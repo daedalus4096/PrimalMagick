@@ -1835,7 +1835,7 @@ public class ResearchEntries {
     
     private static void bootstrapScanEntries(BootstrapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.SCANS;
-        register(context, RAW_MARBLE, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.MARBLE_RAW.get()).parent(UNLOCK_SCANS)
+        register(context, RAW_MARBLE, key -> ResearchEntry.builder(key).discipline(discipline).flags(ResearchEntry.Flags.builder().hidden()).icon(ItemsPM.MARBLE.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.MARBLE_SLAB.get()).recipe(ItemsPM.MARBLE_STAIRS.get()).recipe(ItemsPM.MARBLE_WALL.get()).recipe(ItemsPM.MARBLE_BRICKS.get())
                         .recipe(ItemsPM.MARBLE_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_BRICK_STAIRS.get()).recipe(ItemsPM.MARBLE_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_PILLAR.get())
                         .recipe(ItemsPM.MARBLE_CHISELED.get()).recipe(ItemsPM.MARBLE_TILES.get()).recipe(ItemsPM.MARBLE_RUNED.get()).recipe(ItemsPM.MARBLE_BOOKSHELF.get()).end()

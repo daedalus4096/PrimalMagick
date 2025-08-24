@@ -31,7 +31,7 @@ public class InitResearch {
     private static void initScanResearch() {
         ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Sources.HALLOWED));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWED_ORB.get(), ResearchEntries.SOTU_SCAN_HALLOWED_ORB));
-        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_RAW.get(), ResearchEntries.RAW_MARBLE));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE.get(), ResearchEntries.RAW_MARBLE));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_SLAB.get(), ResearchEntries.RAW_MARBLE));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_STAIRS.get(), ResearchEntries.RAW_MARBLE));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_WALL.get(), ResearchEntries.RAW_MARBLE));

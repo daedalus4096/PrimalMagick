@@ -147,7 +147,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, GrimoireItem> CREATIVE_GRIMOIRE = registerSupplier("grimoire_creative", () -> new GrimoireItem(true, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
     // Register raw marble block items
-    public static final IRegistryItem<Item, BlockItem> MARBLE_RAW = registerSupplier("marble_raw", () -> new BlockItem(BlocksPM.MARBLE_RAW.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> MARBLE = registerSupplier("marble", () -> new BlockItem(BlocksPM.MARBLE.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> MARBLE_SLAB = registerSupplier("marble_slab", () -> new BlockItem(BlocksPM.MARBLE_SLAB.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> MARBLE_STAIRS = registerSupplier("marble_stairs", () -> new BlockItem(BlocksPM.MARBLE_STAIRS.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> MARBLE_WALL = registerSupplier("marble_wall", () -> new BlockItem(BlocksPM.MARBLE_WALL.get(), new Item.Properties()));

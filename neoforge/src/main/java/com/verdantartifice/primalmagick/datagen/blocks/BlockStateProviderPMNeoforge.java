@@ -87,19 +87,19 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     protected void registerStatesAndModels() {
         // TODO Can this be extracted into a common super layer?
         // Generate marble blocks
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_RAW.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), this.blockTexture(BlocksPM.MARBLE.get()));
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_BRICKS.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_BRICK_SLAB.get(), BlocksPM.MARBLE_BRICKS.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
         this.pillarBlockWithItem(BlocksPM.MARBLE_PILLAR.get());
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
+        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE.get()));
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_TILES.get());
-        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_RAW.get());
+        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE.get());
         
         // Generate enchanted marble blocks
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED.get());
@@ -230,7 +230,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         RitualCandleBlock.getAllCandles().forEach(this::ritualCandleBlockWithItem);
         
         // Generate mana font blocks
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_RAW.get())));
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE.get())));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.ENCHANTED).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get())));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.FORBIDDEN).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_SMOKED.get())));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_HALLOWED.get())));
@@ -260,7 +260,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.bloodletterBlockWithItem();
         this.horizontalBlockWithItem(BlocksPM.SOUL_ANVIL.get(), state -> this.models()
                 .getExistingFile(this.defaultModel(BlocksPM.SOUL_ANVIL.get()).withSuffix(state.getValue(SoulAnvilBlock.DIRTY) ? "_dirty" : "")));
-        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
+        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), this.blockTexture(BlocksPM.MARBLE.get()));
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));

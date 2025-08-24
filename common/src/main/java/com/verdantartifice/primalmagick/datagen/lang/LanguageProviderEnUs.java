@@ -96,7 +96,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.add("itemGroup.primalmagick", "Primal Magick");
         
         // Generate block localizations
-        this.block(BlocksPM.MARBLE_RAW).name("Marble").build();
+        this.block(BlocksPM.MARBLE).name("Marble").build();
         this.block(BlocksPM.MARBLE_SLAB).name("Marble Slab").build();
         this.block(BlocksPM.MARBLE_STAIRS).name("Marble Stairs").build();
         this.block(BlocksPM.MARBLE_WALL).name("Marble Wall").build();

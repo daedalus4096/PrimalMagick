@@ -51,7 +51,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         BlockFamiliesPM.getAllFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> blockModels.family(family.getBaseBlock()).generateFor(family));
 
         // TODO Generate marble blocks
-        blockModels.createTrivialCube(BlocksPM.MARBLE_RAW.get());
+        blockModels.createTrivialCube(BlocksPM.MARBLE.get());
 
         // TODO Generate enchanted marble blocks
         // TODO Generate smoked marble blocks

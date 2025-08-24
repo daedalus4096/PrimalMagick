@@ -129,19 +129,19 @@ public class BlocksPM {
     }
 
     // Register raw marble blocks
-    public static final IRegistryItem<Block, Block> MARBLE_RAW = register("marble_raw", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
-    public static final IRegistryItem<Block, SlabBlock> MARBLE_SLAB = register("marble_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, StairBlock> MARBLE_STAIRS = register("marble_stairs", () -> new StairBlockPM(MARBLE_RAW.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, WallBlock> MARBLE_WALL = register("marble_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, Block> MARBLE_BRICKS = register("marble_bricks", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
+    public static final IRegistryItem<Block, Block> MARBLE = register("marble", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+    public static final IRegistryItem<Block, SlabBlock> MARBLE_SLAB = register("marble_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, StairBlock> MARBLE_STAIRS = register("marble_stairs", () -> new StairBlockPM(MARBLE.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, WallBlock> MARBLE_WALL = register("marble_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, Block> MARBLE_BRICKS = register("marble_bricks", () -> new Block(Block.Properties.ofFullCopy(MARBLE.get())));
     public static final IRegistryItem<Block, SlabBlock> MARBLE_BRICK_SLAB = register("marble_brick_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
     public static final IRegistryItem<Block, StairBlock> MARBLE_BRICK_STAIRS = register("marble_brick_stairs", () -> new StairBlockPM(MARBLE_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
     public static final IRegistryItem<Block, WallBlock> MARBLE_BRICK_WALL = register("marble_brick_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
-    public static final IRegistryItem<Block, PillarBlock> MARBLE_PILLAR = register("marble_pillar", () -> new PillarBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, Block> MARBLE_CHISELED = register("marble_chiseled", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, Block> MARBLE_RUNED = register("marble_runed", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, Block> MARBLE_TILES = register("marble_tiles", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, CarvedBookshelfBlock> MARBLE_BOOKSHELF = register("marble_bookshelf", () -> new CarvedBookshelfBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
+    public static final IRegistryItem<Block, PillarBlock> MARBLE_PILLAR = register("marble_pillar", () -> new PillarBlock(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, Block> MARBLE_CHISELED = register("marble_chiseled", () -> new Block(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, Block> MARBLE_RUNED = register("marble_runed", () -> new Block(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, Block> MARBLE_TILES = register("marble_tiles", () -> new Block(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, CarvedBookshelfBlock> MARBLE_BOOKSHELF = register("marble_bookshelf", () -> new CarvedBookshelfBlock(Block.Properties.ofFullCopy(MARBLE.get())));
 
     // Register enchanted marble blocks
     public static final IRegistryItem<Block, Block> MARBLE_ENCHANTED = register("marble_enchanted", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE)));

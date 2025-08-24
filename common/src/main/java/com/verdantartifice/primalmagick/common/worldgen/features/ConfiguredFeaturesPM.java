@@ -53,7 +53,7 @@ public class ConfiguredFeaturesPM {
     
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         // Register configured ore features
-        context.register(ORE_MARBLE_RAW, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), BlocksPM.MARBLE_RAW.get().defaultBlockState(), 33)));
+        context.register(ORE_MARBLE_RAW, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), BlocksPM.MARBLE.get().defaultBlockState(), 33)));
         context.register(ORE_ROCK_SALT, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), BlocksPM.ROCK_SALT_ORE.get().defaultBlockState(), 10)));
         context.register(ORE_QUARTZ, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), BlocksPM.QUARTZ_ORE.get().defaultBlockState(), 3)));
 
