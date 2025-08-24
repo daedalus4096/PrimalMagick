@@ -61,6 +61,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // TODO Generate non-family marble blocks
         this.generatePillarBlock(BlocksPM.MARBLE_PILLAR.get(), blockModels);
         blockModels.createTrivialBlock(BlocksPM.MARBLE_RUNED.get(), TexturedModel.COLUMN);
+        blockModels.createTrivialCube(BlocksPM.MARBLE_TILES.get());
 
         // TODO Generate enchanted marble blocks
         // TODO Generate smoked marble blocks
