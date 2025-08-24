@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.datagen.models;
 import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.items.EquipmentAssetsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
@@ -23,18 +24,24 @@ import net.minecraft.client.color.item.Constant;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.client.renderer.item.BlockModelWrapper;
 import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +58,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         BlockFamiliesPM.getAllFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> blockModels.family(family.getBaseBlock()).generateFor(family));
 
         // TODO Generate non-family marble blocks
+        this.generatePillarBlock(BlocksPM.MARBLE_PILLAR.get(), blockModels);
 
         // TODO Generate enchanted marble blocks
         // TODO Generate smoked marble blocks
@@ -141,14 +149,14 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.PRIMAL_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFishingRod(ItemsPM.PRIMAL_FISHING_ROD.get());
         // TODO Generate client item for sacred shield?
-        this.generateSpelltome(itemModels, ItemsPM.SPELLTOME_APPRENTICE.get(), ItemsPM.STATIC_BOOK.get());
-        this.generateSpelltome(itemModels, ItemsPM.SPELLTOME_ADEPT.get(), ItemsPM.STATIC_BOOK_UNCOMMON.get());
-        this.generateSpelltome(itemModels, ItemsPM.SPELLTOME_WIZARD.get(), ItemsPM.STATIC_BOOK_RARE.get());
-        this.generateSpelltome(itemModels, ItemsPM.SPELLTOME_ARCHMAGE.get(), ItemsPM.GRIMOIRE.get());
-        this.generateManaOrb(itemModels, ItemsPM.MANA_ORB_APPRENTICE.get(), ItemsPM.APPRENTICE_WAND_GEM_ITEM.get());
-        this.generateManaOrb(itemModels, ItemsPM.MANA_ORB_ADEPT.get(), ItemsPM.ADEPT_WAND_GEM_ITEM.get());
-        this.generateManaOrb(itemModels, ItemsPM.MANA_ORB_WIZARD.get(), ItemsPM.WIZARD_WAND_GEM_ITEM.get());
-        this.generateManaOrb(itemModels, ItemsPM.MANA_ORB_ARCHMAGE.get(), ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get());
+        this.generateSpelltomeItem(itemModels, ItemsPM.SPELLTOME_APPRENTICE.get(), ItemsPM.STATIC_BOOK.get());
+        this.generateSpelltomeItem(itemModels, ItemsPM.SPELLTOME_ADEPT.get(), ItemsPM.STATIC_BOOK_UNCOMMON.get());
+        this.generateSpelltomeItem(itemModels, ItemsPM.SPELLTOME_WIZARD.get(), ItemsPM.STATIC_BOOK_RARE.get());
+        this.generateSpelltomeItem(itemModels, ItemsPM.SPELLTOME_ARCHMAGE.get(), ItemsPM.GRIMOIRE.get());
+        this.generateManaOrbItem(itemModels, ItemsPM.MANA_ORB_APPRENTICE.get(), ItemsPM.APPRENTICE_WAND_GEM_ITEM.get());
+        this.generateManaOrbItem(itemModels, ItemsPM.MANA_ORB_ADEPT.get(), ItemsPM.ADEPT_WAND_GEM_ITEM.get());
+        this.generateManaOrbItem(itemModels, ItemsPM.MANA_ORB_WIZARD.get(), ItemsPM.WIZARD_WAND_GEM_ITEM.get());
+        this.generateManaOrbItem(itemModels, ItemsPM.MANA_ORB_ARCHMAGE.get(), ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get());
 
         // Generate mana arrow items
         ManaArrowItem.getManaArrows().forEach(item ->
@@ -339,13 +347,27 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 Optional.ofNullable(defaultModel)));
     }
 
-    private void generateManaOrb(ItemModelGenerators itemModels, Item item, Item particleItem) {
+    private void generateManaOrbItem(ItemModelGenerators itemModels, Item item, Item particleItem) {
         ResourceLocation modelLoc = ModelTemplatesPM.MANA_ORB.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 
-    private void generateSpelltome(ItemModelGenerators itemModels, Item item, Item particleItem) {
+    private void generateSpelltomeItem(ItemModelGenerators itemModels, Item item, Item particleItem) {
         ResourceLocation modelLoc = ModelTemplatesPM.SPELLTOME.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
+    }
+
+    private void generatePillarBlock(Block block, BlockModelGenerators blockModels) {
+        Variant baseVariant = new Variant(TexturedModelsPM.PILLAR.create(block, blockModels.modelOutput));
+        MultiVariant baseMultiVariant = new MultiVariant(WeightedList.of(baseVariant));
+        Variant bottomVariant = new Variant(TexturedModelsPM.PILLAR_BOTTOM.create(block, blockModels.modelOutput));
+        MultiVariant bottomMultiVariant = new MultiVariant(WeightedList.of(bottomVariant));
+        Variant topVariant = new Variant(TexturedModelsPM.PILLAR_TOP.create(block, blockModels.modelOutput));
+        MultiVariant topMultiVariant = new MultiVariant(WeightedList.of(topVariant));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(PillarBlock.PROPERTY_TYPE)
+                        .select(PillarBlock.Type.BASE, baseMultiVariant)
+                        .select(PillarBlock.Type.BOTTOM, bottomMultiVariant)
+                        .select(PillarBlock.Type.TOP, topMultiVariant)));
     }
 }
