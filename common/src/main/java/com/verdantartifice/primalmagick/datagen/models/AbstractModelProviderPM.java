@@ -80,8 +80,16 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.createTrivialBlock(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), TexturedModel.COLUMN);
         this.createCarvedBookshelf(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), blockModels);
 
-        // TODO Generate smoked marble blocks
-        // TODO Generate hallowed marble blocks
+        // Generate smoked marble blocks
+        this.generatePillarBlock(BlocksPM.MARBLE_SMOKED_PILLAR.get(), blockModels);
+        blockModels.createTrivialBlock(BlocksPM.MARBLE_SMOKED_RUNED.get(), TexturedModel.COLUMN);
+        this.createCarvedBookshelf(BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), blockModels);
+
+        // Generate hallowed marble blocks
+        this.generatePillarBlock(BlocksPM.MARBLE_HALLOWED_PILLAR.get(), blockModels);
+        blockModels.createTrivialBlock(BlocksPM.MARBLE_HALLOWED_RUNED.get(), TexturedModel.COLUMN);
+        this.createCarvedBookshelf(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get(), blockModels);
+
         // TODO Generate sunwood blocks
         // TODO Generate moonwood blocks
         // TODO Generate hallowood blocks
