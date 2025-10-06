@@ -34,6 +34,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunc
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypesPM;
+import com.verdantartifice.primalmagick.test.TestFunctionsPM;
 
 public class InitRegistries {
     public static void initDeferredRegistries() {
@@ -70,5 +71,6 @@ public class InitRegistries {
         GridRewardTypesPM.init();
         ResearchTopicTypesPM.init();
         RitualStepTypesPM.init();
+        TestFunctionsPM.init();
     }
 }
