@@ -64,6 +64,7 @@ import com.verdantartifice.primalmagick.platform.services.registries.ISpellPrope
 import com.verdantartifice.primalmagick.platform.services.registries.ISpellVehicleTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IStructurePieceTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IStructureTypeRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.ITestFunctionRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IWeightFunctionTypeRegistryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -146,6 +147,7 @@ public class Services {
     public static final IGridRewardTypeRegistryService GRID_REWARD_TYPES_REGISTRY = load(IGridRewardTypeRegistryService.class);
     public static final IResearchTopicTypeRegistryService RESEARCH_TOPIC_TYPES_REGISTRY = load(IResearchTopicTypeRegistryService.class);
     public static final IRitualStepTypeRegistryService RITUAL_STEP_TYPES_REGISTRY = load(IRitualStepTypeRegistryService.class);
+    public static final ITestFunctionRegistryService TEST_FUNCTIONS_REGISTRY = load(ITestFunctionRegistryService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

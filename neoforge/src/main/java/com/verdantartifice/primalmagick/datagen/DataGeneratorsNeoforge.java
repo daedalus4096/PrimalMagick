@@ -28,7 +28,10 @@ import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.MobEffectTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.SpellPropertyTagsProviderPMNeoforge;
+import com.verdantartifice.primalmagick.test.TestInstancesPM;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.loot.LootTableProvider;
@@ -47,6 +50,13 @@ import java.util.concurrent.CompletableFuture;
  */
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class DataGeneratorsNeoforge {
+    @SubscribeEvent
+    public static void onGatherClientData(GatherDataEvent.Client event) {
+        event.createDatapackRegistryObjects(new RegistrySetBuilder()
+                .add(Registries.TEST_INSTANCE, TestInstancesPM::bootstrap)
+        );
+    }
+
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         // Add all of the mod's data providers to the generator for processing
