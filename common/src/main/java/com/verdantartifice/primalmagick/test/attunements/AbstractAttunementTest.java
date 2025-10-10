@@ -26,7 +26,6 @@ import com.verdantartifice.primalmagick.test.TestUtils;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.TestFunction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.effect.MobEffects;
@@ -41,19 +40,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class AbstractAttunementTest extends AbstractBaseTest {
-    public void beforeDayBatch(ServerLevel level) {
-        level.setDayTime(6000);
-        level.tick(() -> true);
-    }
-
-    public void beforeNightBatch(ServerLevel level) {
-        level.setDayTime(18000);
-        level.tick(() -> true);
-    }
-
     public static void minor_attunement_gives_mana_discount(GameTestHelper helper, Source source) {
         // Create a test player
         var player = makeMockServerPlayer(helper);
