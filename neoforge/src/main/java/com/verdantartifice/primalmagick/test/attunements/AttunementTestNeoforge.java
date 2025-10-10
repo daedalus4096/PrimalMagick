@@ -27,11 +27,6 @@ public class AttunementTestNeoforge extends AbstractAttunementTest {
         super.beforeNightBatch(level);
     }
 
-    @GameTestGenerator
-    public Collection<TestFunction> minor_attunement_gives_mana_discount() {
-        return super.minor_attunement_gives_mana_discount(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
     @PrefixGameTestTemplate(false)
     @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
     @Override

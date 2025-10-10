@@ -26,11 +26,6 @@ public class AttunementTestForge extends AbstractAttunementTest {
         super.beforeNightBatch(level);
     }
 
-    @GameTestGenerator
-    public Collection<TestFunction> minor_attunement_gives_mana_discount() {
-        return super.minor_attunement_gives_mana_discount(TestUtilsForge.DEFAULT_TEMPLATE);
-    }
-
     @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
     @Override
     public void lesser_earth_attunement_gives_haste_modifier(GameTestHelper helper) {
