@@ -72,68 +72,68 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         helper.succeed();
     }
 
-    public void lesser_earth_attunement_gives_haste_modifier(GameTestHelper helper) {
+    public static void lesser_earth_attunement_gives_haste_modifier(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Confirm that the player doesn't have the relevant attribute modifier to start
-        this.assertFalse(helper, player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player has unexpected attribute modifier");
+        assertFalse(helper, player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player has unexpected attribute modifier");
 
         // Grant the test player lesser attunement to the Earth
         AttunementManager.setAttunement(player, Sources.EARTH, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
 
         // Confirm that the player has the relevant attribute modifier with attunement
-        this.assertTrue(helper, player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player does not have expected attribute modifier");
+        assertTrue(helper, player.getAttributes().hasModifier(Attributes.ATTACK_SPEED, AttunementAttributeModifiers.EARTH_LESSER_ID), "Player does not have expected attribute modifier");
 
         helper.succeed();
     }
 
-    public void greater_earth_attunement_gives_step_height_modifier(GameTestHelper helper) {
+    public static void greater_earth_attunement_gives_step_height_modifier(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Confirm that the player doesn't have the relevant attribute modifier to start
-        this.assertFalse(helper, player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player has unexpected attribute modifier");
+        assertFalse(helper, player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player has unexpected attribute modifier");
 
         // Grant the test player greater attunement to the Earth and force processing of attunement buffs
         AttunementManager.setAttunement(player, Sources.EARTH, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
         PlayerEvents.applyAttunementBuffs(player);
 
         // Confirm that the player has the relevant attribute modifier with attunement
-        this.assertTrue(helper, player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player does not have expected attribute modifier");
+        assertTrue(helper, player.getAttributes().hasModifier(Attributes.STEP_HEIGHT, AttunementAttributeModifiers.EARTH_GREATER_ID), "Player does not have expected attribute modifier");
 
         helper.succeed();
     }
 
-    public void lesser_sea_attunement_gives_increased_swim_speed(GameTestHelper helper) {
+    public static void lesser_sea_attunement_gives_increased_swim_speed(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Confirm that the player doesn't have the relevant attribute modifier to start
-        this.assertFalse(helper, player.getAttributes().hasModifier(Services.ATTRIBUTES.swimSpeed(), AttunementAttributeModifiers.SEA_LESSER_ID), "Player has unexpected attribute modifier");
+        assertFalse(helper, player.getAttributes().hasModifier(Services.ATTRIBUTES.swimSpeed(), AttunementAttributeModifiers.SEA_LESSER_ID), "Player has unexpected attribute modifier");
 
         // Grant the test player lesser attunement to the Sea
         AttunementManager.setAttunement(player, Sources.SEA, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
 
         // Confirm that the player has the relevant attribute modifier with attunement
-        this.assertTrue(helper, player.getAttributes().hasModifier(Services.ATTRIBUTES.swimSpeed(), AttunementAttributeModifiers.SEA_LESSER_ID), "Player does not have expected attribute modifier");
+        assertTrue(helper, player.getAttributes().hasModifier(Services.ATTRIBUTES.swimSpeed(), AttunementAttributeModifiers.SEA_LESSER_ID), "Player does not have expected attribute modifier");
 
         helper.succeed();
     }
 
-    public void greater_sea_attunement_gives_water_breathing(GameTestHelper helper) {
+    public static void greater_sea_attunement_gives_water_breathing(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Confirm that the player has the relevant effect with attunement
-        this.assertFalse(helper, player.hasEffect(MobEffects.WATER_BREATHING), "Player has unexpected effect");
+        assertFalse(helper, player.hasEffect(MobEffects.WATER_BREATHING), "Player has unexpected effect");
 
         // Grant the test player greater attunement to the Sea and force processing of attunement buffs
         AttunementManager.setAttunement(player, Sources.SEA, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
         PlayerEvents.applyAttunementBuffs(player);
 
         // Confirm that the player has the relevant effect with attunement
-        this.assertTrue(helper, player.hasEffect(MobEffects.WATER_BREATHING), "Player does not have expected effect");
+        assertTrue(helper, player.hasEffect(MobEffects.WATER_BREATHING), "Player does not have expected effect");
 
         helper.succeed();
     }

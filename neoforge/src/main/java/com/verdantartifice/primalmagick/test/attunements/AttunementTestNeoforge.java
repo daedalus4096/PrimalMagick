@@ -15,46 +15,6 @@ import java.util.Collection;
 
 @GameTestHolder(Constants.MOD_ID)
 public class AttunementTestNeoforge extends AbstractAttunementTest {
-    @BeforeBatch(batch = "attunementDayTests")
-    @Override
-    public void beforeDayBatch(ServerLevel level) {
-        super.beforeDayBatch(level);
-    }
-
-    @BeforeBatch(batch = "attunementNightTests")
-    @Override
-    public void beforeNightBatch(ServerLevel level) {
-        super.beforeNightBatch(level);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void lesser_earth_attunement_gives_haste_modifier(GameTestHelper helper) {
-        super.lesser_earth_attunement_gives_haste_modifier(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void greater_earth_attunement_gives_step_height_modifier(GameTestHelper helper) {
-        super.greater_earth_attunement_gives_step_height_modifier(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void lesser_sea_attunement_gives_increased_swim_speed(GameTestHelper helper) {
-        super.lesser_sea_attunement_gives_increased_swim_speed(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void greater_sea_attunement_gives_water_breathing(GameTestHelper helper) {
-        super.greater_sea_attunement_gives_water_breathing(helper);
-    }
-
     @PrefixGameTestTemplate(false)
     @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
     @Override

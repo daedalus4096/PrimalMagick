@@ -14,42 +14,6 @@ import java.util.Collection;
 
 @GameTestHolder(Constants.MOD_ID + ".forge.attunements")
 public class AttunementTestForge extends AbstractAttunementTest {
-    @BeforeBatch(batch = "attunementDayTests")
-    @Override
-    public void beforeDayBatch(ServerLevel level) {
-        super.beforeDayBatch(level);
-    }
-
-    @BeforeBatch(batch = "attunementNightTests")
-    @Override
-    public void beforeNightBatch(ServerLevel level) {
-        super.beforeNightBatch(level);
-    }
-
-    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
-    @Override
-    public void lesser_earth_attunement_gives_haste_modifier(GameTestHelper helper) {
-        super.lesser_earth_attunement_gives_haste_modifier(helper);
-    }
-
-    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
-    @Override
-    public void greater_earth_attunement_gives_step_height_modifier(GameTestHelper helper) {
-        super.greater_earth_attunement_gives_step_height_modifier(helper);
-    }
-
-    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
-    @Override
-    public void lesser_sea_attunement_gives_increased_swim_speed(GameTestHelper helper) {
-        super.lesser_sea_attunement_gives_increased_swim_speed(helper);
-    }
-
-    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
-    @Override
-    public void greater_sea_attunement_gives_water_breathing(GameTestHelper helper) {
-        super.greater_sea_attunement_gives_water_breathing(helper);
-    }
-
     @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
     @Override
     public void lesser_sky_attunement_gives_movement_speed_modifier(GameTestHelper helper) {
