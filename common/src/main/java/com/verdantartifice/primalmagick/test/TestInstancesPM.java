@@ -11,7 +11,7 @@ import net.minecraft.gametest.framework.GameTestInstance;
 import net.minecraft.gametest.framework.TestData;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
 
@@ -55,18 +55,31 @@ public class TestInstancesPM {
     private static Holder.Reference<GameTestInstance> registerFunction(BootstrapContext<GameTestInstance> context,
                                                                        ResourceKey<GameTestInstance> instanceKey,
                                                                        ResourceKey<Consumer<GameTestHelper>> funcKey) {
+        return registerFunction(context, instanceKey, funcKey, TestEnvironmentsPM.DEFAULT, TestUtils.DEFAULT_TEMPLATE);
+    }
+
+    private static Holder.Reference<GameTestInstance> registerFunction(BootstrapContext<GameTestInstance> context,
+                                                                       ResourceKey<GameTestInstance> instanceKey,
+                                                                       ResourceKey<Consumer<GameTestHelper>> funcKey,
+                                                                       ResourceKey<TestEnvironmentDefinition> envKey) {
+        return registerFunction(context, instanceKey, funcKey, envKey, TestUtils.DEFAULT_TEMPLATE);
+    }
+
+
+    private static Holder.Reference<GameTestInstance> registerFunction(BootstrapContext<GameTestInstance> context,
+                                                                       ResourceKey<GameTestInstance> instanceKey,
+                                                                       ResourceKey<Consumer<GameTestHelper>> funcKey,
+                                                                       ResourceLocation templateLoc) {
+        return registerFunction(context, instanceKey, funcKey, TestEnvironmentsPM.DEFAULT, templateLoc);
+    }
+
+    private static Holder.Reference<GameTestInstance> registerFunction(BootstrapContext<GameTestInstance> context,
+                                                                       ResourceKey<GameTestInstance> instanceKey,
+                                                                       ResourceKey<Consumer<GameTestHelper>> funcKey,
+                                                                       ResourceKey<TestEnvironmentDefinition> envKey,
+                                                                       ResourceLocation templateLoc) {
         HolderGetter<TestEnvironmentDefinition> envs = context.lookup(Registries.TEST_ENVIRONMENT);
-        return registerFunction(context, instanceKey, funcKey, new TestData<>(
-                envs.getOrThrow(TestEnvironmentsPM.DEFAULT),
-                TestUtils.DEFAULT_TEMPLATE,
-                400,
-                50,
-                true,
-                Rotation.NONE,
-                false,
-                3,
-                1,
-                false));
+        return registerFunction(context, instanceKey, funcKey, TestDataBuilder.withEnvironment(envKey, envs).template(templateLoc).build());
     }
 
     private static Holder.Reference<GameTestInstance> registerFunction(BootstrapContext<GameTestInstance> context,
