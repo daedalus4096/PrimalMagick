@@ -18,55 +18,6 @@ public class AttunementTestNeoforge extends AbstractAttunementTest {
     @PrefixGameTestTemplate(false)
     @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
     @Override
-    public void lesser_sky_attunement_gives_movement_speed_modifier(GameTestHelper helper) {
-        super.lesser_sky_attunement_gives_movement_speed_modifier(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void lesser_sky_attunement_reduces_fall_damage_taken(GameTestHelper helper) {
-        super.lesser_sky_attunement_reduces_fall_damage_taken(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void greater_sky_attunement_increases_jump_strength(GameTestHelper helper) {
-        super.greater_sky_attunement_increases_jump_strength(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE, batch = "attunementDayTests")
-    @Override
-    public void lesser_sun_attunement_regenerates_food_during_day(GameTestHelper helper) {
-        super.lesser_sun_attunement_regenerates_food_during_day(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE, batch = "attunementNightTests")
-    @Override
-    public void lesser_sun_attunement_does_not_regenerate_food_during_night(GameTestHelper helper) {
-        super.lesser_sun_attunement_does_not_regenerate_food_during_night(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void lesser_moon_attunement_grants_invisibility_chance_on_hurt(GameTestHelper helper) {
-        super.lesser_moon_attunement_grants_invisibility_chance_on_hurt(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void greater_moon_attunement_grants_night_vision(GameTestHelper helper) {
-        super.greater_moon_attunement_grants_night_vision(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
     public void lesser_blood_attunement_inflicts_bleeding(GameTestHelper helper) {
         super.lesser_blood_attunement_inflicts_bleeding(helper);
     }

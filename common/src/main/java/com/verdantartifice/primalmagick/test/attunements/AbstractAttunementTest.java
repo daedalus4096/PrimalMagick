@@ -138,23 +138,23 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         helper.succeed();
     }
 
-    public void lesser_sky_attunement_gives_movement_speed_modifier(GameTestHelper helper) {
+    public static void lesser_sky_attunement_gives_movement_speed_modifier(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Confirm that the player doesn't have the relevant attribute modifier to start
-        this.assertFalse(helper, player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player has unexpected attribute modifier");
+        assertFalse(helper, player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player has unexpected attribute modifier");
 
         // Grant the test player lesser attunement to the Sky
         AttunementManager.setAttunement(player, Sources.SKY, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
 
         // Confirm that the player has the relevant attribute modifier with attunement
-        this.assertTrue(helper, player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player does not have expected attribute modifier");
+        assertTrue(helper, player.getAttributes().hasModifier(Attributes.MOVEMENT_SPEED, AttunementAttributeModifiers.SKY_LESSER_ID), "Player does not have expected attribute modifier");
 
         helper.succeed();
     }
 
-    public void lesser_sky_attunement_reduces_fall_damage_taken(GameTestHelper helper) {
+    public static void lesser_sky_attunement_reduces_fall_damage_taken(GameTestHelper helper) {
         final float expectedDamage = 8F;
 
         // Create a test player
@@ -163,7 +163,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that the player takes normal falling damage to start
         player.hurt(player.damageSources().fall(), expectedDamage);
         var actualDamage = player.getMaxHealth() - player.getHealth();
-        this.assertTrue(helper, actualDamage == expectedDamage, "Player did not take expected damage without attunement: " + actualDamage);
+        assertTrue(helper, actualDamage == expectedDamage, "Player did not take expected damage without attunement: " + actualDamage);
 
         // Reset the player's health and grant them lesser attunement to the Sky
         player.setHealth(player.getMaxHealth());
@@ -172,48 +172,46 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that the player takes reduced falling damage with attunement
         player.hurt(player.damageSources().fall(), expectedDamage);
         actualDamage = player.getMaxHealth() - player.getHealth();
-        this.assertTrue(helper, actualDamage < expectedDamage, "Player did not take reduced damage with attunement: " + actualDamage);
+        assertTrue(helper, actualDamage < expectedDamage, "Player did not take reduced damage with attunement: " + actualDamage);
 
         helper.succeed();
     }
 
-    public void greater_sky_attunement_increases_jump_strength(GameTestHelper helper) {
+    public static void greater_sky_attunement_increases_jump_strength(GameTestHelper helper) {
         // Create a test player
-        var player1 = this.makeMockServerPlayer(helper);
+        var player1 = makeMockServerPlayer(helper);
         var expectedJumpStrength = player1.getAttributeValue(Attributes.JUMP_STRENGTH);
 
         // Have the player jump and measure its unmodified jump strength
         player1.jumpFromGround();
-        this.assertTrue(helper, player1.getDeltaMovement().y() == expectedJumpStrength, "Player did not have expected starting jump strength");
+        assertTrue(helper, player1.getDeltaMovement().y() == expectedJumpStrength, "Player did not have expected starting jump strength");
 
         // Discard that player and create another one
         player1.discard();
-        var player2 = this.makeMockServerPlayer(helper);
+        var player2 = makeMockServerPlayer(helper);
 
         // Grant the new player greater attunement to the Sky
         AttunementManager.setAttunement(player2, Sources.SKY, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
 
         // Have the new player jump and confirm that their jump strength is greater
         player2.jumpFromGround();
-        this.assertTrue(helper, player2.getDeltaMovement().y() > expectedJumpStrength, "Player did not have boosted jump strength as expected");
+        assertTrue(helper, player2.getDeltaMovement().y() > expectedJumpStrength, "Player did not have boosted jump strength as expected");
 
         helper.succeed();
     }
 
     // TODO Add a double jump test for greater sky attunement
 
-    public void lesser_sun_attunement_regenerates_food_during_day(GameTestHelper helper) {
+    public static void lesser_sun_attunement_regenerates_food_during_day(GameTestHelper helper) {
         final int startFood = 6;
         final int endFood = startFood + 1;
 
         // Create a test player
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Set starting test conditions
-        helper.setDayTime(0);
-        helper.getLevel().tick(() -> true);
         player.getFoodData().setFoodLevel(startFood);
-        this.assertTrue(helper, player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
+        assertTrue(helper, player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
 
         // Grant the player lesser attunement to the Sun and tick photosynthesis
         AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
@@ -221,37 +219,35 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that their food level has regenerated
         var actualFood = player.getFoodData().getFoodLevel();
-        this.assertTrue(helper, actualFood == endFood, "Player does not have expected food with attunement: " + actualFood);
+        assertTrue(helper, actualFood == endFood, "Player does not have expected food with attunement: " + actualFood);
 
         helper.succeed();
     }
 
-    public void lesser_sun_attunement_does_not_regenerate_food_during_night(GameTestHelper helper) {
+    public static void lesser_sun_attunement_does_not_regenerate_food_during_night(GameTestHelper helper) {
         final int startFood = 6;
 
         // Create a test player
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Set starting test conditions
-        helper.setNight();
-        helper.getLevel().tick(() -> true);
         player.getFoodData().setFoodLevel(startFood);
-        this.assertTrue(helper, player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
+        assertTrue(helper, player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food without attunement");
 
         // Grant the player lesser attunement to the Sun and tick photosynthesis
         AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
         PlayerEvents.handlePhotosynthesis(player);
 
         // Confirm that their food level has regenerated
-        this.assertTrue(helper, player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food with attunement");
+        assertTrue(helper, player.getFoodData().getFoodLevel() == startFood, "Player does not have expected food with attunement");
 
         helper.succeed();
     }
 
     // FIXME Highly intermittent; world time doesn't seem consistent with explicitly set values
-    public void greater_sun_attunement_does_not_drop_glow_fields_during_day(GameTestHelper helper) {
+    public static void greater_sun_attunement_does_not_drop_glow_fields_during_day(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper, true);
+        var player = makeMockServerPlayer(helper, true);
         var playerPos = player.blockPosition();
 
         // Create a random source that will always trigger a light drop
@@ -259,7 +255,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that there's no glow field present to start
         LogUtils.getLogger().warn("Block light level before attunement during day: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
-        this.assertFalse(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
+        assertFalse(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
 
         // Grant the player greater attunement to the Sun and trigger light drop
         AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
@@ -268,15 +264,15 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that the glow field is still not present
         LogUtils.getLogger().warn("Block light level after light drop during day: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
-        this.assertFalse(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be after attunement");
+        assertFalse(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be after attunement");
 
         helper.succeed();
     }
 
     // FIXME Highly intermittent; world time doesn't seem consistent with explicitly set values
-    public void greater_sun_attunement_drops_glow_fields_during_night(GameTestHelper helper) {
+    public static void greater_sun_attunement_drops_glow_fields_during_night(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper, true);
+        var player = makeMockServerPlayer(helper, true);
         var playerPos = player.blockPosition();
 
         // Create a random source that will always trigger a light drop
@@ -284,7 +280,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that there's no glow field present to start
         LogUtils.getLogger().warn("Block light level before attunement during night: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
-        this.assertFalse(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
+        assertFalse(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field present when it shouldn't be before attunement");
 
         // Grant the player greater attunement to the Sun and trigger light drop
         AttunementManager.setAttunement(player, Sources.SUN, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
@@ -293,45 +289,45 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that there's still no glow field (because it's day time)
         LogUtils.getLogger().warn("Block light level after light drop during night: {}", helper.getLevel().getBrightness(LightLayer.BLOCK, playerPos));
-        this.assertTrue(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field missing after attunement");
+        assertTrue(helper, helper.getLevel().getBlockState(playerPos).is(BlocksPM.GLOW_FIELD.get()), "Glow field missing after attunement");
 
         helper.succeed();
     }
 
-    public void lesser_moon_attunement_grants_invisibility_chance_on_hurt(GameTestHelper helper) {
+    public static void lesser_moon_attunement_grants_invisibility_chance_on_hurt(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Create a random source that will always trigger
         var rng = TestRandomSource.builder().setDouble(0D).setGaussian(1D).build();
 
         // Confirm that the player is not granted invisibility without attunement
         CombatEvents.grantInvisibilityOnHurt(player, helper.getLevel(), rng);
-        this.assertFalse(helper, player.hasEffect(MobEffects.INVISIBILITY), "Player has invisibility when they shouldn't");
+        assertFalse(helper, player.hasEffect(MobEffects.INVISIBILITY), "Player has invisibility when they shouldn't");
 
         // Grant the player lesser attunement to the Moon
         AttunementManager.setAttunement(player, Sources.MOON, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
 
         // Confirm that the player is granted invisibility with attunement
         CombatEvents.grantInvisibilityOnHurt(player, helper.getLevel(), rng);
-        this.assertTrue(helper, player.hasEffect(MobEffects.INVISIBILITY), "Player does not have invisibility with attunement");
+        assertTrue(helper, player.hasEffect(MobEffects.INVISIBILITY), "Player does not have invisibility with attunement");
 
         helper.succeed();
     }
 
-    public void greater_moon_attunement_grants_night_vision(GameTestHelper helper) {
+    public static void greater_moon_attunement_grants_night_vision(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Confirm that the player has the relevant effect with attunement
-        this.assertFalse(helper, player.hasEffect(MobEffects.NIGHT_VISION), "Player has unexpected effect");
+        assertFalse(helper, player.hasEffect(MobEffects.NIGHT_VISION), "Player has unexpected effect");
 
         // Grant the test player greater attunement to the Moon and force processing of attunement buffs
         AttunementManager.setAttunement(player, Sources.MOON, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
         PlayerEvents.applyAttunementBuffs(player);
 
         // Confirm that the player has the relevant effect with attunement
-        this.assertTrue(helper, player.hasEffect(MobEffects.NIGHT_VISION), "Player does not have expected effect");
+        assertTrue(helper, player.hasEffect(MobEffects.NIGHT_VISION), "Player does not have expected effect");
 
         helper.succeed();
     }
