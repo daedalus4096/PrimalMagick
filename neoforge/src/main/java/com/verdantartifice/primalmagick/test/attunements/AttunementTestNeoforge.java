@@ -18,25 +18,6 @@ public class AttunementTestNeoforge extends AbstractAttunementTest {
     @PrefixGameTestTemplate(false)
     @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
     @Override
-    public void lesser_blood_attunement_inflicts_bleeding(GameTestHelper helper) {
-        super.lesser_blood_attunement_inflicts_bleeding(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void greater_blood_attunement_grants_chance_at_self_healing(GameTestHelper helper) {
-        super.greater_blood_attunement_grants_chance_at_self_healing(helper);
-    }
-
-    @GameTestGenerator
-    public Collection<TestFunction> greater_infernal_attunement_prevents_fire_damage() {
-        return super.greater_infernal_attunement_prevents_fire_damage(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
     public void lesser_void_attunement_reduces_damage_taken(GameTestHelper helper) {
         super.lesser_void_attunement_reduces_damage_taken(helper);
     }

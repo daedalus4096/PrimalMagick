@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagick.test;
 
+import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.attunements.AbstractAttunementTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.damagesource.DamageSources;
 
 import java.util.function.Consumer;
 
@@ -35,5 +37,12 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> LESSER_SUN_ATTUNEMENT_NIGHT_BUFF = Services.TEST_FUNCTIONS_REGISTRY.register("lesser_sun_attunement_does_not_regenerate_food_during_night", () -> AbstractAttunementTest::lesser_sun_attunement_does_not_regenerate_food_during_night);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> LESSER_MOON_ATTUNEMENT_BUFF = Services.TEST_FUNCTIONS_REGISTRY.register("lesser_moon_attunement_grants_invisibility_chance_on_hurt", () -> AbstractAttunementTest::lesser_moon_attunement_grants_invisibility_chance_on_hurt);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GREATER_MOON_ATTUNEMENT_BUFF = Services.TEST_FUNCTIONS_REGISTRY.register("greater_moon_attunement_grants_night_vision", () -> AbstractAttunementTest::greater_moon_attunement_grants_night_vision);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> LESSER_BLOOD_ATTUNEMENT_BUFF = Services.TEST_FUNCTIONS_REGISTRY.register("lesser_blood_attunement_inflicts_bleeding", () -> AbstractAttunementTest::lesser_blood_attunement_inflicts_bleeding);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GREATER_BLOOD_ATTUNEMENT_BUFF = Services.TEST_FUNCTIONS_REGISTRY.register("greater_blood_attunement_grants_chance_at_self_healing", () -> AbstractAttunementTest::greater_blood_attunement_grants_chance_at_self_healing);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GREATER_INFERNAL_ATTUNEMENT_BUFF_IN_FIRE = Services.TEST_FUNCTIONS_REGISTRY.register("greater_infernal_attunement_prevents_fire_damage_in_fire", () -> (helper) -> AbstractAttunementTest.greater_infernal_attunement_prevents_fire_damage(helper, registryAccess -> new DamageSources(registryAccess).inFire()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GREATER_INFERNAL_ATTUNEMENT_BUFF_ON_FIRE = Services.TEST_FUNCTIONS_REGISTRY.register("greater_infernal_attunement_prevents_fire_damage_on_fire", () -> (helper) -> AbstractAttunementTest.greater_infernal_attunement_prevents_fire_damage(helper, registryAccess -> new DamageSources(registryAccess).onFire()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GREATER_INFERNAL_ATTUNEMENT_BUFF_LAVA = Services.TEST_FUNCTIONS_REGISTRY.register("greater_infernal_attunement_prevents_fire_damage_lava", () -> (helper) -> AbstractAttunementTest.greater_infernal_attunement_prevents_fire_damage(helper, registryAccess -> new DamageSources(registryAccess).lava()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GREATER_INFERNAL_ATTUNEMENT_BUFF_HOT_FLOOR = Services.TEST_FUNCTIONS_REGISTRY.register("greater_infernal_attunement_prevents_fire_damage_hot_floor", () -> (helper) -> AbstractAttunementTest.greater_infernal_attunement_prevents_fire_damage(helper, registryAccess -> new DamageSources(registryAccess).hotFloor()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GREATER_INFERNAL_ATTUNEMENT_BUFF_INFERNAL_SORCERY = Services.TEST_FUNCTIONS_REGISTRY.register("greater_infernal_attunement_prevents_fire_damage_infernal_sorcery", () -> (helper) -> AbstractAttunementTest.greater_infernal_attunement_prevents_fire_damage(helper, registryAccess -> DamageSourcesPM.sorcery(registryAccess, Sources.INFERNAL, null)));
 
 }

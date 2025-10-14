@@ -332,9 +332,9 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         helper.succeed();
     }
 
-    public void lesser_blood_attunement_inflicts_bleeding(GameTestHelper helper) {
+    public static void lesser_blood_attunement_inflicts_bleeding(GameTestHelper helper) {
         // Create a test player
-        var player = this.makeMockServerPlayer(helper, true);
+        var player = makeMockServerPlayer(helper, true);
 
         // Create a test target
         var target = helper.spawnWithNoFreeWill(EntityType.COW, player.position());
@@ -342,7 +342,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that bleeding is not inflicted upon the target without player attunement
         MutableFloat damage1 = new MutableFloat(2F);
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
-        this.assertFalse(helper, target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target has effect before attunement");
+        assertFalse(helper, target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target has effect before attunement");
 
         // Grant the test player lesser attunement to the Blood
         AttunementManager.setAttunement(player, Sources.BLOOD, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
@@ -350,16 +350,16 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that bleeding is inflicted upon the target with player attunement
         MutableFloat damage2 = new MutableFloat(2F);
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
-        this.assertTrue(helper, target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target does not have effect after attunement");
+        assertTrue(helper, target.hasEffect(Objects.requireNonNull(EffectsPM.BLEEDING.getHolder())), "Target does not have effect after attunement");
 
         helper.succeed();
     }
 
-    public void greater_blood_attunement_grants_chance_at_self_healing(GameTestHelper helper) {
+    public static void greater_blood_attunement_grants_chance_at_self_healing(GameTestHelper helper) {
         final float startHealth = 5F;
 
         // Create a test player and start them damaged
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
         player.setHealth(startHealth);
 
         // Create a test target
@@ -368,7 +368,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         // Confirm that the player is not healed without attunement
         MutableFloat damage1 = new MutableFloat(12F);   // Do enough damage to force the RNG
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage1::getValue, damage1::setValue);
-        this.assertTrue(helper, player.getHealth() == startHealth, "Player does not have expected health before attunement");
+        assertTrue(helper, player.getHealth() == startHealth, "Player does not have expected health before attunement");
 
         // Grant the test player greater attunement to the Blood
         AttunementManager.setAttunement(player, Sources.BLOOD, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
@@ -378,17 +378,17 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         CombatEvents.onEntityHurt(target, player.damageSources().playerAttack(player), damage2::getValue, damage2::setValue);
         final float expected = startHealth + 1;
         final float actual = player.getHealth();
-        this.assertTrue(helper, actual == expected, "Player does not have expected health after attunement: " + actual);
+        assertTrue(helper, actual == expected, "Player does not have expected health after attunement: " + actual);
 
         helper.succeed();
     }
 
     // FIXME Intermittent; secondary target sometimes just not taking damage from the chain
-    public void lesser_infernal_attunement_fires_hellish_chain_on_attack(GameTestHelper helper) {
+    public static void lesser_infernal_attunement_fires_hellish_chain_on_attack(GameTestHelper helper) {
         final float damage = 4F;
 
         // Create a test player
-        var player = this.makeMockServerPlayer(helper, true);
+        var player = makeMockServerPlayer(helper, true);
 
         // Create a pair of test targets
         var target1 = helper.spawnWithNoFreeWill(EntityType.COW, player.blockPosition().north());
@@ -396,7 +396,7 @@ public class AbstractAttunementTest extends AbstractBaseTest {
 
         // Confirm that the secondary target is not harmed when striking the primary target without attunement
         CombatEvents.onAttack(target1, player.damageSources().playerAttack(player), damage);
-        this.assertTrue(helper, target2.getHealth() == target2.getMaxHealth(), "Secondary target hurt before attunement");
+        assertTrue(helper, target2.getHealth() == target2.getMaxHealth(), "Secondary target hurt before attunement");
 
         // Grant the test player lesser attunement to the Infernal
         AttunementManager.setAttunement(player, Sources.INFERNAL, AttunementType.PERMANENT, AttunementThreshold.LESSER.getValue());
@@ -405,37 +405,28 @@ public class AbstractAttunementTest extends AbstractBaseTest {
         CombatEvents.onAttack(target1, player.damageSources().playerAttack(player), damage);
         final float expected = target2.getMaxHealth() - (0.5F * damage);
         final float actual = target2.getHealth();
-        this.assertTrue(helper, expected == actual, "Secondary target not at expected health after attunement: " + actual);
+        assertTrue(helper, expected == actual, "Secondary target not at expected health after attunement: " + actual);
 
         helper.succeed();
     }
 
-    public Collection<TestFunction> greater_infernal_attunement_prevents_fire_damage(String templateName) {
-        Map<String, Function<RegistryAccess, DamageSource>> testParams = ImmutableMap.<String, Function<RegistryAccess, DamageSource>>builder()
-                .put("inFire", registryAccess -> new DamageSources(registryAccess).inFire())
-                .put("onFire", registryAccess -> new DamageSources(registryAccess).onFire())
-                .put("lava", registryAccess -> new DamageSources(registryAccess).lava())
-                .put("hotFloor", registryAccess -> new DamageSources(registryAccess).hotFloor())
-                .put("infernalSorcery", registryAccess -> DamageSourcesPM.sorcery(registryAccess, Sources.INFERNAL, null))
-                .build();
-        return TestUtils.createParameterizedTestFunctions("greater_infernal_attunement_prevents_fire_damage", templateName, testParams, (helper, func) -> {
-            // Create a test player
-            var player = this.makeMockServerPlayer(helper);
+    public static void greater_infernal_attunement_prevents_fire_damage(GameTestHelper helper, Function<RegistryAccess, DamageSource> damageSourceFunction) {
+        // Create a test player
+        var player = makeMockServerPlayer(helper);
 
-            // Initialize the test damage source
-            var damageSource = func.apply(helper.getLevel().registryAccess());
+        // Initialize the test damage source
+        var damageSource = damageSourceFunction.apply(helper.getLevel().registryAccess());
 
-            // Confirm that the attack event is not supposed to be cancelled without attunement
-            this.assertFalse(helper, CombatEvents.onAttack(player, damageSource, 5F), "Damage being cancelled before attunement");
+        // Confirm that the attack event is not supposed to be cancelled without attunement
+        assertFalse(helper, CombatEvents.onAttack(player, damageSource, 5F), "Damage being cancelled before attunement");
 
-            // Grant the test player greater attunement to the Infernal
-            AttunementManager.setAttunement(player, Sources.INFERNAL, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
+        // Grant the test player greater attunement to the Infernal
+        AttunementManager.setAttunement(player, Sources.INFERNAL, AttunementType.PERMANENT, AttunementThreshold.GREATER.getValue());
 
-            // Confirm that the attack event is supposed to be cancelled with attunement
-            this.assertTrue(helper, CombatEvents.onAttack(player, damageSource, 5F), "Damage not being cancelled after attunement");
+        // Confirm that the attack event is supposed to be cancelled with attunement
+        assertTrue(helper, CombatEvents.onAttack(player, damageSource, 5F), "Damage not being cancelled after attunement");
 
-            helper.succeed();
-        });
+        helper.succeed();
     }
 
     public void lesser_void_attunement_reduces_damage_taken(GameTestHelper helper) {
