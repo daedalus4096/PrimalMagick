@@ -13,6 +13,8 @@ import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
 import org.apache.commons.lang3.tuple.Pair;
@@ -48,6 +50,16 @@ public class ItemHandlerServiceForge implements IItemHandlerService {
             return new SidedInvWrapperPMForge(worldlyContainer, side);
         } else {
             return new InvWrapperPMForge(container);
+        }
+    }
+
+    @Override
+    public boolean touch(BlockEntity blockEntity, Direction direction) {
+        try {
+            var handlerOpt = blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, direction);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

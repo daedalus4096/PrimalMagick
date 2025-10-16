@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagick.test;
 
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.attunements.AttunementTests;
+import com.verdantartifice.primalmagick.test.capabilities.ItemHandlerTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
 
@@ -50,5 +52,10 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GREATER_VOID_ATTUNEMENT_BUFF = Services.TEST_FUNCTIONS_REGISTRY.register("greater_void_attunement_increases_damage_dealt", () -> AttunementTests::greater_void_attunement_increases_damage_dealt);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> LESSER_HALLOWED_ATTUNEMENT_BUFF = Services.TEST_FUNCTIONS_REGISTRY.register("lesser_hallowed_attunement_doubles_damage_dealt_to_undead", () -> AttunementTests::lesser_hallowed_attunement_doubles_damage_dealt_to_undead);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GREATER_HALLOWED_ATTUNEMENT_BUFF = Services.TEST_FUNCTIONS_REGISTRY.register("greater_hallowed_attunement_prevents_death", () -> AttunementTests::greater_hallowed_attunement_prevents_death);
+
+    // Item handler tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ITEM_HANDLER_NULL_DIRECTION_RESEARCH_TABLE = Services.TEST_FUNCTIONS_REGISTRY.register("block_entity_can_retrieve_item_handler_with_null_direction_research_table", () -> (helper) -> ItemHandlerTests.block_entity_can_retrieve_item_handler_with_null_direction(helper, BlocksPM.RESEARCH_TABLE.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ITEM_HANDLER_NULL_DIRECTION_WAND_CHARGER = Services.TEST_FUNCTIONS_REGISTRY.register("block_entity_can_retrieve_item_handler_with_null_direction_wand_charger", () -> (helper) -> ItemHandlerTests.block_entity_can_retrieve_item_handler_with_null_direction(helper, BlocksPM.WAND_CHARGER.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ITEM_HANDLER_NULL_DIRECTION_CALCINATOR_BASIC = Services.TEST_FUNCTIONS_REGISTRY.register("block_entity_can_retrieve_item_handler_with_null_direction_calcinator_basic", () -> (helper) -> ItemHandlerTests.block_entity_can_retrieve_item_handler_with_null_direction(helper, BlocksPM.CALCINATOR_BASIC.get()));
 
 }
