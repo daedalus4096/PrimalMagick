@@ -51,15 +51,8 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class DataGeneratorsNeoforge {
     @SubscribeEvent
-    public static void onGatherClientData(GatherDataEvent.Client event) {
-        event.createDatapackRegistryObjects(new RegistrySetBuilder()
-                .add(Registries.TEST_INSTANCE, TestInstancesPM::bootstrap)
-        );
-    }
-
-    @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
-        // Add all of the mod's data providers to the generator for processing
+        // Add all the mod's data providers to the generator for processing
         DataGenerator generator = event.getGenerator();
         CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGeneratorNeoforge.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGeneratorNeoforge.addProviders(event.includeServer(), generator, generator.getPackOutput(), intermediate, event.getExistingFileHelper());

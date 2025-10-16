@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.datagen.tags.BookLanguageTagsProviderPMN
 import com.verdantartifice.primalmagick.datagen.tags.DamageTypeTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.ResearchEntryTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.StructureTagsProviderPMNeoforge;
+import com.verdantartifice.primalmagick.test.TestInstancesPM;
 import net.minecraft.core.Cloner;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
@@ -60,7 +61,8 @@ public class RegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesProvide
             .add(RegistryKeysPM.BOOKS, BooksPM::bootstrap)
             .add(RegistryKeysPM.BOOK_LANGUAGES, BookLanguagesPM::bootstrap)
             .add(RegistryKeysPM.CULTURES, CulturesPM::bootstrap)
-            .add(RegistryKeysPM.TIPS, TipDefinitionsPM::bootstrap);
+            .add(RegistryKeysPM.TIPS, TipDefinitionsPM::bootstrap)
+            .add(Registries.TEST_INSTANCE, TestInstancesPM::bootstrap);
 
     // Use addProviders() instead
     private RegistryDataGeneratorNeoforge(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
