@@ -44,6 +44,10 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> GREATER_INFERNAL_ATTUNEMENT_BUFF_LAVA = createInstanceKey("greater_infernal_attunement_buff_lava");
     public static final ResourceKey<GameTestInstance> GREATER_INFERNAL_ATTUNEMENT_BUFF_HOT_FLOOR = createInstanceKey("greater_infernal_attunement_buff_hot_floor");
     public static final ResourceKey<GameTestInstance> GREATER_INFERNAL_ATTUNEMENT_BUFF_INFERNAL_SORCERY = createInstanceKey("greater_infernal_attunement_buff_infernal_sorcery");
+    public static final ResourceKey<GameTestInstance> LESSER_VOID_ATTUNEMENT_BUFF = createInstanceKey("lesser_void_attunement_buff");
+    public static final ResourceKey<GameTestInstance> GREATER_VOID_ATTUNEMENT_BUFF = createInstanceKey("greater_void_attunement_buff");
+    public static final ResourceKey<GameTestInstance> LESSER_HALLOWED_ATTUNEMENT_BUFF = createInstanceKey("lesser_allowed_attunement_buff");
+    public static final ResourceKey<GameTestInstance> GREATER_HALLOWED_ATTUNEMENT_BUFF = createInstanceKey("greater_allowed_attunement_buff");
 
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
@@ -74,6 +78,10 @@ public class TestInstancesPM {
         registerFunction(context, GREATER_INFERNAL_ATTUNEMENT_BUFF_LAVA, TestFunctionsPM.GREATER_INFERNAL_ATTUNEMENT_BUFF_LAVA.getKey());
         registerFunction(context, GREATER_INFERNAL_ATTUNEMENT_BUFF_HOT_FLOOR, TestFunctionsPM.GREATER_INFERNAL_ATTUNEMENT_BUFF_HOT_FLOOR.getKey());
         registerFunction(context, GREATER_INFERNAL_ATTUNEMENT_BUFF_INFERNAL_SORCERY, TestFunctionsPM.GREATER_INFERNAL_ATTUNEMENT_BUFF_INFERNAL_SORCERY.getKey());
+        registerFunction(context, LESSER_VOID_ATTUNEMENT_BUFF, TestFunctionsPM.LESSER_VOID_ATTUNEMENT_BUFF.getKey());
+        registerFunction(context, GREATER_VOID_ATTUNEMENT_BUFF, TestFunctionsPM.GREATER_VOID_ATTUNEMENT_BUFF.getKey());
+        registerFunction(context, LESSER_HALLOWED_ATTUNEMENT_BUFF, TestFunctionsPM.LESSER_HALLOWED_ATTUNEMENT_BUFF.getKey());
+        registerFunction(context, GREATER_HALLOWED_ATTUNEMENT_BUFF, TestFunctionsPM.GREATER_HALLOWED_ATTUNEMENT_BUFF.getKey());
     }
 
     private static ResourceKey<GameTestInstance> createInstanceKey(String name) {
