@@ -56,10 +56,24 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> ITEM_HANDLER_NULL_DIRECTION_WAND_CHARGER = createInstanceKey("item_handler_null_direction_wand_charger");
     public static final ResourceKey<GameTestInstance> ITEM_HANDLER_NULL_DIRECTION_CALCINATOR_BASIC = createInstanceKey("item_handler_null_direction_calculator_basic");
 
+    // Player knowledge tests
+    public static final ResourceKey<GameTestInstance> ADD_AND_CHECK_RESEARCH = createInstanceKey("add_and_check_research");
+    public static final ResourceKey<GameTestInstance> CANNOT_ADD_DUPLICATE_RESEARCH = createInstanceKey("cannot_add_duplicate_research");
+    public static final ResourceKey<GameTestInstance> REMOVE_RESEARCH = createInstanceKey("remove_research");
+    public static final ResourceKey<GameTestInstance> GET_RESEARCH_SET = createInstanceKey("get_research_set");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
         registerItemHandlerTests(context);
+        registerPlayerKnowledgeTests(context);
+    }
+
+    private static void registerPlayerKnowledgeTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, ADD_AND_CHECK_RESEARCH, TestFunctionsPM.ADD_AND_CHECK_RESEARCH.getKey());
+        registerFunction(context, CANNOT_ADD_DUPLICATE_RESEARCH, TestFunctionsPM.CANNOT_ADD_DUPLICATE_RESEARCH.getKey());
+        registerFunction(context, REMOVE_RESEARCH, TestFunctionsPM.REMOVE_RESEARCH.getKey());
+        registerFunction(context, GET_RESEARCH_SET, TestFunctionsPM.GET_RESEARCH_SET.getKey());
     }
 
     private static void registerItemHandlerTests(BootstrapContext<GameTestInstance> context) {

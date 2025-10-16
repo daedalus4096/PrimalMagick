@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.attunements.AttunementTests;
+import com.verdantartifice.primalmagick.test.capabilities.AbstractPlayerKnowledgeTest;
 import com.verdantartifice.primalmagick.test.capabilities.ItemHandlerTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
@@ -57,5 +58,11 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ITEM_HANDLER_NULL_DIRECTION_RESEARCH_TABLE = Services.TEST_FUNCTIONS_REGISTRY.register("block_entity_can_retrieve_item_handler_with_null_direction_research_table", () -> (helper) -> ItemHandlerTests.block_entity_can_retrieve_item_handler_with_null_direction(helper, BlocksPM.RESEARCH_TABLE.get()));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ITEM_HANDLER_NULL_DIRECTION_WAND_CHARGER = Services.TEST_FUNCTIONS_REGISTRY.register("block_entity_can_retrieve_item_handler_with_null_direction_wand_charger", () -> (helper) -> ItemHandlerTests.block_entity_can_retrieve_item_handler_with_null_direction(helper, BlocksPM.WAND_CHARGER.get()));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ITEM_HANDLER_NULL_DIRECTION_CALCINATOR_BASIC = Services.TEST_FUNCTIONS_REGISTRY.register("block_entity_can_retrieve_item_handler_with_null_direction_calcinator_basic", () -> (helper) -> ItemHandlerTests.block_entity_can_retrieve_item_handler_with_null_direction(helper, BlocksPM.CALCINATOR_BASIC.get()));
+
+    // Player knowledge tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ADD_AND_CHECK_RESEARCH = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_add_and_check_research", () -> AbstractPlayerKnowledgeTest::player_knowledge_add_and_check_research);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CANNOT_ADD_DUPLICATE_RESEARCH = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_cannot_add_duplicate_research", () -> AbstractPlayerKnowledgeTest::player_knowledge_cannot_add_duplicate_research);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> REMOVE_RESEARCH = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_remove_research", () -> AbstractPlayerKnowledgeTest::player_knowledge_remove_research);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_RESEARCH_SET = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_research_set", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_research_set);
 
 }

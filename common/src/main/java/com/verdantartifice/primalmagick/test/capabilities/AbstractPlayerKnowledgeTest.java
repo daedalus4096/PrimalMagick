@@ -22,44 +22,44 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
     private static final ResearchEntryKey DEFAULT_RESEARCH_KEY = new ResearchEntryKey(ResearchEntries.FIRST_STEPS);
     private static final int DEFAULT_MAX_STAGES = 4;
 
-    public void player_knowledge_add_and_check_research(GameTestHelper helper) {
+    public static void player_knowledge_add_and_check_research(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        this.assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known upon creation");
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
-        this.assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
+        assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known upon creation");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
         helper.succeed();
     }
 
-    public void player_knowledge_cannot_add_duplicate_research(GameTestHelper helper) {
+    public static void player_knowledge_cannot_add_duplicate_research(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
-        this.assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
-        this.assertFalse(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Erroneously added research again");
-        this.assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after duplicate adding");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
+        assertFalse(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Erroneously added research again");
+        assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after duplicate adding");
         helper.succeed();
     }
 
-    public void player_knowledge_remove_research(GameTestHelper helper) {
+    public static void player_knowledge_remove_research(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        this.assertFalse(helper, knowledge.removeResearch(DEFAULT_RESEARCH_KEY), "Managed to remove research before adding");
-        this.assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known after dud removal");
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
-        this.assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
-        this.assertTrue(helper, knowledge.removeResearch(DEFAULT_RESEARCH_KEY), "Failed to remove research");
-        this.assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known after removal");
+        assertFalse(helper, knowledge.removeResearch(DEFAULT_RESEARCH_KEY), "Managed to remove research before adding");
+        assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known after dud removal");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
+        assertTrue(helper, knowledge.removeResearch(DEFAULT_RESEARCH_KEY), "Failed to remove research");
+        assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known after removal");
         helper.succeed();
     }
 
-    public void player_knowledge_get_research_set(GameTestHelper helper) {
+    public static void player_knowledge_get_research_set(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
         var otherKey = new EntityScanKey(EntityTypesPM.TREEFOLK.get());
-        this.assertValueEqual(helper, knowledge.getResearchSet(), Set.of(), "Initial research set");
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research 1");
-        this.assertValueEqual(helper, knowledge.getResearchSet(), Set.of(DEFAULT_RESEARCH_KEY), "Post-add 1 research set");
-        this.assertTrue(helper, knowledge.addResearch(otherKey), "Failed to add research 2");
-        this.assertValueEqual(helper, knowledge.getResearchSet(), Set.of(DEFAULT_RESEARCH_KEY, otherKey), "Post-add 2 research set");
-        this.assertTrue(helper, knowledge.removeResearch(DEFAULT_RESEARCH_KEY), "Failed to remove research");
-        this.assertValueEqual(helper, knowledge.getResearchSet(), Set.of(otherKey), "Post-remove research set");
+        assertValueEqual(helper, knowledge.getResearchSet(), Set.of(), "Initial research set");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research 1");
+        assertValueEqual(helper, knowledge.getResearchSet(), Set.of(DEFAULT_RESEARCH_KEY), "Post-add 1 research set");
+        assertTrue(helper, knowledge.addResearch(otherKey), "Failed to add research 2");
+        assertValueEqual(helper, knowledge.getResearchSet(), Set.of(DEFAULT_RESEARCH_KEY, otherKey), "Post-add 2 research set");
+        assertTrue(helper, knowledge.removeResearch(DEFAULT_RESEARCH_KEY), "Failed to remove research");
+        assertValueEqual(helper, knowledge.getResearchSet(), Set.of(otherKey), "Post-remove research set");
         helper.succeed();
     }
 
