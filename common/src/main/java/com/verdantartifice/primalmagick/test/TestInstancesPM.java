@@ -17,6 +17,8 @@ import java.util.function.Consumer;
 
 public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> CANARY = createInstanceKey("canary");
+
+    // Attunement buff tests
     public static final ResourceKey<GameTestInstance> MINOR_ATTUNEMENT_DISCOUNT_EARTH = createInstanceKey("minor_attunement_discount_earth");
     public static final ResourceKey<GameTestInstance> MINOR_ATTUNEMENT_DISCOUNT_SEA = createInstanceKey("minor_attunement_discount_sea");
     public static final ResourceKey<GameTestInstance> MINOR_ATTUNEMENT_DISCOUNT_SKY = createInstanceKey("minor_attunement_discount_sky");
@@ -51,6 +53,10 @@ public class TestInstancesPM {
 
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
+        registerAttunementBuffTests(context);
+    }
+
+    private static void registerAttunementBuffTests(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, MINOR_ATTUNEMENT_DISCOUNT_EARTH, TestFunctionsPM.MINOR_ATTUNEMENT_DISCOUNT_EARTH.getKey());
         registerFunction(context, MINOR_ATTUNEMENT_DISCOUNT_SEA, TestFunctionsPM.MINOR_ATTUNEMENT_DISCOUNT_SEA.getKey());
         registerFunction(context, MINOR_ATTUNEMENT_DISCOUNT_SKY, TestFunctionsPM.MINOR_ATTUNEMENT_DISCOUNT_SKY.getKey());

@@ -34,7 +34,7 @@ import org.apache.commons.lang3.mutable.MutableFloat;
 import java.util.Objects;
 import java.util.function.Function;
 
-public class AbstractAttunementTest extends AbstractBaseTest {
+public class AttunementTests extends AbstractBaseTest {
     public static void minor_attunement_gives_mana_discount(GameTestHelper helper, Source source) {
         // Create a test player
         var player = makeMockServerPlayer(helper);
