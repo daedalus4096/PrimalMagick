@@ -72,6 +72,12 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> GET_SET_ACTIVE_RESEARCH_PROJECT = createInstanceKey("get_set_active_research_project");
     public static final ResourceKey<GameTestInstance> GET_SET_LAST_RESEARCH_TOPIC = createInstanceKey("get_set_last_research_topic");
     public static final ResourceKey<GameTestInstance> GET_SET_RESEARCH_TOPIC_HISTORY = createInstanceKey("get_set_research_topic_history");
+    public static final ResourceKey<GameTestInstance> KNOWLEDGE_SERIALIZATION = createInstanceKey("knowledge_serialization");
+    public static final ResourceKey<GameTestInstance> DESERIALIZE_FROM_LEGACY_FORMAT = createInstanceKey("deserialize_from_legacy_format");
+    public static final ResourceKey<GameTestInstance> ADD_AND_CHECK_RESEARCH_POST_SERIALIZATION = createInstanceKey("add_and_check_research_post_serialization");
+    public static final ResourceKey<GameTestInstance> KNOWLEDGE_SCHEMA_VERSION = createInstanceKey("knowledge_schema_version");
+    public static final ResourceKey<GameTestInstance> MARKS_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION = createInstanceKey("marks_default_entries_as_read_on_upversion");
+    public static final ResourceKey<GameTestInstance> DOES_NOT_MARK_NON_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION = createInstanceKey("does_not_mark_non_default_entries_as_read_on_upversion");
 
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
@@ -96,6 +102,12 @@ public class TestInstancesPM {
         registerFunction(context, GET_SET_ACTIVE_RESEARCH_PROJECT, TestFunctionsPM.GET_SET_ACTIVE_RESEARCH_PROJECT.getKey());
         registerFunction(context, GET_SET_LAST_RESEARCH_TOPIC, TestFunctionsPM.GET_SET_LAST_RESEARCH_TOPIC.getKey());
         registerFunction(context, GET_SET_RESEARCH_TOPIC_HISTORY, TestFunctionsPM.GET_SET_RESEARCH_TOPIC_HISTORY.getKey());
+        registerFunction(context, KNOWLEDGE_SERIALIZATION, TestFunctionsPM.KNOWLEDGE_SERIALIZATION.getKey());
+        registerFunction(context, DESERIALIZE_FROM_LEGACY_FORMAT, TestFunctionsPM.DESERIALIZE_FROM_LEGACY_FORMAT.getKey());
+        registerFunction(context, ADD_AND_CHECK_RESEARCH_POST_SERIALIZATION, TestFunctionsPM.ADD_AND_CHECK_RESEARCH_POST_SERIALIZATION.getKey());
+        registerFunction(context, KNOWLEDGE_SCHEMA_VERSION, TestFunctionsPM.KNOWLEDGE_SCHEMA_VERSION.getKey());
+        registerFunction(context, MARKS_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION, TestFunctionsPM.MARKS_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION.getKey());
+        registerFunction(context, DOES_NOT_MARK_NON_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION, TestFunctionsPM.DOES_NOT_MARK_NON_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION.getKey());
     }
 
     private static void registerItemHandlerTests(BootstrapContext<GameTestInstance> context) {
