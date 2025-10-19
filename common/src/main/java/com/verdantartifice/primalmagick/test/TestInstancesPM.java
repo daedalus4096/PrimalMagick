@@ -65,6 +65,10 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> GET_SET_RESEARCH_FLAG = createInstanceKey("get_set_research_flag");
     public static final ResourceKey<GameTestInstance> REMOVE_RESEARCH_FLAG = createInstanceKey("remove_research_flag");
     public static final ResourceKey<GameTestInstance> GET_RESEARCH_FLAGS = createInstanceKey("get_research_flags");
+    public static final ResourceKey<GameTestInstance> GET_RESEARCH_STATUS = createInstanceKey("get_research_status");
+    public static final ResourceKey<GameTestInstance> IS_RESEARCH_COMPLETE = createInstanceKey("is_research_complete");
+    public static final ResourceKey<GameTestInstance> GET_SET_KNOWLEDGE_RAW = createInstanceKey("get_set_knowledge_raw");
+    public static final ResourceKey<GameTestInstance> GET_KNOWLEDGE_LEVELS = createInstanceKey("get_knowledge_levels");
 
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
@@ -82,6 +86,10 @@ public class TestInstancesPM {
         registerFunction(context, GET_SET_RESEARCH_FLAG, TestFunctionsPM.GET_SET_RESEARCH_FLAG.getKey());
         registerFunction(context, REMOVE_RESEARCH_FLAG, TestFunctionsPM.REMOVE_RESEARCH_FLAG.getKey());
         registerFunction(context, GET_RESEARCH_FLAGS, TestFunctionsPM.GET_RESEARCH_FLAGS.getKey());
+        registerFunction(context, GET_RESEARCH_STATUS, TestFunctionsPM.GET_RESEARCH_STATUS.getKey());
+        registerFunction(context, IS_RESEARCH_COMPLETE, TestFunctionsPM.IS_RESEARCH_COMPLETE.getKey());
+        registerFunction(context, GET_SET_KNOWLEDGE_RAW, TestFunctionsPM.GET_SET_KNOWLEDGE_RAW.getKey());
+        registerFunction(context, GET_KNOWLEDGE_LEVELS, TestFunctionsPM.GET_KNOWLEDGE_LEVELS.getKey());
     }
 
     private static void registerItemHandlerTests(BootstrapContext<GameTestInstance> context) {

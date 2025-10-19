@@ -68,5 +68,9 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_SET_RESEARCH_FLAG = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_set_research_flag", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_set_research_flag);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> REMOVE_RESEARCH_FLAG = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_remove_research_flag", () -> AbstractPlayerKnowledgeTest::player_knowledge_remove_research_flag);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_RESEARCH_FLAGS = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_research_flags", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_research_flags);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_RESEARCH_STATUS = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_research_status", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_research_status);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> IS_RESEARCH_COMPLETE = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_is_research_complete", () -> AbstractPlayerKnowledgeTest::player_knowledge_is_research_complete);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_SET_KNOWLEDGE_RAW = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_set_knowledge_raw", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_set_knowledge_raw);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_KNOWLEDGE_LEVELS = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_knowledge_levels", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_knowledge_levels);
 
 }

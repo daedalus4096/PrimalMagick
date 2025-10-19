@@ -109,49 +109,49 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
         helper.succeed();
     }
 
-    public void player_knowledge_get_research_status(GameTestHelper helper) {
+    public static void player_knowledge_get_research_status(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
         var ra = helper.getLevel().registryAccess();
-        this.assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.UNKNOWN, "Pre-add research status");
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
-        this.assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.IN_PROGRESS, "Post-add research status");
-        this.assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1), "Failed to set research stage 1");
-        this.assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.IN_PROGRESS, "Post-stage 1 research status");
-        this.assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, DEFAULT_MAX_STAGES), "Failed to set research stage 2");
-        this.assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.COMPLETE, "Post-stage 2 research status");
-        this.assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1000), "Failed to set research stage 3");
-        this.assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.COMPLETE, "Post-stage 3 research status");
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.UNKNOWN, "Pre-add research status");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.IN_PROGRESS, "Post-add research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1), "Failed to set research stage 1");
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.IN_PROGRESS, "Post-stage 1 research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, DEFAULT_MAX_STAGES), "Failed to set research stage 2");
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.COMPLETE, "Post-stage 2 research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1000), "Failed to set research stage 3");
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.COMPLETE, "Post-stage 3 research status");
         helper.succeed();
     }
 
-    public void player_knowledge_is_research_complete(GameTestHelper helper) {
+    public static void player_knowledge_is_research_complete(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
         var ra = helper.getLevel().registryAccess();
-        this.assertFalse(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Pre-add research status");
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
-        this.assertFalse(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-add research status");
-        this.assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1), "Failed to set research stage 1");
-        this.assertFalse(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-stage 1 research status");
-        this.assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, DEFAULT_MAX_STAGES), "Failed to set research stage 2");
-        this.assertTrue(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-stage 2 research status");
-        this.assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1000), "Failed to set research stage 3");
-        this.assertTrue(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-stage 3 research status");
+        assertFalse(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Pre-add research status");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertFalse(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-add research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1), "Failed to set research stage 1");
+        assertFalse(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-stage 1 research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, DEFAULT_MAX_STAGES), "Failed to set research stage 2");
+        assertTrue(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-stage 2 research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1000), "Failed to set research stage 3");
+        assertTrue(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-stage 3 research status");
         helper.succeed();
     }
 
-    public void player_knowledge_get_set_knowledge_raw(GameTestHelper helper) {
+    public static void player_knowledge_get_set_knowledge_raw(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        this.assertValueEqual(helper, knowledge.getKnowledgeRaw(KnowledgeType.THEORY), 0, "Pre-set knowledge raw");
-        this.assertTrue(helper, knowledge.addKnowledge(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression()), "Failed to add knowledge");
-        this.assertValueEqual(helper, knowledge.getKnowledgeRaw(KnowledgeType.THEORY), KnowledgeType.THEORY.getProgression(), "Post-set knowledge raw");
+        assertValueEqual(helper, knowledge.getKnowledgeRaw(KnowledgeType.THEORY), 0, "Pre-set knowledge raw");
+        assertTrue(helper, knowledge.addKnowledge(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression()), "Failed to add knowledge");
+        assertValueEqual(helper, knowledge.getKnowledgeRaw(KnowledgeType.THEORY), KnowledgeType.THEORY.getProgression(), "Post-set knowledge raw");
         helper.succeed();
     }
 
-    public void player_knowledge_get_knowledge_levels(GameTestHelper helper) {
+    public static void player_knowledge_get_knowledge_levels(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        this.assertValueEqual(helper, knowledge.getKnowledge(KnowledgeType.THEORY), 0, "Pre-set knowledge");
-        this.assertTrue(helper, knowledge.addKnowledge(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression()), "Failed to add knowledge");
-        this.assertValueEqual(helper, knowledge.getKnowledge(KnowledgeType.THEORY), 1, "Post-set knowledge");
+        assertValueEqual(helper, knowledge.getKnowledge(KnowledgeType.THEORY), 0, "Pre-set knowledge");
+        assertTrue(helper, knowledge.addKnowledge(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression()), "Failed to add knowledge");
+        assertValueEqual(helper, knowledge.getKnowledge(KnowledgeType.THEORY), 1, "Post-set knowledge");
         helper.succeed();
     }
 
