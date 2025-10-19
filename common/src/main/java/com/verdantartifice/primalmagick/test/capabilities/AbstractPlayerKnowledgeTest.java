@@ -63,49 +63,49 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
         helper.succeed();
     }
 
-    public void player_knowledge_get_set_research_stage(GameTestHelper helper) {
+    public static void player_knowledge_get_set_research_stage(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        this.assertValueEqual(helper, knowledge.getResearchStage(DEFAULT_RESEARCH_KEY), -1, "Initial research stage");
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
-        this.assertValueEqual(helper, knowledge.getResearchStage(DEFAULT_RESEARCH_KEY), 0, "Post-add research stage");
-        this.assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1), "Failed to set research stage");
-        this.assertValueEqual(helper, knowledge.getResearchStage(DEFAULT_RESEARCH_KEY), 1, "Post-set research stage");
+        assertValueEqual(helper, knowledge.getResearchStage(DEFAULT_RESEARCH_KEY), -1, "Initial research stage");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertValueEqual(helper, knowledge.getResearchStage(DEFAULT_RESEARCH_KEY), 0, "Post-add research stage");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1), "Failed to set research stage");
+        assertValueEqual(helper, knowledge.getResearchStage(DEFAULT_RESEARCH_KEY), 1, "Post-set research stage");
         helper.succeed();
     }
 
-    public void player_knowledge_get_set_research_flag(GameTestHelper helper) {
+    public static void player_knowledge_get_set_research_flag(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        this.assertFalse(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag present before adding research");
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
-        this.assertFalse(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag present after adding research but before setting flag");
-        this.assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to add research flag");
-        this.assertTrue(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag not present after setting flag");
+        assertFalse(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag present before adding research");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertFalse(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag present after adding research but before setting flag");
+        assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to add research flag");
+        assertTrue(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag not present after setting flag");
         helper.succeed();
     }
 
-    public void player_knowledge_remove_research_flag(GameTestHelper helper) {
+    public static void player_knowledge_remove_research_flag(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        this.assertFalse(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Remove succeeded before adding research");
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
-        this.assertFalse(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Remove succeeded before adding research flag");
-        this.assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to add research flag");
-        this.assertTrue(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag not present after setting flag");
-        this.assertTrue(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Remove failed");
-        this.assertFalse(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag present after removing research");
+        assertFalse(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Remove succeeded before adding research");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertFalse(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Remove succeeded before adding research flag");
+        assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to add research flag");
+        assertTrue(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag not present after setting flag");
+        assertTrue(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Remove failed");
+        assertFalse(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag present after removing research");
         helper.succeed();
     }
 
-    public void player_knowledge_get_research_flags(GameTestHelper helper) {
+    public static void player_knowledge_get_research_flags(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
-        this.assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(), "Initial research flags without research");
-        this.assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
-        this.assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(), "Initial research flags with research");
-        this.assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to add research flag 1");
-        this.assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(IPlayerKnowledge.ResearchFlag.UPDATED), "Post-add 1 flags");
-        this.assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.POPUP), "Failed to add research flag 2");
-        this.assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(IPlayerKnowledge.ResearchFlag.UPDATED, IPlayerKnowledge.ResearchFlag.POPUP), "Post-add 2 flags");
-        this.assertTrue(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to remove research flag");
-        this.assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(IPlayerKnowledge.ResearchFlag.POPUP), "Post-remove flags");
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(), "Initial research flags without research");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(), "Initial research flags with research");
+        assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to add research flag 1");
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(IPlayerKnowledge.ResearchFlag.UPDATED), "Post-add 1 flags");
+        assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.POPUP), "Failed to add research flag 2");
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(IPlayerKnowledge.ResearchFlag.UPDATED, IPlayerKnowledge.ResearchFlag.POPUP), "Post-add 2 flags");
+        assertTrue(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to remove research flag");
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(IPlayerKnowledge.ResearchFlag.POPUP), "Post-remove flags");
         helper.succeed();
     }
 

@@ -12,34 +12,6 @@ public class PlayerKnowledgeTestNeoforge extends AbstractPlayerKnowledgeTest {
     @PrefixGameTestTemplate(false)
     @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
     @Override
-    public void player_knowledge_get_set_research_stage(GameTestHelper helper) {
-        super.player_knowledge_get_set_research_stage(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void player_knowledge_get_set_research_flag(GameTestHelper helper) {
-        super.player_knowledge_get_set_research_flag(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void player_knowledge_remove_research_flag(GameTestHelper helper) {
-        super.player_knowledge_remove_research_flag(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
-    public void player_knowledge_get_research_flags(GameTestHelper helper) {
-        super.player_knowledge_get_research_flags(helper);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
-    @Override
     public void player_knowledge_get_research_status(GameTestHelper helper) {
         super.player_knowledge_get_research_status(helper);
     }

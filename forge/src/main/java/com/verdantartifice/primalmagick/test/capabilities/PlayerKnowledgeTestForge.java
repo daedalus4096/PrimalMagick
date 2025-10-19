@@ -10,30 +10,6 @@ import net.minecraftforge.gametest.GameTestHolder;
 public class PlayerKnowledgeTestForge extends AbstractPlayerKnowledgeTest {
     @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
     @Override
-    public void player_knowledge_get_set_research_stage(GameTestHelper helper) {
-        super.player_knowledge_get_set_research_stage(helper);
-    }
-
-    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
-    @Override
-    public void player_knowledge_get_set_research_flag(GameTestHelper helper) {
-        super.player_knowledge_get_set_research_flag(helper);
-    }
-
-    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
-    @Override
-    public void player_knowledge_remove_research_flag(GameTestHelper helper) {
-        super.player_knowledge_remove_research_flag(helper);
-    }
-
-    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
-    @Override
-    public void player_knowledge_get_research_flags(GameTestHelper helper) {
-        super.player_knowledge_get_research_flags(helper);
-    }
-
-    @GameTest(template = TestUtilsForge.DEFAULT_TEMPLATE)
-    @Override
     public void player_knowledge_get_research_status(GameTestHelper helper) {
         super.player_knowledge_get_research_status(helper);
     }

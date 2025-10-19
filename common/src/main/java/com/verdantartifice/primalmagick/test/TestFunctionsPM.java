@@ -64,5 +64,9 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CANNOT_ADD_DUPLICATE_RESEARCH = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_cannot_add_duplicate_research", () -> AbstractPlayerKnowledgeTest::player_knowledge_cannot_add_duplicate_research);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> REMOVE_RESEARCH = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_remove_research", () -> AbstractPlayerKnowledgeTest::player_knowledge_remove_research);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_RESEARCH_SET = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_research_set", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_research_set);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_SET_RESEARCH_STAGE = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_set_research_stage", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_set_research_stage);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_SET_RESEARCH_FLAG = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_set_research_flag", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_set_research_flag);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> REMOVE_RESEARCH_FLAG = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_remove_research_flag", () -> AbstractPlayerKnowledgeTest::player_knowledge_remove_research_flag);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> GET_RESEARCH_FLAGS = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_get_research_flags", () -> AbstractPlayerKnowledgeTest::player_knowledge_get_research_flags);
 
 }
