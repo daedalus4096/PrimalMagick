@@ -155,46 +155,46 @@ public class AbstractPlayerKnowledgeTest extends AbstractBaseTest {
         helper.succeed();
     }
 
-    private Project createTestProject(GameTestHelper helper) {
+    private static Project createTestProject(GameTestHelper helper) {
         // Create a player to test with
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
 
         // Create a research project to test with
         var projectTemplateKey = ProjectTemplates.EXPEDITION;
-        var projectTemplate = helper.getLevel().registryAccess().registryOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).getOrThrow(projectTemplateKey);
-        var project = projectTemplate.initialize(player, Set.of());
-        this.assertTrue(helper, project != null, "Failed to initialize project");
+        var projectTemplate = helper.getLevel().registryAccess().lookupOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).getOrThrow(projectTemplateKey);
+        var project = projectTemplate.value().initialize(player, Set.of());
+        assertTrue(helper, project != null, "Failed to initialize project");
 
         return project;
     }
 
-    public void player_knowledge_get_set_active_research_project(GameTestHelper helper) {
-        var project = this.createTestProject(helper);
+    public static void player_knowledge_get_set_active_research_project(GameTestHelper helper) {
+        var project = createTestProject(helper);
         var knowledge = new PlayerKnowledge();
-        this.assertTrue(helper, knowledge.getActiveResearchProject() == null, "Pre-set active research project");
+        assertTrue(helper, knowledge.getActiveResearchProject() == null, "Pre-set active research project");
         knowledge.setActiveResearchProject(project);
-        this.assertValueEqual(helper, knowledge.getActiveResearchProject(), project, "Post-set active research project");
+        assertValueEqual(helper, knowledge.getActiveResearchProject(), project, "Post-set active research project");
 
         helper.succeed();
     }
 
-    public void player_knowledge_get_set_last_research_topic(GameTestHelper helper) {
+    public static void player_knowledge_get_set_last_research_topic(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
         var topic = new EntryResearchTopic(DEFAULT_RESEARCH_KEY, 0);
-        this.assertValueEqual(helper, knowledge.getLastResearchTopic(), MainIndexResearchTopic.INSTANCE, "Pre-set last research topic");
+        assertValueEqual(helper, knowledge.getLastResearchTopic(), MainIndexResearchTopic.INSTANCE, "Pre-set last research topic");
         knowledge.setLastResearchTopic(topic);
-        this.assertValueEqual(helper, knowledge.getLastResearchTopic(), topic, "Post-set last research topic");
+        assertValueEqual(helper, knowledge.getLastResearchTopic(), topic, "Post-set last research topic");
         helper.succeed();
     }
 
-    public void player_knowledge_get_set_research_topic_history(GameTestHelper helper) {
+    public static void player_knowledge_get_set_research_topic_history(GameTestHelper helper) {
         var knowledge = new PlayerKnowledge();
         var topic = new EntryResearchTopic(DEFAULT_RESEARCH_KEY, 0);
-        this.assertValueEqual(helper, knowledge.getResearchTopicHistory(), List.of(), "Pre-set research topic history");
+        assertValueEqual(helper, knowledge.getResearchTopicHistory(), List.of(), "Pre-set research topic history");
         knowledge.setResearchTopicHistory(List.of(MainIndexResearchTopic.INSTANCE));
-        this.assertValueEqual(helper, knowledge.getResearchTopicHistory(), List.of(MainIndexResearchTopic.INSTANCE), "Post-set 1 research topic history");
+        assertValueEqual(helper, knowledge.getResearchTopicHistory(), List.of(MainIndexResearchTopic.INSTANCE), "Post-set 1 research topic history");
         knowledge.setResearchTopicHistory(List.of(topic));
-        this.assertValueEqual(helper, knowledge.getResearchTopicHistory(), List.of(topic), "Post-set 2 research topic history");
+        assertValueEqual(helper, knowledge.getResearchTopicHistory(), List.of(topic), "Post-set 2 research topic history");
         helper.succeed();
     }
 
