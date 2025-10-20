@@ -96,6 +96,17 @@ public class TestInstancesPM {
     // Runecarving tests
     public static final ResourceKey<GameTestInstance> RUNECARVING_CRAFT_WORKS = createInstanceKey("runecarving_craft_works");
 
+    // Caster enchantability tests
+    public static final ResourceKey<GameTestInstance> CASTER_ENCHANTABLE_MUNDANE_WAND = createInstanceKey("caster_enchantable_mundane_wand");
+    public static final ResourceKey<GameTestInstance> CASTER_ENCHANTABLE_MODULAR_WAND = createInstanceKey("caster_enchantable_modular_wand");
+    public static final ResourceKey<GameTestInstance> CASTER_ENCHANTABLE_MODULAR_STAFF = createInstanceKey("caster_enchantable_modular_staff");
+
+    // Ritual enchantment tests
+    public static final ResourceKey<GameTestInstance> ENCHANTMENT_ESSENCE_THIEF1 = createInstanceKey("enchantment_essence_thief1");
+    public static final ResourceKey<GameTestInstance> ENCHANTMENT_ESSENCE_THIEF2 = createInstanceKey("enchantment_essence_thief2");
+    public static final ResourceKey<GameTestInstance> ENCHANTMENT_ESSENCE_THIEF3 = createInstanceKey("enchantment_essence_thief3");
+    public static final ResourceKey<GameTestInstance> ENCHANTMENT_ESSENCE_THIEF4 = createInstanceKey("enchantment_essence_thief4");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -106,6 +117,21 @@ public class TestInstancesPM {
         registerCraftingRequirementTests(context);
         registerRepairTests(context);
         registerRunecarvingTests(context);
+        registerCasterEnchantabilityTests(context);
+        registerRitualEnchantmentTests(context);
+    }
+
+    public static void registerRitualEnchantmentTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, ENCHANTMENT_ESSENCE_THIEF1, TestFunctionsPM.ENCHANTMENT_ESSENCE_THIEF1.getKey());
+        registerFunction(context, ENCHANTMENT_ESSENCE_THIEF2, TestFunctionsPM.ENCHANTMENT_ESSENCE_THIEF2.getKey());
+        registerFunction(context, ENCHANTMENT_ESSENCE_THIEF3, TestFunctionsPM.ENCHANTMENT_ESSENCE_THIEF3.getKey());
+        registerFunction(context, ENCHANTMENT_ESSENCE_THIEF4, TestFunctionsPM.ENCHANTMENT_ESSENCE_THIEF4.getKey());
+    }
+
+    public static void registerCasterEnchantabilityTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, CASTER_ENCHANTABLE_MUNDANE_WAND, TestFunctionsPM.CASTER_ENCHANTABLE_MUNDANE_WAND.getKey());
+        registerFunction(context, CASTER_ENCHANTABLE_MODULAR_WAND, TestFunctionsPM.CASTER_ENCHANTABLE_MODULAR_WAND.getKey());
+        registerFunction(context, CASTER_ENCHANTABLE_MODULAR_STAFF, TestFunctionsPM.CASTER_ENCHANTABLE_MODULAR_STAFF.getKey());
     }
 
     private static void registerRunecarvingTests(BootstrapContext<GameTestInstance> context) {

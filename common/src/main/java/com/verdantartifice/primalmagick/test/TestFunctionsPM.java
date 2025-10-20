@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.test;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -13,6 +14,8 @@ import com.verdantartifice.primalmagick.test.crafting.RunecarvingTests;
 import com.verdantartifice.primalmagick.test.crafting.CraftingRequirementsTests;
 import com.verdantartifice.primalmagick.test.crafting.CalcinatorTests;
 import com.verdantartifice.primalmagick.test.crafting.ArcaneWorkbenchTests;
+import com.verdantartifice.primalmagick.test.enchantments.RitualEnchantmentTests;
+import com.verdantartifice.primalmagick.test.enchantments.CasterEnchantingTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
 
@@ -103,5 +106,16 @@ public class TestFunctionsPM {
 
     // Runecarving tests
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RUNECARVING_CRAFT_WORKS = Services.TEST_FUNCTIONS_REGISTRY.register("runecarving_craft_works", () -> RunecarvingTests::craft_works);
+
+    // Caster enchanting tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CASTER_ENCHANTABLE_MUNDANE_WAND = Services.TEST_FUNCTIONS_REGISTRY.register("caster_enchantable_mundane_wand", () -> (helper) -> CasterEnchantingTests.caster_can_be_enchanted(helper, ItemsPM.MUNDANE_WAND.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CASTER_ENCHANTABLE_MODULAR_WAND = Services.TEST_FUNCTIONS_REGISTRY.register("caster_enchantable_modular_wand", () -> (helper) -> CasterEnchantingTests.caster_can_be_enchanted(helper, ItemsPM.MODULAR_WAND.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CASTER_ENCHANTABLE_MODULAR_STAFF = Services.TEST_FUNCTIONS_REGISTRY.register("caster_enchantable_modular_staff", () -> (helper) -> CasterEnchantingTests.caster_can_be_enchanted(helper, ItemsPM.MODULAR_STAFF.get()));
+
+    // Ritual enchantment tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ENCHANTMENT_ESSENCE_THIEF1 = Services.TEST_FUNCTIONS_REGISTRY.register("enchantment_essence_thief1", () -> (helper) -> RitualEnchantmentTests.enchantment_essence_thief(helper, 1));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ENCHANTMENT_ESSENCE_THIEF2 = Services.TEST_FUNCTIONS_REGISTRY.register("enchantment_essence_thief2", () -> (helper) -> RitualEnchantmentTests.enchantment_essence_thief(helper, 2));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ENCHANTMENT_ESSENCE_THIEF3 = Services.TEST_FUNCTIONS_REGISTRY.register("enchantment_essence_thief3", () -> (helper) -> RitualEnchantmentTests.enchantment_essence_thief(helper, 3));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ENCHANTMENT_ESSENCE_THIEF4 = Services.TEST_FUNCTIONS_REGISTRY.register("enchantment_essence_thief4", () -> (helper) -> RitualEnchantmentTests.enchantment_essence_thief(helper, 4));
 
 }
