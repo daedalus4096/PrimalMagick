@@ -22,12 +22,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
-public class AbstractArcaneWorkbenchTest extends AbstractBaseTest {
-    public void arcane_workbench_craft_works(GameTestHelper helper) {
+public class ArcaneWorkbenchTests extends AbstractBaseTest {
+    public static void arcane_workbench_craft_works(GameTestHelper helper) {
         // Create a test player with the research needed for mana salts
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.MANA_SALTS);
-        this.assertTrue(helper, ExpertiseManager.getValue(player, ResearchDisciplines.MANAWEAVING).orElse(-1) == 0, "Expected starting expertise is not zero for test player");
+        assertTrue(helper, ExpertiseManager.getValue(player, ResearchDisciplines.MANAWEAVING).orElse(-1) == 0, "Expected starting expertise is not zero for test player");
 
         // Place an arcane workbench
         BlockPos tablePos = new BlockPos(1, 1, 1);
@@ -47,7 +47,7 @@ public class AbstractArcaneWorkbenchTest extends AbstractBaseTest {
             }
         };
         player.openMenu(menuProvider);
-        var menu = this.assertInstanceOf(helper, player.containerMenu, ArcaneWorkbenchMenu.class, "Menu not of expected type");
+        var menu = assertInstanceOf(helper, player.containerMenu, ArcaneWorkbenchMenu.class, "Menu not of expected type");
 
         // Populate the arcane workbench with materials
         menu.getSlots().get(1).safeInsert(new ItemStack(Items.REDSTONE));
@@ -56,41 +56,41 @@ public class AbstractArcaneWorkbenchTest extends AbstractBaseTest {
 
         // Populate the arcane workbench with a full wand for mana
         ItemStack wandStack = ItemsPM.MUNDANE_WAND.get().getDefaultInstance();
-        IWand wand = this.assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand not of expected type");
+        IWand wand = assertInstanceOf(helper, wandStack.getItem(), IWand.class, "Wand not of expected type");
         Sources.getAll().forEach(s -> {
             var maxCentimana = wand.getMaxMana(wandStack, s);
             wand.addMana(wandStack, s, maxCentimana);
-            this.assertValueEqual(helper, wand.getMana(wandStack, s), maxCentimana, "Wand starting mana for " + s.getId());
+            assertValueEqual(helper, wand.getMana(wandStack, s), maxCentimana, "Wand starting mana for " + s.getId());
         });
-        this.assertFalse(helper, wand.getAllMana(wandStack).isEmpty(), "Wand mana is empty after adding mana");
+        assertFalse(helper, wand.getAllMana(wandStack).isEmpty(), "Wand mana is empty after adding mana");
         menu.getSlots().get(10).safeInsert(wandStack);
 
         // Take the result that should be there and confirm it's the right type of item
         ItemStack slottedWandStack = menu.getSlots().get(10).getItem(); // Inserting into the slot modifies the original item stack
-        this.assertFalse(helper, wand.getAllMana(slottedWandStack).isEmpty(), "Wand mana is empty before taking recipe output");
+        assertFalse(helper, wand.getAllMana(slottedWandStack).isEmpty(), "Wand mana is empty before taking recipe output");
         var output = menu.quickMoveStack(player, 0);
-        this.assertTrue(helper, output.is(ItemsPM.MANA_SALTS.get()), "Output item not of expected type");
-        this.assertFalse(helper, wand.getAllMana(slottedWandStack).isEmpty(), "Wand mana is empty after taking recipe output");
+        assertTrue(helper, output.is(ItemsPM.MANA_SALTS.get()), "Output item not of expected type");
+        assertFalse(helper, wand.getAllMana(slottedWandStack).isEmpty(), "Wand mana is empty after taking recipe output");
 
         // Confirm that crafting materials were consumed
-        this.assertFalse(helper, menu.getSlots().get(1).hasItem(), "Redstone material stack not empty");
-        this.assertFalse(helper, menu.getSlots().get(2).hasItem(), "Salt material stack not empty");
-        this.assertFalse(helper, menu.getSlots().get(3).hasItem(), "Essence material stack not empty");
+        assertFalse(helper, menu.getSlots().get(1).hasItem(), "Redstone material stack not empty");
+        assertFalse(helper, menu.getSlots().get(2).hasItem(), "Salt material stack not empty");
+        assertFalse(helper, menu.getSlots().get(3).hasItem(), "Essence material stack not empty");
 
         // Confirm that mana was deducted from the wand correctly
         // FIXME Don't use hard-coded mana values for expectations
-        this.assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.EARTH), 2000, "Wand remaining earth mana");
-        this.assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.SEA), 2000, "Wand remaining sea mana");
-        this.assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.SKY), 2000, "Wand remaining sky mana");
-        this.assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.SUN), 2000, "Wand remaining sun mana");
-        this.assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.MOON), 2000, "Wand remaining moon mana");
-        this.assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.BLOOD), 2500, "Wand remaining blood mana");
-        this.assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.INFERNAL), 2500, "Wand remaining infernal mana");
-        this.assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.VOID), 2500, "Wand remaining void mana");
-        this.assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.HALLOWED), 2500, "Wand remaining hallowed mana");
+        assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.EARTH), 2000, "Wand remaining earth mana");
+        assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.SEA), 2000, "Wand remaining sea mana");
+        assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.SKY), 2000, "Wand remaining sky mana");
+        assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.SUN), 2000, "Wand remaining sun mana");
+        assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.MOON), 2000, "Wand remaining moon mana");
+        assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.BLOOD), 2500, "Wand remaining blood mana");
+        assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.INFERNAL), 2500, "Wand remaining infernal mana");
+        assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.VOID), 2500, "Wand remaining void mana");
+        assertValueEqual(helper, wand.getMana(slottedWandStack, Sources.HALLOWED), 2500, "Wand remaining hallowed mana");
 
         // Confirm that expertise was granted to the player
-        this.assertTrue(helper, ExpertiseManager.getValue(player, ResearchDisciplines.MANAWEAVING).orElse(-1) == 5, "Final expertise is not as expected for test player");
+        assertTrue(helper, ExpertiseManager.getValue(player, ResearchDisciplines.MANAWEAVING).orElse(-1) == 5, "Final expertise is not as expected for test player");
 
         helper.succeed();
     }

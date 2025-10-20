@@ -8,6 +8,8 @@ import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.attunements.AttunementTests;
 import com.verdantartifice.primalmagick.test.capabilities.PlayerKnowledgeTests;
 import com.verdantartifice.primalmagick.test.capabilities.ItemHandlerTests;
+import com.verdantartifice.primalmagick.test.crafting.CalcinatorTests;
+import com.verdantartifice.primalmagick.test.crafting.ArcaneWorkbenchTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
 
@@ -81,5 +83,12 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> KNOWLEDGE_SCHEMA_VERSION = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_schema_version", () -> PlayerKnowledgeTests::player_knowledge_schema_version);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MARKS_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_marks_default_entries_as_read_on_upversion", () -> PlayerKnowledgeTests::player_knowledge_marks_default_entries_as_read_on_upversion);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DOES_NOT_MARK_NON_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION = Services.TEST_FUNCTIONS_REGISTRY.register("player_knowledge_does_not_mark_non_default_entries_as_read_on_upversion", () -> PlayerKnowledgeTests::player_knowledge_does_not_mark_non_default_entries_as_read_on_upversion);
+
+    // Arcane workbench tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ARCANE_WORKBENCH_CRAFT_WORKS = Services.TEST_FUNCTIONS_REGISTRY.register("arcane_workbench_craft_works", () -> ArcaneWorkbenchTests::arcane_workbench_craft_works);
+
+    // Calcinator tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CALCINATOR_WORKS_WITH_PLAYER_PRESENT = Services.TEST_FUNCTIONS_REGISTRY.register("calcinator_works_with_player_present", () -> (helper) -> CalcinatorTests.calcinator_works(helper, true));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CALCINATOR_WORKS_WITHOUT_PLAYER_PRESENT = Services.TEST_FUNCTIONS_REGISTRY.register("calcinator_works_without_player_present", () -> (helper) -> CalcinatorTests.calcinator_works(helper, false));
 
 }

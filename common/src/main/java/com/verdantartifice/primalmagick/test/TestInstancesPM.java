@@ -79,11 +79,29 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> MARKS_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION = createInstanceKey("marks_default_entries_as_read_on_upversion");
     public static final ResourceKey<GameTestInstance> DOES_NOT_MARK_NON_DEFAULT_ENTRIES_AS_READ_ON_UPVERSION = createInstanceKey("does_not_mark_non_default_entries_as_read_on_upversion");
 
+    // Arcane workbench tests
+    public static final ResourceKey<GameTestInstance> ARCANE_WORKBENCH_CRAFT_WORKS = createInstanceKey("arcane_workbench_craft_works");
+
+    // Calcinator tests
+    public static final ResourceKey<GameTestInstance> CALCINATOR_WORKS_WITH_PLAYER_PRESENT = createInstanceKey("calcinator_works_with_player_present");
+    public static final ResourceKey<GameTestInstance> CALCINATOR_WORKS_WITHOUT_PLAYER_PRESENT = createInstanceKey("calcinator_works_without_player_present");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
         registerItemHandlerTests(context);
         registerPlayerKnowledgeTests(context);
+        registerArcaneWorkbenchTests(context);
+        registerCalcinatorTests(context);
+    }
+
+    private static void registerCalcinatorTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, CALCINATOR_WORKS_WITH_PLAYER_PRESENT, TestFunctionsPM.CALCINATOR_WORKS_WITH_PLAYER_PRESENT.getKey());
+        registerFunction(context, CALCINATOR_WORKS_WITHOUT_PLAYER_PRESENT, TestFunctionsPM.CALCINATOR_WORKS_WITHOUT_PLAYER_PRESENT.getKey());
+    }
+
+    private static void registerArcaneWorkbenchTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, ARCANE_WORKBENCH_CRAFT_WORKS, TestFunctionsPM.ARCANE_WORKBENCH_CRAFT_WORKS.getKey());
     }
 
     private static void registerPlayerKnowledgeTests(BootstrapContext<GameTestInstance> context) {
