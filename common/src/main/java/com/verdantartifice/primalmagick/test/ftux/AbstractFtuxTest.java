@@ -42,39 +42,30 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractFtuxTest extends AbstractBaseTest {
-    public Collection<TestFunction> font_discovery_tests(String templateName) {
-        Map<String, Block> testParams = ImmutableMap.<String, Block>builder()
-                .put("earth", BlocksPM.ANCIENT_FONT_EARTH.get())
-                .put("sea", BlocksPM.ANCIENT_FONT_SEA.get())
-                .put("sky", BlocksPM.ANCIENT_FONT_SKY.get())
-                .put("sun", BlocksPM.ANCIENT_FONT_SUN.get())
-                .put("moon", BlocksPM.ANCIENT_FONT_MOON.get())
-                .build();
-        return TestUtils.createParameterizedTestFunctions("font_discovery_tests", templateName, testParams, (helper, block) -> {
-            // Create a player in the level and confirm that they start out not having found a shrine
-            var player = this.makeMockServerPlayer(helper, true);
-            player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO)));
-            this.assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research already present on new player");
+    public static void font_discovery(GameTestHelper helper, Block block) {
+        // Create a player in the level and confirm that they start out not having found a shrine
+        var player = makeMockServerPlayer(helper, true);
+        player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO)));
+        assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research already present on new player");
 
-            // Place an ancient font near the player
-            BlockPos fontPos = new BlockPos(1, 1, 1);
-            helper.setBlock(fontPos, block);
-            helper.assertBlockState(fontPos, state -> state.is(block), state -> Component.literal("Test font not found!"));
-            
-            // Succeed once the player has been marked as having found a shrine
-            helper.succeedWhen(() -> {
-                this.assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research not complete");
-                helper.getLevel().getServer().getPlayerList().remove(player);
-            });
+        // Place an ancient font near the player
+        BlockPos fontPos = new BlockPos(1, 1, 1);
+        helper.setBlock(fontPos, block);
+        helper.assertBlockState(fontPos, state -> state.is(block), state -> Component.literal("Test font not found!"));
+
+        // Succeed once the player has been marked as having found a shrine
+        helper.succeedWhen(() -> {
+            assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research not complete");
+            helper.getLevel().getServer().getPlayerList().remove(player);
         });
     }
-    
-    public void sleeping_after_shrine_grants_dream(GameTestHelper helper) {
+
+    public static void sleeping_after_shrine_grants_dream(GameTestHelper helper) {
         // Create a player who's found a shrine and is primed for the dream, but hasn't had it yet
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        this.assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE), "Failed to grant prerequisite research");
-        this.assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Created player already marked as having had the dream");
-        this.assertTrue(helper, player.getInventory().isEmpty(), "Fresh player inventory is not empty");
+        assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE), "Failed to grant prerequisite research");
+        assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Created player already marked as having had the dream");
+        assertTrue(helper, player.getInventory().isEmpty(), "Fresh player inventory is not empty");
         
         // Place a bed and sleep in it
         BlockPos bedPos = new BlockPos(2, 2, 2);
@@ -85,34 +76,25 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         
         // Succeed once the player has been marked as having had the dream and received the dream journal
         helper.succeedWhen(() -> {
-            this.assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Got Dream research not complete");
+            assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Got Dream research not complete");
             NonNullList<ItemStack> stacks = InventoryUtils.find(player, ItemTagsPM.STATIC_BOOKS);
-            this.assertTrue(helper, stacks.size() == 1, "No potential Dream Journals found");
-            this.assertTrue(helper, stacks.stream().anyMatch(stack -> {
-                return StaticBookItem.getBookId(stack).filter(id -> BooksPM.DREAM_JOURNAL.equals(id)).isPresent() &&
-                        StaticBookItem.getBookLanguageId(stack).filter(id -> BookLanguagesPM.DEFAULT.equals(id)).isPresent() &&
+            assertTrue(helper, stacks.size() == 1, "No potential Dream Journals found");
+            assertTrue(helper, stacks.stream().anyMatch(stack -> {
+                return StaticBookItem.getBookId(stack).filter(BooksPM.DREAM_JOURNAL::equals).isPresent() &&
+                        StaticBookItem.getBookLanguageId(stack).filter(BookLanguagesPM.DEFAULT::equals).isPresent() &&
                         StaticBookItem.getAuthor(stack).equals(player.getName());
             }), "Dream Journal components are not a match to expected");
         });
     }
-    
-    public Collection<TestFunction> mundane_wand_crafting_tests(String templateName) {
-        Map<String, Item> testParams = ImmutableMap.<String, Item>builder()
-                .put("earth", ItemsPM.ESSENCE_DUST_EARTH.get())
-                .put("sea", ItemsPM.ESSENCE_DUST_SEA.get())
-                .put("sky", ItemsPM.ESSENCE_DUST_SKY.get())
-                .put("sun", ItemsPM.ESSENCE_DUST_SUN.get())
-                .put("moon", ItemsPM.ESSENCE_DUST_MOON.get())
-                .build();
-        return TestUtils.createParameterizedTestFunctions("mundane_wand_crafting_tests", templateName, testParams, (helper, dust) -> {
-            var container = CraftingInput.of(2, 1, List.of(new ItemStack(Items.STICK), new ItemStack(dust)));
-            var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, container, helper.getLevel());
-            this.assertTrue(helper, recipe.isPresent(), "Recipe not found when expected");
-            this.assertTrue(helper, recipe.get().value().getResultItem(helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
-            helper.succeed();
-        });
+
+    public static void mundane_wand_crafting(GameTestHelper helper, Item dust) {
+        var container = CraftingInput.of(2, 1, List.of(new ItemStack(Items.STICK), new ItemStack(dust)));
+        var recipe = helper.getLevel().recipeAccess().getRecipeFor(RecipeType.CRAFTING, container, helper.getLevel());
+        assertTrue(helper, recipe.isPresent(), "Recipe not found when expected");
+        assertTrue(helper, recipe.get().value().assemble(container, helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
+        helper.succeed();
     }
-    
+
     public void transform_abort_gives_hint(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);

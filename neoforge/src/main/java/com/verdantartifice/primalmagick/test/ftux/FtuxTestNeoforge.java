@@ -13,23 +13,6 @@ import java.util.Collection;
 
 @GameTestHolder(Constants.MOD_ID)
 public class FtuxTestNeoforge extends AbstractFtuxTest {
-    @GameTestGenerator
-    public Collection<TestFunction> font_discovery_tests() {
-        return super.font_discovery_tests(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
-    @PrefixGameTestTemplate(false)
-    @GameTest(template = "test/floor5x5x5", timeoutTicks = 150)
-    @Override
-    public void sleeping_after_shrine_grants_dream(GameTestHelper helper) {
-        super.sleeping_after_shrine_grants_dream(helper);
-    }
-
-    @GameTestGenerator
-    public Collection<TestFunction> mundane_wand_crafting_tests() {
-        return super.mundane_wand_crafting_tests(TestUtilsNeoforge.DEFAULT_GENERATOR_TEMPLATE);
-    }
-
     @PrefixGameTestTemplate(false)
     @GameTest(template = TestUtilsNeoforge.DEFAULT_TEMPLATE)
     @Override

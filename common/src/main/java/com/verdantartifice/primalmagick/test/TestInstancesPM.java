@@ -107,6 +107,19 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> ENCHANTMENT_ESSENCE_THIEF3 = createInstanceKey("enchantment_essence_thief3");
     public static final ResourceKey<GameTestInstance> ENCHANTMENT_ESSENCE_THIEF4 = createInstanceKey("enchantment_essence_thief4");
 
+    // FTUX tests
+    public static final ResourceKey<GameTestInstance> FONT_DISCOVERY_EARTH = createInstanceKey("font_discovery_earth");
+    public static final ResourceKey<GameTestInstance> FONT_DISCOVERY_SEA = createInstanceKey("font_discovery_sea");
+    public static final ResourceKey<GameTestInstance> FONT_DISCOVERY_SKY = createInstanceKey("font_discovery_sky");
+    public static final ResourceKey<GameTestInstance> FONT_DISCOVERY_SUN = createInstanceKey("font_discovery_sun");
+    public static final ResourceKey<GameTestInstance> FONT_DISCOVERY_MOON = createInstanceKey("font_discovery_moon");
+    public static final ResourceKey<GameTestInstance> SLEEP_AFTER_SHRINE_GRANTS_DREAM = createInstanceKey("sleep_after_shrine_grants_dream");
+    public static final ResourceKey<GameTestInstance> MUNDANE_WAND_CRAFTING_EARTH = createInstanceKey("mundane_wand_crafting_earth");
+    public static final ResourceKey<GameTestInstance> MUNDANE_WAND_CRAFTING_SEA = createInstanceKey("mundane_wand_crafting_sea");
+    public static final ResourceKey<GameTestInstance> MUNDANE_WAND_CRAFTING_SKY = createInstanceKey("mundane_wand_crafting_sky");
+    public static final ResourceKey<GameTestInstance> MUNDANE_WAND_CRAFTING_SUN = createInstanceKey("mundane_wand_crafting_sun");
+    public static final ResourceKey<GameTestInstance> MUNDANE_WAND_CRAFTING_MOON = createInstanceKey("mundane_wand_crafting_moon");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -119,6 +132,21 @@ public class TestInstancesPM {
         registerRunecarvingTests(context);
         registerCasterEnchantabilityTests(context);
         registerRitualEnchantmentTests(context);
+        registerFtuxTests(context);
+    }
+
+    public static void registerFtuxTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, FONT_DISCOVERY_EARTH, TestFunctionsPM.FONT_DISCOVERY_EARTH.getKey());
+        registerFunction(context, FONT_DISCOVERY_SEA, TestFunctionsPM.FONT_DISCOVERY_SEA.getKey());
+        registerFunction(context, FONT_DISCOVERY_SKY, TestFunctionsPM.FONT_DISCOVERY_SKY.getKey());
+        registerFunction(context, FONT_DISCOVERY_SUN, TestFunctionsPM.FONT_DISCOVERY_SUN.getKey());
+        registerFunction(context, FONT_DISCOVERY_MOON, TestFunctionsPM.FONT_DISCOVERY_MOON.getKey());
+        registerFunction(context, SLEEP_AFTER_SHRINE_GRANTS_DREAM, TestFunctionsPM.SLEEP_AFTER_SHRINE_GRANTS_DREAM.getKey(), ResourceUtils.loc("test/floor5x5x5"));
+        registerFunction(context, MUNDANE_WAND_CRAFTING_EARTH, TestFunctionsPM.MUNDANE_WAND_CRAFTING_EARTH.getKey());
+        registerFunction(context, MUNDANE_WAND_CRAFTING_SEA, TestFunctionsPM.MUNDANE_WAND_CRAFTING_SEA.getKey());
+        registerFunction(context, MUNDANE_WAND_CRAFTING_SKY, TestFunctionsPM.MUNDANE_WAND_CRAFTING_SKY.getKey());
+        registerFunction(context, MUNDANE_WAND_CRAFTING_SUN, TestFunctionsPM.MUNDANE_WAND_CRAFTING_SUN.getKey());
+        registerFunction(context, MUNDANE_WAND_CRAFTING_MOON, TestFunctionsPM.MUNDANE_WAND_CRAFTING_MOON.getKey());
     }
 
     public static void registerRitualEnchantmentTests(BootstrapContext<GameTestInstance> context) {

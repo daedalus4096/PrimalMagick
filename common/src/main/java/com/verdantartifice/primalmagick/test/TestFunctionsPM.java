@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.test.crafting.CalcinatorTests;
 import com.verdantartifice.primalmagick.test.crafting.ArcaneWorkbenchTests;
 import com.verdantartifice.primalmagick.test.enchantments.RitualEnchantmentTests;
 import com.verdantartifice.primalmagick.test.enchantments.CasterEnchantingTests;
+import com.verdantartifice.primalmagick.test.ftux.AbstractFtuxTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
 
@@ -117,5 +118,18 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ENCHANTMENT_ESSENCE_THIEF2 = Services.TEST_FUNCTIONS_REGISTRY.register("enchantment_essence_thief2", () -> (helper) -> RitualEnchantmentTests.enchantment_essence_thief(helper, 2));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ENCHANTMENT_ESSENCE_THIEF3 = Services.TEST_FUNCTIONS_REGISTRY.register("enchantment_essence_thief3", () -> (helper) -> RitualEnchantmentTests.enchantment_essence_thief(helper, 3));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> ENCHANTMENT_ESSENCE_THIEF4 = Services.TEST_FUNCTIONS_REGISTRY.register("enchantment_essence_thief4", () -> (helper) -> RitualEnchantmentTests.enchantment_essence_thief(helper, 4));
+
+    // FTUX tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> FONT_DISCOVERY_EARTH = Services.TEST_FUNCTIONS_REGISTRY.register("font_discovery_earth", () -> (helper) -> AbstractFtuxTest.font_discovery(helper, BlocksPM.ANCIENT_FONT_EARTH.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> FONT_DISCOVERY_SEA = Services.TEST_FUNCTIONS_REGISTRY.register("font_discovery_sea", () -> (helper) -> AbstractFtuxTest.font_discovery(helper, BlocksPM.ANCIENT_FONT_SEA.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> FONT_DISCOVERY_SKY = Services.TEST_FUNCTIONS_REGISTRY.register("font_discovery_sky", () -> (helper) -> AbstractFtuxTest.font_discovery(helper, BlocksPM.ANCIENT_FONT_SKY.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> FONT_DISCOVERY_SUN = Services.TEST_FUNCTIONS_REGISTRY.register("font_discovery_sun", () -> (helper) -> AbstractFtuxTest.font_discovery(helper, BlocksPM.ANCIENT_FONT_SUN.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> FONT_DISCOVERY_MOON = Services.TEST_FUNCTIONS_REGISTRY.register("font_discovery_moon", () -> (helper) -> AbstractFtuxTest.font_discovery(helper, BlocksPM.ANCIENT_FONT_MOON.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> SLEEP_AFTER_SHRINE_GRANTS_DREAM = Services.TEST_FUNCTIONS_REGISTRY.register("sleeping_after_shrine_grants_dream", () -> AbstractFtuxTest::sleeping_after_shrine_grants_dream);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MUNDANE_WAND_CRAFTING_EARTH = Services.TEST_FUNCTIONS_REGISTRY.register("mundane_wand_crafting_earth", () -> (helper) -> AbstractFtuxTest.mundane_wand_crafting(helper, ItemsPM.ESSENCE_DUST_EARTH.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MUNDANE_WAND_CRAFTING_SEA = Services.TEST_FUNCTIONS_REGISTRY.register("mundane_wand_crafting_sea", () -> (helper) -> AbstractFtuxTest.mundane_wand_crafting(helper, ItemsPM.ESSENCE_DUST_SEA.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MUNDANE_WAND_CRAFTING_SKY = Services.TEST_FUNCTIONS_REGISTRY.register("mundane_wand_crafting_sky", () -> (helper) -> AbstractFtuxTest.mundane_wand_crafting(helper, ItemsPM.ESSENCE_DUST_SKY.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MUNDANE_WAND_CRAFTING_SUN = Services.TEST_FUNCTIONS_REGISTRY.register("mundane_wand_crafting_sun", () -> (helper) -> AbstractFtuxTest.mundane_wand_crafting(helper, ItemsPM.ESSENCE_DUST_SUN.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MUNDANE_WAND_CRAFTING_MOON = Services.TEST_FUNCTIONS_REGISTRY.register("mundane_wand_crafting_moon", () -> (helper) -> AbstractFtuxTest.mundane_wand_crafting(helper, ItemsPM.ESSENCE_DUST_MOON.get()));
 
 }
