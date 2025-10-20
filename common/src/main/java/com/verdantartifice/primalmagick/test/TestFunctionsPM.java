@@ -17,8 +17,10 @@ import com.verdantartifice.primalmagick.test.crafting.ArcaneWorkbenchTests;
 import com.verdantartifice.primalmagick.test.enchantments.RitualEnchantmentTests;
 import com.verdantartifice.primalmagick.test.enchantments.CasterEnchantingTests;
 import com.verdantartifice.primalmagick.test.ftux.FtuxTests;
+import com.verdantartifice.primalmagick.test.items.BeeswaxTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
 
@@ -134,5 +136,15 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> TRANSFORM_ABORT_GIVES_HINT = Services.TEST_FUNCTIONS_REGISTRY.register("transform_abort_gives_hint", () -> FtuxTests::transform_abort_gives_hint);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> TRANSFORM_WITHOUT_DREAM_DOES_NOTHING = Services.TEST_FUNCTIONS_REGISTRY.register("transform_without_dream_does_nothing", () -> FtuxTests::transform_without_dream_does_nothing);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> TRANSFORM_GRIMOIRE = Services.TEST_FUNCTIONS_REGISTRY.register("transform_grimoire", () -> FtuxTests::transform_grimoire);
+
+    // Beeswax item tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_DIRECTLY_CLEAN = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_directly_clean", () -> (helper) -> BeeswaxTests.apply_beeswax_directly(helper, Blocks.COPPER_BLOCK, Blocks.WAXED_COPPER_BLOCK));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_DIRECTLY_EXPOSED = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_directly_exposed", () -> (helper) -> BeeswaxTests.apply_beeswax_directly(helper, Blocks.EXPOSED_COPPER, Blocks.WAXED_EXPOSED_COPPER));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_DIRECTLY_WEATHERED = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_directly_weathered", () -> (helper) -> BeeswaxTests.apply_beeswax_directly(helper, Blocks.WEATHERED_COPPER, Blocks.WAXED_WEATHERED_COPPER));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_DIRECTLY_OXIDIZED = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_directly_oxidized", () -> (helper) -> BeeswaxTests.apply_beeswax_directly(helper, Blocks.OXIDIZED_COPPER, Blocks.WAXED_OXIDIZED_COPPER));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_VIA_CRAFTING_CLEAN = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_via_crafting_clean", () -> (helper) -> BeeswaxTests.apply_beeswax_via_crafting(helper, Blocks.COPPER_BLOCK, Blocks.WAXED_COPPER_BLOCK));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_VIA_CRAFTING_EXPOSED = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_via_crafting_exposed", () -> (helper) -> BeeswaxTests.apply_beeswax_via_crafting(helper, Blocks.EXPOSED_COPPER, Blocks.WAXED_EXPOSED_COPPER));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_VIA_CRAFTING_WEATHERED = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_via_crafting_weathered", () -> (helper) -> BeeswaxTests.apply_beeswax_via_crafting(helper, Blocks.WEATHERED_COPPER, Blocks.WAXED_WEATHERED_COPPER));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_VIA_CRAFTING_OXIDIZED = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_via_crafting_oxidized", () -> (helper) -> BeeswaxTests.apply_beeswax_via_crafting(helper, Blocks.OXIDIZED_COPPER, Blocks.WAXED_OXIDIZED_COPPER));
 
 }

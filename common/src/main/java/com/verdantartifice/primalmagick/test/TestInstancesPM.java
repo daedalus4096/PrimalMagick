@@ -123,6 +123,16 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> TRANSFORM_WITHOUT_DREAM_DOES_NOTHING = createInstanceKey("transform_without_dream_does_nothing");
     public static final ResourceKey<GameTestInstance> TRANSFORM_GRIMOIRE = createInstanceKey("transform_grimoire");
 
+    // Beeswax item tests
+    public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_DIRECTLY_CLEAN = createInstanceKey("apply_beeswax_directly_clean");
+    public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_DIRECTLY_EXPOSED = createInstanceKey("apply_beeswax_directly_exposed");
+    public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_DIRECTLY_WEATHERED = createInstanceKey("apply_beeswax_directly_weathered");
+    public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_DIRECTLY_OXIDIZED = createInstanceKey("apply_beeswax_directly_oxidized");
+    public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_VIA_CRAFTING_CLEAN = createInstanceKey("apply_beeswax_via_crafting_clean");
+    public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_VIA_CRAFTING_EXPOSED = createInstanceKey("apply_beeswax_via_crafting_exposed");
+    public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_VIA_CRAFTING_WEATHERED = createInstanceKey("apply_beeswax_via_crafting_weathered");
+    public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_VIA_CRAFTING_OXIDIZED = createInstanceKey("apply_beeswax_via_crafting_oxidized");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -136,6 +146,18 @@ public class TestInstancesPM {
         registerCasterEnchantabilityTests(context);
         registerRitualEnchantmentTests(context);
         registerFtuxTests(context);
+        registerBeeswaxItemTests(context);
+    }
+
+    public static void registerBeeswaxItemTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, APPLY_BEESWAX_DIRECTLY_CLEAN, TestFunctionsPM.APPLY_BEESWAX_DIRECTLY_CLEAN.getKey());
+        registerFunction(context, APPLY_BEESWAX_DIRECTLY_EXPOSED, TestFunctionsPM.APPLY_BEESWAX_DIRECTLY_EXPOSED.getKey());
+        registerFunction(context, APPLY_BEESWAX_DIRECTLY_WEATHERED, TestFunctionsPM.APPLY_BEESWAX_DIRECTLY_WEATHERED.getKey());
+        registerFunction(context, APPLY_BEESWAX_DIRECTLY_OXIDIZED, TestFunctionsPM.APPLY_BEESWAX_DIRECTLY_OXIDIZED.getKey());
+        registerFunction(context, APPLY_BEESWAX_VIA_CRAFTING_CLEAN, TestFunctionsPM.APPLY_BEESWAX_VIA_CRAFTING_CLEAN.getKey());
+        registerFunction(context, APPLY_BEESWAX_VIA_CRAFTING_EXPOSED, TestFunctionsPM.APPLY_BEESWAX_VIA_CRAFTING_EXPOSED.getKey());
+        registerFunction(context, APPLY_BEESWAX_VIA_CRAFTING_WEATHERED, TestFunctionsPM.APPLY_BEESWAX_VIA_CRAFTING_WEATHERED.getKey());
+        registerFunction(context, APPLY_BEESWAX_VIA_CRAFTING_OXIDIZED, TestFunctionsPM.APPLY_BEESWAX_VIA_CRAFTING_OXIDIZED.getKey());
     }
 
     public static void registerFtuxTests(BootstrapContext<GameTestInstance> context) {
