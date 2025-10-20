@@ -133,6 +133,17 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_VIA_CRAFTING_WEATHERED = createInstanceKey("apply_beeswax_via_crafting_weathered");
     public static final ResourceKey<GameTestInstance> APPLY_BEESWAX_VIA_CRAFTING_OXIDIZED = createInstanceKey("apply_beeswax_via_crafting_oxidized");
 
+    // Dispenser item tests
+    public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_EARTH = createInstanceKey("mana_arrows_fired_from_dispenser_earth");
+    public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_SEA = createInstanceKey("mana_arrows_fired_from_dispenser_sea");
+    public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_SKY = createInstanceKey("mana_arrows_fired_from_dispenser_sky");
+    public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_SUN = createInstanceKey("mana_arrows_fired_from_dispenser_sun");
+    public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_MOON = createInstanceKey("mana_arrows_fired_from_dispenser_moon");
+    public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_BLOOD = createInstanceKey("mana_arrows_fired_from_dispenser_blood");
+    public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_INFERNAL = createInstanceKey("mana_arrows_fired_from_dispenser_infernal");
+    public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_VOID = createInstanceKey("mana_arrows_fired_from_dispenser_void");
+    public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_HALLOWED = createInstanceKey("mana_arrows_fired_from_dispenser_hallowed");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -147,6 +158,19 @@ public class TestInstancesPM {
         registerRitualEnchantmentTests(context);
         registerFtuxTests(context);
         registerBeeswaxItemTests(context);
+        registerDispenserItemTests(context);
+    }
+
+    public static void registerDispenserItemTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, MANA_ARROWS_FIRED_FROM_DISPENSER_EARTH, TestFunctionsPM.MANA_ARROWS_FIRED_FROM_DISPENSER_EARTH.getKey());
+        registerFunction(context, MANA_ARROWS_FIRED_FROM_DISPENSER_SEA, TestFunctionsPM.MANA_ARROWS_FIRED_FROM_DISPENSER_SEA.getKey());
+        registerFunction(context, MANA_ARROWS_FIRED_FROM_DISPENSER_SKY, TestFunctionsPM.MANA_ARROWS_FIRED_FROM_DISPENSER_SKY.getKey());
+        registerFunction(context, MANA_ARROWS_FIRED_FROM_DISPENSER_SUN, TestFunctionsPM.MANA_ARROWS_FIRED_FROM_DISPENSER_SUN.getKey());
+        registerFunction(context, MANA_ARROWS_FIRED_FROM_DISPENSER_MOON, TestFunctionsPM.MANA_ARROWS_FIRED_FROM_DISPENSER_MOON.getKey());
+        registerFunction(context, MANA_ARROWS_FIRED_FROM_DISPENSER_BLOOD, TestFunctionsPM.MANA_ARROWS_FIRED_FROM_DISPENSER_BLOOD.getKey());
+        registerFunction(context, MANA_ARROWS_FIRED_FROM_DISPENSER_INFERNAL, TestFunctionsPM.MANA_ARROWS_FIRED_FROM_DISPENSER_INFERNAL.getKey());
+        registerFunction(context, MANA_ARROWS_FIRED_FROM_DISPENSER_VOID, TestFunctionsPM.MANA_ARROWS_FIRED_FROM_DISPENSER_VOID.getKey());
+        registerFunction(context, MANA_ARROWS_FIRED_FROM_DISPENSER_HALLOWED, TestFunctionsPM.MANA_ARROWS_FIRED_FROM_DISPENSER_HALLOWED.getKey());
     }
 
     public static void registerBeeswaxItemTests(BootstrapContext<GameTestInstance> context) {

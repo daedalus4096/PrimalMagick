@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.test.crafting.ArcaneWorkbenchTests;
 import com.verdantartifice.primalmagick.test.enchantments.RitualEnchantmentTests;
 import com.verdantartifice.primalmagick.test.enchantments.CasterEnchantingTests;
 import com.verdantartifice.primalmagick.test.ftux.FtuxTests;
+import com.verdantartifice.primalmagick.test.items.DispenserTests;
 import com.verdantartifice.primalmagick.test.items.BeeswaxTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
@@ -146,5 +147,16 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_VIA_CRAFTING_EXPOSED = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_via_crafting_exposed", () -> (helper) -> BeeswaxTests.apply_beeswax_via_crafting(helper, Blocks.EXPOSED_COPPER, Blocks.WAXED_EXPOSED_COPPER));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_VIA_CRAFTING_WEATHERED = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_via_crafting_weathered", () -> (helper) -> BeeswaxTests.apply_beeswax_via_crafting(helper, Blocks.WEATHERED_COPPER, Blocks.WAXED_WEATHERED_COPPER));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> APPLY_BEESWAX_VIA_CRAFTING_OXIDIZED = Services.TEST_FUNCTIONS_REGISTRY.register("apply_beeswax_via_crafting_oxidized", () -> (helper) -> BeeswaxTests.apply_beeswax_via_crafting(helper, Blocks.OXIDIZED_COPPER, Blocks.WAXED_OXIDIZED_COPPER));
+
+    // Dispenser item tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_EARTH = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_earth", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_EARTH.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_SEA = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_sea", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_SEA.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_SKY = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_sky", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_SKY.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_SUN = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_sun", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_SUN.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_MOON = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_moon", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_MOON.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_BLOOD = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_blood", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_BLOOD.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_INFERNAL = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_infernal", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_INFERNAL.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_VOID = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_void", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_VOID.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_HALLOWED = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_hallowed", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_HALLOWED.get()));
 
 }
