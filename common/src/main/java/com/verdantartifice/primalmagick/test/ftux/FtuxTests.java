@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.test.ftux;
 
-import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
@@ -18,9 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.gametest.framework.TestFunction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -37,11 +33,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
-public abstract class AbstractFtuxTest extends AbstractBaseTest {
+public abstract class FtuxTests extends AbstractBaseTest {
     public static void font_discovery(GameTestHelper helper, Block block) {
         // Create a player in the level and confirm that they start out not having found a shrine
         var player = makeMockServerPlayer(helper, true);
@@ -95,11 +89,11 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         helper.succeed();
     }
 
-    public void transform_abort_gives_hint(GameTestHelper helper) {
+    public static void transform_abort_gives_hint(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        this.assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
-        this.assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Newly created player already has sought research");
+        assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
+        assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Newly created player already has sought research");
         
         // Put a mundane wand in that player's main hand
         ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
@@ -116,16 +110,16 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         BlockPos posAbs = helper.absolutePos(pos);
         BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
         UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
-        this.assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
         
         // Immediately stop transforming and check for hint flag research
         int remainingTicks = wandItem.getUseDuration(wandStack, player);
         wandItem.releaseUsing(wandStack, helper.getLevel(), player, remainingTicks);
-        this.assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Sought research not found");
+        assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Sought research not found");
         helper.succeed();
     }
 
-    public void transform_without_dream_does_nothing(GameTestHelper helper) {
+    public static void transform_without_dream_does_nothing(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
 
@@ -144,7 +138,7 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         BlockPos posAbs = helper.absolutePos(pos);
         BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
         UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
-        this.assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.PASS), "Failed to start using wand on block");
+        assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.PASS), "Failed to start using wand on block");
 
         // Continue channeling for the expected transform duration, then confirm that nothing has changed
         MutableInt remainingTicks = new MutableInt(WandTransforms.CHANNEL_DURATION + 1);
@@ -157,10 +151,10 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         });
     }
 
-    public void transform_grimoire(GameTestHelper helper) {
+    public static void transform_grimoire(GameTestHelper helper) {
         // Create a player who has gotten the dream
         Player player = helper.makeMockPlayer(GameType.SURVIVAL);
-        this.assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
+        assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
         
         // Put a mundane wand in that player's main hand
         ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
@@ -177,7 +171,7 @@ public abstract class AbstractFtuxTest extends AbstractBaseTest {
         BlockPos posAbs = helper.absolutePos(pos);
         BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
         UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
-        this.assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
         
         // Continue channeling the wand until the transformation succeeds or the test times out and fails
         MutableInt remainingTicks = new MutableInt(wandItem.getUseDuration(wandStack, player));

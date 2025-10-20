@@ -119,6 +119,9 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> MUNDANE_WAND_CRAFTING_SKY = createInstanceKey("mundane_wand_crafting_sky");
     public static final ResourceKey<GameTestInstance> MUNDANE_WAND_CRAFTING_SUN = createInstanceKey("mundane_wand_crafting_sun");
     public static final ResourceKey<GameTestInstance> MUNDANE_WAND_CRAFTING_MOON = createInstanceKey("mundane_wand_crafting_moon");
+    public static final ResourceKey<GameTestInstance> TRANSFORM_ABORT_GIVES_HINT = createInstanceKey("transform_abort_gives_hint");
+    public static final ResourceKey<GameTestInstance> TRANSFORM_WITHOUT_DREAM_DOES_NOTHING = createInstanceKey("transform_without_dream_does_nothing");
+    public static final ResourceKey<GameTestInstance> TRANSFORM_GRIMOIRE = createInstanceKey("transform_grimoire");
 
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
@@ -147,6 +150,9 @@ public class TestInstancesPM {
         registerFunction(context, MUNDANE_WAND_CRAFTING_SKY, TestFunctionsPM.MUNDANE_WAND_CRAFTING_SKY.getKey());
         registerFunction(context, MUNDANE_WAND_CRAFTING_SUN, TestFunctionsPM.MUNDANE_WAND_CRAFTING_SUN.getKey());
         registerFunction(context, MUNDANE_WAND_CRAFTING_MOON, TestFunctionsPM.MUNDANE_WAND_CRAFTING_MOON.getKey());
+        registerFunction(context, TRANSFORM_ABORT_GIVES_HINT, TestFunctionsPM.TRANSFORM_ABORT_GIVES_HINT.getKey());
+        registerFunction(context, TRANSFORM_WITHOUT_DREAM_DOES_NOTHING, TestFunctionsPM.TRANSFORM_WITHOUT_DREAM_DOES_NOTHING.getKey());
+        registerFunction(context, TRANSFORM_GRIMOIRE, TestFunctionsPM.TRANSFORM_GRIMOIRE.getKey());
     }
 
     public static void registerRitualEnchantmentTests(BootstrapContext<GameTestInstance> context) {
