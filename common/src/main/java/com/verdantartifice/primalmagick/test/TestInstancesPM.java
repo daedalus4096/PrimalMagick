@@ -144,6 +144,21 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_VOID = createInstanceKey("mana_arrows_fired_from_dispenser_void");
     public static final ResourceKey<GameTestInstance> MANA_ARROWS_FIRED_FROM_DISPENSER_HALLOWED = createInstanceKey("mana_arrows_fired_from_dispenser_hallowed");
 
+    // Wand mana tests
+    public static final ResourceKey<GameTestInstance> WAND_CAN_GET_AND_ADD_MANA = createInstanceKey("wand_can_get_and_add_mana");
+    public static final ResourceKey<GameTestInstance> WAND_CAN_GET_AND_ADD_REAL_MANA = createInstanceKey("wand_can_get_and_add_real_mana");
+    public static final ResourceKey<GameTestInstance> WAND_CANNOT_ADD_TOO_MUCH_MANA = createInstanceKey("wand_cannot_add_too_much_mana");
+    public static final ResourceKey<GameTestInstance> WAND_CAN_GET_ALL_MANA = createInstanceKey("wand_can_get_all_mana");
+    public static final ResourceKey<GameTestInstance> WAND_CAN_CONSUME_MANA = createInstanceKey("wand_can_consume_mana");
+    public static final ResourceKey<GameTestInstance> WAND_CANNOT_CONSUME_MORE_MANA_THAN_IT_HAS = createInstanceKey("wand_cannot_consume_more_mana_than_it_has");
+    public static final ResourceKey<GameTestInstance> WAND_CAN_CONSUME_MULTIPLE_TYPES_OF_MANA = createInstanceKey("wand_can_consume_multiple_types_of_mana");
+    public static final ResourceKey<GameTestInstance> WAND_CANNOT_CONSUME_MORE_MANA_THAN_IT_HAS_WITH_MULTIPLE_TYPES = createInstanceKey("wand_cannot_consume_more_mana_than_it_has_with_multiple_types");
+    public static final ResourceKey<GameTestInstance> WAND_CAN_REMOVE_MANA_RAW = createInstanceKey("wand_can_remove_mana_raw");
+    public static final ResourceKey<GameTestInstance> WAND_CANNOT_REMOVE_MORE_RAW_MANA_THAN_IT_HAS = createInstanceKey("wand_cannot_remove_more_raw_mana_than_it_has");
+    public static final ResourceKey<GameTestInstance> WAND_CONTAINS_MANA = createInstanceKey("wand_contains_mana");
+    public static final ResourceKey<GameTestInstance> WAND_CONTAINS_MANA_LIST = createInstanceKey("wand_contains_mana_list");
+    public static final ResourceKey<GameTestInstance> WAND_CONTAINS_MANA_RAW = createInstanceKey("wand_contains_mana_raw");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -159,6 +174,23 @@ public class TestInstancesPM {
         registerFtuxTests(context);
         registerBeeswaxItemTests(context);
         registerDispenserItemTests(context);
+        registerWandManaTests(context);
+    }
+
+    public static void registerWandManaTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, WAND_CAN_GET_AND_ADD_MANA, TestFunctionsPM.WAND_CAN_GET_AND_ADD_MANA.getKey());
+        registerFunction(context, WAND_CAN_GET_AND_ADD_REAL_MANA, TestFunctionsPM.WAND_CAN_GET_AND_ADD_REAL_MANA.getKey());
+        registerFunction(context, WAND_CANNOT_ADD_TOO_MUCH_MANA, TestFunctionsPM.WAND_CANNOT_ADD_TOO_MUCH_MANA.getKey());
+        registerFunction(context, WAND_CAN_GET_ALL_MANA, TestFunctionsPM.WAND_CAN_GET_ALL_MANA.getKey());
+        registerFunction(context, WAND_CAN_CONSUME_MANA, TestFunctionsPM.WAND_CAN_CONSUME_MANA.getKey());
+        registerFunction(context, WAND_CANNOT_CONSUME_MORE_MANA_THAN_IT_HAS, TestFunctionsPM.WAND_CANNOT_CONSUME_MORE_MANA_THAN_IT_HAS.getKey());
+        registerFunction(context, WAND_CAN_CONSUME_MULTIPLE_TYPES_OF_MANA, TestFunctionsPM.WAND_CAN_CONSUME_MULTIPLE_TYPES_OF_MANA.getKey());
+        registerFunction(context, WAND_CANNOT_CONSUME_MORE_MANA_THAN_IT_HAS_WITH_MULTIPLE_TYPES, TestFunctionsPM.WAND_CANNOT_CONSUME_MORE_MANA_THAN_IT_HAS_WITH_MULTIPLE_TYPES.getKey());
+        registerFunction(context, WAND_CAN_REMOVE_MANA_RAW, TestFunctionsPM.WAND_CAN_REMOVE_MANA_RAW.getKey());
+        registerFunction(context, WAND_CANNOT_REMOVE_MORE_RAW_MANA_THAN_IT_HAS, TestFunctionsPM.WAND_CANNOT_REMOVE_MORE_RAW_MANA_THAN_IT_HAS.getKey());
+        registerFunction(context, WAND_CONTAINS_MANA, TestFunctionsPM.WAND_CONTAINS_MANA.getKey());
+        registerFunction(context, WAND_CONTAINS_MANA_LIST, TestFunctionsPM.WAND_CONTAINS_MANA_LIST.getKey());
+        registerFunction(context, WAND_CONTAINS_MANA_RAW, TestFunctionsPM.WAND_CONTAINS_MANA_RAW.getKey());
     }
 
     public static void registerDispenserItemTests(BootstrapContext<GameTestInstance> context) {

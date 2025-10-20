@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.test.crafting.ArcaneWorkbenchTests;
 import com.verdantartifice.primalmagick.test.enchantments.RitualEnchantmentTests;
 import com.verdantartifice.primalmagick.test.enchantments.CasterEnchantingTests;
 import com.verdantartifice.primalmagick.test.ftux.FtuxTests;
+import com.verdantartifice.primalmagick.test.items.WandManaTests;
 import com.verdantartifice.primalmagick.test.items.DispenserTests;
 import com.verdantartifice.primalmagick.test.items.BeeswaxTests;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -158,5 +159,20 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_INFERNAL = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_infernal", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_INFERNAL.get()));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_VOID = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_void", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_VOID.get()));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_ARROWS_FIRED_FROM_DISPENSER_HALLOWED = Services.TEST_FUNCTIONS_REGISTRY.register("mana_arrows_fired_from_dispenser_hallowed", () -> (helper) -> DispenserTests.mana_arrows_fired_from_dispenser(helper, ItemsPM.MANA_ARROW_HALLOWED.get()));
+
+    // Wand mana tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CAN_GET_AND_ADD_MANA = Services.TEST_FUNCTIONS_REGISTRY.register("wand_can_get_and_add_mana", () -> WandManaTests::wand_can_get_and_add_mana);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CAN_GET_AND_ADD_REAL_MANA = Services.TEST_FUNCTIONS_REGISTRY.register("wand_can_get_and_add_real_mana", () -> WandManaTests::wand_can_get_and_add_real_mana);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CANNOT_ADD_TOO_MUCH_MANA = Services.TEST_FUNCTIONS_REGISTRY.register("wand_cannot_add_too_much_mana", () -> WandManaTests::wand_cannot_add_too_much_mana);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CAN_GET_ALL_MANA = Services.TEST_FUNCTIONS_REGISTRY.register("wand_can_get_all_mana", () -> WandManaTests::wand_can_get_all_mana);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CAN_CONSUME_MANA = Services.TEST_FUNCTIONS_REGISTRY.register("wand_can_consume_mana", () -> WandManaTests::wand_can_consume_mana);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CANNOT_CONSUME_MORE_MANA_THAN_IT_HAS = Services.TEST_FUNCTIONS_REGISTRY.register("wand_cannot_consume_more_mana_than_it_has", () -> WandManaTests::wand_cannot_consume_more_mana_than_it_has);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CAN_CONSUME_MULTIPLE_TYPES_OF_MANA = Services.TEST_FUNCTIONS_REGISTRY.register("wand_can_consume_multiple_types_of_mana", () -> WandManaTests::wand_can_consume_multiple_types_of_mana);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CANNOT_CONSUME_MORE_MANA_THAN_IT_HAS_WITH_MULTIPLE_TYPES = Services.TEST_FUNCTIONS_REGISTRY.register("wand_cannot_consume_more_mana_than_it_has_with_multiple_types", () -> WandManaTests::wand_cannot_consume_more_mana_than_it_has_with_multiple_types);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CAN_REMOVE_MANA_RAW = Services.TEST_FUNCTIONS_REGISTRY.register("wand_can_remove_mana_raw", () -> WandManaTests::wand_can_remove_mana_raw);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CANNOT_REMOVE_MORE_RAW_MANA_THAN_IT_HAS = Services.TEST_FUNCTIONS_REGISTRY.register("wand_cannot_remove_more_raw_mana_than_it_has", () -> WandManaTests::wand_cannot_remove_more_raw_mana_than_it_has);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CONTAINS_MANA = Services.TEST_FUNCTIONS_REGISTRY.register("wand_contains_mana", () -> WandManaTests::wand_contains_mana);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CONTAINS_MANA_LIST = Services.TEST_FUNCTIONS_REGISTRY.register("wand_contains_mana_list", () -> WandManaTests::wand_contains_mana_list);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CONTAINS_MANA_RAW = Services.TEST_FUNCTIONS_REGISTRY.register("wand_contains_mana_raw", () -> WandManaTests::wand_contains_mana_raw);
 
 }
