@@ -15,12 +15,12 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public abstract class AbstractRunecarvingTest extends AbstractBaseTest {
-    public void craft_works(GameTestHelper helper) {
+public abstract class RunecarvingTests extends AbstractBaseTest {
+    public static void craft_works(GameTestHelper helper) {
         // Create a test player with the research needed for basic runecarving
-        var player = this.makeMockServerPlayer(helper);
+        var player = makeMockServerPlayer(helper);
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.BASIC_RUNEWORKING);
-        this.assertTrue(helper, ExpertiseManager.getValue(player, ResearchDisciplines.RUNEWORKING).orElse(-1) == 0, "Expected starting expertise is not zero for test player");
+        assertTrue(helper, ExpertiseManager.getValue(player, ResearchDisciplines.RUNEWORKING).orElse(-1) == 0, "Expected starting expertise is not zero for test player");
         
         // Place a runecarving table
         BlockPos tablePos = new BlockPos(1, 1, 1);
@@ -30,26 +30,26 @@ public abstract class AbstractRunecarvingTest extends AbstractBaseTest {
         // Populate the runecarving table with materials
         var tile = helper.getBlockEntity(tablePos, RunecarvingTableTileEntity.class);
         tile.setItem(0, 0, new ItemStack(Items.STONE_SLAB));
-        this.assertTrue(helper, tile.getItem(0, 0).is(Items.STONE_SLAB), "Stone slab material not properly set");
+        assertTrue(helper, tile.getItem(0, 0).is(Items.STONE_SLAB), "Stone slab material not properly set");
         tile.setItem(0, 1, new ItemStack(Items.LAPIS_LAZULI));
-        this.assertTrue(helper, tile.getItem(0, 1).is(Items.LAPIS_LAZULI), "Lapis lazuli material not properly set");
+        assertTrue(helper, tile.getItem(0, 1).is(Items.LAPIS_LAZULI), "Lapis lazuli material not properly set");
         
         // Open the block entity menu and select the first (and only) recipe
         Services.PLAYER.openMenu(player, tile, tablePos);
-        var menu = this.assertInstanceOf(helper, player.containerMenu, RunecarvingTableMenu.class, "Menu not of expected type");
-        this.assertTrue(helper, menu.getRecipeListSize() == 1, "Recipe list not as expected in runecarving menu");
-        this.assertTrue(helper, menu.clickMenuButton(player, 0), "Recipe selection failed");
+        var menu = assertInstanceOf(helper, player.containerMenu, RunecarvingTableMenu.class, "Menu not of expected type");
+        assertTrue(helper, menu.getRecipeListSize() == 1, "Recipe list not as expected in runecarving menu");
+        assertTrue(helper, menu.clickMenuButton(player, 0), "Recipe selection failed");
         
         // Take the result that should be there and confirm it's the right type of rune
         var output = menu.quickMoveStack(player, 2);
-        this.assertTrue(helper, output.is(ItemsPM.RUNE_UNATTUNED.get()), "Output item not of expected type");
+        assertTrue(helper, output.is(ItemsPM.RUNE_UNATTUNED.get()), "Output item not of expected type");
         
         // Confirm that crafting materials were consumed
-        this.assertTrue(helper, tile.getItem(0, 0).isEmpty(), "Stone slab material stack not empty");
-        this.assertTrue(helper, tile.getItem(0, 1).isEmpty(), "Lapis lazuli material stack not empty");
+        assertTrue(helper, tile.getItem(0, 0).isEmpty(), "Stone slab material stack not empty");
+        assertTrue(helper, tile.getItem(0, 1).isEmpty(), "Lapis lazuli material stack not empty");
         
         // Confirm that expertise was granted to the player
-        this.assertTrue(helper, ExpertiseManager.getValue(player, ResearchDisciplines.RUNEWORKING).orElse(-1) == 5, "Final expertise is not as expected for test player");
+        assertTrue(helper, ExpertiseManager.getValue(player, ResearchDisciplines.RUNEWORKING).orElse(-1) == 5, "Final expertise is not as expected for test player");
         
         helper.succeed();
     }

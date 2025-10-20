@@ -86,6 +86,16 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> CALCINATOR_WORKS_WITH_PLAYER_PRESENT = createInstanceKey("calcinator_works_with_player_present");
     public static final ResourceKey<GameTestInstance> CALCINATOR_WORKS_WITHOUT_PLAYER_PRESENT = createInstanceKey("calcinator_works_without_player_present");
 
+    // Crafting requirement tests
+    public static final ResourceKey<GameTestInstance> CRAFTING_REQUIREMENT_ARCANE_RECIPE = createInstanceKey("crafting_requirement_arcane_recipe");
+    public static final ResourceKey<GameTestInstance> CRAFTING_REQUIREMENT_RITUAL_RECIPE = createInstanceKey("crafting_requirement_ritual_recipe");
+
+    // Repair tests
+    public static final ResourceKey<GameTestInstance> EARTHSHATTER_HAMMER_CANNOT_BE_REPAIRED = createInstanceKey("earthshatter_hammer_cannot_be_repaired");
+
+    // Runecarving tests
+    public static final ResourceKey<GameTestInstance> RUNECARVING_CRAFT_WORKS = createInstanceKey("runecarving_craft_works");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -93,6 +103,22 @@ public class TestInstancesPM {
         registerPlayerKnowledgeTests(context);
         registerArcaneWorkbenchTests(context);
         registerCalcinatorTests(context);
+        registerCraftingRequirementTests(context);
+        registerRepairTests(context);
+        registerRunecarvingTests(context);
+    }
+
+    private static void registerRunecarvingTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, RUNECARVING_CRAFT_WORKS, TestFunctionsPM.RUNECARVING_CRAFT_WORKS.getKey());
+    }
+
+    private static void registerRepairTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, EARTHSHATTER_HAMMER_CANNOT_BE_REPAIRED, TestFunctionsPM.EARTHSHATTER_HAMMER_CANNOT_BE_REPAIRED.getKey());
+    }
+
+    private static void registerCraftingRequirementTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, CRAFTING_REQUIREMENT_ARCANE_RECIPE, TestFunctionsPM.CRAFTING_REQUIREMENT_ARCANE_RECIPE.getKey());
+        registerFunction(context, CRAFTING_REQUIREMENT_RITUAL_RECIPE, TestFunctionsPM.CRAFTING_REQUIREMENT_RITUAL_RECIPE.getKey());
     }
 
     private static void registerCalcinatorTests(BootstrapContext<GameTestInstance> context) {

@@ -8,6 +8,9 @@ import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.attunements.AttunementTests;
 import com.verdantartifice.primalmagick.test.capabilities.PlayerKnowledgeTests;
 import com.verdantartifice.primalmagick.test.capabilities.ItemHandlerTests;
+import com.verdantartifice.primalmagick.test.crafting.RepairTests;
+import com.verdantartifice.primalmagick.test.crafting.RunecarvingTests;
+import com.verdantartifice.primalmagick.test.crafting.CraftingRequirementsTests;
 import com.verdantartifice.primalmagick.test.crafting.CalcinatorTests;
 import com.verdantartifice.primalmagick.test.crafting.ArcaneWorkbenchTests;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -90,5 +93,15 @@ public class TestFunctionsPM {
     // Calcinator tests
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CALCINATOR_WORKS_WITH_PLAYER_PRESENT = Services.TEST_FUNCTIONS_REGISTRY.register("calcinator_works_with_player_present", () -> (helper) -> CalcinatorTests.calcinator_works(helper, true));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CALCINATOR_WORKS_WITHOUT_PLAYER_PRESENT = Services.TEST_FUNCTIONS_REGISTRY.register("calcinator_works_without_player_present", () -> (helper) -> CalcinatorTests.calcinator_works(helper, false));
+
+    // Crafting requirement tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CRAFTING_REQUIREMENT_ARCANE_RECIPE = Services.TEST_FUNCTIONS_REGISTRY.register("crafting_requirement_arcane_recipe", () -> CraftingRequirementsTests::arcane_recipe);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> CRAFTING_REQUIREMENT_RITUAL_RECIPE = Services.TEST_FUNCTIONS_REGISTRY.register("crafting_requirement_ritual_recipe", () -> CraftingRequirementsTests::ritual_recipe);
+
+    // Repair tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> EARTHSHATTER_HAMMER_CANNOT_BE_REPAIRED = Services.TEST_FUNCTIONS_REGISTRY.register("earthshatter_hammer_cannot_be_repaired", () -> RepairTests::earthshatter_hammer_cannot_be_repaired);
+
+    // Runecarving tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RUNECARVING_CRAFT_WORKS = Services.TEST_FUNCTIONS_REGISTRY.register("runecarving_craft_works", () -> RunecarvingTests::craft_works);
 
 }
