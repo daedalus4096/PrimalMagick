@@ -15,7 +15,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public abstract class RunecarvingTests extends AbstractBaseTest {
+public class RunecarvingTests extends AbstractBaseTest {
     public static void craft_works(GameTestHelper helper) {
         // Create a test player with the research needed for basic runecarving
         var player = makeMockServerPlayer(helper);

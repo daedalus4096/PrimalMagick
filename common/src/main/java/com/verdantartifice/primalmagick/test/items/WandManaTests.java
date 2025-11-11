@@ -14,7 +14,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public abstract class WandManaTests extends AbstractBaseTest {
+public class WandManaTests extends AbstractBaseTest {
     // TODO Expand scope to test other mana sources
     // TODO Expand scope to test other wand types
     protected static final Source source = Sources.EARTH;

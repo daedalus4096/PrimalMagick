@@ -13,7 +13,7 @@ import net.minecraft.world.level.GameType;
 
 import java.util.List;
 
-public abstract class CraftingRequirementsTests extends AbstractBaseTest {
+public class CraftingRequirementsTests extends AbstractBaseTest {
     public static void arcane_recipe(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         

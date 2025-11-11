@@ -35,7 +35,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.List;
 
-public abstract class FtuxTests extends AbstractBaseTest {
+public class FtuxTests extends AbstractBaseTest {
     public static void font_discovery(GameTestHelper helper, Block block) {
         // Create a player in the level and confirm that they start out not having found a shrine
         var player = makeMockServerPlayer(helper, true);

@@ -7,7 +7,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public abstract class ItemHandlerTests extends AbstractBaseTest {
+public class ItemHandlerTests extends AbstractBaseTest {
     public static void block_entity_can_retrieve_item_handler_with_null_direction(GameTestHelper helper, Block block) {
         // Place a copy of the block into the test world
         var pos = BlockPos.ZERO;
