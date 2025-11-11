@@ -24,93 +24,93 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameType;
 
-public abstract class AbstractResearchKeysTest extends AbstractBaseTest {
-    public void research_discipline(GameTestHelper helper) {
+public class ResearchKeysTests extends AbstractBaseTest {
+    public static void research_discipline(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var key = new ResearchDisciplineKey(ResearchDisciplines.MANAWEAVING);
-        this.assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.UNLOCK_MANAWEAVING);
-        this.assertTrue(helper, key.isKnownBy(player), "Key not known");
+        assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }
     
-    public void research_entry(GameTestHelper helper) {
+    public static void research_entry(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var key = new ResearchEntryKey(ResearchEntries.FIRST_STEPS);
-        this.assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.FIRST_STEPS);
-        this.assertTrue(helper, key.isKnownBy(player), "Key not known");
+        assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }
     
-    public void research_stage(GameTestHelper helper) {
+    public static void research_stage(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
         var key = new ResearchStageKey(ResearchEntries.FIRST_STEPS, 2);
-        this.assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.progressResearch(player, ResearchEntries.FIRST_STEPS);
-        this.assertFalse(helper, key.isKnownBy(player), "Partial expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Partial expectation failed");
         ResearchManager.progressResearch(player, ResearchEntries.FIRST_STEPS);
-        this.assertTrue(helper, key.isKnownBy(player), "Key not known");
+        assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }
     
-    public void item_scan(GameTestHelper helper) {
-        var player = this.makeMockServerPlayer(helper);
+    public static void item_scan(GameTestHelper helper) {
+        var player = makeMockServerPlayer(helper);
         var key = new ItemScanKey(Items.IRON_INGOT);
-        this.assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.setScanned(new ItemStack(Items.IRON_INGOT), player);
-        this.assertTrue(helper, key.isKnownBy(player), "Key not known");
+        assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }
     
-    public void entity_scan(GameTestHelper helper) {
-        var player = this.makeMockServerPlayer(helper);
+    public static void entity_scan(GameTestHelper helper) {
+        var player = makeMockServerPlayer(helper);
         var key = new EntityScanKey(EntityType.BAT);
-        this.assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.setScanned(EntityType.BAT, player);
-        this.assertTrue(helper, key.isKnownBy(player), "Key not known");
+        assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }
     
-    public void stack_crafted(GameTestHelper helper) {
-        var player = this.makeMockServerPlayer(helper);
+    public static void stack_crafted(GameTestHelper helper) {
+        var player = makeMockServerPlayer(helper);
         var item = ItemsPM.PRIMALITE_INGOT.get();
         var key = new StackCraftedKey(item);
-        this.assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.completeResearch(player, key);
-        this.assertTrue(helper, key.isKnownBy(player), "Key not known");
+        assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }
     
-    public void tag_crafted(GameTestHelper helper) {
-        var player = this.makeMockServerPlayer(helper);
+    public static void tag_crafted(GameTestHelper helper) {
+        var player = makeMockServerPlayer(helper);
         var tag = ItemTagsPM.INGOTS_PRIMALITE;
         var key = new TagCraftedKey(tag);
-        this.assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.completeResearch(player, key);
-        this.assertTrue(helper, key.isKnownBy(player), "Key not known");
+        assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }
     
-    public void rune_enchantment(GameTestHelper helper) {
-        var player = this.makeMockServerPlayer(helper);
+    public static void rune_enchantment(GameTestHelper helper) {
+        var player = makeMockServerPlayer(helper);
         var enchKey = Enchantments.AQUA_AFFINITY;
-        var ench = helper.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(enchKey).get();
+        var ench = helper.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(enchKey);
         var key = new RuneEnchantmentKey(ench);
-        this.assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.completeResearch(player, key);
-        this.assertTrue(helper, key.isKnownBy(player), "Key not known");
+        assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }
     
-    public void rune_enchantment_partial(GameTestHelper helper) {
-        var player = this.makeMockServerPlayer(helper);
+    public static void rune_enchantment_partial(GameTestHelper helper) {
+        var player = makeMockServerPlayer(helper);
         var enchKey = Enchantments.AQUA_AFFINITY;
-        var ench = helper.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolder(enchKey).get();
+        var ench = helper.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(enchKey);
         var key = new RuneEnchantmentPartialKey(ench, RuneType.SOURCE);
-        this.assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
+        assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
         ResearchManager.completeResearch(player, key);
-        this.assertTrue(helper, key.isKnownBy(player), "Key not known");
+        assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }
 }

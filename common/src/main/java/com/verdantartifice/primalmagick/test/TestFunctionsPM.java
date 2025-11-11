@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.test.ftux.FtuxTests;
 import com.verdantartifice.primalmagick.test.items.WandManaTests;
 import com.verdantartifice.primalmagick.test.items.DispenserTests;
 import com.verdantartifice.primalmagick.test.items.BeeswaxTests;
+import com.verdantartifice.primalmagick.test.research.ResearchKeysTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.level.block.Blocks;
@@ -174,5 +175,16 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CONTAINS_MANA = Services.TEST_FUNCTIONS_REGISTRY.register("wand_contains_mana", () -> WandManaTests::wand_contains_mana);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CONTAINS_MANA_LIST = Services.TEST_FUNCTIONS_REGISTRY.register("wand_contains_mana_list", () -> WandManaTests::wand_contains_mana_list);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CONTAINS_MANA_RAW = Services.TEST_FUNCTIONS_REGISTRY.register("wand_contains_mana_raw", () -> WandManaTests::wand_contains_mana_raw);
+
+    // Research key tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_DISCIPLINE = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_discipline", () -> ResearchKeysTests::research_discipline);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_ENTRY = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_entry", () -> ResearchKeysTests::research_entry);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_STAGE = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_stage", () -> ResearchKeysTests::research_stage);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_ITEM_SCAN = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_item_scan", () -> ResearchKeysTests::item_scan);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_ENTITY_SCAN = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_entity_scan", () -> ResearchKeysTests::entity_scan);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_STACK_CRAFTED = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_stack_crafted", () -> ResearchKeysTests::stack_crafted);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_TAG_CRAFTED = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_tag_crafted", () -> ResearchKeysTests::tag_crafted);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_RUNE_ENCHANTMENT = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_rune_enchantment", () -> ResearchKeysTests::rune_enchantment);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_RUNE_ENCHANTMENT_PARTIAL = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_rune_enchantment_partial", () -> ResearchKeysTests::rune_enchantment_partial);
 
 }

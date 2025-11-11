@@ -159,6 +159,17 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> WAND_CONTAINS_MANA_LIST = createInstanceKey("wand_contains_mana_list");
     public static final ResourceKey<GameTestInstance> WAND_CONTAINS_MANA_RAW = createInstanceKey("wand_contains_mana_raw");
 
+    // Research key tests
+    public static final ResourceKey<GameTestInstance> RESEARCH_KEY_DISCIPLINE = createInstanceKey("research_key_discipline");
+    public static final ResourceKey<GameTestInstance> RESEARCH_KEY_ENTRY = createInstanceKey("research_key_entry");
+    public static final ResourceKey<GameTestInstance> RESEARCH_KEY_STAGE = createInstanceKey("research_key_stage");
+    public static final ResourceKey<GameTestInstance> RESEARCH_KEY_ITEM_SCAN = createInstanceKey("research_key_item_scan");
+    public static final ResourceKey<GameTestInstance> RESEARCH_KEY_ENTITY_SCAN = createInstanceKey("research_key_entity_scan");
+    public static final ResourceKey<GameTestInstance> RESEARCH_KEY_STACK_CRAFTED = createInstanceKey("research_key_stack_crafted");
+    public static final ResourceKey<GameTestInstance> RESEARCH_KEY_TAG_CRAFTED = createInstanceKey("research_key_tag_crafted");
+    public static final ResourceKey<GameTestInstance> RESEARCH_KEY_RUNE_ENCHANTMENT = createInstanceKey("research_key_rune_enchantment");
+    public static final ResourceKey<GameTestInstance> RESEARCH_KEY_RUNE_ENCHANTMENT_PARTIAL = createInstanceKey("research_key_rune_enchantment_partial");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -175,6 +186,19 @@ public class TestInstancesPM {
         registerBeeswaxItemTests(context);
         registerDispenserItemTests(context);
         registerWandManaTests(context);
+        registerResearchKeyTests(context);
+    }
+
+    public static void registerResearchKeyTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, RESEARCH_KEY_DISCIPLINE, TestFunctionsPM.RESEARCH_KEY_DISCIPLINE.getKey());
+        registerFunction(context, RESEARCH_KEY_ENTRY, TestFunctionsPM.RESEARCH_KEY_ENTRY.getKey());
+        registerFunction(context, RESEARCH_KEY_STAGE, TestFunctionsPM.RESEARCH_KEY_STAGE.getKey());
+        registerFunction(context, RESEARCH_KEY_ITEM_SCAN, TestFunctionsPM.RESEARCH_KEY_ITEM_SCAN.getKey());
+        registerFunction(context, RESEARCH_KEY_ENTITY_SCAN, TestFunctionsPM.RESEARCH_KEY_ENTITY_SCAN.getKey());
+        registerFunction(context, RESEARCH_KEY_STACK_CRAFTED, TestFunctionsPM.RESEARCH_KEY_STACK_CRAFTED.getKey());
+        registerFunction(context, RESEARCH_KEY_TAG_CRAFTED, TestFunctionsPM.RESEARCH_KEY_TAG_CRAFTED.getKey());
+        registerFunction(context, RESEARCH_KEY_RUNE_ENCHANTMENT, TestFunctionsPM.RESEARCH_KEY_RUNE_ENCHANTMENT.getKey());
+        registerFunction(context, RESEARCH_KEY_RUNE_ENCHANTMENT_PARTIAL, TestFunctionsPM.RESEARCH_KEY_RUNE_ENCHANTMENT_PARTIAL.getKey());
     }
 
     public static void registerWandManaTests(BootstrapContext<GameTestInstance> context) {
