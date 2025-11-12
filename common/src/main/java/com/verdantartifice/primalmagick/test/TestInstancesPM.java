@@ -186,6 +186,17 @@ public class TestInstancesPM {
     // Research system tests
     public static final ResourceKey<GameTestInstance> RESEARCH_GRANT_WORKS = createInstanceKey("research_grant_works");
 
+    // Spell tests
+    public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_EARTH = createInstanceKey("damage_spells_work_earth");
+    public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_SEA = createInstanceKey("damage_spells_work_sea");
+    public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_SKY = createInstanceKey("damage_spells_work_sky");
+    public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_SUN = createInstanceKey("damage_spells_work_sun");
+    public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_MOON = createInstanceKey("damage_spells_work_moon");
+    public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_BLOOD = createInstanceKey("damage_spells_work_blood");
+    public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_INFERNAL = createInstanceKey("damage_spells_work_infernal");
+    public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_VOID = createInstanceKey("damage_spells_work_void");
+    public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_HALLOWED = createInstanceKey("damage_spells_work_hallowed");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -205,6 +216,19 @@ public class TestInstancesPM {
         registerResearchKeyTests(context);
         registerResearchRequirementTests(context);
         registerResearchTests(context);
+        registerSpellTests(context);
+    }
+
+    public static void registerSpellTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, DAMAGE_SPELLS_WORK_EARTH, TestFunctionsPM.DAMAGE_SPELLS_WORK_EARTH.getKey());
+        registerFunction(context, DAMAGE_SPELLS_WORK_SEA, TestFunctionsPM.DAMAGE_SPELLS_WORK_SEA.getKey());
+        registerFunction(context, DAMAGE_SPELLS_WORK_SKY, TestFunctionsPM.DAMAGE_SPELLS_WORK_SKY.getKey());
+        registerFunction(context, DAMAGE_SPELLS_WORK_SUN, TestFunctionsPM.DAMAGE_SPELLS_WORK_SUN.getKey());
+        registerFunction(context, DAMAGE_SPELLS_WORK_MOON, TestFunctionsPM.DAMAGE_SPELLS_WORK_MOON.getKey());
+        registerFunction(context, DAMAGE_SPELLS_WORK_BLOOD, TestFunctionsPM.DAMAGE_SPELLS_WORK_BLOOD.getKey());
+        registerFunction(context, DAMAGE_SPELLS_WORK_INFERNAL, TestFunctionsPM.DAMAGE_SPELLS_WORK_INFERNAL.getKey());
+        registerFunction(context, DAMAGE_SPELLS_WORK_VOID, TestFunctionsPM.DAMAGE_SPELLS_WORK_VOID.getKey());
+        registerFunction(context, DAMAGE_SPELLS_WORK_HALLOWED, TestFunctionsPM.DAMAGE_SPELLS_WORK_HALLOWED.getKey());
     }
 
     public static void registerResearchTests(BootstrapContext<GameTestInstance> context) {

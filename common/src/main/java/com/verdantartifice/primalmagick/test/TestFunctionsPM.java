@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
 import com.verdantartifice.primalmagick.platform.Services;
 import com.verdantartifice.primalmagick.test.attunements.AttunementTests;
 import com.verdantartifice.primalmagick.test.capabilities.PlayerKnowledgeTests;
@@ -23,6 +24,7 @@ import com.verdantartifice.primalmagick.test.items.BeeswaxTests;
 import com.verdantartifice.primalmagick.test.research.ResearchTests;
 import com.verdantartifice.primalmagick.test.research.ResearchRequirementsTests;
 import com.verdantartifice.primalmagick.test.research.ResearchKeysTests;
+import com.verdantartifice.primalmagick.test.spells.WandSpellcastTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.level.block.Blocks;
@@ -204,5 +206,16 @@ public class TestFunctionsPM {
 
     // Research system tests
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_GRANT_WORKS = Services.TEST_FUNCTIONS_REGISTRY.register("research_grant_works", () -> ResearchTests::research_grant_works);
+
+    // Spell tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_EARTH = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_earth", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.EARTH_DAMAGE.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_SEA = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_sea", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.FROST_DAMAGE.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_SKY = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_sky", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.LIGHTNING_DAMAGE.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_SUN = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_sun", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.SOLAR_DAMAGE.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_MOON = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_moon", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.LUNAR_DAMAGE.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_BLOOD = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_blood", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.BLOOD_DAMAGE.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_INFERNAL = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_infernal", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.FLAME_DAMAGE.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_VOID = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_void", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.VOID_DAMAGE.get()));
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_HALLOWED = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_hallowed", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.HOLY_DAMAGE.get()));
 
 }
