@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.test.ftux.FtuxTests;
 import com.verdantartifice.primalmagick.test.items.WandManaTests;
 import com.verdantartifice.primalmagick.test.items.DispenserTests;
 import com.verdantartifice.primalmagick.test.items.BeeswaxTests;
+import com.verdantartifice.primalmagick.test.research.ResearchRequirementsTests;
 import com.verdantartifice.primalmagick.test.research.ResearchKeysTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
@@ -186,5 +187,18 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_TAG_CRAFTED = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_tag_crafted", () -> ResearchKeysTests::tag_crafted);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_RUNE_ENCHANTMENT = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_rune_enchantment", () -> ResearchKeysTests::rune_enchantment);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_KEY_RUNE_ENCHANTMENT_PARTIAL = Services.TEST_FUNCTIONS_REGISTRY.register("research_key_rune_enchantment_partial", () -> ResearchKeysTests::rune_enchantment_partial);
+
+    // Research requirement tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_RESEARCH = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_research", () -> ResearchRequirementsTests::research_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_KNOWLEDGE = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_knowledge", () -> ResearchRequirementsTests::knowledge_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_ITEM_STACK = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_item_stack", () -> ResearchRequirementsTests::item_stack_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_ITEM_TAG = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_item_tag", () -> ResearchRequirementsTests::item_tag_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_STAT = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_stat", () -> ResearchRequirementsTests::stat_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_EXPERTISE = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_expertise", () -> ResearchRequirementsTests::expertise_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_VANILLA_ITEM_USED_STAT = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_vanilla_item_used_stat", () -> ResearchRequirementsTests::vanilla_item_used_stat_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_VANILLA_CUSTOM_STAT = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_vanilla_custom_stat", () -> ResearchRequirementsTests::vanilla_custom_stat_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_AND = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_and", () -> ResearchRequirementsTests::and_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_OR = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_or", () -> ResearchRequirementsTests::or_requirement);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_QUORUM = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_quorum", () -> ResearchRequirementsTests::quorum_requirement);
 
 }

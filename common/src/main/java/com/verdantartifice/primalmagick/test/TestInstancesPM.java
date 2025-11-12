@@ -170,6 +170,19 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> RESEARCH_KEY_RUNE_ENCHANTMENT = createInstanceKey("research_key_rune_enchantment");
     public static final ResourceKey<GameTestInstance> RESEARCH_KEY_RUNE_ENCHANTMENT_PARTIAL = createInstanceKey("research_key_rune_enchantment_partial");
 
+    // Research requirement tests
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_RESEARCH = createInstanceKey("research_requirement_research");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_KNOWLEDGE = createInstanceKey("research_requirement_knowledge");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_ITEM_STACK = createInstanceKey("research_requirement_item_stack");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_ITEM_TAG = createInstanceKey("research_requirement_item_tag");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_STAT = createInstanceKey("research_requirement_stat");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_EXPERTISE = createInstanceKey("research_requirement_expertise");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_VANILLA_ITEM_USED_STAT = createInstanceKey("research_requirement_vanilla_item_used_stat");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_VANILLA_CUSTOM_STAT = createInstanceKey("research_requirement_vanilla_custom_stat");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_AND = createInstanceKey("research_requirement_and");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_OR = createInstanceKey("research_requirement_or");
+    public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_QUORUM = createInstanceKey("research_requirement_quorum");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -187,6 +200,21 @@ public class TestInstancesPM {
         registerDispenserItemTests(context);
         registerWandManaTests(context);
         registerResearchKeyTests(context);
+        registerResearchRequirementTests(context);
+    }
+
+    public static void registerResearchRequirementTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, RESEARCH_REQUIREMENT_RESEARCH, TestFunctionsPM.RESEARCH_REQUIREMENT_RESEARCH.getKey());
+        registerFunction(context, RESEARCH_REQUIREMENT_KNOWLEDGE, TestFunctionsPM.RESEARCH_REQUIREMENT_KNOWLEDGE.getKey());
+        registerFunction(context, RESEARCH_REQUIREMENT_ITEM_STACK, TestFunctionsPM.RESEARCH_REQUIREMENT_ITEM_STACK.getKey());
+        registerFunction(context, RESEARCH_REQUIREMENT_ITEM_TAG, TestFunctionsPM.RESEARCH_REQUIREMENT_ITEM_TAG.getKey());
+        registerFunction(context, RESEARCH_REQUIREMENT_STAT, TestFunctionsPM.RESEARCH_REQUIREMENT_STAT.getKey());
+        registerFunction(context, RESEARCH_REQUIREMENT_EXPERTISE, TestFunctionsPM.RESEARCH_REQUIREMENT_EXPERTISE.getKey());
+        registerFunction(context, RESEARCH_REQUIREMENT_VANILLA_ITEM_USED_STAT, TestFunctionsPM.RESEARCH_REQUIREMENT_VANILLA_ITEM_USED_STAT.getKey(), ResourceUtils.loc("test/floor5x5x5"));
+        registerFunction(context, RESEARCH_REQUIREMENT_VANILLA_CUSTOM_STAT, TestFunctionsPM.RESEARCH_REQUIREMENT_VANILLA_CUSTOM_STAT.getKey(), ResourceUtils.loc("test/floor5x5x5"));
+        registerFunction(context, RESEARCH_REQUIREMENT_AND, TestFunctionsPM.RESEARCH_REQUIREMENT_AND.getKey());
+        registerFunction(context, RESEARCH_REQUIREMENT_OR, TestFunctionsPM.RESEARCH_REQUIREMENT_OR.getKey());
+        registerFunction(context, RESEARCH_REQUIREMENT_QUORUM, TestFunctionsPM.RESEARCH_REQUIREMENT_QUORUM.getKey());
     }
 
     public static void registerResearchKeyTests(BootstrapContext<GameTestInstance> context) {
