@@ -183,6 +183,9 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_OR = createInstanceKey("research_requirement_or");
     public static final ResourceKey<GameTestInstance> RESEARCH_REQUIREMENT_QUORUM = createInstanceKey("research_requirement_quorum");
 
+    // Research system tests
+    public static final ResourceKey<GameTestInstance> RESEARCH_GRANT_WORKS = createInstanceKey("research_grant_works");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -201,6 +204,11 @@ public class TestInstancesPM {
         registerWandManaTests(context);
         registerResearchKeyTests(context);
         registerResearchRequirementTests(context);
+        registerResearchTests(context);
+    }
+
+    public static void registerResearchTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, RESEARCH_GRANT_WORKS, TestFunctionsPM.RESEARCH_GRANT_WORKS.getKey());
     }
 
     public static void registerResearchRequirementTests(BootstrapContext<GameTestInstance> context) {

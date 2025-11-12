@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.test.ftux.FtuxTests;
 import com.verdantartifice.primalmagick.test.items.WandManaTests;
 import com.verdantartifice.primalmagick.test.items.DispenserTests;
 import com.verdantartifice.primalmagick.test.items.BeeswaxTests;
+import com.verdantartifice.primalmagick.test.research.ResearchTests;
 import com.verdantartifice.primalmagick.test.research.ResearchRequirementsTests;
 import com.verdantartifice.primalmagick.test.research.ResearchKeysTests;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -200,5 +201,8 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_AND = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_and", () -> ResearchRequirementsTests::and_requirement);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_OR = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_or", () -> ResearchRequirementsTests::or_requirement);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_REQUIREMENT_QUORUM = Services.TEST_FUNCTIONS_REGISTRY.register("research_requirement_quorum", () -> ResearchRequirementsTests::quorum_requirement);
+
+    // Research system tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> RESEARCH_GRANT_WORKS = Services.TEST_FUNCTIONS_REGISTRY.register("research_grant_works", () -> ResearchTests::research_grant_works);
 
 }
