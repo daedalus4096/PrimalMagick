@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.test.research.ResearchTests;
 import com.verdantartifice.primalmagick.test.research.ResearchRequirementsTests;
 import com.verdantartifice.primalmagick.test.research.ResearchKeysTests;
 import com.verdantartifice.primalmagick.test.spells.WandSpellcastTests;
+import com.verdantartifice.primalmagick.test.tiles.AutoChargerTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.level.block.Blocks;
@@ -217,5 +218,13 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_INFERNAL = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_infernal", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.FLAME_DAMAGE.get()));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_VOID = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_void", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.VOID_DAMAGE.get()));
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> DAMAGE_SPELLS_WORK_HALLOWED = Services.TEST_FUNCTIONS_REGISTRY.register("damage_spells_work_hallowed", () -> (helper) -> WandSpellcastTests.damage_spells_deduct_mana_from_wand_and_award_expertise(helper, SpellPayloadsPM.HOLY_DAMAGE.get()));
+
+    // Auto charger tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> AUTO_CHARGER_OUTPUT_ALLOWS_CHARGEABLE_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("auto_charger_output_allows_chargeable_items", () -> AutoChargerTests::auto_charger_output_allows_chargeable_items);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> AUTO_CHARGER_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("auto_charger_output_does_not_allow_unchargeable_items", () -> AutoChargerTests::auto_charger_output_does_not_allow_unchargeable_items);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_INSERTED = Services.TEST_FUNCTIONS_REGISTRY.register("auto_charger_can_have_chargeable_items_inserted", () -> AutoChargerTests::auto_charger_can_have_chargeable_items_inserted);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> AUTO_CHARGER_CANNOT_HAVE_UNCHARGEABLE_ITEMS_INSERTED = Services.TEST_FUNCTIONS_REGISTRY.register("auto_charger_cannot_have_unchargeable_items_inserted", () -> AutoChargerTests::auto_charger_cannot_have_unchargeable_items_inserted);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_REMOVED = Services.TEST_FUNCTIONS_REGISTRY.register("auto_charger_can_have_chargeable_items_removed", () -> AutoChargerTests::auto_charger_can_have_chargeable_items_removed);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> AUTO_CHARGER_SIPHONS_INTO_CHARGEABLE_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("auto_charger_siphons_into_chargeable_items", () -> AutoChargerTests::auto_charger_siphons_into_chargeable_items);
 
 }

@@ -197,6 +197,14 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_VOID = createInstanceKey("damage_spells_work_void");
     public static final ResourceKey<GameTestInstance> DAMAGE_SPELLS_WORK_HALLOWED = createInstanceKey("damage_spells_work_hallowed");
 
+    // Auto charger tests
+    public static final ResourceKey<GameTestInstance> AUTO_CHARGER_OUTPUT_ALLOWS_CHARGEABLE_ITEMS = createInstanceKey("auto_charger_output_allows_chargeable_items");
+    public static final ResourceKey<GameTestInstance> AUTO_CHARGER_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS = createInstanceKey("auto_charger_output_does_not_allow_unchargeable_items");
+    public static final ResourceKey<GameTestInstance> AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_INSERTED = createInstanceKey("auto_charger_can_have_chargeable_items_inserted");
+    public static final ResourceKey<GameTestInstance> AUTO_CHARGER_CANNOT_HAVE_UNCHARGEABLE_ITEMS_INSERTED = createInstanceKey("auto_charger_cannot_have_unchargeable_items_inserted");
+    public static final ResourceKey<GameTestInstance> AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_REMOVED = createInstanceKey("auto_charger_can_have_chargeable_items_removed");
+    public static final ResourceKey<GameTestInstance> AUTO_CHARGER_SIPHONS_INTO_CHARGEABLE_ITEMS = createInstanceKey("auto_charger_siphons_into_chargeable_items");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -217,6 +225,16 @@ public class TestInstancesPM {
         registerResearchRequirementTests(context);
         registerResearchTests(context);
         registerSpellTests(context);
+        registerAutoChargerTests(context);
+    }
+
+    public static void registerAutoChargerTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, AUTO_CHARGER_OUTPUT_ALLOWS_CHARGEABLE_ITEMS, TestFunctionsPM.AUTO_CHARGER_OUTPUT_ALLOWS_CHARGEABLE_ITEMS.getKey());
+        registerFunction(context, AUTO_CHARGER_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS, TestFunctionsPM.AUTO_CHARGER_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS.getKey());
+        registerFunction(context, AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_INSERTED, TestFunctionsPM.AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_INSERTED.getKey());
+        registerFunction(context, AUTO_CHARGER_CANNOT_HAVE_UNCHARGEABLE_ITEMS_INSERTED, TestFunctionsPM.AUTO_CHARGER_CANNOT_HAVE_UNCHARGEABLE_ITEMS_INSERTED.getKey());
+        registerFunction(context, AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_REMOVED, TestFunctionsPM.AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_REMOVED.getKey());
+        registerFunction(context, AUTO_CHARGER_SIPHONS_INTO_CHARGEABLE_ITEMS, TestFunctionsPM.AUTO_CHARGER_SIPHONS_INTO_CHARGEABLE_ITEMS.getKey(), ResourceUtils.loc("test/floor5x5x5"));
     }
 
     public static void registerSpellTests(BootstrapContext<GameTestInstance> context) {
