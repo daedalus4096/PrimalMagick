@@ -205,6 +205,14 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_REMOVED = createInstanceKey("auto_charger_can_have_chargeable_items_removed");
     public static final ResourceKey<GameTestInstance> AUTO_CHARGER_SIPHONS_INTO_CHARGEABLE_ITEMS = createInstanceKey("auto_charger_siphons_into_chargeable_items");
 
+    // Mana battery tests
+    public static final ResourceKey<GameTestInstance> MANA_BATTERY_CAN_HAVE_ITS_MENU_OPENED = createInstanceKey("mana_battery_can_have_its_menu_opened");
+    public static final ResourceKey<GameTestInstance> MANA_BATTERY_OUTPUT_ALLOWS_CHARGEABLE_ITEMS = createInstanceKey("mana_battery_output_allows_chargeable_items");
+    public static final ResourceKey<GameTestInstance> MANA_BATTERY_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS = createInstanceKey("mana_battery_output_does_not_allow_unchargeable_items");
+    public static final ResourceKey<GameTestInstance> MANA_BATTERY_INPUT_ALLOWS_ESSENCE = createInstanceKey("mana_battery_input_allows_essence");
+    public static final ResourceKey<GameTestInstance> MANA_BATTERY_INPUT_ALLOWS_WANDS = createInstanceKey("mana_battery_input_allows_wands");
+    public static final ResourceKey<GameTestInstance> MANA_BATTERY_SIPHONS_FROM_NEARBY_FONTS = createInstanceKey("mana_battery_siphons_from_nearby_fonts");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -226,6 +234,16 @@ public class TestInstancesPM {
         registerResearchTests(context);
         registerSpellTests(context);
         registerAutoChargerTests(context);
+        registerManaBatteryTests(context);
+    }
+
+    public static void registerManaBatteryTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, MANA_BATTERY_CAN_HAVE_ITS_MENU_OPENED, TestFunctionsPM.MANA_BATTERY_CAN_HAVE_ITS_MENU_OPENED.getKey());
+        registerFunction(context, MANA_BATTERY_OUTPUT_ALLOWS_CHARGEABLE_ITEMS, TestFunctionsPM.MANA_BATTERY_OUTPUT_ALLOWS_CHARGEABLE_ITEMS.getKey());
+        registerFunction(context, MANA_BATTERY_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS, TestFunctionsPM.MANA_BATTERY_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS.getKey());
+        registerFunction(context, MANA_BATTERY_INPUT_ALLOWS_ESSENCE, TestFunctionsPM.MANA_BATTERY_INPUT_ALLOWS_ESSENCE.getKey());
+        registerFunction(context, MANA_BATTERY_INPUT_ALLOWS_WANDS, TestFunctionsPM.MANA_BATTERY_INPUT_ALLOWS_WANDS.getKey());
+        registerFunction(context, MANA_BATTERY_SIPHONS_FROM_NEARBY_FONTS, TestFunctionsPM.MANA_BATTERY_SIPHONS_FROM_NEARBY_FONTS.getKey());
     }
 
     public static void registerAutoChargerTests(BootstrapContext<GameTestInstance> context) {

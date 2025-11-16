@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.test.research.ResearchTests;
 import com.verdantartifice.primalmagick.test.research.ResearchRequirementsTests;
 import com.verdantartifice.primalmagick.test.research.ResearchKeysTests;
 import com.verdantartifice.primalmagick.test.spells.WandSpellcastTests;
+import com.verdantartifice.primalmagick.test.tiles.ManaBatteryTests;
 import com.verdantartifice.primalmagick.test.tiles.AutoChargerTests;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.damagesource.DamageSources;
@@ -226,5 +227,13 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> AUTO_CHARGER_CANNOT_HAVE_UNCHARGEABLE_ITEMS_INSERTED = Services.TEST_FUNCTIONS_REGISTRY.register("auto_charger_cannot_have_unchargeable_items_inserted", () -> AutoChargerTests::auto_charger_cannot_have_unchargeable_items_inserted);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> AUTO_CHARGER_CAN_HAVE_CHARGEABLE_ITEMS_REMOVED = Services.TEST_FUNCTIONS_REGISTRY.register("auto_charger_can_have_chargeable_items_removed", () -> AutoChargerTests::auto_charger_can_have_chargeable_items_removed);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> AUTO_CHARGER_SIPHONS_INTO_CHARGEABLE_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("auto_charger_siphons_into_chargeable_items", () -> AutoChargerTests::auto_charger_siphons_into_chargeable_items);
+
+    // Mana battery tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_BATTERY_CAN_HAVE_ITS_MENU_OPENED = Services.TEST_FUNCTIONS_REGISTRY.register("mana_battery_can_have_its_menu_opened", () -> ManaBatteryTests::mana_battery_can_have_its_menu_opened);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_BATTERY_OUTPUT_ALLOWS_CHARGEABLE_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("mana_battery_output_allows_chargeable_items", () -> ManaBatteryTests::mana_battery_output_allows_chargeable_items);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_BATTERY_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("mana_battery_output_does_not_allow_unchargeable_items", () -> ManaBatteryTests::mana_battery_output_does_not_allow_unchargeable_items);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_BATTERY_INPUT_ALLOWS_ESSENCE = Services.TEST_FUNCTIONS_REGISTRY.register("mana_battery_input_allows_essence", () -> ManaBatteryTests::mana_battery_input_allows_essence);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_BATTERY_INPUT_ALLOWS_WANDS = Services.TEST_FUNCTIONS_REGISTRY.register("mana_battery_input_allows_wands", () -> ManaBatteryTests::mana_battery_input_allows_wands);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_BATTERY_SIPHONS_FROM_NEARBY_FONTS = Services.TEST_FUNCTIONS_REGISTRY.register("mana_battery_siphons_from_nearby_fonts", () -> ManaBatteryTests::mana_battery_siphons_from_nearby_fonts);
 
 }
