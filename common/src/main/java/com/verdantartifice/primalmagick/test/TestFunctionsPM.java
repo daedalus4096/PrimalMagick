@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.test.research.ResearchTests;
 import com.verdantartifice.primalmagick.test.research.ResearchRequirementsTests;
 import com.verdantartifice.primalmagick.test.research.ResearchKeysTests;
 import com.verdantartifice.primalmagick.test.spells.WandSpellcastTests;
+import com.verdantartifice.primalmagick.test.tiles.ManaFontTests;
 import com.verdantartifice.primalmagick.test.tiles.ManaBatteryTests;
 import com.verdantartifice.primalmagick.test.tiles.AutoChargerTests;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -235,5 +236,9 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_BATTERY_INPUT_ALLOWS_ESSENCE = Services.TEST_FUNCTIONS_REGISTRY.register("mana_battery_input_allows_essence", () -> ManaBatteryTests::mana_battery_input_allows_essence);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_BATTERY_INPUT_ALLOWS_WANDS = Services.TEST_FUNCTIONS_REGISTRY.register("mana_battery_input_allows_wands", () -> ManaBatteryTests::mana_battery_input_allows_wands);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_BATTERY_SIPHONS_FROM_NEARBY_FONTS = Services.TEST_FUNCTIONS_REGISTRY.register("mana_battery_siphons_from_nearby_fonts", () -> ManaBatteryTests::mana_battery_siphons_from_nearby_fonts);
+
+    // Mana font tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_FONT_SIPHONED_BY_WAND = Services.TEST_FUNCTIONS_REGISTRY.register("mana_font_siphoned_by_wand", () -> ManaFontTests::mana_font_siphoned_by_wand);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_FONT_RECHARGES = Services.TEST_FUNCTIONS_REGISTRY.register("mana_font_recharges", () -> ManaFontTests::mana_font_recharges);
 
 }

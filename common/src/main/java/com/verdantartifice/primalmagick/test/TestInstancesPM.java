@@ -213,6 +213,10 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> MANA_BATTERY_INPUT_ALLOWS_WANDS = createInstanceKey("mana_battery_input_allows_wands");
     public static final ResourceKey<GameTestInstance> MANA_BATTERY_SIPHONS_FROM_NEARBY_FONTS = createInstanceKey("mana_battery_siphons_from_nearby_fonts");
 
+    // Mana font tests
+    public static final ResourceKey<GameTestInstance> MANA_FONT_SIPHONED_BY_WAND = createInstanceKey("mana_font_siphoned_by_wand");
+    public static final ResourceKey<GameTestInstance> MANA_FONT_RECHARGES = createInstanceKey("mana_font_recharges");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -235,6 +239,12 @@ public class TestInstancesPM {
         registerSpellTests(context);
         registerAutoChargerTests(context);
         registerManaBatteryTests(context);
+        registerManaFontTests(context);
+    }
+
+    public static void registerManaFontTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, MANA_FONT_SIPHONED_BY_WAND, TestFunctionsPM.MANA_FONT_SIPHONED_BY_WAND.getKey());
+        registerFunction(context, MANA_FONT_RECHARGES, TestFunctionsPM.MANA_FONT_RECHARGES.getKey());
     }
 
     public static void registerManaBatteryTests(BootstrapContext<GameTestInstance> context) {
