@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.test.research.ResearchTests;
 import com.verdantartifice.primalmagick.test.research.ResearchRequirementsTests;
 import com.verdantartifice.primalmagick.test.research.ResearchKeysTests;
 import com.verdantartifice.primalmagick.test.spells.WandSpellcastTests;
+import com.verdantartifice.primalmagick.test.tiles.WandChargerTests;
 import com.verdantartifice.primalmagick.test.tiles.ManaFontTests;
 import com.verdantartifice.primalmagick.test.tiles.ManaBatteryTests;
 import com.verdantartifice.primalmagick.test.tiles.AutoChargerTests;
@@ -241,4 +242,12 @@ public class TestFunctionsPM {
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_FONT_SIPHONED_BY_WAND = Services.TEST_FUNCTIONS_REGISTRY.register("mana_font_siphoned_by_wand", () -> ManaFontTests::mana_font_siphoned_by_wand);
     public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> MANA_FONT_RECHARGES = Services.TEST_FUNCTIONS_REGISTRY.register("mana_font_recharges", () -> ManaFontTests::mana_font_recharges);
 
+    // Wand charger tests
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CHARGER_CAN_HAVE_ITS_MENU_OPENED = Services.TEST_FUNCTIONS_REGISTRY.register("wand_charger_can_have_its_menu_opened", () -> WandChargerTests::wand_charger_can_have_its_menu_opened);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CHARGER_OUTPUT_ALLOWS_CHARGEABLE_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("wand_charger_output_allows_chargeable_items", () -> WandChargerTests::wand_charger_output_allows_chargeable_items);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CHARGER_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("wand_charger_output_does_not_allow_unchargeable_items", () -> WandChargerTests::wand_charger_output_does_not_allow_unchargeable_items);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CHARGER_INPUT_ALLOWS_ESSENCE = Services.TEST_FUNCTIONS_REGISTRY.register("wand_charger_input_allows_essence", () -> WandChargerTests::wand_charger_input_allows_essence);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CHARGER_INPUT_DOES_NOT_ALLOW_NON_ESSENCE = Services.TEST_FUNCTIONS_REGISTRY.register("wand_charger_input_does_not_allow_non_essence", () -> WandChargerTests::wand_charger_input_does_not_allow_non_essence);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CHARGER_CAN_CHARGE_WITH_RIGHT_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("wand_charger_can_charge_with_right_items", () -> WandChargerTests::wand_charger_can_charge_with_right_items);
+    public static final IRegistryItem<Consumer<GameTestHelper>, Consumer<GameTestHelper>> WAND_CHARGER_DO_CHARGE_WITH_RIGHT_ITEMS = Services.TEST_FUNCTIONS_REGISTRY.register("wand_charger_do_charge_with_right_items", () -> WandChargerTests::wand_charger_do_charge_with_right_items);
 }

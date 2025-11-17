@@ -217,6 +217,15 @@ public class TestInstancesPM {
     public static final ResourceKey<GameTestInstance> MANA_FONT_SIPHONED_BY_WAND = createInstanceKey("mana_font_siphoned_by_wand");
     public static final ResourceKey<GameTestInstance> MANA_FONT_RECHARGES = createInstanceKey("mana_font_recharges");
 
+    // Wand charger tests
+    public static final ResourceKey<GameTestInstance> WAND_CHARGER_CAN_HAVE_ITS_MENU_OPENED = createInstanceKey("wand_charger_can_have_its_menu_opened");
+    public static final ResourceKey<GameTestInstance> WAND_CHARGER_OUTPUT_ALLOWS_CHARGEABLE_ITEMS = createInstanceKey("wand_charger_output_allows_chargeable_items");
+    public static final ResourceKey<GameTestInstance> WAND_CHARGER_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS = createInstanceKey("wand_charger_output_does_not_allow_unchargeable_items");
+    public static final ResourceKey<GameTestInstance> WAND_CHARGER_INPUT_ALLOWS_ESSENCE = createInstanceKey("wand_charger_input_allows_essence");
+    public static final ResourceKey<GameTestInstance> WAND_CHARGER_INPUT_DOES_NOT_ALLOW_NON_ESSENCE = createInstanceKey("wand_charger_input_does_not_allow_essence");
+    public static final ResourceKey<GameTestInstance> WAND_CHARGER_CAN_CHARGE_WITH_RIGHT_ITEMS = createInstanceKey("wand_charger_can_charge_with_right_items");
+    public static final ResourceKey<GameTestInstance> WAND_CHARGER_DO_CHARGE_WITH_RIGHT_ITEMS = createInstanceKey("wand_charger_do_charge_with_right_items");
+
     public static void bootstrap(BootstrapContext<GameTestInstance> context) {
         registerFunction(context, CANARY, TestFunctionsPM.CANARY.getKey());
         registerAttunementBuffTests(context);
@@ -240,6 +249,17 @@ public class TestInstancesPM {
         registerAutoChargerTests(context);
         registerManaBatteryTests(context);
         registerManaFontTests(context);
+        registerWandChargerTests(context);
+    }
+
+    public static void registerWandChargerTests(BootstrapContext<GameTestInstance> context) {
+        registerFunction(context, WAND_CHARGER_CAN_HAVE_ITS_MENU_OPENED, TestFunctionsPM.WAND_CHARGER_CAN_HAVE_ITS_MENU_OPENED.getKey());
+        registerFunction(context, WAND_CHARGER_OUTPUT_ALLOWS_CHARGEABLE_ITEMS, TestFunctionsPM.WAND_CHARGER_OUTPUT_ALLOWS_CHARGEABLE_ITEMS.getKey());
+        registerFunction(context, WAND_CHARGER_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS, TestFunctionsPM.WAND_CHARGER_OUTPUT_DOES_NOT_ALLOW_UNCHARGEABLE_ITEMS.getKey());
+        registerFunction(context, WAND_CHARGER_INPUT_ALLOWS_ESSENCE, TestFunctionsPM.WAND_CHARGER_INPUT_ALLOWS_ESSENCE.getKey());
+        registerFunction(context, WAND_CHARGER_INPUT_DOES_NOT_ALLOW_NON_ESSENCE, TestFunctionsPM.WAND_CHARGER_INPUT_DOES_NOT_ALLOW_NON_ESSENCE.getKey());
+        registerFunction(context, WAND_CHARGER_CAN_CHARGE_WITH_RIGHT_ITEMS, TestFunctionsPM.WAND_CHARGER_CAN_CHARGE_WITH_RIGHT_ITEMS.getKey());
+        registerFunction(context, WAND_CHARGER_DO_CHARGE_WITH_RIGHT_ITEMS, TestFunctionsPM.WAND_CHARGER_DO_CHARGE_WITH_RIGHT_ITEMS.getKey());
     }
 
     public static void registerManaFontTests(BootstrapContext<GameTestInstance> context) {
