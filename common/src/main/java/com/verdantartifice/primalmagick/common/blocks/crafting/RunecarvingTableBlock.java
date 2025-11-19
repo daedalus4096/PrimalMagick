@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTi
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -41,7 +42,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class RunecarvingTableBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<RunecarvingTableBlock> CODEC = simpleCodec(RunecarvingTableBlock::new);
     
-    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    protected static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public RunecarvingTableBlock(Block.Properties properties) {
         super(properties);
@@ -91,18 +92,11 @@ public class RunecarvingTableBlock extends BaseEntityBlock implements SimpleWate
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return Services.BLOCK_ENTITY_PROTOTYPES.runecarvingTable().create(pos, state);
     }
-    
+
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Drop the tile entity's inventory into the world when the block is replaced
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RunecarvingTableTileEntity castTile) {
-                castTile.dropContents(worldIn, pos);
-                worldIn.updateNeighbourForOutputSignal(pos, this);
-            }
-            super.onRemove(state, worldIn, pos, newState, isMoving);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        level.updateNeighbourForOutputSignal(pos, this);
     }
 
     protected static final VoxelShape SHAPE = Shapes.or(

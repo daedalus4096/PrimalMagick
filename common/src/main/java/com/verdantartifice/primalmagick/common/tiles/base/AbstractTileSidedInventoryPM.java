@@ -152,6 +152,12 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         }
     }
 
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+        this.dropContents(this.getLevel(), pos);
+    }
+
     protected boolean isSyncedSlot(int inventoryIndex, int slotIndex) {
         return this.getSyncedSlotIndices(inventoryIndex).contains(Integer.valueOf(slotIndex));
     }

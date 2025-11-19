@@ -3,18 +3,17 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.rituals.IRitualStabilizer;
-import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -69,7 +68,7 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
     }
     
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (handIn == InteractionHand.MAIN_HAND) {
             if (worldIn.getBlockEntity(pos) instanceof OfferingPedestalTileEntity pedestalTile) {
                 if (pedestalTile.getItem().isEmpty() && !stack.isEmpty()) {
@@ -82,7 +81,7 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
                     }
                     player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
-                    return ItemInteractionResult.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
@@ -139,18 +138,11 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
     public float getSymmetryPenalty(Level world, BlockPos pos) {
         return 0.01F;
     }
-    
+
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Drop the tile entity's inventory into the world when the block is replaced
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
-                pedestalTile.dropContents(worldIn, pos);
-                worldIn.updateNeighbourForOutputSignal(pos, this);
-            }
-            super.onRemove(state, worldIn, pos, newState, isMoving);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        level.updateNeighbourForOutputSignal(pos, this);
     }
 
     @Override

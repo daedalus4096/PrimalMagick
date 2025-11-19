@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
@@ -31,7 +32,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -51,7 +52,7 @@ import java.util.stream.Collectors;
 public class ScribeTableBlock extends BaseEntityBlock {
     public static final MapCodec<ScribeTableBlock> CODEC = simpleCodec(ScribeTableBlock::new);
     
-    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    protected static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final List<BlockPos> BOOKSHELF_OFFSETS = BlockPos.betweenClosedStream(-2, 0, -2, 2, 1, 2)
             .filter(pos -> Math.abs(pos.getX()) == 2 || Math.abs(pos.getZ()) == 2)
             .map(BlockPos::immutable)
@@ -113,16 +114,9 @@ public class ScribeTableBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        // Drop the tile entity's inventory into the world when the block is replaced
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity tile = pLevel.getBlockEntity(pPos);
-            if (tile instanceof ScribeTableTileEntity castTile) {
-                castTile.dropContents(pLevel, pPos);
-                pLevel.updateNeighbourForOutputSignal(pPos, this);
-            }
-            super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        level.updateNeighbourForOutputSignal(pos, this);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTi
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,7 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -36,7 +37,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public class EssenceTransmuterBlock extends BaseEntityBlock {
     public static final MapCodec<EssenceTransmuterBlock> CODEC = simpleCodec(EssenceTransmuterBlock::new);
     
-    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    protected static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     
     public EssenceTransmuterBlock(Block.Properties properties) {
         super(properties);
@@ -91,18 +92,11 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
         }
         return InteractionResult.SUCCESS;
     }
-    
+
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Drop the tile entity's inventory into the world when the block is replaced
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof EssenceTransmuterTileEntity transmuterTile) {
-                transmuterTile.dropContents(worldIn, pos);
-                worldIn.updateNeighbourForOutputSignal(pos, this);
-            }
-            super.onRemove(state, worldIn, pos, newState, isMoving);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        level.updateNeighbourForOutputSignal(pos, this);
     }
 
     @Override

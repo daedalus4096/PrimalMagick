@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEn
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -35,7 +36,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class ResearchTableBlock extends BaseEntityBlock {
     public static final MapCodec<ResearchTableBlock> CODEC = simpleCodec(ResearchTableBlock::new);
     
-    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    protected static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public ResearchTableBlock(Block.Properties properties) {
         super(properties);
@@ -91,18 +92,11 @@ public class ResearchTableBlock extends BaseEntityBlock {
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return Services.BLOCK_ENTITY_PROTOTYPES.researchTable().create(pos, state);
     }
-    
+
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Drop the tile entity's inventory into the world when the block is replaced
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof ResearchTableTileEntity castTile) {
-                castTile.dropContents(worldIn, pos);
-                worldIn.updateNeighbourForOutputSignal(pos, this);
-            }
-            super.onRemove(state, worldIn, pos, newState, isMoving);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        level.updateNeighbourForOutputSignal(pos, this);
     }
 
     @Override
