@@ -19,9 +19,7 @@ import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -35,6 +33,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -172,37 +172,30 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         return this.burnTime > 0;
     }
     
-    @SuppressWarnings("deprecation")
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
         
-        this.burnTime = compound.getInt("BurnTime");
-        this.burnTimeTotal = compound.getInt("BurnTimeTotal");
-        this.cookTime = compound.getInt("CookTime");
-        this.cookTimeTotal = compound.getInt("CookTimeTotal");
+        this.burnTime = input.getIntOr("BurnTime", 0);
+        this.burnTimeTotal = input.getIntOr("BurnTimeTotal", 0);
+        this.cookTime = input.getIntOr("CookTime", 0);
+        this.cookTimeTotal = input.getIntOr("CookTimeTotal", 0);
         this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
         
         this.ownerUUID = null;
-        if (compound.contains("OwnerUUID")) {
-            String ownerUUIDStr = compound.getString("OwnerUUID");
-            if (!ownerUUIDStr.isEmpty()) {
-                this.ownerUUID = UUID.fromString(ownerUUIDStr);
-            }
-        }
+        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
     }
     
-    @SuppressWarnings("deprecation")
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("BurnTime", this.burnTime);
-        compound.putInt("BurnTimeTotal", this.burnTimeTotal);
-        compound.putInt("CookTime", this.cookTime);
-        compound.putInt("CookTimeTotal", this.cookTimeTotal);
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("BurnTime", this.burnTime);
+        output.putInt("BurnTimeTotal", this.burnTimeTotal);
+        output.putInt("CookTime", this.cookTime);
+        output.putInt("CookTimeTotal", this.cookTimeTotal);
         compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
         if (this.ownerUUID != null) {
-            compound.putString("OwnerUUID", this.ownerUUID.toString());
+            output.putString("OwnerUUID", this.ownerUUID.toString());
         }
     }
 

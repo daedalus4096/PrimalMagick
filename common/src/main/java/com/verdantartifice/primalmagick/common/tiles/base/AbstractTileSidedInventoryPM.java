@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.items.IItemHandlerChangeListener;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -23,6 +22,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -229,34 +230,31 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     }
 
     @Override
-    public void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
         for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
             this.inventories.get(invIndex).clear();
         }
-        if (!this.tryLoadLootTable(pTag)) {
-            if (pTag.contains("TileSidedInventoriesPM")) {
-                ListTag listTag = pTag.getList("TileSidedInventoriesPM", Tag.TAG_COMPOUND);
-                for (int invIndex = 0; invIndex < this.getInventoryCount() && invIndex < listTag.size(); invIndex++) {
-                    CompoundTag invTag = listTag.getCompound(invIndex);
-                    ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex), pRegistries);
+        if (!this.tryLoadLootTable(input)) {
+            input.childrenList("TileSidedInventoriesPM").ifPresent(childInputList -> {
+                List<ValueInput> indexedList = childInputList.stream().toList();
+                for (int invIndex = 0; invIndex < this.getInventoryCount() && invIndex < indexedList.size(); invIndex++) {
+                    ContainerHelper.loadAllItems(indexedList.get(invIndex), this.inventories.get(invIndex));
                 }
-            }
+            });
         }
     }
     
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
-        ListTag listTag = new ListTag();
-        if (!this.trySaveLootTable(pTag)) {
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        if (!this.trySaveLootTable(output)) {
+            ValueOutput.ValueOutputList childOutputList = output.childrenList("TileSidedInventoriesPM");
             for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
-                CompoundTag invTag = new CompoundTag();
-                ContainerHelper.saveAllItems(invTag, this.inventories.get(invIndex), pRegistries);
-                listTag.add(invIndex, invTag);
+                ValueOutput childOutput = childOutputList.addChild();
+                ContainerHelper.saveAllItems(childOutput, this.inventories.get(invIndex));
             }
         }
-        pTag.put("TileSidedInventoriesPM", listTag);
     }
 
     protected void doInventorySync() {
@@ -330,24 +328,24 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         return Optional.empty();
     }
 
-    protected boolean tryLoadLootTable(CompoundTag pTag) {
-        if (pTag.contains("LootTable", Tag.TAG_STRING)) {
-            this.lootTable = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(pTag.getString("LootTable")));
-            this.lootTableSeed = pTag.getLong("LootTableSeed");
+    protected boolean tryLoadLootTable(ValueInput input) {
+        Optional<String> tableLoc = input.getString("LootTable");
+        Optional<Long> tableSeed = input.getLong("LootTableSeed");
+        if (tableLoc.isPresent() && tableSeed.isPresent()) {
+            this.lootTable = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(tableLoc.get()));
+            this.lootTableSeed = tableSeed.get();
             return true;
         } else {
             return false;
         }
     }
 
-    protected boolean trySaveLootTable(CompoundTag pTag) {
+    protected boolean trySaveLootTable(ValueOutput output) {
         if (this.lootTable == null) {
             return false;
         } else {
-            pTag.putString("LootTable", this.lootTable.location().toString());
-            if (this.lootTableSeed != 0L) {
-                pTag.putLong("LootTableSeed", this.lootTableSeed);
-            }
+            output.putString("LootTable", this.lootTable.location().toString());
+            output.putLong("LootTableSeed", this.lootTableSeed);
             return true;
         }
     }
