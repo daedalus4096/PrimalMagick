@@ -7,22 +7,20 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
-import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -37,6 +35,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -107,23 +107,19 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.processTime = compound.getInt("ProcessTime");
-        this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
-            LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.processTime = input.getIntOr("ProcessTime", 0);
+        this.processTimeTotal = input.getIntOr("ProcessTimeTotal", 0);
+        input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("ProcessTime", this.processTime);
-        compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
-            LOGGER.error("Failed to encode mana storage: {}", msg);
-        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("ProcessTime", this.processTime);
+        output.putInt("ProcessTimeTotal", this.processTimeTotal);
+        output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
     }
 
     @Override

@@ -10,13 +10,13 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterMenu;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
-import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
@@ -24,14 +24,10 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -43,6 +39,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -133,42 +131,30 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
         return this.manaStorage;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.processTime = compound.getInt("ProcessTime");
-        this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
-            LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
+    public void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.processTime = input.getIntOr("ProcessTime", 0);
+        this.processTimeTotal = input.getIntOr("ProcessTimeTotal", 0);
+        input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
         this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
-        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(ResourceLocation.parse(compound.getString("NextSource"))) : null;
-        
+        this.nextOutputSource = input.read("NextSource", Source.CODEC).orElse(null);
+
         this.ownerUUID = null;
-        if (compound.contains("OwnerUUID")) {
-            String ownerUUIDStr = compound.getString("OwnerUUID");
-            if (!ownerUUIDStr.isEmpty()) {
-                this.ownerUUID = UUID.fromString(ownerUUIDStr);
-            }
-        }
+        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("ProcessTime", this.processTime);
-        compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
-            LOGGER.error("Failed to encode mana storage: {}", msg);
-        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("ProcessTime", this.processTime);
+        output.putInt("ProcessTimeTotal", this.processTimeTotal);
+        output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
         compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
-        if (this.nextOutputSource != null) {
-            compound.putString("NextSource", this.nextOutputSource.getId().toString());
-        }
+        output.storeNullable("NextSource", Source.CODEC, this.nextOutputSource);
         if (this.ownerUUID != null) {
-            compound.putString("OwnerUUID", this.ownerUUID.toString());
+            output.putString("OwnerUUID", this.ownerUUID.toString());
         }
     }
 

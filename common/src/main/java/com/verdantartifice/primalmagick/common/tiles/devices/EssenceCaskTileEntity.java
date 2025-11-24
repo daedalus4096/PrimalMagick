@@ -18,10 +18,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -36,6 +33,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -204,40 +203,31 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.loadContentsNbt(compound);
-    }
-    
-    protected void loadContentsNbt(CompoundTag compound) {
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
         this.contents.clear();
-        CompoundTag contentsTag = compound.getCompound("CaskContents");
-        for (EssenceType type : EssenceType.values()) {
-            CompoundTag typeContents = contentsTag.getCompound(type.getSerializedName());
-            for (Source source : Sources.getAllSorted()) {
-                int count = typeContents.getInt(source.getId().toString());
-                this.contents.put(type, source, count);
+        input.child("CaskContents").ifPresent(contentsInput -> {
+            for (EssenceType type : EssenceType.values()) {
+                ValueInput typeInput = contentsInput.childOrEmpty(type.getSerializedName());
+                for (Source source : Sources.getAllSorted()) {
+                    int count = typeInput.getIntOr(source.getId().toString(), 0);
+                    this.contents.put(type, source, count);
+                }
             }
-        }
+        });
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.put("CaskContents", this.getContentsNbt());
-    }
-    
-    protected CompoundTag getContentsNbt() {
-        CompoundTag contentsTag = new CompoundTag();
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        ValueOutput contentsOutput = output.child("CaskContents");
         for (EssenceType type : EssenceType.values()) {
-            CompoundTag typeContents = new CompoundTag();
+            ValueOutput typeOutput = contentsOutput.child(type.getSerializedName());
             for (Source source : Sources.getAllSorted()) {
                 int count = this.contents.contains(type, source) ? this.contents.get(type, source) : 0;
-                typeContents.put(source.getId().toString(), IntTag.valueOf(count));
+                typeOutput.putInt(source.getId().toString(), count);
             }
-            contentsTag.put(type.getSerializedName(), typeContents);
         }
-        return contentsTag;
     }
 
     public void dropContents() {
