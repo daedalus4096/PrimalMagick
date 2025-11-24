@@ -41,15 +41,9 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -69,6 +63,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.apache.logging.log4j.LogManager;
@@ -196,82 +192,48 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.active = compound.getBoolean("Active");
-        this.currentStepComplete = compound.getBoolean("CurrentStepComplete");
-        this.activeCount = compound.getInt("ActiveCount");
-        this.nextCheckCount = compound.getInt("NextCheckCount");
-        this.stability = Mth.clamp(compound.getFloat("Stability"), MIN_STABILITY, MAX_STABILITY);
-        
-        if (compound.contains("ActivePlayer", Tag.TAG_COMPOUND)) {
-            this.activePlayerId = NbtUtils.loadUUID(compound.getCompound("ActivePlayer"));
-        } else {
-            this.activePlayerId = null;
-        }
-        
-        this.activeRecipeId = compound.contains("ActiveRecipeId", Tag.TAG_STRING) ? 
-                ResourceLocation.parse(compound.getString("ActiveRecipeId")) : 
-                null;
-        
-        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
-        
-        this.currentStep = null;
-        if (compound.contains("CurrentStep")) {
-            AbstractRitualStep.dispatchCodec().parse(registryOps, compound.get("CurrentStep"))
-                .resultOrPartial(msg -> LOGGER.error("Failed to decode current ritual step: {}", msg))
-                .ifPresent(decodedStep -> this.currentStep = decodedStep);
-        }
-                
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.active = input.getBooleanOr("Active", false);
+        this.currentStepComplete = input.getBooleanOr("CurrentStepComplete", false);
+        this.activeCount = input.getIntOr("ActiveCount", 0);
+        this.nextCheckCount = input.getIntOr("NextCheckCount", 0);
+        this.stability = Mth.clamp(input.getFloatOr("Stability", 0F), MIN_STABILITY, MAX_STABILITY);
+
+        this.activePlayerId = null;
+        input.getString("ActivePlayer").ifPresent(uuid -> this.activePlayerId = UUID.fromString(uuid));
+
+        this.activeRecipeId = null;
+        input.getString("ActiveRecipeId").ifPresent(id -> this.activeRecipeId = ResourceLocation.parse(id));
+
+        this.currentStep = input.read("CurrentStep", AbstractRitualStep.dispatchCodec()).orElse(null);
+
         this.remainingSteps.clear();
-        if (compound.contains("RemainingSteps")) {
-            AbstractRitualStep.dispatchCodec().listOf().parse(registryOps, compound.get("RemainingSteps"))
-                .resultOrPartial(msg -> LOGGER.error("Failed to decode remaining ritual steps: {}", msg))
-                .ifPresent(decodedSteps -> this.remainingSteps.addAll(decodedSteps));
-        }
-        
-        this.awaitedPropPos = compound.contains("AwaitedPropPos", Tag.TAG_LONG) ?
-                BlockPos.of(compound.getLong("AwaitedPropPos")) :
-                null;
-                
-        this.channeledOfferingPos = compound.contains("ChanneledOfferingPos", Tag.TAG_LONG) ?
-                BlockPos.of(compound.getLong("ChanneledOfferingPos")) :
-                null;
+        input.read("RemainingSteps", AbstractRitualStep.dispatchCodec().listOf()).ifPresent(steps -> this.remainingSteps.addAll(steps));
+
+        this.awaitedPropPos = input.read("AwaitedPropPos", BlockPos.CODEC).orElse(null);
+        this.channeledOfferingPos = input.read("ChanneledOfferingPos", BlockPos.CODEC).orElse(null);
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
 
-        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
-
-        compound.putBoolean("Active", this.active);
-        compound.putBoolean("CurrentStepComplete", this.currentStepComplete);
-        compound.putInt("ActiveCount", this.activeCount);
-        compound.putInt("NextCheckCount", this.nextCheckCount);
-        compound.putFloat("Stability", this.stability);
+        output.putBoolean("Active", this.active);
+        output.putBoolean("CurrentStepComplete", this.currentStepComplete);
+        output.putInt("ActiveCount", this.activeCount);
+        output.putInt("NextCheckCount", this.nextCheckCount);
+        output.putFloat("Stability", this.stability);
         if (this.activePlayerId != null) {
-            compound.putUUID("ActivePlayer", this.activePlayerId);
+            output.putString("ActivePlayer", this.activePlayerId.toString());
         }
         if (this.activeRecipeId != null) {
-            compound.putString("ActiveRecipeId", this.activeRecipeId.toString());
+            output.putString("ActiveRecipeId", this.activeRecipeId.toString());
         }
-        if (this.currentStep != null) {
-            AbstractRitualStep.dispatchCodec().encodeStart(registryOps, this.currentStep)
-                .resultOrPartial(msg -> LOGGER.error("Failed to encode current ritual step: {}", msg))
-                .ifPresent(encodedStep -> compound.put("CurrentStep", encodedStep));
-        }
-        if (this.remainingSteps != null && !this.remainingSteps.isEmpty()) {
-            AbstractRitualStep.dispatchCodec().listOf().encodeStart(registryOps, this.remainingSteps)
-                .resultOrPartial(msg -> LOGGER.error("Failed to encode remaining ritual steps: {}", msg))
-                .ifPresent(encodedSteps -> compound.put("RemainingSteps", encodedSteps));
-        }
-        if (this.awaitedPropPos != null) {
-            compound.putLong("AwaitedPropPos", this.awaitedPropPos.asLong());
-        }
-        if (this.channeledOfferingPos != null) {
-            compound.putLong("ChanneledOfferingPos", this.channeledOfferingPos.asLong());
-        }
+        output.storeNullable("CurrentStep", AbstractRitualStep.dispatchCodec(), this.currentStep);
+        output.storeNullable("RemainingSteps", AbstractRitualStep.dispatchCodec().listOf(), this.remainingSteps);
+        output.storeNullable("AwaitedPropPos", BlockPos.CODEC, this.awaitedPropPos);
+        output.storeNullable("ChanneledOfferingPos", BlockPos.CODEC, this.channeledOfferingPos);
     }
     
     protected void reset() {

@@ -7,13 +7,12 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -34,19 +33,17 @@ public abstract class RitualLecternTileEntity extends AbstractTileSidedInventory
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.altarPos = compound.contains("AltarPos", Tag.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
-        this.isOpen = compound.contains("PropOpen", Tag.TAG_BYTE) ? compound.getBoolean("PropOpen") : false;
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.altarPos = input.read("AltarPos", BlockPos.CODEC).orElse(null);
+        this.isOpen = input.getBooleanOr("PropOpen", false);
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        if (this.altarPos != null) {
-            compound.putLong("AltarPos", this.altarPos.asLong());
-        }
-        compound.putBoolean("PropOpen", this.isOpen);
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.storeNullable("AltarPos", BlockPos.CODEC, this.altarPos);
+        output.putBoolean("PropOpen", this.isOpen);
     }
     
     @Override

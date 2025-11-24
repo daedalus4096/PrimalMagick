@@ -7,14 +7,14 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -77,20 +77,20 @@ public abstract class CarvedBookshelfTileEntity extends AbstractTileSidedInvento
     }
 
     @Override
-    public void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        this.lastInteractedSlot = pTag.getInt("LastInteractedSlot");
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.lastInteractedSlot = input.getIntOr("LastInteractedSlot", 0);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
-        pTag.putInt("LastInteractedSlot", this.lastInteractedSlot);
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("LastInteractedSlot", this.lastInteractedSlot);
     }
 
     @Override
     public Optional<IItemHandlerPM> getTargetRandomizedInventory() {
-        return Optional.ofNullable(this.itemHandlers.get(INPUT_INV_INDEX));
+        return Optional.of(this.itemHandlers.get(INPUT_INV_INDEX));
     }
 
     protected void updateState(int slot) {
