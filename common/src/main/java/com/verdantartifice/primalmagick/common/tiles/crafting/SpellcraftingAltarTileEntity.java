@@ -21,7 +21,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.Arrays;
@@ -62,31 +65,31 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        
-        this.phaseTicks = compound.getInt("PhaseTicks");
-        this.nextUpdate = compound.getInt("NextUpdate");
-        this.lastSegment = Segment.values()[compound.getInt("LastSegmentIndex")];
-        this.nextSegment = Segment.values()[compound.getInt("NextSegmentIndex")];
-        this.currentRotation = RotationPhase.values()[compound.getInt("CurrentRotationIndex")];
-        
-        Source last = Sources.get(ResourceLocation.parse(compound.getString("LastSource")));
-        this.lastSource = last == null ? Sources.EARTH : last;
-        Source next = Sources.get(ResourceLocation.parse(compound.getString("NextSource")));
-        this.nextSource = next == null ? Sources.EARTH : next;
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+
+        Segment[] segments = Segment.values();
+        RotationPhase[] phases = RotationPhase.values();
+
+        this.phaseTicks = input.getIntOr("PhaseTicks", 0);
+        this.nextUpdate = input.getIntOr("NextUpdate", 0);
+        this.lastSegment = segments[Mth.clamp(input.getIntOr("LastSegmentIndex", 0), 0, segments.length)];
+        this.nextSegment = segments[Mth.clamp(input.getIntOr("NextSegmentIndex", 0), 0, segments.length)];
+        this.currentRotation = phases[Mth.clamp(input.getIntOr("CurrentRotationIndex", 0), 0, phases.length)];
+        this.lastSource = input.read("LastSource", Source.CODEC).orElse(Sources.EARTH);
+        this.nextSource = input.read("NextSource", Source.CODEC).orElse(Sources.EARTH);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("PhaseTicks", this.phaseTicks);
-        compound.putInt("NextUpdate", this.nextUpdate);
-        compound.putInt("LastSegmentIndex", this.lastSegment.ordinal());
-        compound.putInt("NextSegmentIndex", this.nextSegment.ordinal());
-        compound.putInt("CurrentRotationIndex", this.currentRotation.ordinal());
-        compound.putString("LastSource", this.lastSource.getId().toString());
-        compound.putString("NextSource", this.nextSource.getId().toString());
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("PhaseTicks", this.phaseTicks);
+        output.putInt("NextUpdate", this.nextUpdate);
+        output.putInt("LastSegmentIndex", this.lastSegment.ordinal());
+        output.putInt("NextSegmentIndex", this.nextSegment.ordinal());
+        output.putInt("CurrentRotationIndex", this.currentRotation.ordinal());
+        output.store("LastSource", Source.CODEC, this.lastSource);
+        output.store("NextSource", Source.CODEC, this.nextSource);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SpellcraftingAltarTileEntity entity) {
