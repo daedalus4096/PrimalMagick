@@ -12,12 +12,12 @@ import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
 import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
-import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -26,11 +26,9 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,6 +41,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -302,38 +302,27 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.chargeTime = compound.getInt("ChargeTime");
-        this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
-        this.fontSiphonTime = compound.getInt("FontSiphonTime");
-
-        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
-            LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.chargeTime = input.getIntOr("ChargeTime", 0);
+        this.chargeTimeTotal = input.getIntOr("ChargeTimeTotal", 0);
+        this.fontSiphonTime = input.getIntOr("FontSiphonTime", 0);
+        input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
 
         this.ownerUUID = null;
-        if (compound.contains("OwnerUUID")) {
-            String ownerUUIDStr = compound.getString("OwnerUUID");
-            if (!ownerUUIDStr.isEmpty()) {
-                this.ownerUUID = UUID.fromString(ownerUUIDStr);
-            }
-        }
+        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("ChargeTime", this.chargeTime);
-        compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
-        compound.putInt("FontSiphonTime", this.fontSiphonTime);
-
-        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
-            LOGGER.error("Failed to encode mana storage: {}", msg);
-        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("ChargeTime", this.chargeTime);
+        output.putInt("ChargeTimeTotal", this.chargeTimeTotal);
+        output.putInt("FontSiphonTime", this.fontSiphonTime);
+        output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
 
         if (this.ownerUUID != null) {
-            compound.putString("OwnerUUID", this.ownerUUID.toString());
+            output.putString("OwnerUUID", this.ownerUUID.toString());
         }
     }
 

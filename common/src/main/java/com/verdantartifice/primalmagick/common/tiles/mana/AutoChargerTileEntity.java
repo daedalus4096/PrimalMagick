@@ -18,15 +18,15 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -61,24 +61,19 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.chargeTime = compound.getInt("ChargeTime");
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.chargeTime = input.getIntOr("ChargeTime", 0);
         this.ownerUUID = null;
-        if (compound.contains("OwnerUUID")) {
-            String ownerUUIDStr = compound.getString("OwnerUUID");
-            if (!ownerUUIDStr.isEmpty()) {
-                this.ownerUUID = UUID.fromString(ownerUUIDStr);
-            }
-        }
+        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("ChargeTime", this.chargeTime);
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("ChargeTime", this.chargeTime);
         if (this.ownerUUID != null) {
-            compound.putString("OwnerUUID", this.ownerUUID.toString());
+            output.putString("OwnerUUID", this.ownerUUID.toString());
         }
     }
 
@@ -133,7 +128,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
     
     public ItemStack getSyncedStack() {
-        return this.syncedInventories.get(INPUT_INV_INDEX).get(0);
+        return this.syncedInventories.get(INPUT_INV_INDEX).getFirst();
     }
     
     public void setItem(ItemStack stack) {

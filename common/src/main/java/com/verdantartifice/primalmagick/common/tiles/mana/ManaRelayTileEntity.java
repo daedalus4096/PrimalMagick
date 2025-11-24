@@ -10,13 +10,12 @@ import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -62,26 +61,24 @@ public abstract class ManaRelayTileEntity extends AbstractTilePM implements ITie
             int lastColor = this.lastSource.getColor();
             int nextColor = this.nextSource.getColor();
             float blend = Mth.clamp(((this.ticks % TICKS_PER_PHASE) + partialTicks) / (TICKS_PER_PHASE / 2F), 0F, 1F);
-            return FastColor.ARGB32.lerp(blend, lastColor, nextColor);
+            return ARGB.lerp(blend, lastColor, nextColor);
         }
     }
 
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        this.ticks = pTag.getInt("Ticks");
-        Source last = Sources.get(ResourceLocation.parse(pTag.getString("LastSource")));
-        this.lastSource = last == null ? Sources.EARTH : last;
-        Source next = Sources.get(ResourceLocation.parse(pTag.getString("NextSource")));
-        this.nextSource = next == null ? Sources.EARTH : next;
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.ticks = input.getIntOr("Ticks", 0);
+        this.lastSource = input.read("LastSource", Source.CODEC).orElse(Sources.EARTH);
+        this.nextSource = input.read("NextSource", Source.CODEC).orElse(Sources.EARTH);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
-        pTag.putInt("Ticks", this.ticks);
-        pTag.putString("LastSource", this.lastSource.getId().toString());
-        pTag.putString("NextSource", this.nextSource.getId().toString());
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Ticks", this.ticks);
+        output.store("LastSource", Source.CODEC, this.lastSource);
+        output.store("NextSource", Source.CODEC, this.nextSource);
     }
 
     @Override
