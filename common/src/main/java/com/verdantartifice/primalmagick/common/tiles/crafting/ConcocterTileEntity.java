@@ -14,23 +14,21 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -139,8 +137,8 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         this.cookTime = input.getIntOr("CookTime", 0);
         this.cookTimeTotal = input.getIntOr("CookTimeTotal", 0);
         input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
-        this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
-        
+        this.researchCache.deserialize(input.childOrEmpty("ResearchCache"));
+
         this.ownerUUID = null;
         input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
     }
@@ -151,7 +149,10 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         output.putInt("CookTime", this.cookTime);
         output.putInt("CookTimeTotal", this.cookTimeTotal);
         output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
-        compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
+
+        ValueOutput cacheChild = output.child("ResearchCache");
+        this.researchCache.serialize(cacheChild);
+
         if (this.ownerUUID != null) {
             output.putString("OwnerUUID", this.ownerUUID.toString());
         }

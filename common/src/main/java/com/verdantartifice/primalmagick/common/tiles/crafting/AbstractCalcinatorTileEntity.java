@@ -180,7 +180,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         this.burnTimeTotal = input.getIntOr("BurnTimeTotal", 0);
         this.cookTime = input.getIntOr("CookTime", 0);
         this.cookTimeTotal = input.getIntOr("CookTimeTotal", 0);
-        this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
+        this.researchCache.deserialize(input.childOrEmpty("ResearchCache"));
         
         this.ownerUUID = null;
         input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
@@ -193,7 +193,10 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         output.putInt("BurnTimeTotal", this.burnTimeTotal);
         output.putInt("CookTime", this.cookTime);
         output.putInt("CookTimeTotal", this.cookTimeTotal);
-        compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
+
+        ValueOutput cacheChild = output.child("ResearchCache");
+        this.researchCache.serialize(cacheChild);
+
         if (this.ownerUUID != null) {
             output.putString("OwnerUUID", this.ownerUUID.toString());
         }

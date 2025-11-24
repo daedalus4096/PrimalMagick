@@ -137,21 +137,23 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
         this.processTime = input.getIntOr("ProcessTime", 0);
         this.processTimeTotal = input.getIntOr("ProcessTimeTotal", 0);
         input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
-        this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
+        this.researchCache.deserialize(input.childOrEmpty("ResearchCache"));
         this.nextOutputSource = input.read("NextSource", Source.CODEC).orElse(null);
 
         this.ownerUUID = null;
         input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void saveAdditional(@NotNull ValueOutput output) {
         super.saveAdditional(output);
         output.putInt("ProcessTime", this.processTime);
         output.putInt("ProcessTimeTotal", this.processTimeTotal);
         output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
-        compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
+
+        ValueOutput cacheChild = output.child("ResearchCache");
+        this.researchCache.serialize(cacheChild);
+
         output.storeNullable("NextSource", Source.CODEC, this.nextOutputSource);
         if (this.ownerUUID != null) {
             output.putString("OwnerUUID", this.ownerUUID.toString());
