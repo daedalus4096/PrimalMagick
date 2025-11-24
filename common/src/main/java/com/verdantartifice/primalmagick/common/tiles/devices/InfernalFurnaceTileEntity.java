@@ -49,6 +49,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -144,38 +146,39 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.processTime = compound.getInt("ProcessTime");
-        this.processTimeTotal = compound.getInt("ProcessTimeTotal");
-        this.superchargeTime = compound.getInt("SuperchargeTime");
-        this.superchargeTimeTotal = compound.getInt("SuperchargeTimeTotal");
-        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
-            LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
-        
-        CompoundTag recipesUsedTag = compound.getCompound("RecipesUsed");
-        for (String key : recipesUsedTag.getAllKeys()) {
-            this.recipesUsed.put(ResourceLocation.parse(key), recipesUsedTag.getInt(key));
-        }
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.processTime = input.getIntOr("ProcessTime", 0);
+        this.processTimeTotal = input.getIntOr("ProcessTimeTotal", 0);
+        this.superchargeTime = input.getIntOr("SuperchargeTime", 0);
+        this.superchargeTimeTotal = input.getIntOr("SuperchargeTimeTotal", 0);
+        input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
+
+        this.recipesUsed.clear();
+        input.childrenListOrEmpty("RecipesUsed").stream().forEach(child -> {
+            Optional<String> recipeOpt = child.getString("Recipe");
+            Optional<Integer> countOpt = child.getInt("Count");
+            if (recipeOpt.isPresent() && countOpt.isPresent()) {
+                this.recipesUsed.put(ResourceLocation.parse(recipeOpt.get()), countOpt.get().intValue());
+            }
+        });
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("ProcessTime", this.processTime);
-        compound.putInt("ProcessTimeTotal", this.processTimeTotal);
-        compound.putInt("SuperchargeTime", this.superchargeTime);
-        compound.putInt("SuperchargeTimeTotal", this.superchargeTimeTotal);
-        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
-            LOGGER.error("Failed to encode mana storage: {}", msg);
-        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
-        
-        CompoundTag recipesUsedTag = new CompoundTag();
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("ProcessTime", this.processTime);
+        output.putInt("ProcessTimeTotal", this.processTimeTotal);
+        output.putInt("SuperchargeTime", this.superchargeTime);
+        output.putInt("SuperchargeTimeTotal", this.superchargeTimeTotal);
+        output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
+
+        ValueOutput.ValueOutputList childList = output.childrenList("RecipesUsed");
         this.recipesUsed.forEach((key, value) -> {
-            recipesUsedTag.putInt(key.toString(), value);
+            ValueOutput child = childList.addChild();
+            child.putString("Recipe", key.toString());
+            child.putInt("Count", value);
         });
-        compound.put("RecipesUsed", recipesUsedTag);
     }
 
     @Override

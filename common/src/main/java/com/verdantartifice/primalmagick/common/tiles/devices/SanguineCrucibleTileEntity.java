@@ -25,6 +25,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -62,19 +64,19 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.souls = compound.getInt("Souls");
-        this.fluidAmount = compound.getInt("FluidAmount");
-        this.charge = compound.getInt("Charge");
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.souls = input.getIntOr("Souls", 0);
+        this.fluidAmount = input.getIntOr("FluidAmount", 0);
+        this.charge = input.getIntOr("Charge", 0);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("Souls", this.souls);
-        compound.putInt("FluidAmount", this.fluidAmount);
-        compound.putInt("Charge", this.charge);
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Souls", this.souls);
+        output.putInt("FluidAmount", this.fluidAmount);
+        output.putInt("Charge", this.charge);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SanguineCrucibleTileEntity entity) {
