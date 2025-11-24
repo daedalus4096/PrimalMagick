@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.fluids.IFluidStackPM;
+import com.verdantartifice.primalmagick.common.util.IValueIOSerializablePM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 
@@ -8,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
  * Common interface mirroring the Forge and Neoforge fluid handler capability interfaces.
  * Provided here so that common code has a usable reference to capability functions.
  */
-public interface IFluidHandlerPM {
+public interface IFluidHandlerPM extends IValueIOSerializablePM {
     int getTanks();
     IFluidStackPM getFluidInTank(int tank);
     int getTankCapacity(int tank);
@@ -16,6 +17,4 @@ public interface IFluidHandlerPM {
     int fill(IFluidStackPM stack, boolean simulate);
     IFluidStackPM drain(IFluidStackPM stack, boolean simulate);
     IFluidStackPM drain(int maxDrain, boolean simulate);
-    IFluidHandlerPM readFromNBT(HolderLookup.Provider lookupProvider, CompoundTag nbt);
-    CompoundTag writeToNBT(HolderLookup.Provider lookupProvider, CompoundTag nbt);
 }

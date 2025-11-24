@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.fluids.FluidStackPMNeoforge;
 import com.verdantartifice.primalmagick.common.fluids.IFluidStackPM;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
@@ -70,14 +70,13 @@ public class FluidHandlerPMNeoforge implements IFluidHandlerPM {
     }
 
     @Override
-    public IFluidHandlerPM readFromNBT(HolderLookup.Provider lookupProvider, CompoundTag nbt) {
-        this.tank.readFromNBT(lookupProvider, nbt.getCompound("Tank"));
-        return this;
+    public void serialize(ValueOutput output) {
+        ValueOutput child = output.child("Tank");
+        this.tank.serialize(child);
     }
 
     @Override
-    public CompoundTag writeToNBT(HolderLookup.Provider lookupProvider, CompoundTag nbt) {
-        nbt.put("Tank", this.tank.writeToNBT(lookupProvider, new CompoundTag()));
-        return nbt;
+    public void deserialize(ValueInput input) {
+        input.child("Tank").ifPresent(this.tank::deserialize);
     }
 }

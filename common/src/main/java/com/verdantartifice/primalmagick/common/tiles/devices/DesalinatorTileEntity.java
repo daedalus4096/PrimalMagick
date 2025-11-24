@@ -9,23 +9,21 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.fluids.IFluidStackPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
-import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.util.FluidUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -40,6 +38,8 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -115,25 +115,21 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.boilTime = compound.getInt("BoilTime");
-        this.boilTimeTotal = compound.getInt("BoilTimeTotal");
-        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
-            LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
-        this.waterTank.readFromNBT(registries, compound.getCompound("WaterTank"));
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.boilTime = input.getIntOr("BoilTime", 0);
+        this.boilTimeTotal = input.getIntOr("BoilTimeTotal", 0);
+        input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
+        this.waterTank.deserialize(input);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("BoilTime", this.boilTime);
-        compound.putInt("BoilTimeTotal", this.boilTimeTotal);
-        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
-            LOGGER.error("Failed to encode mana storage: {}", msg);
-        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
-        compound.put("WaterTank", this.waterTank.writeToNBT(registries, new CompoundTag()));
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("BoilTime", this.boilTime);
+        output.putInt("BoilTimeTotal", this.boilTimeTotal);
+        output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
+        this.waterTank.serialize(output);
     }
 
     @Override
