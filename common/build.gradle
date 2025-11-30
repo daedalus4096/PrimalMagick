@@ -28,8 +28,7 @@ dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
 
     // Common Networking
-    // FIXME Replace hardcoded version with config variable once back on a supported version of MC for CN
-    implementation "mysticdrew:common-networking-common:${common_network_version}-1.21.7"
+    implementation "mysticdrew:common-networking-common:${common_network_version}-${minecraft_version}"
 }
 
 configurations {
