@@ -113,7 +113,7 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
     public static void tick(Level level, BlockPos pos, BlockState state, WandChargerTileEntity entity) {
         boolean shouldMarkDirty = false;
         
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             if (!inputStack.isEmpty() && !chargeStack.isEmpty()) {

@@ -61,7 +61,7 @@ public abstract class PixieHouseItem extends Item implements IHasCustomRenderer 
                 }
 
                 itemStack.shrink(1);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.sidedSuccess(level.isClientSide());
             } else {
                 return InteractionResult.FAIL;
             }

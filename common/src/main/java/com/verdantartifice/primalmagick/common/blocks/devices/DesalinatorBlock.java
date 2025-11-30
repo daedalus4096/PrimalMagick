@@ -122,7 +122,7 @@ public class DesalinatorBlock extends BaseEntityBlock implements SimpleWaterlogg
 
     @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
+        if (!pLevel.isClientSide() && pPlayer instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the desalinator
             if (pLevel.getBlockEntity(pPos) instanceof DesalinatorTileEntity desalinatorTile) {
                 Services.PLAYER.openMenu(serverPlayer, desalinatorTile, desalinatorTile.getBlockPos());

@@ -52,7 +52,7 @@ import java.util.function.Supplier;
 public class ConcoctionItem extends Item {
     public static final CauldronInteraction FILL_EMPTY_CAULDRON = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
         if (stack.has(DataComponents.POTION_CONTENTS) && stack.get(DataComponents.POTION_CONTENTS).is(Potions.WATER)) {
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 Item item = stack.getItem();
                 player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(ItemsPM.SKYGLASS_FLASK.get())));
                 player.awardStat(Stats.USE_CAULDRON);
@@ -61,14 +61,14 @@ public class ConcoctionItem extends Item {
                 level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
         } else {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
     };
     public static final CauldronInteraction FILL_WATER_CAULDRON = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
         if (state.getValue(LayeredCauldronBlock.LEVEL) < 3 && stack.has(DataComponents.POTION_CONTENTS) && stack.get(DataComponents.POTION_CONTENTS).is(Potions.WATER)) {
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 Item item = stack.getItem();
                 player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(ItemsPM.SKYGLASS_FLASK.get())));
                 player.awardStat(Stats.USE_CAULDRON);
@@ -77,7 +77,7 @@ public class ConcoctionItem extends Item {
                 level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
         } else {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
@@ -96,7 +96,7 @@ public class ConcoctionItem extends Item {
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
         Player player = entityLiving instanceof Player ? (Player)entityLiving : null;
 
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             PotionContents contents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
             contents.forEachEffect(instance -> {
                 if (instance.getEffect().value().isInstantenous()) {

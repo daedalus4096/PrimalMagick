@@ -87,7 +87,7 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock implements SimpleWa
     
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             BlockEntity blockEntity = worldIn.getBlockEntity(pos);
             if (blockEntity instanceof SpellcraftingAltarTileEntity altarTile && player instanceof ServerPlayer serverPlayer) {
                 // Open the GUI for the spellcrafting altar

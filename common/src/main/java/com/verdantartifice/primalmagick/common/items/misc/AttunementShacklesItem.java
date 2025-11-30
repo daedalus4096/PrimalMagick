@@ -44,7 +44,7 @@ public class AttunementShacklesItem extends Item {
     
     @Override
     public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        if (!pLevel.isClientSide) {
+        if (!pLevel.isClientSide()) {
             AttunementManager.setSuppressed(pPlayer, this.source, !AttunementManager.isSuppressed(pPlayer, this.source));
         }
         return super.use(pLevel, pPlayer, pUsedHand);

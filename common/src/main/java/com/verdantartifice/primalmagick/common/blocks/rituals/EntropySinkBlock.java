@@ -138,7 +138,7 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (player != null && stack.getItem() instanceof EssenceItem essenceItem && !this.isPropActivated(state, worldIn, pos)) {
-            if (!worldIn.isClientSide && worldIn.getBlockEntity(pos) instanceof EntropySinkTileEntity sink) {
+            if (!worldIn.isClientSide() && worldIn.getBlockEntity(pos) instanceof EntropySinkTileEntity sink) {
                 // Start the sink glowing
                 worldIn.setBlock(pos, state.setValue(EntropySinkBlock.LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 sink.startGlowing();
@@ -165,7 +165,7 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide() && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);

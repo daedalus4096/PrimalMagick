@@ -157,13 +157,13 @@ public class SpellMineEntity extends Entity {
     public void tick() {
         super.tick();
         Level level = this.level();
-        if (!level.isClientSide && (this.spell == null || !this.spell.isValid())) {
+        if (!level.isClientSide() && (this.spell == null || !this.spell.isValid())) {
             this.discard();
         }
         if (++this.currentLife > this.getLifespan()) {
             this.discard();
         }
-        if (!level.isClientSide && this.isAlive()) {
+        if (!level.isClientSide() && this.isAlive()) {
             if (!this.isArmed() && this.currentLife >= ARMING_TIME) {
                 this.setArmed(true);
             }

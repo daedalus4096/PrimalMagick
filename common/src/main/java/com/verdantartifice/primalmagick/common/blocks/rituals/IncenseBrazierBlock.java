@@ -88,7 +88,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
         if (pPlayer != null && pState.getValue(LIT)) {
             // If using an empty hand on a lit brazier, snuff it
             pLevel.playSound(pPlayer, pPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (!pLevel.isClientSide) {
+            if (!pLevel.isClientSide()) {
                 pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }
             return InteractionResult.SUCCESS;
@@ -102,7 +102,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
         if (pPlayer != null && pStack.is(ItemsPM.INCENSE_STICK.get()) && !pState.getValue(LIT)) {
             // If using an incense stick on an unlit brazier, light it
             pLevel.playSound(pPlayer, pPos, SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 0.8F + (pLevel.random.nextFloat() * 0.4F));
-            if (!pLevel.isClientSide) {
+            if (!pLevel.isClientSide()) {
                 pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 if (!pPlayer.hasInfiniteMaterials()) {
                     pPlayer.getItemInHand(pHand).shrink(1);
@@ -125,7 +125,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide() && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);

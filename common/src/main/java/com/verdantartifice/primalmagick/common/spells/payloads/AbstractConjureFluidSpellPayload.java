@@ -93,7 +93,7 @@ public abstract class AbstractConjureFluidSpellPayload<T extends AbstractConjure
                 lbc.placeLiquid(world, pos, state, this.fluid.getSource(false));
             } else {
                 // Destroy the existing block at the target location if fluid would replace it
-                if (!world.isClientSide && (!isSolid || isReplaceable) && !state.liquid()) {
+                if (!world.isClientSide() && (!isSolid || isReplaceable) && !state.liquid()) {
                     world.destroyBlock(pos, true);
                 }
                 

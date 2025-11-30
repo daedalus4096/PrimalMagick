@@ -28,7 +28,7 @@ public class SunlampTileEntity extends AbstractTilePM {
 
     public static void tick(Level level, BlockPos pos, BlockState state, SunlampTileEntity entity) {
         entity.ticksExisted++;
-        if (!level.isClientSide && entity.ticksExisted % 5 == 0) {
+        if (!level.isClientSide() && entity.ticksExisted % 5 == 0) {
             // Pick a random location within 15 blocks
             int x = level.random.nextInt(16) - level.random.nextInt(16);
             int y = level.random.nextInt(16) - level.random.nextInt(16);

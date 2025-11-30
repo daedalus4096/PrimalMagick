@@ -80,7 +80,7 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             boolean powered = state.getValue(POWERED);
             if (powered != level.hasNeighborSignal(pos)) {
                 level.setBlock(pos, state.cycle(POWERED), UPDATE_CLIENTS);

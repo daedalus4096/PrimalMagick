@@ -124,7 +124,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     
     @Override
     protected ItemInteractionResult useItemOn(ItemStack handStack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+        if (!worldIn.isClientSide() && handIn == InteractionHand.MAIN_HAND) {
             if (worldIn.getBlockEntity(pos) instanceof RitualLecternTileEntity lecternTile) {
                 ItemStack bookStack = lecternTile.getItem();
                 if (bookStack.isEmpty() && handStack.is(Items.ENCHANTED_BOOK)) {
@@ -174,7 +174,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     
     @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide) {
+        if (!pLevel.isClientSide()) {
             if (pLevel.getBlockEntity(pPos) instanceof RitualLecternTileEntity lecternTile) {
                 ItemStack bookStack = lecternTile.getItem();
                 if (!bookStack.isEmpty()) {
@@ -207,7 +207,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide() && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
         if (state.getBlock() != newState.getBlock()) {

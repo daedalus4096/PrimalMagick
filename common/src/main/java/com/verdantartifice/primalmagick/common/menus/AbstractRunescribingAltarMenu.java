@@ -162,7 +162,7 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<Run
     }
     
     protected void slotChangedCraftingGrid() {
-        if (!this.world.isClientSide && this.player instanceof ServerPlayer spe) {
+        if (!this.world.isClientSide() && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
             ItemStack baseStack = this.altarInv.getItem(0);
             

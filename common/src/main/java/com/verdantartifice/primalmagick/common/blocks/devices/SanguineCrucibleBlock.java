@@ -108,7 +108,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
 
     @Override
     public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             if (worldIn.getBlockEntity(pos) instanceof SanguineCrucibleTileEntity crucibleTile) {
                 if (entityIn instanceof ItemEntity itemEntity) {
                     if (itemEntity.getItem().getItem() == ItemsPM.SOUL_GEM.get()) {
@@ -124,7 +124,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && pLevel.getBlockEntity(pPos) instanceof SanguineCrucibleTileEntity crucibleTile) {
+        if (!pLevel.isClientSide() && pLevel.getBlockEntity(pPos) instanceof SanguineCrucibleTileEntity crucibleTile) {
             if (pPlayer.isSecondaryUseActive() && crucibleTile.hasCore()) {
                 popResource(pLevel, pPos.relative(pHitResult.getDirection()), crucibleTile.removeItem(1));
                 pLevel.playSound(null, pPos, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundSource.BLOCKS, 0.3F, 0.5F);
@@ -137,7 +137,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && pLevel.getBlockEntity(pPos) instanceof SanguineCrucibleTileEntity crucibleTile) {
+        if (!pLevel.isClientSide() && pLevel.getBlockEntity(pPos) instanceof SanguineCrucibleTileEntity crucibleTile) {
             if (pStack.getItem() instanceof SanguineCoreItem && !crucibleTile.hasCore()) {
                 crucibleTile.setItem(pStack.copyWithCount(1));
                 pStack.shrink(1);

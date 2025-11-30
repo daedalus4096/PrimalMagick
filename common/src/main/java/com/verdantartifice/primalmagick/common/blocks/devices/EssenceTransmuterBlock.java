@@ -83,7 +83,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
+        if (!worldIn.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the essence transmuter
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof EssenceTransmuterTileEntity transmuterTile) {
@@ -104,7 +104,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
 
         // Set the block entity's owner when placed by a player
-        if (!worldIn.isClientSide && placer instanceof Player player && worldIn.getBlockEntity(pos) instanceof IOwnedTileEntity ownedTile) {
+        if (!worldIn.isClientSide() && placer instanceof Player player && worldIn.getBlockEntity(pos) instanceof IOwnedTileEntity ownedTile) {
             ownedTile.setTileOwner(player);
         }
     }

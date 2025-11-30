@@ -120,7 +120,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
         super.readAdditionalSaveData(tag);
         this.setAge(Math.max(0, this.getAge()));
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             this.readPersistentAngerSaveData((ServerLevel)level, tag);
         }
     }
@@ -202,7 +202,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         Level level = this.level();
         if (this.isAlive() && !this.isTrading() && !this.isBaby()) {
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 if (this.getOffers().isEmpty()) {
                     return InteractionResult.CONSUME;
                 } else {
@@ -210,7 +210,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
                     this.openTradingScreen(player, this.getDisplayName(), 1);
                 }
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide());
         } else {
             return super.mobInteract(player, hand);
         }
@@ -247,7 +247,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     @Override
     public void aiStep() {
         Level level = this.level();
-        if (!level.isClientSide && this.isAlive()) {
+        if (!level.isClientSide() && this.isAlive()) {
             if (this.isDrinkingPotion()) {
                 if (this.usingTime-- <= 0) {
                     this.setUsingItem(false);

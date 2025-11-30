@@ -83,7 +83,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     public void readAdditionalSaveData(CompoundTag compound) {
         Level level = this.level();
         super.readAdditionalSaveData(compound);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             this.readPersistentAngerSaveData((ServerLevel)level, compound);
         }
     }
@@ -156,7 +156,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
             }
         }
         
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             this.updatePersistentAnger((ServerLevel)level, true);
         }
     }
@@ -275,7 +275,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
         ItemStack itemstack = playerIn.getItemInHand(hand);
         if (!itemstack.is(this.getRepairMaterialTag())) {
             InteractionResult actionResult = super.mobInteract(playerIn, hand);
-            if (!actionResult.consumesAction() && this.isCompanionOwner(playerIn) && !level.isClientSide) {
+            if (!actionResult.consumesAction() && this.isCompanionOwner(playerIn) && !level.isClientSide()) {
                 long time = playerIn.level().getGameTime();
                 if (this.lastStayChangeTime != time) {
                     this.setCompanionStaying(!this.isCompanionStaying());
@@ -301,7 +301,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
                 if (!playerIn.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.sidedSuccess(level.isClientSide());
             }
         }
     }

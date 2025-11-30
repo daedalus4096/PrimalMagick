@@ -217,7 +217,7 @@ public class StaticBookItem extends Item {
     @Override
     public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
-        if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
+        if (!pLevel.isClientSide() && pPlayer instanceof ServerPlayer serverPlayer) {
             getBookDefinition(stack).ifPresentOrElse(bookDefHolder -> {
                 getBookLanguage(stack).ifPresentOrElse(langHolder -> {
                     LinguisticsManager.markRead(pPlayer, bookDefHolder, langHolder);

@@ -121,7 +121,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
         // Detect nearby sin crystals and heal for each
         Level level = this.level();
         this.crystalsInRange = EntityUtils.getEntitiesInRange(level, this.position(), null, SinCrystalEntity.class, HEAL_RANGE);
-        if (!this.crystalsInRange.isEmpty() && this.tickCount % 10 == 0 && !level.isClientSide) {
+        if (!this.crystalsInRange.isEmpty() && this.tickCount % 10 == 0 && !level.isClientSide()) {
             this.heal((float)this.crystalsInRange.size());
         }
         super.aiStep();
@@ -130,7 +130,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     @Override
     protected void customServerAiStep() {
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // Explode if suffocating
             if (this.isSuffocating && this.tickCount % 20 == 0) {
                 Level.ExplosionInteraction mode = Services.EVENTS.canEntityGrief(level, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
@@ -214,7 +214,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     
     public void doSinCrash() {
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             double demonPosX = this.getX();
             double demonPosY = this.getEyeY();
             double demonPosZ = this.getZ();

@@ -111,7 +111,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
         if (pPlayer != null && pState.getValue(LIT)) {
             // If using an empty hand on a lit candle, snuff it
             pLevel.playSound(pPlayer, pPos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (!pLevel.isClientSide) {
+            if (!pLevel.isClientSide()) {
                 pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }
             return InteractionResult.SUCCESS;
@@ -125,7 +125,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
         if (pPlayer != null && pStack.is(Items.FLINT_AND_STEEL) && !pState.getValue(LIT)) {
             // If using a flint-and-steel on an unlit candle, light it
             pLevel.playSound(pPlayer, pPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 0.8F + (pLevel.random.nextFloat() * 0.4F));
-            if (!pLevel.isClientSide) {
+            if (!pLevel.isClientSide()) {
                 pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 pPlayer.getItemInHand(pHand).hurtAndBreak(1, pPlayer, LivingEntity.getSlotForHand(pHand));
                 
@@ -143,7 +143,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide() && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);

@@ -94,7 +94,7 @@ public class PlayerGrid {
         }
         
         Level level = this.player.level();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             // Send packet to server and presume success on the remote
             PacketHandler.sendToServer(new UnlockGridNodeActionPacket(this.definition.getKey(), node));
             this.unlocked.add(node);

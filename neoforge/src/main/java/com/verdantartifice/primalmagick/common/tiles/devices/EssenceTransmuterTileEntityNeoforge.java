@@ -12,7 +12,7 @@ public class EssenceTransmuterTileEntityNeoforge extends EssenceTransmuterTileEn
     public void onLoad() {
         super.onLoad();
         this.doInventorySync();
-        if (!this.level.isClientSide) {
+        if (!this.level.isClientSide()) {
             this.relevantResearch = assembleRelevantResearch();
         }
         this.processTimeTotal = this.getProcessTimeTotal();

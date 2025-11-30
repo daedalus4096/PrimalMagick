@@ -43,7 +43,7 @@ public abstract class AbstractAttunementGainItem extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (ResearchManager.hasStartedProgression(player)) {
                 AttunementManager.incrementAttunement(player, this.source, this.attunementType, this.amount);
                 player.displayClientMessage(Component.translatable("event.primalmagick.attunement_item.success").withStyle(ChatFormatting.GREEN), true);

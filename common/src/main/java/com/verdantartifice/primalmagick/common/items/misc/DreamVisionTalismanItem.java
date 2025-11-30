@@ -123,7 +123,7 @@ public class DreamVisionTalismanItem extends Item {
      */
     public boolean doDrain(ItemStack stack, Player player) {
         Level level = player.level();
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel && this.isReadyToDrain(stack)) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel && this.isReadyToDrain(stack)) {
             if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
                 this.setStoredExp(stack, 0);
                 stack.hurtAndBreak(1, serverLevel, player instanceof ServerPlayer serverPlayer ? serverPlayer : null, item -> {
@@ -154,7 +154,7 @@ public class DreamVisionTalismanItem extends Item {
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         boolean active = this.isActive(stack);
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             if (active) {
                 player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.set_inactive"), false);
             } else {

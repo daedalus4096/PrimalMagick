@@ -178,7 +178,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     public static void tick(Level level, BlockPos pos, BlockState state, ManaBatteryTileEntity entity) {
         boolean shouldMarkDirty = false;
         
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             

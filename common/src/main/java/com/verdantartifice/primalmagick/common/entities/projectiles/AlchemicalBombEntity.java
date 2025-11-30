@@ -90,7 +90,7 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
             double mz = result.getDirection().getStepZ() == 0 ? 1.0D : -1.0D;
             this.setDeltaMovement(this.getDeltaMovement().scale(0.7D).multiply(mx, my, mz));
             Level level = this.level();
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 float volume = Mth.clamp((float)this.getDeltaMovement().length(), 0.0F, 1.0F);
                 this.playSound(SoundsPM.CLANK.get(), volume, 0.8F + (0.4F * level.random.nextFloat()));
             }

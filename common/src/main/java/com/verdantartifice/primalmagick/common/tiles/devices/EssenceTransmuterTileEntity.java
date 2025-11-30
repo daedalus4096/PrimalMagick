@@ -181,7 +181,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceTransmuterTileEntity entity) {
         boolean shouldMarkDirty = false;
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {

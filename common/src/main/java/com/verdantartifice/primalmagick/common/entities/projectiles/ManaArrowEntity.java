@@ -85,7 +85,7 @@ public class ManaArrowEntity extends AbstractArrow {
             this.setNoGravity(false);
         }
         Level level = this.level();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             if (this.inGround) {
                 if (this.inGroundTime % 5 == 0) {
                     this.makeParticle(1);

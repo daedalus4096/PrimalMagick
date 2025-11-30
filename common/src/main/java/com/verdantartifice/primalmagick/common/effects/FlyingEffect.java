@@ -26,7 +26,7 @@ public class FlyingEffect extends MobEffect {
     public boolean applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
         // End flying effect on the last tick, because there's no equivalent to onEffectStarted for effects ending
         Level level = pLivingEntity.level();
-        if (!level.isClientSide && pLivingEntity instanceof ServerPlayer player) {
+        if (!level.isClientSide() && pLivingEntity instanceof ServerPlayer player) {
             GameType type = player.gameMode.getGameModeForPlayer();
             player.getAbilities().mayfly = (type == GameType.CREATIVE || type == GameType.SPECTATOR);   // Cancel flight ability if not appropriate for game mode
             if (!player.getAbilities().mayfly) {
@@ -41,7 +41,7 @@ public class FlyingEffect extends MobEffect {
     @Override
     public void onEffectStarted(LivingEntity pLivingEntity, int pAmplifier) {
         Level level = pLivingEntity.level();
-        if (!level.isClientSide && pLivingEntity instanceof ServerPlayer player) {
+        if (!level.isClientSide() && pLivingEntity instanceof ServerPlayer player) {
             // Set the mayFly player ability when this effect is applied and send the change to clients
             player.getAbilities().mayfly = true;
             player.onUpdateAbilities();

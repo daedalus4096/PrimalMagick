@@ -47,7 +47,7 @@ public class RunescribingResultSlot extends Slot {
         super.checkTakeAchievements(stack);
         
         Level level = this.player.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             List<Rune> runes = RuneManager.getRunes(stack);
             Map<Holder<Enchantment>, Integer> enchants = RuneManager.getRuneEnchantments(level.registryAccess(), runes, stack, this.player, false);
 

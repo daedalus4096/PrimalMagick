@@ -49,7 +49,7 @@ public class HydromelonBlock extends Block {
                     pLevel.addParticle(ParticleTypes.LARGE_SMOKE, pPos.getX() + rng.nextDouble(), pPos.getY() + rng.nextDouble(), pPos.getZ() + rng.nextDouble(), 0.0D, 0.0D, 0.0D);
                 }
             }
-            if (!pLevel.isClientSide) {
+            if (!pLevel.isClientSide()) {
                 if (shouldVaporize) {
                     pLevel.removeBlock(pPos, false);
                 } else {

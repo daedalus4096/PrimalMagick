@@ -214,7 +214,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
         
         entity.litGraceTicks = Mth.clamp(entity.litGraceTicks - 1, 0, LIT_GRACE_TICKS_MAX);
         
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 1);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {

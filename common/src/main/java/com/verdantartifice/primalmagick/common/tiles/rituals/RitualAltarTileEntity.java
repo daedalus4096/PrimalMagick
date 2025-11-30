@@ -275,14 +275,14 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         if (entity.active) {
             entity.doEffects();
         }
-        if (entity.ticksExisted % (entity.active ? 10 : 20) == 0 && !level.isClientSide) {
+        if (entity.ticksExisted % (entity.active ? 10 : 20) == 0 && !level.isClientSide()) {
             entity.scanDirty = true;
         }
-        if (entity.scanDirty && !level.isClientSide) {
+        if (entity.scanDirty && !level.isClientSide()) {
             entity.scanSurroundings();
             entity.scanDirty = false;
         }
-        if (!level.isClientSide && entity.active) {
+        if (!level.isClientSide() && entity.active) {
             if (entity.currentStep == null || entity.currentStepComplete) {
                 if (entity.remainingSteps.isEmpty()) {
                     // If there are no steps remaining in the ritual, finish it up
@@ -322,7 +322,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public InteractionResult onWandRightClick(ItemStack wandStack, Level level, Player player, BlockPos pos, Direction direction) {
-        if (!this.level.isClientSide && wandStack.getItem() instanceof IWand) {
+        if (!this.level.isClientSide() && wandStack.getItem() instanceof IWand) {
             if (this.active) {
                 player.displayClientMessage(Component.translatable("ritual.primalmagick.info.canceled"), false);
                 this.doMishap();    // Trigger an automatic mishap if canceling a ritual early

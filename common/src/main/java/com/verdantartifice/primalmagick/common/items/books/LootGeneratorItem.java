@@ -39,7 +39,7 @@ public class LootGeneratorItem extends Item {
 
     @Override
     public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer && pLevel instanceof ServerLevel serverLevel) {
+        if (!pLevel.isClientSide() && pPlayer instanceof ServerPlayer serverPlayer && pLevel instanceof ServerLevel serverLevel) {
             LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(this.lootTableLoc);
             LootParams lootParams = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, pPlayer.getEyePosition()).create(LootContextParamSets.CHEST);   // Origin is irrelevant, but expected
             List<ItemStack> generatedStacks = lootTable.getRandomItems(lootParams);

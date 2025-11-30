@@ -39,7 +39,7 @@ public class KnowledgeGainItem extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (ResearchManager.hasStartedProgression(player)) {
                 ResearchManager.addKnowledge(player, this.knowledgeType, this.knowledgePoints);
                 player.displayClientMessage(Component.translatable("event.primalmagick.knowledge_item.success").withStyle(ChatFormatting.GREEN), true);

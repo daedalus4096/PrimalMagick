@@ -90,7 +90,7 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RitualAltarTileEntity altarTile) {
                 if (!altarTile.getItem().isEmpty()) {

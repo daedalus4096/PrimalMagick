@@ -12,7 +12,7 @@ public class ConcocterTileEntityNeoforge extends ConcocterTileEntity {
     public void onLoad() {
         super.onLoad();
         this.doInventorySync();
-        if (!this.level.isClientSide) {
+        if (!this.level.isClientSide()) {
             this.relevantResearch = assembleRelevantResearch(this.level.getRecipeManager());
         }
         this.cookTimeTotal = this.getCookTimeTotal();

@@ -78,7 +78,7 @@ public class RunecarvingTableBlock extends BaseEntityBlock implements SimpleWate
     
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
+        if (!worldIn.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the research table
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RunecarvingTableTileEntity tableTile) {

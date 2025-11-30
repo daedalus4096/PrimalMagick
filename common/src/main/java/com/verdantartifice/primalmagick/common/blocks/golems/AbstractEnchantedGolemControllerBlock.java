@@ -78,7 +78,7 @@ public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEn
     
     @Override
     public InteractionResult onWandRightClick(ItemStack wandStack, Level world, Player player, BlockPos pos, Direction direction) {
-        if (!world.isClientSide && wandStack.getItem() instanceof IWand && this.getRequirement().isMetBy(player)) {
+        if (!world.isClientSide() && wandStack.getItem() instanceof IWand && this.getRequirement().isMetBy(player)) {
             BlockPattern.BlockPatternMatch helper = this.getGolemPattern().find(world, pos);
             if (helper != null) {
                 for (int i = 0; i < this.getGolemPattern().getWidth(); i++) {

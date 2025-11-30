@@ -125,7 +125,7 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
             final double noteHue = 2.0D / 24.0D;
             worldIn.playSound(player, pos, SoundsPM.HARP.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             worldIn.addParticle(new NoteEmitterParticleData(noteHue, CelestialHarpTileEntity.TICKS_PER_PLAY), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-            if (!worldIn.isClientSide && tile instanceof CelestialHarpTileEntity harp) {
+            if (!worldIn.isClientSide() && tile instanceof CelestialHarpTileEntity harp) {
                 // Start the harp tile entity playing
                 harp.startPlaying();
                 
@@ -143,7 +143,7 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide() && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);

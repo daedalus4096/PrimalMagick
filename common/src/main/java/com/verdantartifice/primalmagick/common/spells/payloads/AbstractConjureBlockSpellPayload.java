@@ -82,7 +82,7 @@ public abstract class AbstractConjureBlockSpellPayload<T extends AbstractConjure
         boolean isReplaceable = state.canBeReplaced();
         if (world.isEmptyBlock(pos) || !isSolid || isReplaceable) {
             // Destroy the existing block at the target location if the new block would replace it
-            if (!world.isClientSide && (!isSolid || isReplaceable) && !state.liquid()) {
+            if (!world.isClientSide() && (!isSolid || isReplaceable) && !state.liquid()) {
                 world.destroyBlock(pos, true);
             }
             

@@ -63,7 +63,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
-        if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
+        if (!pLevel.isClientSide() && pPlayer instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the battery
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof ManaBatteryTileEntity batteryTile) {
@@ -98,7 +98,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
 
         // Set the block entity's owner when placed by a player
-        if (!pLevel.isClientSide && pPlacer instanceof Player player && pLevel.getBlockEntity(pPos) instanceof IOwnedTileEntity ownedTile) {
+        if (!pLevel.isClientSide() && pPlacer instanceof Player player && pLevel.getBlockEntity(pPos) instanceof IOwnedTileEntity ownedTile) {
             ownedTile.setTileOwner(player);
         }
     }

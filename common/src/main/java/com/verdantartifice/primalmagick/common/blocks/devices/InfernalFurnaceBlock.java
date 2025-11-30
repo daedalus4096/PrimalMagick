@@ -79,7 +79,7 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
-        if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
+        if (!pLevel.isClientSide() && pPlayer instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the furnace
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {

@@ -114,7 +114,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
                     FluidState fluid = world.getFluidState(pos);
                     world.setBlock(pos, state.setValue(TripWireBlock.DISARMED, Boolean.TRUE), Block.UPDATE_INVISIBLE);
                     world.gameEvent(player, GameEvent.SHEAR, pos);
-                    if (world.setBlock(pos, fluid.createLegacyBlock(), world.isClientSide ? Block.UPDATE_ALL_IMMEDIATE : Block.UPDATE_ALL)) {
+                    if (world.setBlock(pos, fluid.createLegacyBlock(), world.isClientSide() ? Block.UPDATE_ALL_IMMEDIATE : Block.UPDATE_ALL)) {
                         tripwire.destroy(world, pos, state);
                     }
                 }

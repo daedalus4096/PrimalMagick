@@ -111,7 +111,7 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     }
     
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceCaskTileEntity entity) {
-        if (!level.isClientSide && !entity.inventories.get(INPUT_INV_INDEX).isEmpty()) {
+        if (!level.isClientSide() && !entity.inventories.get(INPUT_INV_INDEX).isEmpty()) {
             ItemStack stack = entity.getItem(INPUT_INV_INDEX, 0);
             if (stack.getItem() instanceof EssenceItem essenceItem) {
                 EssenceType essenceType = essenceItem.getEssenceType();

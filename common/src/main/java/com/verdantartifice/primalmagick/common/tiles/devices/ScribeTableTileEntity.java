@@ -110,7 +110,7 @@ public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM
 
     public void doTranscribe(Player player) {
         Level level = this.getLevel();
-        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+        if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             ItemStack sourceStack = this.getItem(INPUT_INV_INDEX, 0);
             ItemStack blankStack = this.getItem(INPUT_INV_INDEX, 1);
             if (sourceStack.is(ItemTagsPM.STATIC_BOOKS) && blankStack.is(Items.WRITABLE_BOOK)) {

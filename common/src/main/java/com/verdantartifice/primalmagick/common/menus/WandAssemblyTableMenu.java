@@ -192,7 +192,7 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
     }
     
     protected void slotChangedCraftingGrid(Level world) {
-        if (!world.isClientSide && this.player instanceof ServerPlayer) {
+        if (!world.isClientSide() && this.player instanceof ServerPlayer) {
             ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
             Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);

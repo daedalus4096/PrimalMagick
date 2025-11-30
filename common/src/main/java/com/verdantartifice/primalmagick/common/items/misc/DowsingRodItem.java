@@ -64,7 +64,7 @@ public class DowsingRodItem extends Item {
         Player player = context.getPlayer();
         BlockPos targetPos = context.getClickedPos();
         this.recordDowsingPosition(stack, player, targetPos);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             Block block = level.getBlockState(targetPos).getBlock();
             BlockEntity blockEntity = level.getBlockEntity(targetPos);
             if (blockEntity instanceof RitualAltarTileEntity altarEntity) {
@@ -210,7 +210,7 @@ public class DowsingRodItem extends Item {
         BlockPos symPos = RitualAltarTileEntity.getSymmetricPosition(altarPos, blockPos);
         if (symPos == null || block.hasSymmetryPenalty(level, blockPos, symPos)) {
             player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.not_found"));
-            if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
                 player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.marking_pos"));
                 PacketHandler.sendToPlayer(new PropMarkerPacket(symPos, 200), serverPlayer);
             }

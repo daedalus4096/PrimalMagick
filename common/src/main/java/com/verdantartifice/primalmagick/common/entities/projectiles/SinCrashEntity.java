@@ -49,7 +49,7 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
         // Only impact when hitting a block
         super.onHitBlock(result);
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             SinCrystalEntity crystal = new SinCrystalEntity(level, result.getLocation().x, result.getLocation().y, result.getLocation().z);
             level.addFreshEntity(crystal);
             this.discard();

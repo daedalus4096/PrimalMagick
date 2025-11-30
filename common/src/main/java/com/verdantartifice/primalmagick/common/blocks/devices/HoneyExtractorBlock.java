@@ -80,7 +80,7 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
+        if (!worldIn.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the honey extractor
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof HoneyExtractorTileEntity extractorTile) {

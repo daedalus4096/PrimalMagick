@@ -108,7 +108,7 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
                     return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 } else {
                     addBook(pLevel, pPos, pPlayer, tile, pStack, slotOpt.getAsInt());
-                    return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
+                    return ItemInteractionResult.sidedSuccess(pLevel.isClientSide());
                 }
             }
         } else {
@@ -126,7 +126,7 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
                 return InteractionResult.CONSUME;
             } else {
                 removeBook(pLevel, pPos, pPlayer, tile, slotOpt.getAsInt());
-                return InteractionResult.sidedSuccess(pLevel.isClientSide);
+                return InteractionResult.sidedSuccess(pLevel.isClientSide());
             }
         } else {
             return InteractionResult.PASS;
@@ -142,7 +142,7 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
     }
 
     private static void addBook(Level pLevel, BlockPos pPos, Player pPlayer, CarvedBookshelfTileEntity tile, ItemStack bookStack, int slot) {
-        if (!pLevel.isClientSide) {
+        if (!pLevel.isClientSide()) {
             // Set the book stack into the tile entity's slot
             pPlayer.awardStat(Stats.ITEM_USED.get(bookStack.getItem()));
             SoundEvent soundEvent = bookStack.is(Items.ENCHANTED_BOOK) ? SoundEvents.CHISELED_BOOKSHELF_INSERT_ENCHANTED : SoundEvents.CHISELED_BOOKSHELF_INSERT;
@@ -152,7 +152,7 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
     }
 
     private static void removeBook(Level pLevel, BlockPos pPos, Player pPlayer, CarvedBookshelfTileEntity tile, int slot) {
-        if (!pLevel.isClientSide) {
+        if (!pLevel.isClientSide()) {
             ItemStack oldStack = tile.removeBook(slot);
             SoundEvent soundEvent = oldStack.is(Items.ENCHANTED_BOOK) ? SoundEvents.CHISELED_BOOKSHELF_PICKUP_ENCHANTED : SoundEvents.CHISELED_BOOKSHELF_PICKUP;
             pLevel.playSound(null, pPos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -208,7 +208,7 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState pState, Level pLevel, BlockPos pPos) {
-        if (pLevel.isClientSide) {
+        if (pLevel.isClientSide()) {
             return 0;
         } else if (pLevel.getBlockEntity(pPos) instanceof CarvedBookshelfTileEntity tile) {
             return tile.getLastInteractedSlot() + 1;

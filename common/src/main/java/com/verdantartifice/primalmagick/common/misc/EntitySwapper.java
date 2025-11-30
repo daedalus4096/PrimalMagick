@@ -82,7 +82,7 @@ public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
     
     public void execute(@Nonnull Entity entity) {
         Level world = entity.level();
-        if (!world.isClientSide && world instanceof ServerLevel serverWorld) {
+        if (!world.isClientSide() && world instanceof ServerLevel serverWorld) {
             // Only proceed if this is a valid swapper and the target is allowed to be swapped
             if (this.isValid() && this.isValidTarget(entity)) {
                 LivingEntity livingTarget = (LivingEntity)entity;

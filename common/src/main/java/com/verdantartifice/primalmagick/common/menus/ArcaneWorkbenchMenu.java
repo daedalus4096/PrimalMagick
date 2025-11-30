@@ -164,7 +164,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     
     protected void slotChangedCraftingGrid(Level world) {
         CraftingInput craftInput = this.craftingInv.asCraftInput();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             // Get the active recipe, if any, for client display of mana costs
             this.activeArcaneRecipe = null;
             Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);
@@ -175,7 +175,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
                 }
             }
         }
-        if (!world.isClientSide && this.player instanceof ServerPlayer) {
+        if (!world.isClientSide() && this.player instanceof ServerPlayer) {
             ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
             Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);

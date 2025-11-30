@@ -83,7 +83,7 @@ public class RunicGrindstoneBlock extends GrindstoneBlock implements SimpleWater
     
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
+        if (!worldIn.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             serverPlayer.openMenu(state.getMenuProvider(worldIn, pos));
         }
         return InteractionResult.SUCCESS;

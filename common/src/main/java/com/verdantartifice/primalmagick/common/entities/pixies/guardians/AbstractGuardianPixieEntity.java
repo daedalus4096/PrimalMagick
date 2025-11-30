@@ -239,7 +239,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
         }
 
         Level level = this.level();
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
             this.updatePersistentAnger(serverLevel, true);
             if (this.isAlive()) {
                 level.broadcastEntityEvent(this, PIXIE_DUST_EVENT);

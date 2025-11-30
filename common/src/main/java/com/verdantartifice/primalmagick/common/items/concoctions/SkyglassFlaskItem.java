@@ -24,7 +24,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
  */
 public class SkyglassFlaskItem extends AbstractConcoctionContainerItem {
     public static final CauldronInteraction FILL_CONCOCTION = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             Item item = stack.getItem();
             player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, ItemsPM.CONCOCTION.get().getDefaultInstance().copy()));
             player.awardStat(Stats.USE_CAULDRON);
@@ -33,7 +33,7 @@ public class SkyglassFlaskItem extends AbstractConcoctionContainerItem {
             level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
         }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide());
     };
     
     public SkyglassFlaskItem(Item.Properties properties) {

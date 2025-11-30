@@ -213,7 +213,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         if (burningAtStart) {
             entity.burnTime--;
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack fuelStack = entity.getItem(FUEL_INV_INDEX, 0);
             if (entity.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {

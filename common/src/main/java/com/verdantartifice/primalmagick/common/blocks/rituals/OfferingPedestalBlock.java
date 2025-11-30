@@ -118,7 +118,7 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
         }
 
         // If one pedestal is full and the other is empty, invoke a symmetry penalty
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return ( (tile instanceof OfferingPedestalTileEntity pedestal) &&
                      (otherTile instanceof OfferingPedestalTileEntity otherPedestal) &&
                      pedestal.getSyncedStack().isEmpty() != otherPedestal.getSyncedStack().isEmpty() );

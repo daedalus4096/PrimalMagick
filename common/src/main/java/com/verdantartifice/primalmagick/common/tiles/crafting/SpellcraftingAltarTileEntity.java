@@ -93,7 +93,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SpellcraftingAltarTileEntity entity) {
-        if (entity.phaseTicks++ >= entity.nextUpdate && !level.isClientSide) {
+        if (entity.phaseTicks++ >= entity.nextUpdate && !level.isClientSide()) {
             entity.nextRotationPhase();
         }
     }
@@ -115,7 +115,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         this.setChanged();
         this.syncTile(true);
         
-        if (!this.level.isClientSide && this.currentRotation.isPause()) {
+        if (!this.level.isClientSide() && this.currentRotation.isPause()) {
             this.emitRuneParticle();
         }
     }

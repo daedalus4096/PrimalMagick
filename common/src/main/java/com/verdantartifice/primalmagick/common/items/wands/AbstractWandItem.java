@@ -190,7 +190,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         if (activeSpell != null && !SpellManager.isOnCooldown(playerIn)) {
             // If the wand has an active spell and spells are off the player's cooldown, attempt to cast the spell on right-click
             SpellManager.setCooldown(playerIn, activeSpell.getCooldownTicks());
-            if (worldIn.isClientSide) {
+            if (worldIn.isClientSide()) {
                 return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
             } else {
                 HitResult hit = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
@@ -224,12 +224,12 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             } else if (wandPos != null) {
                 for (IWandTransform transform : WandTransforms.getAll()) {
                     if (transform.isValid(level, player, wandPos)) {
-                        if (level.isClientSide) {
+                        if (level.isClientSide()) {
                             // Trigger visual effects during channel
                             FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Sources.HALLOWED.getColor());
                         }
                         if (this.getUseDuration(stack, living) - count >= WandTransforms.CHANNEL_DURATION) {
-                            if (!level.isClientSide) {
+                            if (!level.isClientSide()) {
                                 // Only execute the transform on the server side
                                 transform.execute(level, player, wandPos);
                             }
@@ -247,7 +247,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         
         // Give a hint the first time the player aborts a wand transform early
         BlockPos wandPos = this.getPositionInUse(stack);
-        if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !WAND_TRANSFORM_HINT_KEY.isKnownBy(player)) {
+        if (wandPos != null && !worldIn.isClientSide() && entityLiving instanceof Player player && !WAND_TRANSFORM_HINT_KEY.isKnownBy(player)) {
             for (IWandTransform transform : WandTransforms.getAll()) {
                 if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack, entityLiving) - timeLeft < WandTransforms.CHANNEL_DURATION) {
                     ResearchManager.completeResearch(player, WAND_TRANSFORM_HINT_KEY);

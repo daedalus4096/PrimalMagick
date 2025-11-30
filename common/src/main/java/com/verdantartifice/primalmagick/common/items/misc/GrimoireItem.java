@@ -36,7 +36,7 @@ public class GrimoireItem extends Item {
     
     @Override
     public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        if (!worldIn.isClientSide && playerIn instanceof ServerPlayer serverPlayer) {
+        if (!worldIn.isClientSide() && playerIn instanceof ServerPlayer serverPlayer) {
             if (this.unlockAll) {
                 ResearchManager.forceGrantAll(playerIn);
             }

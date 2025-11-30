@@ -65,7 +65,7 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
         }
 
         // Determine if the attached device needs mana and pull if so
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (entity.ticks % 5 == 0) {
                 entity.getConnectedStorage().ifPresent(storage -> {
                     final int throughput = entity.getManaThroughput();

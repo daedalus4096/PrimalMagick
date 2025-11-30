@@ -73,7 +73,7 @@ public class WandInscriptionTableBlock extends Block {
     
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
+        if (!worldIn.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the wand inscription table
             serverPlayer.openMenu(new MenuProvider() {
                 @Override

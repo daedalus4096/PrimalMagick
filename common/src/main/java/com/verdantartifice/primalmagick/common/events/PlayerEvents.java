@@ -123,7 +123,7 @@ public class PlayerEvents {
 
     public static void livingTick(Entity entity) {
         Level level = entity.level();
-        if (!level.isClientSide && (entity instanceof ServerPlayer player)) {
+        if (!level.isClientSide() && (entity instanceof ServerPlayer player)) {
             checkNearDeathExperience(player);
             if (player.tickCount % 5 == 0) {
                 // Apply any earned buffs for attunements
@@ -150,11 +150,11 @@ public class PlayerEvents {
                 AttunementManager.decayTemporaryAttunements(player);
             }
         }
-        if (level.isClientSide && (entity instanceof Player player)) {
+        if (level.isClientSide() && (entity instanceof Player player)) {
             // If this is a client-side player, handle any double jumps from attunement bonuses
             handleDoubleJump(player);
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // If on the server side, handle any entity swappers attached to the entity
             tickEntitySwappers(entity);
         }
@@ -395,7 +395,7 @@ public class PlayerEvents {
     }
 
     public static void playerJoinEvent(Entity entity, Level level) {
-        if (!level.isClientSide && (entity instanceof ServerPlayer player)) {
+        if (!level.isClientSide() && (entity instanceof ServerPlayer player)) {
             // When a player first joins a world, sync that player's capabilities to their client
             doScheduledSyncs(player, true);
             
@@ -499,7 +499,7 @@ public class PlayerEvents {
     }
     
     public static void registerItemCrafted(Player player, ItemStack stack) {
-        if (player != null && !player.level().isClientSide) {
+        if (player != null && !player.level().isClientSide()) {
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
             if (ResearchManager.getAllCraftingReferences().contains(ItemUtils.getHashCode(stack))) {
                 ResearchManager.completeResearch(player, new StackCraftedKey(stack));
@@ -516,7 +516,7 @@ public class PlayerEvents {
     }
     
     public static void onWakeUp(Player player) {
-        if (player != null && !player.level().isClientSide) {
+        if (player != null && !player.level().isClientSide()) {
             if ( ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE) &&
                  !ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM) ) {
                 // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
@@ -575,7 +575,7 @@ public class PlayerEvents {
     
     public static void onPickupExperience(Player player, ExperienceOrb orb) {
         Level level = player.level();
-        if (player != null && !level.isClientSide) {
+        if (player != null && !level.isClientSide()) {
             NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
             if (!foundTalismans.isEmpty()) {
                 int xpValue = orb.getValue();
@@ -621,7 +621,7 @@ public class PlayerEvents {
                         // the appropriate client/server syncing is performed.
                         stateUpdater.accept(level.getBlockState(pos));
                     }
-                    if (!level.isClientSide) {
+                    if (!level.isClientSide()) {
                         level.levelEvent(1505, pos, 0);
                     }
                 }
@@ -634,7 +634,7 @@ public class PlayerEvents {
         Level level = target.level();
         
         // Befriend the targeted witch, if appropriate
-        if ( !level.isClientSide && 
+        if ( !level.isClientSide() && 
              target.getType() == EntityType.WITCH && 
              stack.getItem() instanceof NameTagItem && 
              stack.getHoverName().getString().equals(FriendlyWitchEntity.HONORED_NAME)) {

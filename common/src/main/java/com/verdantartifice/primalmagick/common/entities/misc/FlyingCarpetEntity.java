@@ -138,13 +138,13 @@ public class FlyingCarpetEntity extends Entity {
         Level level = this.level();
         if (this.isVehicle() && this.isControlledByLocalInstance()) {
             this.updateMotion();
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 this.controlCarpet();
             }
             this.move(MoverType.SELF, this.getDeltaMovement());
         } else {
             this.setDeltaMovement(Vec3.ZERO);
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 this.updateInputs(false, false);
             }
         }
@@ -221,7 +221,7 @@ public class FlyingCarpetEntity extends Entity {
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
         Level level = this.level();
-        if (!level.isClientSide && this.isAlive()) {
+        if (!level.isClientSide() && this.isAlive()) {
             if (player.isSecondaryUseActive()) {
                 this.spawnAtLocation(this.getDropItem(), 0.0F);
                 this.discard();
@@ -239,7 +239,7 @@ public class FlyingCarpetEntity extends Entity {
         Level level = this.level();
         if (this.isInvulnerableTo(pSource)) {
             return false;
-        } else if (!level.isClientSide && !this.isRemoved()) {
+        } else if (!level.isClientSide() && !this.isRemoved()) {
             this.setDamage(this.getDamage() + pAmount * 10.0F);
             this.markHurt();
             this.gameEvent(GameEvent.ENTITY_DAMAGE, pSource.getEntity());

@@ -69,7 +69,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
         if (player != null && stack.is(Items.WATER_BUCKET) && state.getValue(FILLED)) {
             // If using a water bucket on a filled bloodletter, clean it out
             worldIn.playSound(player, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (!worldIn.isClientSide) {
+            if (!worldIn.isClientSide()) {
                 if (!player.hasInfiniteMaterials()) {
                     player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
                 }
@@ -85,7 +85,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pPlayer != null && !pState.getValue(FILLED)) {
             // If using an empty hand on an unfilled bloodletter, cut the player
-            if (!pLevel.isClientSide) {
+            if (!pLevel.isClientSide()) {
                 pPlayer.hurt(DamageSourcesPM.bleeding(pLevel.registryAccess()), 2.0F);
                 pLevel.setBlock(pPos, pState.setValue(FILLED, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 
@@ -103,7 +103,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide() && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);

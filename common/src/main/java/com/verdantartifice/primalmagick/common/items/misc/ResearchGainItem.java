@@ -37,7 +37,7 @@ public class ResearchGainItem extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS)) {
                 if (!this.keySupplier.get().isKnownBy(player)) {
                     ResearchManager.completeResearch(player, this.keySupplier.get());

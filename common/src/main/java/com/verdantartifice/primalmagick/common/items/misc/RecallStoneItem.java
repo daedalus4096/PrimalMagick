@@ -26,7 +26,7 @@ public class RecallStoneItem extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
             if (serverLevel.dimension().equals(serverPlayer.getRespawnDimension())) {
                 // If the player's respawn point is in this dimension, teleport them to it
                 DimensionTransition respawn = serverPlayer.findRespawnPositionAndUseSpawnBlock(true, DimensionTransition.DO_NOTHING);

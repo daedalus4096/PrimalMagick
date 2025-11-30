@@ -221,7 +221,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
 
     protected void doRing(BlockState state, Level world, BlockPos pos, @Nullable Direction dir) {
         BlockEntity tile = world.getBlockEntity(pos);
-        if (!world.isClientSide && tile instanceof RitualBellTileEntity) {
+        if (!world.isClientSide() && tile instanceof RitualBellTileEntity) {
             if (dir == null) {
                 dir = world.getBlockState(pos).getValue(FACING);
             }
@@ -258,7 +258,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
+        if (!worldIn.isClientSide() && state.getBlock() != newState.getBlock()) {
             this.closeProp(state, worldIn, pos);
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);

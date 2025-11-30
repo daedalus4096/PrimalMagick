@@ -87,7 +87,7 @@ public class SpellProjectileEntity extends AbstractArrow {
     @Override
     protected void onHit(HitResult result) {
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (result.getType() == HitResult.Type.ENTITY && ((EntityHitResult)result).getEntity() instanceof SpellProjectileEntity) {
                 // Don't collide with other spell projectiles
                 return;

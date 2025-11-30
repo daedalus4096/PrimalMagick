@@ -67,7 +67,7 @@ public class SpellScrollItem extends Item {
         // Cast the held spell, if any, and consume the scroll
         ItemStack stack = playerIn.getItemInHand(handIn);
         playerIn.startUsingItem(handIn);
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             SpellPackage spell = this.getSpell(stack);
             // Check to see if the player's spells are on cooldown
             if (spell != null && !SpellManager.isOnCooldown(playerIn)) {

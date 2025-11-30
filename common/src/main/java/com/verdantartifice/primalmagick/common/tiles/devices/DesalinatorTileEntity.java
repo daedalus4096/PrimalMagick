@@ -158,7 +158,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
         boolean shouldMarkDirty = false;
         entity.ticks++;
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {

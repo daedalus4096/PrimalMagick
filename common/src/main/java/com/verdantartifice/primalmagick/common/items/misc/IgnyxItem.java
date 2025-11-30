@@ -33,7 +33,7 @@ public abstract class IgnyxItem extends Item implements ProjectileItem {
         ItemStack stack = player.getItemInHand(hand);
         RandomSource random = level.getRandom();
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.NEUTRAL, 1.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             IgnyxEntity projectile = new IgnyxEntity(level, player);
             projectile.setItem(stack);
             projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);

@@ -48,7 +48,7 @@ import java.util.Set;
  */
 public class BlockEvents {
     public static void onBlockBreak(Player player, Level level, BlockPos pos, BlockState state) {
-        if (level != null && !level.isClientSide && !player.isSecondaryUseActive() && !BlockBreaker.hasBreakerQueued(level, pos)) {
+        if (level != null && !level.isClientSide() && !player.isSecondaryUseActive() && !BlockBreaker.hasBreakerQueued(level, pos)) {
             triggerReverberation(level, pos, state, player, player.getMainHandItem());
             triggerDisintegration(level, pos, state, player, player.getMainHandItem());
         }
@@ -167,20 +167,20 @@ public class BlockEvents {
                 return InteractionResult.SUCCESS;
             } else if (lecternEntity.getBook().is(ItemsPM.GRIMOIRE.get())) {
                 // Open the grimoire screen
-                if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
                     StatsManager.incrementValue(player, StatsPM.GRIMOIRE_READ);
                     PacketHandler.sendToPlayer(new OpenGrimoireScreenPacket(), serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
             } else if (lecternEntity.getBook().is(ItemTagsPM.STATIC_BOOKS)) {
                 // Open the static book screen
-                if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
                     PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(lecternEntity.getBook(), BookType.BOOK, player.registryAccess()), serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
             } else if (lecternEntity.getBook().is(Items.ENCHANTED_BOOK)) {
                 // Open the enchanted book screen
-                if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
                     EnchantmentHelper.getEnchantmentsForCrafting(lecternEntity.getBook()).entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
                         PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer);
                     });

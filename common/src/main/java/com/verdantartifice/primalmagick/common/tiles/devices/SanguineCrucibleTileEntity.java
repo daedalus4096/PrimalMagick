@@ -204,7 +204,7 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
     
     @Nullable
     protected SanguineCoreItem getCoreItem() {
-        ItemStack stack = this.level.isClientSide ? this.getSyncedItem(INPUT_INV_INDEX, 0) : this.getItem(INPUT_INV_INDEX, 0);
+        ItemStack stack = this.level.isClientSide() ? this.getSyncedItem(INPUT_INV_INDEX, 0) : this.getItem(INPUT_INV_INDEX, 0);
         if (stack.getItem() instanceof SanguineCoreItem core) {
             return core;
         } else {

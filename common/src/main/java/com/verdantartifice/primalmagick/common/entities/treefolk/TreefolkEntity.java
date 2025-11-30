@@ -146,7 +146,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     public void setCustomName(Component name) {
         super.setCustomName(name);
         Level level = this.level();
-        if (!level.isClientSide && DREADED_NAME.equals(name.getString())) {
+        if (!level.isClientSide() && DREADED_NAME.equals(name.getString())) {
             List<Player> nearby = EntityUtils.getEntitiesInRange(level, this.position(), null, Player.class, 6.0D);
             for (Player player : nearby) {
                 StatsManager.incrementValue(player, StatsPM.TREANTS_NAMED);
@@ -180,13 +180,13 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.is(Items.FLINT_AND_STEEL)) {
             level.playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 this.igniteForSeconds(10);
                 this.setLastHurtByMob(player);
                 stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        } else if (!level.isClientSide) {
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        } else if (!level.isClientSide()) {
             return TreefolkAi.mobInteract(this, player, hand);
         } else {
             boolean flag = TreefolkAi.canAdmire(this, stack) && this.getArmPose() != TreefolkArmPose.ADMIRING_ITEM;
@@ -236,7 +236,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     public boolean hurt(DamageSource pSource, float pAmount) {
         Level level = this.level();
         boolean flag = super.hurt(pSource, pAmount);
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return false;
         } else {
             if (flag && pSource.getEntity() instanceof LivingEntity livingSource) {

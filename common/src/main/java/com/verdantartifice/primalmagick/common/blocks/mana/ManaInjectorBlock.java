@@ -72,7 +72,7 @@ public class ManaInjectorBlock extends BaseEntityBlock implements ITieredDevice 
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
 
         // Set the block entity's owner when placed by a player
-        if (!pLevel.isClientSide && pPlacer instanceof Player player && pLevel.getBlockEntity(pPos) instanceof IOwnedTileEntity ownedTile) {
+        if (!pLevel.isClientSide() && pPlacer instanceof Player player && pLevel.getBlockEntity(pPos) instanceof IOwnedTileEntity ownedTile) {
             ownedTile.setTileOwner(player);
         }
     }

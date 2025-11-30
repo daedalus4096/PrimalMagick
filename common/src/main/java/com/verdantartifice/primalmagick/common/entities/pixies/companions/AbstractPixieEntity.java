@@ -104,7 +104,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             this.readPersistentAngerSaveData((ServerLevel)level, compound);
         }
     }
@@ -158,7 +158,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
         }
         
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             this.updatePersistentAnger((ServerLevel)level, true);
             if (this.isAlive()) {
                 level.broadcastEntityEvent(this, PIXIE_DUST_EVENT);
@@ -239,7 +239,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     protected InteractionResult mobInteract(Player playerIn, InteractionHand hand) {
         Level level = this.level();
         InteractionResult actionResult = super.mobInteract(playerIn, hand);
-        if (!actionResult.consumesAction() && !level.isClientSide && this.isCompanionOwner(playerIn)) {
+        if (!actionResult.consumesAction() && !level.isClientSide() && this.isCompanionOwner(playerIn)) {
             ItemStack held = playerIn.getItemInHand(hand);
             ItemStack stack = new ItemStack(this.getSpawnItem());
             if (ItemStack.isSameItem(held, stack)) {

@@ -32,7 +32,7 @@ public abstract class AbstractCalcinatorTileEntityForge extends AbstractCalcinat
     public void onLoad() {
         super.onLoad();
         this.doInventorySync();
-        if (!this.level.isClientSide) {
+        if (!this.level.isClientSide()) {
             this.relevantResearch = assembleRelevantResearch();
         }
         this.cookTimeTotal = this.getCookTimeTotal();

@@ -69,7 +69,7 @@ public abstract class ArcanometerItem extends Item implements IHasCustomRenderer
     
     @Override
     public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        if (worldIn.isClientSide) {
+        if (worldIn.isClientSide()) {
             HitResult result = RayTraceUtils.getMouseOver(worldIn, playerIn);
             if (result != null && result.getType() != HitResult.Type.MISS) {
                 // If something is being moused over, play the sound effect for the player and send a scan packet to the server

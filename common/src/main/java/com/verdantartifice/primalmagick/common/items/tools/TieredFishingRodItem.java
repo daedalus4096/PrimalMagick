@@ -38,7 +38,7 @@ public class TieredFishingRodItem extends FishingRodItem {
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (player.fishing != null) {
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 int val = player.fishing.retrieve(stack);
                 stack.hurtAndBreak(val, player, LivingEntity.getSlotForHand(hand));
             }
@@ -46,7 +46,7 @@ public class TieredFishingRodItem extends FishingRodItem {
             player.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
         } else {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
-            if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
+            if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
                 int lure = (int)(EnchantmentHelper.getFishingTimeReduction(serverLevel, stack, player) * 20.0F);
                 int luck = EnchantmentHelper.getFishingLuckBonus(serverLevel, stack, player);
                 level.addFreshEntity(new FishingHook(player, level, luck, lure));

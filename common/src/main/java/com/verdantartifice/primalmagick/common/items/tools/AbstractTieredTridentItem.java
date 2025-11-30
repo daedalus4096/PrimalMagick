@@ -74,7 +74,7 @@ public abstract class AbstractTieredTridentItem extends TridentItem implements I
                 if (riptide <= 0F || player.isInWaterOrRain()) {
                     if (!isTooDamagedToUse(stack)) {
                         Holder<SoundEvent> soundHolder = EnchantmentHelper.pickHighestLevel(stack, EnchantmentEffectComponents.TRIDENT_SOUND).orElse(SoundEvents.TRIDENT_THROW);
-                        if (!worldIn.isClientSide) {
+                        if (!worldIn.isClientSide()) {
                             stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(entityLiving.getUsedItemHand()));
                             if (riptide == 0) {
                                 AbstractTridentEntity trident = this.getThrownEntity(worldIn, player, stack);

@@ -63,7 +63,7 @@ public class AppleEntity extends ThrowableItemProjectile {
     protected void onHit(HitResult result) {
         super.onHit(result);
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             level.broadcastEntityEvent(this, (byte)3);
             this.discard();
         }

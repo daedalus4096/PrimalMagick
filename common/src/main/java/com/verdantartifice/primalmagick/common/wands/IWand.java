@@ -64,7 +64,7 @@ public interface IWand extends ISpellContainer, IManaContainer {
     default InteractionResult onWandUseFirst(ItemStack stack, UseOnContext context) {
         // Only process on server side
         Level world = context.getLevel();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return InteractionResult.PASS;
         }
 

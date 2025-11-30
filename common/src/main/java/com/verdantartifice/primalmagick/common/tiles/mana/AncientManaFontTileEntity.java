@@ -37,7 +37,7 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, AncientManaFontTileEntity entity) {
         entity.ticksExisted++;
-        if (!level.isClientSide && entity.ticksExisted % 10 == 0) {
+        if (!level.isClientSide() && entity.ticksExisted % 10 == 0) {
             // Have players in range discover this font's shrine
             List<Player> players = EntityUtils.getEntitiesInRange(level, pos, null, Player.class, 5.0D);
             for (Player player : players) {
@@ -54,7 +54,7 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
                 }
             }
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             entity.doRecharge();
         }
     }

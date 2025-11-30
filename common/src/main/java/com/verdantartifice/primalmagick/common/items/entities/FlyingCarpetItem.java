@@ -38,11 +38,11 @@ public class FlyingCarpetItem extends Item implements IHasDyeColor {
             if (carpet.getDyeColor(stack) == null) {
                 return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             } else {
-                if (!level.isClientSide) {
+                if (!level.isClientSide()) {
                     carpet.removeDyeColor(stack);
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                 }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                return ItemInteractionResult.sidedSuccess(level.isClientSide());
             }
         }
     };
@@ -64,7 +64,7 @@ public class FlyingCarpetItem extends Item implements IHasDyeColor {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             if (context.getClickedFace() != Direction.UP) {
                 return InteractionResult.PASS;
             }

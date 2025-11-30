@@ -166,7 +166,7 @@ public class BlockBreaker {
      * @see net.minecraft.server.level.ServerPlayerGameMode#destroyBlock(BlockPos)
      */
     protected boolean doHarvest(@Nonnull Level world) {
-        if (!world.isClientSide && this.player instanceof ServerPlayer serverPlayer && world instanceof ServerLevel serverWorld) {
+        if (!world.isClientSide() && this.player instanceof ServerPlayer serverPlayer && world instanceof ServerLevel serverWorld) {
             int exp = this.skipEvent ? 0 : Services.EVENTS.fireBlockBreakEvent(world, serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer, this.pos);
             if (exp == -1) {
                 return false;

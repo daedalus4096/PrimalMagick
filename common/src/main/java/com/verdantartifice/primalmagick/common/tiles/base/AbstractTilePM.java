@@ -80,7 +80,7 @@ public abstract class AbstractTilePM extends BlockEntity {
      * @param nbt the data to be synced
      */
     public void sendMessageToServer(CompoundTag nbt) {
-        if (this.hasLevel() && this.getLevel().isClientSide) {
+        if (this.hasLevel() && this.getLevel().isClientSide()) {
             PacketHandler.sendToServer(new TileToServerPacket(this.worldPosition, nbt));
         }
     }

@@ -37,7 +37,7 @@ public class StrippableLogBlock extends RotatedPillarBlock {
         if (this.strippedVersion != null && player != null && Services.ITEM_ABILITIES.canAxeStrip(stack)) {
             // If the player right-clicks on the log with an axe, replace this block with its stripped version
             worldIn.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (!worldIn.isClientSide) {
+            if (!worldIn.isClientSide()) {
                 worldIn.setBlock(pos, this.getDefaultStrippedState(state), Block.UPDATE_ALL_IMMEDIATE);
                 stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(handIn));
             }

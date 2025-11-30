@@ -308,7 +308,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     @Override
     public void handleEntityEvent(byte pId) {
         if (pId == HIT_EVENT) {
-            if (this.level().isClientSide) {
+            if (this.level().isClientSide()) {
                 this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_HIT, this.getSoundSource(), 0.3F, 1.0F, false);
                 this.lastHit = this.level().getGameTime();
             }

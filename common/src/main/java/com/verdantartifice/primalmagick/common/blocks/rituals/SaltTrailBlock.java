@@ -250,7 +250,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     
     @Override
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
-        if (oldState.getBlock() != state.getBlock() && !world.isClientSide) {
+        if (oldState.getBlock() != state.getBlock() && !world.isClientSide()) {
             this.updateSurroundingSaltPower(world, pos, state);
             
             for (Direction dir : Direction.Plane.VERTICAL) {
@@ -276,7 +276,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving && state.getBlock() != newState.getBlock()) {
             super.onRemove(state, world, pos, newState, isMoving);
-            if (!world.isClientSide) {
+            if (!world.isClientSide()) {
                 for (Direction dir : Direction.values()) {
                     world.updateNeighborsAt(pos.relative(dir), this);
                 }
@@ -301,7 +301,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             if (state.canSurvive(world, pos)) {
                 this.updateSurroundingSaltPower(world, pos, state);
             } else {

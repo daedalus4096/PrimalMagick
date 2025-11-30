@@ -23,13 +23,13 @@ public class TickStickItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
         Level level = pContext.getLevel();
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
             BlockPos pos = pContext.getClickedPos();
             BlockState state = level.getBlockState(pos);
             Player player = pContext.getPlayer();
             if (player.canUseGameMasterBlocks() && state.isRandomlyTicking()) {
                 state.randomTick(serverLevel, pos, serverLevel.random);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.sidedSuccess(level.isClientSide());
             } else {
                 return InteractionResult.FAIL;
             }

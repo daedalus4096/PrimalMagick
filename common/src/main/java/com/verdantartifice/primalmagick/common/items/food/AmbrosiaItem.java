@@ -45,7 +45,7 @@ public class AmbrosiaItem extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isClientSide && (entityLiving instanceof Player)) {
+        if (!worldIn.isClientSide() && (entityLiving instanceof Player)) {
             Player player = (Player)entityLiving;
 
             // Only modify attunements if the player has started mod progression

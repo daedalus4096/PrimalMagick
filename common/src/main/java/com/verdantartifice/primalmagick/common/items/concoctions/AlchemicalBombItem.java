@@ -54,7 +54,7 @@ public class AlchemicalBombItem extends Item {
         if (playerIn.isSecondaryUseActive()) {
             // Set bomb fuse
             FuseType fuse = ConcoctionUtils.getFuseType(stack);
-            if (!worldIn.isClientSide && fuse != null && fuse.getNext() != null) {
+            if (!worldIn.isClientSide() && fuse != null && fuse.getNext() != null) {
                 playerIn.setItemInHand(handIn, ConcoctionUtils.setFuseType(stack, fuse.getNext()));
                 Component fuseText = Component.translatable(fuse.getNext().getTranslationKey());
                 playerIn.sendSystemMessage(Component.translatable("concoctions.primalmagick.fuse_set", fuseText));

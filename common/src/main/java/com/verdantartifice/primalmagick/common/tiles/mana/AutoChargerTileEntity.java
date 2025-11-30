@@ -106,7 +106,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             ItemStack chargeStack = entity.getItem(INPUT_INV_INDEX, 0);
             if (entity.chargeTime % 5 == 0 && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 final ManaStorage manaStorage = chargeStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);

@@ -65,7 +65,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
         if ((this.dealtDamage || this.isNoPhysics()) && shooter != null) {
             int loyalty = this.entityData.get(LOYALTY_LEVEL);
             if (loyalty > 0 && !this.shouldReturnToThrower()) {
-                if (!level.isClientSide && this.pickup == AbstractArrow.Pickup.ALLOWED) {
+                if (!level.isClientSide() && this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }
                 this.discard();
@@ -73,7 +73,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
                 this.setNoPhysics(true);
                 Vec3 vector3d = new Vec3(shooter.getX() - this.getX(), shooter.getEyeY() - this.getY(), shooter.getZ() - this.getZ());
                 this.setPosRaw(this.getX(), this.getY() + vector3d.y * 0.015D * (double)loyalty, this.getZ());
-                if (level.isClientSide) {
+                if (level.isClientSide()) {
                     this.yOld = this.getY();
                 }
                 

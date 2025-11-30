@@ -61,7 +61,7 @@ public class SinCrystalEntity extends Entity {
         
         // Create or extend damage cloud
         Level level = this.level();
-        if (!level.isClientSide && level instanceof ServerLevel serverWorld) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverWorld) {
             UUID cloudId = this.getDamageCloud();
             if (cloudId == null) {
                 AreaEffectCloud cloud = new AreaEffectCloud(level, this.getX(), this.getY(), this.getZ());
@@ -115,7 +115,7 @@ public class SinCrystalEntity extends Entity {
             return false;
         } else {
             Level level = this.level();
-            if (this.isAlive() && !level.isClientSide) {
+            if (this.isAlive() && !level.isClientSide()) {
                 // Cause backlash to any inner demons being healed by this crystal
                 List<InnerDemonEntity> demonsInRange = EntityUtils.getEntitiesInRange(level, this.position(), null, InnerDemonEntity.class, InnerDemonEntity.HEAL_RANGE);
                 if (!demonsInRange.isEmpty()) {

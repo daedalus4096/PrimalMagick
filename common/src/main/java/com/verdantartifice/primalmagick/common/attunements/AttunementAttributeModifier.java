@@ -50,7 +50,7 @@ public class AttunementAttributeModifier {
     }
     
     public void applyToEntity(@Nullable LivingEntity entity) {
-        if (entity != null && !entity.level().isClientSide) {
+        if (entity != null && !entity.level().isClientSide()) {
             AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
                 instance.removeModifier(this.getModifier());
@@ -60,7 +60,7 @@ public class AttunementAttributeModifier {
     }
     
     public void removeFromEntity(@Nullable LivingEntity entity) {
-        if (entity != null && !entity.level().isClientSide) {
+        if (entity != null && !entity.level().isClientSide()) {
             AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
                 instance.removeModifier(this.getModifier());

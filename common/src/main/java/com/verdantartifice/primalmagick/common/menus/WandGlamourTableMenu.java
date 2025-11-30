@@ -194,7 +194,7 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
     }
 
     protected void slotChangedCraftingGrid(Level world) {
-        if (!world.isClientSide && this.player instanceof ServerPlayer spe) {
+        if (!world.isClientSide() && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
             Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
             if (opt.isPresent() && opt.get().value() instanceof WandGlamourRecipe recipe) {
