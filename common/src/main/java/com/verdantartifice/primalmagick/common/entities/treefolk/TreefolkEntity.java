@@ -21,6 +21,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -127,9 +128,9 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     @Override
     protected void customServerAiStep() {
         Level level = this.level();
-        level.getProfiler().push("treefolkBrain");
+        Profiler.get().push("treefolkBrain");
         this.getBrain().tick((ServerLevel)level, this);
-        level.getProfiler().pop();
+        Profiler.get().pop();
         TreefolkAi.updateActivity(this);
         super.customServerAiStep();
     }

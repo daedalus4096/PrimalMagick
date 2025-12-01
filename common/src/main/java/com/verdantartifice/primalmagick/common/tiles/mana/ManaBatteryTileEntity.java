@@ -474,14 +474,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         }
 
         // Combine supplier and consumer network loading
-        level.getProfiler().push("loadManaNetwork");
-        level.getProfiler().push("manaBattery");
+        Profiler.get().push("loadManaNetwork");
+        Profiler.get().push("manaBattery");
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 
         // Search for mana suppliers and consumers which are in range of this node
-        level.getProfiler().push("findNodes");
+        Profiler.get().push("findNodes");
         List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
                 .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
@@ -489,21 +489,21 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                 .toList();
 
         // Create direct routes from this supplier for terminus consumers
-        level.getProfiler().popPush("createDirectConsumerEdges");
+        Profiler.get().popPush("createDirectConsumerEdges");
         List<IManaConsumer> consumers = nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
                 .filter(Objects::nonNull)
                 .toList();
         consumers.forEach(consumer -> this.getRouteTable().add(this, consumer));
 
         // Create direct routes to this consumer for origin suppliers
-        level.getProfiler().popPush("createDirectSupplierEdges");
+        Profiler.get().popPush("createDirectSupplierEdges");
         List<IManaSupplier> suppliers = nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
                 .filter(Objects::nonNull)
                 .toList();
         suppliers.forEach(supplier -> this.getRouteTable().add(supplier, this));
-        level.getProfiler().pop();
+        Profiler.get().pop();
 
-        level.getProfiler().pop();
-        level.getProfiler().pop();
+        Profiler.get().pop();
+        Profiler.get().pop();
     }
 }

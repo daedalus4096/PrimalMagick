@@ -83,7 +83,7 @@ public class RouteTable {
     }
 
     protected void cullInactiveNodes(@NotNull Level level) {
-        level.getProfiler().push("cullInactiveRoutes");
+        Profiler.get().push("cullInactiveRoutes");
         boolean anyRemoved;
         synchronized (this.graph) {
             anyRemoved = this.graph.removeIf(pos -> !level.isLoaded(pos) || !(level.getBlockEntity(pos) instanceof IManaNetworkNode));
@@ -91,6 +91,6 @@ public class RouteTable {
         if (anyRemoved) {
             this.invalidate();
         }
-        level.getProfiler().pop();
+        Profiler.get().pop();
     }
 }

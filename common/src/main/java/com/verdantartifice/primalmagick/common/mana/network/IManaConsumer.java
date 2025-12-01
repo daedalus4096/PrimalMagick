@@ -67,8 +67,8 @@ public interface IManaConsumer extends IManaNetworkNode {
      * @return the total amount of centimana transferred during this operation
      */
     default int doSiphon(@Nullable Player owner, @NotNull Level level, @NotNull Source source, final int maxTransferCentimana) {
-        level.getProfiler().push("doSiphon");
-        level.getProfiler().push("defaultManaConsumer");
+        Profiler.get().push("doSiphon");
+        Profiler.get().push("defaultManaConsumer");
 
         int totalSiphoned = 0;
         int remainingTransfer = maxTransferCentimana;
@@ -76,14 +76,14 @@ public interface IManaConsumer extends IManaNetworkNode {
         Set<Route.Hop> particleHops = new HashSet<>();
 
         // Get the best route for each origin linked to this terminus that can carry the requested source
-        level.getProfiler().push("findBestRoutes");
+        Profiler.get().push("findBestRoutes");
         List<Route> routes = routeTable.getAllRoutes(level, Optional.of(source), this).stream()
                 .filter(route -> route.isActive(level))
                 .sorted(Comparator.<Route, Integer>comparing(route -> route.getMaxThroughput(level)).reversed().thenComparing(Route::hashCode))
                 .toList();
 
         // Transfer mana directly from the origin to the terminus
-        level.getProfiler().popPush("doTransfer");
+        Profiler.get().popPush("doTransfer");
         Iterator<Route> routeIterator = routes.iterator();
         while (remainingTransfer > 0 && routeIterator.hasNext()) {
             Route route = routeIterator.next();
@@ -108,7 +108,7 @@ public interface IManaConsumer extends IManaNetworkNode {
         }
 
         // Show particles for each hop in the route
-        level.getProfiler().popPush("showParticles");
+        Profiler.get().popPush("showParticles");
         if (level instanceof ServerLevel serverLevel) {
             particleHops.forEach(hop -> PacketHandler.sendToAllAround(
                     new ManaSparklePacket(hop.supplier().getBlockPos().getCenter(), hop.consumer().getBlockPos().getCenter(), 20, source),
@@ -116,10 +116,10 @@ public interface IManaConsumer extends IManaNetworkNode {
                     hop.supplier().getBlockPos(),
                     32D));
         }
-        level.getProfiler().pop();
+        Profiler.get().pop();
 
-        level.getProfiler().pop();
-        level.getProfiler().pop();
+        Profiler.get().pop();
+        Profiler.get().pop();
 
         return totalSiphoned;
     }
@@ -135,14 +135,14 @@ public interface IManaConsumer extends IManaNetworkNode {
             return;
         }
 
-        level.getProfiler().push("loadManaNetwork");
-        level.getProfiler().push("defaultManaConsumer");
+        Profiler.get().push("loadManaNetwork");
+        Profiler.get().push("defaultManaConsumer");
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 
         // Search for mana suppliers which are in range of this node
-        level.getProfiler().push("findNodes");
+        Profiler.get().push("findNodes");
         List<IManaSupplier> suppliers = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
                 .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaSupplier supplier ? supplier : null)
@@ -150,11 +150,11 @@ public interface IManaConsumer extends IManaNetworkNode {
                 .toList();
 
         // Create direct routes to this consumer for origin suppliers
-        level.getProfiler().popPush("createDirectSupplierEdges");
+        Profiler.get().popPush("createDirectSupplierEdges");
         suppliers.forEach(supplier -> this.getRouteTable().add(supplier, this));
-        level.getProfiler().pop();
+        Profiler.get().pop();
 
-        level.getProfiler().pop();
-        level.getProfiler().pop();
+        Profiler.get().pop();
+        Profiler.get().pop();
     }
 }
