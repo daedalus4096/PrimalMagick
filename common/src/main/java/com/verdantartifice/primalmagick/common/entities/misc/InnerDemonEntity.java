@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.spells.payloads.BloodDamageSpellP
 import com.verdantartifice.primalmagick.common.spells.vehicles.ProjectileSpellVehicle;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +22,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PowerableMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -40,7 +38,9 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ import java.util.List;
  * 
  * @author Daedalus4096
  */
-public class InnerDemonEntity extends Monster implements RangedAttackMob, PowerableMob {
+public class InnerDemonEntity extends Monster implements RangedAttackMob {
     public static final double HEAL_RANGE = 16.0D;
     protected static final double SIN_CRASH_RANGE = 12.0D;
 
@@ -84,8 +84,8 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
+    public void readAdditionalSaveData(@NotNull ValueInput input) {
+        super.readAdditionalSaveData(input);
         if (this.hasCustomName()) {
             this.bossInfo.setName(this.getDisplayName());
         }
@@ -107,13 +107,8 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     }
 
     @Override
-    public void performRangedAttack(LivingEntity target, float distanceFactor) {
+    public void performRangedAttack(@NotNull LivingEntity target, float distanceFactor) {
         this.getSpellPackage().cast(this.level(), this, ItemStack.EMPTY);
-    }
-
-    @Override
-    public boolean isPowered() {
-        return true;
     }
 
     @Override
@@ -128,56 +123,54 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     }
 
     @Override
-    protected void customServerAiStep() {
-        Level level = this.level();
-        if (!level.isClientSide()) {
-            // Explode if suffocating
-            if (this.isSuffocating && this.tickCount % 20 == 0) {
-                Level.ExplosionInteraction mode = Services.EVENTS.canEntityGrief(level, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
-                level.explode(this, this.getX(), this.getY(), this.getZ(), 7.0F, false, mode);
-                this.isSuffocating = false;
-            }
-            
-            this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
+    protected void customServerAiStep(@NotNull ServerLevel serverLevel) {
+        // Explode if suffocating
+        if (this.isSuffocating && this.tickCount % 20 == 0) {
+            Level.ExplosionInteraction mode = Services.EVENTS.canEntityGrief(serverLevel, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
+            serverLevel.explode(this, this.getX(), this.getY(), this.getZ(), 7.0F, false, mode);
+            this.isSuffocating = false;
         }
-        super.customServerAiStep();
+
+        this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
+
+        super.customServerAiStep(serverLevel);
     }
 
     @Override
-    public boolean doHurtTarget(Entity entityIn) {
-        boolean retVal = super.doHurtTarget(entityIn);
+    public boolean doHurtTarget(@NotNull ServerLevel serverLevel, @NotNull Entity entityIn) {
+        boolean retVal = super.doHurtTarget(serverLevel, entityIn);
         entityIn.igniteForSeconds(5);
         return retVal;
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (source == this.level().damageSources().drown() || source.getEntity() instanceof InnerDemonEntity) {
+    public boolean hurtServer(@NotNull ServerLevel serverLevel, @NotNull DamageSource source, float amount) {
+        if (source == serverLevel.damageSources().drown() || source.getEntity() instanceof InnerDemonEntity) {
             return false;
         } else {
-            if (source == this.level().damageSources().inWall()) {
+            if (source == serverLevel.damageSources().inWall()) {
                 this.isSuffocating = true;
             }
-            return super.hurt(source, amount);
+            return super.hurtServer(serverLevel, source, amount);
         }
     }
 
     @Override
-    public void startSeenByPlayer(ServerPlayer player) {
+    public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.bossInfo.addPlayer(player);
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer player) {
+    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossInfo.removePlayer(player);
     }
 
     @Override
-    protected void dropCustomDeathLoot(ServerLevel serverLevel, DamageSource source, boolean recentlyHitIn) {
+    protected void dropCustomDeathLoot(@NotNull ServerLevel serverLevel, @NotNull DamageSource source, boolean recentlyHitIn) {
         super.dropCustomDeathLoot(serverLevel, source, recentlyHitIn);
-        ItemEntity itemEntity = this.spawnAtLocation(ItemsPM.HALLOWED_ORB.get());
+        ItemEntity itemEntity = this.spawnAtLocation(serverLevel, ItemsPM.HALLOWED_ORB.get());
         if (itemEntity != null) {
             itemEntity.setExtendedLifetime();
         }
@@ -185,7 +178,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
 
     @Override
     public void checkDespawn() {
-        if (this.level().getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL && !this.getType().isAllowedInPeaceful()) {
             this.discard();
         } else {
             this.noActionTime = 0;
@@ -193,12 +186,12 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     }
 
     @Override
-    public boolean canBeAffected(MobEffectInstance potioneffectIn) {
+    public boolean canBeAffected(@NotNull MobEffectInstance potionEffectIn) {
         return false;
     }
 
     @Override
-    protected boolean canRide(Entity entityIn) {
+    protected boolean canRide(@NotNull Entity entityIn) {
         return false;
     }
 
@@ -225,7 +218,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
                 double dy = -1.0D * (double)this.getEyeHeight();
                 double dz = level.random.nextGaussian() * SIN_CRASH_RANGE * (level.random.nextBoolean() ? 1.0D : -1.0D);
                 SinCrashEntity crash = new SinCrashEntity(level, this, new Vec3(dx, dy, dz));
-                crash.moveTo(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);
+                crash.absSnapTo(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);
                 level.addFreshEntity(crash);
             }
             level.playSound(null, demonPosX, demonPosY, demonPosZ, SoundsPM.WHISPERS.get(), SoundSource.HOSTILE, 1.0F, 1.0F);
