@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayl
 import com.verdantartifice.primalmagick.common.spells.payloads.SpellPayloadsPM;
 import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -24,9 +23,10 @@ import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -47,6 +47,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -63,7 +65,7 @@ import java.util.UUID;
  */
 public abstract class AbstractGuardianPixieEntity extends PathfinderMob implements NeutralMob, FlyingAnimal, RangedAttackMob, IPixie {
     protected static final EntityDataAccessor<Integer> DATA_ANGER_TIME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.INT);
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_HOME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> DATA_HOME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
     protected static final EntityDataAccessor<String> DATA_SOURCE_TAG = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.STRING);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     protected static final byte PIXIE_DUST_EVENT = 15;
@@ -80,7 +82,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     public static <T extends AbstractGuardianPixieEntity> T spawn(EntityType<T> entityType, Source source, PixieHouseEntity home, ServerLevel level, BlockPos pos) {
-        T pixie = entityType.create(level, $ -> {}, pos, MobSpawnType.SPAWN_EGG, true, true);
+        T pixie = entityType.create(level, $ -> {}, pos, EntitySpawnReason.SPAWN_ITEM_USE, true, true);
         if (pixie != null) {
             pixie.setPixieSource(source);
             pixie.setHome(home);
@@ -104,15 +106,16 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
     @Nullable
     public PixieHouseEntity getHome() {
-        if (this.homeCache == null && this.level() instanceof ServerLevel serverLevel) {
-            this.homeCache = this.entityData.get(DATA_HOME).map(u -> serverLevel.getEntity(u) instanceof PixieHouseEntity house ? house : null).orElse(null);
+        if (this.homeCache == null) {
+            this.homeCache = this.entityData.get(DATA_HOME).map(ref -> EntityReference.getLivingEntity(ref, this.level()))
+                    .map(l -> l instanceof PixieHouseEntity pixieHouseEntity ? pixieHouseEntity : null).orElse(null);
         }
         return this.homeCache;
     }
 
     public void setHome(@NotNull PixieHouseEntity home) {
         this.homeCache = home;
-        this.entityData.set(DATA_HOME, Optional.of(home.getUUID()));
+        this.entityData.set(DATA_HOME, Optional.of(EntityReference.of(home)));
     }
 
     @Override
@@ -158,7 +161,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(DATA_ANGER_TIME, 0);
         pBuilder.define(DATA_HOME, Optional.empty());
@@ -166,27 +169,27 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag pCompound) {
-        super.addAdditionalSaveData(pCompound);
-        this.addPersistentAngerSaveData(pCompound);
+    public void addAdditionalSaveData(@NotNull ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        this.addPersistentAngerSaveData(output);
         if (this.getHome() != null) {
-            pCompound.putUUID("HomeEntity", this.getHome().getUUID());
+            output.store("HomeEntity", EntityReference.codec(), EntityReference.of(this.getHome()));
         }
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag pCompound) {
-        super.readAdditionalSaveData(pCompound);
-        if (this.level() instanceof ServerLevel serverLevel) {
-            this.readPersistentAngerSaveData(serverLevel, pCompound);
-            if (pCompound.hasUUID("HomeEntity") && serverLevel.getEntity(pCompound.getUUID("HomeEntity")) instanceof PixieHouseEntity house) {
+    public void readAdditionalSaveData(@NotNull ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.readPersistentAngerSaveData(this.level(), input);
+        input.read("HomeEntity", EntityReference.<LivingEntity>codec()).ifPresent(ref -> {
+            if (EntityReference.getLivingEntity(ref, this.level()) instanceof PixieHouseEntity house) {
                 this.setHome(house);
             }
-        }
+        });
     }
 
     @Override
-    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    protected void checkFallDamage(double y, boolean onGroundIn, @NotNull BlockState state, @NotNull BlockPos pos) {
         // Pixies fly, not fall
     }
 
@@ -266,7 +269,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
         // TODO Replace with custom sounds
         return SoundEvents.BAT_HURT;
     }
@@ -278,7 +281,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     @Override
-    public void die(DamageSource pDamageSource) {
+    public void die(@NotNull DamageSource pDamageSource) {
         if (!this.isRemoved() && !this.dead && this.getHome() != null) {
             this.getHome().setHousedPixie(DrainedPixieItem.getDrainedPixie(this.getPixieRank(), this.getPixieSource()));
             this.getHome().removeDeployedPixie();
@@ -292,7 +295,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     @Override
-    protected void doPush(Entity entityIn) {
+    protected void doPush(@NotNull Entity entityIn) {
         // Pixies pass through other entities
     }
 
@@ -307,15 +310,15 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     @Override
-    protected PathNavigation createNavigation(Level worldIn) {
-        FlyingPathNavigation nav = new FlyingPathNavigation(this, worldIn);
+    @NotNull
+    protected PathNavigation createNavigation(@NotNull Level level) {
+        FlyingPathNavigation nav = new FlyingPathNavigation(this, level);
         nav.setCanOpenDoors(false);
-        nav.setCanPassDoors(true);
         return nav;
     }
 
     @Override
-    public void performRangedAttack(LivingEntity target, float distanceFactor) {
+    public void performRangedAttack(@NotNull LivingEntity target, float distanceFactor) {
         this.getSpellPackage().cast(this.level(), this, ItemStack.EMPTY);
     }
 
@@ -360,7 +363,9 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
         @Override
         public void start() {
-            this.mob.getNavigation().moveTo(this.wantedPos.x(), this.wantedPos.y(), this.wantedPos.z(), this.speedModifier);
+            if (this.wantedPos != null) {
+                this.mob.getNavigation().moveTo(this.wantedPos.x(), this.wantedPos.y(), this.wantedPos.z(), this.speedModifier);
+            }
         }
     }
 
@@ -438,7 +443,9 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
         @Override
         public void start() {
-            this.mob.getNavigation().moveTo(this.wantedPos.x(), this.wantedPos.y(), this.wantedPos.z(), this.speedModifier);
+            if (this.wantedPos != null) {
+                this.mob.getNavigation().moveTo(this.wantedPos.x(), this.wantedPos.y(), this.wantedPos.z(), this.speedModifier);
+            }
         }
     }
 
