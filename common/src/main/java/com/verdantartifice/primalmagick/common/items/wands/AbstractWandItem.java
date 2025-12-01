@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -40,7 +39,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -58,39 +56,13 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
         super(properties);
     }
 
-    @Deprecated(forRemoval = true, since = "6.0.2-beta")
-    @SuppressWarnings("removal")
     public ManaStorage getManaStorage(ItemStack stack) {
-        // FIXME Remove in next major revision
-        // If the wand already has a mana storage capability attached, return it. Otherwise, convert the stack from the
-        // old component type to the new one and then return the new one.
-        if (stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
-            return stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
-        } else {
-            ManaStorage retVal = ManaStorage.emptyWand(this.getMaxMana(stack, null));
-            retVal.setMana(stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY));
-            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), retVal);
-            stack.remove(DataComponentsPM.STORED_CENTIMANA.get());
-            return retVal;
-        }
+        return stack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
     }
 
-    @Deprecated(forRemoval = true, since = "6.0.2-beta")
-    @SuppressWarnings("removal")
     private void updateManaStorageWith(ItemStack stack, Source source, int amount) {
-        // FIXME Remove in next major revision
-        // If the wand already has a mana storage capability attached, update it. Otherwise, convert the stack from the
-        // old component type to the new one and then update the new one.
-        if (stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
-            stack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, mana -> mana.copyWith(source, amount));
-            stack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
-        } else {
-            ManaStorage newStorage = ManaStorage.emptyWand(this.getMaxMana(stack, source));
-            newStorage.setMana(stack.getOrDefault(DataComponentsPM.STORED_CENTIMANA.get(), SourceList.EMPTY));
-            newStorage.setMana(source, amount);
-            stack.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), newStorage);
-            stack.remove(DataComponentsPM.STORED_CENTIMANA.get());
-        }
+        stack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, mana -> mana.copyWith(source, amount));
+        stack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
     }
 
     @Override
