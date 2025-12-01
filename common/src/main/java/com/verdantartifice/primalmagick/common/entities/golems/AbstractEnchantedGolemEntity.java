@@ -280,9 +280,9 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
                 if (this.lastStayChangeTime != time) {
                     this.setCompanionStaying(!this.isCompanionStaying());
                     if (this.isCompanionStaying()) {
-                        playerIn.sendSystemMessage(Component.translatable("event.primalmagick.golem.stay"));
+                        playerIn.displayClientMessage(Component.translatable("event.primalmagick.golem.stay"), false);
                     } else {
-                        playerIn.sendSystemMessage(Component.translatable("event.primalmagick.golem.follow"));
+                        playerIn.displayClientMessage(Component.translatable("event.primalmagick.golem.follow"), false);
                     }
                     this.lastStayChangeTime = time;
                 }

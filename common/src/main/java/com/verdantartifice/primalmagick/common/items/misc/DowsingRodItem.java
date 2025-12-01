@@ -144,13 +144,13 @@ public class DowsingRodItem extends Item {
     }
 
     protected void recordDowsingPosition(@NotNull ItemStack stack, @Nullable Player player, @Nullable BlockPos targetPos) {
-        boolean sendStatusMessage = player != null && !player.level().isClientSide;
+        boolean sendStatusMessage = player != null && !player.level().isClientSide();
         if (targetPos == null && player != null && player.isShiftKeyDown()) {
             // Clear all set positions if using the rod on empty air while sneaking
             stack.remove(DataComponentsPM.DOWSING_PRIMARY_POSITION.get());
             stack.remove(DataComponentsPM.DOWSING_SECONDARY_POSITION.get());
             if (sendStatusMessage) {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.position.clear"));
+                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.position.clear"), false);
             }
         } else if (targetPos != null) {
             if (stack.has(DataComponentsPM.DOWSING_PRIMARY_POSITION.get())) {
@@ -160,62 +160,66 @@ public class DowsingRodItem extends Item {
             stack.set(DataComponentsPM.DOWSING_PRIMARY_POSITION.get(), targetPos);
             if (sendStatusMessage) {
                 Component posText = ComponentUtils.wrapInSquareBrackets(Component.literal(targetPos.toShortString()));
-                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.position.record", posText));
+                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.position.record", posText), false);
             }
         }
     }
 
     protected void doRouteTableCheck(@NotNull Level level, @NotNull IManaNetworkNode primaryNode, @NotNull Player player, @NotNull ItemStack stack) {
         BlockPos secondaryPos = stack.has(DataComponentsPM.DOWSING_SECONDARY_POSITION.get()) ? stack.get(DataComponentsPM.DOWSING_SECONDARY_POSITION.get()) : null;
-        player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.routes",
-                ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
+        player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.routes",
+                ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))), false);
         if (secondaryPos != null && level.getBlockEntity(secondaryPos) instanceof IManaNetworkNode secondaryNode) {
             if (secondaryNode instanceof IManaSupplier supplier && primaryNode instanceof IManaConsumer consumer &&
                     consumer.getRouteTable().getRoute(level, Optional.empty(), supplier, consumer).isPresent()) {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.route_highlight",
+                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.route_highlight",
                         ComponentUtils.wrapInSquareBrackets(Component.literal(secondaryPos.toShortString())),
-                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
+                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))),
+                    false);
             } else {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.no_route",
+                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.no_route",
                         ComponentUtils.wrapInSquareBrackets(Component.literal(secondaryPos.toShortString())),
-                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
+                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))),
+                    false);
             }
         }
     }
     
     protected void doStabilityCheck(RitualAltarTileEntity altarEntity, Player player) {
         float delta = altarEntity.calculateStabilityDelta();
+        Component msg;
         if (delta >= THRESHOLD_HIGH) {
-            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.very_good"));
+            msg = Component.translatable("event.primalmagick.dowsing_rod.altar_stability.very_good");
         } else if (delta >= THRESHOLD_LOW) {
-            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.good"));
+            msg = Component.translatable("event.primalmagick.dowsing_rod.altar_stability.good");
         } else if (delta <= -THRESHOLD_HIGH) {
-            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.very_poor"));
+            msg = Component.translatable("event.primalmagick.dowsing_rod.altar_stability.very_poor");
         } else if (delta <= -THRESHOLD_LOW) {
-            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.poor"));
+            msg = Component.translatable("event.primalmagick.dowsing_rod.altar_stability.poor");
         } else {
-            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.neutral"));
+            msg = Component.translatable("event.primalmagick.dowsing_rod.altar_stability.neutral");
         }
+        player.displayClientMessage(msg, false);
     }
     
     protected void doPropSaltCheck(Level level, ISaltPowered block, BlockPos blockPos, Player player) {
         if (block.isBlockSaltPowered(level, blockPos)) {
-            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.active"));
+            player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.active"), false);
         } else {
-            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.inactive"));
+            player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.inactive"), false);
         }
     }
     
     protected void doPropSymmetryCheck(Level level, IRitualStabilizer block, BlockPos blockPos, BlockPos altarPos, Player player) {
         BlockPos symPos = RitualAltarTileEntity.getSymmetricPosition(altarPos, blockPos);
         if (symPos == null || block.hasSymmetryPenalty(level, blockPos, symPos)) {
-            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.not_found"));
+            player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.not_found"), false);
             if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.marking_pos"));
+                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.marking_pos"), false);
                 PacketHandler.sendToPlayer(new PropMarkerPacket(symPos, 200), serverPlayer);
             }
         } else {
-            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.found"));
+            player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.found"), false);
         }
     }
     

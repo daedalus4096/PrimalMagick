@@ -474,7 +474,7 @@ public class ResearchManager {
                         addendum.completionRequirementOpt().filter(req -> req.contains(key) && req.isMetBy(player)).ifPresent(req -> {
                             // Announce completion of the addendum
                             Component nameComp = Component.translatable(searchEntry.getNameTranslationKey());
-                            player.sendSystemMessage(Component.translatable("event.primalmagick.add_addendum", nameComp));
+                            player.displayClientMessage(Component.translatable("event.primalmagick.add_addendum", nameComp), false);
                             knowledge.addResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
                             knowledge.removeResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.READ);
                             

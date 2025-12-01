@@ -57,7 +57,7 @@ public class AlchemicalBombItem extends Item {
             if (!worldIn.isClientSide() && fuse != null && fuse.getNext() != null) {
                 playerIn.setItemInHand(handIn, ConcoctionUtils.setFuseType(stack, fuse.getNext()));
                 Component fuseText = Component.translatable(fuse.getNext().getTranslationKey());
-                playerIn.sendSystemMessage(Component.translatable("concoctions.primalmagick.fuse_set", fuseText));
+                playerIn.displayClientMessage(Component.translatable("concoctions.primalmagick.fuse_set", fuseText), false);
             }
         } else {
             worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));

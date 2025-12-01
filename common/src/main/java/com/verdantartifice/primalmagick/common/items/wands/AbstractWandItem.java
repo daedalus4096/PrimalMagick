@@ -27,8 +27,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
@@ -116,8 +116,8 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
     
     @Override
-    public UseAnim getUseAnimation(ItemStack stack) {
-        return UseAnim.BOW;
+    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+        return ItemUseAnimation.BOW;
     }
     
     @Override
@@ -214,7 +214,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
     }
     
     @Override
-    public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
+    public boolean releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
         super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
         
         // Give a hint the first time the player aborts a wand transform early
@@ -223,7 +223,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             for (IWandTransform transform : WandTransforms.getAll()) {
                 if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack, entityLiving) - timeLeft < WandTransforms.CHANNEL_DURATION) {
                     ResearchManager.completeResearch(player, WAND_TRANSFORM_HINT_KEY);
-                    player.sendSystemMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN));
+                    player.displayClientMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN), false);
                     break;
                 }
             }
@@ -231,5 +231,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
 
         // Once interaction ceases, clear the last-interacted coordinates
         this.clearPositionInUse(stack);
+
+        return true;
     }
 }

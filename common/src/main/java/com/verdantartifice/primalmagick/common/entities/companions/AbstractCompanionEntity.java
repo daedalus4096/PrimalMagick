@@ -197,7 +197,7 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     public void die(DamageSource cause) {
         Level level = this.level();
         if (!level.isClientSide() && level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getCompanionOwner() instanceof ServerPlayer) {
-            this.getCompanionOwner().sendSystemMessage(this.getCombatTracker().getDeathMessage());
+            this.getCompanionOwner().displayClientMessage(this.getCombatTracker().getDeathMessage(), false);
         }
         super.die(cause);
     }

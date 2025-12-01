@@ -219,9 +219,9 @@ public class SpellManager {
         if (retVal && player != null) {
             SpellPackage spell = getActiveSpell(mainHandStack, offHandStack);
             if (spell == null) {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell.none"));
+                player.displayClientMessage(Component.translatable("event.primalmagick.cycle_spell.none"), false);
             } else {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getDisplayName()));
+                player.displayClientMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getDisplayName()), false);
             }
         } else if (!retVal) {
             LOGGER.warn("Failed to set active spell to invalid index {}", index);
