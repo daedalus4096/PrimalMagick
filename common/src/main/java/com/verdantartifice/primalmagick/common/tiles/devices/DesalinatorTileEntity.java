@@ -223,8 +223,9 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     protected static ItemStack getContainerForInput(ItemStack stack) {
-        if (stack.is(Items.WATER_BUCKET) && stack.getItem().getCraftingRemainingItem() != null) {
-            return new ItemStack(stack.getItem().getCraftingRemainingItem());
+        ItemStack remainderStack = stack.getItem().getCraftingRemainder();
+        if (!remainderStack.isEmpty()) {
+            return remainderStack;
         } else if (stack.is(Items.POTION)) {
             return new ItemStack(Items.GLASS_BOTTLE);
         } else if (stack.is(ItemsPM.CONCOCTION.get())) {
