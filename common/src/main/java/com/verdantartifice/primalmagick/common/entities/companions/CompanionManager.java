@@ -20,17 +20,13 @@ public class CompanionManager {
     // Set of unique IDs of players that need their companions synced to their client
     private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
 
-    public static boolean isSyncScheduled(@Nullable Player player) {
-        if (player == null) {
-            return false;
-        } else {
-            return SYNC_SET.remove(player.getUUID());
-        }
+    public static boolean isSyncScheduled(@Nullable Player owner) {
+        return owner != null && SYNC_SET.remove(owner.getUUID());
     }
     
-    public static void scheduleSync(@Nullable Player player) {
-        if (player != null) {
-            SYNC_SET.add(player.getUUID());
+    public static void scheduleSync(@Nullable Player owner) {
+        if (owner != null) {
+            SYNC_SET.add(owner.getUUID());
         }
     }
     
@@ -38,24 +34,24 @@ public class CompanionManager {
      * Link the given player and companion.  If the given player is already at the limit for that type of
      * companion, the oldest entity of that type will be killed.
      * 
-     * @param player the player to gain the companion
+     * @param owner the player to gain the companion
      * @param companion the companion to be added
      */
-    public static void addCompanion(@Nullable Player player, @Nullable AbstractCompanionEntity companion) {
-        if (player != null && companion != null) {
-            companion.setCompanionOwnerId(player.getUUID());
-            Services.CAPABILITIES.companions(player).ifPresent(companions -> {
+    public static void addCompanion(@Nullable Player owner, @Nullable AbstractCompanionEntity companion) {
+        if (owner != null && companion != null) {
+            companion.setCompanionOwner(owner);
+            Services.CAPABILITIES.companions(owner).ifPresent(companions -> {
                 UUID oldCompanion = companions.add(companion.getCompanionType(), companion.getUUID());
-                if (oldCompanion != null && player.level() instanceof ServerLevel serverLevel) {
-                    for (ServerLevel serverWorld : serverLevel.getServer().getAllLevels()) {
-                        Entity entity = serverWorld.getEntity(oldCompanion);
+                if (oldCompanion != null && owner.level() instanceof ServerLevel serverLevel) {
+                    for (ServerLevel sl : serverLevel.getServer().getAllLevels()) {
+                        Entity entity = sl.getEntity(oldCompanion);
                         if (entity != null) {
-                            entity.kill();
+                            entity.kill(sl);
                             break;
                         }
                     }
                 }
-                CompanionManager.scheduleSync(player);
+                CompanionManager.scheduleSync(owner);
             });
         }
     }
@@ -68,7 +64,7 @@ public class CompanionManager {
      */
     public static void removeCompanion(@Nullable Player player, @Nullable AbstractCompanionEntity companion) {
         if (player != null && companion != null) {
-            companion.setCompanionOwnerId(null);
+            companion.setCompanionOwner(null);
             Services.CAPABILITIES.companions(player).ifPresent(companions -> {
                 if (companions.remove(companion.getCompanionType(), companion.getUUID())) {
                     CompanionManager.scheduleSync(player);

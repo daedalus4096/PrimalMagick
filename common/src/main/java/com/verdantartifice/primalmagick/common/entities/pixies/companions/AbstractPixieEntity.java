@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -43,6 +42,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.EnumSet;
@@ -95,18 +97,15 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        this.addPersistentAngerSaveData(compound);
+    public void addAdditionalSaveData(@NotNull ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        this.addPersistentAngerSaveData(output);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        Level level = this.level();
-        if (!level.isClientSide()) {
-            this.readPersistentAngerSaveData((ServerLevel)level, compound);
-        }
+    public void readAdditionalSaveData(@NotNull ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.readPersistentAngerSaveData(this.level(), input);
     }
 
     @Override
@@ -119,7 +118,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(ANGER_TIME, 0);
     }
@@ -130,7 +129,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    protected void checkFallDamage(double y, boolean onGroundIn, @NotNull BlockState state, @NotNull BlockPos pos) {
         // Pixies fly, not fall
     }
 
@@ -185,8 +184,8 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    public boolean canAttack(LivingEntity target) {
-        return this.isCompanionOwner(target) ? false : super.canAttack(target);
+    public boolean canAttack(@NotNull LivingEntity target) {
+        return !this.isCompanionOwner(target) && super.canAttack(target);
     }
 
     @Override
@@ -224,7 +223,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
         // TODO Replace with custom sounds
         return SoundEvents.BAT_HURT;
     }
@@ -236,21 +235,24 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected InteractionResult mobInteract(Player playerIn, InteractionHand hand) {
+    protected InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         Level level = this.level();
-        InteractionResult actionResult = super.mobInteract(playerIn, hand);
-        if (!actionResult.consumesAction() && !level.isClientSide() && this.isCompanionOwner(playerIn)) {
-            ItemStack held = playerIn.getItemInHand(hand);
+        InteractionResult actionResult = super.mobInteract(player, hand);
+        if (!actionResult.consumesAction() && !level.isClientSide() && this.isCompanionOwner(player)) {
+            ItemStack held = player.getItemInHand(hand);
             ItemStack stack = new ItemStack(this.getSpawnItem());
             if (ItemStack.isSameItem(held, stack)) {
                 held.grow(1);
             } else if (held.isEmpty()) {
-                playerIn.setItemInHand(hand, stack);
+                player.setItemInHand(hand, stack);
             } else {
                 return InteractionResult.FAIL;
             }
             CompanionManager.removeCompanion(this.getCompanionOwner(), this);
-            this.playSound(this.getHurtSound(null), 1.0F, 1.0F);
+            SoundEvent hurtSound = this.getHurtSound(player.damageSources().playerAttack(player));
+            if (hurtSound != null) {
+                this.playSound(hurtSound, 1.0F, 1.0F);
+            }
             this.discard();
             return InteractionResult.SUCCESS;
         } else {
@@ -264,7 +266,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected void doPush(Entity entityIn) {
+    protected void doPush(@NotNull Entity entityIn) {
         // Pixies pass through other entities
     }
 
@@ -279,10 +281,10 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected PathNavigation createNavigation(Level worldIn) {
+    @NotNull
+    protected PathNavigation createNavigation(@NotNull Level worldIn) {
         FlyingPathNavigation nav = new FlyingPathNavigation(this, worldIn);
         nav.setCanOpenDoors(false);
-        nav.setCanPassDoors(true);
         return nav;
     }
 

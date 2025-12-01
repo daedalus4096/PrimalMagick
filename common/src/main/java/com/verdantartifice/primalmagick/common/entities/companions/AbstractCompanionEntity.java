@@ -1,13 +1,14 @@
 package com.verdantartifice.primalmagick.common.entities.companions;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions.CompanionType;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -16,11 +17,13 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.scores.PlayerTeam;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Base class for an entity that follows a player as a friendly companion, similar to a tamed creature.
@@ -28,7 +31,8 @@ import java.util.UUID;
  * @author Daedalus4096
  */
 public abstract class AbstractCompanionEntity extends PathfinderMob {
-    protected static final EntityDataAccessor<Optional<UUID>> OWNER_UNIQUE_ID = SynchedEntityData.defineId(AbstractCompanionEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> OWNER_REFERENCE =
+            SynchedEntityData.defineId(AbstractCompanionEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
 
     protected boolean staying;
 
@@ -37,64 +41,54 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
-        pBuilder.define(OWNER_UNIQUE_ID, Optional.empty());
+        pBuilder.define(OWNER_REFERENCE, Optional.empty());
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        compound.putBoolean("CompanionStaying", this.isCompanionStaying());
+    public void addAdditionalSaveData(@NotNull ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putBoolean("CompanionStaying", this.isCompanionStaying());
         if (this.hasCompanionOwner()) {
-            compound.putUUID("CompanionOwner", this.getCompanionOwnerId());
+            this.getCompanionOwnerReference().store(output, "CompanionOwner");
         }
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        this.setCompanionStaying(compound.getBoolean("CompanionStaying"));
-        if (compound.hasUUID("CompanionOwner")) {
-            this.setCompanionOwnerId(compound.getUUID("CompanionOwner"));
-        } else {
-            this.setCompanionOwnerId(null);
-        }
+    public void readAdditionalSaveData(@NotNull ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.setCompanionStaying(input.getBooleanOr("CompanionStaying", false));
+        this.setCompanionOwner(EntityReference.getLivingEntity(EntityReference.read(input, "CompanionOwner"), this.level()));
     }
 
     /**
-     * Get the unique ID of this companion entity's owner, if any.
+     * Get the entity reference of this companion entity's owner, if any.
      * 
-     * @return the unique ID of this companion entity's owner, if any
+     * @return the entity reference of this companion entity's owner, if any
      */
     @Nullable
-    public UUID getCompanionOwnerId() {
-        return this.entityData.get(OWNER_UNIQUE_ID).orElse(null);
+    private EntityReference<LivingEntity> getCompanionOwnerReference() {
+        return this.entityData.get(OWNER_REFERENCE).orElse(null);
     }
 
     /**
      * Set the unique ID of this companion entity's owner.
      * 
-     * @param ownerId the unique ID of this companion entity's new owner
+     * @param entity the companion entity's new owner
      */
-    public void setCompanionOwnerId(@Nullable UUID ownerId) {
-        this.entityData.set(OWNER_UNIQUE_ID, Optional.ofNullable(ownerId));
+    public void setCompanionOwner(@Nullable LivingEntity entity) {
+        this.entityData.set(OWNER_REFERENCE, Optional.ofNullable(EntityReference.of(entity)));
     }
 
     /**
      * Get this companion entity's owner entity.
-     * 
-     * @param world a valid entity reader
+     *
      * @return this companion entity's owner entity
      */
     @Nullable
     public Player getCompanionOwner() {
-        try {
-            UUID ownerId = this.getCompanionOwnerId();
-            return ownerId == null ? null : this.level().getPlayerByUUID(ownerId);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
+        return EntityReference.getLivingEntity(this.getCompanionOwnerReference(), this.level()) instanceof Player player ? player : null;
     }
     
     /**
@@ -103,7 +97,7 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
      * @return whether this companion entity has an owner
      */
     public boolean hasCompanionOwner() {
-        return this.getCompanionOwnerId() != null;
+        return this.getCompanionOwnerReference() != null;
     }
     
     /**
@@ -113,31 +107,18 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
      * @return whether the given player is this entity's companion owner
      */
     public boolean isCompanionOwner(LivingEntity entity) {
-        return entity instanceof Player && ((Player)entity) == this.getCompanionOwner();
+        return entity instanceof Player player && player == this.getCompanionOwner();
     }
     
     @Override
     public PlayerTeam getTeam() {
         if (this.hasCompanionOwner()) {
-            Player owner = this.getCompanionOwner();
+            LivingEntity owner = this.getCompanionOwner();
             if (owner != null) {
                 return owner.getTeam();
             }
         }
         return super.getTeam();
-    }
-
-    @Override
-    public boolean isAlliedTo(Entity other) {
-        if (this.hasCompanionOwner()) {
-            Player owner = this.getCompanionOwner();
-            if (other == owner) {
-                return true;
-            } else if (owner != null) {
-                return owner.isAlliedTo(other);
-            }
-        }
-        return super.isAlliedTo(other);
     }
 
     /**
@@ -166,16 +147,13 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
      * @return whether this companion entity should target the given target entity
      */
     public boolean shouldAttackEntity(LivingEntity target, Player owner) {
-        if (target instanceof AbstractCompanionEntity) {
-            AbstractCompanionEntity otherCompanion = (AbstractCompanionEntity)target;
-            return !otherCompanion.hasCompanionOwner() || otherCompanion.getCompanionOwner() != owner;
-        } else if (target instanceof Player && !owner.canHarmPlayer((Player)target)) {
-            return false;
-        } else if (target instanceof AbstractHorse && ((AbstractHorse)target).isTamed()) {
-            return false;
-        } else {
-            return !(target instanceof TamableAnimal) || !((TamableAnimal)target).isTame();
-        }
+        return switch (target) {
+            case AbstractCompanionEntity otherCompanion ->
+                    !otherCompanion.hasCompanionOwner() || otherCompanion.getCompanionOwner() != owner;
+            case Player player when !owner.canHarmPlayer(player) -> false;
+            case AbstractHorse abstractHorse when abstractHorse.isTamed() -> false;
+            default -> !(target instanceof TamableAnimal) || !((TamableAnimal) target).isTame();
+        };
     }
 
     /**
@@ -186,7 +164,7 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     public abstract CompanionType getCompanionType();
 
     @Override
-    public void remove(Entity.RemovalReason reason) {
+    public void remove(@NotNull Entity.RemovalReason reason) {
         if (this.hasCompanionOwner()) {
             CompanionManager.removeCompanion(this.getCompanionOwner(), this);
         }
@@ -194,10 +172,10 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     }
 
     @Override
-    public void die(DamageSource cause) {
+    public void die(@NotNull DamageSource cause) {
         Level level = this.level();
-        if (!level.isClientSide() && level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getCompanionOwner() instanceof ServerPlayer) {
-            this.getCompanionOwner().displayClientMessage(this.getCombatTracker().getDeathMessage(), false);
+        if (level instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getCompanionOwner() instanceof ServerPlayer player) {
+            player.displayClientMessage(this.getCombatTracker().getDeathMessage(), false);
         }
         super.die(cause);
     }
@@ -211,8 +189,10 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
         if (!level.isClientSide() && this.tickCount % 100 == 0) {
             Player owner = this.getCompanionOwner();
             if (owner != null && !CompanionManager.isCurrentCompanion(owner, this)) {
-                this.setCompanionOwnerId(null);
-                this.kill();
+                this.setCompanionOwner(null);
+                if (level instanceof ServerLevel serverLevel) {
+                    this.kill(serverLevel);
+                }
             }
         }
     }

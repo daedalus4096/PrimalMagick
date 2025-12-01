@@ -43,6 +43,6 @@ public class HallowsteelGolemEntity extends AbstractEnchantedGolemEntity {
 
     @Override
     public boolean canBeAffected(MobEffectInstance pMobEffect) {
-        return pMobEffect.getEffect().is(MobEffectTagsPM.IMMUNITY_HALLOWSTEEL_GOLEM) ? false : super.canBeAffected(pMobEffect);
+        return !pMobEffect.getEffect().is(MobEffectTagsPM.IMMUNITY_HALLOWSTEEL_GOLEM) && super.canBeAffected(pMobEffect);
     }
 }

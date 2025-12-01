@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition of a majestic hallowed pixie.  Greatest of the hallowed pixies.
@@ -17,7 +18,7 @@ public class MajesticHallowedPixieEntity extends AbstractHallowedPixieEntity imp
     }
 
     @Override
-    protected SpawnEggItem getSpawnItem() {
+    protected @NotNull SpawnEggItem getSpawnItem() {
         return ItemsPM.MAJESTIC_HALLOWED_PIXIE.get();
     }
 }

@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.entities.companions.AbstractCompa
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -48,7 +47,11 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Math;
 
 import java.util.Comparator;
 import java.util.List;
@@ -74,18 +77,15 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        this.addPersistentAngerSaveData(compound);
+    public void addAdditionalSaveData(@NotNull ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        this.addPersistentAngerSaveData(output);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        Level level = this.level();
-        super.readAdditionalSaveData(compound);
-        if (!level.isClientSide()) {
-            this.readPersistentAngerSaveData((ServerLevel)level, compound);
-        }
+    public void readAdditionalSaveData(@NotNull ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.readPersistentAngerSaveData(this.level(), input);
     }
 
     @Override
@@ -104,7 +104,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(ANGER_TIME, 0);
     }
@@ -126,7 +126,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     @Override
-    protected void doPush(Entity entityIn) {
+    protected void doPush(@NotNull Entity entityIn) {
         if (entityIn instanceof Enemy && !(entityIn instanceof Creeper) && this.getRandom().nextInt(20) == 0) {
             this.setTarget((LivingEntity)entityIn);
         }
@@ -162,8 +162,8 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     @Override
-    public boolean canAttack(LivingEntity target) {
-        return this.isCompanionOwner(target) ? false : super.canAttack(target);
+    public boolean canAttack(@NotNull LivingEntity target) {
+        return !this.isCompanionOwner(target) && super.canAttack(target);
     }
 
     @Override
@@ -210,9 +210,9 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
     
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(@NotNull ServerLevel serverLevel, @NotNull DamageSource source, float amount) {
         AbstractEnchantedGolemEntity.Cracks cracksBefore = this.getCrackLevel();
-        boolean success = super.hurt(source, amount);
+        boolean success = super.hurtServer(serverLevel, source, amount);
         if (success && cracksBefore != this.getCrackLevel()) {
             this.playSound(SoundEvents.IRON_GOLEM_DAMAGE, 1.0F, 1.0F);
         }
@@ -220,19 +220,18 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     @Override
-    public boolean doHurtTarget(Entity entityIn) {
+    public boolean doHurtTarget(@NotNull ServerLevel serverLevel, @NotNull Entity entityIn) {
         this.attackTimer = 10;
-        this.level().broadcastEntityEvent(this, (byte)4);
+        serverLevel.broadcastEntityEvent(this, (byte)4);
         float rawDamage = (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
         float damage = ((int)rawDamage > 0) ? (rawDamage / 2.0F) + (float)this.random.nextInt((int)rawDamage) : rawDamage;
         DamageSource damageSource = this.damageSources().mobAttack(this);
-        boolean flag = entityIn.hurt(damageSource, damage);
+        boolean flag = entityIn.hurtServer(serverLevel, damageSource, damage);
         if (flag) {
-            // FIXME Factor in knockback resistance
-            entityIn.setDeltaMovement(entityIn.getDeltaMovement().add(0.0D, 0.4D, 0.0D));
-            if (this.level() instanceof ServerLevel serverlevel) {
-                EnchantmentHelper.doPostAttackEffects(serverlevel, entityIn, damageSource);
-            }
+            double resistance = entityIn instanceof LivingEntity livingEntity ? livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) : 0D;
+            double factor = Math.max(0D, 1D - resistance);
+            entityIn.setDeltaMovement(entityIn.getDeltaMovement().add(0.0D, 0.4D * factor, 0.0D));
+            EnchantmentHelper.doPostAttackEffects(serverLevel, entityIn, damageSource);
         }
         this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);
         return flag;
@@ -256,7 +255,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
         return SoundEvents.IRON_GOLEM_HURT;
     }
 
@@ -270,13 +269,14 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     protected abstract float getRepairHealAmount();
 
     @Override
-    protected InteractionResult mobInteract(Player playerIn, InteractionHand hand) {
+    @NotNull
+    protected InteractionResult mobInteract(@NotNull Player playerIn, @NotNull InteractionHand hand) {
         Level level = this.level();
         ItemStack itemstack = playerIn.getItemInHand(hand);
         if (!itemstack.is(this.getRepairMaterialTag())) {
             InteractionResult actionResult = super.mobInteract(playerIn, hand);
             if (!actionResult.consumesAction() && this.isCompanionOwner(playerIn) && !level.isClientSide()) {
-                long time = playerIn.level().getGameTime();
+                long time = level.getGameTime();
                 if (this.lastStayChangeTime != time) {
                     this.setCompanionStaying(!this.isCompanionStaying());
                     if (this.isCompanionStaying()) {
@@ -301,13 +301,13 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
                 if (!playerIn.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide());
+                return InteractionResult.SUCCESS;
             }
         }
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState blockIn) {
+    protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
         this.playSound(SoundEvents.IRON_GOLEM_STEP, 1.0F, 1.0F);
     }
 
@@ -331,23 +331,22 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     @Override
+    @NotNull
     public Vec3 getLeashOffset() {
-        return new Vec3(0.0D, (double)(0.875F * this.getEyeHeight()), (double)(this.getBbWidth() * 0.4F));
+        return new Vec3(0.0D, (0.875F * this.getEyeHeight()), (this.getBbWidth() * 0.4F));
     }
 
-    public static enum Cracks {
+    public enum Cracks {
         NONE(1.0F),
         LOW(0.75F),
         MEDIUM(0.5F),
         HIGH(0.25F);
         
-        private static final List<AbstractEnchantedGolemEntity.Cracks> SORTED_VALUES = Stream.of(values()).sorted(Comparator.comparingDouble((c) -> {
-            return (double)c.healthPercentage;
-        })).collect(ImmutableList.toImmutableList());
+        private static final List<AbstractEnchantedGolemEntity.Cracks> SORTED_VALUES = Stream.of(values()).sorted(Comparator.comparingDouble(c -> (double)c.healthPercentage)).collect(ImmutableList.toImmutableList());
         
         private final float healthPercentage;
         
-        private Cracks(float healthPercentage) {
+        Cracks(float healthPercentage) {
             this.healthPercentage = healthPercentage;
         }
         

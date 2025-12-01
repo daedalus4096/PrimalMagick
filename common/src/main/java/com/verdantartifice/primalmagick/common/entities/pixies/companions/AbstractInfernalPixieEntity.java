@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Base definition for an infernal pixie.  In addition to following the player as a companion, attacks with
@@ -29,12 +30,12 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
     }
 
     @Override
-    public Source getPixieSource() {
+    public @NotNull Source getPixieSource() {
         return Sources.INFERNAL;
     }
 
     @Override
-    protected AbstractSpellPayload<?> getSpellPayload() {
+    protected @NotNull AbstractSpellPayload<?> getSpellPayload() {
         return FlameDamageSpellPayload.INSTANCE;
     }
 

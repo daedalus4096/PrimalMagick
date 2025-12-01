@@ -43,6 +43,6 @@ public class PrimaliteGolemEntity extends AbstractEnchantedGolemEntity {
 
     @Override
     public boolean canBeAffected(MobEffectInstance pMobEffect) {
-        return pMobEffect.getEffect().is(MobEffectTagsPM.IMMUNITY_PRIMALITE_GOLEM) ? false : super.canBeAffected(pMobEffect);
+        return !pMobEffect.getEffect().is(MobEffectTagsPM.IMMUNITY_PRIMALITE_GOLEM) && super.canBeAffected(pMobEffect);
     }
 }
