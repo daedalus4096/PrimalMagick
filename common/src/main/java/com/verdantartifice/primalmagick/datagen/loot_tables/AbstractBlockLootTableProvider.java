@@ -31,6 +31,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.LimitCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
@@ -150,7 +151,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     }
     
     protected void registerManaBearingDeviceTable(Block block) {
-        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block).apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY).include(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())))
+        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block).apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY).include(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())))
                 .when(ExplosionCondition.survivesExplosion());
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(poolBuilder);
         this.registerLootTableBuilder(block, tableBuilder);
