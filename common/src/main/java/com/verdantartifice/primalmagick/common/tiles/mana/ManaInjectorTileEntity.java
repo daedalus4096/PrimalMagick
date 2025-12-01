@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,7 +39,7 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     protected int ticks = 0;
     protected Source lastSource = Sources.SKY;
     protected Source nextSource = Sources.SKY;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
 
     public ManaInjectorTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.MANA_INJECTOR.get(), pos, state);
@@ -47,16 +48,13 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     @Override
     protected void loadAdditional(@NotNull ValueInput input) {
         super.loadAdditional(input);
-        this.ownerUUID = null;
-        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
+        this.owner = EntityReference.read(input, "Owner");
     }
 
     @Override
     protected void saveAdditional(@NotNull ValueOutput output) {
         super.saveAdditional(output);
-        if (this.ownerUUID != null) {
-            output.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+        EntityReference.store(this.owner, output, "Owner");
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ManaInjectorTileEntity entity) {
@@ -85,16 +83,14 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
 
     @Override
     public void setTileOwner(@Nullable Player owner) {
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
     }
 
     @Override
-    public @Nullable Player getTileOwner() {
-        if (this.level instanceof ServerLevel serverLevel) {
-            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-        } else {
-            return null;
-        }
+    @Nullable
+    public Player getTileOwner() {
+        Level level = this.getLevel();
+        return level != null ? EntityReference.getPlayer(this.owner, level) : null;
     }
 
     protected void nextPhase() {

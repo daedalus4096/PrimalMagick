@@ -21,6 +21,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -48,7 +49,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     protected static final int INPUT_INV_INDEX = 0;
 
     protected int chargeTime;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
 
     public AutoChargerTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.AUTO_CHARGER.get(), pos, state);
@@ -64,37 +65,33 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     protected void loadAdditional(@NotNull ValueInput input) {
         super.loadAdditional(input);
         this.chargeTime = input.getIntOr("ChargeTime", 0);
-        this.ownerUUID = null;
-        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
+        this.owner = EntityReference.read(input, "Owner");
     }
     
     @Override
     protected void saveAdditional(@NotNull ValueOutput output) {
         super.saveAdditional(output);
         output.putInt("ChargeTime", this.chargeTime);
-        if (this.ownerUUID != null) {
-            output.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+        EntityReference.store(this.owner, output, "Owner");
     }
 
     @Override
     public void setTileOwner(@Nullable Player owner) {
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
     }
 
     @Override
-    public @Nullable Player getTileOwner() {
-        if (this.level instanceof ServerLevel serverLevel) {
-            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-        } else {
-            return null;
-        }
+    @Nullable
+    public Player getTileOwner() {
+        Level level = this.getLevel();
+        return level != null ? EntityReference.getPlayer(this.owner, level) : null;
     }
 
     @Override
     public int receiveMana(@NotNull Source source, int maxReceive, boolean simulate) {
+        Level level = this.getLevel();
         ItemStack chargeStack = this.getItem(INPUT_INV_INDEX, 0);
-        if (!this.getLevel().isClientSide() && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+        if (level != null && !level.isClientSide() && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
             MutableInt actualReceived = new MutableInt(0);
             chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
                 actualReceived.setValue(manaCap.receiveMana(source, maxReceive, simulate));
@@ -192,7 +189,8 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public @NotNull RouteTable getRouteTable() {
+    @NotNull
+    public RouteTable getRouteTable() {
         return RouteManager.getRouteTable(this.getLevel());
     }
 }

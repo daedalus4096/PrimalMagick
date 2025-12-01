@@ -27,6 +27,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -34,6 +36,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -74,7 +77,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     protected int cookTimeTotal;
     protected ManaStorage manaStorage;
     protected ITileResearchCache researchCache;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
 
     protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
     protected final Predicate<AbstractResearchKey<?>> relevantFilter = k -> this.getRelevantResearch().contains(k);
@@ -83,18 +86,13 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     protected final ContainerData concocterData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-            case 0:
-                return ConcocterTileEntity.this.cookTime;
-            case 1:
-                return ConcocterTileEntity.this.cookTimeTotal;
-            case 2:
-                return ConcocterTileEntity.this.manaStorage.getManaStored(Sources.INFERNAL);
-            case 3:
-                return ConcocterTileEntity.this.manaStorage.getMaxManaStored(Sources.INFERNAL);
-            default:
-                return 0;
-            }
+            return switch (index) {
+                case 0 -> ConcocterTileEntity.this.cookTime;
+                case 1 -> ConcocterTileEntity.this.cookTimeTotal;
+                case 2 -> ConcocterTileEntity.this.manaStorage.getManaStored(Sources.INFERNAL);
+                case 3 -> ConcocterTileEntity.this.manaStorage.getMaxManaStored(Sources.INFERNAL);
+                default -> 0;
+            };
         }
 
         @Override
@@ -138,9 +136,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         this.cookTimeTotal = input.getIntOr("CookTimeTotal", 0);
         input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
         this.researchCache.deserialize(input.childOrEmpty("ResearchCache"));
-
-        this.ownerUUID = null;
-        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
+        this.owner = EntityReference.read(input, "Owner");
     }
 
     @Override
@@ -153,27 +149,26 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         ValueOutput cacheChild = output.child("ResearchCache");
         this.researchCache.serialize(cacheChild);
 
-        if (this.ownerUUID != null) {
-            output.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+        EntityReference.store(this.owner, output, "Owner");
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new ConcocterMenu(windowId, playerInv, this.getBlockPos(), this, this.concocterData);
     }
 
     @Override
     public void setTileOwner(Player owner) {
         // Set the owner and update the local research cache with their relevant research
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
         this.researchCache.update(owner, this.relevantFilter);
     }
 
     @Override
     public Player getTileOwner() {
-        if (this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
-            Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+        Level level = this.getLevel();
+        if (level != null) {
+            Player livePlayer = EntityReference.getPlayer(this.owner, level);
             if (livePlayer != null && livePlayer.tickCount % 20 == 0) {
                 // Update research cache with current player research
                 this.researchCache.update(livePlayer, this.relevantFilter);
@@ -212,6 +207,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     }
     
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -312,11 +308,12 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     }
 
     @Override
-    public int getMana(Source source) {
+    public int getMana(@NotNull Source source) {
         return this.manaStorage.getManaStored(source);
     }
 
     @Override
+    @NotNull
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
         for (Source source : Sources.getAllSorted()) {
@@ -335,14 +332,14 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     }
 
     @Override
-    public void setMana(Source source, int amount) {
+    public void setMana(@NotNull Source source, int amount) {
         this.manaStorage.setMana(source, amount);
         this.setChanged();
         this.syncTile(true);
     }
 
     @Override
-    public void setMana(SourceList mana) {
+    public void setMana(@NotNull SourceList mana) {
         this.manaStorage.setMana(mana);
         this.setChanged();
         this.syncTile(true);
@@ -414,19 +411,20 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+    protected void applyImplicitComponents(@NotNull DataComponentGetter pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
         pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override
-    protected void collectImplicitComponents(Builder pComponents) {
+    protected void collectImplicitComponents(@NotNull DataComponentMap.Builder pComponents) {
         super.collectImplicitComponents(pComponents);
         pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag pTag) {
-        pTag.remove("ManaStorage");
+    public void removeComponentsFromTag(@NotNull ValueOutput output) {
+        output.discard("ManaStorage");
     }
 }

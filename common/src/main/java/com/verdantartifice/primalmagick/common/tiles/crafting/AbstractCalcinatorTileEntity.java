@@ -21,9 +21,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -35,7 +35,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
@@ -45,7 +44,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -67,7 +65,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     protected int burnTimeTotal;
     protected int cookTime;
     protected int cookTimeTotal;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
     protected ITileResearchCache researchCache;
     
     protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
@@ -77,18 +75,13 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     protected final ContainerData calcinatorData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-            case 0:
-                return AbstractCalcinatorTileEntity.this.burnTime;
-            case 1:
-                return AbstractCalcinatorTileEntity.this.burnTimeTotal;
-            case 2:
-                return AbstractCalcinatorTileEntity.this.cookTime;
-            case 3:
-                return AbstractCalcinatorTileEntity.this.cookTimeTotal;
-            default:
-                return 0;
-            }
+            return switch (index) {
+                case 0 -> AbstractCalcinatorTileEntity.this.burnTime;
+                case 1 -> AbstractCalcinatorTileEntity.this.burnTimeTotal;
+                case 2 -> AbstractCalcinatorTileEntity.this.cookTime;
+                case 3 -> AbstractCalcinatorTileEntity.this.cookTimeTotal;
+                default -> 0;
+            };
         }
 
         @Override
@@ -132,8 +125,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     @Override
     protected int getInventorySize(int inventoryIndex) {
         return switch (inventoryIndex) {
-            case INPUT_INV_INDEX -> 1;
-            case FUEL_INV_INDEX -> 1;
+            case INPUT_INV_INDEX, FUEL_INV_INDEX -> 1;
             case OUTPUT_INV_INDEX -> OUTPUT_CAPACITY;
             default -> 0;
         };
@@ -181,9 +173,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         this.cookTime = input.getIntOr("CookTime", 0);
         this.cookTimeTotal = input.getIntOr("CookTimeTotal", 0);
         this.researchCache.deserialize(input.childOrEmpty("ResearchCache"));
-        
-        this.ownerUUID = null;
-        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
+        this.owner = EntityReference.read(input, "Owner");
     }
     
     @Override
@@ -197,9 +187,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         ValueOutput cacheChild = output.child("ResearchCache");
         this.researchCache.serialize(cacheChild);
 
-        if (this.ownerUUID != null) {
-            output.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+        EntityReference.store(this.owner, output, "Owner");
     }
 
     protected boolean hasFuelRemainingItem(ItemStack fuelStack) {
@@ -260,7 +248,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
             if (burningAtStart != entity.isBurning()) {
                 // Update the tile's block state if the calcinator was lit up or went out this tick
                 shouldMarkDirty = true;
-                level.setBlock(pos, state.setValue(AbstractCalcinatorBlock.LIT, Boolean.valueOf(entity.isBurning())), Block.UPDATE_ALL);
+                level.setBlock(pos, state.setValue(AbstractCalcinatorBlock.LIT, entity.isBurning()), Block.UPDATE_ALL);
             }
         }
         if (shouldMarkDirty) {
@@ -294,20 +282,22 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     }
 
     protected boolean canCalcinate(ItemStack inputStack) {
-        MutableBoolean retVal = new MutableBoolean(false);
-        if (inputStack != null && !inputStack.isEmpty()) {
+        Level level = this.getLevel();
+        if (level != null && inputStack != null && !inputStack.isEmpty()) {
             // An item without affinities cannot be melted
-            AffinityManager.getInstance().getAffinityValues(inputStack, this.level).ifPresent(sources -> {
+            return AffinityManager.getInstance().getAffinityValues(inputStack, level).map(sources -> {
                 if (!sources.isEmpty()) {
                     // Merge the items already in the output inventory with the new output items from the melting
                     List<ItemStack> currentOutputs = this.inventories.get(OUTPUT_INV_INDEX);
                     List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, true);   // Force dreg generation to prevent random overflow
                     List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
-                    retVal.setValue(mergedOutputs.size() <= OUTPUT_CAPACITY);
+                    return mergedOutputs.size() <= OUTPUT_CAPACITY;
+                } else {
+                    return false;
                 }
-            });
+            }).orElse(false);
         }
-        return retVal.booleanValue();
+        return false;
     }
     
     @Nonnull
@@ -324,11 +314,12 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new CalcinatorMenu(windowId, playerInv, this.getBlockPos(), this, this.calcinatorData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -347,14 +338,15 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
 
     @Override
     public void setTileOwner(Player owner) {
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
         this.researchCache.update(owner, this.relevantFilter);
     }
 
     @Override
     public Player getTileOwner() {
-        if (this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
-            Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+        Level level = this.getLevel();
+        if (level != null) {
+            Player livePlayer = EntityReference.getPlayer(this.owner, level);
             if (livePlayer != null && livePlayer.tickCount % 20 == 0) {
                 // Update research cache with current player research
                 this.researchCache.update(livePlayer, this.relevantFilter);

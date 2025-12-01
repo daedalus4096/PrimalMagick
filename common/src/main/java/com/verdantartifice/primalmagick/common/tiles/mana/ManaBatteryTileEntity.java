@@ -27,13 +27,14 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.component.DataComponentMap.Builder;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -53,7 +54,6 @@ import org.jetbrains.annotations.VisibleForTesting;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Definition of a mana battery tile entity.  Holds the charge for the corresponding block.
@@ -72,7 +72,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     protected int chargeTimeTotal;
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chargerData = new ContainerData() {
@@ -153,16 +153,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public void setTileOwner(@Nullable Player owner) {
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
     }
 
     @Override
-    public @Nullable Player getTileOwner() {
-        if (this.level instanceof ServerLevel serverLevel) {
-            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-        } else {
-            return null;
-        }
+    @Nullable
+    public Player getTileOwner() {
+        Level level = this.getLevel();
+        return level != null ? EntityReference.getPlayer(this.owner, level) : null;
     }
 
     @Override
@@ -308,9 +306,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         this.chargeTimeTotal = input.getIntOr("ChargeTimeTotal", 0);
         this.fontSiphonTime = input.getIntOr("FontSiphonTime", 0);
         input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
-
-        this.ownerUUID = null;
-        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
+        this.owner = EntityReference.read(input, "Owner");
     }
     
     @Override
@@ -320,28 +316,27 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         output.putInt("ChargeTimeTotal", this.chargeTimeTotal);
         output.putInt("FontSiphonTime", this.fontSiphonTime);
         output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
-
-        if (this.ownerUUID != null) {
-            output.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+        EntityReference.store(this.owner, output, "Owner");
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+    public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
         return new ManaBatteryMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this, this.chargerData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
 
     @Override
-    public int getMana(Source source) {
+    public int getMana(@NotNull Source source) {
         return this.manaStorage.getManaStored(source);
     }
 
     @Override
+    @NotNull
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
         for (Source source : Sources.getAllSorted()) {
@@ -360,14 +355,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public void setMana(Source source, int amount) {
+    public void setMana(@NotNull Source source, int amount) {
         this.manaStorage.setMana(source, amount);
         this.setChanged();
         this.syncTile(true);
     }
 
     @Override
-    public void setMana(SourceList mana) {
+    public void setMana(@NotNull SourceList mana) {
         this.manaStorage.setMana(mana);
         this.setChanged();
         this.syncTile(true);
@@ -425,20 +420,21 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+    protected void applyImplicitComponents(@NotNull DataComponentGetter pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
         pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override
-    protected void collectImplicitComponents(Builder pComponents) {
+    protected void collectImplicitComponents(DataComponentMap.@NotNull Builder pComponents) {
         super.collectImplicitComponents(pComponents);
         pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag pTag) {
-        pTag.remove("ManaStorage");
+    public void removeComponentsFromTag(@NotNull ValueOutput output) {
+        output.discard("ManaStorage");
     }
 
     @Override

@@ -25,13 +25,13 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.component.DataComponentMap.Builder;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -44,14 +44,12 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -72,7 +70,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     
     protected int processTime;
     protected int processTimeTotal;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
     protected ManaStorage manaStorage;
     protected ITileResearchCache researchCache;
     protected Source nextOutputSource;
@@ -84,18 +82,13 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     protected final ContainerData transmuterData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-            case 0:
-                return EssenceTransmuterTileEntity.this.processTime;
-            case 1:
-                return EssenceTransmuterTileEntity.this.processTimeTotal;
-            case 2:
-                return EssenceTransmuterTileEntity.this.manaStorage.getManaStored(Sources.MOON);
-            case 3:
-                return EssenceTransmuterTileEntity.this.manaStorage.getMaxManaStored(Sources.MOON);
-            default:
-                return 0;
-            }
+            return switch (index) {
+                case 0 -> EssenceTransmuterTileEntity.this.processTime;
+                case 1 -> EssenceTransmuterTileEntity.this.processTimeTotal;
+                case 2 -> EssenceTransmuterTileEntity.this.manaStorage.getManaStored(Sources.MOON);
+                case 3 -> EssenceTransmuterTileEntity.this.manaStorage.getMaxManaStored(Sources.MOON);
+                default -> 0;
+            };
         }
 
         @Override
@@ -139,9 +132,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
         input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
         this.researchCache.deserialize(input.childOrEmpty("ResearchCache"));
         this.nextOutputSource = input.read("NextSource", Source.CODEC).orElse(null);
-
-        this.ownerUUID = null;
-        input.getString("OwnerUUID").ifPresent(uuid -> this.ownerUUID = UUID.fromString(uuid));
+        this.owner = EntityReference.read(input, "Owner");
     }
 
     @Override
@@ -155,17 +146,16 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
         this.researchCache.serialize(cacheChild);
 
         output.storeNullable("NextSource", Source.CODEC, this.nextOutputSource);
-        if (this.ownerUUID != null) {
-            output.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+        EntityReference.store(this.owner, output, "Owner");
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new EssenceTransmuterMenu(windowId, playerInv, this.getBlockPos(), this, this.transmuterData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -220,7 +210,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
         }
     }
     
-    @Nonnull
+    @Nullable
     protected Source getNextSource(Source inputSource, RandomSource rng) {
         if (this.nextOutputSource == null || this.nextOutputSource.equals(inputSource)) {
             // Generate a new random, known source different from the input
@@ -253,14 +243,14 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     
     @Nullable
     protected List<ItemStack> getNewOutputs(ItemStack inputStack) {
-        if (inputStack != null && !inputStack.isEmpty() && inputStack.getCount() >= ESSENCE_PER_TRANSMUTE && inputStack.getItem() instanceof EssenceItem essence) {
+        Level level = this.getLevel();
+        if (level != null && inputStack != null && !inputStack.isEmpty() && inputStack.getCount() >= ESSENCE_PER_TRANSMUTE && inputStack.getItem() instanceof EssenceItem essence) {
             EssenceType inputType = essence.getEssenceType();
             Source inputSource = essence.getSource();
-            Source outputSource = this.getNextSource(inputSource, this.level.random);
+            Source outputSource = this.getNextSource(inputSource, level.random);
             ItemStack outputItem = EssenceItem.getEssence(inputType, outputSource, 1);
             List<ItemStack> currentOutputs = this.inventories.get(OUTPUT_INV_INDEX);
-            List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackIntoList(currentOutputs, outputItem);
-            return mergedOutputs;
+            return ItemUtils.mergeItemStackIntoList(currentOutputs, outputItem);
         } else {
             return null;
         }
@@ -279,11 +269,12 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     }
 
     @Override
-    public int getMana(Source source) {
+    public int getMana(@NotNull Source source) {
         return this.manaStorage.getManaStored(source);
     }
 
     @Override
+    @NotNull
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
         for (Source source : Sources.getAllSorted()) {
@@ -302,14 +293,14 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     }
 
     @Override
-    public void setMana(Source source, int amount) {
+    public void setMana(@NotNull Source source, int amount) {
         this.manaStorage.setMana(source, amount);
         this.setChanged();
         this.syncTile(true);
     }
 
     @Override
-    public void setMana(SourceList mana) {
+    public void setMana(@NotNull SourceList mana) {
         this.manaStorage.setMana(mana);
         this.setChanged();
         this.syncTile(true);
@@ -317,17 +308,18 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
 
     @Override
     public void setTileOwner(Player owner) {
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
         this.updateResearchCache(owner);
     }
 
     @Override
     public Player getTileOwner() {
-        if (this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
-            Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+        Level level = this.getLevel();
+        if (level != null) {
+            Player livePlayer = EntityReference.getPlayer(this.owner, level);
             if (livePlayer != null && livePlayer.tickCount % 20 == 0) {
                 // Update research cache with current player research
-                this.updateResearchCache(livePlayer);
+                this.researchCache.update(livePlayer, this.relevantFilter);
             }
             return livePlayer;
         }
@@ -407,19 +399,20 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+    protected void applyImplicitComponents(@NotNull DataComponentGetter pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
         pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override
-    protected void collectImplicitComponents(Builder pComponents) {
+    protected void collectImplicitComponents(@NotNull DataComponentMap.Builder pComponents) {
         super.collectImplicitComponents(pComponents);
         pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag pTag) {
-        pTag.remove("ManaStorage");
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("ManaStorage");
     }
 }

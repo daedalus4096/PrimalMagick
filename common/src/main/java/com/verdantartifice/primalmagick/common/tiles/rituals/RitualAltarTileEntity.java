@@ -51,6 +51,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -112,7 +113,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     protected int activeCount = 0;
     protected int nextCheckCount = 0;
     protected float stability = 0.0F;
-    protected UUID activePlayerId = null;
+    protected EntityReference<Player> activePlayer;
     protected ResourceLocation activeRecipeId = null;
     protected AbstractRitualStep<?> currentStep = null;
     protected LinkedList<AbstractRitualStep<?>> remainingSteps = new LinkedList<>();
@@ -151,18 +152,15 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     
     @Nullable
     public Player getActivePlayer() {
-        if (this.activePlayerId != null && this.level instanceof ServerLevel serverLevel) {
-            return serverLevel.getServer().getPlayerList().getPlayer(this.activePlayerId);
-        } else {
-            return null;
-        }
+        Level level = this.getLevel();
+        return level != null ? EntityReference.getPlayer(this.activePlayer, level) : null;
     }
     
     public void setActivePlayer(@Nullable Player player) {
-        this.activePlayerId = player == null ? null : player.getUUID();
+        this.activePlayer = EntityReference.of(player);
     }
     
-    @Nullable
+    @NotNull
     protected Optional<RecipeHolder<IRitualRecipe>> getActiveRecipe() {
         if (this.activeRecipeId != null) {
             Optional<RecipeHolder<?>> recipeOpt = this.level.getServer().getRecipeManager().byKey(this.activeRecipeId);
@@ -176,7 +174,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     @Override
     protected Set<Integer> getSyncedSlotIndices(int inventoryIndex) {
         // Sync the altar's stack for client rendering use
-        return inventoryIndex == OUTPUT_INV_INDEX ? ImmutableSet.of(Integer.valueOf(0)) : ImmutableSet.of();
+        return inventoryIndex == OUTPUT_INV_INDEX ? ImmutableSet.of(0) : ImmutableSet.of();
     }
     
     public Color getOrbColor() {
@@ -199,9 +197,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         this.activeCount = input.getIntOr("ActiveCount", 0);
         this.nextCheckCount = input.getIntOr("NextCheckCount", 0);
         this.stability = Mth.clamp(input.getFloatOr("Stability", 0F), MIN_STABILITY, MAX_STABILITY);
-
-        this.activePlayerId = null;
-        input.getString("ActivePlayer").ifPresent(uuid -> this.activePlayerId = UUID.fromString(uuid));
+        this.activePlayer = EntityReference.read(input, "ActivePlayer");
 
         this.activeRecipeId = null;
         input.getString("ActiveRecipeId").ifPresent(id -> this.activeRecipeId = ResourceLocation.parse(id));
@@ -224,9 +220,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         output.putInt("ActiveCount", this.activeCount);
         output.putInt("NextCheckCount", this.nextCheckCount);
         output.putFloat("Stability", this.stability);
-        if (this.activePlayerId != null) {
-            output.putString("ActivePlayer", this.activePlayerId.toString());
-        }
+        EntityReference.store(this.activePlayer, output, "ActivePlayer");
         if (this.activeRecipeId != null) {
             output.putString("ActiveRecipeId", this.activeRecipeId.toString());
         }
@@ -238,11 +232,11 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     
     protected void reset() {
         // If there's a prop being waited on, close it out
-        if (this.awaitedPropPos != null) {
+        if (this.level != null && this.awaitedPropPos != null) {
             BlockState state = this.level.getBlockState(this.awaitedPropPos);
             Block block = state.getBlock();
-            if (block instanceof IRitualPropBlock) {
-                ((IRitualPropBlock)block).closeProp(state, this.level, this.awaitedPropPos);
+            if (block instanceof IRitualPropBlock propBlock) {
+                propBlock.closeProp(state, this.level, this.awaitedPropPos);
             }
         }
         
@@ -322,7 +316,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public InteractionResult onWandRightClick(ItemStack wandStack, Level level, Player player, BlockPos pos, Direction direction) {
-        if (!this.level.isClientSide() && wandStack.getItem() instanceof IWand) {
+        if (this.level != null && !this.level.isClientSide() && wandStack.getItem() instanceof IWand) {
             if (this.active) {
                 player.displayClientMessage(Component.translatable("ritual.primalmagick.info.canceled"), false);
                 this.doMishap();    // Trigger an automatic mishap if canceling a ritual early
@@ -364,7 +358,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         // Determine offerings
         List<ItemStack> offerings = new ArrayList<>();
         for (BlockPos offeringPos : this.pedestalPositions) {
-            BlockEntity tile = this.level.getBlockEntity(offeringPos);
+            BlockEntity tile = this.level != null ? this.level.getBlockEntity(offeringPos) : null;
             if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
                 ItemStack stack = pedestalTile.getItem();
                 if (stack != null && !stack.isEmpty()) {
@@ -509,7 +503,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     }
     
     protected void scanPosition(BlockPos pos, Queue<BlockPos> toScan, Set<BlockPos> history) {
-        if (history.contains(pos)) {
+        if (this.level == null || history.contains(pos)) {
             return;
         } else {
             history.add(pos);
@@ -547,9 +541,8 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
                     pedestalTile.setAltarPos(this.getBlockPos());
                 }
             }
-        } else if (block instanceof IRitualPropBlock) {
+        } else if (block instanceof IRitualPropBlock propBlock) {
             // Add this position to the prop collection
-            IRitualPropBlock propBlock = (IRitualPropBlock)block;
             if (propBlock.isBlockSaltPowered(this.level, pos)) {
                 this.propPositions.add(pos);
                 if (this.level.getBlockEntity(pos) instanceof IRitualPropTileEntity propTile) {
@@ -579,7 +572,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         
         for (BlockPos scanPos : toScan) {
             BlockPos symPos = getSymmetricPosition(this.worldPosition, scanPos);
-            Block block = this.level.getBlockState(scanPos).getBlock();
+            Block block = this.level != null ? this.level.getBlockState(scanPos).getBlock() : null;
 
             // Only stabilizers connected to the salt network should count for stability modifiers
             if (block instanceof IRitualStabilizer stabilizer && stabilizer.isBlockSaltPowered(this.level, scanPos)) {
@@ -599,7 +592,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         // instance of any blocks gets its full value and diminishes, rather than having every block
         // of that type have a fully diminished value.
         float retVal = baseValue;
-        int count = this.blockCounts.getOrDefault(block, Integer.valueOf(0)).intValue();
+        int count = this.blockCounts.getOrDefault(block, 0);
         if (count > 0) {
             retVal = baseValue * (float)Math.pow(0.75D, count);
         }
@@ -612,7 +605,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     }
     
     public static boolean doOfferingStep(RitualAltarTileEntity altar, OfferingRitualStep step) {
-        IRitualRecipe recipe = altar.getActiveRecipe().map(holder -> holder.value()).orElse(null);
+        IRitualRecipe recipe = altar.getActiveRecipe().map(RecipeHolder::value).orElse(null);
         if (recipe == null) {
             LOGGER.warn("No recipe found when trying to do offering ritual step");
             return false;
@@ -684,7 +677,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     }
     
     public static boolean doPropStep(RitualAltarTileEntity altar, PropRitualStep step) {
-        IRitualRecipe recipe = altar.getActiveRecipe().map(holder -> holder.value()).orElse(null);
+        IRitualRecipe recipe = altar.getActiveRecipe().map(RecipeHolder::value).orElse(null);
         if (recipe == null) {
             LOGGER.warn("No recipe found when trying to do prop ritual step");
             return false;
@@ -730,7 +723,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     }
     
     public static boolean doUniversalPropStep(RitualAltarTileEntity altar, UniversalRitualStep step) {
-        IRitualRecipe recipe = altar.getActiveRecipe().map(holder -> holder.value()).orElse(null);
+        IRitualRecipe recipe = altar.getActiveRecipe().map(RecipeHolder::value).orElse(null);
         if (recipe == null) {
             LOGGER.warn("No recipe found when trying to do universal ritual step");
             return false;
@@ -776,8 +769,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         // Validate the prop block
         BlockState propState = this.level.getBlockState(propPos);
         Block block = propState.getBlock();
-        if (block instanceof IRitualPropBlock) {
-            IRitualPropBlock propBlock = (IRitualPropBlock)block;
+        if (block instanceof IRitualPropBlock propBlock) {
             if (isPropValid.test(propBlock)) {
                 // Upon confirmation, open the prop for activation
                 propBlock.openProp(propState, this.level, propPos, this.getActivePlayer(), this.worldPosition);
@@ -801,9 +793,9 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             }
             this.skipWarningMessage = true;
         }
-        if (block instanceof IRitualPropBlock) {
+        if (block instanceof IRitualPropBlock propBlock) {
             // If the block still exists (i.e. salt was broken), then close it to activation
-            ((IRitualPropBlock)block).closeProp(propState, this.level, this.awaitedPropPos);
+            propBlock.closeProp(propState, this.level, this.awaitedPropPos);
         }
         this.awaitedPropPos = null;
         this.addStability(Mth.clamp(50 * Math.min(0.0F, this.calculateStabilityDelta()), -25.0F, -1.0F));
@@ -814,8 +806,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             // If the activated prop is the one we're waiting for, close it and mark the step as complete
             BlockState propState = this.level.getBlockState(propPos);
             Block block = propState.getBlock();
-            if (block instanceof IRitualPropBlock) {
-                IRitualPropBlock propBlock = (IRitualPropBlock)block;
+            if (block instanceof IRitualPropBlock propBlock) {
                 propBlock.closeProp(propState, this.level, propPos);
                 this.addStability(stabilityBonus);
             }

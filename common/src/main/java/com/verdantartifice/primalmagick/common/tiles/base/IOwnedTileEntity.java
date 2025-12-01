@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import javax.annotation.Nullable;
 
 /**
- * Interface marking a tile entity as one that can have an owner.  This may involved specific
+ * Interface marking a tile entity as one that can have an owner.  This may involve specific
  * privileges being granted to the owner, or the tile entity may simply need to know who its owner
  * is for some calculation.
  * 
