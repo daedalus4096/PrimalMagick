@@ -5,8 +5,6 @@ import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItemNeoforge;
-import com.verdantartifice.primalmagick.common.items.misc.EarthshatterHammerItem;
-import com.verdantartifice.primalmagick.common.items.misc.EarthshatterHammerItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItemNeoforge;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
@@ -63,11 +61,6 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     @Override
     public Supplier<ArcanometerItem> arcanometer() {
         return ArcanometerItemNeoforge::new;
-    }
-
-    @Override
-    public Supplier<EarthshatterHammerItem> earthshatterHammer() {
-        return EarthshatterHammerItemNeoforge::new;
     }
 
     @Override

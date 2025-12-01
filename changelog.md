@@ -1,3 +1,8 @@
+v7.0.0
+------
+* Updated to Minecraft 1.21.10
+* Earthshatter Hammers no longer have limited durability
+
 v6.0.7
 ------
 * Add client-side config option to render affinities as text instead of with icons
