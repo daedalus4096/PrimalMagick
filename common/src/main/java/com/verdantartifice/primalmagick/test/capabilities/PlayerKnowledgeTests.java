@@ -229,21 +229,6 @@ public class PlayerKnowledgeTests extends AbstractBaseTest {
         helper.succeed();
     }
 
-    @SuppressWarnings("removal")
-    public static void player_knowledge_deserialize_from_legacy_format(GameTestHelper helper) {
-        var before = createTestPlayerKnowledge(helper);
-
-        // Serialize the capability to a legacy formatted tag
-        var tag = before.serializeLegacyNBT(helper.getLevel().registryAccess());
-
-        // Deserialize a new capability and ensure it matches the previous one
-        var after = new PlayerKnowledge();
-        after.deserializeNBT(helper.getLevel().registryAccess(), tag);
-        assertValueEqual(helper, after, before, "Knowledge capabilities");
-
-        helper.succeed();
-    }
-
     public static void player_knowledge_add_and_check_research_post_serialization(GameTestHelper helper) {
         var before = new PlayerKnowledge();
         var tag = before.serializeNBT(helper.getLevel().registryAccess());
@@ -252,67 +237,6 @@ public class PlayerKnowledgeTests extends AbstractBaseTest {
         assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known upon creation");
         assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
         assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
-        helper.succeed();
-    }
-
-    @SuppressWarnings("removal")
-    public static void player_knowledge_schema_version(GameTestHelper helper) {
-        var before = createTestPlayerKnowledge(helper);
-
-        // Assert that newly created knowledge data is of the current schema version
-        assertValueEqual(helper, before.getSchemaVersion(), PlayerKnowledge.CURRENT_SCHEMA_VERSION, "Knowledge schema");
-
-        // Serialize the capability to a legacy formatted tag
-        var tag = before.serializeLegacyNBT(helper.getLevel().registryAccess());
-
-        // Deserialize a new capability from the legacy tag and confirm that it has the legacy schema version when
-        // deserialized in the legacy fashion
-        var after1 = new PlayerKnowledge();
-        after1.deserializeLegacyNBT(helper.getLevel().registryAccess(), tag);
-        assertValueEqual(helper, after1.getSchemaVersion(), PlayerKnowledge.LEGACY_VERSION, "Legacy knowledge schema");
-
-        // Deserialize another new capability from the legacy tag using the current method, and confirm that it's been
-        // up-versioned to the latest schema
-        var after2 = new PlayerKnowledge();
-        after2.deserializeNBT(helper.getLevel().registryAccess(), tag);
-        assertValueEqual(helper, after2.getSchemaVersion(), PlayerKnowledge.CURRENT_SCHEMA_VERSION, "Up-versioned knowledge schema");
-
-        helper.succeed();
-    }
-
-    @SuppressWarnings("removal")
-    public static void player_knowledge_marks_default_entries_as_read_on_upversion(GameTestHelper helper) {
-        var before = new PlayerKnowledge();
-        before.addResearch(DEFAULT_RESEARCH_KEY);
-        before.setResearchStage(DEFAULT_RESEARCH_KEY, 1);
-        assertFalse(helper, before.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.READ), "Research key read before up-version");
-
-        // Serialize the capability to a legacy formatted tag
-        var tag = before.serializeLegacyNBT(helper.getLevel().registryAccess());
-
-        // Confirm that an up-versioning deserialize operation marks the entry as read
-        var after = new PlayerKnowledge();
-        after.deserializeNBT(helper.getLevel().registryAccess(), tag);
-        assertTrue(helper, after.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.READ), "Research key unread after up-version");
-
-        helper.succeed();
-    }
-
-    @SuppressWarnings("removal")
-    public static void player_knowledge_does_not_mark_non_default_entries_as_read_on_upversion(GameTestHelper helper) {
-        var before = new PlayerKnowledge();
-        before.addResearch(DEFAULT_RESEARCH_KEY);
-        before.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.NEW);
-        assertFalse(helper, before.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.READ), "Research key read before up-version");
-
-        // Serialize the capability to a legacy formatted tag
-        var tag = before.serializeLegacyNBT(helper.getLevel().registryAccess());
-
-        // Confirm that an up-versioning deserialize operation marks the entry as read
-        var after = new PlayerKnowledge();
-        after.deserializeNBT(helper.getLevel().registryAccess(), tag);
-        assertFalse(helper, after.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.READ), "Research key read after up-version");
-
         helper.succeed();
     }
 }
