@@ -86,8 +86,9 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
         
         for (int index = 0; index < retVal.size(); index++) {
             ItemStack inputStack = pContainer.getItem(index);
-            if (Services.ITEMS.hasCraftingRemainingItem(inputStack)) {
-                retVal.set(index, Services.ITEMS.getCraftingRemainingItem(inputStack));
+            ItemStack remainderStack = inputStack.getItem().getCraftingRemainder();
+            if (!remainderStack.isEmpty()) {
+                retVal.set(index, remainderStack);
             } else if (inputStack.getItem() instanceof IWritingImplement pen) {
                 ItemStack leftoverStack = inputStack.copyWithCount(1);
                 if (pen.isDamagedOnUse()) {

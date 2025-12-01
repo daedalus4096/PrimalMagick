@@ -244,8 +244,9 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
                 entity.superchargeTime = entity.superchargeTimeTotal;
                 if (entity.isSupercharged()) {
                     shouldMarkDirty = true;
-                    if (Services.ITEMS.hasCraftingRemainingItem(fuelStack)) {
-                        entity.setItem(WAND_INV_INDEX, 0, Services.ITEMS.getCraftingRemainingItem(fuelStack));
+                    ItemStack remainderStack = fuelStack.getItem().getCraftingRemainder();
+                    if (!remainderStack.isEmpty()) {
+                        entity.setItem(WAND_INV_INDEX, 0, remainderStack);
                     } else {
                         fuelStack.shrink(1);
                         if (fuelStack.isEmpty()) {

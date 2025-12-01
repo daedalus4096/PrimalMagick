@@ -242,8 +242,9 @@ public class InventoryUtils {
     
     private static void addRefundItem(ItemStack stack, int refundCount, Player player) {
         ItemStack refundStack = ItemStack.EMPTY;
-        if (Services.ITEMS.hasCraftingRemainingItem(stack)) {
-            refundStack = Services.ITEMS.getCraftingRemainingItem(stack).copyWithCount(refundCount);
+        ItemStack remainderStack = stack.getItem().getCraftingRemainder();
+        if (!remainderStack.isEmpty()) {
+            refundStack = remainderStack.copyWithCount(refundCount);
         } else if (stack.is(Items.POTION)) {
             // Potions don't use the standard container mechanism, so test for them directly
             refundStack = new ItemStack(Items.GLASS_BOTTLE, refundCount);

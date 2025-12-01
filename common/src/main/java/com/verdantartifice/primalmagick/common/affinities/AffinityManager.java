@@ -429,10 +429,8 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                 // See: https://github.com/daedalus4096/PrimalMagick/issues/246
                 return NonNullList.of(ItemStack.EMPTY, ingStackList.stream()
                         .map(ItemStack::getItem)
-                        .filter(Item::hasCraftingRemainingItem)
-                        .map(Item::getCraftingRemainingItem)
-                        .filter(Objects::nonNull)
-                        .map(ItemStack::new)
+                        .map(Item::getCraftingRemainder)
+                        .filter(Predicate.not(ItemStack::isEmpty))
                         .toArray(ItemStack[]::new));
             });
         } else {

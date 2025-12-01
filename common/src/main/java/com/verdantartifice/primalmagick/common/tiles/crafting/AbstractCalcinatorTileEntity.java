@@ -202,9 +202,13 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         }
     }
 
-    protected abstract boolean hasFuelRemainingItem(ItemStack fuelStack);
+    protected boolean hasFuelRemainingItem(ItemStack fuelStack) {
+        return !fuelStack.getItem().getCraftingRemainder().isEmpty();
+    }
 
-    protected abstract ItemStack getFuelRemainingItem(ItemStack fuelStack);
+    protected ItemStack getFuelRemainingItem(ItemStack fuelStack) {
+        return fuelStack.getItem().getCraftingRemainder();
+    }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AbstractCalcinatorTileEntity entity) {
         boolean burningAtStart = entity.isBurning();
