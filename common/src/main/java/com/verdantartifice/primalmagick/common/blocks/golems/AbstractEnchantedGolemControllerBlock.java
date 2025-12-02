@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,8 +25,9 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -36,7 +38,7 @@ import javax.annotation.Nullable;
  * @author Daedalus4096
  */
 public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEnchantedGolemEntity> extends Block implements IInteractWithWand {
-    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    protected static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     @Nullable
     private BlockPattern golemPattern;
@@ -61,12 +63,13 @@ public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEn
     }
     
     @Override
+    @NotNull
     public BlockState rotate(BlockState state, Rotation rot) {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
-    @SuppressWarnings("deprecation")
     @Override
+    @NotNull
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
@@ -90,15 +93,17 @@ public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEn
                 }
                 
                 BlockPos blockpos = helper.getBlock(1, 2, 0).getPos();
-                AbstractEnchantedGolemEntity golem = this.getEntityType().create(world);
-                CompanionManager.addCompanion(player, golem);
-                golem.moveTo((double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.05D, (double)blockpos.getZ() + 0.5D, 0.0F, 0.0F);
-                world.addFreshEntity(golem);
+                AbstractEnchantedGolemEntity golem = this.getEntityType().create(world, EntitySpawnReason.TRIGGERED);
+                if (golem != null) {
+                    CompanionManager.addCompanion(player, golem);
+                    golem.snapTo((double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.05D, (double)blockpos.getZ() + 0.5D, 0.0F, 0.0F);
+                    world.addFreshEntity(golem);
 
-                for (int i = 0; i < this.getGolemPattern().getWidth(); i++) {
-                    for (int j = 0; j < this.getGolemPattern().getHeight(); j++) {
-                        BlockInWorld info = helper.getBlock(i, j, 0);
-                        world.blockUpdated(info.getPos(), Blocks.AIR);
+                    for (int i = 0; i < this.getGolemPattern().getWidth(); i++) {
+                        for (int j = 0; j < this.getGolemPattern().getHeight(); j++) {
+                            BlockInWorld info = helper.getBlock(i, j, 0);
+                            world.setBlock(info.getPos(), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
+                        }
                     }
                 }
 
