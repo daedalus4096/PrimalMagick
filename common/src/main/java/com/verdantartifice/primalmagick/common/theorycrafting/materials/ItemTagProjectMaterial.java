@@ -84,7 +84,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
             // Only allow satisfaction from surroundings if not consuming the material and only one item is required
             TagKey<Block> blockTagKey = TagKey.create(Registries.BLOCK, this.tag.location());
             List<Block> tagContents = new ArrayList<>();
-            Services.BLOCKS_REGISTRY.getTag(blockTagKey).forEach(tagContents::add);
+            Services.BLOCKS_REGISTRY.getTag(blockTagKey).ifPresent(t -> t.forEach(tagContents::add));
             Set<Block> intersection = new HashSet<>(surroundings);
             intersection.retainAll(tagContents);
             return !intersection.isEmpty();

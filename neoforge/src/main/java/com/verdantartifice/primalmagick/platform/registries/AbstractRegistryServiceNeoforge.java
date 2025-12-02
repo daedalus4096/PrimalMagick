@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.registries.RegistryItemNeoforge;
 import com.verdantartifice.primalmagick.common.tags.ITagValue;
 import com.verdantartifice.primalmagick.common.tags.TagValueNeoforge;
 import com.verdantartifice.primalmagick.platform.services.registries.IRegistryService;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -49,7 +48,7 @@ abstract class AbstractRegistryServiceNeoforge<R> implements IRegistryService<R>
 
     @Override
     public @Nullable R get(ResourceLocation id) {
-        return this.getRegistry().get(id);
+        return this.getRegistry().getValue(id);
     }
 
     @Override
@@ -78,21 +77,6 @@ abstract class AbstractRegistryServiceNeoforge<R> implements IRegistryService<R>
     }
 
     @Override
-    public Optional<Holder<R>> getHolder(ResourceKey<R> key) {
-        return this.getRegistry().getHolder(key).flatMap(Optional::of);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(ResourceLocation loc) {
-        return this.getRegistry().getHolder(loc).flatMap(Optional::of);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(R value) {
-        return this.getRegistry().getResourceKey(value).flatMap(this::getHolder);
-    }
-
-    @Override
     public Codec<R> codec() {
         return this.getRegistry().byNameCodec();
     }
@@ -108,7 +92,7 @@ abstract class AbstractRegistryServiceNeoforge<R> implements IRegistryService<R>
             @Override
             public R decode(FriendlyByteBuf pBuffer) {
                 ResourceLocation id = ResourceLocation.parse(Utf8String.read(pBuffer, 32767));
-                return AbstractRegistryServiceNeoforge.this.getRegistry().get(id);
+                return AbstractRegistryServiceNeoforge.this.getRegistry().getValue(id);
             }
 
             @Override
@@ -120,12 +104,7 @@ abstract class AbstractRegistryServiceNeoforge<R> implements IRegistryService<R>
     }
 
     @Override
-    public ITagValue<R> getTag(TagKey<R> key) {
-        return new TagValueNeoforge<>(this.getRegistry().getOrCreateTag(key));
-    }
-
-    @Override
-    public boolean tagExists(TagKey<R> key) {
-        return this.getRegistry().getTag(key).isPresent();
+    public Optional<ITagValue<R>> getTag(TagKey<R> key) {
+        return this.getRegistry().getTags().filter(n -> n.key().equals(key)).findFirst().map(TagValueNeoforge::new);
     }
 }

@@ -27,7 +27,6 @@ public class PrimalMagick {
         InitRegistriesForge.initDeferredRegistries();
     }
 
-    @Nullable
     public static FMLJavaModLoadingContext getModLoadingContext() {
         return PrimalMagick.context;
     }

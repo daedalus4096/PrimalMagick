@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
 import com.verdantartifice.primalmagick.common.tags.ITagValue;
 import com.verdantartifice.primalmagick.common.tags.TagValueForgeBuiltIn;
 import com.verdantartifice.primalmagick.platform.services.registries.IRegistryService;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -39,7 +38,7 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
 
     @Override
     public void init() {
-        this.getDeferredRegisterSupplier().get().register(PrimalMagick.getModLoadingContext().getModEventBus());
+        this.getDeferredRegisterSupplier().get().register(PrimalMagick.getModLoadingContext().getModBusGroup());
     }
 
     @Override
@@ -49,7 +48,7 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
 
     @Override
     public @Nullable R get(ResourceLocation id) {
-        return this.getRegistry().get(id);
+        return this.getRegistry().getValue(id);
     }
 
     @Override
@@ -78,21 +77,6 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
     }
 
     @Override
-    public Optional<Holder<R>> getHolder(ResourceKey<R> key) {
-        return this.getRegistry().getHolder(key).flatMap(Optional::of);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(ResourceLocation loc) {
-        return this.getRegistry().getHolder(loc).flatMap(Optional::of);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(R value) {
-        return this.getRegistry().getResourceKey(value).flatMap(this::getHolder);
-    }
-
-    @Override
     public Codec<R> codec() {
         return this.getRegistry().byNameCodec();
     }
@@ -108,7 +92,7 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
             @Override
             public R decode(FriendlyByteBuf pBuffer) {
                 ResourceLocation id = ResourceLocation.parse(Utf8String.read(pBuffer, 32767));
-                return AbstractBuiltInRegistryServiceForge.this.getRegistry().get(id);
+                return AbstractBuiltInRegistryServiceForge.this.getRegistry().getValue(id);
             }
 
             @Override
@@ -120,12 +104,7 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
     }
 
     @Override
-    public ITagValue<R> getTag(TagKey<R> key) {
-        return new TagValueForgeBuiltIn<>(this.getRegistry().getOrCreateTag(key));
-    }
-
-    @Override
-    public boolean tagExists(TagKey<R> key) {
-        return this.getRegistry().getTag(key).isPresent();
+    public Optional<ITagValue<R>> getTag(TagKey<R> key) {
+        return this.getRegistry().getTags().filter(n -> n.key().equals(key)).findFirst().map(TagValueForgeBuiltIn::new);
     }
 }

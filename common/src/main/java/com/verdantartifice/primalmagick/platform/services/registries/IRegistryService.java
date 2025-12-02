@@ -93,12 +93,6 @@ public interface IRegistryService<R> {
      */
     @Nullable default ResourceLocation getKey(R value) { return this.getResourceKey(value).map(ResourceKey::location).orElse(null); }
 
-    Optional<Holder<R>> getHolder(ResourceKey<R> key);
-
-    Optional<Holder<R>> getHolder(ResourceLocation loc);
-
-    Optional<Holder<R>> getHolder(R value);
-
     /**
      * Retrieve the serialization codec for this registry.
      *
@@ -120,7 +114,5 @@ public interface IRegistryService<R> {
      */
     StreamCodec<FriendlyByteBuf, R> friendlyStreamCodec();
 
-    ITagValue<R> getTag(TagKey<R> key);
-
-    boolean tagExists(TagKey<R> key);
+    Optional<ITagValue<R>> getTag(TagKey<R> key);
 }

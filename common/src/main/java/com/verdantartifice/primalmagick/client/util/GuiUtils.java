@@ -297,7 +297,7 @@ public class GuiUtils {
     
     protected static ItemStack getTagDisplayStack(TagKey<Item> key, long time, long millisPerItem) {
         List<Item> tagContents = new ArrayList<>();
-        Services.ITEMS_REGISTRY.getTag(key).forEach(tagContents::add);
+        Services.ITEMS_REGISTRY.getTag(key).ifPresent(tag -> tag.forEach(tagContents::add));
         if (!tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((time / millisPerItem) % tagContents.size());

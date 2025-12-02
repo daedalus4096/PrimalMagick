@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.registries.RegistryItemForge;
 import com.verdantartifice.primalmagick.common.tags.ITagValue;
 import com.verdantartifice.primalmagick.common.tags.TagValueForgeCustom;
 import com.verdantartifice.primalmagick.platform.services.registries.IRegistryService;
-import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.Utf8String;
@@ -18,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.tags.ITagManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -39,7 +39,7 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
 
     @Override
     public void init() {
-        this.getDeferredRegisterSupplier().get().register(PrimalMagick.getModLoadingContext().getModEventBus());
+        this.getDeferredRegisterSupplier().get().register(PrimalMagick.getModLoadingContext().getModBusGroup());
     }
 
     @Override
@@ -75,21 +75,6 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
     @Override
     public Optional<ResourceKey<R>> getResourceKey(R value) {
         return this.getRegistry().get().getResourceKey(value);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(ResourceKey<R> key) {
-        return this.getRegistry().get().getHolder(key);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(ResourceLocation loc) {
-        return this.getRegistry().get().getHolder(loc);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(R value) {
-        return this.getRegistry().get().getHolder(value);
     }
 
     @Override
@@ -144,12 +129,8 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
     }
 
     @Override
-    public ITagValue<R> getTag(TagKey<R> key) {
-        return new TagValueForgeCustom<>(this.getRegistry().get().tags().getTag(key));
-    }
-
-    @Override
-    public boolean tagExists(TagKey<R> key) {
-        return this.getRegistry().get().tags().isKnownTagName(key);
+    public Optional<ITagValue<R>> getTag(TagKey<R> key) {
+        ITagManager<R> tags = this.getRegistry().get().tags();
+        return tags == null ? Optional.empty() : Optional.of(new TagValueForgeCustom<>(tags.getTag(key)));
     }
 }

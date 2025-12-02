@@ -29,6 +29,6 @@ public record SpellProperty(ResourceLocation id, String translationKey, int min,
     }
 
     public boolean is(TagKey<SpellProperty> tag) {
-        return Services.SPELL_PROPERTIES_REGISTRY.getTag(tag).stream().anyMatch(this::equals);
+        return Services.SPELL_PROPERTIES_REGISTRY.getTag(tag).map(t -> t.stream().anyMatch(this::equals)).orElse(false);
     }
 }

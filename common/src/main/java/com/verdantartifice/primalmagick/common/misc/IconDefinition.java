@@ -91,9 +91,9 @@ public class IconDefinition {
         if (this.tooltipOverrideOpt.isPresent()) {
             return ImmutableList.of(Component.translatable(this.tooltipOverrideOpt.get()));
         } else if (this.isItem) {
-            return ImmutableList.of(this.asItem().getDescription());
+            return ImmutableList.of(this.asItem().getName());
         } else if (this.isTag) {
-            return Services.ITEMS_REGISTRY.getTag(this.asTagKey()).stream().map(Item::getDescription).toList();
+            return Services.ITEMS_REGISTRY.getTag(this.asTagKey()).map(tag -> tag.stream().map(Item::getName).toList()).orElse(ImmutableList.of());
         } else {
             return ImmutableList.of();
         }
