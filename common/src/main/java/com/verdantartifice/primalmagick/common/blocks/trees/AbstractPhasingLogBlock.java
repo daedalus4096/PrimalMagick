@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import net.minecraft.core.BlockPos;
@@ -9,33 +10,30 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 /**
  * Base definition for log blocks that phase in and out over time.
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
-    public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
+public abstract class AbstractPhasingLogBlock extends StrippableLogBlock implements IPhasingBlock {
     public static final BooleanProperty PULSING = BooleanProperty.create("pulsing");
-    
+
+    protected static final Logger LOGGER = LogUtils.getLogger();
+
     public AbstractPhasingLogBlock(Block stripped, Block.Properties properties) {
         super(stripped, properties);
         this.registerDefaultState(this.defaultBlockState().setValue(PHASE, TimePhase.FULL).setValue(PULSING, false));
     }
-    
-    /**
-     * Get the current phase of the block based on the current game time.
-     * 
-     * @param world the game world
-     * @return the block's current phase
-     */
-    public abstract TimePhase getCurrentPhase(LevelAccessor world);
     
     /**
      * Get the color of particles to be emitted during animation if this block is pulsing.
@@ -45,12 +43,13 @@ public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
     public abstract int getPulseColor();
     
     @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(PHASE, PULSING);
     }
     
     @Override
+    @NotNull
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Set the block's phase upon placement
         TimePhase phase = this.getCurrentPhase(context.getLevel());
@@ -58,7 +57,7 @@ public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
     }
     
     @Override
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
+    public void randomTick(@NotNull BlockState state, @NotNull ServerLevel worldIn, @NotNull BlockPos pos, @NotNull RandomSource random) {
         // Periodically check to see if the block's phase needs to be updated
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
@@ -68,14 +67,18 @@ public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
     }
     
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+    @NotNull
+    public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
         // Immediately check to see if the block's phase needs to be updated when one of its neighbors changes
-        BlockState state = super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
-        TimePhase newPhase = this.getCurrentPhase(worldIn);
-        if (newPhase != state.getValue(PHASE)) {
-            state = state.setValue(PHASE, newPhase);
+        BlockState newState = super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
+        if (this.canPhase(level)) {
+            newState = this.updateBlockPhase(newState, level);
+        } else {
+            LOGGER.warn("Attempting to change time phase with incompatible level type {}", level);
         }
-        return state;
+        return newState;
     }
     
     @Override
@@ -84,7 +87,7 @@ public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+    public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         super.animateTick(state, level, pos, random);
         if (state.getValue(PULSING) && random.nextInt(4) == 0) {
             FxDispatcher.INSTANCE.spellImpact(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 2, this.getPulseColor());

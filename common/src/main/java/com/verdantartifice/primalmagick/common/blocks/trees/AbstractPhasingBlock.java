@@ -8,12 +8,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.LevelTimeAccess;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -22,9 +20,7 @@ import org.slf4j.Logger;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractPhasingBlock extends Block {
-    public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
-
+public abstract class AbstractPhasingBlock extends Block implements IPhasingBlock {
     protected static final Logger LOGGER = LogUtils.getLogger();
 
     public AbstractPhasingBlock(Block.Properties properties) {
@@ -32,14 +28,6 @@ public abstract class AbstractPhasingBlock extends Block {
         this.registerDefaultState(this.defaultBlockState().setValue(PHASE, TimePhase.FULL));
     }
     
-    /**
-     * Get the current phase of the block based on the current game time.
-     * 
-     * @param world the game world
-     * @return the block's current phase
-     */
-    protected abstract TimePhase getCurrentPhase(LevelTimeAccess world);
-
     @Override
     protected void createBlockStateDefinition(@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
@@ -71,11 +59,8 @@ public abstract class AbstractPhasingBlock extends Block {
                                   @NotNull RandomSource random) {
         // Immediately check to see if the block's phase needs to be updated when one of its neighbors changes
         BlockState newState = super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
-        if (level instanceof LevelTimeAccess timeAccess) {
-            TimePhase newPhase = this.getCurrentPhase(timeAccess);
-            if (newPhase != newState.getValue(PHASE)) {
-                newState = newState.setValue(PHASE, newPhase);
-            }
+        if (this.canPhase(level)) {
+            newState = this.updateBlockPhase(newState, level);
         } else {
             LOGGER.warn("Attempting to change time phase with incompatible level type {}", level);
         }
