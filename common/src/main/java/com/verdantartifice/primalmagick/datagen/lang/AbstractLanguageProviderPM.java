@@ -61,11 +61,12 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.armortrim.TrimMaterial;
-import net.minecraft.world.item.armortrim.TrimPattern;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.equipment.trim.TrimMaterial;
+import net.minecraft.world.item.equipment.trim.TrimPattern;
 import net.minecraft.world.level.block.Block;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -85,27 +86,29 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
     protected final Map<Source, String> sourceNames = new HashMap<>();
     private final Map<String, String> data = new TreeMap<>();
     private final PackOutput output;
-    private final String modid;
+    private final String modId;
     private final String locale;
     private final CompletableFuture<HolderLookup.Provider> lookupProviderFuture;
 
     public AbstractLanguageProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProviderFuture, String locale) {
         this.output = output;
-        this.modid = Constants.MOD_ID;
+        this.modId = Constants.MOD_ID;
         this.locale = locale;
         this.lookupProviderFuture = lookupProviderFuture;
     }
 
     @Override
-    public CompletableFuture<?> run(CachedOutput pOutput) {
+    @NotNull
+    public CompletableFuture<?> run(@NotNull CachedOutput pOutput) {
         return this.lookupProviderFuture.thenCompose(p -> {
             this.addLocalizations(p);
             this.validate();
-            return save(pOutput, this.output.getOutputFolder(PackOutput.Target.RESOURCE_PACK).resolve(this.modid).resolve("lang").resolve(this.locale + ".json"));
+            return save(pOutput, this.output.getOutputFolder(PackOutput.Target.RESOURCE_PACK).resolve(this.modId).resolve("lang").resolve(this.locale + ".json"));
         });
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Languages: " + this.locale;
     }
@@ -135,9 +138,9 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
         MutableInt count = new MutableInt(0);
         this.tracking.forEach((key, builder) -> {
             if (builder.isEmpty()) {
-                LOGGER.warn("Empty untracked language builder left over for " + key.toString());
+                LOGGER.warn("Empty untracked language builder left over for {}", key);
             } else {
-                LOGGER.error("Unbuilt language builder left over for " + key.toString());
+                LOGGER.error("Unbuilt language builder left over for {}", key);
                 count.increment();
             }
         });
@@ -154,7 +157,7 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
         if (this.sourceNames.containsKey(source)) {
             return this.sourceNames.get(source);
         } else {
-            throw new IllegalStateException("No source name found for " + source.getId().toString());
+            throw new IllegalStateException("No source name found for " + source.getId());
         }
     }
     
@@ -206,8 +209,8 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
         return this.createBuilder(() -> new MobEffectLanguageBuilder(effect, this::untrack, this::add));
     }
     
-    public EnchantmentLanguageBuilder enchantment(ResourceKey<Enchantment> ench) {
-        return this.createBuilder(() -> new EnchantmentLanguageBuilder(ench, this::untrack, this::add));
+    public EnchantmentLanguageBuilder enchantment(ResourceKey<Enchantment> enchantment) {
+        return this.createBuilder(() -> new EnchantmentLanguageBuilder(enchantment, this::untrack, this::add));
     }
     
     public SourceLanguageBuilder source(Source source) {
