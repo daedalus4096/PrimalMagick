@@ -9,21 +9,19 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Definition of a primal shrine structure.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.level.levelgen.structure.structures.DesertPyramidStructure}
- * @see {@link net.minecraft.world.level.levelgen.structure.structures.IglooStructure}
+ * @see net.minecraft.world.level.levelgen.structure.structures.DesertPyramidStructure
+ * @see net.minecraft.world.level.levelgen.structure.structures.IglooStructure
  */
 public class ShrineStructure extends Structure {
-    public static final MapCodec<ShrineStructure> CODEC = RecordCodecBuilder.<ShrineStructure>mapCodec(instance -> instance.group(
+    public static final MapCodec<ShrineStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ShrineStructure.settingsCodec(instance),
             ShrineStructure.Type.CODEC.fieldOf("shrine_type").forGetter(shrine -> shrine.shrineType)
         ).apply(instance, ShrineStructure::new));
@@ -36,13 +34,13 @@ public class ShrineStructure extends Structure {
     }
     
     @Override
-    public Optional<GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
-        return onTopOfChunkCenter(context, Heightmap.Types.WORLD_SURFACE_WG, builder -> {
-            this.generatePieces(builder, context);
-        });
+    @NotNull
+    public Optional<GenerationStub> findGenerationPoint(Structure.@NotNull GenerationContext context) {
+        return onTopOfChunkCenter(context, Heightmap.Types.WORLD_SURFACE_WG, builder -> this.generatePieces(builder, context));
     }
 
     @Override
+    @NotNull
     public StructureType<?> type() {
         return StructureTypesPM.SHRINE.get();
     }
@@ -55,7 +53,7 @@ public class ShrineStructure extends Structure {
         builder.addPiece(new ShrinePiece(context.structureTemplateManager(), this.shrineType, pos));
     }
 
-    public static enum Type implements StringRepresentable {
+    public enum Type implements StringRepresentable {
         EARTH("earth"),
         SEA("sea"),
         SKY("sky"),
@@ -65,18 +63,12 @@ public class ShrineStructure extends Structure {
         private final String name;
 
         public static final Codec<ShrineStructure.Type> CODEC = StringRepresentable.fromEnum(ShrineStructure.Type::values);
-        private static final Map<String, ShrineStructure.Type> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(ShrineStructure.Type::getSerializedName, (type) -> {
-            return type;
-        }));
 
-        private Type(String name) {
+        Type(String name) {
             this.name = name;
         }
         
-        public static ShrineStructure.Type byName(String name) {
-            return BY_NAME.get(name);
-        }
-        
+        @NotNull
         public String getSerializedName() {
             return this.name;
         }

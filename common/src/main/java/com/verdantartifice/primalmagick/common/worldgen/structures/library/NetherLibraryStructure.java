@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -24,11 +25,11 @@ import java.util.Optional;
  * Definition of an ancient library structure located in the Nether.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.level.levelgen.structure.structures.DesertPyramidStructure}
- * @see {@link net.minecraft.world.level.levelgen.structure.structures.NetherFossilStructure}
+ * @see net.minecraft.world.level.levelgen.structure.structures.DesertPyramidStructure
+ * @see net.minecraft.world.level.levelgen.structure.structures.NetherFossilStructure
  */
 public class NetherLibraryStructure extends Structure {
-    public static final MapCodec<NetherLibraryStructure> CODEC = RecordCodecBuilder.<NetherLibraryStructure>mapCodec(instance -> instance.group(
+    public static final MapCodec<NetherLibraryStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             NetherLibraryStructure.settingsCodec(instance),
             ResourceKey.codec(RegistryKeysPM.CULTURES).fieldOf("culture_key").forGetter(library -> library.cultureKey),
             HeightProvider.CODEC.fieldOf("height").forGetter(library -> library.height)
@@ -44,6 +45,7 @@ public class NetherLibraryStructure extends Structure {
     }
 
     @Override
+    @NotNull
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext pContext) {
         WorldgenRandom random = pContext.random();
         int x = pContext.chunkPos().getMinBlockX() + random.nextInt(16);
@@ -67,13 +69,13 @@ public class NetherLibraryStructure extends Structure {
             return Optional.empty();
         } else {
             BlockPos pos = new BlockPos(x, y, z);
-            return Optional.of(new Structure.GenerationStub(pos, builder -> {
-                builder.addPiece(new NetherLibraryPiece(pContext.structureTemplateManager(), this.cultureKey, pos));
-            }));
+            return Optional.of(new Structure.GenerationStub(pos, builder ->
+                    builder.addPiece(new NetherLibraryPiece(pContext.structureTemplateManager(), this.cultureKey, pos))));
         }
     }
 
     @Override
+    @NotNull
     public StructureType<?> type() {
         return StructureTypesPM.NETHER_LIBRARY.get();
     }

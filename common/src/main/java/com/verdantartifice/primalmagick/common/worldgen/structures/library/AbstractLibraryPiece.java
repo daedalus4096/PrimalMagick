@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IRandomizableContents;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -20,13 +19,14 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Base class definition of a piece of an ancient library structure.  Handles loot population.  Can
  * be overridden to account for multiple styles of library.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.level.levelgen.structure.DesertPyramidPiece}
+ * @see net.minecraft.world.level.levelgen.structure.structures.DesertPyramidPiece
  */
 public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
     protected final ResourceKey<Culture> cultureKey;
@@ -37,17 +37,13 @@ public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
     }
 
     public AbstractLibraryPiece(StructureTemplateManager templateManager, CompoundTag nbt) {
-        super(StructurePieceTypesPM.LIBRARY.get(), nbt, templateManager, (dummy) -> {
-            return makePlaceSettings();
-        });
-        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, ResourceLocation.parse(nbt.getString("Culture")));
+        super(StructurePieceTypesPM.LIBRARY.get(), nbt, templateManager, dummy -> makePlaceSettings());
+        this.cultureKey = nbt.read("Culture", ResourceKey.codec(RegistryKeysPM.CULTURES)).orElseThrow();
     }
     
     public AbstractLibraryPiece(StructurePieceSerializationContext context, CompoundTag nbt) {
-        super(StructurePieceTypesPM.LIBRARY.get(), nbt, context.structureTemplateManager(), (dummy) -> {
-            return makePlaceSettings();
-        });
-        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, ResourceLocation.parse(nbt.getString("Culture")));
+        super(StructurePieceTypesPM.LIBRARY.get(), nbt, context.structureTemplateManager(), dummy -> makePlaceSettings());
+        this.cultureKey = nbt.read("Culture", ResourceKey.codec(RegistryKeysPM.CULTURES)).orElseThrow();
     }
     
     protected static StructurePlaceSettings makePlaceSettings() {
@@ -55,9 +51,9 @@ public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
     }
     
     @Override
-    protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
+    protected void addAdditionalSaveData(@NotNull StructurePieceSerializationContext pContext, @NotNull CompoundTag pTag) {
         super.addAdditionalSaveData(pContext, pTag);
-        pTag.putString("Culture", this.cultureKey.location().toString());
+        pTag.store("Culture", ResourceKey.codec(RegistryKeysPM.CULTURES), this.cultureKey);
     }
     
     protected abstract BlockState getFillerBlockState();
@@ -65,38 +61,44 @@ public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
     protected abstract BlockState getBrickBlockState();
 
     @Override
-    protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
+    protected void handleDataMarker(@NotNull String pName, @NotNull BlockPos pPos, @NotNull ServerLevelAccessor pLevel, @NotNull RandomSource pRandom, @NotNull BoundingBox pBox) {
         // Process data markers, populating bookshelves and replacing blocks as appropriate
-        Holder.Reference<Culture> culture = pLevel.registryAccess().registryOrThrow(RegistryKeysPM.CULTURES).getHolderOrThrow(this.cultureKey);
-        if ("shelf_low".equals(pName)) {
-            // Populate bookshelf above
-            if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(culture.value().shelfLootTable(), pRandom.nextLong());
-            }
-            pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
-        } else if ("shelf_high".equals(pName)) {
-            // Populate bookshelf below
-            if (pLevel.getBlockEntity(pPos.below()) instanceof IRandomizableContents container) {
-                container.setLootTable(culture.value().shelfLootTable(), pRandom.nextLong());
-            }
-            pLevel.setBlock(pPos, this.getBrickBlockState(), Block.UPDATE_ALL);
-        } else if ("welcome".equals(pName)) {
-            // Populate lectern above
-            if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(culture.value().welcomeLootTable(), pRandom.nextLong());
-            }
-            pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
-        } else if ("hidden".equals(pName)) {
-            if (pRandom.nextDouble() < 0.25D && pLevel.getBlockEntity(pPos.below()) instanceof RandomizableContainerBlockEntity container) {
-                // Populate chest below
-                container.setLootTable(culture.value().hiddenLootTable(), pRandom.nextLong());
-            } else {
+        Culture culture = pLevel.registryAccess().lookupOrThrow(RegistryKeysPM.CULTURES).getValueOrThrow(this.cultureKey);
+        switch (pName) {
+            case "shelf_low" -> {
+                // Populate bookshelf above
+                if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
+                    container.setLootTable(culture.shelfLootTable(), pRandom.nextLong());
+                }
                 pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
-                pLevel.setBlock(pPos.below(), this.getFillerBlockState(), Block.UPDATE_ALL);
             }
-        } else if ("accent".equals(pName)) {
-            // Populate accent blocks
-            pLevel.setBlock(pPos, culture.value().accentBlockState(), Block.UPDATE_ALL);
+            case "shelf_high" -> {
+                // Populate bookshelf below
+                if (pLevel.getBlockEntity(pPos.below()) instanceof IRandomizableContents container) {
+                    container.setLootTable(culture.shelfLootTable(), pRandom.nextLong());
+                }
+                pLevel.setBlock(pPos, this.getBrickBlockState(), Block.UPDATE_ALL);
+            }
+            case "welcome" -> {
+                // Populate lectern above
+                if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
+                    container.setLootTable(culture.welcomeLootTable(), pRandom.nextLong());
+                }
+                pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
+            }
+            case "hidden" -> {
+                if (pRandom.nextDouble() < 0.25D && pLevel.getBlockEntity(pPos.below()) instanceof RandomizableContainerBlockEntity container) {
+                    // Populate chest below
+                    container.setLootTable(culture.hiddenLootTable(), pRandom.nextLong());
+                } else {
+                    pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
+                    pLevel.setBlock(pPos.below(), this.getFillerBlockState(), Block.UPDATE_ALL);
+                }
+            }
+            case "accent" -> {
+                // Populate accent blocks
+                pLevel.setBlock(pPos, culture.accentBlockState(), Block.UPDATE_ALL);
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * Definition of a piece of an ancient library structure in the default style.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.level.levelgen.structure.DesertPyramidPiece}
+ * @see net.minecraft.world.level.levelgen.structure.structures.DesertPyramidPiece
  */
 public class LibraryPiece extends AbstractLibraryPiece {
     protected static final ResourceLocation TEMPLATE = ResourceUtils.loc("library/default");
@@ -24,10 +24,6 @@ public class LibraryPiece extends AbstractLibraryPiece {
         super(templateManager, TEMPLATE, cultureKey, pos);
     }
 
-    public LibraryPiece(StructureTemplateManager templateManager, CompoundTag nbt) {
-        super(templateManager, nbt);
-    }
-    
     public LibraryPiece(StructurePieceSerializationContext context, CompoundTag nbt) {
         super(context, nbt);
     }
