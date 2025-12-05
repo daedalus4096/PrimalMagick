@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.FlameDamageSpellPayload;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -14,7 +15,6 @@ import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,9 +53,9 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
     
     public void explode() {
         Level level = this.level();
-        if (!level.isClientSide()) {
-            Explosion explosion = level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.getSpellPower(), true, Level.ExplosionInteraction.TNT);
-            this.hurt(this.level().damageSources().explosion(explosion), Float.MAX_VALUE);
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.getSpellPower(), true, Level.ExplosionInteraction.TNT);
+            this.kill(serverLevel);
         }
     }
     
