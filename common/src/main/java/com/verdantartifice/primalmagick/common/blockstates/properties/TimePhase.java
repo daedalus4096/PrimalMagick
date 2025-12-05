@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blockstates.properties;
 
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelTimeAccess;
 
 /**
  * Representation of the current phase of a block that phases in and out over time.
@@ -17,12 +18,12 @@ public enum TimePhase implements StringRepresentable {
     private final String name;
     private final int light;
     
-    private TimePhase(String name, int light) {
+    TimePhase(String name, int light) {
         this.name = name;
         this.light = light;
     }
     
-    public static TimePhase getSunPhase(LevelAccessor world) {
+    public static TimePhase getSunPhase(LevelTimeAccess world) {
         float angle = world.getTimeOfDay(1.0F);
         if (angle < 0.1875F) {
             return FULL;    // Afternoon
@@ -41,7 +42,7 @@ public enum TimePhase implements StringRepresentable {
         }
     }
     
-    public static TimePhase getMoonPhase(LevelAccessor world) {
+    public static TimePhase getMoonPhase(LevelTimeAccess world) {
         float angle = world.getTimeOfDay(1.0F);
         if (angle < 0.1875F) {
             return FADED;   // Afternoon

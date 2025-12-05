@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelTimeAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 
 /**
- * Block definition for sunwood planks.  They are decorative blocks that fade out of existence and become indestructable at night.
+ * Block definition for sunwood planks.  They are decorative blocks that fade out of existence at night.
  * 
  * @author Daedalus4096
  */
@@ -18,7 +18,7 @@ public class SunwoodPlanksBlock extends AbstractPhasingBlock {
     }
 
     @Override
-    protected TimePhase getCurrentPhase(LevelAccessor world) {
+    protected TimePhase getCurrentPhase(LevelTimeAccess world) {
         return TimePhase.getSunPhase(world);
     }
 }
