@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -10,23 +11,23 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.slf4j.Logger;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Supplier;
 
 /**
@@ -39,7 +40,9 @@ import java.util.function.Supplier;
  * @see com.verdantartifice.primalmagick.common.misc.EntitySwapper
  */
 public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphSpellPayload<T>> extends AbstractSpellPayload<T> {
-    private static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
+    private static final Supplier<List<SpellProperty>> PROPERTIES = () -> List.of(SpellPropertiesPM.NON_ZERO_DURATION.get());
+
+    protected static final Logger LOGGER = LogUtils.getLogger();
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
@@ -54,9 +57,12 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
             EntityHitResult entityTarget = (EntityHitResult)target;
             if (SpellManager.canPolymorph(entityTarget.getEntity().getType())) {
                 // Create and enqueue an entity swapper for the target entity
-                CompoundTag originalData = entityTarget.getEntity().saveWithoutId(new CompoundTag());
                 int ticks = 20 * this.getDurationSeconds(spell, spellSource, caster, world.registryAccess());
-                EntitySwapper.enqueue(entityTarget.getEntity(), new EntitySwapper(this.getNewEntityType(), originalData, Optional.of(ticks), 0));
+                try (ProblemReporter.ScopedCollector problems = new ProblemReporter.ScopedCollector(LOGGER)) {
+                    TagValueOutput out = TagValueOutput.createWithContext(problems, world.registryAccess());
+                    entityTarget.getEntity().saveWithoutId(out);
+                    EntitySwapper.enqueue(entityTarget.getEntity(), new EntitySwapper(this.getNewEntityType(), out.buildResult(), Optional.of(ticks), 0));
+                }
             }
         }
     }
@@ -71,11 +77,11 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
         return 5 * properties.get(SpellPropertiesPM.NON_ZERO_DURATION.get());
     }
     
-    protected abstract SoundEvent getCastSoundEvent();
+    protected abstract SoundEvent getCastSoundEvent(HolderLookup.Provider lookupProvider);
 
     @Override
     public void playSounds(Level world, BlockPos origin) {
-        world.playSound(null, origin, this.getCastSoundEvent(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
+        world.playSound(null, origin, this.getCastSoundEvent(world.registryAccess()), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
     protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {
