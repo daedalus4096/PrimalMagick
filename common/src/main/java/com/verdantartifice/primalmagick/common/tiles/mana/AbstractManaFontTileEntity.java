@@ -60,6 +60,13 @@ public abstract class AbstractManaFontTileEntity extends AbstractTilePM implemen
         output.putInt("mana", this.mana);
     }
 
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        // Before the block entity is removed, invalidate its route table
+        super.preRemoveSideEffects(pos, state);
+        this.getRouteTable().invalidate();
+    }
+
     public int getMana() {
         return this.mana;
     }
