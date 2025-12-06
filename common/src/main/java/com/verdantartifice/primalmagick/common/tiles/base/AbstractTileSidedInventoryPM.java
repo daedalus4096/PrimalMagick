@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -65,7 +66,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
             // Validate the outputs of the face-inventory mapping function
             this.getInventoryIndexForFace(dir).ifPresent(invIndex -> {
                 if (invIndex < 0 || invIndex >= this.getInventoryCount()) {
-                    throw new IllegalArgumentException("Face inventory mapping yields invalid index for direction " + dir.toString());
+                    throw new IllegalArgumentException("Face inventory mapping yields invalid index for direction " + dir);
                 }
             });
         }
@@ -93,9 +94,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     public int getInventorySize(@Nullable Direction face) {
         MutableInt retVal = new MutableInt(0);
         if (face != null) {
-            this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
-                retVal.setValue(this.getInventorySize(invIndex));
-            });
+            this.getInventoryIndexForFace(face).ifPresent(invIndex -> retVal.setValue(this.getInventorySize(invIndex)));
         }
         return retVal.getValue();
     }
@@ -134,9 +133,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
 
     public void addInventoryChangeListener(@Nullable Direction face, @NotNull IItemHandlerChangeListener listener) {
         if (face != null) {
-            this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
-                this.listeners.get(invIndex).add(listener);
-            });
+            this.getInventoryIndexForFace(face).ifPresent(invIndex -> this.listeners.get(invIndex).add(listener));
         }
     }
     
@@ -154,13 +151,13 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     }
 
     @Override
-    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
         super.preRemoveSideEffects(pos, state);
         this.dropContents(this.getLevel(), pos);
     }
 
     protected boolean isSyncedSlot(int inventoryIndex, int slotIndex) {
-        return this.getSyncedSlotIndices(inventoryIndex).contains(Integer.valueOf(slotIndex));
+        return this.getSyncedSlotIndices(inventoryIndex).contains(slotIndex);
     }
     
     /**
@@ -169,27 +166,30 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
      * @param player the player of the client to receive the sync data
      */
     protected void syncSlots(@Nullable ServerPlayer player) {
-        ListTag tagList = new ListTag();
-        for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
-            for (int slotIndex = 0; slotIndex < this.getInventorySize(invIndex); slotIndex++) {
-                ItemStack stack = this.getItem(invIndex, slotIndex);
-                if (this.isSyncedSlot(invIndex, slotIndex) && !stack.isEmpty()) {
-                    // Only include populated, sync-tagged slots to lessen packet size
-                    CompoundTag slotTag = new CompoundTag();
-                    final byte invIndexByte = (byte)invIndex;
-                    slotTag.putByte("Inv", invIndexByte);
-                    final byte slotIndexByte = (byte)slotIndex;
-                    slotTag.putByte("Slot", slotIndexByte);
-                    ItemStack.OPTIONAL_CODEC.encodeStart(this.getLevel().registryAccess().createSerializationContext(NbtOps.INSTANCE), stack).resultOrPartial(msg -> {
-                        LOGGER.error("Failed to encode inv {} slot {}: {}", invIndexByte, slotIndexByte, msg);
-                    }).ifPresent(tag -> slotTag.put("Item", tag));
-                    tagList.add(slotTag);
+        if (this.level != null) {
+            RegistryOps<Tag> ops = this.level.registryAccess().createSerializationContext(NbtOps.INSTANCE);
+            ListTag tagList = new ListTag();
+            for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
+                for (int slotIndex = 0; slotIndex < this.getInventorySize(invIndex); slotIndex++) {
+                    ItemStack stack = this.getItem(invIndex, slotIndex);
+                    if (this.isSyncedSlot(invIndex, slotIndex) && !stack.isEmpty()) {
+                        // Only include populated, sync-tagged slots to lessen packet size
+                        CompoundTag slotTag = new CompoundTag();
+                        final byte invIndexByte = (byte)invIndex;
+                        slotTag.putByte("Inv", invIndexByte);
+                        final byte slotIndexByte = (byte)slotIndex;
+                        slotTag.putByte("Slot", slotIndexByte);
+                        ItemStack.OPTIONAL_CODEC.encodeStart(ops, stack).resultOrPartial(
+                                msg -> LOGGER.error("Failed to encode inv {} slot {}: {}", invIndexByte, slotIndexByte, msg))
+                            .ifPresent(tag -> slotTag.put("Item", tag));
+                        tagList.add(slotTag);
+                    }
                 }
             }
+            CompoundTag nbt = new CompoundTag();
+            nbt.put("ItemsSynced", tagList);
+            this.sendMessageToClient(nbt, player);
         }
-        CompoundTag nbt = new CompoundTag();
-        nbt.put("ItemsSynced", tagList);
-        this.sendMessageToClient(nbt, player);
     }
     
     @Override
@@ -199,7 +199,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     }
 
     @Override
-    public void onMessageFromClient(CompoundTag nbt, ServerPlayer player) {
+    public void onMessageFromClient(@NotNull CompoundTag nbt, @NotNull ServerPlayer player) {
         super.onMessageFromClient(nbt, player);
         if (nbt.contains("RequestSync")) {
             // If the message was a request for a sync, send one to just that player's client
@@ -208,22 +208,23 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     }
 
     @Override
-    public void onMessageFromServer(CompoundTag nbt) {
+    public void onMessageFromServer(@NotNull CompoundTag nbt) {
         // If the message was a data sync, load the data into the sync inventory
         super.onMessageFromServer(nbt);
-        if (nbt.contains("ItemsSynced")) {
+        if (this.level != null && nbt.contains("ItemsSynced")) {
+            RegistryOps<Tag> ops = this.level.registryAccess().createSerializationContext(NbtOps.INSTANCE);
             for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
                 this.syncedInventories.get(invIndex).clear();
             }
-            ListTag tagList = nbt.getList("ItemsSynced", Tag.TAG_COMPOUND);
+            ListTag tagList = nbt.getListOrEmpty("ItemsSynced");
             for (int tagIndex = 0; tagIndex < tagList.size(); tagIndex++) {
-                CompoundTag slotTag = tagList.getCompound(tagIndex);
-                byte invIndex = slotTag.getByte("Inv");
-                byte slotIndex = slotTag.getByte("Slot");
+                CompoundTag slotTag = tagList.getCompoundOrEmpty(tagIndex);
+                int invIndex = slotTag.getIntOr("Inv", 0);
+                int slotIndex = slotTag.getIntOr("Slot", 0);
                 if (this.isSyncedSlot(invIndex, slotIndex)) {
-                    ItemStack.OPTIONAL_CODEC.parse(this.getLevel().registryAccess().createSerializationContext(NbtOps.INSTANCE), slotTag.getCompound("Item")).resultOrPartial(msg -> {
-                        LOGGER.error("Failed to decode inv {} slot {}: {}", invIndex, slotIndex, msg);
-                    }).ifPresent(stack -> this.syncedInventories.get(invIndex).set(slotIndex, stack));
+                    ItemStack.OPTIONAL_CODEC.parse(ops, slotTag.getCompoundOrEmpty("Item")).resultOrPartial(
+                            msg -> LOGGER.error("Failed to decode inv {} slot {}: {}", invIndex, slotIndex, msg))
+                        .ifPresent(stack -> this.syncedInventories.get(invIndex).set(slotIndex, stack));
                 }
             }
         }
@@ -258,15 +259,17 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     }
 
     protected void doInventorySync() {
-        // TODO Handle calls to this method from each loader's onLoad method automatically
-        if (!this.level.isClientSide()) {
-            // When first loaded, server-side tiles should immediately sync their contents to all nearby clients
-            this.syncSlots(null);
-        } else {
-            // When first loaded, client-side tiles should request a sync from the server
-            CompoundTag nbt = new CompoundTag();
-            nbt.putBoolean("RequestSync", true);
-            this.sendMessageToServer(nbt);
+        if (this.level != null) {
+            // TODO Handle calls to this method from each loader's onLoad method automatically
+            if (!this.level.isClientSide()) {
+                // When first loaded, server-side tiles should immediately sync their contents to all nearby clients
+                this.syncSlots(null);
+            } else {
+                // When first loaded, client-side tiles should request a sync from the server
+                CompoundTag nbt = new CompoundTag();
+                nbt.putBoolean("RequestSync", true);
+                this.sendMessageToServer(nbt);
+            }
         }
     }
     
@@ -298,7 +301,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
 
     @Override
     public void unpackLootTable(Player player) {
-        if (this.lootTable != null && this.level.getServer() != null) {
+        if (this.lootTable != null && this.level != null && this.level.getServer() != null) {
             LootTable loot = this.level.getServer().reloadableRegistries().getLootTable(this.lootTable);
             if (player instanceof ServerPlayer serverPlayer) {
                 CriteriaTriggers.GENERATE_LOOT.trigger(serverPlayer, this.lootTable);
@@ -308,11 +311,9 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
             if (player != null) {
                 paramsBuilder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
             }
-            this.getTargetRandomizedInventory().ifPresentOrElse(inv -> {
-                loot.fill(inv.asContainer(), paramsBuilder.create(LootContextParamSets.CHEST), this.lootTableSeed);
-            }, () -> {
-                LOGGER.error("Attempting to unpack loot table into undefined destination!");
-            });
+            this.getTargetRandomizedInventory().ifPresentOrElse(
+                    inv -> loot.fill(inv.asContainer(), paramsBuilder.create(LootContextParamSets.CHEST), this.lootTableSeed),
+                    () -> LOGGER.error("Attempting to unpack loot table into undefined destination!"));
         }
     }
 
