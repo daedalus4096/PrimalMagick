@@ -8,6 +8,7 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition for a thrown ignyx entity.  Explodes on impact.
@@ -20,20 +21,21 @@ public class IgnyxEntity extends ThrowableItemProjectile {
     }
     
     public IgnyxEntity(Level level, LivingEntity thrower) {
-        super(EntityTypesPM.IGNYX.get(), thrower, level);
+        super(EntityTypesPM.IGNYX.get(), thrower, level, ItemsPM.IGNYX.get().getDefaultInstance());
     }
     
     public IgnyxEntity(Level level, double x, double y, double z) {
-        super(EntityTypesPM.IGNYX.get(), x, y, z, level);
+        super(EntityTypesPM.IGNYX.get(), x, y, z, level, ItemsPM.IGNYX.get().getDefaultInstance());
     }
 
     @Override
+    @NotNull
     protected Item getDefaultItem() {
         return ItemsPM.IGNYX.get();
     }
 
     @Override
-    protected void onHit(HitResult result) {
+    protected void onHit(@NotNull HitResult result) {
         super.onHit(result);
         Level level = this.level();
         if (!level.isClientSide()) {

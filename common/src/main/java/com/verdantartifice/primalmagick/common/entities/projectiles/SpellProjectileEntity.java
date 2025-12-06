@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -47,27 +48,17 @@ public class SpellProjectileEntity extends AbstractArrow {
         }
     }
     
-    public SpellProjectileEntity(Level world, double x, double y, double z, SpellPackage spell, @Nullable ItemStack spellSource) {
-        super(EntityTypesPM.SPELL_PROJECTILE.get(), x, y, z, world, ItemStack.EMPTY, null);
-        this.spell = spell;
-        this.spellSource = spellSource == null ? null : spellSource.copy();
-        if (spell != null && spell.payload() != null) {
-            // Store the spell payload's color for use in rendering
-            this.setColor(spell.payload().getComponent().getSource().getColor());
-        }
-    }
-    
     @Nullable
     public SpellPackage getSpell() {
         return this.spell;
     }
     
     public int getColor() {
-        return this.getEntityData().get(COLOR).intValue();
+        return this.getEntityData().get(COLOR);
     }
     
     protected void setColor(int color) {
-        this.getEntityData().set(COLOR, Integer.valueOf(color));
+        this.getEntityData().set(COLOR, color);
     }
     
     @Override
@@ -85,15 +76,14 @@ public class SpellProjectileEntity extends AbstractArrow {
     }
 
     @Override
-    protected void onHit(HitResult result) {
+    protected void onHit(@NotNull HitResult result) {
         Level level = this.level();
         if (!level.isClientSide()) {
             if (result.getType() == HitResult.Type.ENTITY && ((EntityHitResult)result).getEntity() instanceof SpellProjectileEntity) {
                 // Don't collide with other spell projectiles
                 return;
             }
-            if (this.spell != null && this.spell.payload() != null) {
-                LivingEntity shooter = (this.getOwner() instanceof LivingEntity) ? (LivingEntity)this.getOwner() : null;
+            if (this.spell != null && this.spell.payload() != null && this.getOwner() instanceof LivingEntity shooter) {
                 SpellManager.executeSpellPayload(this.spell, result, level, shooter, this.spellSource, true, this);
             }
             this.discard();
@@ -101,7 +91,7 @@ public class SpellProjectileEntity extends AbstractArrow {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(COLOR, 0xFFFFFF);
     }
@@ -112,6 +102,7 @@ public class SpellProjectileEntity extends AbstractArrow {
     }
 
     @Override
+    @NotNull
     protected ItemStack getDefaultPickupItem() {
         return ItemStack.EMPTY;
     }

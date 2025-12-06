@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -52,14 +53,11 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
     }
     
     public AlchemicalBombEntity(Level world, LivingEntity entity) {
-        super(EntityTypesPM.ALCHEMICAL_BOMB.get(), entity, world);
-    }
-    
-    public AlchemicalBombEntity(Level world, double x, double y, double z) {
-        super(EntityTypesPM.ALCHEMICAL_BOMB.get(), x, y, z, world);
+        super(EntityTypesPM.ALCHEMICAL_BOMB.get(), entity, world, ItemsPM.ALCHEMICAL_BOMB.get().getDefaultInstance());
     }
     
     @Override
+    @NotNull
     protected Item getDefaultItem() {
         return ItemsPM.ALCHEMICAL_BOMB.get();
     }
@@ -79,7 +77,7 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult result) {
+    protected void onHitBlock(@NotNull BlockHitResult result) {
         super.onHitBlock(result);
         FuseType fuse = ConcoctionUtils.getFuseType(this.getItem());
         if (fuse == FuseType.IMPACT) {
@@ -98,7 +96,7 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult result) {
+    protected void onHitEntity(@NotNull EntityHitResult result) {
         super.onHitEntity(result);
         this.detonate(result.getEntity());
     }
@@ -108,12 +106,12 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
         ItemStack itemStack = this.getItem();
         if (level instanceof ServerLevel serverLevel && itemStack.has(DataComponents.POTION_CONTENTS)) {
             PotionContents contents = itemStack.get(DataComponents.POTION_CONTENTS);
-            Optional<Holder<Potion>> potionHolderOpt = contents.potion();
+            Optional<Holder<Potion>> potionHolderOpt = contents != null ? contents.potion() : Optional.empty();
             potionHolderOpt.ifPresent(potionHolder -> {
                 List<MobEffectInstance> effects = potionHolder.value().getEffects();
 
                 // Do explosion audio visual effects
-                PacketHandler.sendToAllAround(new PotionExplosionPacket(this.position(), PotionContents.getColor(potionHolder), potionHolder.value().hasInstantEffects()), serverLevel, this.blockPosition(), 32.0D);
+                PacketHandler.sendToAllAround(new PotionExplosionPacket(this.position(), contents.getColor(), potionHolder.value().hasInstantEffects()), serverLevel, this.blockPosition(), 32.0D);
 
                 // Apply potion effects
                 if (contents.is(Potions.WATER) && effects.isEmpty()) {
@@ -128,15 +126,17 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
     }
     
     private void applyWater() {
-        AABB aabb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
-        List<LivingEntity> entities = this.level().getEntitiesOfClass(LivingEntity.class, aabb, WATER_SENSITIVE);
-        for (LivingEntity entity : entities) {
-            double distanceSq = this.distanceToSqr(entity);
-            if (distanceSq < 16.0D && entity.isSensitiveToWater()) {
-                entity.hurt(this.level().damageSources().indirectMagic(entity, this.getOwner()), 1.0F);
+        if (this.level() instanceof ServerLevel serverLevel) {
+            AABB aabb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
+            List<LivingEntity> entities = serverLevel.getEntitiesOfClass(LivingEntity.class, aabb, WATER_SENSITIVE);
+            for (LivingEntity entity : entities) {
+                double distanceSq = this.distanceToSqr(entity);
+                if (distanceSq < 16.0D && entity.isSensitiveToWater()) {
+                    entity.hurtServer(serverLevel, serverLevel.damageSources().indirectMagic(entity, this.getOwner()), 1.0F);
+                }
             }
         }
-        
+
         BlockPos pos = this.blockPosition();
         this.extinguishFire(pos);
         for (Direction dir : Direction.values()) {
@@ -146,7 +146,8 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
 
     private void applyPotionEffects(List<MobEffectInstance> effects, @Nullable Entity struckEntity) {
         AABB aabb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
-        List<LivingEntity> entityList = this.level().getEntitiesOfClass(LivingEntity.class, aabb);
+        Level level = this.level();
+        List<LivingEntity> entityList = level.getEntitiesOfClass(LivingEntity.class, aabb);
         for (LivingEntity entity : entityList) {
             if (entity.isAffectedByPotions()) {
                 double distanceSq = this.distanceToSqr(entity);
@@ -154,8 +155,8 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
                     double multiplier = (entity == struckEntity) ? 1.0D : 1.0D - Math.sqrt(distanceSq) / 4.0D;
                     for (MobEffectInstance effectInstance : effects) {
                         Holder<MobEffect> effect = effectInstance.getEffect();
-                        if (effect.value().isInstantenous()) {
-                            effect.value().applyInstantenousEffect(this, this.getOwner(), entity, effectInstance.getAmplifier(), multiplier);
+                        if (level instanceof ServerLevel serverLevel && effect.value().isInstantenous()) {
+                            effect.value().applyInstantenousEffect(serverLevel, this, this.getOwner(), entity, effectInstance.getAmplifier(), multiplier);
                         } else {
                             int scaledDuration = (int)(multiplier * (double)effectInstance.getDuration() + 0.5D);
                             if (scaledDuration > 20) {

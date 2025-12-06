@@ -3,27 +3,26 @@ package com.verdantartifice.primalmagick.common.entities.projectiles;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Definition for a spell mine entity.  Sits in the world until another entity collides with it, at which point it executes a
@@ -32,8 +31,6 @@ import java.util.UUID;
  * @author Daedalus4096
  */
 public class SpellMineEntity extends Entity {
-    private static final Logger LOGGER = LogManager.getLogger();
-    
     protected static final EntityDataAccessor<Integer> COLOR = SynchedEntityData.defineId(SpellMineEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> ARMED = SynchedEntityData.defineId(SpellMineEntity.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Integer> LIFESPAN = SynchedEntityData.defineId(SpellMineEntity.class, EntityDataSerializers.INT);
@@ -41,7 +38,7 @@ public class SpellMineEntity extends Entity {
     protected static final int ARMING_TIME = 60;        // Number of ticks before switching to an armed state
     
     protected SpellPackage spell;
-    protected UUID casterId;
+    protected EntityReference<LivingEntity> caster;
     protected ItemStack spellSource;
     protected int currentLife = 0;
     
@@ -54,8 +51,8 @@ public class SpellMineEntity extends Entity {
         super(EntityTypesPM.SPELL_MINE.get(), world);
         this.setPos(pos.x, pos.y, pos.z);
         this.spell = spell;
-        this.spellSource = spellSource.copy();
-        this.casterId = caster.getUUID();
+        this.spellSource = spellSource != null ? spellSource.copy() : null;
+        this.caster = EntityReference.of(caster);
         this.setLifespan(20 * 60 * durationMinutes);
         if (spell != null && spell.payload() != null) {
             // Store the spell payload's color for use in rendering
@@ -69,36 +66,32 @@ public class SpellMineEntity extends Entity {
     }
 
     public int getColor() {
-        return this.getEntityData().get(COLOR).intValue();
+        return this.getEntityData().get(COLOR);
     }
     
     protected void setColor(int color) {
-        this.getEntityData().set(COLOR, Integer.valueOf(color));
+        this.getEntityData().set(COLOR, color);
     }
     
     public boolean isArmed() {
-        return this.getEntityData().get(ARMED).booleanValue();
+        return this.getEntityData().get(ARMED);
     }
     
     protected void setArmed(boolean armed) {
-        this.getEntityData().set(ARMED, Boolean.valueOf(armed));
+        this.getEntityData().set(ARMED, armed);
     }
     
     protected int getLifespan() {
-        return this.getEntityData().get(LIFESPAN).intValue();
+        return this.getEntityData().get(LIFESPAN);
     }
     
     protected void setLifespan(int ticks) {
-        this.getEntityData().set(LIFESPAN, Integer.valueOf(ticks));
+        this.getEntityData().set(LIFESPAN, ticks);
     }
     
     @Nullable
     public LivingEntity getCaster() {
-        if (this.casterId != null && this.level() instanceof ServerLevel serverLevel && serverLevel.getEntity(this.casterId) instanceof LivingEntity living) {
-            return living;
-        } else {
-            return null;
-        }
+        return EntityReference.getLivingEntity(this.caster, this.level());
     }
 
     @Override
@@ -109,15 +102,10 @@ public class SpellMineEntity extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
-        if (compound.contains("Caster", Tag.TAG_COMPOUND)) {
-            this.casterId =  compound.getUUID("Caster");
-        }
-        
-        this.spell = null;
-        if (compound.contains("Spell", Tag.TAG_COMPOUND)) {
-            this.spell = SpellPackage.deserializeNBT(compound.getCompound("Spell"), this.registryAccess());
-        }
+    protected void readAdditionalSaveData(@NotNull ValueInput input) {
+        this.caster = input.read("Caster", EntityReference.<LivingEntity>codec()).orElse(null);
+
+        this.spell = input.read("Spell", SpellPackage.codec()).orElse(null);
         if (this.spell != null && !this.spell.isValid()) {
             this.spell = null;
         }
@@ -125,32 +113,19 @@ public class SpellMineEntity extends Entity {
             this.setColor(this.spell.payload().getComponent().getSource().getColor());
         }
         
-        this.spellSource = null;
-        if (compound.contains("SpellSource", Tag.TAG_COMPOUND)) {
-            this.spellSource = ItemStack.OPTIONAL_CODEC.parse(this.registryAccess().createSerializationContext(NbtOps.INSTANCE), compound.getCompound("SpellSource"))
-                    .resultOrPartial(msg -> LOGGER.error("Failed to decode spell source: {}", msg))
-                    .orElse(ItemStack.EMPTY);
-        }
-        
-        this.currentLife = compound.getInt("CurrentLife");
-        this.setLifespan(compound.getInt("Lifespan"));
+        this.spellSource = input.read("SpellSource", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
+
+        this.currentLife = input.getIntOr("CurrentLife", 0);
+        this.setLifespan(input.getIntOr("Lifespan", 0));
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compound) {
-        if (this.casterId != null) {
-            compound.putUUID("Caster", this.casterId);
-        }
-        if (this.spell != null) {
-            compound.put("Spell", this.spell.serializeNBT(this.registryAccess()));
-        }
-        if (this.spellSource != null) {
-            ItemStack.OPTIONAL_CODEC.encodeStart(this.registryAccess().createSerializationContext(NbtOps.INSTANCE), this.spellSource)
-                    .resultOrPartial(msg -> LOGGER.error("Failed to encode spell source: {}", msg))
-                    .ifPresent(tag -> compound.put("SpellSource", tag));
-        }
-        compound.putInt("CurrentLife", this.currentLife);
-        compound.putInt("Lifespan", this.getLifespan());
+    protected void addAdditionalSaveData(@NotNull ValueOutput output) {
+        output.store("Caster", EntityReference.codec(), this.caster);
+        output.store("Spell", SpellPackage.codec(), this.spell);
+        output.store("SpellSource", ItemStack.OPTIONAL_CODEC, this.spellSource);
+        output.putInt("CurrentLife", this.currentLife);
+        output.putInt("Lifespan", this.getLifespan());
     }
 
     @Override
@@ -189,5 +164,10 @@ public class SpellMineEntity extends Entity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean hurtServer(@NotNull ServerLevel serverLevel, @NotNull DamageSource damageSource, float v) {
+        return false;
     }
 }
