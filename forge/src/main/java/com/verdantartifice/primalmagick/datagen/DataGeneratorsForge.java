@@ -64,7 +64,7 @@ public class DataGeneratorsForge {
         generator.addProvider(event.includeServer(), new RecipesForge(generator.getPackOutput(), registryLookupFuture));
         BlockTagsProviderPMForge blockTagsProvider = new BlockTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTagsProvider);
-        generator.addProvider(event.includeServer(), new ItemTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new ItemTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new BiomeTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPMForge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));

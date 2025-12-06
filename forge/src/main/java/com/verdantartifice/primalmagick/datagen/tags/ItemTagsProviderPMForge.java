@@ -7,34 +7,36 @@ import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Data provider for all of the mod's item tags, both original tags and modifications to vanilla tags.
+ * Data provider for all the mod's item tags, both original tags and modifications to vanilla tags.
  * 
  * @author Daedalus4096
  */
-public class ItemTagsProviderPMForge extends ItemTagsProvider {
-    public ItemTagsProviderPMForge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> blockTagLookup, ExistingFileHelper helper) {
-        super(packOutput, lookupProvider, blockTagLookup, Constants.MOD_ID, helper);
+public class ItemTagsProviderPMForge extends IntrinsicHolderTagsProvider<Item> {
+    public ItemTagsProviderPMForge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
+        super(packOutput, Registries.ITEM, lookupProvider, item -> item.builtInRegistryHolder().key(), Constants.MOD_ID, helper);
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Primal Magick Item Tags";
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider lookupProvider) {
+    protected void addTags(@NotNull HolderLookup.Provider lookupProvider) {
         // Add entries to vanilla tags
         this.tag(ItemTags.ARROWS).add(ItemsPM.MANA_ARROW_EARTH.get(), ItemsPM.MANA_ARROW_SEA.get(), ItemsPM.MANA_ARROW_SKY.get(), ItemsPM.MANA_ARROW_SUN.get(), ItemsPM.MANA_ARROW_MOON.get(), ItemsPM.MANA_ARROW_BLOOD.get(), ItemsPM.MANA_ARROW_INFERNAL.get(), ItemsPM.MANA_ARROW_VOID.get(), ItemsPM.MANA_ARROW_HALLOWED.get());
         this.tag(ItemTags.AXES).add(ItemsPM.PRIMALITE_AXE.get(), ItemsPM.HEXIUM_AXE.get(), ItemsPM.HALLOWSTEEL_AXE.get(), ItemsPM.PRIMAL_AXE.get());
@@ -73,15 +75,15 @@ public class ItemTagsProviderPMForge extends ItemTagsProvider {
         this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_CHESTPLATES).add(ItemsPM.PRIMALITE_CHEST.get(), ItemsPM.HEXIUM_CHEST.get(), ItemsPM.HALLOWSTEEL_CHEST.get());
         this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_LEGGINGS).add(ItemsPM.PRIMALITE_LEGS.get(), ItemsPM.HEXIUM_LEGS.get(), ItemsPM.HALLOWSTEEL_LEGS.get());
         this.tag(CommonTags.Items.ARMORS).addTag(ItemTagsPM.ROBES_BOOTS).add(ItemsPM.PRIMALITE_FEET.get(), ItemsPM.HEXIUM_FEET.get(), ItemsPM.HALLOWSTEEL_FEET.get());
-        this.tag(CommonTags.Items.DUSTS).addTag(ItemExtensionTags.DUSTS_IRON).addTag(ItemExtensionTags.DUSTS_GOLD).addTag(ItemExtensionTags.DUSTS_COPPER).addOptionalTag(ItemExtensionTags.DUSTS_TIN.location()).addOptionalTag(ItemExtensionTags.DUSTS_LEAD.location()).addOptionalTag(ItemExtensionTags.DUSTS_SILVER.location()).addOptionalTag(ItemExtensionTags.DUSTS_URANIUM.location());
+        this.tag(CommonTags.Items.DUSTS).addTag(ItemExtensionTags.DUSTS_IRON).addTag(ItemExtensionTags.DUSTS_GOLD).addTag(ItemExtensionTags.DUSTS_COPPER).addOptionalTag(ItemExtensionTags.DUSTS_TIN).addOptionalTag(ItemExtensionTags.DUSTS_LEAD).addOptionalTag(ItemExtensionTags.DUSTS_SILVER).addOptionalTag(ItemExtensionTags.DUSTS_URANIUM);
         this.tag(CommonTags.Items.INGOTS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
         this.tag(CommonTags.Items.NUGGETS).addTag(ItemTagsPM.NUGGETS_PRIMALITE).addTag(ItemTagsPM.NUGGETS_HEXIUM).addTag(ItemTagsPM.NUGGETS_HALLOWSTEEL).addTag(ItemExtensionTags.NUGGETS_QUARTZ);
         this.tag(CommonTags.Items.ORE_RATES_DENSE).add(ItemsPM.ROCK_SALT_ORE.get());
         this.tag(CommonTags.Items.ORE_RATES_SINGULAR).add(ItemsPM.QUARTZ_ORE.get());
-        this.tag(CommonTags.Items.ORES).addTag(ItemExtensionTags.ORES_ROCK_SALT).addOptionalTag(ItemExtensionTags.ORES_TIN.location()).addOptionalTag(ItemExtensionTags.ORES_LEAD.location()).addOptionalTag(ItemExtensionTags.ORES_SILVER.location()).addOptionalTag(ItemExtensionTags.ORES_URANIUM.location());
+        this.tag(CommonTags.Items.ORES).addTag(ItemExtensionTags.ORES_ROCK_SALT).addOptionalTag(ItemExtensionTags.ORES_TIN).addOptionalTag(ItemExtensionTags.ORES_LEAD).addOptionalTag(ItemExtensionTags.ORES_SILVER).addOptionalTag(ItemExtensionTags.ORES_URANIUM);
         this.tag(CommonTags.Items.ORES_QUARTZ).add(ItemsPM.QUARTZ_ORE.get());
         this.tag(CommonTags.Items.ORES_IN_GROUND_STONE).add(ItemsPM.QUARTZ_ORE.get(), ItemsPM.ROCK_SALT_ORE.get());
-        this.tag(CommonTags.Items.RAW_MATERIALS).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_TIN.location()).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_LEAD.location()).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_SILVER.location()).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_URANIUM.location());
+        this.tag(CommonTags.Items.RAW_MATERIALS).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_TIN).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_LEAD).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_SILVER).addOptionalTag(ItemExtensionTags.RAW_MATERIALS_URANIUM);
         this.tag(CommonTags.Items.STORAGE_BLOCKS).add(ItemsPM.IGNYX_BLOCK.get()).addTag(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(ItemTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         this.tag(CommonTags.Items.TOOLS_BOW).add(ItemsPM.PRIMALITE_BOW.get(), ItemsPM.HEXIUM_BOW.get(), ItemsPM.HALLOWSTEEL_BOW.get(), ItemsPM.FORBIDDEN_BOW.get());
         this.tag(CommonTags.Items.TOOLS_FISHING_ROD).add(ItemsPM.PRIMALITE_FISHING_ROD.get(), ItemsPM.HEXIUM_FISHING_ROD.get(), ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), ItemsPM.PRIMAL_FISHING_ROD.get());

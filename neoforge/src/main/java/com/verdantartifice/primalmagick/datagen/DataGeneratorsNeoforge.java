@@ -66,7 +66,7 @@ public class DataGeneratorsNeoforge {
         generator.addProvider(event.includeServer(), new RecipesNeoforge(generator.getPackOutput(), registryLookupFuture));
         BlockTagsProviderPMNeoforge blockTagsProvider = new BlockTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTagsProvider);
-        generator.addProvider(event.includeServer(), new ItemTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new ItemTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new BiomeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
