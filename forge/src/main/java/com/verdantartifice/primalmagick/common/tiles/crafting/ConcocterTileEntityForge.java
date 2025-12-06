@@ -7,11 +7,13 @@ import com.verdantartifice.primalmagick.common.tiles.IHasItemHandlerCapabilityFo
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class ConcocterTileEntityForge extends ConcocterTileEntity implements IHasItemHandlerCapabilityForge {
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
@@ -31,9 +33,8 @@ public class ConcocterTileEntityForge extends ConcocterTileEntity implements IHa
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
-        if (!this.level.isClientSide()) {
-            this.relevantResearch = assembleRelevantResearch(this.level.getRecipeManager());
+        if (this.level instanceof ServerLevel serverLevel) {
+            this.relevantResearch = assembleRelevantResearch(serverLevel.recipeAccess());
         }
         this.cookTimeTotal = this.getCookTimeTotal();
     }
@@ -47,7 +48,8 @@ public class ConcocterTileEntityForge extends ConcocterTileEntity implements IHa
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+    @NotNull
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
         if (this.remove) {
             return super.getCapability(cap, side);
         } else {

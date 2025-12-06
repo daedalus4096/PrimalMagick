@@ -12,6 +12,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractCalcinatorTileEntityForge extends AbstractCalcinatorTileEntity implements IHasItemHandlerCapabilityForge {
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
@@ -30,15 +31,15 @@ public abstract class AbstractCalcinatorTileEntityForge extends AbstractCalcinat
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
-        if (!this.level.isClientSide()) {
+        if (this.level != null && !this.level.isClientSide()) {
             this.relevantResearch = assembleRelevantResearch();
         }
         this.cookTimeTotal = this.getCookTimeTotal();
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+    @NotNull
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
         if (this.remove) {
             return super.getCapability(cap, side);
         } else {

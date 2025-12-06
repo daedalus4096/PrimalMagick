@@ -11,6 +11,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class ManaBatteryTileEntityForge extends ManaBatteryTileEntity implements IHasItemHandlerCapabilityForge {
     protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
@@ -29,14 +30,14 @@ public class ManaBatteryTileEntityForge extends ManaBatteryTileEntity implements
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
-        if (this.getLevel() != null) {
-            this.loadManaNetwork(this.getLevel());
+        if (this.level != null) {
+            this.loadManaNetwork(this.level);
         }
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+    @NotNull
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
         if (this.remove) {
             return super.getCapability(cap, side);
         } else {

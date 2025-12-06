@@ -26,12 +26,6 @@ public class ResearchTableTileEntityForge extends ResearchTableTileEntity implem
     }
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        this.doInventorySync();
-    }
-
-    @Override
     public void invalidateCaps() {
         super.invalidateCaps();
         this.itemHandlerOpts.forEach(LazyOptional::invalidate);

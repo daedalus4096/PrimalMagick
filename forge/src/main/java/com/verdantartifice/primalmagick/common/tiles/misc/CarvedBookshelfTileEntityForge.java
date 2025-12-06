@@ -48,6 +48,5 @@ public class CarvedBookshelfTileEntityForge extends CarvedBookshelfTileEntity im
     public void onLoad() {
         this.unpackLootTable(null);
         super.onLoad();
-        this.doInventorySync();
     }
 }

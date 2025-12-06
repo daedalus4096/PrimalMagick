@@ -26,12 +26,6 @@ public class RunecarvingTableTileEntityForge extends RunecarvingTableTileEntity 
     }
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        this.doInventorySync();
-    }
-
-    @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (this.remove) {
             return super.getCapability(cap, side);

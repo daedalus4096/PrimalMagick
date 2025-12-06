@@ -28,9 +28,8 @@ public class AutoChargerTileEntityForge extends AutoChargerTileEntity implements
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
-        if (this.getLevel() != null) {
-            this.loadManaNetwork(this.getLevel());
+        if (this.level != null) {
+            this.loadManaNetwork(this.level);
         }
     }
 

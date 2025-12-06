@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesForge;
 import com.verdantartifice.primalmagick.common.capabilities.FluidHandlerPMForge;
-import com.verdantartifice.primalmagick.common.capabilities.IFluidHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.tiles.IHasFluidHandlerCapabilityForge;
 import com.verdantartifice.primalmagick.common.tiles.IHasItemHandlerCapabilityForge;
@@ -14,8 +13,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.EmptyFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class DesalinatorTileEntityForge extends DesalinatorTileEntity implements IHasItemHandlerCapabilityForge, IHasFluidHandlerCapabilityForge {
     protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
@@ -36,12 +35,12 @@ public class DesalinatorTileEntityForge extends DesalinatorTileEntity implements
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
         this.boilTimeTotal = this.getBoilTimeTotal();
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+    @NotNull
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
         if (this.remove) {
             return super.getCapability(cap, side);
         } else {

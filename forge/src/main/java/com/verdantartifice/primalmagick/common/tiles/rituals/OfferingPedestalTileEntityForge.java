@@ -29,7 +29,6 @@ public class OfferingPedestalTileEntityForge extends OfferingPedestalTileEntity 
     public void onLoad() {
         this.unpackLootTable(null);
         super.onLoad();
-        this.doInventorySync();
     }
 
     @Override

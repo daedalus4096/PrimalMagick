@@ -12,6 +12,5 @@ public class OfferingPedestalTileEntityNeoforge extends OfferingPedestalTileEnti
     public void onLoad() {
         this.unpackLootTable(null);
         super.onLoad();
-        this.doInventorySync();
     }
 }

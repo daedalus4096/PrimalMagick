@@ -11,7 +11,6 @@ public class DesalinatorTileEntityNeoforge extends DesalinatorTileEntity {
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
         this.boilTimeTotal = this.getBoilTimeTotal();
     }
 }

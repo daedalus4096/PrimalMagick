@@ -7,10 +7,4 @@ public class RitualLecternTileEntityNeoforge extends RitualLecternTileEntity {
     public RitualLecternTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(pos, state);
     }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        this.doInventorySync();
-    }
 }

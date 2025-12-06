@@ -11,6 +11,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class DissolutionChamberTileEntityForge extends DissolutionChamberTileEntity implements IHasItemHandlerCapabilityForge {
     protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
@@ -29,12 +30,12 @@ public class DissolutionChamberTileEntityForge extends DissolutionChamberTileEnt
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
         this.processTimeTotal = this.getProcessTimeTotal();
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+    @NotNull
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
         if (this.remove) {
             return super.getCapability(cap, side);
         } else {

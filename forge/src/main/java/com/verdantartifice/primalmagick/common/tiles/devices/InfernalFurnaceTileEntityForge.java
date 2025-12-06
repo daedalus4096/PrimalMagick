@@ -11,6 +11,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class InfernalFurnaceTileEntityForge extends InfernalFurnaceTileEntity implements IHasItemHandlerCapabilityForge {
     protected LazyOptional<IManaStorage<?>> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
@@ -29,12 +30,12 @@ public class InfernalFurnaceTileEntityForge extends InfernalFurnaceTileEntity im
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
         this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+    @NotNull
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
         if (this.remove) {
             return super.getCapability(cap, side);
         } else {

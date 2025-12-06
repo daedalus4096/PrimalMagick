@@ -11,9 +11,8 @@ public class AutoChargerTileEntityNeoforge extends AutoChargerTileEntity{
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
-        if (this.getLevel() != null) {
-            this.loadManaNetwork(this.getLevel());
+        if (this.level != null) {
+            this.loadManaNetwork(this.level);
         }
     }
 }

@@ -260,7 +260,6 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
 
     protected void doInventorySync() {
         if (this.level != null) {
-            // TODO Handle calls to this method from each loader's onLoad method automatically
             if (!this.level.isClientSide()) {
                 // When first loaded, server-side tiles should immediately sync their contents to all nearby clients
                 this.syncSlots(null);
