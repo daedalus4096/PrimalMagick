@@ -7,7 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -33,7 +33,7 @@ public class BombCasingItem extends AbstractConcoctionContainerItem {
             level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
         }
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return InteractionResult.SUCCESS;
     };
     
     public BombCasingItem(Item.Properties properties) {

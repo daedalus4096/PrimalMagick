@@ -14,6 +14,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Base definition of a concoction container.  Interacts with water sources to fill the container
@@ -29,7 +30,8 @@ public abstract class AbstractConcoctionContainerItem extends Item {
     protected abstract ItemStack getConcoctionContainerItem();
 
     @Override
-    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    @NotNull
+    public InteractionResult use(@NotNull Level worldIn, @NotNull Player playerIn, @NotNull InteractionHand handIn) {
         ItemStack itemStack = playerIn.getItemInHand(handIn);
         BlockHitResult rayTraceResult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
         if (rayTraceResult.getType() == HitResult.Type.MISS) {

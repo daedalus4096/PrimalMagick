@@ -6,17 +6,16 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,8 +26,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -38,9 +35,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -62,9 +58,9 @@ public class ConcoctionItem extends Item {
                 level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         } else {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
         }
     };
     public static final CauldronInteraction FILL_WATER_CAULDRON = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
@@ -78,9 +74,9 @@ public class ConcoctionItem extends Item {
                 level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         } else {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
         }
     };
     
@@ -89,23 +85,25 @@ public class ConcoctionItem extends Item {
     }
 
     @Override
+    @NotNull
     public ItemStack getDefaultInstance() {
         return ConcoctionUtils.setConcoctionType(PotionContents.createItemStack(this, Potions.WATER), ConcoctionType.WATER);
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+    @NotNull
+    public ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving) {
         Player player = entityLiving instanceof Player ? (Player)entityLiving : null;
 
-        if (!worldIn.isClientSide()) {
+        if (worldIn instanceof ServerLevel serverLevel) {
             PotionContents contents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
             contents.forEachEffect(instance -> {
                 if (instance.getEffect().value().isInstantenous()) {
-                    instance.getEffect().value().applyInstantenousEffect(player, player, entityLiving, instance.getAmplifier(), 1.0D);
+                    instance.getEffect().value().applyInstantenousEffect(serverLevel, player, player, entityLiving, instance.getAmplifier(), 1.0D);
                 } else {
                     entityLiving.addEffect(new MobEffectInstance(instance));
                 }
-            });
+            }, 1F);
         }
         
         if (player != null) {
@@ -124,40 +122,41 @@ public class ConcoctionItem extends Item {
     }
 
     @Override
-    public ItemUseAnimation getUseAnimation(ItemStack stack) {
+    @NotNull
+    public ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
         return ItemUseAnimation.DRINK;
     }
 
     @Override
-    public int getUseDuration(ItemStack stack, LivingEntity pEntity) {
+    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity pEntity) {
         return 32;
     }
 
     @Override
-    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    @NotNull
+    public InteractionResult use(@NotNull Level worldIn, @NotNull Player playerIn, @NotNull InteractionHand handIn) {
         return ItemUtils.startUsingInstantly(worldIn, playerIn, handIn);
     }
 
     @Override
-    public String getDescriptionId(ItemStack stack) {
+    @NotNull
+    public Component getName(@NotNull ItemStack stack) {
         ConcoctionType type = ConcoctionUtils.getConcoctionType(stack);
-        if (stack.has(DataComponents.POTION_CONTENTS) && type != null) {
-            Optional<Holder<Potion>> potionHolderOpt = stack.get(DataComponents.POTION_CONTENTS).potion();
-            return Potion.getName(potionHolderOpt, this.getDescriptionId() + "." + type.getSerializedName() + ".effect.");
-        } else {
-            type = ConcoctionType.WATER;
-            PotionContents fakeContents = new PotionContents(Potions.WATER);
-            return Potion.getName(fakeContents.potion(), this.getDescriptionId() + "." + type.getSerializedName() + ".effect.");
+        PotionContents contents = stack.get(DataComponents.POTION_CONTENTS);
+        if (contents == null) {
+            contents = new PotionContents(Potions.WATER);
         }
+        return contents.getName(this.descriptionId + "." + type.getSerializedName() + ".effect.");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(@NotNull ItemStack stack, Item.@NotNull TooltipContext context, @NotNull TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, @NotNull TooltipFlag flagIn) {
         tooltip.accept(Component.translatable("concoctions.primalmagick.doses_remaining", ConcoctionUtils.getCurrentDoses(stack)).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
     }
 
     @Override
-    public boolean isFoil(ItemStack stack) {
+    public boolean isFoil(@NotNull ItemStack stack) {
         return super.isFoil(stack) || stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).hasEffects();
     }
 
@@ -171,9 +170,7 @@ public class ConcoctionItem extends Item {
                         return !potionRef.value().getEffects().isEmpty() && ConcoctionUtils.hasBeneficialEffect(potionRef.value());
                     }).map(potionRef -> {
                         return ConcoctionUtils.setConcoctionType(PotionContents.createItemStack(item, potionRef), concoctionType);
-                    }).forEach(stack -> {
-                        output.accept(stack);
-                    });
+                    }).forEach(output::accept);
                 });
             }
         }
