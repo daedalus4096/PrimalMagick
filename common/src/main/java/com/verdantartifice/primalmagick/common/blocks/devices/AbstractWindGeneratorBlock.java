@@ -24,11 +24,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
 
 /**
  * Base class for a wind generator block that moves entities in range.
@@ -36,7 +40,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     
     public AbstractWindGeneratorBlock(Block.Properties properties) {
@@ -45,13 +49,15 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         // TODO Assemble more detailed shape for device
         return Shapes.block();
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -62,12 +68,13 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     }
     
     @Override
+    @NotNull
     public BlockState rotate(BlockState state, Rotation rot) {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
-    @SuppressWarnings("deprecation")
     @Override
+    @NotNull
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
@@ -78,8 +85,8 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     }
     
     @Override
-    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
+    public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Block blockIn, @Nullable Orientation orientation, boolean movedByPiston) {
+        super.neighborChanged(state, level, pos, blockIn, orientation, movedByPiston);
         if (!level.isClientSide()) {
             boolean powered = state.getValue(POWERED);
             if (powered != level.hasNeighborSignal(pos)) {
@@ -89,12 +96,12 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new WindGeneratorTileEntity(pos, state);
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return createTickerHelper(type, BlockEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTileEntity::tick);
     }
 
@@ -103,12 +110,12 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     public abstract ParticleOptions getParticleType();
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+    public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (state.getValue(POWERED)) {
             double lifetime = 20D;
             int power = level.getBestNeighborSignal(pos);
             Direction windDir = this.getWindDirection(state);
-            Vec3i velocity = windDir.getNormal().multiply(power);
+            Vec3i velocity = windDir.getUnitVec3i().multiply(power);
             Vec3 start = this.getParticleStartPoint(state, level, pos, random);
             level.addParticle(this.getParticleType(), start.x, start.y, start.z, velocity.getX() / lifetime, velocity.getY() / lifetime, velocity.getZ() / lifetime);
         }
@@ -116,7 +123,7 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     
     protected Vec3 getParticleStartPoint(BlockState state, Level level, BlockPos pos, RandomSource random) {
         Direction dir = state.getValue(FACING);
-        Vec3 dirUnit = new Vec3(dir.getNormal().getX(), dir.getNormal().getY(), dir.getNormal().getZ());
+        Vec3 dirUnit = new Vec3(dir.getStepX(), dir.getStepY(), dir.getStepZ());
         Vec3 center = Vec3.atCenterOf(pos);
         Vec3 retVal = center.add(dirUnit.scale(0.5D));
         for (Axis axis : Axis.values()) {
