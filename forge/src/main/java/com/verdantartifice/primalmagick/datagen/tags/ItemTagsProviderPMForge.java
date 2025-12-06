@@ -170,6 +170,10 @@ public class ItemTagsProviderPMForge extends ItemTagsProvider {
         this.tag(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL).add(ItemsPM.HALLOWSTEEL_BLOCK.get());
         this.tag(ItemTagsPM.STORAGE_BLOCKS_HEXIUM).add(ItemsPM.HEXIUM_BLOCK.get());
         this.tag(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE).add(ItemsPM.PRIMALITE_BLOCK.get());
+
+        this.tag(ItemTagsPM.SPELLCLOTH).add(ItemsPM.SPELLCLOTH.get());
+        this.tag(ItemTagsPM.HEXWEAVE).add(ItemsPM.HEXWEAVE.get());
+        this.tag(ItemTagsPM.SAINTSWOOL).add(ItemsPM.SAINTSWOOL.get());
         
         this.tag(ItemTagsPM.MELEE_ENCHANTABLE).addTag(ItemTags.WEAPON_ENCHANTABLE).addTag(ItemTags.TRIDENT_ENCHANTABLE).addTag(ItemTagsPM.STAFF_ENCHANTABLE);
         this.tag(ItemTagsPM.ARCHERY_ENCHANTABLE).addTag(ItemTags.BOW_ENCHANTABLE).addTag(ItemTags.CROSSBOW_ENCHANTABLE);
