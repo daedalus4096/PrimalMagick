@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -16,7 +17,7 @@ import java.util.List;
  * 
  * @author Daedalus4096
  */
-public class StackedComponentContents extends StackedContents {
+public class StackedComponentContents extends StackedItemContents {
     protected final Int2ObjectMap<List<DataComponentMap>> nbtData = new Int2ObjectOpenHashMap<>();
 
     @Override

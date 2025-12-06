@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
@@ -102,7 +103,7 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedContents contents) {
+    public void fillCraftSlotsStackedContents(StackedItemContents contents) {
         this.tile.fillStackedContents(contents);
     }
 

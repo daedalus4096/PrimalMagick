@@ -13,6 +13,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
@@ -135,7 +136,7 @@ public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileE
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedContents stackedContents) {
+    public void fillCraftSlotsStackedContents(StackedItemContents stackedContents) {
         this.tile.fillStackedContents(stackedContents);
     }
 

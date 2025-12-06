@@ -16,6 +16,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -219,7 +220,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedContents contents) {
+    public void fillCraftSlotsStackedContents(StackedItemContents contents) {
         this.craftingInv.fillStackedContents(contents);
     }
 

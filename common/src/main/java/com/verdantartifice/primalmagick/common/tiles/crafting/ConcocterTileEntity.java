@@ -40,6 +40,7 @@ import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
@@ -358,7 +359,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     }
 
     @Override
-    public void fillStackedContents(StackedContents stackedContents) {
+    public void fillStackedContents(@NotNull StackedItemContents stackedContents) {
         for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
             for (int slotIndex = 0; slotIndex < this.getInventorySize(invIndex); slotIndex++) {
                 stackedContents.accountStack(this.getItem(invIndex, slotIndex));
