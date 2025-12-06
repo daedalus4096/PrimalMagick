@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -20,6 +21,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -42,11 +44,12 @@ public class ArcaneCraftingResultSlot extends Slot {
     }
     
     @Override
-    public boolean mayPlace(ItemStack stack) {
+    public boolean mayPlace(@NotNull ItemStack stack) {
         return false;
     }
     
     @Override
+    @NotNull
     public ItemStack remove(int amount) {
         if (this.hasItem()) {
             this.amountCrafted += Math.min(amount, this.getItem().getCount());
@@ -55,7 +58,7 @@ public class ArcaneCraftingResultSlot extends Slot {
     }
     
     @Override
-    protected void onQuickCraft(ItemStack stack, int amount) {
+    protected void onQuickCraft(@NotNull ItemStack stack, int amount) {
         this.amountCrafted += amount;
         this.checkTakeAchievements(stack);
     }
@@ -66,10 +69,10 @@ public class ArcaneCraftingResultSlot extends Slot {
     }
     
     @Override
-    protected void checkTakeAchievements(ItemStack stack) {
+    protected void checkTakeAchievements(@NotNull ItemStack stack) {
         // Fire crafting handlers
         if (this.amountCrafted > 0) {
-            stack.onCraftedBy(this.player.level(), this.player, this.amountCrafted);
+            stack.onCraftedBy(this.player, this.amountCrafted);
             Services.EVENTS.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
             
             // Increment the expertise and craft counter stats for the recipe's discipline
@@ -87,7 +90,7 @@ public class ArcaneCraftingResultSlot extends Slot {
     }
     
     @Override
-    public void onTake(Player thePlayer, ItemStack stack) {
+    public void onTake(@NotNull Player thePlayer, @NotNull ItemStack stack) {
         this.checkTakeAchievements(stack);
         
         // Do additional processing if the crafted recipe was arcane
@@ -97,7 +100,7 @@ public class ArcaneCraftingResultSlot extends Slot {
                 SourceList manaCosts = arcaneRecipe.getManaCosts();
                 if (!manaCosts.isEmpty()) {
                     ItemStack wandStack = this.wandInventory.getItem(0);
-                    if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+                    if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                         wand.consumeMana(wandStack, this.player, manaCosts, thePlayer.registryAccess());
                     }
                 }
@@ -114,19 +117,23 @@ public class ArcaneCraftingResultSlot extends Slot {
         // Get the remaining items from the recipe, checking arcane recipes first, then vanilla recipes
         Level level = thePlayer.level();
         NonNullList<ItemStack> remainingList;
-        Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory.asCraftInput(), level);
-        if (arcaneOptional.isPresent()) {
-            remainingList = arcaneOptional.get().value().getRemainingItems(craftingInput);
-        } else {
-            Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory.asCraftInput(), level);
-            if (vanillaOptional.isPresent()) {
-                remainingList = vanillaOptional.get().value().getRemainingItems(craftingInput);
+        if (thePlayer.level() instanceof ServerLevel serverLevel) {
+            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = serverLevel.recipeAccess().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory.asCraftInput(), level);
+            if (arcaneOptional.isPresent()) {
+                remainingList = arcaneOptional.get().value().getRemainingItems(craftingInput);
             } else {
-                remainingList = NonNullList.withSize(this.craftingInventory.getContainerSize(), ItemStack.EMPTY);
-                for (int index = 0; index < remainingList.size(); index++) {
-                    remainingList.set(index, this.craftingInventory.getItem(index));
+                Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = serverLevel.recipeAccess().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory.asCraftInput(), level);
+                if (vanillaOptional.isPresent()) {
+                    remainingList = vanillaOptional.get().value().getRemainingItems(craftingInput);
+                } else {
+                    remainingList = NonNullList.withSize(this.craftingInventory.getContainerSize(), ItemStack.EMPTY);
+                    for (int index = 0; index < remainingList.size(); index++) {
+                        remainingList.set(index, this.craftingInventory.getItem(index));
+                    }
                 }
             }
+        } else {
+            remainingList = CraftingRecipe.defaultCraftingReminder(craftingInput);
         }
 
         Services.EVENTS.setCraftingPlayer(null);

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -32,12 +33,12 @@ public class SpellcraftingResultSlot extends ResultSlot {
     }
     
     @Override
-    public void onTake(Player player, ItemStack stack) {
+    public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
         // Deduct the cost of the spell from the wand
         SourceList manaCosts = this.costSupplier.get();
         if (manaCosts != null && !manaCosts.isEmpty()) {
             ItemStack wandStack = this.wandInventory.getItem(0);
-            if (wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 wand.consumeMana(wandStack, this.player, manaCosts, player.registryAccess());
             }
         }
@@ -45,7 +46,7 @@ public class SpellcraftingResultSlot extends ResultSlot {
     }
 
     @Override
-    protected void checkTakeAchievements(ItemStack stack) {
+    protected void checkTakeAchievements(@NotNull ItemStack stack) {
         super.checkTakeAchievements(stack);
         
         // Increment the craft counter statistic for the discipline
@@ -58,11 +59,12 @@ public class SpellcraftingResultSlot extends ResultSlot {
     }
     
     @Override
-    public boolean mayPlace(ItemStack stack) {
+    public boolean mayPlace(@NotNull ItemStack stack) {
         return false;
     }
     
     @Override
+    @NotNull
     public ItemStack remove(int amount) {
         if (this.hasItem()) {
             this.amountCrafted += Math.min(amount, this.getItem().getCount());
@@ -71,7 +73,7 @@ public class SpellcraftingResultSlot extends ResultSlot {
     }
     
     @Override
-    protected void onQuickCraft(ItemStack stack, int amount) {
+    protected void onQuickCraft(@NotNull ItemStack stack, int amount) {
         this.amountCrafted += amount;
         super.onQuickCraft(stack, amount);
     }

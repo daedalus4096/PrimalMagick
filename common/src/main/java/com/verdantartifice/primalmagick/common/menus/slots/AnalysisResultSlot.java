@@ -4,6 +4,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Custom GUI slot for analysis table results.
@@ -16,13 +17,13 @@ public class AnalysisResultSlot extends Slot {
     }
 
     @Override
-    public boolean mayPlace(ItemStack stack) {
+    public boolean mayPlace(@NotNull ItemStack stack) {
         // Don't allow anything to be dropped into the slot
         return false;
     }
     
     @Override
-    public boolean mayPickup(Player playerIn) {
+    public boolean mayPickup(@NotNull Player playerIn) {
         // Don't allow anything to be taken out of the slot
         return false;
     }
