@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition for a thrown hexium trident entity.
@@ -29,6 +30,7 @@ public class HexiumTridentEntity extends AbstractTridentEntity {
     }
 
     @Override
+    @NotNull
     protected ItemStack getDefaultPickupItem() {
         return DEFAULT_THROWN_STACK;
     }

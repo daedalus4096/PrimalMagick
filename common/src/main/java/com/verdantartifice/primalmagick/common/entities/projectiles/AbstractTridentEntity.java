@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.entities.projectiles;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,9 +17,12 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -48,7 +50,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     }
     
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(LOYALTY_LEVEL, (byte)0);
         pBuilder.define(HAS_GLINT, false);
@@ -65,8 +67,8 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
         if ((this.dealtDamage || this.isNoPhysics()) && shooter != null) {
             int loyalty = this.entityData.get(LOYALTY_LEVEL);
             if (loyalty > 0 && !this.shouldReturnToThrower()) {
-                if (!level.isClientSide() && this.pickup == AbstractArrow.Pickup.ALLOWED) {
-                    this.spawnAtLocation(this.getPickupItem(), 0.1F);
+                if (level instanceof ServerLevel serverLevel && this.pickup == AbstractArrow.Pickup.ALLOWED) {
+                    this.spawnAtLocation(serverLevel, this.getPickupItem(), 0.1F);
                 }
                 this.discard();
             } else if (loyalty > 0) {
@@ -100,6 +102,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     }
 
     @Override
+    @NotNull
     protected ItemStack getPickupItem() {
         return this.thrownStack.copy();
     }
@@ -110,29 +113,32 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
 
     @Override
     @Nullable
-    protected EntityHitResult findHitEntity(Vec3 startVec, Vec3 endVec) {
+    protected EntityHitResult findHitEntity(@NotNull Vec3 startVec, @NotNull Vec3 endVec) {
         return this.dealtDamage ? null : super.findHitEntity(startVec, endVec);
     }
     
     public abstract double getBaseDamage();
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
+        Level level = this.level();
         Entity victim = pResult.getEntity();
         float damage = (float)this.getBaseDamage();
         Entity attacker = this.getOwner();
-        DamageSource damageSource = this.damageSources().trident(this, (Entity)(attacker == null ? this : attacker));
-        if (this.level() instanceof ServerLevel serverLevel) {
-            damage = EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), victim, damageSource, damage);
+        DamageSource damageSource = this.damageSources().trident(this, attacker == null ? this : attacker);
+        ItemStack weaponItem = this.getWeaponItem();
+        if (level instanceof ServerLevel serverLevel && weaponItem != null) {
+            damage = EnchantmentHelper.modifyDamage(serverLevel, weaponItem, victim, damageSource, damage);
         }
 
         this.dealtDamage = true;
-        if (victim.hurt(damageSource, damage)) {
+        if (victim.hurtOrSimulate(damageSource, damage)) {
             if (victim.getType() == EntityType.ENDERMAN) {
                 return;
             }
 
-            if (this.level() instanceof ServerLevel serverLevel) {
+            if (level instanceof ServerLevel serverLevel) {
                 EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, victim, damageSource, this.getWeaponItem());
             }
 
@@ -147,7 +153,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     }
 
     @Override
-    protected void hitBlockEnchantmentEffects(ServerLevel pLevel, BlockHitResult pHitResult, ItemStack pStack) {
+    protected void hitBlockEnchantmentEffects(@NotNull ServerLevel pLevel, @NotNull BlockHitResult pHitResult, @NotNull ItemStack pStack) {
         Vec3 vec3 = pHitResult.getBlockPos().clampLocationWithin(pHitResult.getLocation());
         EnchantmentHelper.onHitBlock(
             pLevel,
@@ -157,7 +163,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
             null,
             vec3,
             pLevel.getBlockState(pHitResult.getBlockPos()),
-            item -> this.kill()
+            item -> this.kill(pLevel)
         );
     }
 
@@ -167,12 +173,13 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     }
 
     @Override
+    @NotNull
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return SoundEvents.TRIDENT_HIT_GROUND;
     }
 
     @Override
-    public void playerTouch(Player entityIn) {
+    public void playerTouch(@NotNull Player entityIn) {
         Entity shooter = this.getOwner();
         if (shooter == null || shooter.getUUID() == entityIn.getUUID()) {
             super.playerTouch(entityIn);
@@ -180,16 +187,16 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        this.dealtDamage = compound.getBoolean("DealtDamage");
+    public void readAdditionalSaveData(@NotNull ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.dealtDamage = input.getBooleanOr("DealtDamage", false);
         this.entityData.set(LOYALTY_LEVEL, this.getLoyaltyFromItem(this.thrownStack));
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        compound.putBoolean("DealtDamage", this.dealtDamage);
+    public void addAdditionalSaveData(@NotNull ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putBoolean("DealtDamage", this.dealtDamage);
     }
 
     @Override
@@ -210,6 +217,8 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     }
     
     protected byte getLoyaltyFromItem(ItemStack pStack) {
-        return this.level() instanceof ServerLevel serverLevel ? (byte)Mth.clamp(EnchantmentHelper.getTridentReturnToOwnerAcceleration(serverLevel, pStack, this), 0, Byte.MAX_VALUE) : 0;
+        return this.level() instanceof ServerLevel serverLevel ?
+                (byte)Mth.clamp(EnchantmentHelper.getTridentReturnToOwnerAcceleration(serverLevel, pStack, this), 0, Byte.MAX_VALUE) :
+                0;
     }
 }
