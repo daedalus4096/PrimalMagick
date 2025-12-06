@@ -21,13 +21,14 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block definition for the wand inscription table.  A wand inscription table allows a player to take a
@@ -36,7 +37,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class WandInscriptionTableBlock extends Block {
-    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    protected static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public WandInscriptionTableBlock() {
         super(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.5F, 6.0F).sound(SoundType.WOOD).noOcclusion());
@@ -44,7 +45,8 @@ public class WandInscriptionTableBlock extends Block {
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         // TODO Assemble more detailed shape for base table
         return Shapes.block();
     }
@@ -56,12 +58,13 @@ public class WandInscriptionTableBlock extends Block {
     }
     
     @Override
+    @NotNull
     public BlockState rotate(BlockState state, Rotation rot) {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
-    
-    @SuppressWarnings("deprecation")
+
     @Override
+    @NotNull
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
@@ -72,16 +75,18 @@ public class WandInscriptionTableBlock extends Block {
     }
     
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
         if (!worldIn.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the wand inscription table
             serverPlayer.openMenu(new MenuProvider() {
                 @Override
-                public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
+                public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory inv, @NotNull Player player) {
                     return new WandInscriptionTableMenu(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
                 }
 
                 @Override
+                @NotNull
                 public Component getDisplayName() {
                     return Component.translatable(WandInscriptionTableBlock.this.getDescriptionId());
                 }

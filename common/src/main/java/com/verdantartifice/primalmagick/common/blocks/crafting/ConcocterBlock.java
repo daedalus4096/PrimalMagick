@@ -31,6 +31,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Block definition for a concocter.  Used to craft multi-dose potions.
@@ -60,33 +62,35 @@ public class ConcocterBlock extends BaseEntityBlock {
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
+    @NotNull
     public BlockState rotate(BlockState state, Rotation rot) {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
-    @SuppressWarnings("deprecation")
     @Override
+    @NotNull
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
     
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return Services.BLOCK_ENTITY_PROTOTYPES.concocter().create(pos, state);
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return createTickerHelper(type, BlockEntityTypesPM.CONCOCTER.get(), Services.BLOCK_ENTITY_TICKERS.concocter());
     }
 
     @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(@NotNull Level worldIn, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity placer, @NotNull ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
 
         // Set the block entity's owner when placed by a player
@@ -96,13 +100,14 @@ public class ConcocterBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
         super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
         level.updateNeighbourForOutputSignal(pos, this);
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
         if (!worldIn.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the concocter
             BlockEntity tile = worldIn.getBlockEntity(pos);
@@ -114,7 +119,7 @@ public class ConcocterBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
+    public void animateTick(@NotNull BlockState stateIn, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         double d0 = (double)pos.getX() + 0.4D + (double)rand.nextFloat() * 0.2D;
         double d1 = (double)pos.getY() + 0.7D + (double)rand.nextFloat() * 0.3D;
         double d2 = (double)pos.getZ() + 0.4D + (double)rand.nextFloat() * 0.2D;
@@ -122,6 +127,7 @@ public class ConcocterBlock extends BaseEntityBlock {
     }
 
     @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }

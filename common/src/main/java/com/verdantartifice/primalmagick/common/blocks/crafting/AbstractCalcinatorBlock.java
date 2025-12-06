@@ -26,6 +26,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Base block definition for the essence furnace and calcinators.  These are like furnaces, but instead of smelting items
@@ -39,11 +41,11 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     
     public AbstractCalcinatorBlock(Block.Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
+        this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.FALSE));
     }
     
     @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(FACING, LIT);
     }
@@ -55,23 +57,26 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
+    @NotNull
     public BlockState rotate(BlockState state, Rotation rot) {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
-    @SuppressWarnings("deprecation")
     @Override
+    @NotNull
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
     
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
         if (!worldIn.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the calcinator
             BlockEntity tile = worldIn.getBlockEntity(pos);
@@ -83,7 +88,7 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     }
     
     @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(@NotNull Level worldIn, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity placer, @NotNull ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
         
         // Set the block entity's owner when placed by a player
@@ -93,11 +98,11 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
         super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
         level.updateNeighbourForOutputSignal(pos, this);
     }
 
     @Override
-    public abstract void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand);
+    public abstract void animateTick(@NotNull BlockState stateIn, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand);
 }

@@ -9,12 +9,14 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -28,12 +30,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block definition for the spellcrafting altar.  A spellcrafting altar allows a player to define a spell
@@ -45,7 +48,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class SpellcraftingAltarBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<SpellcraftingAltarBlock> CODEC = simpleCodec(SpellcraftingAltarBlock::new);
     
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/spellcrafting_altar"));
 
     public SpellcraftingAltarBlock(Block.Properties properties) {
@@ -54,12 +57,14 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock implements SimpleWa
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return SHAPE;
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState p_49232_) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -70,23 +75,25 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock implements SimpleWa
     }
     
     @Override
+    @NotNull
     public BlockState rotate(BlockState state, Rotation rot) {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
-    @SuppressWarnings("deprecation")
     @Override
+    @NotNull
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
     
     @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(@NotNull Builder<Block, BlockState> builder) {
         builder.add(FACING, BlockStateProperties.WATERLOGGED);
     }
     
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
         if (!worldIn.isClientSide()) {
             BlockEntity blockEntity = worldIn.getBlockEntity(pos);
             if (blockEntity instanceof SpellcraftingAltarTileEntity altarTile && player instanceof ServerPlayer serverPlayer) {
@@ -98,29 +105,34 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock implements SimpleWa
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new SpellcraftingAltarTileEntity(pos, state);
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return createTickerHelper(type, BlockEntityTypesPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarTileEntity::tick);
     }
 
     @Override
+    @NotNull
     protected FluidState getFluidState(BlockState pState) {
         return pState.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(pState);
     }
 
     @Override
-    protected BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
-        if(pState.getValue(BlockStateProperties.WATERLOGGED)){
-            pLevel.scheduleTick(pPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
+    @NotNull
+    public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
+        if (state.getValue(BlockStateProperties.WATERLOGGED)) {
+            scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
-        return super.updateShape(pState, pDirection, pNeighborState, pLevel, pPos, pNeighborPos);
+        return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }

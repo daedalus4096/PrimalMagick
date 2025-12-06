@@ -7,12 +7,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -31,6 +33,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block definition for the runecarving table.  The runecarving table lets the player turn stone
@@ -50,7 +53,8 @@ public class RunecarvingTableBlock extends BaseEntityBlock implements SimpleWate
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -61,12 +65,13 @@ public class RunecarvingTableBlock extends BaseEntityBlock implements SimpleWate
     }
     
     @Override
+    @NotNull
     public BlockState rotate(BlockState state, Rotation rot) {
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
     
-    @SuppressWarnings("deprecation")
     @Override
+    @NotNull
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
@@ -77,7 +82,8 @@ public class RunecarvingTableBlock extends BaseEntityBlock implements SimpleWate
     }
     
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
         if (!worldIn.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the research table
             BlockEntity tile = worldIn.getBlockEntity(pos);
@@ -89,12 +95,12 @@ public class RunecarvingTableBlock extends BaseEntityBlock implements SimpleWate
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return Services.BLOCK_ENTITY_PROTOTYPES.runecarvingTable().create(pos, state);
     }
 
     @Override
-    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
         super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
         level.updateNeighbourForOutputSignal(pos, this);
     }
@@ -106,24 +112,30 @@ public class RunecarvingTableBlock extends BaseEntityBlock implements SimpleWate
     );
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return SHAPE;
     }
 
     @Override
+    @NotNull
     protected FluidState getFluidState(BlockState pState) {
         return pState.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(pState);
     }
 
     @Override
-    protected BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
-        if(pState.getValue(BlockStateProperties.WATERLOGGED)){
-            pLevel.scheduleTick(pPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
+    @NotNull
+    public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
+        if (state.getValue(BlockStateProperties.WATERLOGGED)) {
+            scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
-        return super.updateShape(pState, pDirection, pNeighborState, pLevel, pPos, pNeighborPos);
+        return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }

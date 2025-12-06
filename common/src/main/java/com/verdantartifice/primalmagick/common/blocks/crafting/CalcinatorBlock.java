@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A proper calcinator, one of four tiers.  Generates essence by melting other items.
@@ -44,21 +45,21 @@ public class CalcinatorBlock extends AbstractCalcinatorBlock implements ITieredD
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return Services.BLOCK_ENTITY_PROTOTYPES.calcinator().create(pos, state);
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return createTickerHelper(type, BlockEntityTypesPM.CALCINATOR.get(), Services.BLOCK_ENTITY_TICKERS.calcinator());
     }
 
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
+    public void animateTick(@NotNull BlockState stateIn, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         if (stateIn.getValue(LIT)) {
-            double d0 = (double)pos.getX() + 0.5D;
-            double d1 = (double)pos.getY();
-            double d2 = (double)pos.getZ() + 0.5D;
+            double d0 = pos.getX() + 0.5D;
+            double d1 = pos.getY();
+            double d2 = pos.getZ() + 0.5D;
             if (rand.nextDouble() < 0.1D) {
                 worldIn.playLocalSound(d0, d1, d2, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
             }
@@ -77,6 +78,7 @@ public class CalcinatorBlock extends AbstractCalcinatorBlock implements ITieredD
     }
 
     @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
