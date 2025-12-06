@@ -13,6 +13,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Global loot modifier that allows mobs in the conditioned tag to drop Mystical Relic Fragments when killed.
@@ -38,11 +39,13 @@ public class RelicFragmentsModifier extends LootModifier {
     }
 
     @Override
-    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    @NotNull
+    protected ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
         return LootModifiers.relicFragments(generatedLoot, context, this.targetTag, this.minCount, this.maxCount);
     }
 
     @Override
+    @NotNull
     public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }

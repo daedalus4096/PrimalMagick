@@ -17,7 +17,7 @@ public class LootModifierSerializersPM {
     private static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Constants.MOD_ID);
     
     public static void init() {
-        SERIALIZERS.register(PrimalMagick.getModLoadingContext().getModEventBus());
+        SERIALIZERS.register(PrimalMagick.getModLoadingContext().getModBusGroup());
     }
     
     public static final RegistryObject<MapCodec<BloodyFleshModifier>> BLOODY_FLESH = SERIALIZERS.register("bloody_flesh", () -> BloodyFleshModifier.CODEC);

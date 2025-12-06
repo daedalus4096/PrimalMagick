@@ -42,11 +42,13 @@ public class GuillotineModifier extends LootModifier {
     }
     
     @Override
-    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    @NotNull
+    protected ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
         return LootModifiers.guillotine(generatedLoot, context, this.targetTag, this.item, this.chance);
     }
     
     @Override
+    @NotNull
     public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
