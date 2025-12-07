@@ -7,7 +7,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
-import net.minecraft.world.item.equipment.EquipmentAssets;
 
 import java.util.EnumMap;
 
@@ -31,7 +30,7 @@ public class ArmorMaterialsPM {
             0.0F,
             0.0F,
             ItemTags.WOOL,
-            EquipmentAssets.LEATHER    // FIXME Need equipment asset for armor material
+            EquipmentAssetsPM.IMBUED_WOOL
     );
     public static final ArmorMaterial SPELLCLOTH = new ArmorMaterial(
             20,
@@ -47,7 +46,7 @@ public class ArmorMaterialsPM {
             1.0F,
             0.0F,
             ItemTagsPM.SPELLCLOTH,
-            EquipmentAssets.LEATHER    // FIXME Need equipment asset for armor material
+            EquipmentAssetsPM.SPELLCLOTH
     );
     public static final ArmorMaterial HEXWEAVE = new ArmorMaterial(
             35,
@@ -63,7 +62,7 @@ public class ArmorMaterialsPM {
             2.0F,
             0.0F,
             ItemTagsPM.HEXWEAVE,
-            EquipmentAssets.LEATHER    // FIXME Need equipment asset for armor material
+            EquipmentAssetsPM.HEXWEAVE
     );
     public static final ArmorMaterial SAINTSWOOL = new ArmorMaterial(
             50,
@@ -79,7 +78,7 @@ public class ArmorMaterialsPM {
             3.0F,
             0.0F,
             ItemTagsPM.SAINTSWOOL,
-            EquipmentAssets.LEATHER    // FIXME Need equipment asset for armor material
+            EquipmentAssetsPM.SAINTSWOOL
     );
     public static final ArmorMaterial PRIMALITE = new ArmorMaterial(
             30,
