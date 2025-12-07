@@ -32,7 +32,6 @@ import com.verdantartifice.primalmagick.platform.services.IShearableService;
 import com.verdantartifice.primalmagick.platform.services.ITagService;
 import com.verdantartifice.primalmagick.platform.services.ITestService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeRegistryService;
-import com.verdantartifice.primalmagick.platform.services.registries.IArmorMaterialRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockEntityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.ICreativeModeTabRegistryService;
@@ -116,7 +115,6 @@ public class Services {
     public static final IBlockRegistryService BLOCKS_REGISTRY = load(IBlockRegistryService.class);
     public static final IItemRegistryService ITEMS_REGISTRY = load(IItemRegistryService.class);
     public static final ICreativeModeTabRegistryService CREATIVE_MODE_TABS_REGISTRY = load(ICreativeModeTabRegistryService.class);
-    public static final IArmorMaterialRegistryService ARMOR_MATERIALS_REGISTRY = load(IArmorMaterialRegistryService.class);
     public static final IDataComponentTypeRegistryService DATA_COMPONENT_TYPES_REGISTRY = load(IDataComponentTypeRegistryService.class);
     public static final IEntityTypeRegistryService ENTITY_TYPES_REGISTRY = load(IEntityTypeRegistryService.class);
     public static final IBlockEntityTypeRegistryService BLOCK_ENTITY_TYPES_REGISTRY = load(IBlockEntityTypeRegistryService.class);
