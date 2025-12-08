@@ -75,6 +75,8 @@ public class DataComponentsPM {
 
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<Source>> SOURCE_TINT = register("source_tint", builder -> builder.persistent(Source.CODEC).networkSynchronized(Source.STREAM_CODEC));
 
+    public static final IRegistryItem<DataComponentType<?>, DataComponentType<Float>> ANTENNA_ANGLE = register("antenna_angle", builder -> builder.persistent(Codec.FLOAT));
+
     private static <T> IRegistryItem<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> operator) {
         return Services.DATA_COMPONENT_TYPES_REGISTRY.register(name, () -> operator.apply(DataComponentType.builder()).build());
     }

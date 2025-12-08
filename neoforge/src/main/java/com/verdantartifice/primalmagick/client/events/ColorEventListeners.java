@@ -12,7 +12,7 @@ import net.neoforged.neoforge.client.event.RegisterSelectItemModelPropertyEvent;
  * 
  * @author Daedalus4096
  */
-@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public class ColorEventListeners {
     @SubscribeEvent
     public static void onBlockColorInit(RegisterColorHandlersEvent.Block event) {
@@ -27,10 +27,5 @@ public class ColorEventListeners {
     @SubscribeEvent
     public static void onItemTintSourceInit(RegisterColorHandlersEvent.ItemTintSources event) {
         ColorEvents.onItemTintSourceInit(event::register);
-    }
-
-    @SubscribeEvent
-    public static void onSelectItemModelPropertiesInit(RegisterSelectItemModelPropertyEvent event) {
-        ColorEvents.onSelectItemModelPropertyInit(event::register);
     }
 }

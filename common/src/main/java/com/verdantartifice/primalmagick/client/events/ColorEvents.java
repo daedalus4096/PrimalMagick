@@ -79,10 +79,6 @@ public class ColorEvents {
         tintMapper.accept(ResourceUtils.loc("source"), SourceTint.MAP_CODEC);
     }
 
-    public static void onSelectItemModelPropertyInit(BiConsumer<ResourceLocation, SelectItemModelProperty.Type<?, ?>> propertyMapper) {
-        propertyMapper.accept(ResourceUtils.loc("dyeColor"), StackDyeColor.TYPE);
-    }
-
     public static void onItemColorInit(ItemColorRegistrar itemColors) {
         itemColors.register((stack, dummy) -> {
             if (stack.getItem() instanceof BlockItem blockItem) {

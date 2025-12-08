@@ -55,9 +55,7 @@ public class RayTraceUtils {
         AABB aabb = viewEntity.getBoundingBox().expandTowards(lookVector.scale(reachDistance)).inflate(1.0D, 1.0D, 1.0D);
         
         // Determine if there's an entity closer than the current mouseover block
-        EntityHitResult entityResult = RayTraceUtils.rayTraceEntities(level, viewEntity, eyePos, reachPos, aabb, (testEntity) -> {
-            return !testEntity.isSpectator();
-        }, sqReachDistance);
+        EntityHitResult entityResult = RayTraceUtils.rayTraceEntities(level, viewEntity, eyePos, reachPos, aabb, testEntity -> !testEntity.isSpectator(), sqReachDistance);
         
         // If an entity was found, return that; otherwise return the current mouseover block
         if (entityResult != null) {

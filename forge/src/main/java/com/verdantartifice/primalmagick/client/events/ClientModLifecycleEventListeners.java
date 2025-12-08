@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
 import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemTintSources;
-import net.minecraft.client.gui.LayeredDraw;
+import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,7 +23,8 @@ public class ClientModLifecycleEventListeners {
     public static void clientSetup(FMLClientSetupEvent event) {
         ClientModLifecycleEvents.clientSetup(event::enqueueWork);
         ColorEvents.onItemTintSourceInit(ItemTintSources.ID_MAPPER::put);
-        ColorEvents.onSelectItemModelPropertyInit(SelectItemModelProperties.ID_MAPPER::put);
+        ItemModelPropertyEvents.onSelectItemModelPropertyInit(SelectItemModelProperties.ID_MAPPER::put);
+        ItemModelPropertyEvents.onRangeSelectItemModelPropertyInit(RangeSelectItemModelProperties.ID_MAPPER::put);
         registerHudOverlays();  // FIXME Move this to a dedicated event if/when Forge implements one
     }
 
