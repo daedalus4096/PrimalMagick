@@ -14,7 +14,7 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
  * 
  * @author Daedalus4096
  */
-@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Constants.MOD_ID)
 public class SpawnEventListeners {
     @SubscribeEvent
     public static void onRegisterSpawnPlacement(RegisterSpawnPlacementsEvent event) {

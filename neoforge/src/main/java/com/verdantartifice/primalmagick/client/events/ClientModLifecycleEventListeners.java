@@ -11,7 +11,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
  * 
  * @author Daedalus4096
  */
-@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public class ClientModLifecycleEventListeners {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {

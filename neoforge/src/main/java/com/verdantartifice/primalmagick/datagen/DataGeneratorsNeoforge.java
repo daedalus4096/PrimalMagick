@@ -48,7 +48,7 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Constants.MOD_ID)
 public class DataGeneratorsNeoforge {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
