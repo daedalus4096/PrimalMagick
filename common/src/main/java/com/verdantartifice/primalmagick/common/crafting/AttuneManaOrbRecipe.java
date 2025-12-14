@@ -28,6 +28,9 @@ public class AttuneManaOrbRecipe extends CustomRecipe {
         ItemStack orbStack = ItemStack.EMPTY;
         ItemStack dustStack = ItemStack.EMPTY;
 
+        if (craftingInput.ingredientCount() != 2) {
+            return false;
+        }
         for (int index = 0; index < craftingInput.size(); index++) {
             ItemStack slotStack = craftingInput.getItem(index);
             if (!slotStack.isEmpty()) {
@@ -79,12 +82,7 @@ public class AttuneManaOrbRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 2;
-    }
-
-    @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return RecipeSerializersPM.ATTUNE_MANA_ORB.get();
     }
 }

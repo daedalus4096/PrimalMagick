@@ -16,6 +16,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Special definition for a wand assembly recipe.
@@ -27,12 +28,16 @@ public class WandAssemblyRecipe extends CustomRecipe {
         super(category);
     }
 
-    private static ItemStack getItem(CraftingInput inv, int index) {
+    private static ItemStack getItem(@NotNull CraftingInput inv, int index) {
         return (index >= 0 && index < inv.size()) ? inv.getItem(index) : ItemStack.EMPTY;
     }
 
     @Override
-    public boolean matches(CraftingInput inv, Level worldIn) {
+    public boolean matches(@NotNull CraftingInput inv, @NotNull Level worldIn) {
+        if (inv.ingredientCount() != 4) {
+            return false;
+        }
+
         ItemStack coreStack = getItem(inv, 0);
         ItemStack gemStack = getItem(inv, 1);
         ItemStack capStack1 = getItem(inv, 2);
@@ -46,7 +51,8 @@ public class WandAssemblyRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput inv, @NotNull HolderLookup.Provider registries) {
         ItemStack coreStack = getItem(inv, 0);
         ItemStack gemStack = getItem(inv, 1);
         ItemStack capStack = getItem(inv, 2);
@@ -71,12 +77,8 @@ public class WandAssemblyRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return (width * height) >= 4;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    @NotNull
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get();
     }
 }

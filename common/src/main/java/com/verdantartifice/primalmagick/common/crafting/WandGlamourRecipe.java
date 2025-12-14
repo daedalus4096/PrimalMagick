@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Special definition for a wand glamour recipe.
@@ -30,7 +31,7 @@ public class WandGlamourRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInput inv, Level worldIn) {
+    public boolean matches(@NotNull CraftingInput inv, @NotNull Level worldIn) {
         ItemStack wandStack = getItem(inv, 0);
         ItemStack coreStack = getItem(inv, 1);
         ItemStack capStack = getItem(inv, 2);
@@ -45,7 +46,8 @@ public class WandGlamourRecipe extends CustomRecipe {
     }
     
     @Override
-    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput inv, @NotNull HolderLookup.Provider registries) {
         ItemStack wandStack = getItem(inv, 0);
         ItemStack coreStack = getItem(inv, 1);
         ItemStack capStack = getItem(inv, 2);
@@ -78,12 +80,8 @@ public class WandGlamourRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return (width * height) >= 4;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    @NotNull
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return RecipeSerializersPM.WAND_GLAMOUR_SPECIAL.get();
     }
 }

@@ -9,6 +9,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Special definition for a recipe to dye a flying carpet.
@@ -24,7 +25,10 @@ public class FlyingCarpetDyeRecipe extends CustomRecipe {
     public boolean matches(CraftingInput inv, Level worldIn) {
         ItemStack carpetStack = ItemStack.EMPTY;
         ItemStack dyeStack = ItemStack.EMPTY;
-        
+
+        if (inv.ingredientCount() != 2) {
+            return false;
+        }
         for (int index = 0; index < inv.size(); index++) {
             ItemStack slotStack = inv.getItem(index);
             if (!slotStack.isEmpty()) {
@@ -75,12 +79,8 @@ public class FlyingCarpetDyeRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 2;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    @NotNull
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return RecipeSerializersPM.FLYING_CARPET_DYE.get();
     }
 }

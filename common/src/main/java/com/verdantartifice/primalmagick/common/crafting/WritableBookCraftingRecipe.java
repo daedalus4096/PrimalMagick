@@ -1,10 +1,8 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
-import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -12,6 +10,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Special recipe for creating a writable book using a blank book and a mod writing implement.
@@ -19,14 +18,16 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WritableBookCraftingRecipe extends CustomRecipe {
-    protected static final RandomSource RANDOM = RandomSource.create();
-    
     public WritableBookCraftingRecipe(CraftingBookCategory pCategory) {
         super(pCategory);
     }
 
     @Override
-    public boolean matches(CraftingInput pContainer, Level pLevel) {
+    public boolean matches(@NotNull CraftingInput pContainer, @NotNull Level pLevel) {
+        if (pContainer.ingredientCount() != 2) {
+            return false;
+        }
+
         ItemStack penStack = ItemStack.EMPTY;
         ItemStack bookStack = ItemStack.EMPTY;
         
@@ -53,7 +54,8 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput pContainer, HolderLookup.Provider pRegistries) {
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput pContainer, @NotNull HolderLookup.Provider pRegistries) {
         ItemStack penStack = ItemStack.EMPTY;
         ItemStack bookStack = ItemStack.EMPTY;
         
@@ -76,12 +78,8 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return pWidth * pHeight >= 2;
-    }
-
-    @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingInput pContainer) {
+    @NotNull
+    public NonNullList<ItemStack> getRemainingItems(@NotNull CraftingInput pContainer) {
         NonNullList<ItemStack> retVal = NonNullList.withSize(pContainer.size(), ItemStack.EMPTY);
         
         for (int index = 0; index < retVal.size(); index++) {
@@ -107,7 +105,8 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    @NotNull
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return RecipeSerializersPM.WRITABLE_BOOK_CRAFTING.get();
     }
 }

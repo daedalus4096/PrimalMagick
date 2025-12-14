@@ -11,6 +11,7 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Special recipe for decorating a magickal metal shield with a banner.
@@ -23,7 +24,11 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInput inv, Level worldIn) {
+    public boolean matches(@NotNull CraftingInput inv, @NotNull Level worldIn) {
+        if (inv.ingredientCount() != 2) {
+            return false;
+        }
+
         ItemStack shieldStack = ItemStack.EMPTY;
         ItemStack bannerStack = ItemStack.EMPTY;
         
@@ -52,7 +57,8 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput inv, @NotNull HolderLookup.Provider registries) {
         ItemStack shieldStack = ItemStack.EMPTY;
         ItemStack bannerStack = ItemStack.EMPTY;
         
@@ -77,13 +83,8 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 2;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    @NotNull
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return RecipeSerializersPM.TIERED_SHIELD_DECORATION.get();
     }
-
 }

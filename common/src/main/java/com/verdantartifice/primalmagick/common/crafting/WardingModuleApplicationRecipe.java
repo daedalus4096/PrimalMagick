@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Special recipe for applying a warding module to a piece of armor.
@@ -24,7 +25,11 @@ public class WardingModuleApplicationRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInput pContainer, Level pLevel) {
+    public boolean matches(@NotNull CraftingInput pContainer, @NotNull Level pLevel) {
+        if (pContainer.ingredientCount() != 2) {
+            return false;
+        }
+
         ItemStack moduleStack = ItemStack.EMPTY;
         ItemStack armorStack = ItemStack.EMPTY;
         
@@ -51,7 +56,8 @@ public class WardingModuleApplicationRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput pContainer, HolderLookup.Provider pRegistries) {
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput pContainer, @NotNull HolderLookup.Provider pRegistries) {
         ItemStack moduleStack = ItemStack.EMPTY;
         ItemStack armorStack = ItemStack.EMPTY;
         
@@ -76,12 +82,8 @@ public class WardingModuleApplicationRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return pWidth * pHeight >= 2;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    @NotNull
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return RecipeSerializersPM.WARDING_MODULE_APPLICATION.get();
     }
 }
