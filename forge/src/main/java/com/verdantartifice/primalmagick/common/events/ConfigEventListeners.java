@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.network.tasks.SyncAffinityDataTaskForge;
 import com.verdantartifice.primalmagick.common.network.tasks.SyncLinguisticsGridDataTaskForge;
 import net.minecraftforge.event.network.GatherLoginConfigurationTasksEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**

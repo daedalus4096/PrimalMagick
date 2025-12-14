@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**

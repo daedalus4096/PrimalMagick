@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.events;
 import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.world.InteractionResult;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
