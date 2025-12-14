@@ -19,7 +19,6 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +34,6 @@ import org.slf4j.Logger;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Definition of an auto-charger tile entity.  Provides the siphoning functionality for the
@@ -85,6 +83,14 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     public Player getTileOwner() {
         Level level = this.getLevel();
         return level != null ? EntityReference.getPlayer(this.owner, level) : null;
+    }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        // Before the block entity is removed, invalidate its route table and drop its inventory
+        super.preRemoveSideEffects(pos, state);
+        this.getRouteTable().invalidate();
+        this.dropContents(this.getLevel(), pos);
     }
 
     @Override
