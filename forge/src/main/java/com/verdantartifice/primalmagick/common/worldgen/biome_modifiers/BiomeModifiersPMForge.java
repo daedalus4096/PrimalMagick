@@ -62,6 +62,6 @@ public class BiomeModifiersPMForge {
         
         // Register mob spawn biome modifiers
         HolderSet.Named<Biome> treefolkBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTagsPM.HAS_TREEFOLK);
-        context.register(ADD_SPAWN_TREEFOLK, AddSpawnsBiomeModifier.singleSpawn(treefolkBiomes, new MobSpawnSettings.SpawnerData(EntityTypesPM.TREEFOLK.get(), 100, 1, 3)));
+        context.register(ADD_SPAWN_TREEFOLK, AddSpawnsBiomeModifier.singleSpawn(treefolkBiomes, 100, new MobSpawnSettings.SpawnerData(EntityTypesPM.TREEFOLK.get(), 1, 3)));
     }
 }
