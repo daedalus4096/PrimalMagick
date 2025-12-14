@@ -3,14 +3,12 @@ package com.verdantartifice.primalmagick.datagen.tags;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,21 +17,22 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class BiomeTagsProviderPMForge extends IntrinsicHolderTagsProvider<Biome> {
+public class BiomeTagsProviderPMForge extends BiomeTagsProvider {
     public BiomeTagsProviderPMForge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(packOutput, Registries.BIOME, lookupProvider, b -> ForgeRegistries.BIOMES.getResourceKey(b).orElseThrow(), Constants.MOD_ID, existingFileHelper);
+        super(packOutput, lookupProvider, Constants.MOD_ID, existingFileHelper);
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Primal Magick Biome Tags";
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider lookupProvider) {
+    protected void addTags(@NotNull HolderLookup.Provider lookupProvider) {
         // Create custom tags
-        this.tag(BiomeTagsPM.HAS_EARTH_SHRINE).addTag(BiomeTags.IS_SAVANNA).add(Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-        this.tag(BiomeTagsPM.HAS_SEA_SHRINE).addTag(BiomeTags.IS_RIVER).addTag(BiomeTags.IS_BEACH).add(Biomes.SWAMP, Biomes.SNOWY_PLAINS, Biomes.ICE_SPIKES);
+        this.tag(BiomeTagsPM.HAS_EARTH_SHRINE).addTag(BiomeTags.IS_SAVANNA).add(Biomes.PLAINS).add(Biomes.SUNFLOWER_PLAINS);
+        this.tag(BiomeTagsPM.HAS_SEA_SHRINE).addTag(BiomeTags.IS_RIVER).addTag(BiomeTags.IS_BEACH).add(Biomes.SWAMP).add(Biomes.SNOWY_PLAINS).add(Biomes.ICE_SPIKES);
         this.tag(BiomeTagsPM.HAS_SKY_SHRINE).addTag(BiomeTags.IS_HILL).addTag(BiomeTags.IS_MOUNTAIN).add(Biomes.BAMBOO_JUNGLE);
         this.tag(BiomeTagsPM.HAS_SUN_SHRINE).addTag(BiomeTags.IS_BADLANDS).add(Biomes.DESERT);
         this.tag(BiomeTagsPM.HAS_MOON_SHRINE).addTag(BiomeTags.IS_FOREST);
