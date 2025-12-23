@@ -65,9 +65,6 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     protected static final int HISTORY_LIMIT = 100;
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     protected static final Map<AffinityType, IAffinitySerializer<?>> SERIALIZERS = new ImmutableMap.Builder<AffinityType, IAffinitySerializer<?>>()
-            .put(AffinityType.POTION_BONUS, PotionBonusAffinity.SERIALIZER)
-            .put(AffinityType.ENCHANTMENT_BONUS, EnchantmentBonusAffinity.SERIALIZER)
-            .put(AffinityType.ENTITY_TYPE, EntityTypeAffinity.SERIALIZER)
             .build();
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -531,7 +528,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         // Determine bonus affinities from NBT-attached enchantment data
         ItemEnchantments enchants = stack.getEnchantments();
         enchants.entrySet().forEach(entry -> {
-            IAffinity bonus = this.getAffinity(AffinityType.ENCHANTMENT_BONUS, entry.getKey().unwrapKey().get().location());
+            IAffinity bonus = this.getAffinity(AffinityTypesPM.ENCHANTMENT_BONUS.get(), entry.getKey().unwrapKey().get().location());
             if (bonus != null) {
                 bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()).thenApply(enchBonus -> enchBonus.multiply(entry.getIntValue())));
             }

@@ -23,7 +23,7 @@ import java.util.concurrent.CompletableFuture;
 public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
     public static final MapCodec<ItemAffinity> CODEC = RecordCodecBuilder.<ItemAffinity>mapCodec(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("target").forGetter(ItemAffinity::getTarget),
-            Codec.mapEither(FixedValues.CODEC, DerivedValues.CODEC).forGetter(a -> a.valuesEither),
+            Codec.mapEither(FixedValues.CODEC, DerivedValues.CODEC).forGetter(ia -> ia.valuesEither),
             ResourceLocation.CODEC.optionalFieldOf("recipe").forGetter(ItemAffinity::getSourceRecipe)
         ).apply(instance, ItemAffinity::new)).validate(ia -> ia.valuesEither.map(
             fv -> DataResult.success(ia),
@@ -36,8 +36,8 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
             ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC), ItemAffinity::getSourceRecipe,
             ItemAffinity::new);
 
-    protected Either<FixedValues, DerivedValues> valuesEither;
-    protected Optional<ResourceLocation> sourceRecipe;
+    protected final Either<FixedValues, DerivedValues> valuesEither;
+    protected final Optional<ResourceLocation> sourceRecipe;
     
     protected ItemAffinity(@NotNull ResourceLocation target, @NotNull Either<FixedValues, DerivedValues> valuesEither, @NotNull Optional<ResourceLocation> recipe) {
         super(target);
