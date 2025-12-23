@@ -17,10 +17,5 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface IAffinity {
     ResourceLocation getTarget();
-    
-    AffinityType getType();
-    
-    IAffinitySerializer<?> getSerializer();
-    
     CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history);
 }

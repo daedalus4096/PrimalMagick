@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public abstract class AbstractAffinity implements IAffinity {
+public abstract class AbstractAffinity<T extends AbstractAffinity<T>> implements IAffinity {
     protected ResourceLocation targetId;
     protected CompletableFuture<SourceList> totalCache;
 
@@ -22,6 +22,8 @@ public abstract class AbstractAffinity implements IAffinity {
     public ResourceLocation getTarget() {
         return this.targetId;
     }
+
+    protected abstract AffinityType<T> getType();
 
     @Override
     public CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {

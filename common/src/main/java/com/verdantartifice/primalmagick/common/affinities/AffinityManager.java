@@ -65,7 +65,6 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     protected static final int HISTORY_LIMIT = 100;
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     protected static final Map<AffinityType, IAffinitySerializer<?>> SERIALIZERS = new ImmutableMap.Builder<AffinityType, IAffinitySerializer<?>>()
-            .put(AffinityType.ITEM, ItemAffinity.SERIALIZER)
             .put(AffinityType.POTION_BONUS, PotionBonusAffinity.SERIALIZER)
             .put(AffinityType.ENCHANTMENT_BONUS, EnchantmentBonusAffinity.SERIALIZER)
             .put(AffinityType.ENTITY_TYPE, EntityTypeAffinity.SERIALIZER)
@@ -361,8 +360,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (history.size() < HISTORY_LIMIT) {
             CompletableFuture<RecipeValues> valuesFuture = this.generateItemAffinityValuesFromRecipesAsync(id, recipeManager, registryAccess, history);
             return valuesFuture.thenApply(values -> {
-                ItemAffinity retVal = new ItemAffinity(id, values.values());
-                retVal.setSourceRecipe(values.recipe());
+                ItemAffinity retVal = ItemAffinity.fixed(id, values.values(), values.recipe());
                 this.registerAffinity(retVal);
                 return retVal;
             });

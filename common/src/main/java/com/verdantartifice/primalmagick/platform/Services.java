@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagick.platform.services.IRecipeService;
 import com.verdantartifice.primalmagick.platform.services.IShearableService;
 import com.verdantartifice.primalmagick.platform.services.ITagService;
 import com.verdantartifice.primalmagick.platform.services.ITestService;
+import com.verdantartifice.primalmagick.platform.services.registries.IAffinityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockEntityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockRegistryService;
@@ -146,6 +147,7 @@ public class Services {
     public static final IResearchTopicTypeRegistryService RESEARCH_TOPIC_TYPES_REGISTRY = load(IResearchTopicTypeRegistryService.class);
     public static final IRitualStepTypeRegistryService RITUAL_STEP_TYPES_REGISTRY = load(IRitualStepTypeRegistryService.class);
     public static final ITestFunctionRegistryService TEST_FUNCTIONS_REGISTRY = load(ITestFunctionRegistryService.class);
+    public static final IAffinityTypeRegistryService AFFINITY_TYPES_REGISTRY = load(IAffinityTypeRegistryService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
