@@ -14,11 +14,13 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
 public class ItemEventListeners {
     @SubscribeEvent
-    public static void onItemRightClick(PlayerInteractEvent.RightClickItem event) {
+    public static boolean onItemRightClick(PlayerInteractEvent.RightClickItem event) {
         InteractionResult result = ItemEvents.onItemRightClick(event.getItemStack(), event.getEntity(), event.getLevel());
         if (result.consumesAction()) {
-            event.setCanceled(true);
             event.setCancellationResult(result);
+            return true;
+        } else {
+            return false;
         }
     }
 }

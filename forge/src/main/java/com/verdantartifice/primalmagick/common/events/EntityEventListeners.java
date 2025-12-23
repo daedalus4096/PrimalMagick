@@ -7,7 +7,7 @@ import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.listener.Priority;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -19,50 +19,40 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid= Constants.MOD_ID)
 public class EntityEventListeners {
     @SubscribeEvent
-    public static void onEnderEntityTeleport(EntityTeleportEvent.EnderEntity event) {
-        if (!event.isCanceled() && EntityEvents.onEnderTeleport(event.getEntityLiving(), event.getTarget())) {
-            event.setCanceled(true);
-        }
+    public static boolean onEnderEntityTeleport(EntityTeleportEvent.EnderEntity event) {
+        return EntityEvents.onEnderTeleport(event.getEntityLiving(), event.getTarget());
     }
     
     @SubscribeEvent
-    public static void onEnderPearlTeleport(EntityTeleportEvent.EnderPearl event) {
-        if (!event.isCanceled() && EntityEvents.onEnderTeleport(event.getPlayer(), event.getTarget())) {
-            event.setCanceled(true);
-        }
+    public static boolean onEnderPearlTeleport(EntityTeleportEvent.EnderPearl event) {
+        return EntityEvents.onEnderTeleport(event.getPlayer(), event.getTarget());
     }
     
     @SubscribeEvent
-    public static void onChorusFruitTeleport(EntityTeleportEvent.ChorusFruit event) {
-        if (!event.isCanceled() && EntityEvents.onEnderTeleport(event.getEntityLiving(), event.getTarget())) {
-            event.setCanceled(true);
-        }
+    public static boolean onChorusFruitTeleport(EntityTeleportEvent.ChorusFruit event) {
+        return EntityEvents.onEnderTeleport(event.getEntityLiving(), event.getTarget());
     }
     
-    @SubscribeEvent(priority=EventPriority.LOWEST)
+    @SubscribeEvent(priority=Priority.LOWEST)
     public static void onEnderPearlTeleportLowest(EntityTeleportEvent.EnderPearl event) {
         EntityEvents.onEnderTeleportLowest(event.getPlayer(), event.getTarget());
     }
     
-    @SubscribeEvent(priority=EventPriority.LOWEST)
+    @SubscribeEvent(priority=Priority.LOWEST)
     public static void onChorusFruitTeleportLowest(EntityTeleportEvent.ChorusFruit event) {
-        if (!event.isCanceled() && event.getEntityLiving() instanceof Player player) {
+        if (event.getEntityLiving() instanceof Player player) {
             EntityEvents.onEnderTeleportLowest(player, event.getTarget());
         }
     }
     
-    @SubscribeEvent(priority=EventPriority.LOWEST)
+    @SubscribeEvent(priority=Priority.LOWEST)
     public static void onAnimalTameLowest(AnimalTameEvent event) {
-        if (!event.isCanceled()) {
-            EntityEvents.onAnimalTameLowest(event.getTamer(), event.getAnimal());
-        }
+        EntityEvents.onAnimalTameLowest(event.getTamer(), event.getAnimal());
     }
     
-    @SubscribeEvent(priority=EventPriority.LOWEST)
+    @SubscribeEvent(priority=Priority.LOWEST)
     public static void onBabyEntitySpawnLowest(BabyEntitySpawnEvent event) {
-        if (!event.isCanceled()) {
-            EntityEvents.onBabyEntitySpawnLowest(event.getCausedByPlayer());
-        }
+        EntityEvents.onBabyEntitySpawnLowest(event.getCausedByPlayer());
     }
     
     @SubscribeEvent

@@ -20,6 +20,6 @@ public class VillagerEventListeners {
     
     @SubscribeEvent
     public static void onWandererTradeSetup(WandererTradesEvent event) {
-        VillagerEvents.onWandererTradeSetup(event.getGenericTrades(), event.getRareTrades());
+        VillagerEvents.onWandererTradeSetup(event.getPools().get(2).getEntries(), event.getPools().get(1).getEntries());
     }
 }

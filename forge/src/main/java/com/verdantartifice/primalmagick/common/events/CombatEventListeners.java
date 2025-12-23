@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
+import net.minecraftforge.common.util.Result;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.listener.Priority;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -20,10 +20,8 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
 public class CombatEventListeners {
     @SubscribeEvent
-    public static void onAttack(LivingAttackEvent event) {
-        if (CombatEvents.onAttack(event.getEntity(), event.getSource(), event.getAmount())) {
-            event.setCanceled(true);
-        }
+    public static boolean onAttack(LivingAttackEvent event) {
+        return CombatEvents.onAttack(event.getEntity(), event.getSource(), event.getAmount());
     }
     
     @SubscribeEvent
@@ -31,18 +29,14 @@ public class CombatEventListeners {
         CombatEvents.onEntityHurt(event.getEntity(), event.getSource(), event::getAmount, event::setAmount);
     }
     
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent(priority = Priority.LOWEST)
     public static void onEntityHurtLowest(LivingHurtEvent event) {
-        if (!event.isCanceled()) {
-            CombatEvents.onEntityHurtLowest(event.getEntity(), event.getSource(), event.getAmount());
-        }
+        CombatEvents.onEntityHurtLowest(event.getEntity(), event.getSource(), event.getAmount());
     }
     
     @SubscribeEvent
-    public static void onDeath(LivingDeathEvent event) {
-        if (!event.isCanceled() && CombatEvents.onDeath(event.getEntity())) {
-            event.setCanceled(true);
-        }
+    public static boolean onDeath(LivingDeathEvent event) {
+        return CombatEvents.onDeath(event.getEntity());
     }
     
     @SubscribeEvent

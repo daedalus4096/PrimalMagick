@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
 public class CapabilityEvents {
     @SubscribeEvent
-    public static void attachEntityCapability(AttachCapabilitiesEvent<Entity> event) {
+    public static void attachEntityCapability(AttachCapabilitiesEvent.Entities event) {
         if (event.getObject() instanceof Player player) {
             // Only attach these capabilities to players, not other types of entities
             event.addCapability(PlayerKnowledgeForge.Provider.NAME, new PlayerKnowledgeForge.Provider());

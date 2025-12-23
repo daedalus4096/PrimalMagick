@@ -13,9 +13,9 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
 public class ServerEventListeners {
     @SubscribeEvent
-    public static void serverWorldTick(TickEvent.LevelTickEvent event) {
-        if (event.side.isServer() && event.phase != TickEvent.Phase.START) {
-            ServerEvents.serverLevelTick(event.level);
+    public static void serverWorldTick(TickEvent.LevelTickEvent.Pre event) {
+        if (event.side().isServer()) {
+            ServerEvents.serverLevelTick(event.level());
         }
     }
 }
