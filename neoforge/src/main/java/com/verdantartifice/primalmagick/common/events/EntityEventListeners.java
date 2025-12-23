@@ -33,7 +33,7 @@ public class EntityEventListeners {
     }
     
     @SubscribeEvent
-    public static void onChorusFruitTeleport(EntityTeleportEvent.ChorusFruit event) {
+    public static void onChorusFruitTeleport(EntityTeleportEvent.ItemConsumption event) {
         if (!event.isCanceled() && EntityEvents.onEnderTeleport(event.getEntityLiving(), event.getTarget())) {
             event.setCanceled(true);
         }
@@ -45,7 +45,7 @@ public class EntityEventListeners {
     }
     
     @SubscribeEvent(priority=EventPriority.LOWEST)
-    public static void onChorusFruitTeleportLowest(EntityTeleportEvent.ChorusFruit event) {
+    public static void onChorusFruitTeleportLowest(EntityTeleportEvent.ItemConsumption event) {
         if (!event.isCanceled() && event.getEntityLiving() instanceof Player player) {
             EntityEvents.onEnderTeleportLowest(player, event.getTarget());
         }
