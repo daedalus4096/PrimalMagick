@@ -38,7 +38,7 @@ public class PotionBonusAffinity extends AbstractAffinity<PotionBonusAffinity> {
     }
 
     @Override
-    protected AffinityType<PotionBonusAffinity> getType() {
+    public @NotNull AffinityType<PotionBonusAffinity> getType() {
         return AffinityTypesPM.POTION_BONUS.get();
     }
 

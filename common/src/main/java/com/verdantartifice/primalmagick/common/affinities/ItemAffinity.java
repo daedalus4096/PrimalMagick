@@ -8,10 +8,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,7 +27,7 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
     public static final MapCodec<ItemAffinity> CODEC = RecordCodecBuilder.<ItemAffinity>mapCodec(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("target").forGetter(ItemAffinity::getTarget),
             Codec.mapEither(FixedValues.CODEC, DerivedValues.CODEC).forGetter(ia -> ia.valuesEither),
-            ResourceLocation.CODEC.optionalFieldOf("recipe").forGetter(ItemAffinity::getSourceRecipe)
+            ResourceKey.codec(Registries.RECIPE).optionalFieldOf("recipe").forGetter(ItemAffinity::getSourceRecipe)
         ).apply(instance, ItemAffinity::new)).validate(ia -> ia.valuesEither.map(
             fv -> DataResult.success(ia),
             dv -> ia.targetId.equals(dv.base) ? DataResult.error(() -> "Affinity base must not match target " + ia.targetId) : DataResult.success(ia)
@@ -33,28 +36,28 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemAffinity> STREAM_CODEC = StreamCodec.composite(
             ResourceLocation.STREAM_CODEC, ItemAffinity::getTarget,
             ByteBufCodecs.either(FixedValues.STREAM_CODEC, DerivedValues.STREAM_CODEC), ia -> ia.valuesEither,
-            ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC), ItemAffinity::getSourceRecipe,
+            ByteBufCodecs.optional(ResourceKey.streamCodec(Registries.RECIPE)), ItemAffinity::getSourceRecipe,
             ItemAffinity::new);
 
     protected final Either<FixedValues, DerivedValues> valuesEither;
-    protected final Optional<ResourceLocation> sourceRecipe;
+    protected final Optional<ResourceKey<Recipe<?>>> sourceRecipe;
     
-    protected ItemAffinity(@NotNull ResourceLocation target, @NotNull Either<FixedValues, DerivedValues> valuesEither, @NotNull Optional<ResourceLocation> recipe) {
+    protected ItemAffinity(@NotNull ResourceLocation target, @NotNull Either<FixedValues, DerivedValues> valuesEither, @NotNull Optional<ResourceKey<Recipe<?>>> recipe) {
         super(target);
         this.valuesEither = valuesEither;
         this.sourceRecipe = recipe;
     }
     
-    public static ItemAffinity fixed(@NotNull ResourceLocation target, @NotNull SourceList setValues, @NotNull Optional<ResourceLocation> recipe) {
+    public static ItemAffinity fixed(@NotNull ResourceLocation target, @NotNull SourceList setValues, @NotNull Optional<ResourceKey<Recipe<?>>> recipe) {
         return new ItemAffinity(target, Either.left(new FixedValues(setValues)), recipe);
     }
 
     @Override
-    protected AffinityType<ItemAffinity> getType() {
+    public @NotNull AffinityType<ItemAffinity> getType() {
         return AffinityTypesPM.ITEM.get();
     }
 
-    public Optional<ResourceLocation> getSourceRecipe() {
+    public Optional<ResourceKey<Recipe<?>>> getSourceRecipe() {
         return this.sourceRecipe;
     }
     

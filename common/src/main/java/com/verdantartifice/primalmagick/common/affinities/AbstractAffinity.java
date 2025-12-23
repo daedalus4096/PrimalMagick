@@ -26,19 +26,19 @@ public abstract class AbstractAffinity<T extends AbstractAffinity<T>> implements
     protected ResourceLocation targetId;
     protected CompletableFuture<SourceList> totalCache;
 
-    protected AbstractAffinity(ResourceLocation target) {
+    protected AbstractAffinity(@NotNull ResourceLocation target) {
         this.targetId = target;
     }
     
     @Override
-    public ResourceLocation getTarget() {
+    public @NotNull ResourceLocation getTarget() {
         return this.targetId;
     }
 
-    protected abstract AffinityType<T> getType();
+    public abstract @NotNull AffinityType<T> getType();
 
     @Override
-    public CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
+    public @NotNull CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
         if (this.totalCache == null) {
             this.totalCache = this.calculateTotalAsync(recipeManager, registryAccess, history);
         }

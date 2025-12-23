@@ -34,7 +34,7 @@ public class EnchantmentBonusAffinity extends AbstractAffinity<EnchantmentBonusA
     }
 
     @Override
-    protected AffinityType<EnchantmentBonusAffinity> getType() {
+    public @NotNull AffinityType<EnchantmentBonusAffinity> getType() {
         return AffinityTypesPM.ENCHANTMENT_BONUS.get();
     }
 

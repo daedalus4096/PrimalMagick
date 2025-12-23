@@ -1,15 +1,11 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
@@ -42,7 +38,7 @@ public class EntityTypeAffinity extends AbstractAffinity<EntityTypeAffinity> {
     }
 
     @Override
-    protected AffinityType<EntityTypeAffinity> getType() {
+    public @NotNull AffinityType<EntityTypeAffinity> getType() {
         return AffinityTypesPM.ENTITY_TYPE.get();
     }
 
