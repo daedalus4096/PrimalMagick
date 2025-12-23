@@ -12,11 +12,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -26,12 +27,13 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -40,7 +42,7 @@ import java.util.Optional;
  * Block definition for a sunlamp.  Sunlamps are like normal lanterns, but they spawn glow fields
  * nearby in sufficiently dark spaces.  It can also be attached to any side of a block instead of
  * just the top or bottom.
- * 
+ *
  * @author Daedalus4096
  * @see com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock
  */
@@ -49,9 +51,9 @@ public class SunlampBlock extends BaseEntityBlock {
             ResourceKey.codec(Registries.BLOCK).fieldOf("glowBlockKey").forGetter(b -> b.glowBlockKey),
             propertiesCodec()
     ).apply(instance, SunlampBlock::new));
-    
+
     protected static final Logger LOGGER = LogManager.getLogger();
-    public static final DirectionProperty ATTACHMENT = DirectionProperty.create("attachment", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
+    public static final EnumProperty<Direction> ATTACHMENT = EnumProperty.create("attachment", Direction.class, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
     
     protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/sunlamp_ground_base"));
     protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/sunlamp_hanging_base"));
@@ -65,12 +67,14 @@ public class SunlampBlock extends BaseEntityBlock {
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return state.getValue(ATTACHMENT) == Direction.DOWN ? GROUND_SHAPE : HANGING_SHAPE;
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -87,55 +91,42 @@ public class SunlampBlock extends BaseEntityBlock {
     }
     
     @Override
-    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+    public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader worldIn, @NotNull BlockPos pos) {
         Direction dir = state.getValue(ATTACHMENT);
         return Block.canSupportCenter(worldIn, pos.relative(dir), dir.getOpposite());
     }
-    
+
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return stateIn.getValue(ATTACHMENT) == facing && !stateIn.canSurvive(worldIn, currentPos) ? 
-                Blocks.AIR.defaultBlockState() : 
-                super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+    @NotNull
+    public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
+        return state.getValue(ATTACHMENT) == direction && !state.canSurvive(level, pos) ?
+                Blocks.AIR.defaultBlockState() :
+                super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
     
     @Override
-    public boolean isPathfindable(BlockState state, PathComputationType type) {
+    public boolean isPathfindable(@NotNull BlockState state, @NotNull PathComputationType type) {
         return false;
     }
     
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new SunlampTileEntity(pos, state);
     }
     
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return createTickerHelper(type, BlockEntityTypesPM.SUNLAMP.get(), SunlampTileEntity::tick);
     }
 
-    @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        this.getGlowField(worldIn.registryAccess()).ifPresent(glow -> {
-            for (int x = -15; x <= 15; x++) {
-                for (int y = -15; y <= 15; y++) {
-                    for (int z = -15; z <= 15; z++) {
-                        BlockPos bp = pos.offset(x, y, z);
-                        if (worldIn.getBlockState(bp).is(glow)) {
-                            worldIn.removeBlock(bp, false);
-                        }
-                    }
-                }
-            }
-        });
-        super.onRemove(state, worldIn, pos, newState, isMoving);
-    }
-    
     public Optional<GlowFieldBlock> getGlowField(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(Registries.BLOCK).getOptional(this.glowBlockKey).filter(GlowFieldBlock.class::isInstance).map(GlowFieldBlock.class::cast);
+        return registryAccess.lookupOrThrow(Registries.BLOCK).getOptional(this.glowBlockKey).filter(GlowFieldBlock.class::isInstance).map(GlowFieldBlock.class::cast);
     }
 
     @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
