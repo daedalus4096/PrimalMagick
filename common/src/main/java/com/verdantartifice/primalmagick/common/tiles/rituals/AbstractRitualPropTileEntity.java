@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
+import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
@@ -64,11 +65,16 @@ public abstract class AbstractRitualPropTileEntity extends AbstractTilePM implem
 
     @Override
     public void notifyAltarOfPropActivation(float stabilityBonus) {
-        if (this.altarPos != null) {
-            BlockEntity tile = this.level.getBlockEntity(this.altarPos);
-            if (tile instanceof RitualAltarTileEntity altarTile) {
-                altarTile.onPropActivation(this.worldPosition, stabilityBonus);
-            }
+        if (this.altarPos != null && this.level != null && this.level.getBlockEntity(this.altarPos) instanceof RitualAltarTileEntity altarTile) {
+            altarTile.onPropActivation(this.worldPosition, stabilityBonus);
         }
+    }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        if (this.level != null && state.getBlock() instanceof IRitualPropBlock propBlock) {
+            propBlock.closeProp(state, this.level, pos);
+        }
+        super.preRemoveSideEffects(pos, state);
     }
 }

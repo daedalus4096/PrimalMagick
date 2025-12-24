@@ -14,7 +14,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -32,6 +31,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -71,23 +71,25 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return SHAPE;
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(LIT);
     }
     
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
+    public void animateTick(@NotNull BlockState stateIn, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         // Show flame particles if lit
         if (stateIn.getValue(LIT)) {
             double x = pos.getX() + 0.5D;
@@ -107,8 +109,10 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     }
     
     @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (pPlayer != null && pState.getValue(LIT)) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos,
+                                               @NotNull Player pPlayer, @NotNull BlockHitResult pHitResult) {
+        if (pState.getValue(LIT)) {
             // If using an empty hand on a lit candle, snuff it
             pLevel.playSound(pPlayer, pPos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!pLevel.isClientSide()) {
@@ -121,13 +125,16 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pPlayer != null && pStack.is(Items.FLINT_AND_STEEL) && !pState.getValue(LIT)) {
+    @NotNull
+    protected InteractionResult useItemOn(@NotNull ItemStack pStack, @NotNull BlockState pState, @NotNull Level pLevel,
+                                          @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand,
+                                          @NotNull BlockHitResult pHitResult) {
+        if (pStack.is(Items.FLINT_AND_STEEL) && !pState.getValue(LIT)) {
             // If using a flint-and-steel on an unlit candle, light it
             pLevel.playSound(pPlayer, pPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 0.8F + (pLevel.random.nextFloat() * 0.4F));
             if (!pLevel.isClientSide()) {
                 pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
-                pPlayer.getItemInHand(pHand).hurtAndBreak(1, pPlayer, LivingEntity.getSlotForHand(pHand));
+                pPlayer.getItemInHand(pHand).hurtAndBreak(1, pPlayer, pHand.asEquipmentSlot());
                 
                 // If this block is awaiting activation for an altar, notify it
                 if (this.isPropOpen(pState, pLevel, pPos)) {
@@ -141,16 +148,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     }
 
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide() && state.getBlock() != newState.getBlock()) {
-            this.closeProp(state, worldIn, pos);
-        }
-        super.onRemove(state, worldIn, pos, newState, isMoving);
-    }
-    
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new RitualCandleTileEntity(pos, state);
     }
     
@@ -183,6 +181,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     }
 
     @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
