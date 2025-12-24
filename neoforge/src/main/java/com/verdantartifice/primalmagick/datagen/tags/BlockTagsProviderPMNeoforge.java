@@ -11,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -21,8 +20,8 @@ import java.util.concurrent.CompletableFuture;
  * @author Daedalus4096
  */
 public class BlockTagsProviderPMNeoforge extends BlockTagsProvider {
-    public BlockTagsProviderPMNeoforge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
-        super(packOutput, lookupProvider, Constants.MOD_ID, helper);
+    public BlockTagsProviderPMNeoforge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider, Constants.MOD_ID);
     }
 
     @Override
