@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.misc;
 
-import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -20,9 +18,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.GameMasterBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -54,8 +52,8 @@ public class BlockBreaker {
     protected final Optional<Boolean> silkTouchOverride;
     protected final Optional<Integer> fortuneOverride;
     
-    protected BlockBreaker(float power, @Nonnull BlockPos pos, @Nonnull BlockState targetBlock, float currentDurability, float maxDurability, @Nonnull Player player, 
-            ItemStack tool, boolean oneShot, boolean skipEvent, boolean alwaysDrop, Optional<Boolean> silkTouchOverride, Optional<Integer> fortuneOverride) {
+    protected BlockBreaker(float power, @NotNull BlockPos pos, @NotNull BlockState targetBlock, float currentDurability, float maxDurability, @NotNull Player player,
+                           ItemStack tool, boolean oneShot, boolean skipEvent, boolean alwaysDrop, Optional<Boolean> silkTouchOverride, Optional<Integer> fortuneOverride) {
         this.power = power;
         this.pos = pos;
         this.targetBlock = targetBlock;
@@ -78,7 +76,7 @@ public class BlockBreaker {
      * @param breaker the block breaker to be run
      * @return true if the breaker was successfully scheduled, false otherwise
      */
-    public static boolean schedule(@Nonnull Level world, int delayTicks, @Nullable BlockBreaker breaker) {
+    public static boolean schedule(@NotNull Level world, int delayTicks, @Nullable BlockBreaker breaker) {
         if (breaker == null) {
             // Don't allow null breakers in the schedule
             return false;
@@ -99,7 +97,7 @@ public class BlockBreaker {
      * @param world the world for which to run
      * @return the collection of block breakers that should be executed now
      */
-    public static Iterable<BlockBreaker> tick(@Nonnull Level world) {
+    public static Iterable<BlockBreaker> tick(@NotNull Level world) {
         ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.dimension().location());
         if (tree == null) {
             return Collections.emptyList();
@@ -121,11 +119,11 @@ public class BlockBreaker {
         }
     }
     
-    public static boolean hasBreakerQueued(@Nonnull Level world, @Nonnull BlockPos pos) {
+    public static boolean hasBreakerQueued(@NotNull Level world, @NotNull BlockPos pos) {
         ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.dimension().location());
         if (tree != null) {
             for (Map<BlockPos, BlockBreaker> tickMap : tree.values()) {
-                if (tickMap.keySet().contains(pos)) {
+                if (tickMap.containsKey(pos)) {
                     return true;
                 }
             }
@@ -134,7 +132,7 @@ public class BlockBreaker {
     }
     
     @Nullable
-    public BlockBreaker execute(@Nonnull Level world) {
+    public BlockBreaker execute(@NotNull Level world) {
         BlockBreaker retVal = null;
         BlockState state = world.getBlockState(this.pos);
         if (state == this.targetBlock) {
@@ -165,7 +163,7 @@ public class BlockBreaker {
      * @return true if the block was successfully harvested, false otherwise
      * @see net.minecraft.server.level.ServerPlayerGameMode#destroyBlock(BlockPos)
      */
-    protected boolean doHarvest(@Nonnull Level world) {
+    protected boolean doHarvest(@NotNull Level world) {
         if (!world.isClientSide() && this.player instanceof ServerPlayer serverPlayer && world instanceof ServerLevel serverWorld) {
             int exp = this.skipEvent ? 0 : Services.EVENTS.fireBlockBreakEvent(world, serverPlayer.gameMode.getGameModeForPlayer(), serverPlayer, this.pos);
             if (exp == -1) {
@@ -174,10 +172,11 @@ public class BlockBreaker {
                 BlockEntity tile = world.getBlockEntity(this.pos);
                 BlockState state = world.getBlockState(this.pos);
                 Block block = state.getBlock();
+                ItemStack harvestTool = this.getHarvestTool(serverPlayer);
                 
                 // If the experience for the block was zero because the player is using a Break spell and thus the wrong tool type, recalculate
                 if (exp == 0 && !Services.EVENTS.isCorrectToolForDrops(this.player, state, world, this.pos)) {
-                    exp = Services.BLOCK_STATES.getExpDrop(state, world, this.pos, this.player, this.getHarvestTool(this.player));
+                    exp = Services.BLOCK_STATES.getExpDrop(state, world, this.pos, this.player, harvestTool);
                 }
                 
                 if (block instanceof GameMasterBlock && !serverPlayer.canUseGameMasterBlocks()) {
@@ -190,13 +189,13 @@ public class BlockBreaker {
                 } else {
                     world.levelEvent(null, 2001, this.pos, Block.getId(state));
                     if (serverPlayer.gameMode.isCreative()) {
-                        this.removeBlock(world, false);
+                        this.removeBlock(world, harvestTool, false);
                         return true;
                     } else {
                         boolean canHarvest = (this.alwaysDrop || Services.BLOCK_STATES.canHarvestBlock(state, world, this.pos, serverPlayer));
-                        boolean success = this.removeBlock(world, canHarvest);
+                        boolean success = this.removeBlock(world, harvestTool, canHarvest);
                         if (success && canHarvest) {
-                            block.playerDestroy(world, serverPlayer, this.pos, state, tile, this.getHarvestTool(serverPlayer));
+                            block.playerDestroy(world, serverPlayer, this.pos, state, tile, harvestTool);
                         }
                         if (success && exp > 0) {
                             block.popExperience(serverWorld, this.pos, exp);
@@ -242,9 +241,9 @@ public class BlockBreaker {
      * @param canHarvest whether the player is able to harvest this block for drops
      * @return true if the block is successfully removed, false otherwise
      */
-    protected boolean removeBlock(@Nonnull Level world, boolean canHarvest) {
+    protected boolean removeBlock(@NotNull Level world, @NotNull ItemStack toolStack, boolean canHarvest) {
         BlockState state = world.getBlockState(this.pos);
-        boolean removed = Services.BLOCK_STATES.onDestroyedByPlayer(state, world, this.pos, this.player, canHarvest, world.getFluidState(this.pos));
+        boolean removed = Services.BLOCK_STATES.onDestroyedByPlayer(state, world, this.pos, this.player, toolStack, canHarvest, world.getFluidState(this.pos));
         if (removed) {
             state.getBlock().destroy(world, this.pos, state);
         }
@@ -334,12 +333,12 @@ public class BlockBreaker {
         }
         
         public Builder silkTouch(boolean silk) {
-            this.silkTouchOverride = Optional.of(Boolean.valueOf(silk));
+            this.silkTouchOverride = Optional.of(silk);
             return this;
         }
         
         public Builder fortune(int fortune) {
-            this.fortuneOverride = Optional.of(Integer.valueOf(fortune));
+            this.fortuneOverride = Optional.of(fortune);
             return this;
         }
         

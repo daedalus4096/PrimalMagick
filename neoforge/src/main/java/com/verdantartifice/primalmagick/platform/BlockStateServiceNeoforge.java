@@ -32,8 +32,8 @@ public class BlockStateServiceNeoforge implements IBlockStateService {
     }
 
     @Override
-    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        return state.onDestroyedByPlayer(level, pos, player, willHarvest, fluid);
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, ItemStack toolStack, boolean willHarvest, FluidState fluid) {
+        return state.onDestroyedByPlayer(level, pos, player, toolStack, willHarvest, fluid);
     }
 
     @Override
