@@ -17,6 +17,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,7 @@ public interface IEventService {
      */
     Optional<Vec3> attemptEnderEntityTeleport(LivingEntity entity, Vec3 target);
 
-    int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType);
+    int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType, FuelValues fuelValues);
 
     int fireBlockBreakEvent(Level level, GameType gameType, ServerPlayer entityPlayer, BlockPos pos);
     boolean isCorrectToolForDrops(Player player, BlockState state, Level level, BlockPos pos);
