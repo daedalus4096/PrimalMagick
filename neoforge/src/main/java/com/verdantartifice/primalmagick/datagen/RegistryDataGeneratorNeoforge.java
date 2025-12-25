@@ -74,7 +74,7 @@ public class RegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesProvide
         // TODO Move to DataGenerators once Forge allows tagging datapack registries
         generator.addProvider(isServer, new DamageTypeTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new StructureTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
-        generator.addProvider(isServer, new BookLanguageTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new BookLanguageTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER))));
         generator.addProvider(isServer, new ResearchEntryTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         return registryDataGenerator.getRegistryProvider();
     }
