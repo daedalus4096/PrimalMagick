@@ -16,11 +16,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerExplosion;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
@@ -90,16 +91,16 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
     }
 
     @Nonnull
-    public Set<HitResult> getBurstTargets(HitResult origin, SpellPackage spell, @Nullable ItemStack spellSource, @Nullable LivingEntity caster, Level world) {
+    public Set<HitResult> getBurstTargets(HitResult origin, SpellPackage spell, @Nullable ItemStack spellSource, @Nullable LivingEntity caster, ServerLevel serverLevel) {
         Set<HitResult> retVal = new HashSet<>();
         Set<BlockPos> affectedBlocks = new HashSet<>();
         Vec3 hitVec = origin.getLocation();
         BlockPos hitPos = BlockPos.containing(hitVec);
         int radius = this.getRadiusBlocks(spell, spellSource);
-        int power = this.getBlastPower(spell, spellSource, caster, world.registryAccess());
+        int power = this.getBlastPower(spell, spellSource, caster, serverLevel.registryAccess());
         double sqRadius = radius * radius;
         int searchRadius = radius + 1;
-        Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.BlockInteraction.KEEP);
+        Explosion explosion = new ServerExplosion(serverLevel, null, null, null, hitVec, (float)power, false, Explosion.BlockInteraction.KEEP);
         
         // Calculate blasted blocks
         for (int i = 0; i < 16; i++) {
@@ -116,17 +117,17 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
                             BlockPos curPos = BlockPos.containing(curVec);
                             if (affectedBlocks.add(curPos)) {
                                 Vec3 relVec = hitVec.subtract(curVec);
-                                Direction dir = Direction.getNearest(relVec.x, relVec.y, relVec.z);
+                                Direction dir = Direction.getNearest((int)relVec.x, (int)relVec.y, (int)relVec.z, Direction.UP);
                                 retVal.add(new BlockHitResult(curVec, dir, curPos, false));
                             }
                             
                             // Decrement the remaining power based on the block's explosion resistance
-                            BlockState blockState = world.getBlockState(curPos);
-                            FluidState fluidState = world.getFluidState(curPos);
+                            BlockState blockState = serverLevel.getBlockState(curPos);
+                            FluidState fluidState = serverLevel.getFluidState(curPos);
                             if (!blockState.isAir() || !fluidState.isEmpty()) {
                                 float resistance = Math.max(
-                                        Services.BLOCK_STATES.getExplosionResistance(blockState, world, curPos, explosion),
-                                        Services.FLUID_STATES.getExplosionResistance(fluidState, world, curPos, explosion));
+                                        Services.BLOCK_STATES.getExplosionResistance(blockState, serverLevel, curPos, explosion),
+                                        Services.FLUID_STATES.getExplosionResistance(fluidState, serverLevel, curPos, explosion));
                                 remainingPower -= (resistance + 0.3F) * 0.3F;
                             }
                             
@@ -140,7 +141,7 @@ public class BurstSpellMod extends AbstractSpellMod<BurstSpellMod> {
         
         // Calculate blasted entities
         AABB aabb = new AABB(hitPos).inflate(searchRadius);
-        List<Entity> entities = world.getEntities((Entity)null, aabb, e -> !e.isSpectator());
+        List<Entity> entities = serverLevel.getEntities((Entity)null, aabb, e -> !e.isSpectator());
         for (Entity entity : entities) {
             if (origin.getLocation().distanceToSqr(entity.position()) <= sqRadius) {
                 retVal.add(new EntityHitResult(entity));
