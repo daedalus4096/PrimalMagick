@@ -7,9 +7,11 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.function.ToIntFunction;
@@ -34,7 +37,6 @@ import java.util.function.ToIntFunction;
  * connecting to other adjacent skyglass blocks.  It also is not destroyed upon harvesting.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.block.PaneBlock}
  */
 public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
     public static final EnumProperty<SkyglassPaneSide> NORTH = EnumProperty.create("north", SkyglassPaneSide.class);
@@ -62,28 +64,28 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
         super(properties);
         this.shapes = this.makeShapes(1.0F, 1.0F, 16.0F, 0.0F, 16.0F);
         this.collisionShapes = this.makeShapes(1.0F, 1.0F, 16.0F, 0.0F, 16.0F);
-        this.registerDefaultState(this.defaultBlockState().setValue(NORTH, SkyglassPaneSide.NONE).setValue(EAST, SkyglassPaneSide.NONE).setValue(SOUTH, SkyglassPaneSide.NONE).setValue(WEST, SkyglassPaneSide.NONE).setValue(UP, SkyglassPaneSide.NONE).setValue(DOWN, SkyglassPaneSide.NONE).setValue(WATERLOGGED, Boolean.valueOf(false)));
+        this.registerDefaultState(this.defaultBlockState().setValue(NORTH, SkyglassPaneSide.NONE).setValue(EAST, SkyglassPaneSide.NONE).setValue(SOUTH, SkyglassPaneSide.NONE).setValue(WEST, SkyglassPaneSide.NONE).setValue(UP, SkyglassPaneSide.NONE).setValue(DOWN, SkyglassPaneSide.NONE).setValue(WATERLOGGED, Boolean.FALSE));
     }
     
-    protected VoxelShape[] makeShapes(float nodeWidth, float extensionWidth, float p_196408_3_, float p_196408_4_, float p_196408_5_) {
+    protected VoxelShape[] makeShapes(float nodeWidth, float extensionWidth, float nodeHeight, float extensionBottom, float extensionHeight) {
         float f = 8.0F - nodeWidth;
         float f1 = 8.0F + nodeWidth;
         float f2 = 8.0F - extensionWidth;
         float f3 = 8.0F + extensionWidth;
-        VoxelShape voxelshape = Block.box((double)f, 0.0D, (double)f, (double)f1, (double)p_196408_3_, (double)f1);
-        VoxelShape voxelshape1 = Block.box((double)f2, (double)p_196408_4_, 0.0D, (double)f3, (double)p_196408_5_, (double)f3);
-        VoxelShape voxelshape2 = Block.box((double)f2, (double)p_196408_4_, (double)f2, (double)f3, (double)p_196408_5_, 16.0D);
-        VoxelShape voxelshape3 = Block.box(0.0D, (double)p_196408_4_, (double)f2, (double)f3, (double)p_196408_5_, (double)f3);
-        VoxelShape voxelshape4 = Block.box((double)f2, (double)p_196408_4_, (double)f2, 16.0D, (double)p_196408_5_, (double)f3);
-        VoxelShape voxelshape5 = Shapes.or(voxelshape1, voxelshape4);
-        VoxelShape voxelshape6 = Shapes.or(voxelshape2, voxelshape3);
-        VoxelShape[] avoxelshape = new VoxelShape[]{Shapes.empty(), voxelshape2, voxelshape3, voxelshape6, voxelshape1, Shapes.or(voxelshape2, voxelshape1), Shapes.or(voxelshape3, voxelshape1), Shapes.or(voxelshape6, voxelshape1), voxelshape4, Shapes.or(voxelshape2, voxelshape4), Shapes.or(voxelshape3, voxelshape4), Shapes.or(voxelshape6, voxelshape4), voxelshape5, Shapes.or(voxelshape2, voxelshape5), Shapes.or(voxelshape3, voxelshape5), Shapes.or(voxelshape6, voxelshape5)};
+        VoxelShape voxelShape = Block.box(f, 0.0D, f, f1, nodeHeight, f1);
+        VoxelShape voxelShape1 = Block.box(f2, extensionBottom, 0.0D, f3, extensionHeight, f3);
+        VoxelShape voxelShape2 = Block.box(f2, extensionBottom, f2, f3, extensionHeight, 16.0D);
+        VoxelShape voxelShape3 = Block.box(0.0D, extensionBottom, f2, f3, extensionHeight, f3);
+        VoxelShape voxelShape4 = Block.box(f2, extensionBottom, f2, 16.0D, extensionHeight, f3);
+        VoxelShape voxelShape5 = Shapes.or(voxelShape1, voxelShape4);
+        VoxelShape voxelShape6 = Shapes.or(voxelShape2, voxelShape3);
+        VoxelShape[] aVoxelShape = new VoxelShape[]{Shapes.empty(), voxelShape2, voxelShape3, voxelShape6, voxelShape1, Shapes.or(voxelShape2, voxelShape1), Shapes.or(voxelShape3, voxelShape1), Shapes.or(voxelShape6, voxelShape1), voxelShape4, Shapes.or(voxelShape2, voxelShape4), Shapes.or(voxelShape3, voxelShape4), Shapes.or(voxelShape6, voxelShape4), voxelShape5, Shapes.or(voxelShape2, voxelShape5), Shapes.or(voxelShape3, voxelShape5), Shapes.or(voxelShape6, voxelShape5)};
 
-        for (int i = 0; i < avoxelshape.length; i++) {
-            avoxelshape[i] = Shapes.or(voxelshape, avoxelshape[i]);
+        for (int i = 0; i < aVoxelShape.length; i++) {
+            aVoxelShape[i] = Shapes.or(voxelShape, aVoxelShape[i]);
         }
         
-        return avoxelshape;
+        return aVoxelShape;
     }
     
     @Override
@@ -92,12 +94,14 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return this.shapes[this.getShapeIndex(state)];
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return this.collisionShapes[this.getShapeIndex(state)];
     }
     
@@ -130,18 +134,21 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
         // Determine the block's connections when it is placed into the world
         return this.getCurrentState(this.defaultBlockState(), context.getLevel(), context.getClickedPos());
     }
-    
+
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-        if (stateIn.getValue(WATERLOGGED)) {
-            worldIn.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+    @NotNull
+    public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
+        if (state.getValue(BlockStateProperties.WATERLOGGED)) {
+            scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
         
         // Determine the block's connections when one of its neighbors is updated
-        return this.getCurrentState(stateIn, worldIn, currentPos);
+        return this.getCurrentState(state, level, pos);
     }
     
-    protected BlockState getCurrentState(BlockState state, LevelAccessor world, BlockPos pos) {
+    protected BlockState getCurrentState(BlockState state, LevelReader world, BlockPos pos) {
         return this.defaultBlockState()
                 .setValue(UP, this.getSideConnection(state, world, pos, Direction.UP))
                 .setValue(DOWN, this.getSideConnection(state, world, pos, Direction.DOWN))
@@ -149,12 +156,12 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
                 .setValue(SOUTH, this.getSideConnection(state, world, pos, Direction.SOUTH))
                 .setValue(WEST, this.getSideConnection(state, world, pos, Direction.WEST))
                 .setValue(EAST, this.getSideConnection(state, world, pos, Direction.EAST))
-                .setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER);
+                .setValue(WATERLOGGED, world.getFluidState(pos).is(Fluids.WATER));
     }
     
-    protected SkyglassPaneSide getSideConnection(BlockState state, LevelAccessor world, BlockPos pos, Direction dir) {
+    protected SkyglassPaneSide getSideConnection(BlockState state, LevelReader world, BlockPos pos, Direction dir) {
         BlockState adjacent = world.getBlockState(pos.relative(dir));
-        if (adjacent == null || isExceptionForConnection(adjacent)) {
+        if (isExceptionForConnection(adjacent)) {
             return SkyglassPaneSide.NONE;
         } else if (state.getBlock() == adjacent.getBlock()) {
             return SkyglassPaneSide.GLASS;
@@ -166,7 +173,7 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
     }
     
     @Override
-    public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
+    public boolean skipRendering(@NotNull BlockState state, @NotNull BlockState adjacentBlockState, @NotNull Direction side) {
         if (adjacentBlockState.getBlock() == state.getBlock()) {
             if (!side.getAxis().isHorizontal()) {
                 return true;
@@ -180,43 +187,42 @@ public class SkyglassPaneBlock extends Block implements SimpleWaterloggedBlock {
     }
     
     @Override
-    public FluidState getFluidState(BlockState state) {
+    @NotNull
+    public FluidState getFluidState(@NotNull BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
     
     @Override
-    public boolean isPathfindable(BlockState state, PathComputationType type) {
+    public boolean isPathfindable(@NotNull BlockState state, @NotNull PathComputationType type) {
         return false;
     }
     
     @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state) {
         return !state.getValue(WATERLOGGED);
     }
     
     @Override
-    public BlockState rotate(BlockState state, Rotation rot) {
-        switch (rot) {
-        case CLOCKWISE_180:
-            return state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
-        case CLOCKWISE_90:
-            return state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
-        case COUNTERCLOCKWISE_90:
-            return state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
-        default:
-            return state;
-        }
+    @NotNull
+    public BlockState rotate(@NotNull BlockState state, @NotNull Rotation rot) {
+        return switch (rot) {
+            case CLOCKWISE_180 ->
+                    state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
+            case CLOCKWISE_90 ->
+                    state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
+            case COUNTERCLOCKWISE_90 ->
+                    state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
+            default -> state;
+        };
     }
     
     @Override
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        switch (mirrorIn) {
-        case LEFT_RIGHT:
-            return state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
-        case FRONT_BACK:
-            return state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
-        default:
-            return state;
-        }
+    @NotNull
+    public BlockState mirror(@NotNull BlockState state, @NotNull Mirror mirrorIn) {
+        return switch (mirrorIn) {
+            case LEFT_RIGHT -> state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
+            case FRONT_BACK -> state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
+            default -> state;
+        };
     }
 }

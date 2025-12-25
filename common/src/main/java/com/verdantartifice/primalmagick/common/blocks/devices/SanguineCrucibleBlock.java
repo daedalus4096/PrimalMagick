@@ -15,6 +15,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -39,6 +40,7 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block definition for a sanguine crucible.  Uses blood cores and captured souls to summon creatures.
@@ -107,19 +109,19 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-        if (!worldIn.isClientSide()) {
-            if (worldIn.getBlockEntity(pos) instanceof SanguineCrucibleTileEntity crucibleTile) {
-                if (entityIn instanceof ItemEntity itemEntity) {
+    public void entityInside(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos,
+                             @NotNull Entity pEntity, @NotNull InsideBlockEffectApplier applier, boolean intersects) {
+        if (!pLevel.isClientSide()) {
+            if (pLevel.getBlockEntity(pPos) instanceof SanguineCrucibleTileEntity crucibleTile) {
+                if (pEntity instanceof ItemEntity itemEntity) {
                     if (itemEntity.getItem().getItem() == ItemsPM.SOUL_GEM.get()) {
                         crucibleTile.addSouls(itemEntity.getItem().getCount());
-                        entityIn.discard();
-                        worldIn.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        pEntity.discard();
+                        pLevel.playSound(null, pPos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                     }
                 }
             }
         }
-        super.entityInside(state, worldIn, pos, entityIn);
     }
 
     @Override
