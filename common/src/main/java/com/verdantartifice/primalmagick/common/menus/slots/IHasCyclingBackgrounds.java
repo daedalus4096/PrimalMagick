@@ -10,6 +10,5 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public interface IHasCyclingBackgrounds {
-    Pair<ResourceLocation, ResourceLocation> getNoItemIcon();
     void tickBackgrounds();
 }

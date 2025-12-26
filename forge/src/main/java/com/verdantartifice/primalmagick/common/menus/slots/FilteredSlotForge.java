@@ -36,7 +36,7 @@ public class FilteredSlotForge extends SlotItemHandler implements IHasTooltip, I
         this.backgrounds = properties.getBackgrounds();
         
         // Set the default background to the first active one, if any
-        this.getActiveBackgrounds().stream().findFirst().ifPresent(loc -> this.setBackground(InventoryMenu.BLOCK_ATLAS, loc));
+        this.getActiveBackgrounds().stream().findFirst().ifPresent(this::setBackground);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class FilteredSlotForge extends SlotItemHandler implements IHasTooltip, I
         List<ResourceLocation> active = this.getActiveBackgrounds();
         if (!active.isEmpty()) {
             int backgroundIndex = (this.ticks++ / BACKGROUND_CHANGE_TICK_RATE) % active.size();
-            this.setBackground(InventoryMenu.BLOCK_ATLAS, active.get(backgroundIndex));
+            this.setBackground(active.get(backgroundIndex));
         }
     }
     
