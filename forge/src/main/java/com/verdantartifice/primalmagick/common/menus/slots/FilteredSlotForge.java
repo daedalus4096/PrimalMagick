@@ -3,11 +3,11 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +40,7 @@ public class FilteredSlotForge extends SlotItemHandler implements IHasTooltip, I
     }
 
     @Override
-    public boolean mayPlace(ItemStack pStack) {
+    public boolean mayPlace(@NotNull ItemStack pStack) {
         return this.filter.orElse(super::mayPlace).test(pStack);
     }
 
