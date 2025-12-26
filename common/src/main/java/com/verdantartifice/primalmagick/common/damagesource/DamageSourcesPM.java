@@ -14,22 +14,22 @@ import net.minecraft.world.entity.LivingEntity;
  */
 public class DamageSourcesPM {
     public static DamageSource bleeding(RegistryAccess registryAccess) {
-        return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.BLEEDING));
+        return new DamageSource(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(DamageTypesPM.BLEEDING));
     }
     
     public static DamageSource bloodRose(RegistryAccess registryAccess) {
-        return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.BLOOD_ROSE));
+        return new DamageSource(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(DamageTypesPM.BLOOD_ROSE));
     }
     
     public static DamageSource hellishChain(RegistryAccess registryAccess, LivingEntity directSource) {
-        return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.HELLISH_CHAIN), directSource);
+        return new DamageSource(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(DamageTypesPM.HELLISH_CHAIN), directSource);
     }
     
     public static DamageSource sorcery(RegistryAccess registryAccess, Source source, LivingEntity directSource) {
-        return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.getSorceryType(source)), directSource);
+        return new DamageSource(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(DamageTypesPM.getSorceryType(source)), directSource);
     }
     
     public static DamageSource sorcery(RegistryAccess registryAccess, Source source, Entity directSource, LivingEntity indirectSource) {
-        return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.getSorceryType(source)), directSource, indirectSource);
+        return new DamageSource(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(DamageTypesPM.getSorceryType(source)), directSource, indirectSource);
     }
 }
