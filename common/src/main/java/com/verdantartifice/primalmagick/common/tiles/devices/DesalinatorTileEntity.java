@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IFluidHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
@@ -21,9 +20,9 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -41,7 +40,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 
 import java.util.Optional;
 
@@ -52,8 +50,6 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainingBlockEntity {
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     public static final int INPUT_INV_INDEX = 0;
     public static final int OUTPUT_INV_INDEX = 1;
     public static final int WAND_INV_INDEX = 2;
@@ -133,11 +129,12 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new DesalinatorMenu(windowId, playerInv, this.getBlockPos(), this, this.containerData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -308,11 +305,12 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public int getMana(Source source) {
+    public int getMana(@NotNull Source source) {
         return this.manaStorage.getManaStored(source);
     }
 
     @Override
+    @NotNull
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
         for (Source source : Sources.getAllSorted()) {
@@ -331,14 +329,14 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public void setMana(Source source, int amount) {
+    public void setMana(@NotNull Source source, int amount) {
         this.manaStorage.setMana(source, amount);
         this.setChanged();
         this.syncTile(true);
     }
 
     @Override
-    public void setMana(SourceList mana) {
+    public void setMana(@NotNull SourceList mana) {
         this.manaStorage.setMana(mana);
         this.setChanged();
         this.syncTile(true);
@@ -397,19 +395,29 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
-        super.applyImplicitComponents(pComponentInput);
-        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
+    protected void applyImplicitComponents(@NotNull DataComponentGetter pComponentGetter) {
+        super.applyImplicitComponents(pComponentGetter);
+        pComponentGetter.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override
-    protected void collectImplicitComponents(DataComponentMap.Builder pComponents) {
+    protected void collectImplicitComponents(@NotNull DataComponentMap.Builder pComponents) {
         super.collectImplicitComponents(pComponents);
         pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag pTag) {
-        pTag.remove("ManaStorage");
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("ManaStorage");
+    }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        if (this.level != null) {
+            this.dropContents(level, pos);
+            level.updateNeighbourForOutputSignal(pos, state.getBlock());
+        }
+        super.preRemoveSideEffects(pos, state);
     }
 }

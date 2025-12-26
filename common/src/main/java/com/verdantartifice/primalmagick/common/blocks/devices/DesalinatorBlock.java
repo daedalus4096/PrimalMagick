@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -45,7 +45,7 @@ import org.jetbrains.annotations.Nullable;
 public class DesalinatorBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<DesalinatorBlock> CODEC = simpleCodec(DesalinatorBlock::new);
 
-    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    protected static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     protected static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/desalinator"));
 
@@ -90,38 +90,29 @@ public class DesalinatorBlock extends BaseEntityBlock implements SimpleWaterlogg
     }
 
     @Override
-    protected @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    protected @NotNull VoxelShape getShape(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos, @NotNull CollisionContext pContext) {
         return SHAPE;
     }
 
     @Override
-    public @NotNull RenderShape getRenderShape(BlockState state) {
+    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    public @NotNull BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    public @NotNull BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
         return Services.BLOCK_ENTITY_PROTOTYPES.desalinator().create(blockPos, blockState);
     }
 
     @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pBlockEntityType) {
         return createTickerHelper(pBlockEntityType, BlockEntityTypesPM.DESALINATOR.get(), Services.BLOCK_ENTITY_TICKERS.desalinator());
     }
 
     @Override
-    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if (!pState.is(pNewState.getBlock())) {
-            if (pLevel.getBlockEntity(pPos) instanceof DesalinatorTileEntity desalinatorTile) {
-                desalinatorTile.dropContents(pLevel, pPos);
-                pLevel.updateNeighbourForOutputSignal(pPos, this);
-            }
-            super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
-        }
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos,
+                                               @NotNull Player pPlayer, @NotNull BlockHitResult pHitResult) {
         if (!pLevel.isClientSide() && pPlayer instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the desalinator
             if (pLevel.getBlockEntity(pPos) instanceof DesalinatorTileEntity desalinatorTile) {
