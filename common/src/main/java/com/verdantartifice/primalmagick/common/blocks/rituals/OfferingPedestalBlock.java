@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 
@@ -45,17 +46,19 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return SHAPE;
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
+    public void animateTick(@NotNull BlockState stateIn, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         // Show spell sparkles if receiving salt power
         if (this.isBlockSaltPowered(worldIn, pos)) {
             FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
@@ -63,12 +66,15 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
     }
     
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return Services.BLOCK_ENTITY_PROTOTYPES.offeringPedestal().create(pos, state);
     }
     
     @Override
-    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    @NotNull
+    protected InteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level worldIn,
+                                          @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn,
+                                          @NotNull BlockHitResult hit) {
         if (handIn == InteractionHand.MAIN_HAND) {
             if (worldIn.getBlockEntity(pos) instanceof OfferingPedestalTileEntity pedestalTile) {
                 if (pedestalTile.getItem().isEmpty() && !stack.isEmpty()) {
@@ -89,7 +95,8 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
     }
     
     @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull BlockHitResult pHitResult) {
         if (pLevel.getBlockEntity(pPos) instanceof OfferingPedestalTileEntity pedestalTile) {
             if (!pedestalTile.getItem().isEmpty()) {
                 // When activating a full pedestal, pick up the item
@@ -140,12 +147,13 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
     }
 
     @Override
-    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
         super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
         level.updateNeighbourForOutputSignal(pos, this);
     }
 
     @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
