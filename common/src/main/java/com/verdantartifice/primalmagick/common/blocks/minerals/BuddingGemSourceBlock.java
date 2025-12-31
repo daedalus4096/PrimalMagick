@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.minerals;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -10,6 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -37,7 +37,7 @@ public class BuddingGemSourceBlock extends Block {
     }
 
     @Override
-    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void randomTick(@NotNull BlockState pState, @NotNull ServerLevel pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
         if (pRandom.nextInt(GROWTH_CHANCE) == 0) {
             Direction dir = Direction.values()[pRandom.nextInt(Direction.values().length)];
             BlockPos targetPos = pPos.relative(dir);
