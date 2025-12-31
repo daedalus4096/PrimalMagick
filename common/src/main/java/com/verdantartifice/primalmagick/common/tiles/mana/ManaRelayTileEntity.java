@@ -110,4 +110,10 @@ public abstract class ManaRelayTileEntity extends AbstractTilePM implements ITie
     public @NotNull RouteTable getRouteTable() {
         return RouteManager.getRouteTable(this.getLevel());
     }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        this.getRouteTable().invalidate();
+        super.preRemoveSideEffects(pos, state);
+    }
 }
