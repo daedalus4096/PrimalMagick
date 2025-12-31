@@ -6,6 +6,8 @@ import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -13,6 +15,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -21,11 +24,13 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.joml.Vector3f;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashSet;
@@ -54,8 +59,8 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     protected final Set<BlockPos> blocksNeedingUpdate = new HashSet<>();
 
     public SaltTrailBlock() {
-        super(Block.Properties.of().pushReaction(PushReaction.DESTROY).noCollission().strength(0.0F));
-        this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, SaltSide.NONE).setValue(EAST, SaltSide.NONE).setValue(SOUTH, SaltSide.NONE).setValue(WEST, SaltSide.NONE).setValue(POWER, Integer.valueOf(0)));
+        super(Block.Properties.of().pushReaction(PushReaction.DESTROY).noCollision().strength(0.0F));
+        this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, SaltSide.NONE).setValue(EAST, SaltSide.NONE).setValue(SOUTH, SaltSide.NONE).setValue(WEST, SaltSide.NONE).setValue(POWER, 0));
     }
     
     protected int getAABBIndex(BlockState state) {
@@ -82,7 +87,8 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return SHAPES[this.getAABBIndex(state)];
     }
 
@@ -90,8 +96,8 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
         return state.getBlock() instanceof ISaltPowered;
     }
     
-    @Nonnull
-    protected SaltSide getSide(@Nonnull BlockGetter world, @Nonnull BlockPos pos, @Nonnull Direction face) {
+    @NotNull
+    protected SaltSide getSide(@NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull Direction face) {
         BlockPos facePos = pos.relative(face);
         BlockState faceState = world.getBlockState(facePos);
         BlockPos upPos = pos.above();
@@ -124,41 +130,46 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
         BlockPos pos = context.getClickedPos();
         return this.defaultBlockState().setValue(WEST, this.getSide(world, pos, Direction.WEST)).setValue(EAST, this.getSide(world, pos, Direction.EAST)).setValue(NORTH, this.getSide(world, pos, Direction.NORTH)).setValue(SOUTH, this.getSide(world, pos, Direction.SOUTH));
     }
-    
+
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-        if (facing == Direction.DOWN) {
-            return stateIn;
-        } else if (facing == Direction.UP) {
-            return stateIn.setValue(WEST, this.getSide(worldIn, currentPos, Direction.WEST)).setValue(EAST, this.getSide(worldIn, currentPos, Direction.EAST)).setValue(NORTH, this.getSide(worldIn, currentPos, Direction.NORTH)).setValue(SOUTH, this.getSide(worldIn, currentPos, Direction.SOUTH));
+    @NotNull
+    public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
+        if (direction == Direction.DOWN) {
+            return state;
+        } else if (direction == Direction.UP) {
+            return state.setValue(WEST, this.getSide(level, pos, Direction.WEST)).setValue(EAST, this.getSide(level, pos, Direction.EAST)).setValue(NORTH, this.getSide(level, pos, Direction.NORTH)).setValue(SOUTH, this.getSide(level, pos, Direction.SOUTH));
         } else {
-            return stateIn.setValue(FACING_PROPERTY_MAP.get(facing), this.getSide(worldIn, currentPos, facing));
+            return state.setValue(FACING_PROPERTY_MAP.get(direction), this.getSide(level, pos, direction));
         }
     }
     
     @Override
-    public void updateIndirectNeighbourShapes(BlockState state, LevelAccessor world, BlockPos pos, int flags, int recursionLeft) {
+    public void updateIndirectNeighbourShapes(@NotNull BlockState state, @NotNull LevelAccessor world, @NotNull BlockPos pos, int flags, int recursionLeft) {
         BlockPos.MutableBlockPos mbp = new BlockPos.MutableBlockPos();
         for (Direction dir : Direction.Plane.HORIZONTAL) {
             SaltSide saltSide = state.getValue(FACING_PROPERTY_MAP.get(dir));
-            if (saltSide != SaltSide.NONE && world.getBlockState(mbp.set(pos).move(dir)).getBlock() != this) {
+            if (saltSide != SaltSide.NONE && !world.getBlockState(mbp.set(pos).move(dir)).is(this)) {
                 mbp.move(Direction.DOWN);
                 BlockState downState = world.getBlockState(mbp);
-                BlockPos oppDownPos = mbp.relative(dir.getOpposite());
-                BlockState newDownState = downState.updateShape(dir.getOpposite(), world.getBlockState(oppDownPos), world, mbp, oppDownPos);
-                updateOrDestroy(downState, newDownState, world, mbp, flags, recursionLeft);
-                
+                if (downState.is(this)) {
+                    BlockPos downPos = mbp.relative(dir.getOpposite());
+                    world.neighborShapeChanged(dir.getOpposite(), mbp, downPos, world.getBlockState(downPos), flags, recursionLeft);
+                }
+
                 mbp.set(pos).move(dir).move(Direction.UP);
                 BlockState upState = world.getBlockState(mbp);
-                BlockPos oppUpPos = mbp.relative(dir.getOpposite());
-                BlockState newUpState = upState.updateShape(dir.getOpposite(), world.getBlockState(oppUpPos), world, mbp, oppUpPos);
-                updateOrDestroy(upState, newUpState, world, mbp, flags, recursionLeft);
+                if (upState.is(this)) {
+                    BlockPos upPos = mbp.relative(dir.getOpposite());
+                    world.neighborShapeChanged(dir.getOpposite(), mbp, upPos, world.getBlockState(upPos), flags, recursionLeft);
+                }
             }
         }
     }
     
     @Override
-    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader world, @NotNull BlockPos pos) {
         BlockPos downPos = pos.below();
         BlockState downState = world.getBlockState(downPos);
         return downState.isFaceSturdy(world, downPos, Direction.UP);
@@ -216,7 +227,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
         }
         
         if (curPower != decrSignal) {
-            state = state.setValue(POWER, Integer.valueOf(decrSignal));
+            state = state.setValue(POWER, decrSignal);
             if (world.getBlockState(pos) == stateCopy) {
                 world.setBlock(pos, state, Block.UPDATE_CLIENTS);
             }
@@ -249,7 +260,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     }
     
     @Override
-    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull BlockState oldState, boolean isMoving) {
         if (oldState.getBlock() != state.getBlock() && !world.isClientSide()) {
             this.updateSurroundingSaltPower(world, pos, state);
             
@@ -271,36 +282,31 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
             }
         }
     }
-    
+
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!isMoving && state.getBlock() != newState.getBlock()) {
-            super.onRemove(state, world, pos, newState, isMoving);
-            if (!world.isClientSide()) {
-                for (Direction dir : Direction.values()) {
-                    world.updateNeighborsAt(pos.relative(dir), this);
-                }
-                
-                this.updateSurroundingSaltPower(world, pos, state);
-                
-                for (Direction dir : Direction.Plane.HORIZONTAL) {
-                    this.notifyTrailNeighborsOfStateChange(world, pos.relative(dir));
-                }
-                
-                for (Direction dir : Direction.Plane.HORIZONTAL) {
-                    BlockPos offsetPos = pos.relative(dir);
-                    if (world.getBlockState(offsetPos).isRedstoneConductor(world, offsetPos)) {
-                        this.notifyTrailNeighborsOfStateChange(world, offsetPos.above());
-                    } else {
-                        this.notifyTrailNeighborsOfStateChange(world, offsetPos.below());
-                    }
-                }
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
+        for (Direction dir : Direction.values()) {
+            level.updateNeighborsAt(pos.relative(dir), this);
+        }
+
+        this.updateSurroundingSaltPower(level, pos, state);
+
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            this.notifyTrailNeighborsOfStateChange(level, pos.relative(dir));
+        }
+
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            BlockPos offsetPos = pos.relative(dir);
+            if (level.getBlockState(offsetPos).isRedstoneConductor(level, offsetPos)) {
+                this.notifyTrailNeighborsOfStateChange(level, offsetPos.above());
+            } else {
+                this.notifyTrailNeighborsOfStateChange(level, offsetPos.below());
             }
         }
     }
-    
+
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull Block blockIn, @Nullable Orientation orientation, boolean isMoving) {
         if (!world.isClientSide()) {
             if (state.canSurvive(world, pos)) {
                 this.updateSurroundingSaltPower(world, pos, state);
@@ -312,24 +318,8 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     }
 
     @Override
-    public int getStrongSaltPower(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    public int getStrongSaltPower(@NotNull BlockState blockState, @NotNull BlockGetter blockAccess, @NotNull BlockPos pos, @NotNull Direction side) {
         return this.canProvidePower ? blockState.getValue(POWER) : 0;
-    }
-    
-    protected boolean isPowerSourceAt(BlockGetter world, BlockPos pos, Direction side) {
-        BlockPos offsetPos = pos.relative(side);
-        BlockState offsetState = world.getBlockState(offsetPos);
-        boolean isOffsetNormal = offsetState.isRedstoneConductor(world, offsetPos);
-        BlockPos upPos = pos.above();
-        boolean isUpNormal = world.getBlockState(upPos).isRedstoneConductor(world, upPos);
-        
-        if (!isUpNormal && isOffsetNormal && this.canConnectTo(world.getBlockState(offsetPos.above()), world, offsetPos.above(), null)) {
-            return true;
-        } else if (this.canConnectTo(offsetState, world, offsetPos, side)) {
-            return true;
-        } else {
-            return !isOffsetNormal && this.canConnectTo(world.getBlockState(offsetPos.below()), world, offsetPos.below(), null);
-        }
     }
     
     public static int colorMultiplier(int power) {
@@ -340,42 +330,40 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     }
     
     @Override
-    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
+    public void animateTick(@NotNull BlockState state, @NotNull Level world, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         int power = state.getValue(POWER);
         if (power > 0) {
             double x = (double)pos.getX() + 0.5D + ((double)rand.nextFloat() - 0.5D) * 0.2D;
-            double y = (double)((float)pos.getY() + 0.0625F);
+            double y = (float)pos.getY() + 0.0625F;
             double z = (double)pos.getZ() + 0.5D + ((double)rand.nextFloat() - 0.5D) * 0.2D;
             float powerRatio = (float)power / 15.0F;
-            float colorRatio = (power == 0) ? 0.6F : (powerRatio * 0.3F) + 0.7F;
-            world.addParticle(new DustParticleOptions(new Vector3f(colorRatio, colorRatio, colorRatio), 1.0F), x, y, z, 0.0D, 0.0D, 0.0D);
+            float colorRatio = powerRatio * 0.3F + 0.7F;
+            world.addParticle(new DustParticleOptions(ARGB.color(new Vec3(colorRatio, colorRatio, colorRatio)), 1.0F), x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
     
     @Override
-    public BlockState rotate(BlockState state, Rotation rot) {
-        switch(rot) {
-        case CLOCKWISE_180:
-            return state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
-        case COUNTERCLOCKWISE_90:
-            return state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
-        case CLOCKWISE_90:
-            return state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
-        default:
-            return state;
-        }
+    @NotNull
+    public BlockState rotate(@NotNull BlockState state, @NotNull Rotation rot) {
+        return switch (rot) {
+            case CLOCKWISE_180 ->
+                    state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
+            case COUNTERCLOCKWISE_90 ->
+                    state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
+            case CLOCKWISE_90 ->
+                    state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
+            default -> state;
+        };
     }
     
     @Override
-    public BlockState mirror(BlockState state, Mirror mirrorIn) {
-        switch(mirrorIn) {
-        case LEFT_RIGHT:
-            return state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
-        case FRONT_BACK:
-            return state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
-        default:
-            return state;
-        }
+    @NotNull
+    public BlockState mirror(@NotNull BlockState state, @NotNull Mirror mirrorIn) {
+        return switch (mirrorIn) {
+            case LEFT_RIGHT -> state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
+            case FRONT_BACK -> state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
+            default -> state;
+        };
     }
     
     @Override
