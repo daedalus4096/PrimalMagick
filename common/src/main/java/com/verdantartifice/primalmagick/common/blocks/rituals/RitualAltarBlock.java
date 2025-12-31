@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEnti
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -94,6 +95,14 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
             }
         }
         return super.useWithoutItem(state, worldIn, pos, player, hit);
+    }
+
+    @Override
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        for (Direction dir : Direction.values()) {
+            level.updateNeighborsAt(pos.relative(dir), state.getBlock());
+        }
     }
 
     @Override

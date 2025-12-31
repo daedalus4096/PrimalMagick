@@ -80,9 +80,6 @@ public abstract class RitualLecternTileEntity extends AbstractTileSidedInventory
             propBlock.closeProp(state, this.level, pos);
         }
         super.preRemoveSideEffects(pos, state);
-        if (this.level != null) {
-            this.level.updateNeighbourForOutputSignal(pos, state.getBlock());
-        }
     }
 
     public ItemStack getItem() {

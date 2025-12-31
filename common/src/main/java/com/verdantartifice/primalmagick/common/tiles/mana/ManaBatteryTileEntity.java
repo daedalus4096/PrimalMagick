@@ -511,7 +511,6 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         // Drop the tile entity's inventory into the world when the block is replaced
         if (this.level != null) {
             this.dropContents(this.level, pos);
-            this.level.updateNeighbourForOutputSignal(pos, state.getBlock());
         }
 
         super.preRemoveSideEffects(pos, state);

@@ -13,6 +13,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -252,6 +253,12 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return Services.BLOCK_ENTITY_PROTOTYPES.ritualLectern().create(pos, state);
+    }
+
+    @Override
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        level.updateNeighbourForOutputSignal(pos, state.getBlock());
     }
 
     @Override

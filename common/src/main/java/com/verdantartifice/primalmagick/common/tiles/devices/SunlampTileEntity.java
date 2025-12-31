@@ -10,7 +10,6 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition of a sunlamp tile entity.  Periodically attempts to spawn glow fields in dark air
@@ -20,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class SunlampTileEntity extends AbstractTilePM {
     private static final int LIGHT_THRESHOLD = 11;
-    private static final int RADIUS = 15;
+    private static final int RANGE = 16;
     
     protected int ticksExisted = 0;
     
@@ -32,9 +31,9 @@ public class SunlampTileEntity extends AbstractTilePM {
         entity.ticksExisted++;
         if (!level.isClientSide() && entity.ticksExisted % 5 == 0) {
             // Pick a random location within 15 blocks
-            int x = level.random.nextInt(RADIUS + 1) - level.random.nextInt(RADIUS + 1);
-            int y = level.random.nextInt(RADIUS + 1) - level.random.nextInt(RADIUS + 1);
-            int z = level.random.nextInt(RADIUS + 1) - level.random.nextInt(RADIUS + 1);
+            int x = level.random.nextInt(RANGE) - level.random.nextInt(RANGE);
+            int y = level.random.nextInt(RANGE) - level.random.nextInt(RANGE);
+            int z = level.random.nextInt(RANGE) - level.random.nextInt(RANGE);
             BlockPos bp = pos.offset(x, y, z);
             
             // Constrain the selected block pos
@@ -59,19 +58,5 @@ public class SunlampTileEntity extends AbstractTilePM {
                 });
             }
         }
-    }
-
-    @Override
-    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
-        if (state.getBlock() instanceof SunlampBlock sunlampBlock && this.level != null) {
-            sunlampBlock.getGlowField(this.level.registryAccess()).ifPresent(glow -> {
-                BlockPos.betweenClosedStream(pos.offset(-RADIUS, -RADIUS, -RADIUS), pos.offset(RADIUS, RADIUS, RADIUS)).forEach(bp -> {
-                    if (this.level.getBlockState(bp).is(glow)) {
-                        this.level.removeBlock(bp, false);
-                    }
-                });
-            });
-        }
-        super.preRemoveSideEffects(pos, state);
     }
 }

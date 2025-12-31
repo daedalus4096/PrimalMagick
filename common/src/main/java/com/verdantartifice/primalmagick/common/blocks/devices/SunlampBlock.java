@@ -12,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -57,7 +58,9 @@ public class SunlampBlock extends BaseEntityBlock {
     
     protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/sunlamp_ground_base"));
     protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(ResourceUtils.loc("block/sunlamp_hanging_base"));
-    
+
+    private static final int RADIUS = 15;
+
     protected final ResourceKey<Block> glowBlockKey;
     
     public SunlampBlock(ResourceKey<Block> glowBlockKey, Block.Properties properties) {
@@ -123,6 +126,18 @@ public class SunlampBlock extends BaseEntityBlock {
 
     public Optional<GlowFieldBlock> getGlowField(RegistryAccess registryAccess) {
         return registryAccess.lookupOrThrow(Registries.BLOCK).getOptional(this.glowBlockKey).filter(GlowFieldBlock.class::isInstance).map(GlowFieldBlock.class::cast);
+    }
+
+    @Override
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        this.getGlowField(level.registryAccess()).ifPresent(glow -> {
+            BlockPos.betweenClosedStream(pos.offset(-RADIUS, -RADIUS, -RADIUS), pos.offset(RADIUS, RADIUS, RADIUS)).forEach(bp -> {
+                if (level.getBlockState(bp).is(glow)) {
+                    level.removeBlock(bp, false);
+                }
+            });
+        });
     }
 
     @Override

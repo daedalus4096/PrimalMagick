@@ -415,8 +415,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     @Override
     public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
         if (this.level != null) {
-            this.dropContents(level, pos);
-            level.updateNeighbourForOutputSignal(pos, state.getBlock());
+            this.dropContents(this.level, pos);
         }
         super.preRemoveSideEffects(pos, state);
     }

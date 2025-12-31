@@ -1074,9 +1074,6 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     @Override
     public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
         if (this.level != null) {
-            for (Direction dir : Direction.values()) {
-                this.level.updateNeighborsAt(pos.relative(dir), state.getBlock());
-            }
             this.dropContents(this.level, pos);
         }
         super.preRemoveSideEffects(pos, state);

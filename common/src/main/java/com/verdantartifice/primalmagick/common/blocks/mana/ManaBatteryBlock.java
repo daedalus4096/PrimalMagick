@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -89,6 +90,12 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
         if (!pLevel.isClientSide() && pPlacer instanceof Player player && pLevel.getBlockEntity(pPos) instanceof IOwnedTileEntity ownedTile) {
             ownedTile.setTileOwner(player);
         }
+    }
+
+    @Override
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        level.updateNeighbourForOutputSignal(pos, state.getBlock());
     }
 
     @Override
