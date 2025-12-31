@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.misc;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block definition for stained skyglass.  Like normal stained glass, except that it connects to
@@ -20,6 +21,7 @@ public class StainedSkyglassBlock extends SkyglassBlock implements BeaconBeamBlo
     }
     
     @Override
+    @NotNull
     public DyeColor getColor() {
         return this.color;
     }
