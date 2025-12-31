@@ -14,7 +14,6 @@ import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEnti
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
@@ -30,7 +29,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public abstract class ManaInjectorTileEntity extends AbstractTilePM implements ITieredDeviceBlockEntity, IManaConsumer, IOwnedTileEntity {
     protected static final int TICKS_PER_PHASE = 40;
@@ -149,5 +147,11 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     @Override
     public @NotNull RouteTable getRouteTable() {
         return RouteManager.getRouteTable(this.getLevel());
+    }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        this.getRouteTable().invalidate();
+        super.preRemoveSideEffects(pos, state);
     }
 }
