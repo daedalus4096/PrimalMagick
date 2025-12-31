@@ -143,7 +143,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
     @VisibleForTesting
     public int getBatteryTransferCap() {
-        // Return the max amount of centimana that can be transfered by the battery per tick
+        // Return the max amount of centimana that can be transferred by the battery per tick
         return switch (this.getDeviceTier()) {
             case FORBIDDEN -> WandCap.HEXIUM.getSiphonAmount();
             case HEAVENLY, CREATIVE -> WandCap.HALLOWSTEEL.getSiphonAmount();
@@ -290,8 +290,8 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             if (outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 outputStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, stackManaStorage -> {
                     int centimanaToTransfer = Math.min(this.getBatteryTransferCap(), this.manaStorage.getManaStored(source));
-                    int transferedCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
-                    this.manaStorage.extractMana(source, transferedCentimana, false);
+                    int transferredCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
+                    this.manaStorage.extractMana(source, transferredCentimana, false);
                     return stackManaStorage;
                 });
                 outputStack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
@@ -501,5 +501,19 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
         Profiler.get().pop();
         Profiler.get().pop();
+    }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        // Before the block entity is removed, invalidate its route table
+        this.getRouteTable().invalidate();
+
+        // Drop the tile entity's inventory into the world when the block is replaced
+        if (this.level != null) {
+            this.dropContents(this.level, pos);
+            this.level.updateNeighbourForOutputSignal(pos, state.getBlock());
+        }
+
+        super.preRemoveSideEffects(pos, state);
     }
 }
