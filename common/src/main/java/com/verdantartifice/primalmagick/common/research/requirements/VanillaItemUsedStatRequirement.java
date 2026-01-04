@@ -12,7 +12,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
@@ -28,11 +28,11 @@ import java.util.stream.Stream;
  */
 public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaItemUsedStatRequirement> implements IVanillaStatRequirement {
     public static final MapCodec<VanillaItemUsedStatRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("item").xmap(loc -> Services.ITEMS_REGISTRY.get(loc), item -> Services.ITEMS_REGISTRY.getKey(item)).forGetter(req -> req.stat.getValue()),
+            Identifier.CODEC.fieldOf("item").xmap(loc -> Services.ITEMS_REGISTRY.get(loc), item -> Services.ITEMS_REGISTRY.getKey(item)).forGetter(req -> req.stat.getValue()),
             Codec.INT.fieldOf("threshold").forGetter(VanillaItemUsedStatRequirement::getThreshold)
         ).apply(instance, VanillaItemUsedStatRequirement::new));
     public static final StreamCodec<ByteBuf, VanillaItemUsedStatRequirement> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC.map(loc -> Services.ITEMS_REGISTRY.get(loc), item -> Services.ITEMS_REGISTRY.getKey(item)),
+            Identifier.STREAM_CODEC.map(loc -> Services.ITEMS_REGISTRY.get(loc), item -> Services.ITEMS_REGISTRY.getKey(item)),
             req -> req.stat.getValue(),
             ByteBufCodecs.VAR_INT,
             VanillaItemUsedStatRequirement::getThreshold,
@@ -56,12 +56,12 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
     }
 
     @Override
-    public ResourceLocation getStatTypeLoc() {
+    public Identifier getStatTypeLoc() {
         return BuiltInRegistries.STAT_TYPE.getKey(this.stat.getType());
     }
     
     @Override
-    public ResourceLocation getStatValueLoc() {
+    public Identifier getStatValueLoc() {
         return Services.ITEMS_REGISTRY.getKey(this.stat.getValue());
     }
 

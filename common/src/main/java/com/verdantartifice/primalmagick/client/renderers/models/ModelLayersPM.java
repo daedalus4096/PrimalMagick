@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.models;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Definition of registered model layer locations.

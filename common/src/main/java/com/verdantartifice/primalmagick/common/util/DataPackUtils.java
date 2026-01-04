@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.util;
 
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.SharedConstants;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -95,7 +95,7 @@ public class DataPackUtils {
 
         for (Item item : sourceItems) {
             @Nullable
-            ResourceLocation resourceLocation = Services.ITEMS_REGISTRY.getKey(item);
+            Identifier resourceLocation = Services.ITEMS_REGISTRY.getKey(item);
             if (resourceLocation != null) {
                 String namespace= resourceLocation.getNamespace();
                 String path = resourceLocation.getPath();
@@ -110,7 +110,7 @@ public class DataPackUtils {
         }
         
         for (EntityType<?> entityType : sourceEntities) {
-            ResourceLocation resourceLocation = Services.ENTITY_TYPES_REGISTRY.getKey(entityType);
+            Identifier resourceLocation = Services.ENTITY_TYPES_REGISTRY.getKey(entityType);
             if (resourceLocation != null) {
                 String namespace= resourceLocation.getNamespace();
                 String path = resourceLocation.getPath();

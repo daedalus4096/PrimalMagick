@@ -14,7 +14,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class OpenStaticBookScreenPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("open_static_book_screen");
+    public static final Identifier CHANNEL = ResourceUtils.loc("open_static_book_screen");
     public static final StreamCodec<RegistryFriendlyByteBuf, OpenStaticBookScreenPacket> STREAM_CODEC = StreamCodec.ofMember(OpenStaticBookScreenPacket::encode, OpenStaticBookScreenPacket::decode);
 
     // TODO Can this be strongly typed as a ResourceKey<BookDefinition> instead?

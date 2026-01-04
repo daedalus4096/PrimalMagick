@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 /**
@@ -18,7 +18,7 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class PageButton extends Button {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     protected GrimoireScreen screen;
     protected boolean isNext;

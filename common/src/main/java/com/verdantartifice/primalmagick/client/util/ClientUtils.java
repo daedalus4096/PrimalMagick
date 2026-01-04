@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -79,7 +79,7 @@ public class ClientUtils {
      * @param containerId the ID of the menu whose screen to update
      * @param recipeId the ID of the recipe to be placed
      */
-    public static void handlePlaceGhostRecipe(int containerId, ResourceLocation recipeId) {
+    public static void handlePlaceGhostRecipe(int containerId, Identifier recipeId) {
         // TODO Find a better home for this method
         Minecraft mc = Minecraft.getInstance();
         AbstractContainerMenu menu = mc.player.containerMenu;

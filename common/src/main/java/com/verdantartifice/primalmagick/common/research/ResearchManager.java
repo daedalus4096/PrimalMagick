@@ -25,7 +25,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
@@ -84,7 +84,7 @@ public class ResearchManager {
     }
     
     @Nullable
-    public static Optional<ResearchEntry> getEntryForRecipe(RegistryAccess registryAccess, ResourceLocation recipeId) {
+    public static Optional<ResearchEntry> getEntryForRecipe(RegistryAccess registryAccess, Identifier recipeId) {
         return ResearchEntries.stream(registryAccess)
                 .filter(entry -> entry.getAllRecipeIds().contains(recipeId))
                 .findFirst();
@@ -94,7 +94,7 @@ public class ResearchManager {
         return FIRST_STEPS.isKnownBy(player);
     }
     
-    public static boolean isRecipeVisible(ResourceLocation recipeId, Player player) {
+    public static boolean isRecipeVisible(Identifier recipeId, Player player) {
         IPlayerKnowledge know = Services.CAPABILITIES.knowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
         ResearchEntry entry = ResearchManager.getEntryForRecipe(player.level().registryAccess(), recipeId).orElse(null);
         if (entry == null) {

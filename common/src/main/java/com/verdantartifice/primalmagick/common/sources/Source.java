@@ -11,7 +11,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 
@@ -28,13 +28,13 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class Source implements StringRepresentable {
-    protected static final ResourceLocation UNKNOWN_IMAGE = ResourceUtils.loc("textures/research/research_unknown.png");
-    protected static final ResourceLocation UNKNOWN_ATLAS_LOC = ResourceUtils.loc("research/research_unknown");
+    protected static final Identifier UNKNOWN_IMAGE = ResourceUtils.loc("textures/research/research_unknown.png");
+    protected static final Identifier UNKNOWN_ATLAS_LOC = ResourceUtils.loc("research/research_unknown");
     
-    public static final Codec<Source> CODEC = ResourceLocation.CODEC.xmap(Sources::get, Source::getId);
-    public static final StreamCodec<ByteBuf, Source> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(Sources::get, Source::getId);
+    public static final Codec<Source> CODEC = Identifier.CODEC.xmap(Sources::get, Source::getId);
+    public static final StreamCodec<ByteBuf, Source> STREAM_CODEC = Identifier.STREAM_CODEC.map(Sources::get, Source::getId);
 
-    protected final ResourceLocation id;            // Unique identifier for the source
+    protected final Identifier id;            // Unique identifier for the source
     protected final int color;                      // Color to use for graphical effects
     protected final ChatFormatting chatColor;       // Color to use in text components
     protected final double observationMultiplier;   // How many observation points that one affinity of this source is worth
@@ -42,11 +42,11 @@ public class Source implements StringRepresentable {
     protected final Optional<ResearchEntryKey> discoverKey;             // Research key for the below requirement
     protected final Optional<ResearchRequirement> discoverRequirement;  // Research requirement for unlocking this source and making it visible to the player
     protected final int sortOrder;                  // Order in which the source should be included in sorted lists
-    protected final ResourceLocation image;         // Location of the source's image
-    protected final ResourceLocation atlasLoc;      // Location of the source's image in the texture atlas
+    protected final Identifier image;         // Location of the source's image
+    protected final Identifier atlasLoc;      // Location of the source's image in the texture atlas
     
-    public Source(ResourceLocation id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, Optional<ResearchEntryKey> discoverKey, int sortOrder,
-            ResourceLocation image, ResourceLocation atlasLoc) {
+    public Source(Identifier id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, Optional<ResearchEntryKey> discoverKey, int sortOrder,
+            Identifier image, Identifier atlasLoc) {
         this.id = id;
         this.color = color;
         this.chatColor = chatColor;
@@ -60,18 +60,18 @@ public class Source implements StringRepresentable {
         Sources.register(this);
     }
     
-    public Source(ResourceLocation id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, ResourceKey<ResearchEntry> discoverKey, int sortOrder) {
+    public Source(Identifier id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, ResourceKey<ResearchEntry> discoverKey, int sortOrder) {
         this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.of(new ResearchEntryKey(discoverKey)), sortOrder,
-                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "sources/" + id.getPath()));
+                Identifier.fromNamespaceAndPath(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), Identifier.fromNamespaceAndPath(id.getNamespace(), "sources/" + id.getPath()));
     }
     
-    public Source(ResourceLocation id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, int sortOrder) {
+    public Source(Identifier id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, int sortOrder) {
         this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.empty(), sortOrder,
-                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "sources/" + id.getPath()));
+                Identifier.fromNamespaceAndPath(id.getNamespace(), "textures/sources/" + id.getPath() + ".png"), Identifier.fromNamespaceAndPath(id.getNamespace(), "sources/" + id.getPath()));
     }
     
     @Nonnull
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return this.id;
     }
     
@@ -80,7 +80,7 @@ public class Source implements StringRepresentable {
         return getNameTranslationKey(this.id);
     }
     
-    private static String getNameTranslationKey(ResourceLocation id) {
+    private static String getNameTranslationKey(Identifier id) {
         return String.join(".", "source", id.getNamespace(), id.getPath());
     }
     
@@ -122,12 +122,12 @@ public class Source implements StringRepresentable {
     }
     
     @Nonnull
-    public ResourceLocation getImage() {
+    public Identifier getImage() {
         return this.image;
     }
     
     @Nonnull
-    public ResourceLocation getAtlasLocation() {
+    public Identifier getAtlasLocation() {
         return this.atlasLoc;
     }
     
@@ -146,12 +146,12 @@ public class Source implements StringRepresentable {
     }
     
     @Nonnull
-    public static ResourceLocation getUnknownImage() {
+    public static Identifier getUnknownImage() {
         return UNKNOWN_IMAGE;
     }
     
     @Nonnull
-    public static ResourceLocation getUnknownAtlasLocation() {
+    public static Identifier getUnknownAtlasLocation() {
         return UNKNOWN_ATLAS_LOC;
     }
     

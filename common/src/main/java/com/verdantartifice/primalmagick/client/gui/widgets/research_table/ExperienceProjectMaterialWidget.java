@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.Experien
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import java.awt.Color;
@@ -19,7 +19,7 @@ import java.util.Set;
  * @author Daedalus4096
  */
 public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidget<ExperienceProjectMaterial> {
-    private static final ResourceLocation EXPERIENCE_ORB_TEXTURES = ResourceLocation.withDefaultNamespace("textures/entity/experience_orb.png");
+    private static final Identifier EXPERIENCE_ORB_TEXTURES = Identifier.withDefaultNamespace("textures/entity/experience_orb.png");
 
     public ExperienceProjectMaterialWidget(ExperienceProjectMaterial material, int x, int y, Set<Block> surroundings) {
         super(material, x, y, surroundings);

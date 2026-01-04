@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     
     protected abstract ScribeTableMode getMode();
     
-    protected abstract ResourceLocation getBgTexture();
+    protected abstract Identifier getBgTexture();
 
     @Override
     protected void init() {

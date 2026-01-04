@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,27 +23,27 @@ public abstract class AbstractAffinity<T extends AbstractAffinity<T>> implements
         return Services.AFFINITY_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractAffinity::getType, AffinityType::streamCodec);
     }
 
-    protected ResourceLocation targetId;
+    protected Identifier targetId;
     protected CompletableFuture<SourceList> totalCache;
 
-    protected AbstractAffinity(@NotNull ResourceLocation target) {
+    protected AbstractAffinity(@NotNull Identifier target) {
         this.targetId = target;
     }
     
     @Override
-    public @NotNull ResourceLocation getTarget() {
+    public @NotNull Identifier getTarget() {
         return this.targetId;
     }
 
     public abstract @NotNull AffinityType<T> getType();
 
     @Override
-    public @NotNull CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
+    public @NotNull CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
         if (this.totalCache == null) {
             this.totalCache = this.calculateTotalAsync(recipeManager, registryAccess, history);
         }
         return this.totalCache;
     }
     
-    protected abstract CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history);
+    protected abstract CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history);
 }

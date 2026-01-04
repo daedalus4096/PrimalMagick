@@ -10,7 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class DissolutionChamberScreen extends AbstractContainerScreenPM<DissolutionChamberMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/dissolution_chamber.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/dissolution_chamber.png");
     
     protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();
     protected boolean widthTooNarrow;

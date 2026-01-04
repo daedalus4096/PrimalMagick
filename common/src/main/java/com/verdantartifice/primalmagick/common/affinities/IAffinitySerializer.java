@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.affinities;
 
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Primary interface for the serializer of a data-defined affinity entry
@@ -13,7 +13,7 @@ public interface IAffinitySerializer<T extends IAffinity> {
     /**
      * Read an affinity entry object from JSON
      */
-    T read(ResourceLocation affinityId, JsonObject json);
+    T read(Identifier affinityId, JsonObject json);
     
     /**
      * Read an affinity entry object from the network

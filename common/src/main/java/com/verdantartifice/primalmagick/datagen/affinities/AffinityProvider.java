@@ -11,7 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
@@ -41,7 +41,7 @@ public class AffinityProvider implements DataProvider {
     public CompletableFuture<?> run(CachedOutput cache) {
         return this.lookupProviderFuture.thenCompose(p -> {
             ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
-            Map<AffinityType, Map<ResourceLocation, IFinishedAffinity>> map = new HashMap<>();
+            Map<AffinityType, Map<Identifier, IFinishedAffinity>> map = new HashMap<>();
             this.registerAffinities(p, affinity -> {
                 if (map.computeIfAbsent(affinity.getType(), (type) -> { return new HashMap<>(); }).put(affinity.getId(), affinity) != null) {
                     LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
@@ -57,7 +57,7 @@ public class AffinityProvider implements DataProvider {
         });
     }
 
-    private Path getPath(PackOutput output, AffinityType affinityType, ResourceLocation entryLoc) {
+    private Path getPath(PackOutput output, AffinityType affinityType, Identifier entryLoc) {
         return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("affinities").resolve(affinityType.getFolder()).resolve(entryLoc.getPath() + ".json");
     }
     

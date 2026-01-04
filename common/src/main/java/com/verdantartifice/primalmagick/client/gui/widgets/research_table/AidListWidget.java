@@ -8,7 +8,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class AidListWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
     
     protected final List<Component> aidNames;
 

@@ -9,7 +9,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Tab button for a mode on the scribe table GUI.
@@ -34,7 +34,7 @@ public class ScribeTableModeTabButton extends StateSwitchingButton {
     public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         if (this.sprites != null) {
             RenderSystem.disableDepthTest();
-            ResourceLocation spriteLoc = this.sprites.get(true, this.isStateTriggered);
+            Identifier spriteLoc = this.sprites.get(true, this.isStateTriggered);
             int x = this.getX();
             if (this.isStateTriggered) {
                 x -= 2;
@@ -47,7 +47,7 @@ public class ScribeTableModeTabButton extends StateSwitchingButton {
     }
 
     protected void renderIcon(GuiGraphics pGuiGraphics) {
-        ResourceLocation spriteLoc = this.mode.getIconSprite();
+        Identifier spriteLoc = this.mode.getIconSprite();
         int dx = this.isStateTriggered() ? -2 : 0;
         pGuiGraphics.blitSprite(spriteLoc, this.getX() + 9 + dx, this.getY() + 5, 16, 16);
     }

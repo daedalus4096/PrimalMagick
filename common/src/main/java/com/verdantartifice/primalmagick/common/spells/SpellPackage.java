@@ -20,7 +20,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -195,7 +195,7 @@ public record SpellPackage(String name, ConfiguredSpellVehicle<?> vehicle, Confi
     
     
     @Nullable
-    public ResourceLocation getIcon() {
+    public Identifier getIcon() {
         if (this.payload != null) {
             return this.payload.getComponent().getSource().getImage();
         }

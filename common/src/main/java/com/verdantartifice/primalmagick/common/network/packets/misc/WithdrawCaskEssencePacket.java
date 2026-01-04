@@ -11,7 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  * @author Daedalus4096
  */
 public class WithdrawCaskEssencePacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("withdraw_cask_essence");
+    public static final Identifier CHANNEL = ResourceUtils.loc("withdraw_cask_essence");
     public static final StreamCodec<RegistryFriendlyByteBuf, WithdrawCaskEssencePacket> STREAM_CODEC = StreamCodec.ofMember(WithdrawCaskEssencePacket::encode, WithdrawCaskEssencePacket::decode);
 
     protected final EssenceType essenceType;

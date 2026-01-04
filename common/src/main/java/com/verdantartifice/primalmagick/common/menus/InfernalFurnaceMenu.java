@@ -12,7 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -31,7 +31,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
  * @author Daedalus4096
  */
 public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<SingleRecipeInput, AbstractCookingRecipe> {
-    public static final ResourceLocation IGNYX_SLOT_TEXTURE = ResourceUtils.loc("item/empty_ignyx_slot");
+    public static final Identifier IGNYX_SLOT_TEXTURE = ResourceUtils.loc("item/empty_ignyx_slot");
     protected static final Component IGNYX_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.infernal_furnace.slot.ignyx");
 
     protected final ContainerData furnaceData;

@@ -16,7 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
@@ -30,7 +30,7 @@ import org.joml.Vector2i;
  * @author Daedalus4096
  */
 public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
-    public static final ResourceLocation BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
+    public static final Identifier BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
     protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
 
     private final DataSlot languageClue = DataSlot.standalone();

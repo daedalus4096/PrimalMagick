@@ -10,7 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -19,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class SyncLinguisticsPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_linguistics");
+    public static final Identifier CHANNEL = ResourceUtils.loc("sync_linguistics");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncLinguisticsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncLinguisticsPacket::encode, SyncLinguisticsPacket::decode);
 
     protected final CompoundTag data;

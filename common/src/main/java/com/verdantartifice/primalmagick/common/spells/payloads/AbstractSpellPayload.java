@@ -13,7 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -59,7 +59,7 @@ public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> im
     protected abstract List<SpellProperty> getPropertiesInner();
 
     @Override
-    public SpellProperty getProperty(ResourceLocation id) {
+    public SpellProperty getProperty(Identifier id) {
         return this.getPropertiesInner().stream().filter(prop -> prop.id().equals(id)).findFirst().orElse(null);
     }
     

@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.ManaArrowEnt
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Renderer for a mana-tinged arrow entity.
@@ -12,14 +12,14 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ManaArrowRenderer extends ArrowRenderer<ManaArrowEntity> {
-    public static final ResourceLocation MANA_ARROW_LOCATION = ResourceUtils.loc("textures/entity/mana_arrow.png");
+    public static final Identifier MANA_ARROW_LOCATION = ResourceUtils.loc("textures/entity/mana_arrow.png");
 
     public ManaArrowRenderer(EntityRendererProvider.Context context) {
         super(context);
      }
 
     @Override
-    public ResourceLocation getTextureLocation(ManaArrowEntity p_114482_) {
+    public Identifier getTextureLocation(ManaArrowEntity p_114482_) {
         return MANA_ARROW_LOCATION;
     }
 }

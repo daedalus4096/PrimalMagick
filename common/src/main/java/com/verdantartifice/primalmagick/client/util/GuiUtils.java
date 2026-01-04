@@ -26,7 +26,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -185,7 +185,7 @@ public class GuiUtils {
         renderSourceIcon(guiGraphics, x, y, Source.getUnknownAtlasLocation(), amount, z);
     }
     
-    protected static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nonnull ResourceLocation imageLoc, int amount, double z) {
+    protected static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nonnull Identifier imageLoc, int amount, double z) {
         // Preserve previous value for blend GL attribute
         boolean isBlendOn = GL11.glIsEnabled(GL11.GL_BLEND);
         
@@ -251,7 +251,7 @@ public class GuiUtils {
                 poseStack.translate(shiftX - startDeltaX, 0.0D, 0.0D);
                 poseStack.scale(scale, scale, scale);
 
-                ResourceLocation texLoc = source.isDiscovered(mc.player) ? source.getAtlasLocation() : Source.getUnknownAtlasLocation();
+                Identifier texLoc = source.isDiscovered(mc.player) ? source.getAtlasLocation() : Source.getUnknownAtlasLocation();
                 @SuppressWarnings("deprecation")
                 TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(texLoc);
                 VertexConsumer builder = buffers.getBuffer(RenderType.cutout());

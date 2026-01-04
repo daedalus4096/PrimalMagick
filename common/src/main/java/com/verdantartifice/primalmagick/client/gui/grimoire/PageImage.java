@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nullable;
 
@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 public class PageImage implements IPageElement {
     public int x, y, width, height, adjustedWidth, adjustedHeight;
     public float scale;
-    public ResourceLocation location;
+    public Identifier location;
     
     @Nullable
     public static PageImage parse(String str) {
@@ -26,7 +26,7 @@ public class PageImage implements IPageElement {
         }
         try {
             PageImage image = new PageImage();
-            image.location = ResourceLocation.fromNamespaceAndPath(tokens[0], tokens[1]);
+            image.location = Identifier.fromNamespaceAndPath(tokens[0], tokens[1]);
             image.x = Integer.parseInt(tokens[2]);
             image.y = Integer.parseInt(tokens[3]);
             image.width = Integer.parseInt(tokens[4]);

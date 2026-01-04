@@ -10,7 +10,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import java.util.Set;
  * @author Daedalus4096
  */
 public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMaterial<T>> extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
 
     protected final T material;
     protected final boolean complete;

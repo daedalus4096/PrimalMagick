@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
@@ -26,23 +26,23 @@ import java.util.function.Consumer;
 public class GridDefinitionBuilder {
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected final ResourceLocation key;
+    protected final Identifier key;
     protected ResourceKey<BookLanguage> bookLanguage;
     protected Vector2ic startPos;
     protected final List<IFinishedGridNode> nodes = new ArrayList<>();
     protected final HolderLookup.Provider lookupProvider;
     
-    protected GridDefinitionBuilder(@Nonnull ResourceLocation key, HolderLookup.Provider lookupProvider) {
+    protected GridDefinitionBuilder(@Nonnull Identifier key, HolderLookup.Provider lookupProvider) {
         this.key = key;
         this.lookupProvider = lookupProvider;
     }
 
-    public static GridDefinitionBuilder grid(@Nonnull ResourceLocation key, HolderLookup.Provider lookupProvider) {
+    public static GridDefinitionBuilder grid(@Nonnull Identifier key, HolderLookup.Provider lookupProvider) {
         return new GridDefinitionBuilder(key, lookupProvider);
     }
     
     public static GridDefinitionBuilder grid(@Nonnull String keyNamespace, @Nonnull String keyPath, HolderLookup.Provider lookupProvider) {
-        return grid(ResourceLocation.fromNamespaceAndPath(keyNamespace, keyPath), lookupProvider);
+        return grid(Identifier.fromNamespaceAndPath(keyNamespace, keyPath), lookupProvider);
     }
     
     public static GridDefinitionBuilder grid(@Nonnull String keyPath, HolderLookup.Provider lookupProvider) {
@@ -68,7 +68,7 @@ public class GridDefinitionBuilder {
         return this;
     }
     
-    private void validate(ResourceLocation id) {
+    private void validate(Identifier id) {
         if (this.key == null) {
             throw new IllegalStateException("No key for linguistics grid " + id.toString());
         }
@@ -110,21 +110,21 @@ public class GridDefinitionBuilder {
     }
     
     public void build(Consumer<IFinishedGrid> consumer, String name) {
-        this.build(consumer, ResourceLocation.parse(name));
+        this.build(consumer, Identifier.parse(name));
     }
     
-    public void build(Consumer<IFinishedGrid> consumer, ResourceLocation id) {
+    public void build(Consumer<IFinishedGrid> consumer, Identifier id) {
         this.validate(id);
         consumer.accept(new Result(this.key, this.bookLanguage.location(), this.startPos, this.nodes));
     }
     
     public static class Result implements IFinishedGrid {
-        protected final ResourceLocation key;
-        protected final ResourceLocation bookLanguage;
+        protected final Identifier key;
+        protected final Identifier bookLanguage;
         protected final Vector2ic startPos;
         protected final List<IFinishedGridNode> nodes;
         
-        public Result(ResourceLocation key, ResourceLocation bookLanguage, Vector2ic startPos, List<IFinishedGridNode> nodes) {
+        public Result(Identifier key, Identifier bookLanguage, Vector2ic startPos, List<IFinishedGridNode> nodes) {
             this.key = key;
             this.bookLanguage = bookLanguage;
             this.startPos = startPos;
@@ -132,7 +132,7 @@ public class GridDefinitionBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
+        public Identifier getId() {
             return this.key;
         }
 

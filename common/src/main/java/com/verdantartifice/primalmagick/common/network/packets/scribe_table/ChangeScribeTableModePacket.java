@@ -10,7 +10,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
@@ -19,7 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
  * @author Daedalus4096
  */
 public class ChangeScribeTableModePacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("change_scribe_table_mode");
+    public static final Identifier CHANNEL = ResourceUtils.loc("change_scribe_table_mode");
     public static final StreamCodec<RegistryFriendlyByteBuf, ChangeScribeTableModePacket> STREAM_CODEC = StreamCodec.ofMember(ChangeScribeTableModePacket::encode, ChangeScribeTableModePacket::decode);
 
     protected final int windowId;

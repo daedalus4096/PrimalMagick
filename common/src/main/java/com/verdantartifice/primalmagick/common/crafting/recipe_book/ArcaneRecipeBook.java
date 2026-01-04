@@ -6,7 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.apache.logging.log4j.LogManager;
@@ -28,8 +28,8 @@ import java.util.function.Consumer;
 public class ArcaneRecipeBook {
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected final Set<ResourceLocation> known = new HashSet<>();
-    protected final Set<ResourceLocation> highlight = new HashSet<>();
+    protected final Set<Identifier> known = new HashSet<>();
+    protected final Set<Identifier> highlight = new HashSet<>();
     protected final ArcaneRecipeBookSettings settings = new ArcaneRecipeBookSettings();
 
     public void copyOverData(ArcaneRecipeBook other) {
@@ -46,11 +46,11 @@ public class ArcaneRecipeBook {
         this.settings.clear();
     }
     
-    public Set<ResourceLocation> getKnown() {
+    public Set<Identifier> getKnown() {
         return Collections.unmodifiableSet(this.known);
     }
     
-    public Set<ResourceLocation> getHighlight() {
+    public Set<Identifier> getHighlight() {
         return Collections.unmodifiableSet(this.highlight);
     }
     
@@ -64,7 +64,7 @@ public class ArcaneRecipeBook {
         }
     }
     
-    protected void add(ResourceLocation loc) {
+    protected void add(Identifier loc) {
         this.known.add(loc);
     }
     
@@ -72,7 +72,7 @@ public class ArcaneRecipeBook {
         return recipe == null ? false : this.contains(recipe.id());
     }
     
-    public boolean contains(ResourceLocation loc) {
+    public boolean contains(Identifier loc) {
         return this.known.contains(loc);
     }
     
@@ -80,7 +80,7 @@ public class ArcaneRecipeBook {
         this.remove(recipe.id());
     }
     
-    protected void remove(ResourceLocation loc) {
+    protected void remove(Identifier loc) {
         this.known.remove(loc);
         this.highlight.remove(loc);
     }
@@ -131,13 +131,13 @@ public class ArcaneRecipeBook {
         this.getBookSettings().write(tag);
         
         ListTag knownList = new ListTag();
-        for (ResourceLocation loc : this.known) {
+        for (Identifier loc : this.known) {
             knownList.add(StringTag.valueOf(loc.toString()));
         }
         tag.put("Recipes", knownList);
         
         ListTag highlightList = new ListTag();
-        for (ResourceLocation loc : this.highlight) {
+        for (Identifier loc : this.highlight) {
             highlightList.add(StringTag.valueOf(loc.toString()));
         }
         tag.put("ToBeDisplayed", highlightList);
@@ -157,7 +157,7 @@ public class ArcaneRecipeBook {
             String locStr = tag.getString(index);
             
             try {
-                ResourceLocation loc = ResourceLocation.parse(locStr);
+                Identifier loc = Identifier.parse(locStr);
                 Optional<RecipeHolder<?>> recipeOpt = recipeManager.byKey(loc);
                 recipeOpt.ifPresentOrElse(recipe -> {
                     consumer.accept(recipe);

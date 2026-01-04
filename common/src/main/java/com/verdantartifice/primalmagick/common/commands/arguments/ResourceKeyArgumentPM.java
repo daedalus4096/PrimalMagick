@@ -22,7 +22,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -95,7 +95,7 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
 
     @Override
     public ResourceKey<T> parse(StringReader pReader) throws CommandSyntaxException {
-        return ResourceKey.create(this.registryKey, ResourceLocation.read(pReader));
+        return ResourceKey.create(this.registryKey, Identifier.read(pReader));
     }
 
     @Override

@@ -11,7 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -60,7 +60,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvider {
     private static final Logger LOGGER = LogManager.getLogger();
     
-    protected final Set<ResourceLocation> registeredBlocks = new HashSet<>();
+    protected final Set<Identifier> registeredBlocks = new HashSet<>();
     
     public AbstractBlockLootTableProvider(HolderLookup.Provider registries) {
         super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags(), registries);
@@ -183,7 +183,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> blocks = Services.BLOCKS_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
+        Set<Identifier> blocks = Services.BLOCKS_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
         
         // Warn for each mod block that didn't have a loot table registered
         blocks.removeAll(this.registeredBlocks);

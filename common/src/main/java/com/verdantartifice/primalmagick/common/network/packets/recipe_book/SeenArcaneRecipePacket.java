@@ -7,7 +7,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -17,16 +17,16 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  * @author Daedalus4096
  */
 public class SeenArcaneRecipePacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("seen_arcane_recipe");
+    public static final Identifier CHANNEL = ResourceUtils.loc("seen_arcane_recipe");
     public static final StreamCodec<RegistryFriendlyByteBuf, SeenArcaneRecipePacket> STREAM_CODEC = StreamCodec.ofMember(SeenArcaneRecipePacket::encode, SeenArcaneRecipePacket::decode);
 
-    protected final ResourceLocation recipeId;
+    protected final Identifier recipeId;
     
     public SeenArcaneRecipePacket(RecipeHolder<?> recipe) {
         this(recipe.id());
     }
     
-    public SeenArcaneRecipePacket(ResourceLocation recipeId) {
+    public SeenArcaneRecipePacket(Identifier recipeId) {
         this.recipeId = recipeId;
     }
 

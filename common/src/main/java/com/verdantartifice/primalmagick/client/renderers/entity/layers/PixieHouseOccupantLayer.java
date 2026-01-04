@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Map;
 
 public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseEntity, PixieHouseModel> {
-    private static final Map<PixieRank, ResourceLocation> TEXTURES = ImmutableMap.of(
+    private static final Map<PixieRank, Identifier> TEXTURES = ImmutableMap.of(
             PixieRank.BASIC, BasicPixieRenderer.TEXTURE,
             PixieRank.GRAND, GrandPixieRenderer.TEXTURE,
             PixieRank.MAJESTIC, MajesticPixieRenderer.TEXTURE);

@@ -28,7 +28,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.BowItem;
@@ -331,11 +331,11 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         this.itemWithParent(ItemsPM.TICK_STICK.get(), Items.STICK);
     }
     
-    private ResourceLocation key(Item item) {
+    private Identifier key(Item item) {
         return Objects.requireNonNull(Services.ITEMS_REGISTRY.getKey(item));
     }
     
-    private ResourceLocation key(Block block) {
+    private Identifier key(Block block) {
         return Objects.requireNonNull(Services.BLOCKS_REGISTRY.getKey(block));
     }
     
@@ -343,51 +343,51 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         return this.builder(this.key(item));
     }
     
-    private ItemModelBuilderPMNeoforge builder(ResourceLocation loc) {
+    private ItemModelBuilderPMNeoforge builder(Identifier loc) {
         return this.getBuilder(loc.toString());
     }
     
-    private ResourceLocation defaultModelLoc(Item item) {
+    private Identifier defaultModelLoc(Item item) {
         return this.key(item).withPrefix(ITEM_FOLDER + "/");
     }
     
-    private ModelFile existingModel(ResourceLocation modelLoc) {
+    private ModelFile existingModel(Identifier modelLoc) {
         return new ModelFile.ExistingModelFile(modelLoc, this.existingFileHelper);
     }
     
-    private ModelFile uncheckedModel(ResourceLocation modelLoc) {
+    private ModelFile uncheckedModel(Identifier modelLoc) {
         return new ModelFile.UncheckedModelFile(modelLoc);
     }
     
-    private ResourceLocation blockTexture(Block block) {
+    private Identifier blockTexture(Block block) {
         return this.key(block).withPrefix(BLOCK_FOLDER + "/");
     }
     
     public ItemModelBuilderPMNeoforge basicItem(Item item) {
-        ResourceLocation key = this.key(item);
+        Identifier key = this.key(item);
         return this.builder(key)
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "item/" + key.getPath()));
+                .texture("layer0", Identifier.fromNamespaceAndPath(key.getNamespace(), "item/" + key.getPath()));
     }
 
     private ItemModelBuilderPMNeoforge itemWithParent(Item item, Item parent) {
         return this.itemWithParent(item, this.defaultModelLoc(parent));
     }
     
-    private ItemModelBuilderPMNeoforge itemWithParent(Item item, ResourceLocation parent) {
+    private ItemModelBuilderPMNeoforge itemWithParent(Item item, Identifier parent) {
         return this.builder(item).parent(this.existingModel(parent));
     }
     
     private ItemModelBuilderPMNeoforge handheldItem(Item item) {
-        return this.builder(item).parent(this.existingModel(ResourceLocation.withDefaultNamespace("item/handheld"))).texture("layer0", this.defaultModelLoc(item));
+        return this.builder(item).parent(this.existingModel(Identifier.withDefaultNamespace("item/handheld"))).texture("layer0", this.defaultModelLoc(item));
     }
     
     private ItemModelBuilderPMNeoforge tridentItem(TridentItem item) {
         ItemModelBuilderPMNeoforge throwingModel = this.tridentThrowingModel(item);
         ItemModelBuilderPMNeoforge inHandModel = this.tridentInHandModel(item, throwingModel);
         return this.basicItem(item)
-                .override().predicate(ResourceLocation.withDefaultNamespace("throwing"), 0).model(inHandModel).end()
-                .override().predicate(ResourceLocation.withDefaultNamespace("throwing"), 1).model(throwingModel).end();
+                .override().predicate(Identifier.withDefaultNamespace("throwing"), 0).model(inHandModel).end()
+                .override().predicate(Identifier.withDefaultNamespace("throwing"), 1).model(throwingModel).end();
     }
     
     private ItemModelBuilderPMNeoforge tridentInHandModel(TridentItem item, ModelFile throwingModel) {
@@ -395,7 +395,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
                 .texture("particle", this.defaultModelLoc(item))
-                .override().predicate(ResourceLocation.withDefaultNamespace("throwing"), 1).model(throwingModel).end()
+                .override().predicate(Identifier.withDefaultNamespace("throwing"), 1).model(throwingModel).end()
                 .transforms()
                         .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 60, 0).translation(11, 17, -2).scale(1).end()
                         .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 60, 0).translation(3, 17, 12).scale(1).end()
@@ -424,8 +424,8 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
     }
     
     private ItemModelBuilderPMNeoforge bowItem(BowItem item) {
-        ResourceLocation pulling = ResourceLocation.withDefaultNamespace("pulling");
-        ResourceLocation pull = ResourceLocation.withDefaultNamespace("pull");
+        Identifier pulling = Identifier.withDefaultNamespace("pulling");
+        Identifier pull = Identifier.withDefaultNamespace("pull");
         return this.builder(item)
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", this.defaultModelLoc(item))
@@ -441,7 +441,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
     }
     
     private ItemModelBuilderPMNeoforge bowPullingModel(BowItem item, int stage) {
-        ResourceLocation stageKey = this.key(item).withSuffix("_pulling_" + stage);
+        Identifier stageKey = this.key(item).withSuffix("_pulling_" + stage);
         return this.builder(stageKey).parent(this.uncheckedModel(this.defaultModelLoc(item))).texture("layer0", stageKey.withPrefix(ITEM_FOLDER + "/"));
     }
     
@@ -449,20 +449,20 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         return this.builder(item)
                 .parent(new ModelFile.UncheckedModelFile("item/handheld_rod"))
                 .texture("layer0", this.defaultModelLoc(item))
-                .override().predicate(ResourceLocation.withDefaultNamespace("cast"), 1).model(this.fishingRodCastModel(item)).end();
+                .override().predicate(Identifier.withDefaultNamespace("cast"), 1).model(this.fishingRodCastModel(item)).end();
     }
     
     private ItemModelBuilderPMNeoforge fishingRodCastModel(FishingRodItem item) {
-        ResourceLocation castKey = this.key(item).withSuffix("_cast");
+        Identifier castKey = this.key(item).withSuffix("_cast");
         return this.builder(castKey).parent(this.uncheckedModel(this.defaultModelLoc(item))).texture("layer0", castKey.withPrefix(ITEM_FOLDER + "/"));
     }
     
-    private ItemModelBuilderPMNeoforge shieldItem(ShieldItem item, ResourceLocation particleTexture) {
+    private ItemModelBuilderPMNeoforge shieldItem(ShieldItem item, Identifier particleTexture) {
         return this.builder(item)
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
                 .texture("particle", particleTexture)
-                .override().predicate(ResourceLocation.withDefaultNamespace("blocking"), 1).model(this.shieldBlockingModel(item, particleTexture)).end()
+                .override().predicate(Identifier.withDefaultNamespace("blocking"), 1).model(this.shieldBlockingModel(item, particleTexture)).end()
                 .transforms()
                         .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 90, 0).translation(10, 6, -4).scale(1).end()
                         .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 90, 0).translation(10, 6, 12).scale(1).end()
@@ -474,7 +474,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
                         .end();
     }
     
-    private ItemModelBuilderPMNeoforge shieldBlockingModel(ShieldItem item, ResourceLocation particleTexture) {
+    private ItemModelBuilderPMNeoforge shieldBlockingModel(ShieldItem item, Identifier particleTexture) {
         return this.builder(this.key(item).withSuffix("_blocking"))
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
@@ -530,8 +530,8 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         return this.armorItemWithTrims(item, this.getArmorTrimOverlay(item), trims);
     }
     
-    private ItemModelBuilderPMNeoforge armorItemWithTrims(ArmorItem item, ResourceLocation trimOverlayLoc, List<Holder<TrimMaterial>> trims) {
-        ResourceLocation trimType = ResourceLocation.withDefaultNamespace("trim_type");
+    private ItemModelBuilderPMNeoforge armorItemWithTrims(ArmorItem item, Identifier trimOverlayLoc, List<Holder<TrimMaterial>> trims) {
+        Identifier trimType = Identifier.withDefaultNamespace("trim_type");
         ItemModelBuilderPMNeoforge builder = this.basicItem(item);
         
         // It's very important that the overrides be written in ascending order of value, otherwise you may get the wrong texture for any given property value
@@ -543,7 +543,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         return builder;
     }
     
-    private ItemModelBuilderPMNeoforge trimmedArmorModel(ArmorItem item, ResourceLocation trimOverlayLoc, Holder<TrimMaterial> trim) {
+    private ItemModelBuilderPMNeoforge trimmedArmorModel(ArmorItem item, Identifier trimOverlayLoc, Holder<TrimMaterial> trim) {
         String palatteSuffix = this.getArmorTrimColorPaletteSuffix(trim, item.getMaterial());
         return this.builder(this.key(item).withSuffix("_" + palatteSuffix + "_trim"))
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
@@ -551,7 +551,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
                 .palattedTexture("layer1", trimOverlayLoc, palatteSuffix);
     }
     
-    private ResourceLocation getArmorTrimOverlay(ArmorItem item) {
+    private Identifier getArmorTrimOverlay(ArmorItem item) {
         if (item instanceof RobeArmorItem) {
             return switch (item.getEquipmentSlot()) {
                 case HEAD -> ResourceUtils.loc("trims/items/robe_head_trim");
@@ -562,10 +562,10 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
             };
         } else {
             return switch (item.getEquipmentSlot()) {
-                case HEAD -> ResourceLocation.withDefaultNamespace("trims/items/helmet_trim");
-                case CHEST -> ResourceLocation.withDefaultNamespace("trims/items/chestplate_trim");
-                case LEGS -> ResourceLocation.withDefaultNamespace("trims/items/leggings_trim");
-                case FEET -> ResourceLocation.withDefaultNamespace("trims/items/boots_trim");
+                case HEAD -> Identifier.withDefaultNamespace("trims/items/helmet_trim");
+                case CHEST -> Identifier.withDefaultNamespace("trims/items/chestplate_trim");
+                case LEGS -> Identifier.withDefaultNamespace("trims/items/leggings_trim");
+                case FEET -> Identifier.withDefaultNamespace("trims/items/boots_trim");
                 default -> throw new IllegalArgumentException("Invalid armor type for trim overlay detection");
             };
         }
@@ -581,7 +581,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
     }
     
     private ItemModelBuilderPMNeoforge itemWithOverlay(Item item) {
-        ResourceLocation texture = this.defaultModelLoc(item);
+        Identifier texture = this.defaultModelLoc(item);
         return this.builder(item)
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", texture.withSuffix("_overlay"))
@@ -589,7 +589,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
     }
     
     private ItemModelBuilderPMNeoforge spawnEggItem(SpawnEggItem item) {
-        return this.itemWithParent(item, ResourceLocation.withDefaultNamespace("item/template_spawn_egg"));
+        return this.itemWithParent(item, Identifier.withDefaultNamespace("item/template_spawn_egg"));
     }
     
     private void pixieItem(PixieItemNeoforge item) {
@@ -598,10 +598,10 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
     }
     
     private ItemModelBuilderPMNeoforge dyeableItem(Item item, DyeColor defaultColor) {
-        ResourceLocation key = this.key(item);
+        Identifier key = this.key(item);
         ItemModelBuilderPMNeoforge builder = this.builder(key)
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "item/" + key.getPath() + "_" + defaultColor.getName()));
+                .texture("layer0", Identifier.fromNamespaceAndPath(key.getNamespace(), "item/" + key.getPath() + "_" + defaultColor.getName()));
         
         // It's very important that the overrides be written in ascending order of value, otherwise you may get the wrong texture for any given property value
         List<DyeColor> sortedColors = Stream.of(DyeColor.values()).sorted((c1, c2) -> Integer.compare(c1.getId(), c2.getId())).toList();
@@ -617,7 +617,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
                 .texture("layer0", this.defaultModelLoc(item).withSuffix("_" + color.getName()));
     }
 
-    private ItemModelBuilderPMNeoforge pixieHouseItem(PixieHouseItem item, ResourceLocation particleTexture) {
+    private ItemModelBuilderPMNeoforge pixieHouseItem(PixieHouseItem item, Identifier particleTexture) {
         return this.builder(item)
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)

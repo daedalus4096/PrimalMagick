@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Rarity;
 
 import javax.annotation.Nonnull;
@@ -23,10 +23,10 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public abstract class Rune {
-    public static final Codec<Rune> CODEC = ResourceLocation.CODEC.xmap(Rune::getRune, Rune::getId);
-    public static final StreamCodec<ByteBuf, Rune> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(Rune::getRune, Rune::getId);
+    public static final Codec<Rune> CODEC = Identifier.CODEC.xmap(Rune::getRune, Rune::getId);
+    public static final StreamCodec<ByteBuf, Rune> STREAM_CODEC = Identifier.STREAM_CODEC.map(Rune::getRune, Rune::getId);
     
-    protected static final Map<ResourceLocation, Rune> REGISTRY = new HashMap<>();
+    protected static final Map<Identifier, Rune> REGISTRY = new HashMap<>();
     
     public static final SourceRune EARTH = new SourceRune("earth", ResearchEntries.RUNE_EARTH, Sources.EARTH);
     public static final SourceRune SEA = new SourceRune("sea", ResearchEntries.RUNE_SEA, Sources.SEA);
@@ -50,13 +50,13 @@ public abstract class Rune {
     public static final PowerRune POWER = new PowerRune("power", ResearchEntries.RUNE_POWER, Rarity.RARE, 1);
     public static final PowerRune GRACE = new PowerRune("grace", ResearchEntries.RUNE_GRACE, Rarity.EPIC, -1);
     
-    protected final ResourceLocation id;
+    protected final Identifier id;
     protected final AbstractRequirement<?> requirement;
     protected final Rarity rarity;
     protected final boolean glint;
     protected final int limit;
     
-    public Rune(@Nonnull ResourceLocation id, @Nonnull AbstractRequirement<?> requirement, @Nonnull Rarity rarity, boolean glint, int limit) {
+    public Rune(@Nonnull Identifier id, @Nonnull AbstractRequirement<?> requirement, @Nonnull Rarity rarity, boolean glint, int limit) {
         if (REGISTRY.containsKey(id)) {
             // Don't allow a given rune to be registered more than once
             throw new IllegalArgumentException("Rune " + id.toString() + " already registered!");
@@ -70,7 +70,7 @@ public abstract class Rune {
     }
     
     @Nonnull
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return this.id;
     }
     
@@ -105,7 +105,7 @@ public abstract class Rune {
     }
     
     @Nullable
-    public static Rune getRune(@Nonnull ResourceLocation tag) {
+    public static Rune getRune(@Nonnull Identifier tag) {
         return REGISTRY.get(tag);
     }
 }

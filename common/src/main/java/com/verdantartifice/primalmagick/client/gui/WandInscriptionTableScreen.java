@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.menus.WandInscriptionTableMenu;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class WandInscriptionTableScreen extends AbstractContainerScreenPM<WandInscriptionTableMenu> {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/wand_inscription_table.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/wand_inscription_table.png");
 
     public WandInscriptionTableScreen(WandInscriptionTableMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);

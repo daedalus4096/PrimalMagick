@@ -4,7 +4,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
@@ -17,14 +17,14 @@ public abstract class AbstractToastPM implements Toast {
     protected static final long TITLE_TIME = 1500L;
     protected static final float FADE_DURATION = 300F;
 
-    protected abstract ResourceLocation getBackgroundSprite();
+    protected abstract Identifier getBackgroundSprite();
     protected abstract Component getTitleText();
     protected abstract Optional<Component> getSubtitleText();
     protected abstract Component getBodyText();
     protected abstract int getTitleColor();
     protected abstract int getSubtitleColor();
     protected abstract int getBodyColor();
-    protected abstract Optional<ResourceLocation> getIcon();
+    protected abstract Optional<Identifier> getIcon();
 
     protected int getIconWidth() {
         return 16;

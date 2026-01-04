@@ -9,7 +9,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +30,7 @@ public class StyleGuideProvider implements DataProvider {
     @Override
     public CompletableFuture<?> run(CachedOutput pOutput) {
         ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
-        Map<ResourceLocation, StyleGuide> map = new HashMap<>();
+        Map<Identifier, StyleGuide> map = new HashMap<>();
         this.registerStyleGuides((langId, guide) -> {
             if (map.put(langId, guide) != null) {
                 LOGGER.warn("Duplicate style guide in data generation: {}", langId.toString());
@@ -44,11 +44,11 @@ public class StyleGuideProvider implements DataProvider {
         return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
     }
 
-    private Path getPath(PackOutput output, ResourceLocation entryLoc) {
+    private Path getPath(PackOutput output, Identifier entryLoc) {
         return output.getOutputFolder(PackOutput.Target.RESOURCE_PACK).resolve(entryLoc.getNamespace()).resolve("style_guides").resolve(entryLoc.getPath() + ".json");
     }
     
-    protected void registerStyleGuides(BiConsumer<ResourceLocation, StyleGuide> consumer) {
+    protected void registerStyleGuides(BiConsumer<Identifier, StyleGuide> consumer) {
         String illegibleKey = "tooltip.primalmagick.written_language.illegible_text";
         
         StyleGuide.builder(BookLanguagesPM.DEFAULT)

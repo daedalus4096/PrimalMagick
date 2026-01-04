@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.books.grids;
 
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -42,9 +42,9 @@ public class GridDefinitionLoader extends SimpleJsonResourceReloadListener<GridD
     }
 
     @Override
-    protected void apply(@NotNull Map<ResourceLocation, GridDefinition> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
+    protected void apply(@NotNull Map<Identifier, GridDefinition> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
         LinguisticsManager.clearAllGridDefinitions();
-        for (Map.Entry<ResourceLocation, GridDefinition> entry : pObject.entrySet()) {
+        for (Map.Entry<Identifier, GridDefinition> entry : pObject.entrySet()) {
             if (entry.getValue() == null || !LinguisticsManager.registerGridDefinition(entry.getKey(), entry.getValue())) {
                 LOGGER.error("Failed to register linguistics grid definition {}", entry.getKey());
             }
@@ -52,9 +52,9 @@ public class GridDefinitionLoader extends SimpleJsonResourceReloadListener<GridD
         LOGGER.info("Loaded {} linguistics grid definitions", LinguisticsManager.getAllGridDefinitions().size());
     }
 
-    public void replaceGridDefinitions(Map<ResourceLocation, GridDefinition> gridDefinitions) {
+    public void replaceGridDefinitions(Map<Identifier, GridDefinition> gridDefinitions) {
         LinguisticsManager.clearAllGridDefinitions();
-        for (Map.Entry<ResourceLocation, GridDefinition> entry : gridDefinitions.entrySet()) {
+        for (Map.Entry<Identifier, GridDefinition> entry : gridDefinitions.entrySet()) {
             if (entry.getValue() == null || !LinguisticsManager.registerGridDefinition(entry.getKey(), entry.getValue())) {
                 LOGGER.error("Failed to update linguistics grid {}", entry.getKey());
             }

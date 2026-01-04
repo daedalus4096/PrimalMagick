@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.items;
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * Builder for item models, adds the ability to set textures with armor trim suffixes 
- * via {@link #palattedTexture(String, ResourceLocation, String)}.  Duplicates override functionality
+ * via {@link #palattedTexture(String, Identifier, String)}.  Duplicates override functionality
  * from ItemModelBuilder.
  * 
  * @author Daedalus4096
@@ -23,11 +23,11 @@ import java.util.Map;
 public class ItemModelBuilderPMForge extends ModelBuilder<ItemModelBuilderPMForge> {
     protected List<OverrideBuilder> overrides = new ArrayList<>();
 
-    public ItemModelBuilderPMForge(ResourceLocation outputLocation, ExistingFileHelper existingFileHelper) {
+    public ItemModelBuilderPMForge(Identifier outputLocation, ExistingFileHelper existingFileHelper) {
         super(outputLocation, existingFileHelper);
     }
     
-    public ItemModelBuilderPMForge palattedTexture(String key, ResourceLocation baseTexture, String palatteSuffix) {
+    public ItemModelBuilderPMForge palattedTexture(String key, Identifier baseTexture, String palatteSuffix) {
         Preconditions.checkNotNull(key, "Key must not be null");
         Preconditions.checkNotNull(baseTexture, "Base texture must not be null");
         // TODO Check that base texture exists if ModelProvider.TEXTURE ever becomes accessible
@@ -54,7 +54,7 @@ public class ItemModelBuilderPMForge extends ModelBuilder<ItemModelBuilderPMForg
 
     public class OverrideBuilder {
         private ModelFile model;
-        private final Map<ResourceLocation, Float> predicates = new LinkedHashMap<>();
+        private final Map<Identifier, Float> predicates = new LinkedHashMap<>();
 
         public OverrideBuilder model(ModelFile model) {
             this.model = model;
@@ -62,7 +62,7 @@ public class ItemModelBuilderPMForge extends ModelBuilder<ItemModelBuilderPMForg
             return this;
         }
 
-        public OverrideBuilder predicate(ResourceLocation key, float value) {
+        public OverrideBuilder predicate(Identifier key, float value) {
             this.predicates.put(key, value);
             return this;
         }

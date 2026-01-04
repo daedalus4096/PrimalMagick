@@ -8,7 +8,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.awt.Color;
 import java.text.DecimalFormat;
@@ -20,7 +20,7 @@ import java.util.Collections;
  * @author Daedalus4096
  */
 public class ManaGaugeWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/mana_gauge.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/mana_gauge.png");
     protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
 
     protected final Source source;

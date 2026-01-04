@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import net.minecraft.Util;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.HashSet;
@@ -56,7 +56,7 @@ public interface IHasExpertise extends IHasRequirement {
      * 
      * @return the recipe's expertise group, if any
      */
-    Optional<ResourceLocation> getExpertiseGroup();
+    Optional<Identifier> getExpertiseGroup();
     
     /**
      * Get the localized text describing this recipe's expertise group for tooltip rendering.
@@ -90,7 +90,7 @@ public interface IHasExpertise extends IHasRequirement {
      * @param registryAccess a registry access object
      * @return the recipe's research discipline, if any
      */
-    default Optional<ResearchDisciplineKey> getResearchDiscipline(RegistryAccess registryAccess, ResourceLocation recipeId) {
+    default Optional<ResearchDisciplineKey> getResearchDiscipline(RegistryAccess registryAccess, Identifier recipeId) {
         return this.getResearchDisciplineOverride().or(() -> {
             return this.getRequirement().flatMap(req -> {
                 Set<ResearchDisciplineKey> foundDisciplines = new HashSet<>();

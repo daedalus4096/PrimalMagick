@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -36,8 +36,8 @@ import java.util.Optional;
 public class WandInscriptionTableMenu extends AbstractContainerMenu {
     protected static final Component CASTER_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.caster");
     protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.scroll");
-    protected static final ResourceLocation TOME_BACKGROUND = ResourceUtils.loc("item/empty_book_slot");
-    protected static final ResourceLocation RECIPE_LOC = ResourceUtils.loc("wand_inscription");
+    protected static final Identifier TOME_BACKGROUND = ResourceUtils.loc("item/empty_book_slot");
+    protected static final Identifier RECIPE_LOC = ResourceUtils.loc("wand_inscription");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final InscriptionComponentInventory componentInv = new InscriptionComponentInventory();

@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPart
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -139,7 +139,7 @@ public class RuneManager {
      * @return true if the list of runes is within allowed limits, false otherwise
      */
     public static boolean checkLimits(@Nonnull List<Rune> runes) {
-        Map<ResourceLocation, Integer> counts = new HashMap<>();
+        Map<Identifier, Integer> counts = new HashMap<>();
         for (Rune rune : runes) {
             if (rune.hasLimit()) {
                 counts.put(rune.getId(), counts.getOrDefault(rune.getId(), 0) + 1);

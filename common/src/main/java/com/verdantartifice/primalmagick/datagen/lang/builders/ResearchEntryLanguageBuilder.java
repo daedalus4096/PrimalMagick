@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -23,7 +23,7 @@ public class ResearchEntryLanguageBuilder extends AbstractLanguageBuilder<Resear
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(ResearchEntry base) {
+    protected Identifier getBaseRegistryKey(ResearchEntry base) {
         return ResourceUtils.loc(base.key().getRootKey().location().getPath().toLowerCase());
     }
 

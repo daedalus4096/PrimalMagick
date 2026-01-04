@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 
@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class TileToServerPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("tile_to_server");
+    public static final Identifier CHANNEL = ResourceUtils.loc("tile_to_server");
     public static final StreamCodec<RegistryFriendlyByteBuf, TileToServerPacket> STREAM_CODEC = StreamCodec.ofMember(TileToServerPacket::encode, TileToServerPacket::decode);
 
     protected final BlockPos pos;

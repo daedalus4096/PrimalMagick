@@ -17,7 +17,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -120,7 +120,7 @@ public class ConcoctingRecipeBuilder {
         }
     }
     
-    protected void validate(ResourceLocation id) {
+    protected void validate(Identifier id) {
         if (this.ingredients.isEmpty()) {
             throw new IllegalStateException("No ingredients defined for concocting recipe " + id + "!");
         }
@@ -129,7 +129,7 @@ public class ConcoctingRecipeBuilder {
         }
     }
     
-    public void build(RecipeOutput output, ResourceLocation id) {
+    public void build(RecipeOutput output, Identifier id) {
         this.validate(id);
         String groupStr = this.useDefaultGroup ? BuiltInRegistries.POTION.getKey(this.result.get(DataComponents.POTION_CONTENTS).potion().get().value()).getPath() : this.group;
         ConcoctingRecipe recipe = new ConcoctingRecipe(Objects.requireNonNullElse(groupStr, ""), this.result, this.ingredients, this.getFinalRequirement(), Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));

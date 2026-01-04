@@ -6,7 +6,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Packet sent to reset the server-side fall distance of the sending player.
@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ResetFallDistancePacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("reset_fall_distance");
+    public static final Identifier CHANNEL = ResourceUtils.loc("reset_fall_distance");
     public static final StreamCodec<RegistryFriendlyByteBuf, ResetFallDistancePacket> STREAM_CODEC = StreamCodec.ofMember(ResetFallDistancePacket::encode, ResetFallDistancePacket::decode);
 
     public ResetFallDistancePacket() {}

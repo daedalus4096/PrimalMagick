@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.registries;
 
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import javax.annotation.Nullable;
@@ -14,7 +14,7 @@ public record RegistryItemNeoforge<R, T extends R>(DeferredHolder<R, T> inner) i
     }
 
     @Override
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return inner.getId();
     }
 

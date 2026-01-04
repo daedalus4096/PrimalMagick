@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Objects;
@@ -26,7 +26,7 @@ public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<Resource
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(ResourceKey<Enchantment> base) {
+    protected Identifier getBaseRegistryKey(ResourceKey<Enchantment> base) {
         return Objects.requireNonNull(base).location();
     }
 

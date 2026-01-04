@@ -11,7 +11,7 @@ import net.minecraft.gametest.framework.GameTestInstance;
 import net.minecraft.gametest.framework.TestData;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Consumer;
 
@@ -503,7 +503,7 @@ public class TestInstancesPM {
     private static Holder.Reference<GameTestInstance> registerFunction(BootstrapContext<GameTestInstance> context,
                                                                        ResourceKey<GameTestInstance> instanceKey,
                                                                        ResourceKey<Consumer<GameTestHelper>> funcKey,
-                                                                       ResourceLocation templateLoc) {
+                                                                       Identifier templateLoc) {
         return registerFunction(context, instanceKey, funcKey, TestEnvironmentsPM.DEFAULT, templateLoc);
     }
 
@@ -511,7 +511,7 @@ public class TestInstancesPM {
                                                                        ResourceKey<GameTestInstance> instanceKey,
                                                                        ResourceKey<Consumer<GameTestHelper>> funcKey,
                                                                        ResourceKey<TestEnvironmentDefinition> envKey,
-                                                                       ResourceLocation templateLoc) {
+                                                                       Identifier templateLoc) {
         HolderGetter<TestEnvironmentDefinition> envs = context.lookup(Registries.TEST_ENVIRONMENT);
         return registerFunction(context, instanceKey, funcKey, TestDataBuilder.withEnvironment(envKey, envs).template(templateLoc).build());
     }

@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -26,7 +26,7 @@ public class WrittenBookLanguageBuilder extends AbstractLanguageBuilder<Resource
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(ResourceKey<BookDefinition> base) {
+    protected Identifier getBaseRegistryKey(ResourceKey<BookDefinition> base) {
         return Objects.requireNonNull(base).location();
     }
 

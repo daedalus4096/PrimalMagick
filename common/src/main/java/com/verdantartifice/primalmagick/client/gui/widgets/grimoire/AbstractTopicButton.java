@@ -11,7 +11,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 import java.awt.Color;
@@ -22,7 +22,7 @@ import java.awt.Color;
  * @author Daedalus4096
  */
 public abstract class AbstractTopicButton extends Button {
-    protected static final ResourceLocation UNREAD_SPRITE = ResourceUtils.loc("grimoire/unread");
+    protected static final Identifier UNREAD_SPRITE = ResourceUtils.loc("grimoire/unread");
     protected static final int UNREAD_WIDTH = 16;
     protected static final int UNREAD_HEIGHT = 16;
 

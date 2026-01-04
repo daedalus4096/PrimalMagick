@@ -10,7 +10,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Objects;
@@ -22,7 +22,7 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
     public static final StreamCodec<RegistryFriendlyByteBuf, RuneEnchantmentKey> STREAM_CODEC = StreamCodec.composite(Enchantment.STREAM_CODEC, k -> k.enchant, RuneEnchantmentKey::new);
     
     private static final String PREFIX = "&";
-    private static final ResourceLocation ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
+    private static final Identifier ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
 
     protected final Holder<Enchantment> enchant;
     

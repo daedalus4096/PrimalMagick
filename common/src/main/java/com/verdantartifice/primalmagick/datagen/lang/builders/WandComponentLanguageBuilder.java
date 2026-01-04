@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -23,7 +23,7 @@ public class WandComponentLanguageBuilder extends AbstractLanguageBuilder<IWandC
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(IWandComponent base) {
+    protected Identifier getBaseRegistryKey(IWandComponent base) {
         return ResourceUtils.loc(base.getTag());
     }
 }

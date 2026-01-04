@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinition;
@@ -25,7 +25,7 @@ import java.util.stream.IntStream;
 public class SoundDefinitionsProviderPMForge extends SoundDefinitionsProvider {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private final List<ResourceLocation> generatedSounds = new ArrayList<>();
+    private final List<Identifier> generatedSounds = new ArrayList<>();
     
     public SoundDefinitionsProviderPMForge(PackOutput output, ExistingFileHelper helper) {
         super(output, Constants.MOD_ID, helper);
@@ -72,13 +72,13 @@ public class SoundDefinitionsProviderPMForge extends SoundDefinitionsProvider {
     }
 
     @Override
-    protected void add(ResourceLocation soundEvent, SoundDefinition definition) {
+    protected void add(Identifier soundEvent, SoundDefinition definition) {
         super.add(soundEvent, definition);
         this.generatedSounds.add(soundEvent);
     }
     
     protected void verifyComplete() {
-        List<ResourceLocation> registeredSounds = new ArrayList<>(Services.SOUND_EVENTS_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).toList());
+        List<Identifier> registeredSounds = new ArrayList<>(Services.SOUND_EVENTS_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).toList());
         registeredSounds.removeAll(this.generatedSounds);
         if (!registeredSounds.isEmpty()) {
             registeredSounds.forEach(loc -> LOGGER.warn("No sound definition generated for sound {}", loc.toString()));

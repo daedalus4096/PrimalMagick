@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.spells;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,7 +26,7 @@ public interface ISpellComponent {
      * @return the named property, or null if no such property is attached to this spell component
      */
     @Nullable
-    SpellProperty getProperty(ResourceLocation id);
+    SpellProperty getProperty(Identifier id);
     
     /**
      * Determine whether the spell component has an effect that should be executed.  Should be true for all but

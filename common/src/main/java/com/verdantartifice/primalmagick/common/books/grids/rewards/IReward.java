@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
@@ -16,6 +16,6 @@ import java.util.Optional;
 public interface IReward {
     void grant(ServerPlayer player, RegistryAccess registryAccess);
     Component getDescription(Player player, RegistryAccess registryAccess);
-    ResourceLocation getIconLocation(Player player);
+    Identifier getIconLocation(Player player);
     Optional<Component> getAmountText();
 }

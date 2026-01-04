@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 
 import javax.annotation.Nonnull;
@@ -44,11 +44,11 @@ public class JsonUtils {
      * @return the list of deserialized resource locations 
      */
     @Nonnull
-    public static List<ResourceLocation> toResourceLocations(@Nonnull JsonArray jsonArray) {
-        List<ResourceLocation> retVal = new ArrayList<>();
+    public static List<Identifier> toResourceLocations(@Nonnull JsonArray jsonArray) {
+        List<Identifier> retVal = new ArrayList<>();
         for (JsonElement element : jsonArray) {
             try {
-                retVal.add(ResourceLocation.parse(element.getAsString()));
+                retVal.add(Identifier.parse(element.getAsString()));
             } catch (Exception e) {}
         }
         return retVal;

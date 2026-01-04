@@ -20,7 +20,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ItemLike;
 
@@ -187,13 +187,13 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
     
     @Nonnull
-    public Set<ResourceLocation> getAllRecipeIds() {
+    public Set<Identifier> getAllRecipeIds() {
         return Stream.concat(this.stages.stream().flatMap(stage -> stage.recipes().stream()), this.addenda.stream().flatMap(addendum -> addendum.recipes().stream())).collect(Collectors.toSet());
     }
     
     @Nonnull
-    public Set<ResourceLocation> getKnownRecipeIds(Player player) {
-        Set<ResourceLocation> retVal = new HashSet<>();
+    public Set<Identifier> getKnownRecipeIds(Player player) {
+        Set<Identifier> retVal = new HashSet<>();
         if (this.stages().isEmpty()) {
             // If this research entry has no stages, then it can't have any recipes, so just abort
             return retVal;
@@ -343,7 +343,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
             return this;
         }
         
-        public Builder icon(ResourceLocation loc) {
+        public Builder icon(Identifier loc) {
             this.iconOpt = Optional.of(IconDefinition.of(loc));
             return this;
         }

@@ -9,7 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nonnull;
 
@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * @author Daedalus4096
  */
 public class WandPoofPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("wand_poof");
+    public static final Identifier CHANNEL = ResourceUtils.loc("wand_poof");
     public static final StreamCodec<RegistryFriendlyByteBuf, WandPoofPacket> STREAM_CODEC = StreamCodec.ofMember(WandPoofPacket::encode, WandPoofPacket::decode);
 
     protected final double x;

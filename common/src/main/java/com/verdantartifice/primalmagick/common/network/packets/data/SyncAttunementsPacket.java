@@ -10,7 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -19,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class SyncAttunementsPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_attunements");
+    public static final Identifier CHANNEL = ResourceUtils.loc("sync_attunements");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncAttunementsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncAttunementsPacket::encode, SyncAttunementsPacket::decode);
 
     protected final CompoundTag data;

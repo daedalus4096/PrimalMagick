@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.client.util.TooltipHelper;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Objects;
@@ -27,7 +27,7 @@ public class BlockLanguageBuilder extends AbstractLanguageBuilder<Block, BlockLa
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(Block base) {
+    protected Identifier getBaseRegistryKey(Block base) {
         return Objects.requireNonNull(Services.BLOCKS_REGISTRY.getKey(base));
     }
 

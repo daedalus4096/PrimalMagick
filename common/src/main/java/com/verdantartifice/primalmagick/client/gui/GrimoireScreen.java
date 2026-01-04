@@ -89,7 +89,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
@@ -120,7 +120,7 @@ import java.util.stream.Stream;
  */
 public class GrimoireScreen extends Screen {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagick:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     private static final int HISTORY_LIMIT = 64;
@@ -681,22 +681,22 @@ public class GrimoireScreen extends Screen {
         }
         
         // Generate recipe pages from stage and addenda
-        List<ResourceLocation> locList = new ArrayList<>();
-        for (ResourceLocation loc : stage.recipes()) {
+        List<Identifier> locList = new ArrayList<>();
+        for (Identifier loc : stage.recipes()) {
             if (!locList.contains(loc)) {
                 locList.add(loc);
             }
         }
         for (ResearchAddendum addendum : addenda) {
             if (addendum.completionRequirementOpt().isEmpty() || addendum.completionRequirementOpt().get().isMetBy(player)) {
-                for (ResourceLocation loc : addendum.recipes()) {
+                for (Identifier loc : addendum.recipes()) {
                     if (!locList.contains(loc)) {
                         locList.add(loc);
                     }
                 }
             }
         }
-        for (ResourceLocation recipeLoc : locList) {
+        for (Identifier recipeLoc : locList) {
             Optional<RecipeHolder<?>> opt = level.getRecipeManager().byKey(recipeLoc);
             opt.ifPresent(recipe -> {
                 AbstractRecipePage page = RecipePageFactory.createPage(recipe, level.registryAccess());
@@ -906,7 +906,7 @@ public class GrimoireScreen extends Screen {
         // Add the first page with no contents to show the meter
         this.pages.add(new AttunementPage(source, true));
         
-        ResourceLocation sourceId = source.getId();
+        Identifier sourceId = source.getId();
         String componentKey = String.join(".", "source", sourceId.getNamespace(), sourceId.getPath(), "attunement", "text");
         String rawText = (Component.translatable(componentKey)).getString();
         
@@ -981,7 +981,7 @@ public class GrimoireScreen extends Screen {
     
     protected void parseRuneEnchantmentPage(Holder<Enchantment> enchant) {
         Minecraft mc = Minecraft.getInstance();
-        ResourceLocation enchantKey = enchant.unwrapKey().get().location();
+        Identifier enchantKey = enchant.unwrapKey().get().location();
         String rawText = ResearchManager.isResearchComplete(mc.player, new RuneEnchantmentKey(enchant)) ?
                 (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "text"))).getString() :
                 (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "partial_text"))).getString();

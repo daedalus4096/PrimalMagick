@@ -5,12 +5,12 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.gametest.framework.TestData;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Rotation;
 
 public class TestDataBuilder {
     private final Holder<TestEnvironmentDefinition> envHolder;
-    private ResourceLocation template = TestUtils.DEFAULT_TEMPLATE;
+    private Identifier template = TestUtils.DEFAULT_TEMPLATE;
     private int maxTicks = 400;
     private int setupTicks = 50;
     private boolean required = true;
@@ -28,7 +28,7 @@ public class TestDataBuilder {
         return new TestDataBuilder(envKey, holderGetter);
     }
 
-    public TestDataBuilder template(ResourceLocation template) {
+    public TestDataBuilder template(Identifier template) {
         this.template = template;
         return this;
     }

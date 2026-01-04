@@ -12,7 +12,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
@@ -23,7 +23,7 @@ public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplin
     public static final MapCodec<ResearchDisciplineKey> CODEC = ResourceKey.codec(RegistryKeysPM.RESEARCH_DISCIPLINES).fieldOf("rootKey").xmap(ResearchDisciplineKey::new, key -> key.rootKey);
     public static final StreamCodec<ByteBuf, ResearchDisciplineKey> STREAM_CODEC = ResourceKey.streamCodec(RegistryKeysPM.RESEARCH_DISCIPLINES).map(ResearchDisciplineKey::new, key -> key.rootKey);
     
-    private static final ResourceLocation ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
+    private static final Identifier ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
 
     protected final ResourceKey<ResearchDiscipline> rootKey;
     

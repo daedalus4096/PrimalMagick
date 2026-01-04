@@ -8,7 +8,7 @@ import commonnetwork.networking.data.Side;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
@@ -17,17 +17,17 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  * @author Daedalus4096
  */
 public class PlaceGhostArcaneRecipePacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("place_ghost_arcane_recipe");
+    public static final Identifier CHANNEL = ResourceUtils.loc("place_ghost_arcane_recipe");
     public static final StreamCodec<RegistryFriendlyByteBuf, PlaceGhostArcaneRecipePacket> STREAM_CODEC = StreamCodec.ofMember(PlaceGhostArcaneRecipePacket::encode, PlaceGhostArcaneRecipePacket::decode);
 
     protected final int containerId;
-    protected final ResourceLocation recipeId;
+    protected final Identifier recipeId;
     
     public PlaceGhostArcaneRecipePacket(int containerId, RecipeHolder<?> recipe) {
         this(containerId, recipe.id());
     }
     
-    protected PlaceGhostArcaneRecipePacket(int containerId, ResourceLocation recipeId) {
+    protected PlaceGhostArcaneRecipePacket(int containerId, Identifier recipeId) {
         this.containerId = containerId;
         this.recipeId = recipeId;
     }

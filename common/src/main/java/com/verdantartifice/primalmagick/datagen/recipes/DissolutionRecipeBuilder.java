@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -71,13 +71,13 @@ public class DissolutionRecipeBuilder {
         return this;
     }
     
-    protected void validate(ResourceLocation id) {
+    protected void validate(Identifier id) {
         if (this.ingredient == null) {
             throw new IllegalStateException("No ingredient defined for dissolution recipe " + id + "!");
         }
     }
     
-    public void build(RecipeOutput output, ResourceLocation id) {
+    public void build(RecipeOutput output, Identifier id) {
         this.validate(id);
         DissolutionRecipe recipe = new DissolutionRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);

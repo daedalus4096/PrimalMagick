@@ -11,7 +11,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Objects;
@@ -29,7 +29,7 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
             RuneEnchantmentPartialKey::new);
     
     private static final String PREFIX = "&";
-    private static final ResourceLocation ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
+    private static final Identifier ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
 
     protected final Holder<Enchantment> enchant;
     protected final RuneType runeType;

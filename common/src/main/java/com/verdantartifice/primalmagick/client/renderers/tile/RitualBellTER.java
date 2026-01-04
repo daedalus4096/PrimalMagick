@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 /**
@@ -24,7 +24,7 @@ import net.minecraft.util.Mth;
  */
 @SuppressWarnings("deprecation")
 public class RitualBellTER implements BlockEntityRenderer<RitualBellTileEntity> {
-    public static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/ritual_bell_body");
+    public static final Identifier TEXTURE = ResourceUtils.loc("entity/ritual_bell_body");
     public static final Material BODY_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS, TEXTURE);
     protected final ModelPart modelRenderer;
 

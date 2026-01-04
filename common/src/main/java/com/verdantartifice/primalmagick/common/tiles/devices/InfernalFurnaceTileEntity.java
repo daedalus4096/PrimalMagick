@@ -25,7 +25,7 @@ import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -88,7 +88,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     protected int litGraceTicks;
     protected ManaStorage manaStorage;
 
-    private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
+    private final Object2IntOpenHashMap<Identifier> recipesUsed = new Object2IntOpenHashMap<>();
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData furnaceData = new ContainerData() {
@@ -160,7 +160,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
             Optional<String> recipeOpt = child.getString("Recipe");
             Optional<Integer> countOpt = child.getInt("Count");
             if (recipeOpt.isPresent() && countOpt.isPresent()) {
-                this.recipesUsed.put(ResourceLocation.parse(recipeOpt.get()), countOpt.get().intValue());
+                this.recipesUsed.put(Identifier.parse(recipeOpt.get()), countOpt.get().intValue());
             }
         });
     }
@@ -441,7 +441,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     
     public List<RecipeHolder<?>> getRecipesToAwardAndPopExperience(ServerLevel pLevel, Vec3 pPopVec) {
         List<RecipeHolder<?>> retVal = new ArrayList<>();
-        for (Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
+        for (Object2IntMap.Entry<Identifier> entry : this.recipesUsed.object2IntEntrySet()) {
             pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent(recipeHolder -> {
                 retVal.add(recipeHolder);
                 createExperience(pLevel, pPopVec, entry.getIntValue(), ((AbstractCookingRecipe)recipeHolder.value()).getExperience());

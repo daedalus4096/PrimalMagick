@@ -13,7 +13,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -60,9 +60,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     
     public static final int MAX_SCAN_COUNT = 108;   // Enough to scan a 9x12 inventory
     
-    private final Map<AffinityType<?>, Map<ResourceLocation, IAffinity>> affinities = new HashMap<>();
+    private final Map<AffinityType<?>, Map<Identifier, IAffinity>> affinities = new HashMap<>();
     
-    private final Map<AffinityType<?>, Map<ResourceLocation, CompletableFuture<SourceList>>> resultCache = new ConcurrentHashMap<>();
+    private final Map<AffinityType<?>, Map<Identifier, CompletableFuture<SourceList>>> resultCache = new ConcurrentHashMap<>();
     private final Object resultCacheLock = new Object();
 
     protected AffinityManager() {
@@ -85,7 +85,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     }
     
     @Override
-    protected void apply(@NotNull Map<ResourceLocation, AbstractAffinity<?>> objectIn, @NotNull ResourceManager resourceManagerIn, @NotNull ProfilerFiller profilerIn) {
+    protected void apply(@NotNull Map<Identifier, AbstractAffinity<?>> objectIn, @NotNull ResourceManager resourceManagerIn, @NotNull ProfilerFiller profilerIn) {
         this.affinities.clear();
         this.clearCachedResults();
         objectIn.forEach((id, affinity) -> {
@@ -110,12 +110,12 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     }
 
     @Nullable
-    protected IAffinity getAffinity(AffinityType<?> type, ResourceLocation id) {
+    protected IAffinity getAffinity(AffinityType<?> type, Identifier id) {
         return this.affinities.getOrDefault(type, Collections.emptyMap()).get(id);
     }
     
-    public CompletableFuture<IAffinity> getOrGenerateItemAffinityAsync(@NotNull ResourceLocation id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
-        Map<ResourceLocation, IAffinity> map = this.affinities.computeIfAbsent(AffinityTypesPM.ITEM.get(), affinityType -> new HashMap<>());
+    public CompletableFuture<IAffinity> getOrGenerateItemAffinityAsync(@NotNull Identifier id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
+        Map<Identifier, IAffinity> map = this.affinities.computeIfAbsent(AffinityTypesPM.ITEM.get(), affinityType -> new HashMap<>());
         if (map.containsKey(id)) {
             return CompletableFuture.completedFuture(map.get(id));
         } else {
@@ -132,7 +132,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         this.affinities.computeIfAbsent(affinity.getType(), affinityType -> new HashMap<>()).put(affinity.getTarget(), affinity);
     }
     
-    protected boolean isRegistered(AffinityType<?> type, ResourceLocation id) {
+    protected boolean isRegistered(AffinityType<?> type, Identifier id) {
         if (type == null || id == null) {
             return false;
         } else {
@@ -265,12 +265,12 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         });
     }
     
-    protected CompletableFuture<SourceList> getAffinityValuesAsync(@NotNull ItemStack stack, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
+    protected CompletableFuture<SourceList> getAffinityValuesAsync(@NotNull ItemStack stack, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
         if (stack.isEmpty()) {
             return CompletableFuture.completedFuture(SourceList.EMPTY);
         }
         
-        ResourceLocation stackItemLoc = Services.ITEMS_REGISTRY.getKey(stack.getItem());
+        Identifier stackItemLoc = Services.ITEMS_REGISTRY.getKey(stack.getItem());
         if (stackItemLoc == null) {
             return CompletableFuture.completedFuture(SourceList.EMPTY);
         }
@@ -298,7 +298,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         });
     }
     
-    protected CompletableFuture<IAffinity> generateItemAffinityAsync(@NotNull ResourceLocation id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
+    protected CompletableFuture<IAffinity> generateItemAffinityAsync(@NotNull Identifier id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
         // If the affinity is already registered, just return that
         if (this.isRegistered(AffinityTypesPM.ITEM.get(), id)) {
             return CompletableFuture.completedFuture(this.getAffinity(AffinityTypesPM.ITEM.get(), id));
@@ -324,7 +324,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     }
     
     @NotNull
-    protected CompletableFuture<RecipeValues> generateItemAffinityValuesFromRecipesAsync(@NotNull ResourceLocation id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
+    protected CompletableFuture<RecipeValues> generateItemAffinityValuesFromRecipesAsync(@NotNull Identifier id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
         // Look up all recipes with the given item as an output
         List<CompletableFuture<RecipeValues>> recipeValueFutures = recipeManager.getRecipes().stream()
                 .filter(r -> r.value().getResultItem(registryAccess) != null && id.equals(Services.ITEMS_REGISTRY.getKey(r.value().getResultItem(registryAccess).getItem())))
@@ -363,7 +363,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     }
     
     @NotNull
-    protected CompletableFuture<SourceList> generateItemAffinityValuesFromIngredientsAsync(@NotNull RecipeHolder<?> recipeHolder, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
+    protected CompletableFuture<SourceList> generateItemAffinityValuesFromIngredientsAsync(@NotNull RecipeHolder<?> recipeHolder, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
         List<Ingredient> ingredients = recipeHolder.value().placementInfo().ingredients();
         ItemStack output = recipeHolder.value().getResultItem(registryAccess);
         
@@ -425,7 +425,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
 
     @SuppressWarnings("deprecation")
     @NotNull
-    protected CompletableFuture<ItemStack> getMatchingItemStackAsync(@Nullable Ingredient ingredient, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
+    protected CompletableFuture<ItemStack> getMatchingItemStackAsync(@Nullable Ingredient ingredient, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
         if (ingredient == null || ingredient.isEmpty()) {
             return CompletableFuture.completedFuture(ItemStack.EMPTY);
         }

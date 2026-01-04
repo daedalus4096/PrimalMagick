@@ -11,10 +11,10 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class VanillaStatProgressWidget extends AbstractWidget {
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    protected static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
     
     protected final IVanillaStatRequirement requirement;
     protected final boolean isComplete;

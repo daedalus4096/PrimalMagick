@@ -55,7 +55,7 @@ import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
@@ -169,10 +169,10 @@ public class PrimalMagickCommand {
                     .then(Commands.literal("reset").executes((context) -> { return resetStats(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("get")
                         // /pm stats <target> get <stat>
-                        .then(Commands.argument("stat", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(ResourceLocation::toString), sb)).executes((context) -> { return getStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "stat")); }))
+                        .then(Commands.argument("stat", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(Identifier::toString), sb)).executes((context) -> { return getStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "stat")); }))
                     )
                     .then(Commands.literal("set")
-                        .then(Commands.argument("stat", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(ResourceLocation::toString), sb))
+                        .then(Commands.argument("stat", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(Identifier::toString), sb))
                             // /pm stats <target> set <stat> <value>
                             .then(Commands.argument("value", StatValueArgument.value()).executes((context) -> { return setStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "stat"), IntegerArgumentType.getInteger(context, "value")); }))
                         )
@@ -568,7 +568,7 @@ public class PrimalMagickCommand {
         return 0;
     }
 
-    private static int getStatValue(CommandSourceStack source, ServerPlayer target, ResourceLocation statLoc) {
+    private static int getStatValue(CommandSourceStack source, ServerPlayer target, Identifier statLoc) {
         // Look up the requested stat value for the given player and display it
         Stat stat = StatsManager.getStat(statLoc);
         if (stat == null) {
@@ -581,7 +581,7 @@ public class PrimalMagickCommand {
         return 0;
     }
 
-    private static int setStatValue(CommandSourceStack source, ServerPlayer target, ResourceLocation statLoc, int value) {
+    private static int setStatValue(CommandSourceStack source, ServerPlayer target, Identifier statLoc, int value) {
         // Set the given value for the given stat for the given player
         Stat stat = StatsManager.getStat(statLoc);
         if (stat == null) {
@@ -742,7 +742,7 @@ public class PrimalMagickCommand {
         Vector<EntityType<?>> retVal = new Vector<>();
 
         Services.ENTITY_TYPES_REGISTRY.getAll().forEach(entityType -> {
-            ResourceLocation resourceLocation = Services.ENTITY_TYPES_REGISTRY.getKey(entityType);
+            Identifier resourceLocation = Services.ENTITY_TYPES_REGISTRY.getKey(entityType);
             if (resourceLocation == null) {
                 // If the Item can't be resolved in registry, it's got problems I can't care about.
                 return;
@@ -771,7 +771,7 @@ public class PrimalMagickCommand {
 
         Vector<Item> items = new Vector<>();
         Services.ITEMS_REGISTRY.getAll().forEach( (item) -> {
-                ResourceLocation itemId = Services.ITEMS_REGISTRY.getKey(item);
+                Identifier itemId = Services.ITEMS_REGISTRY.getKey(item);
                 if (itemId == null) {
                     // If the Item can't be resolved in registry, it's got problems I can't care about.
                     return;
@@ -825,7 +825,7 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
             // List all known arcane research book entries for the target player
-            Set<ResourceLocation> knownSet = recipeBook.get().getKnown();
+            Set<Identifier> knownSet = recipeBook.get().getKnown();
             String[] knownList = knownSet.stream()
                                         .map(r -> r.toString())
                                         .collect(Collectors.toSet())
@@ -834,7 +834,7 @@ public class PrimalMagickCommand {
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.list.known", target.getName(), knownOutput), true);
 
             // List all highlighted arcane research book entries for the target player
-            Set<ResourceLocation> highlightSet = recipeBook.get().getHighlight();
+            Set<Identifier> highlightSet = recipeBook.get().getHighlight();
             String[] highlightList = highlightSet.stream()
                                         .map(r -> r.toString())
                                         .collect(Collectors.toSet())
@@ -940,7 +940,7 @@ public class PrimalMagickCommand {
 
     private static int setLanguageComprehension(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage, int value) {
         int complexity = bookLanguage.value().complexity();
-        ResourceLocation langKey = bookLanguage.key().location();
+        Identifier langKey = bookLanguage.key().location();
         LinguisticsManager.setComprehension(target, bookLanguage, value);
         int newValue = LinguisticsManager.getComprehension(target, bookLanguage);
         if (value > complexity) {
@@ -964,7 +964,7 @@ public class PrimalMagickCommand {
     }
 
     private static int setLanguageVocabulary(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage, int value) {
-        ResourceLocation langKey = bookLanguage.key().location();
+        Identifier langKey = bookLanguage.key().location();
         LinguisticsManager.setVocabulary(target, bookLanguage, value);
         int newValue = LinguisticsManager.getVocabulary(target, bookLanguage);
         source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.set.success", target.getName(), langKey.toString(), newValue), true);
@@ -980,8 +980,8 @@ public class PrimalMagickCommand {
     }
 
     private static int setBookStudyCount(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage, int value) {
-        ResourceLocation bookId = bookDef.key().location();
-        ResourceLocation langKey = bookLanguage.key().location();
+        Identifier bookId = bookDef.key().location();
+        Identifier langKey = bookLanguage.key().location();
         LinguisticsManager.setTimesStudied(target, bookDef, bookLanguage, value);
         int newValue = LinguisticsManager.getTimesStudied(target, bookDef, bookLanguage);
         if (value > IPlayerLinguistics.MAX_STUDY_COUNT) {
@@ -1000,7 +1000,7 @@ public class PrimalMagickCommand {
 
     private static int explainItemAffinity(CommandSourceStack source, ItemInput item) {
         // Get the affinity data for the item
-        ResourceLocation itemId = Services.ITEMS_REGISTRY.getKey(item.getItem());
+        Identifier itemId = Services.ITEMS_REGISTRY.getKey(item.getItem());
         IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getLevel().getRecipeManager(), source.registryAccess(), new ArrayList<>()).join();
         if (affinityData instanceof ItemAffinity itemAffinity) {
             itemAffinity.getSourceRecipe().ifPresentOrElse(recipeLoc -> {

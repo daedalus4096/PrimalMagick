@@ -15,7 +15,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.item.ItemStack;
 
@@ -27,8 +27,8 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class WandHudOverlay {
-    public static final ResourceLocation ID = ResourceUtils.loc("wand_hud_overlay");
-    private static final ResourceLocation HUD_TEXTURE = ResourceUtils.loc("textures/gui/hud.png");
+    public static final Identifier ID = ResourceUtils.loc("wand_hud_overlay");
+    private static final Identifier HUD_TEXTURE = ResourceUtils.loc("textures/gui/hud.png");
     
     public static boolean shouldRender() {
         Minecraft mc = Minecraft.getInstance();
@@ -48,7 +48,7 @@ public class WandHudOverlay {
         
         int posY = 0;
         SpellPackage activeSpell = SpellManager.getActiveSpell(mainHandStack, offHandStack);
-        ResourceLocation spellIcon = activeSpell == null ? null : activeSpell.getIcon();
+        Identifier spellIcon = activeSpell == null ? null : activeSpell.getIcon();
         posY += renderSpellDisplay(guiGraphics, 0, posY, spellIcon, partialTick);
 
         int index = 0;
@@ -69,7 +69,7 @@ public class WandHudOverlay {
         guiGraphics.pose().popPose();
     }
 
-    private static int renderSpellDisplay(GuiGraphics guiGraphics, int x, int y, ResourceLocation spellIcon, float partialTick) {
+    private static int renderSpellDisplay(GuiGraphics guiGraphics, int x, int y, Identifier spellIcon, float partialTick) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         guiGraphics.setColor(1, 1, 1, 1);

@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.StructureUtils;
 import net.minecraft.gametest.framework.TestFunction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 
 public class TestUtils {
     public static final String DEFAULT_BATCH = "defaultBatch";
-    public static final ResourceLocation DEFAULT_TEMPLATE = ResourceUtils.loc("test/empty3x3x3");
+    public static final Identifier DEFAULT_TEMPLATE = ResourceUtils.loc("test/empty3x3x3");
 
     @Nullable
     private static String findPrefix(int stackDepth) {

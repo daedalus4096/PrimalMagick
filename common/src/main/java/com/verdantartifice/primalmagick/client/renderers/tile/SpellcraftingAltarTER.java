@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -28,7 +28,7 @@ import java.awt.*;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingAltarTileEntity> {
-    public static final ResourceLocation RING_TEXTURE = ResourceUtils.loc("entity/spellcrafting_altar/spellcrafting_altar_ring");
+    public static final Identifier RING_TEXTURE = ResourceUtils.loc("entity/spellcrafting_altar/spellcrafting_altar_ring");
     public static final Material RING_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, RING_TEXTURE);
 
     protected final SpellcraftingAltarRingModel ringModel;

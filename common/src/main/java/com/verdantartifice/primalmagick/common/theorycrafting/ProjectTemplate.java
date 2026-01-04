@@ -23,7 +23,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, List<AbstractReward<?>> otherRewards, Optional<AbstractRequirement<?>> requirement,
-        Optional<Integer> requiredMaterialCountOverride, Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, List<ResourceLocation> aidBlocks,
+        Optional<Integer> requiredMaterialCountOverride, Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, List<Identifier> aidBlocks,
         Optional<AbstractWeightFunction<?>> weightFunction) {
     public static final int MAX_MATERIALS = 4;
     
@@ -57,7 +57,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
                 Codec.INT.optionalFieldOf("requiredMaterialCountOverride").forGetter(ProjectTemplate::requiredMaterialCountOverride),
                 Codec.DOUBLE.optionalFieldOf("baseSuccessChanceOverride").forGetter(ProjectTemplate::baseSuccessChanceOverride),
                 Codec.DOUBLE.fieldOf("rewardMultiplier").forGetter(ProjectTemplate::rewardMultiplier),
-                ResourceLocation.CODEC.listOf().fieldOf("aidBlocks").forGetter(ProjectTemplate::aidBlocks),
+                Identifier.CODEC.listOf().fieldOf("aidBlocks").forGetter(ProjectTemplate::aidBlocks),
                 AbstractWeightFunction.dispatchCodec().optionalFieldOf("weightFunction").forGetter(ProjectTemplate::weightFunction)
             ).apply(instance, ProjectTemplate::new));
     }
@@ -76,7 +76,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
                 ProjectTemplate::baseSuccessChanceOverride,
                 ByteBufCodecs.DOUBLE,
                 ProjectTemplate::rewardMultiplier,
-                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                Identifier.STREAM_CODEC.apply(ByteBufCodecs.list()),
                 ProjectTemplate::aidBlocks,
                 ByteBufCodecs.optional(AbstractWeightFunction.dispatchStreamCodec()),
                 ProjectTemplate::weightFunction,
@@ -101,11 +101,11 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
             return null;
         }
         
-        ResourceLocation foundAid = null;
+        Identifier foundAid = null;
         if (!this.aidBlocks.isEmpty()) {
             boolean found = false;
-            Set<ResourceLocation> nearbyIds = nearby.stream().map(b -> Services.BLOCKS_REGISTRY.getKey(b)).collect(Collectors.toUnmodifiableSet());
-            for (ResourceLocation aidBlock : this.aidBlocks) {
+            Set<Identifier> nearbyIds = nearby.stream().map(b -> Services.BLOCKS_REGISTRY.getKey(b)).collect(Collectors.toUnmodifiableSet());
+            for (Identifier aidBlock : this.aidBlocks) {
                 if (nearbyIds.contains(aidBlock)) {
                     found = true;
                     foundAid = aidBlock;
@@ -179,7 +179,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
         protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
         protected double rewardMultiplier = 0.25D;
-        protected final List<ResourceLocation> aidBlocks = new ArrayList<>();
+        protected final List<Identifier> aidBlocks = new ArrayList<>();
         protected Optional<AbstractWeightFunction<?>> weightFunction = Optional.empty();
         
         protected Builder() {}

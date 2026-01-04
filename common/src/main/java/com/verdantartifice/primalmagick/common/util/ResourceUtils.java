@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.common.util;
 
 import com.verdantartifice.primalmagick.Constants;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ResourceUtils {
-    public static ResourceLocation loc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name);
+    public static Identifier loc(String name) {
+        return Identifier.fromNamespaceAndPath(Constants.MOD_ID, name);
     }
 }

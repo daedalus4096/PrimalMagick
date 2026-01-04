@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * @author Daedalus4096
  */
 public class FlyingCarpetItem extends Item implements IHasDyeColor {
-    public static final ResourceLocation COLOR_PROPERTY = ResourceUtils.loc("color");
+    public static final Identifier COLOR_PROPERTY = ResourceUtils.loc("color");
     
     public static final CauldronInteraction DYED_CARPET = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
         Item item = stack.getItem();

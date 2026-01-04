@@ -5,17 +5,17 @@ import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.pixies.guardians.AbstractGuardianPixieEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class GrandGuardianPixieRenderer extends AbstractGuardianPixieRenderer {
-    public static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/pixie/grand_pixie.png");
+    public static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/pixie/grand_pixie.png");
 
     public GrandGuardianPixieRenderer(EntityRendererProvider.Context context) {
         super(context, new GuardianPixieModel(context.bakeLayer(ModelLayersPM.PIXIE_BASIC)));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(AbstractGuardianPixieEntity entity) {
+    public Identifier getTextureLocation(AbstractGuardianPixieEntity entity) {
         return TEXTURE;
     }
 }

@@ -14,12 +14,12 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
 
 public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
-    protected static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/end_crystal/end_crystal.png");
+    protected static final Identifier TEXTURE = Identifier.withDefaultNamespace("textures/entity/end_crystal/end_crystal.png");
     protected static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(TEXTURE);
     protected static final float ANGLE = (float)Math.sin((Math.PI / 4D));
     
@@ -35,7 +35,7 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
     }
     
     @Override
-    public ResourceLocation getTextureLocation(SinCrystalEntity entity) {
+    public Identifier getTextureLocation(SinCrystalEntity entity) {
         return TEXTURE;
     }
 

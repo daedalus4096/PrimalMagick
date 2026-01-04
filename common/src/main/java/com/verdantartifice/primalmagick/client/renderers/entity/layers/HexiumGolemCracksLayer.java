@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchanted
 import com.verdantartifice.primalmagick.common.entities.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public class HexiumGolemCracksLayer extends AbstractEnchantedGolemCracksLayer<HexiumGolemEntity> {
-    protected static final Map<Cracks, ResourceLocation> TEXTURES = ImmutableMap.<Cracks, ResourceLocation>builder()
+    protected static final Map<Cracks, Identifier> TEXTURES = ImmutableMap.<Cracks, Identifier>builder()
             .put(Cracks.LOW, ResourceUtils.loc("textures/entity/hexium_golem/hexium_golem_crackiness_low.png"))
             .put(Cracks.MEDIUM, ResourceUtils.loc("textures/entity/hexium_golem/hexium_golem_crackiness_medium.png"))
             .put(Cracks.HIGH, ResourceUtils.loc("textures/entity/hexium_golem/hexium_golem_crackiness_high.png"))
@@ -27,7 +27,7 @@ public class HexiumGolemCracksLayer extends AbstractEnchantedGolemCracksLayer<He
     }
 
     @Override
-    protected Map<Cracks, ResourceLocation> getTextureMap() {
+    protected Map<Cracks, Identifier> getTextureMap() {
         return TEXTURES;
     }
 }

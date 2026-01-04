@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.items.IEnchantedByDefault;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -23,7 +23,7 @@ import java.util.function.Consumer;
  * @author Daedalus4096
  */
 public class SacredShieldItem extends AbstractTieredShieldItem implements IEnchantedByDefault {
-    public static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/shield/sacred_shield");
+    public static final Identifier TEXTURE = ResourceUtils.loc("entity/shield/sacred_shield");
     
     public SacredShieldItem(Item.Properties properties) {
         super(ToolMaterialsPM.HALLOWSTEEL, properties);

@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * @see net.minecraft.world.level.levelgen.structure.structures.DesertPyramidPiece
  */
 public class NetherLibraryPiece extends AbstractLibraryPiece {
-    protected static final ResourceLocation TEMPLATE = ResourceUtils.loc("library/nether");
+    protected static final Identifier TEMPLATE = ResourceUtils.loc("library/nether");
     
     public NetherLibraryPiece(StructureTemplateManager templateManager, ResourceKey<Culture> cultureKey, BlockPos pos) {
         super(templateManager, TEMPLATE, cultureKey, pos);

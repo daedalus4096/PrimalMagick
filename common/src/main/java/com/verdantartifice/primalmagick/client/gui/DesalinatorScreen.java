@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -20,10 +20,10 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/desalinator.png");
-    protected static final ResourceLocation WATER_TEXTURE = ResourceUtils.loc("textures/block/water_still.png");
-    protected static final ResourceLocation PROGRESS_SPRITE = ResourceUtils.loc("progress_arrow");
-    protected static final ResourceLocation GAUGE_SPRITE = ResourceUtils.loc("desalinator/gauge_markers");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/desalinator.png");
+    protected static final Identifier WATER_TEXTURE = ResourceUtils.loc("textures/block/water_still.png");
+    protected static final Identifier PROGRESS_SPRITE = ResourceUtils.loc("progress_arrow");
+    protected static final Identifier GAUGE_SPRITE = ResourceUtils.loc("desalinator/gauge_markers");
     protected static final int TANK_HEIGHT = 71;
 
     protected ManaGaugeWidget manaGauge;

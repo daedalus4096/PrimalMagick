@@ -13,7 +13,7 @@ import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -37,7 +37,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class ArcanometerItem extends Item implements IHasCustomRenderer {
-    public static final ResourceLocation SCAN_STATE_PROPERTY = ResourceUtils.loc("scan_state");
+    public static final Identifier SCAN_STATE_PROPERTY = ResourceUtils.loc("scan_state");
 
     private BlockEntityWithoutLevelRenderer customRenderer;
 

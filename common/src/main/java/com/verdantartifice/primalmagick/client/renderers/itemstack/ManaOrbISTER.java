@@ -17,17 +17,17 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class ManaOrbISTER extends BlockEntityWithoutLevelRenderer {
-    protected static final ResourceLocation TEXTURE_APPRENTICE = ResourceUtils.loc("textures/entity/mana_orb/apprentice.png");
-    protected static final ResourceLocation TEXTURE_ADEPT = ResourceUtils.loc("textures/entity/mana_orb/adept.png");
-    protected static final ResourceLocation TEXTURE_WIZARD = ResourceUtils.loc("textures/entity/mana_orb/wizard.png");
-    protected static final ResourceLocation TEXTURE_ARCHMAGE = ResourceUtils.loc("textures/entity/mana_orb/archmage.png");
-    protected static final ResourceLocation TEXTURE_NUGGET = ResourceUtils.loc("textures/entity/mana_orb/nugget.png");
+    protected static final Identifier TEXTURE_APPRENTICE = ResourceUtils.loc("textures/entity/mana_orb/apprentice.png");
+    protected static final Identifier TEXTURE_ADEPT = ResourceUtils.loc("textures/entity/mana_orb/adept.png");
+    protected static final Identifier TEXTURE_WIZARD = ResourceUtils.loc("textures/entity/mana_orb/wizard.png");
+    protected static final Identifier TEXTURE_ARCHMAGE = ResourceUtils.loc("textures/entity/mana_orb/archmage.png");
+    protected static final Identifier TEXTURE_NUGGET = ResourceUtils.loc("textures/entity/mana_orb/nugget.png");
 
     protected static final int BOB_CYCLE_TIME_TICKS = 200;
 
@@ -112,7 +112,7 @@ public class ManaOrbISTER extends BlockEntityWithoutLevelRenderer {
         };
     }
 
-    private static ResourceLocation getCoreTexture(DeviceTier tier) {
+    private static Identifier getCoreTexture(DeviceTier tier) {
         return switch (tier) {
             case BASIC -> TEXTURE_APPRENTICE;
             case ENCHANTED -> TEXTURE_ADEPT;

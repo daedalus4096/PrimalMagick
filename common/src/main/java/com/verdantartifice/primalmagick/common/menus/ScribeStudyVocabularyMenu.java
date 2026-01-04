@@ -21,7 +21,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -39,7 +39,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
-    public static final ResourceLocation BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
+    public static final Identifier BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
     protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
     protected static final int[] COSTS_PER_SLOT = new int[] { 25, 100, 300 };
 

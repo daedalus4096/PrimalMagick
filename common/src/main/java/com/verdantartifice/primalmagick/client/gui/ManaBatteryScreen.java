@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public class ManaBatteryScreen extends AbstractContainerScreenPM<ManaBatteryMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/mana_battery.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/mana_battery.png");
     protected static final int AVAILABLE_GAUGE_WIDTH = 116;
     protected static final int GAUGE_START_X = 57;
     protected static final int GAUGE_WIDTH = 12;

@@ -6,7 +6,7 @@ import net.minecraft.client.data.models.ItemModelOutput;
 import net.minecraft.client.data.models.blockstates.BlockModelDefinitionGenerator;
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -31,7 +31,7 @@ public class ModelProviderPMForge extends AbstractModelProviderPM {
 
         public BlockModelGeneratorsPMForge(Consumer<BlockModelDefinitionGenerator> pBlockStateOutput,
                                            ItemModelOutput pItemModelOutput,
-                                           BiConsumer<ResourceLocation, ModelInstance> pModelOutput,
+                                           BiConsumer<Identifier, ModelInstance> pModelOutput,
                                            AbstractModelProviderPM pParentProvider) {
             super(pBlockStateOutput, pItemModelOutput, pModelOutput);
             this.parentProvider = pParentProvider;
@@ -46,7 +46,7 @@ public class ModelProviderPMForge extends AbstractModelProviderPM {
     private static class ItemModelGeneratorsPMForge extends ItemModelGenerators {
         private final AbstractModelProviderPM parentProvider;
 
-        public ItemModelGeneratorsPMForge(ItemModelOutput pItemModelOutput, BiConsumer<ResourceLocation, ModelInstance> pModelOutput, AbstractModelProviderPM pParentProvider) {
+        public ItemModelGeneratorsPMForge(ItemModelOutput pItemModelOutput, BiConsumer<Identifier, ModelInstance> pModelOutput, AbstractModelProviderPM pParentProvider) {
             super(pItemModelOutput, pModelOutput);
             this.parentProvider = pParentProvider;
         }

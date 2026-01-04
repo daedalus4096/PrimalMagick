@@ -16,7 +16,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -35,7 +35,7 @@ import java.util.concurrent.CompletableFuture;
  * @author Daedalus4096
  */
 public class ScanPositionPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("scan_position");
+    public static final Identifier CHANNEL = ResourceUtils.loc("scan_position");
     public static final StreamCodec<RegistryFriendlyByteBuf, ScanPositionPacket> STREAM_CODEC = StreamCodec.ofMember(ScanPositionPacket::encode, ScanPositionPacket::decode);
 
     protected static final Logger LOGGER = LogManager.getLogger();

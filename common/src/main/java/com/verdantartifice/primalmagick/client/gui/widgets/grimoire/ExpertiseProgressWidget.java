@@ -16,12 +16,12 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
 public class ExpertiseProgressWidget extends AbstractWidget {
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    protected static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
     
     protected final ResearchDisciplineKey disciplineKey;
     protected final ResearchTier tier;

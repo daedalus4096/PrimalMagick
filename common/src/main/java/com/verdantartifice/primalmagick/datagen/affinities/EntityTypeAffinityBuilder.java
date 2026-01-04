@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 
 import javax.annotation.Nonnull;
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class EntityTypeAffinityBuilder {
-    protected final ResourceLocation targetId;
+    protected final Identifier targetId;
     protected SourceList.Builder values = SourceList.builder();
 
     protected EntityTypeAffinityBuilder(@Nonnull EntityType<?> target) {
@@ -34,7 +34,7 @@ public class EntityTypeAffinityBuilder {
         return this;
     }
     
-    private void validate(ResourceLocation id) {
+    private void validate(Identifier id) {
         if (this.targetId == null) {
             throw new IllegalStateException("No target entity type for affinity " + id.toString());
         }
@@ -48,20 +48,20 @@ public class EntityTypeAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {
-        this.build(consumer, ResourceLocation.parse(name));
+        this.build(consumer, Identifier.parse(name));
     }
 
-    public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {
+    public void build(Consumer<IFinishedAffinity> consumer, Identifier id) {
         this.validate(id);
         consumer.accept(new EntityTypeAffinityBuilder.Result(id, this.targetId, this.values.build()));
     }
     
     public static class Result implements IFinishedAffinity {
-        protected final ResourceLocation id;
-        protected final ResourceLocation targetId;
+        protected final Identifier id;
+        protected final Identifier targetId;
         protected final SourceList values;
         
-        public Result(@Nonnull ResourceLocation id, @Nonnull ResourceLocation targetId, @Nullable SourceList values) {
+        public Result(@Nonnull Identifier id, @Nonnull Identifier targetId, @Nullable SourceList values) {
             this.id = id;
             this.targetId = targetId;
             this.values = values;
@@ -73,7 +73,7 @@ public class EntityTypeAffinityBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
+        public Identifier getId() {
             return this.id;
         }
 

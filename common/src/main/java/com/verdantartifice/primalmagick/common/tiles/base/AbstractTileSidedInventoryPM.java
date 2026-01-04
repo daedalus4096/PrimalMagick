@@ -13,7 +13,7 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
@@ -332,7 +332,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         Optional<String> tableLoc = input.getString("LootTable");
         Optional<Long> tableSeed = input.getLong("LootTableSeed");
         if (tableLoc.isPresent() && tableSeed.isPresent()) {
-            this.lootTable = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(tableLoc.get()));
+            this.lootTable = ResourceKey.create(Registries.LOOT_TABLE, Identifier.parse(tableLoc.get()));
             this.lootTableSeed = tableSeed.get();
             return true;
         } else {

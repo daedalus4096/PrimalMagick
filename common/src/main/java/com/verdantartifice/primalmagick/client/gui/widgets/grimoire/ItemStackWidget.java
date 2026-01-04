@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -22,7 +22,7 @@ import java.awt.Color;
  * @author Daedalus4096
  */
 public class ItemStackWidget extends AbstractWidget {
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    protected static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     protected ItemStack stack;
     protected boolean isComplete;

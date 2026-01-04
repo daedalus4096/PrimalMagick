@@ -31,7 +31,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
@@ -57,7 +57,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarTileEntity> {
-    protected static final ResourceLocation RECIPE_LOC = ResourceUtils.loc("spellcrafting");
+    protected static final Identifier RECIPE_LOC = ResourceUtils.loc("spellcrafting");
     protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.spellcrafting_altar.slot.scroll");
 
     protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);

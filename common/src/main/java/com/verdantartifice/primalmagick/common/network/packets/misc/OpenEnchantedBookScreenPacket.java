@@ -16,7 +16,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
@@ -25,7 +25,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class OpenEnchantedBookScreenPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("open_enchanted_book_screen");
+    public static final Identifier CHANNEL = ResourceUtils.loc("open_enchanted_book_screen");
     public static final StreamCodec<RegistryFriendlyByteBuf, OpenEnchantedBookScreenPacket> STREAM_CODEC = StreamCodec.ofMember(OpenEnchantedBookScreenPacket::encode, OpenEnchantedBookScreenPacket::decode);
 
     protected final BookView view;

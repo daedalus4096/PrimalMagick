@@ -19,7 +19,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ public class SpellSelectionRadialScreen extends Screen {
                 close();
             }
         };
-        this.noSpellMenuItem = new ImageRadialMenuItem(this.menu, -1, ResourceLocation.withDefaultNamespace("textures/item/barrier.png"), Component.translatable("tooltip.primalmagick.spells.no_spell_selection")) {
+        this.noSpellMenuItem = new ImageRadialMenuItem(this.menu, -1, Identifier.withDefaultNamespace("textures/item/barrier.png"), Component.translatable("tooltip.primalmagick.spells.no_spell_selection")) {
             @Override
             public boolean onClick() {
                 return SpellSelectionRadialScreen.this.trySwitch(getSlot());

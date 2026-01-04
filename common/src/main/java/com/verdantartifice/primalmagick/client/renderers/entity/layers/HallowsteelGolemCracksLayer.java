@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchanted
 import com.verdantartifice.primalmagick.common.entities.golems.HallowsteelGolemEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public class HallowsteelGolemCracksLayer extends AbstractEnchantedGolemCracksLayer<HallowsteelGolemEntity> {
-    protected static final Map<Cracks, ResourceLocation> TEXTURES = ImmutableMap.<Cracks, ResourceLocation>builder()
+    protected static final Map<Cracks, Identifier> TEXTURES = ImmutableMap.<Cracks, Identifier>builder()
             .put(Cracks.LOW, ResourceUtils.loc("textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_low.png"))
             .put(Cracks.MEDIUM, ResourceUtils.loc("textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_medium.png"))
             .put(Cracks.HIGH, ResourceUtils.loc("textures/entity/hallowsteel_golem/hallowsteel_golem_crackiness_high.png"))
@@ -27,7 +27,7 @@ public class HallowsteelGolemCracksLayer extends AbstractEnchantedGolemCracksLay
     }
 
     @Override
-    protected Map<Cracks, ResourceLocation> getTextureMap() {
+    protected Map<Cracks, Identifier> getTextureMap() {
         return TEXTURES;
     }
 }

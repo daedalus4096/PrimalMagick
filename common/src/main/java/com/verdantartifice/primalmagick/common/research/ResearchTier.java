@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.misc.IconDefinition;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,18 +15,18 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class ResearchTier implements StringRepresentable, Comparable<ResearchTier> {
-    private static final Map<ResourceLocation, ResearchTier> TIERS = new HashMap<>();
+    private static final Map<Identifier, ResearchTier> TIERS = new HashMap<>();
 
-    public static final Codec<ResearchTier> CODEC = ResourceLocation.CODEC.xmap(ResearchTier::get, ResearchTier::getName);
-    public static final StreamCodec<ByteBuf, ResearchTier> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(ResearchTier::get, ResearchTier::getName);
+    public static final Codec<ResearchTier> CODEC = Identifier.CODEC.xmap(ResearchTier::get, ResearchTier::getName);
+    public static final StreamCodec<ByteBuf, ResearchTier> STREAM_CODEC = Identifier.STREAM_CODEC.map(ResearchTier::get, ResearchTier::getName);
 
     private final int id;
-    private final ResourceLocation name;
+    private final Identifier name;
     private final int defaultExpertise;
     private final int defaultBonusExpertise;
     private final Optional<IconDefinition> iconDef;
     
-    public ResearchTier(int id, ResourceLocation name, int defaultExp, int defaultBonusExp, Optional<IconDefinition> iconDef) {
+    public ResearchTier(int id, Identifier name, int defaultExp, int defaultBonusExp, Optional<IconDefinition> iconDef) {
         this.id = id;
         this.name = name;
         this.defaultExpertise = defaultExp;
@@ -39,7 +39,7 @@ public class ResearchTier implements StringRepresentable, Comparable<ResearchTie
         return this.id;
     }
 
-    public ResourceLocation getName() {
+    public Identifier getName() {
         return this.name;
     }
     
@@ -77,7 +77,7 @@ public class ResearchTier implements StringRepresentable, Comparable<ResearchTie
     }
 
     @Nullable
-    public static ResearchTier get(ResourceLocation id) {
+    public static ResearchTier get(Identifier id) {
         return TIERS.get(id);
     }
 }

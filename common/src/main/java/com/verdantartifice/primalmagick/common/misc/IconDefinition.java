@@ -10,7 +10,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -23,7 +23,7 @@ public class IconDefinition {
     public static final Codec<IconDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.BOOL.optionalFieldOf("isItem", false).forGetter(IconDefinition::isItem),
             Codec.BOOL.optionalFieldOf("isTag", false).forGetter(IconDefinition::isTag),
-            ResourceLocation.CODEC.fieldOf("location").forGetter(IconDefinition::getLocation),
+            Identifier.CODEC.fieldOf("location").forGetter(IconDefinition::getLocation),
             Codec.STRING.optionalFieldOf("tooltipOverride").forGetter(def -> def.tooltipOverrideOpt)
         ).apply(instance, IconDefinition::new));
     public static final StreamCodec<ByteBuf, IconDefinition> STREAM_CODEC = StreamCodec.composite(
@@ -31,7 +31,7 @@ public class IconDefinition {
             IconDefinition::isItem,
             ByteBufCodecs.BOOL,
             IconDefinition::isTag,
-            ResourceLocation.STREAM_CODEC,
+            Identifier.STREAM_CODEC,
             IconDefinition::getLocation,
             ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8),
             def -> def.tooltipOverrideOpt,
@@ -39,10 +39,10 @@ public class IconDefinition {
     
     private final boolean isItem;
     private final boolean isTag;
-    private final ResourceLocation location;
+    private final Identifier location;
     private final Optional<String> tooltipOverrideOpt;
     
-    private IconDefinition(boolean isItem, boolean isTag, ResourceLocation loc, Optional<String> tooltipOverrideOpt) {
+    private IconDefinition(boolean isItem, boolean isTag, Identifier loc, Optional<String> tooltipOverrideOpt) {
         this.isItem = isItem;
         this.isTag = isTag;
         this.location = loc;
@@ -57,11 +57,11 @@ public class IconDefinition {
         return new IconDefinition(false, true, tagKey.location(), Optional.empty());
     }
     
-    public static IconDefinition of(ResourceLocation loc) {
+    public static IconDefinition of(Identifier loc) {
         return of(loc, null);
     }
     
-    public static IconDefinition of(ResourceLocation loc, String tooltipKey) {
+    public static IconDefinition of(Identifier loc, String tooltipKey) {
         return new IconDefinition(false, false, Preconditions.checkNotNull(loc), Optional.ofNullable(tooltipKey));
     }
     
@@ -73,7 +73,7 @@ public class IconDefinition {
         return this.isTag;
     }
     
-    public ResourceLocation getLocation() {
+    public Identifier getLocation() {
         return this.location;
     }
     

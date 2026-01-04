@@ -13,7 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import javax.annotation.Nonnull;
@@ -27,7 +27,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class RuneEnchantmentPage extends AbstractPage {
-    protected static final ResourceLocation OVERLAY = ResourceUtils.loc("textures/gui/grimoire_overlay.png");
+    protected static final Identifier OVERLAY = ResourceUtils.loc("textures/gui/grimoire_overlay.png");
     protected static final ResearchEntryKey UNKNOWN_RUNE_KEY = new ResearchEntryKey(ResearchEntries.UNKNOWN_RUNE);
     
     protected Holder<Enchantment> enchant;

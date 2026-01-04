@@ -10,7 +10,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 /**
@@ -19,8 +19,8 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class BackButton extends Button {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
-    private static final ResourceLocation UNREAD_SPRITE = ResourceUtils.loc("grimoire/unread");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier UNREAD_SPRITE = ResourceUtils.loc("grimoire/unread");
     private static final int UNREAD_WIDTH = 16;
     private static final int UNREAD_HEIGHT = 16;
 

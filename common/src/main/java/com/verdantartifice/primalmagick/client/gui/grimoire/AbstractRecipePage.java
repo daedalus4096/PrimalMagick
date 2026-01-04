@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Base class for all grimoire recipe pages.
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public abstract class AbstractRecipePage extends AbstractPage {
-    protected static final ResourceLocation OVERLAY = ResourceUtils.loc("textures/gui/grimoire_overlay.png");
+    protected static final Identifier OVERLAY = ResourceUtils.loc("textures/gui/grimoire_overlay.png");
     
     protected final RegistryAccess registryAccess;
     

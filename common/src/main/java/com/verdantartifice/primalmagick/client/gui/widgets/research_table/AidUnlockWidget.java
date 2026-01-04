@@ -6,7 +6,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import javax.annotation.Nonnull;
@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * @author Daedalus4096
  */
 public class AidUnlockWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
     
     protected Block aidBlock;
 

@@ -17,7 +17,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +28,8 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ResearchWidget extends AbstractWidget {
-    protected static final ResourceLocation UNKNOWN_TEXTURE = ResourceUtils.loc("textures/research/research_unknown.png");
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    protected static final Identifier UNKNOWN_TEXTURE = ResourceUtils.loc("textures/research/research_unknown.png");
+    protected static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
     
     protected final AbstractResearchKey<?> key;
     protected final ResearchEntry researchEntry;

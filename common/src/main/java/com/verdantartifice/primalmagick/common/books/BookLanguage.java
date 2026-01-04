@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Function;
 
@@ -21,9 +21,9 @@ import java.util.function.Function;
  * 
  * @author Daedalus4096
  */
-public record BookLanguage(ResourceLocation languageId, Style style, int complexity, boolean autoTranslate) {
+public record BookLanguage(Identifier languageId, Style style, int complexity, boolean autoTranslate) {
     public static final Codec<BookLanguage> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("languageId").forGetter(BookLanguage::languageId),
+            Identifier.CODEC.fieldOf("languageId").forGetter(BookLanguage::languageId),
             Style.Serializer.CODEC.fieldOf("style").forGetter(BookLanguage::style),
             Codec.INT.fieldOf("complexity").forGetter(BookLanguage::complexity),
             Codec.BOOL.fieldOf("autoTranslate").forGetter(BookLanguage::autoTranslate)
@@ -68,7 +68,7 @@ public record BookLanguage(ResourceLocation languageId, Style style, int complex
         return Component.translatable(this.getDescriptionId());
     }
     
-    public ResourceLocation getGlyphSprite() {
+    public Identifier getGlyphSprite() {
         return this.languageId().withPrefix("books/language_glyphs/");
     }
 }

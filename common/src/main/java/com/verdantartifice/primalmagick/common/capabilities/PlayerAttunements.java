@@ -10,7 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 
@@ -81,7 +81,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         ListTag attunementList = nbt.getList("Attunements", Tag.TAG_COMPOUND);
         for (int index = 0; index < attunementList.size(); index++) {
             CompoundTag tag = attunementList.getCompound(index);
-            Source source = Sources.get(ResourceLocation.parse(tag.getString("Source")));
+            Source source = Sources.get(Identifier.parse(tag.getString("Source")));
             AttunementType type = null;
             try {
                 type = AttunementType.valueOf(tag.getString("Type"));
@@ -93,7 +93,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         // Deserialize suppression values
         ListTag suppressionList = nbt.getList("Suppressions", Tag.TAG_STRING);
         for (int index = 0; index < suppressionList.size(); index++) {
-            Source source = Sources.get(ResourceLocation.parse(suppressionList.getString(index)));
+            Source source = Sources.get(Identifier.parse(suppressionList.getString(index)));
             this.setSuppressed(source, true);
         }
     }

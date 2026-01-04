@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -36,7 +36,7 @@ public class ArcaneShapelessTagRecipeBuilder {
     protected SourceList manaCosts;
     protected Optional<Integer> baseExpertiseOverride = Optional.empty();
     protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
-    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+    protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
     protected ArcaneShapelessTagRecipeBuilder(TagKey<Item> result, int count) {
@@ -165,7 +165,7 @@ public class ArcaneShapelessTagRecipeBuilder {
         return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
     }
     
-    public ArcaneShapelessTagRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+    public ArcaneShapelessTagRecipeBuilder expertiseGroup(Identifier groupLoc) {
         this.expertiseGroup = Optional.ofNullable(groupLoc);
         return this;
     }
@@ -195,7 +195,7 @@ public class ArcaneShapelessTagRecipeBuilder {
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(RecipeOutput output, ResourceLocation id) {
+    public void build(RecipeOutput output, Identifier id) {
         this.validate(id);
         ShapelessArcaneTagRecipe recipe = new ShapelessArcaneTagRecipe(Objects.requireNonNullElse(this.group, ""), this.resultTag, this.resultAmount, this.ingredients, this.getFinalRequirement(), 
                 Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
@@ -207,7 +207,7 @@ public class ArcaneShapelessTagRecipeBuilder {
      * 
      * @param id the ID of the recipe
      */
-    protected void validate(ResourceLocation id) {
+    protected void validate(Identifier id) {
         if (this.ingredients.isEmpty()) {
             throw new IllegalStateException("No ingredients defined for arcane shapeless tag recipe " + id + "!");
         }

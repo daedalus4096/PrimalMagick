@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 
 import java.util.function.BiConsumer;
@@ -25,7 +25,7 @@ public class TrimPatternLanguageBuilder extends AbstractLanguageBuilder<Resource
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(ResourceKey<TrimPattern> base) {
+    protected Identifier getBaseRegistryKey(ResourceKey<TrimPattern> base) {
         return base.location();
     }
 }

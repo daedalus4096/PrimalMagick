@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
@@ -81,7 +81,7 @@ public class BlockTagsProviderPMForge extends BlockTagsProvider {
         this.tag(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL, Blocks.DEAD_BUBBLE_CORAL, Blocks.DEAD_FIRE_CORAL, Blocks.DEAD_HORN_CORAL, Blocks.DEAD_TUBE_CORAL);
         this.tag(BlockTagsPM.DEAD_CORALS).addTag(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL_FAN, Blocks.DEAD_BUBBLE_CORAL_FAN, Blocks.DEAD_FIRE_CORAL_FAN, Blocks.DEAD_HORN_CORAL_FAN, Blocks.DEAD_TUBE_CORAL_FAN);
         this.tag(BlockTagsPM.EMPTY_BOOKSHELVES).add(Blocks.CHISELED_BOOKSHELF, BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get());
-        this.tag(BlockTagsPM.ENCHANTING_TABLES).add(Blocks.ENCHANTING_TABLE).addOptional(ResourceLocation.fromNamespaceAndPath("quark", "matrix_enchanter"));
+        this.tag(BlockTagsPM.ENCHANTING_TABLES).add(Blocks.ENCHANTING_TABLE).addOptional(Identifier.fromNamespaceAndPath("quark", "matrix_enchanter"));
         this.tag(BlockTagsPM.HALLOWOOD_LOGS).add(BlocksPM.HALLOWOOD_LOG.get(), BlocksPM.STRIPPED_HALLOWOOD_LOG.get(), BlocksPM.HALLOWOOD_WOOD.get(), BlocksPM.STRIPPED_HALLOWOOD_WOOD.get());
         this.tag(BlockTagsPM.LINGUISTICS_POWER_PROVIDERS).add(Blocks.CHISELED_BOOKSHELF, BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get());
         this.tag(BlockTagsPM.LINGUISTICS_POWER_TRANSMITTERS).addTag(BlockTags.REPLACEABLE);
@@ -96,7 +96,7 @@ public class BlockTagsProviderPMForge extends BlockTagsProvider {
         this.tag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).add(BlocksPM.HEXIUM_BLOCK.get());
         this.tag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).add(BlocksPM.PRIMALITE_BLOCK.get());
         this.tag(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.get(), BlocksPM.STRIPPED_SUNWOOD_LOG.get(), BlocksPM.SUNWOOD_WOOD.get(), BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
-        this.tag(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT).add(Blocks.GRASS_BLOCK, Blocks.ROOTED_DIRT, Blocks.SHORT_GRASS, Blocks.FERN).addOptional(ResourceLocation.fromNamespaceAndPath("regions_unexplored", "alpha_grass_block"));
+        this.tag(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT).add(Blocks.GRASS_BLOCK, Blocks.ROOTED_DIRT, Blocks.SHORT_GRASS, Blocks.FERN).addOptional(Identifier.fromNamespaceAndPath("regions_unexplored", "alpha_grass_block"));
         
         this.tag(BlockTagsPM.MAY_PLACE_SUNWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);
         this.tag(BlockTagsPM.MAY_PLACE_MOONWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);

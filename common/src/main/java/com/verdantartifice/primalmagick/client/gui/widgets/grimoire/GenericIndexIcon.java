@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Icon to show a generic texture on a grimoire topic button.
@@ -9,14 +9,14 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class GenericIndexIcon extends AbstractIndexIcon {
-    protected final ResourceLocation iconLocation;
+    protected final Identifier iconLocation;
     
-    protected GenericIndexIcon(ResourceLocation loc, boolean large) {
+    protected GenericIndexIcon(Identifier loc, boolean large) {
         super(large);
         this.iconLocation = loc;
     }
     
-    public static GenericIndexIcon of(ResourceLocation loc, boolean large) {
+    public static GenericIndexIcon of(Identifier loc, boolean large) {
         return new GenericIndexIcon(loc, large);
     }
 

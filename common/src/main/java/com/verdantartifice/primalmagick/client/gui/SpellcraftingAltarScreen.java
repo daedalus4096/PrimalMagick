@@ -21,7 +21,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import org.lwjgl.glfw.GLFW;
 
@@ -38,7 +38,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<SpellcraftingAltarMenu> {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/spellcrafting_altar.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/spellcrafting_altar.png");
     
     private final Map<Vec3i, Component> texts = new HashMap<>();
     private final List<GuiEventListener> localWidgets = new ArrayList<>();

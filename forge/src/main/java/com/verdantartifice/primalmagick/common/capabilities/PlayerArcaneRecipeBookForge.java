@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -18,7 +18,7 @@ public class PlayerArcaneRecipeBookForge extends PlayerArcaneRecipeBook implemen
      * @see com.verdantartifice.primalmagick.common.events.CapabilityEvents
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = ResourceUtils.loc("capability_arcane_recipe_book");
+        public static final Identifier NAME = ResourceUtils.loc("capability_arcane_recipe_book");
 
         private final IPlayerArcaneRecipeBook instance = new PlayerArcaneRecipeBook();
         private final LazyOptional<IPlayerArcaneRecipeBook> holder = LazyOptional.of(() -> instance);   // Cache a lazy optional of the capability instance

@@ -8,7 +8,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class PotionBonusAffinity extends AbstractAffinity<PotionBonusAffinity> {
     public static final MapCodec<PotionBonusAffinity> CODEC = RecordCodecBuilder.<PotionBonusAffinity>mapCodec(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("target").forGetter(PotionBonusAffinity::getTarget),
+            Identifier.CODEC.fieldOf("target").forGetter(PotionBonusAffinity::getTarget),
             SourceList.CODEC.fieldOf("bonus").forGetter(pba -> pba.bonusValues)
         ).apply(instance, PotionBonusAffinity::new)).validate(pba -> BuiltInRegistries.POTION.containsKey(pba.targetId) ?
             DataResult.success(pba) :
@@ -26,13 +26,13 @@ public class PotionBonusAffinity extends AbstractAffinity<PotionBonusAffinity> {
         ));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PotionBonusAffinity> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC, PotionBonusAffinity::getTarget,
+            Identifier.STREAM_CODEC, PotionBonusAffinity::getTarget,
             SourceList.STREAM_CODEC, pba -> pba.bonusValues,
             PotionBonusAffinity::new);
 
     protected final SourceList bonusValues;
     
-    protected PotionBonusAffinity(@NotNull ResourceLocation target, @NotNull SourceList bonusValues) {
+    protected PotionBonusAffinity(@NotNull Identifier target, @NotNull SourceList bonusValues) {
         super(target);
         this.bonusValues = bonusValues;
     }
@@ -43,7 +43,7 @@ public class PotionBonusAffinity extends AbstractAffinity<PotionBonusAffinity> {
     }
 
     @Override
-    protected CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
+    protected CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
         return CompletableFuture.completedFuture(this.bonusValues);
     }
 }

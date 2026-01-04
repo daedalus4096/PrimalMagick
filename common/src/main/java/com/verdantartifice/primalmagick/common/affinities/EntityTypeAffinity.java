@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class EntityTypeAffinity extends AbstractAffinity<EntityTypeAffinity> {
     public static final MapCodec<EntityTypeAffinity> CODEC = RecordCodecBuilder.<EntityTypeAffinity>mapCodec(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("target").forGetter(EntityTypeAffinity::getTarget),
+            Identifier.CODEC.fieldOf("target").forGetter(EntityTypeAffinity::getTarget),
             SourceList.CODEC.fieldOf("values").forGetter(eta -> eta.values)
         ).apply(instance, EntityTypeAffinity::new)).validate(eta -> Services.ENTITY_TYPES_REGISTRY.containsKey(eta.targetId) ?
             DataResult.success(eta) :
@@ -26,13 +26,13 @@ public class EntityTypeAffinity extends AbstractAffinity<EntityTypeAffinity> {
         ));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, EntityTypeAffinity> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC, EntityTypeAffinity::getTarget,
+            Identifier.STREAM_CODEC, EntityTypeAffinity::getTarget,
             SourceList.STREAM_CODEC, eta -> eta.values,
             EntityTypeAffinity::new);
     
     protected final SourceList values;
     
-    protected EntityTypeAffinity(@NotNull ResourceLocation target, @NotNull SourceList values) {
+    protected EntityTypeAffinity(@NotNull Identifier target, @NotNull SourceList values) {
         super(target);
         this.values = values;
     }
@@ -43,7 +43,7 @@ public class EntityTypeAffinity extends AbstractAffinity<EntityTypeAffinity> {
     }
 
     @Override
-    protected CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history) {
+    protected CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
         return CompletableFuture.completedFuture(this.values);
     }
 }

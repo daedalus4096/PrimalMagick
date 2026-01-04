@@ -15,7 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -94,7 +94,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     @Override
     public Source getPixieSource() {
         if (this.source == null) {
-            this.source = Sources.get(ResourceLocation.parse(this.entityData.get(DATA_SOURCE_TAG)));
+            this.source = Sources.get(Identifier.parse(this.entityData.get(DATA_SOURCE_TAG)));
         }
         return this.source;
     }

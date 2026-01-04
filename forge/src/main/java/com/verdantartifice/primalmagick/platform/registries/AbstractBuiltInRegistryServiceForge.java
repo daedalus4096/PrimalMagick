@@ -14,7 +14,7 @@ import net.minecraft.network.Utf8String;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraftforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
@@ -47,7 +47,7 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
     }
 
     @Override
-    public @Nullable R get(ResourceLocation id) {
+    public @Nullable R get(Identifier id) {
         return this.getRegistry().getValue(id);
     }
 
@@ -57,7 +57,7 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
     }
 
     @Override
-    public Set<ResourceLocation> getAllKeys() {
+    public Set<Identifier> getAllKeys() {
         return this.getRegistry().keySet();
     }
 
@@ -67,7 +67,7 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
     }
 
     @Override
-    public boolean containsKey(ResourceLocation id) {
+    public boolean containsKey(Identifier id) {
         return this.getRegistry().containsKey(id);
     }
 
@@ -91,13 +91,13 @@ abstract class AbstractBuiltInRegistryServiceForge<R> implements IRegistryServic
         return new StreamCodec<>() {
             @Override
             public R decode(FriendlyByteBuf pBuffer) {
-                ResourceLocation id = ResourceLocation.parse(Utf8String.read(pBuffer, 32767));
+                Identifier id = Identifier.parse(Utf8String.read(pBuffer, 32767));
                 return AbstractBuiltInRegistryServiceForge.this.getRegistry().getValue(id);
             }
 
             @Override
             public void encode(FriendlyByteBuf pBuffer, R pValue) {
-                ResourceLocation id = AbstractBuiltInRegistryServiceForge.this.getRegistry().getKey(pValue);
+                Identifier id = AbstractBuiltInRegistryServiceForge.this.getRegistry().getKey(pValue);
                 Utf8String.write(pBuffer, id.toString(), 32767);
             }
         };

@@ -16,7 +16,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.EntityTypeTags;
@@ -231,7 +231,7 @@ public class EnchantmentsPM {
                         // Fire burn time reduction
                         EnchantmentEffectComponents.ATTRIBUTES,
                         new EnchantmentAttributeEffect(
-                            ResourceLocation.withDefaultNamespace("enchantment.fire_protection"),
+                            Identifier.withDefaultNamespace("enchantment.fire_protection"),
                             Attributes.BURNING_TIME,
                             LevelBasedValue.perLevel(-0.15F),
                             AttributeModifier.Operation.ADD_MULTIPLIED_BASE
@@ -261,7 +261,7 @@ public class EnchantmentsPM {
                         // Blast knockback reduction
                         EnchantmentEffectComponents.ATTRIBUTES,
                         new EnchantmentAttributeEffect(
-                            ResourceLocation.withDefaultNamespace("enchantment.blast_protection"),
+                            Identifier.withDefaultNamespace("enchantment.blast_protection"),
                             Attributes.EXPLOSION_KNOCKBACK_RESISTANCE,
                             LevelBasedValue.perLevel(0.15F),
                             AttributeModifier.Operation.ADD_VALUE

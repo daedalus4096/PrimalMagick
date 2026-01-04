@@ -15,11 +15,11 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class EnchantmentExpertiseWidget extends AbstractWidget {
-    protected static final ResourceLocation ICON_LOC = ResourceUtils.loc("textures/research/expertise_expert.png");
+    protected static final Identifier ICON_LOC = ResourceUtils.loc("textures/research/expertise_expert.png");
     
     protected final Holder<Enchantment> enchantment;
     

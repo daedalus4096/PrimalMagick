@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
  * @see net.minecraft.world.level.levelgen.structure.structures.DesertPyramidPiece
  */
 public class ShrinePiece extends TemplateStructurePiece {
-    protected static final ResourceLocation TEMPLATE = ResourceUtils.loc("shrine");
+    protected static final Identifier TEMPLATE = ResourceUtils.loc("shrine");
     
     protected final ShrineStructure.Type type;
     

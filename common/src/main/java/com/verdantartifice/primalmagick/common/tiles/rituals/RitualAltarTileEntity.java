@@ -46,7 +46,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -762,7 +762,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         }
         
         BlockPos propPos = step.getPos();
-        ResourceLocation expectedId = step.getExpectedId();
+        Identifier expectedId = step.getExpectedId();
         if (altar.activeCount >= altar.nextCheckCount) {
             if (altar.awaitedPropPos == null) {
                 // Open the prop block if it's valid
@@ -814,7 +814,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         return false;
     }
     
-    protected void onPropInterrupted(Block block, BlockState propState, ResourceLocation expectedId) {
+    protected void onPropInterrupted(Block block, BlockState propState, Identifier expectedId) {
         Block expectedProp = Services.BLOCKS_REGISTRY.get(expectedId);
         
         // If contact with the prop was lost, add an instability spike and start looking again

@@ -34,7 +34,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -59,7 +59,7 @@ import java.util.stream.Stream;
  * 
  * @author Daedalus4096
  */
-public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceLocation> recipes,
+public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<Identifier> recipes,
                             List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, List<ResearchEntryKey> highlights, List<AbstractReward<?>> rewards,
                             Optional<TopicLink> ctaLinkOpt) {
     public static Codec<ResearchStage> codec() { 
@@ -67,7 +67,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             ResearchEntryKey.CODEC.codec().fieldOf("parentKey").forGetter(ResearchStage::parentKey),
             Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchStage::textTranslationKey),
             AbstractRequirement.dispatchCodec().optionalFieldOf("completionRequirementOpt").forGetter(ResearchStage::completionRequirementOpt),
-            ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
+            Identifier.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
             AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
             ResearchEntryKey.CODEC.codec().listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
             ResearchEntryKey.CODEC.codec().listOf().optionalFieldOf("highlights", List.of()).forGetter(ResearchStage::highlights),
@@ -81,7 +81,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
                 ResearchEntryKey.STREAM_CODEC, ResearchStage::parentKey,
                 ByteBufCodecs.STRING_UTF8, ResearchStage::textTranslationKey,
                 ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), ResearchStage::completionRequirementOpt,
-                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::recipes,
+                Identifier.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::recipes,
                 AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchStage::siblings,
                 ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::revelations,
                 ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::highlights,
@@ -133,7 +133,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         protected final ResearchEntryKey parentKey;
         protected final int stageIndex;
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
-        protected final List<ResourceLocation> recipes = new ArrayList<>();
+        protected final List<Identifier> recipes = new ArrayList<>();
         protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
         protected final List<ResearchEntryKey> revelations = new ArrayList<>();
         protected final List<ResearchEntryKey> highlights = new ArrayList<>();
@@ -208,7 +208,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             return this.requirement(new StatRequirement(stat, value));
         }
         
-        public Builder requiredVanillaCustomStat(ResourceLocation statLoc, int value, IconDefinition iconDef) {
+        public Builder requiredVanillaCustomStat(Identifier statLoc, int value, IconDefinition iconDef) {
             return this.requirement(new VanillaCustomStatRequirement(statLoc, value, iconDef));
         }
         
@@ -229,14 +229,14 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
         
         public Builder recipe(String modId, String name) {
-            return this.recipe(ResourceLocation.fromNamespaceAndPath(modId, name));
+            return this.recipe(Identifier.fromNamespaceAndPath(modId, name));
         }
         
         public Builder recipe(ItemLike itemLike) {
             return this.recipe(Services.ITEMS_REGISTRY.getKey(itemLike.asItem()));
         }
         
-        public Builder recipe(ResourceLocation recipe) {
+        public Builder recipe(Identifier recipe) {
             this.recipes.add(recipe);
             return this;
         }

@@ -15,7 +15,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -71,7 +71,7 @@ public class ExpertiseManager {
     }
     
     protected static int getThresholdByDisciplineRecipes(RegistryAccess registryAccess, RecipeManager recipeManager, ResearchDisciplineKey discKey, ResearchTier tier) {
-        Set<ResourceLocation> foundGroups = new HashSet<>();
+        Set<Identifier> foundGroups = new HashSet<>();
         MutableInt retVal = new MutableInt(0);
         for (RecipeHolder<?> recipeHolder : recipeManager.getRecipes()) {
             if (recipeHolder.value() instanceof IHasExpertise expRecipe) {
@@ -185,7 +185,7 @@ public class ExpertiseManager {
     }
     
     public static boolean isBonusEligible(Player player, Holder<Enchantment> enchantment) {
-        ResourceLocation enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
+        Identifier enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
         return player != null && enchKey != null && Services.CAPABILITIES.stats(player).map(stats -> !stats.isRuneEnchantmentCrafted(enchKey)).orElse(false);
     }
     

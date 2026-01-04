@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.books.Lexicon;
 import com.verdantartifice.primalmagick.common.books.LexiconManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.GsonHelper;
@@ -52,10 +52,10 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+    protected void apply(Map<Identifier, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
         // Load lexicons explicitly defined in resource packs
         pObject.entrySet().forEach(entry -> {
-            ResourceLocation location = entry.getKey();
+            Identifier location = entry.getKey();
             // Filter anything beginning with "_" as it's used for metadata.
             if (!location.getPath().startsWith("_")) {
                 try {

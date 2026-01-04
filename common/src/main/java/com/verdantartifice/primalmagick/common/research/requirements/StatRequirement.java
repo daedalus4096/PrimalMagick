@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 
@@ -21,11 +21,11 @@ import java.util.stream.Stream;
  */
 public class StatRequirement extends AbstractRequirement<StatRequirement> {
     public static final MapCodec<StatRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("stat").xmap(loc -> StatsManager.getStat(loc), stat -> stat.key()).forGetter(req -> req.stat),
+            Identifier.CODEC.fieldOf("stat").xmap(loc -> StatsManager.getStat(loc), stat -> stat.key()).forGetter(req -> req.stat),
             ExtraCodecs.POSITIVE_INT.fieldOf("requiredValue").forGetter(req -> req.requiredValue)
         ).apply(instance, StatRequirement::new));
     public static final StreamCodec<ByteBuf, StatRequirement> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC.map(loc -> StatsManager.getStat(loc), stat -> stat.key()),
+            Identifier.STREAM_CODEC.map(loc -> StatsManager.getStat(loc), stat -> stat.key()),
             StatRequirement::getStat,
             ByteBufCodecs.VAR_INT,
             StatRequirement::getRequiredValue,

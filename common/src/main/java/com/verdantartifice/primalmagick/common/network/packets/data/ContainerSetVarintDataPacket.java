@@ -8,7 +8,7 @@ import commonnetwork.networking.data.Side;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class ContainerSetVarintDataPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("container_set_varint_data");
+    public static final Identifier CHANNEL = ResourceUtils.loc("container_set_varint_data");
     public static final StreamCodec<RegistryFriendlyByteBuf, ContainerSetVarintDataPacket> STREAM_CODEC = StreamCodec.ofMember(ContainerSetVarintDataPacket::encode, ContainerSetVarintDataPacket::decode);
 
     private final int containerId;

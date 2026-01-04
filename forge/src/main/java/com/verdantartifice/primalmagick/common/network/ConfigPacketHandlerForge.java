@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.network.packets.config.UpdateAffi
 import com.verdantartifice.primalmagick.common.network.packets.config.UpdateLinguisticsGridConfigPacketForge;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.Connection;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.network.Channel;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.SimpleChannel;
@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ConfigPacketHandlerForge {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation CHANNEL_NAME = ResourceUtils.loc("config_channel_forge");
+    private static final Identifier CHANNEL_NAME = ResourceUtils.loc("config_channel_forge");
     private static final int PROTOCOL_VERSION = 1;
 
     private static final SimpleChannel CHANNEL = ChannelBuilder

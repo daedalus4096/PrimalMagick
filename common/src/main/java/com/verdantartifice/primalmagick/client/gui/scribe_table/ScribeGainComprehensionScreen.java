@@ -24,7 +24,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -47,8 +47,8 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<ScribeGainComprehensionMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/scribe_gain_comprehension.png");
-    protected static final ResourceLocation PARCHMENT_SPRITE = ResourceUtils.loc("scribe_table/parchment");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/scribe_gain_comprehension.png");
+    protected static final Identifier PARCHMENT_SPRITE = ResourceUtils.loc("scribe_table/parchment");
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected final Map<Vector2i, NodeButton> nodeButtons = new HashMap<>();
@@ -69,7 +69,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     }
 
     @Override
-    protected ResourceLocation getBgTexture() {
+    protected Identifier getBgTexture() {
         return TEXTURE;
     }
 
@@ -161,7 +161,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     
     protected static class NodeButton extends ImageButton {
         protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(ResourceUtils.loc("scribe_table/grid_node_button"), ResourceUtils.loc("scribe_table/grid_node_button_disabled"), ResourceUtils.loc("scribe_table/grid_node_button_highlighted"), ResourceUtils.loc("scribe_table/grid_node_button_disabled_highlighted"));
-        protected static final ResourceLocation PLACEHOLDER = ResourceUtils.loc("scribe_table/grid_node_placeholder");
+        protected static final Identifier PLACEHOLDER = ResourceUtils.loc("scribe_table/grid_node_placeholder");
         
         protected final Player player;
         protected final RegistryAccess registryAccess;
@@ -240,7 +240,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             pGuiGraphics.pose().pushPose();
             pGuiGraphics.pose().translate(this.getX(), this.getY(), 0);
             pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
-            ResourceLocation resourcelocation = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
+            Identifier resourcelocation = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
             pGuiGraphics.blitSprite(resourcelocation, 0, 0, this.width * 2, this.height * 2);
             pGuiGraphics.pose().popPose();
 

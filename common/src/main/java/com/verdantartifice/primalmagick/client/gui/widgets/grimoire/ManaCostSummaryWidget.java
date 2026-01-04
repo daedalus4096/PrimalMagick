@@ -13,7 +13,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.text.DecimalFormat;
 
@@ -23,7 +23,7 @@ import java.text.DecimalFormat;
  * @author Daedalus4096
  */
 public class ManaCostSummaryWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/mana_cost_summary_widget.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/mana_cost_summary_widget.png");
     protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
 
     protected SourceList manaCosts;

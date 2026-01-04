@@ -45,7 +45,7 @@ import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.core.Direction;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -338,24 +338,24 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.TICK_STICK.get(), Items.STICK, ModelTemplates.FLAT_ITEM);
     }
 
-    private void generateSourceTintedLayeredItem(ItemModelGenerators itemModels, Item item, ResourceLocation overlayModel, ResourceLocation baseModel) {
-        ResourceLocation modelLoc = itemModels.generateLayeredItem(item, overlayModel, baseModel);
+    private void generateSourceTintedLayeredItem(ItemModelGenerators itemModels, Item item, Identifier overlayModel, Identifier baseModel) {
+        Identifier modelLoc = itemModels.generateLayeredItem(item, overlayModel, baseModel);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new SourceTint()));
     }
 
     private void generateConcoctionItem(ItemModelGenerators itemModels, Item item) {
-        ResourceLocation modelLoc = itemModels.generateLayeredItem(item, ModelLocationUtils.getModelLocation(item, "_overlay"), ModelLocationUtils.getModelLocation(item));
+        Identifier modelLoc = itemModels.generateLayeredItem(item, ModelLocationUtils.getModelLocation(item, "_overlay"), ModelLocationUtils.getModelLocation(item));
         itemModels.addPotionTint(item, modelLoc);
     }
 
     private void generateSpawnItem(ItemModelGenerators itemModels, Item item, int baseColor, int overlayColor) {
-        ResourceLocation spawnEggLoc = ResourceUtils.loc("spawn_egg").withPrefix("item/");
-        ResourceLocation modelLoc = itemModels.generateLayeredItem(item, spawnEggLoc, spawnEggLoc.withSuffix("_overlay"));
+        Identifier spawnEggLoc = ResourceUtils.loc("spawn_egg").withPrefix("item/");
+        Identifier modelLoc = itemModels.generateLayeredItem(item, spawnEggLoc, spawnEggLoc.withSuffix("_overlay"));
         itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new Constant(baseColor), new Constant(overlayColor)));
     }
 
     private void generateDrainedPixieItem(ItemModelGenerators itemModels, Item item) {
-        ResourceLocation modelLoc = ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(ResourceUtils.loc("drained_pixie").withPrefix("item/")), itemModels.modelOutput);
+        Identifier modelLoc = ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(ResourceUtils.loc("drained_pixie").withPrefix("item/")), itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 
@@ -375,12 +375,12 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     private void generateManaOrbItem(ItemModelGenerators itemModels, Item item, Item particleItem) {
-        ResourceLocation modelLoc = ModelTemplatesPM.MANA_ORB.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
+        Identifier modelLoc = ModelTemplatesPM.MANA_ORB.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 
     private void generateSpelltomeItem(ItemModelGenerators itemModels, Item item, Item particleItem) {
-        ResourceLocation modelLoc = ModelTemplatesPM.SPELLTOME.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
+        Identifier modelLoc = ModelTemplatesPM.SPELLTOME.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 

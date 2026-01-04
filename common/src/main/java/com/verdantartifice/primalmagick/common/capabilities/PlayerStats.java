@@ -10,7 +10,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongArrayTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Map;
@@ -23,11 +23,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Daedalus4096
  */
 public class PlayerStats implements IPlayerStats {
-    private final Map<ResourceLocation, Integer> stats = new ConcurrentHashMap<>();     // Map of stat locations to values
+    private final Map<Identifier, Integer> stats = new ConcurrentHashMap<>();     // Map of stat locations to values
     private final Set<Long> discoveredShrines = ConcurrentHashMap.newKeySet();          // Set of long-encoded block positions of shrine locations
-    private final Set<ResourceLocation> craftedRecipes = ConcurrentHashMap.newKeySet(); // Set of IDs of expertise-eligible recipes crafted by the player
-    private final Set<ResourceLocation> craftedGroups = ConcurrentHashMap.newKeySet();  // Set of IDs of expertise-eligible recipe groups crafted by the player
-    private final Set<ResourceLocation> craftedEnchs = ConcurrentHashMap.newKeySet();   // Set of IDs of expertise-eligible rune enchantments crafted by the player
+    private final Set<Identifier> craftedRecipes = ConcurrentHashMap.newKeySet(); // Set of IDs of expertise-eligible recipes crafted by the player
+    private final Set<Identifier> craftedGroups = ConcurrentHashMap.newKeySet();  // Set of IDs of expertise-eligible recipe groups crafted by the player
+    private final Set<Identifier> craftedEnchs = ConcurrentHashMap.newKeySet();   // Set of IDs of expertise-eligible rune enchantments crafted by the player
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
@@ -36,7 +36,7 @@ public class PlayerStats implements IPlayerStats {
         
         // Serialize recorded stat values
         ListTag statList = new ListTag();
-        for (Map.Entry<ResourceLocation, Integer> entry : stats.entrySet()) {
+        for (Map.Entry<Identifier, Integer> entry : stats.entrySet()) {
             if (entry != null && entry.getKey() != null && entry.getValue() != null) {
                 CompoundTag tag = new CompoundTag();
                 tag.putString("Key", entry.getKey().toString());
@@ -56,21 +56,21 @@ public class PlayerStats implements IPlayerStats {
         
         // Serialize crafted recipe IDs
         ListTag recipeList = new ListTag();
-        for (ResourceLocation recipeId : this.craftedRecipes) {
+        for (Identifier recipeId : this.craftedRecipes) {
             recipeList.add(StringTag.valueOf(recipeId.toString()));
         }
         rootTag.put("CraftedRecipes", recipeList);
         
         // Serialize crafted recipe group IDs
         ListTag groupList = new ListTag();
-        for (ResourceLocation groupId : this.craftedGroups) {
+        for (Identifier groupId : this.craftedGroups) {
             groupList.add(StringTag.valueOf(groupId.toString()));
         }
         rootTag.put("CraftedGroups", groupList);
         
         // Serialize crafted rune enchantment IDs
         ListTag enchList = new ListTag();
-        for (ResourceLocation enchId : this.craftedEnchs) {
+        for (Identifier enchId : this.craftedEnchs) {
             enchList.add(StringTag.valueOf(enchId.toString()));
         }
         rootTag.put("CraftedRuneEnchantments", enchList);
@@ -93,7 +93,7 @@ public class PlayerStats implements IPlayerStats {
         ListTag statList = nbt.getList("Stats", Tag.TAG_COMPOUND);
         for (int index = 0; index < statList.size(); index++) {
             CompoundTag tag = statList.getCompound(index);
-            ResourceLocation loc = ResourceLocation.parse(tag.getString("Key"));
+            Identifier loc = Identifier.parse(tag.getString("Key"));
             Integer value = Integer.valueOf(tag.getInt("Value"));
             this.stats.put(loc, value);
         }
@@ -108,21 +108,21 @@ public class PlayerStats implements IPlayerStats {
         ListTag recipeList = nbt.getList("CraftedRecipes", Tag.TAG_STRING);
         for (int index = 0; index < recipeList.size(); index++) {
             String idStr = recipeList.getString(index);
-            this.craftedRecipes.add(ResourceLocation.parse(idStr));
+            this.craftedRecipes.add(Identifier.parse(idStr));
         }
         
         // Deserialize crafted recipe group IDs
         ListTag groupList = nbt.getList("CraftedGroups", Tag.TAG_STRING);
         for (int index = 0; index < groupList.size(); index++) {
             String idStr = groupList.getString(index);
-            this.craftedGroups.add(ResourceLocation.parse(idStr));
+            this.craftedGroups.add(Identifier.parse(idStr));
         }
         
         // Deserialize crafted rune enchantment IDs
         ListTag enchList = nbt.getList("CraftedRuneEnchantments", Tag.TAG_STRING);
         for (int index = 0; index < enchList.size(); index++) {
             String idStr = enchList.getString(index);
-            this.craftedEnchs.add(ResourceLocation.parse(idStr));
+            this.craftedEnchs.add(Identifier.parse(idStr));
         }
     }
 
@@ -168,32 +168,32 @@ public class PlayerStats implements IPlayerStats {
     }
 
     @Override
-    public boolean isRecipeCrafted(ResourceLocation recipeId) {
+    public boolean isRecipeCrafted(Identifier recipeId) {
         return this.craftedRecipes.contains(recipeId);
     }
 
     @Override
-    public boolean isRecipeGroupCrafted(ResourceLocation groupId) {
+    public boolean isRecipeGroupCrafted(Identifier groupId) {
         return this.craftedGroups.contains(groupId);
     }
 
     @Override
-    public boolean isRuneEnchantmentCrafted(ResourceLocation enchantmentId) {
+    public boolean isRuneEnchantmentCrafted(Identifier enchantmentId) {
         return this.craftedEnchs.contains(enchantmentId);
     }
 
     @Override
-    public void setRecipeCrafted(ResourceLocation recipeId) {
+    public void setRecipeCrafted(Identifier recipeId) {
         this.craftedRecipes.add(recipeId);
     }
 
     @Override
-    public void setRecipeGroupCrafted(ResourceLocation groupId) {
+    public void setRecipeGroupCrafted(Identifier groupId) {
         this.craftedGroups.add(groupId);
     }
 
     @Override
-    public void setRuneEnchantmentCrafted(ResourceLocation enchantmentId) {
+    public void setRuneEnchantmentCrafted(Identifier enchantmentId) {
         this.craftedEnchs.add(enchantmentId);
     }
 

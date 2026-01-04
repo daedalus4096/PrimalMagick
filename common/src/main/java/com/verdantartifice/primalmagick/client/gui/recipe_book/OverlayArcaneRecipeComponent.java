@@ -12,7 +12,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -25,9 +25,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListener {
-    private static final ResourceLocation OVERLAY_RECIPE_SPRITE = ResourceLocation.withDefaultNamespace("recipe_book/overlay_recipe");
-    protected static final WidgetSprites CRAFTING_OVERLAY_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay"), ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay_disabled_highlighted"));
-    protected static final WidgetSprites FURNACE_OVERLAY_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay_disabled_highlighted"));
+    private static final Identifier OVERLAY_RECIPE_SPRITE = Identifier.withDefaultNamespace("recipe_book/overlay_recipe");
+    protected static final WidgetSprites CRAFTING_OVERLAY_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/crafting_overlay"), Identifier.withDefaultNamespace("recipe_book/crafting_overlay_disabled"), Identifier.withDefaultNamespace("recipe_book/crafting_overlay_highlighted"), Identifier.withDefaultNamespace("recipe_book/crafting_overlay_disabled_highlighted"));
+    protected static final WidgetSprites FURNACE_OVERLAY_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/furnace_overlay"), Identifier.withDefaultNamespace("recipe_book/furnace_overlay_disabled"), Identifier.withDefaultNamespace("recipe_book/furnace_overlay_highlighted"), Identifier.withDefaultNamespace("recipe_book/furnace_overlay_disabled_highlighted"));
     protected static final int MAX_ROW = 4;
     protected static final int MAX_ROW_LARGE = 5;
     protected static final float ITEM_RENDER_SCALE = 0.375F;
@@ -203,7 +203,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
         @Override
         public void renderWidget(GuiGraphics guiGraphics, int p_93677_, int p_93678_, float p_93679_) {
             WidgetSprites sprites = OverlayArcaneRecipeComponent.this.useFurnaceStyle ? OverlayArcaneRecipeComponent.FURNACE_OVERLAY_SPRITES : OverlayArcaneRecipeComponent.CRAFTING_OVERLAY_SPRITES;
-            ResourceLocation spriteLoc = sprites.get(this.isCraftable, this.isHoveredOrFocused());
+            Identifier spriteLoc = sprites.get(this.isCraftable, this.isHoveredOrFocused());
             guiGraphics.blitSprite(spriteLoc, this.getX(), this.getY(), this.width, this.height);
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate((double)(this.getX() + 2), (double)(this.getY() + 2), 125.0D);

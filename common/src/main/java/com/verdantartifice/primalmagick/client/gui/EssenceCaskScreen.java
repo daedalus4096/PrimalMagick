@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class EssenceCaskScreen extends AbstractContainerScreenPM<EssenceCaskMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/essence_cask.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/essence_cask.png");
     
     protected final List<EssenceCaskWidget> caskWidgets = new ArrayList<>();
     protected long lastCheck = 0L;

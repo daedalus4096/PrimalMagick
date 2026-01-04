@@ -13,7 +13,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkbenchMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/arcane_workbench.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/arcane_workbench.png");
     
     protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();
     protected List<ManaCostWidget> costWidgets = new ArrayList<>();

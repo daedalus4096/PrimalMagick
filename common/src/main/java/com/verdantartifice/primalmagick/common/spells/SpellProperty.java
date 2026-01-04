@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringRepresentable;
 
@@ -15,9 +15,9 @@ import net.minecraft.util.StringRepresentable;
  * 
  * @author Daedalus4096
  */
-public record SpellProperty(ResourceLocation id, String translationKey, int min, int max) implements StringRepresentable {
-    public static final Codec<SpellProperty> CODEC = ResourceLocation.CODEC.xmap(SpellPropertiesPM::get, SpellProperty::id);
-    public static final StreamCodec<ByteBuf, SpellProperty> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(SpellPropertiesPM::get, SpellProperty::id);
+public record SpellProperty(Identifier id, String translationKey, int min, int max) implements StringRepresentable {
+    public static final Codec<SpellProperty> CODEC = Identifier.CODEC.xmap(SpellPropertiesPM::get, SpellProperty::id);
+    public static final StreamCodec<ByteBuf, SpellProperty> STREAM_CODEC = Identifier.STREAM_CODEC.map(SpellPropertiesPM::get, SpellProperty::id);
     
     public Component getDescription() {
         return Component.translatable(this.translationKey);

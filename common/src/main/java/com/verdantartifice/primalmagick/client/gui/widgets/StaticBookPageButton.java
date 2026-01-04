@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.books.BookType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.PageButton;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Page-turning button widget for the static book view screen.
@@ -24,7 +24,7 @@ public class StaticBookPageButton extends PageButton {
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        ResourceLocation rl = ClientBookHelper.getSprites(this.bookType).getPageButton(this.isForward, this.isHoveredOrFocused());
+        Identifier rl = ClientBookHelper.getSprites(this.bookType).getPageButton(this.isForward, this.isHoveredOrFocused());
         guiGraphics.blitSprite(rl, this.getX(), this.getY(), 23, 13);
     }
 }

@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import javax.annotation.Nonnull;
@@ -42,7 +42,7 @@ public class EnchantmentBonusAffinityBuilder {
         return this.multiplier(source, 1);
     }
     
-    private void validate(ResourceLocation id) {
+    private void validate(Identifier id) {
         if (this.targetId == null) {
             throw new IllegalStateException("No target enchantment for affinity " + id.toString());
         }
@@ -56,20 +56,20 @@ public class EnchantmentBonusAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {
-        this.build(consumer, ResourceLocation.parse(name));
+        this.build(consumer, Identifier.parse(name));
     }
     
-    public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {
+    public void build(Consumer<IFinishedAffinity> consumer, Identifier id) {
         this.validate(id);
         consumer.accept(new EnchantmentBonusAffinityBuilder.Result(id, this.targetId.location(), this.multiplierValues.build()));
     }
     
     public static class Result implements IFinishedAffinity {
-        protected final ResourceLocation id;
-        protected final ResourceLocation targetId;
+        protected final Identifier id;
+        protected final Identifier targetId;
         protected final SourceList multiplierValues;
         
-        public Result(@Nonnull ResourceLocation id, @Nonnull ResourceLocation targetId, @Nullable SourceList multiplierValues) {
+        public Result(@Nonnull Identifier id, @Nonnull Identifier targetId, @Nullable SourceList multiplierValues) {
             this.id = id;
             this.targetId = targetId;
             this.multiplierValues = multiplierValues;
@@ -81,7 +81,7 @@ public class EnchantmentBonusAffinityBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
+        public Identifier getId() {
             return this.id;
         }
 

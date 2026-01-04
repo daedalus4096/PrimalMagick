@@ -14,14 +14,14 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
 
 public class AttunementMeterWidget extends AbstractWidget {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/attunement_meter.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/attunement_meter.png");
 
     protected final Source source;
     protected final Color permanentColor;

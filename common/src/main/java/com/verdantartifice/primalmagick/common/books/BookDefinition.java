@@ -8,16 +8,16 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Definition for a mod static book.
  * 
  * @author Daedalus4096
  */
-public record BookDefinition(ResourceLocation bookId) {
+public record BookDefinition(Identifier bookId) {
     public static final Codec<BookDefinition> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("bookId").forGetter(BookDefinition::bookId)
+            Identifier.CODEC.fieldOf("bookId").forGetter(BookDefinition::bookId)
         ).apply(instance, BookDefinition::new));
     public static final Codec<BookDefinition> NETWORK_CODEC = DIRECT_CODEC; // TODO Modify if some book data is not necessary on the client
     

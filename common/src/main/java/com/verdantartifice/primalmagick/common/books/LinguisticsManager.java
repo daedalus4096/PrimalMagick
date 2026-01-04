@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +36,7 @@ public class LinguisticsManager {
     // Set of unique IDs of players that need their linguistics data synced to their client
     private static final Set<UUID> SYNC_SET = ConcurrentHashMap.newKeySet();
     
-    protected static final Map<ResourceLocation, GridDefinition> GRID_DEFINITIONS = new HashMap<>();
+    protected static final Map<Identifier, GridDefinition> GRID_DEFINITIONS = new HashMap<>();
 
     public static boolean isSyncScheduled(@Nullable Player player) {
         if (player == null) {
@@ -196,11 +196,11 @@ public class LinguisticsManager {
         GRID_DEFINITIONS.clear();
     }
     
-    public static Map<ResourceLocation, GridDefinition> getAllGridDefinitions() {
+    public static Map<Identifier, GridDefinition> getAllGridDefinitions() {
         return Collections.unmodifiableMap(GRID_DEFINITIONS);
     }
     
-    public static boolean registerGridDefinition(ResourceLocation definitionKey, GridDefinition gridDefinition) {
+    public static boolean registerGridDefinition(Identifier definitionKey, GridDefinition gridDefinition) {
         if (GRID_DEFINITIONS.containsKey(definitionKey)) {
             return false;
         } else {
@@ -210,11 +210,11 @@ public class LinguisticsManager {
     }
     
     @Nullable
-    protected static GridDefinition getGridDefinition(@Nonnull ResourceLocation gridKey) {
+    protected static GridDefinition getGridDefinition(@Nonnull Identifier gridKey) {
         return GRID_DEFINITIONS.get(gridKey);
     }
     
-    protected static Set<Vector2i> getUnlockedGridNodes(@Nullable Player player, @Nullable ResourceLocation gridKey) {
+    protected static Set<Vector2i> getUnlockedGridNodes(@Nullable Player player, @Nullable Identifier gridKey) {
         MutableObject<Set<Vector2i>> retVal = new MutableObject<>(Collections.emptySet());
         if (player != null && gridKey != null) {
             Services.CAPABILITIES.linguistics(player).ifPresent(linguistics -> {
@@ -224,7 +224,7 @@ public class LinguisticsManager {
         return retVal.getValue();
     }
     
-    protected static long getGridLastModified(@Nullable Player player, @Nullable ResourceLocation gridKey) {
+    protected static long getGridLastModified(@Nullable Player player, @Nullable Identifier gridKey) {
         MutableLong retVal = new MutableLong(0L);
         if (player != null && gridKey != null) {
             Services.CAPABILITIES.linguistics(player).ifPresent(linguistics -> {
@@ -235,7 +235,7 @@ public class LinguisticsManager {
     }
     
     @Nullable
-    public static PlayerGrid getPlayerGrid(@Nonnull Player player, @Nonnull ResourceLocation gridKey) {
+    public static PlayerGrid getPlayerGrid(@Nonnull Player player, @Nonnull Identifier gridKey) {
         GridDefinition gridDef = getGridDefinition(gridKey);
         return gridDef == null ? null : new PlayerGrid(player, gridDef, getUnlockedGridNodes(player, gridKey), getGridLastModified(player, gridKey));
     }

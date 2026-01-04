@@ -7,7 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
@@ -194,7 +194,7 @@ public class BooksPM {
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
-        return context.register(key, new BookDefinition(ResourceLocation.fromNamespaceAndPath(key.location().getNamespace(), key.location().getPath().replace('/', '.'))));
+        return context.register(key, new BookDefinition(Identifier.fromNamespaceAndPath(key.location().getNamespace(), key.location().getPath().replace('/', '.'))));
     }
     
     /**

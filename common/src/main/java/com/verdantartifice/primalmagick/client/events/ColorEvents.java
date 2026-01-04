@@ -16,7 +16,7 @@ import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -75,7 +75,7 @@ public class ColorEvents {
         void register(BlockColor blockColor, Block... blocks);
     }
 
-    public static void onItemTintSourceInit(BiConsumer<ResourceLocation, MapCodec<? extends ItemTintSource>> tintMapper) {
+    public static void onItemTintSourceInit(BiConsumer<Identifier, MapCodec<? extends ItemTintSource>> tintMapper) {
         tintMapper.accept(ResourceUtils.loc("source"), SourceTint.MAP_CODEC);
     }
 

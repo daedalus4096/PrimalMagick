@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePiec
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
     protected final ResourceKey<Culture> cultureKey;
 
-    public AbstractLibraryPiece(StructureTemplateManager templateManager, ResourceLocation template, ResourceKey<Culture> cultureKey, BlockPos pos) {
+    public AbstractLibraryPiece(StructureTemplateManager templateManager, Identifier template, ResourceKey<Culture> cultureKey, BlockPos pos) {
         super(StructurePieceTypesPM.LIBRARY.get(), 0, templateManager, template, template.toString(), makePlaceSettings(), pos);
         this.cultureKey = cultureKey;
     }

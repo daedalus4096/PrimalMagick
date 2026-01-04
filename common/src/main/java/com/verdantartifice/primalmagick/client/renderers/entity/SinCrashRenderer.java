@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 
@@ -24,7 +24,7 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class SinCrashRenderer extends EntityRenderer<SinCrashEntity> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/spell_projectile.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/spell_projectile.png");
     protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);
 
     protected final SpellProjectileModel model;
@@ -63,7 +63,7 @@ public class SinCrashRenderer extends EntityRenderer<SinCrashEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SinCrashEntity entity) {
+    public Identifier getTextureLocation(SinCrashEntity entity) {
         return TEXTURE;
     }
 }

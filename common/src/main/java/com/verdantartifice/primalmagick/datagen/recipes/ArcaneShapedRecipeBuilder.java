@@ -15,7 +15,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +44,7 @@ public class ArcaneShapedRecipeBuilder {
     protected SourceList manaCosts;
     protected Optional<Integer> baseExpertiseOverride = Optional.empty();
     protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
-    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+    protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
     
     protected ArcaneShapedRecipeBuilder(ItemLike result, int count) {
@@ -180,7 +180,7 @@ public class ArcaneShapedRecipeBuilder {
         return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
     }
     
-    public ArcaneShapedRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+    public ArcaneShapedRecipeBuilder expertiseGroup(Identifier groupLoc) {
         this.expertiseGroup = Optional.ofNullable(groupLoc);
         return this;
     }
@@ -210,7 +210,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(RecipeOutput output, ResourceLocation id) {
+    public void build(RecipeOutput output, Identifier id) {
         ShapedRecipePattern pattern = this.validate(id);
         ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.getFinalRequirement(), 
                 Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
@@ -225,8 +225,8 @@ public class ArcaneShapedRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        ResourceLocation id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
-        ResourceLocation saveLoc = ResourceLocation.parse(save);
+        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
+        Identifier saveLoc = Identifier.parse(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Arcane Shaped Recipe " + save + " should remove its 'save' argument");
         } else {
@@ -248,7 +248,7 @@ public class ArcaneShapedRecipeBuilder {
      * 
      * @param id the ID of the recipe
      */
-    protected ShapedRecipePattern validate(ResourceLocation id) {
+    protected ShapedRecipePattern validate(Identifier id) {
         if (this.requirements.isEmpty()) {
             throw new IllegalStateException("No requirement is defined for arcane shaped recipe " + id + "!");
         } else if (this.patternRows.size() == 1 && this.patternRows.get(0).length() == 1) {

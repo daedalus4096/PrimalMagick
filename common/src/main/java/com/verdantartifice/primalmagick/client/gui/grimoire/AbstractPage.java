@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nullable;
 import java.awt.Color;
@@ -19,7 +19,7 @@ import java.awt.Color;
  * @author Daedalus4096
  */
 public abstract class AbstractPage implements GuiEventListener {
-    private static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     /**
      * Render this grimoire page
@@ -52,7 +52,7 @@ public abstract class AbstractPage implements GuiEventListener {
         return true;
     }
     
-    protected void renderTitle(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY, @Nullable ResourceLocation icon) {
+    protected void renderTitle(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY, @Nullable Identifier icon) {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft mc = Minecraft.getInstance();

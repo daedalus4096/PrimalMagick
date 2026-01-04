@@ -15,7 +15,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Display widget for showing progress towards a statistic threshold on the requirements page.
@@ -23,14 +23,14 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class StatProgressWidget extends AbstractWidget {
-    protected static final ResourceLocation UNKNOWN_TEXTURE = ResourceUtils.loc("textures/research/research_unknown.png");
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    protected static final Identifier UNKNOWN_TEXTURE = ResourceUtils.loc("textures/research/research_unknown.png");
+    protected static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
 
     protected final Stat stat;
     protected final int maxValue;
     protected final int currentValue;
     protected final boolean isComplete;
-    protected final ResourceLocation iconLoc;
+    protected final Identifier iconLoc;
     protected MutableComponent lastTooltip = Component.empty();
     protected MutableComponent tooltip = Component.empty();
 

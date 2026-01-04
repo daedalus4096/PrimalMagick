@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -32,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Daedalus4096
  */
 public class StatsManager {
-    protected static final Map<ResourceLocation, Stat> REGISTRY = new HashMap<>();
+    protected static final Map<Identifier, Stat> REGISTRY = new HashMap<>();
     protected static final List<Stat> DISPLAY_STATS = new ArrayList<>();
     
     // Set of unique IDs of players that need their research synced to their client
@@ -52,7 +52,7 @@ public class StatsManager {
         }
     }
     
-    public static Set<ResourceLocation> getStatLocations() {
+    public static Set<Identifier> getStatLocations() {
         return Collections.unmodifiableSet(REGISTRY.keySet());
     }
     
@@ -73,7 +73,7 @@ public class StatsManager {
         }
     }
     
-    public static Stat getStat(@Nullable ResourceLocation loc) {
+    public static Stat getStat(@Nullable Identifier loc) {
         return REGISTRY.get(loc);
     }
     

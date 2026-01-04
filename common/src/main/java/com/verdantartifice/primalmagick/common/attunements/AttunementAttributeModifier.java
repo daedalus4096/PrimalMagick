@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.attunements;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -23,7 +23,7 @@ public class AttunementAttributeModifier {
     protected final Holder<Attribute> attribute;
     protected final AttributeModifier modifier;
     
-    public AttunementAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Holder<Attribute> attribute, @Nonnull ResourceLocation id, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
+    public AttunementAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Holder<Attribute> attribute, @Nonnull Identifier id, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
         this.source = source;
         this.threshold = threshold;
         this.attribute = attribute;

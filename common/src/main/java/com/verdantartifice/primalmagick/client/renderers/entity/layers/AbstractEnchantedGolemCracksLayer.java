@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchanted
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Map;
 
@@ -26,11 +26,11 @@ public abstract class AbstractEnchantedGolemCracksLayer<T extends AbstractEnchan
         if (!entitylivingbaseIn.isInvisible()) {
             Cracks cracks = entitylivingbaseIn.getCrackLevel();
             if (cracks != Cracks.NONE) {
-                ResourceLocation tex = this.getTextureMap().get(cracks);
+                Identifier tex = this.getTextureMap().get(cracks);
                 renderColoredCutoutModel(this.getParentModel(), tex, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, -1);
             }
         }
     }
     
-    protected abstract Map<Cracks, ResourceLocation> getTextureMap();
+    protected abstract Map<Cracks, Identifier> getTextureMap();
 }

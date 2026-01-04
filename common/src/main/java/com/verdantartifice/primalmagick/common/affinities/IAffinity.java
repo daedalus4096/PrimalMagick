@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.affinities;
 
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,6 +17,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface IAffinity {
     @NotNull AffinityType<?> getType();
-    @NotNull ResourceLocation getTarget();
-    @NotNull CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> history);
+    @NotNull Identifier getTarget();
+    @NotNull CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history);
 }

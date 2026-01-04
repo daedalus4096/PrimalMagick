@@ -11,7 +11,7 @@ import net.minecraft.core.Position;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
@@ -23,7 +23,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class ManaSparklePacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("mana_sparkle");
+    public static final Identifier CHANNEL = ResourceUtils.loc("mana_sparkle");
     public static final StreamCodec<RegistryFriendlyByteBuf, ManaSparklePacket> STREAM_CODEC = StreamCodec.ofMember(ManaSparklePacket::encode, ManaSparklePacket::decode);
 
     protected final double x1;

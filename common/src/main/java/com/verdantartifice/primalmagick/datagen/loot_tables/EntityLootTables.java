@@ -8,7 +8,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -38,7 +38,7 @@ import java.util.stream.Stream;
 public class EntityLootTables extends EntityLootSubProvider {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected final Set<ResourceLocation> registeredEntities = new HashSet<>();
+    protected final Set<Identifier> registeredEntities = new HashSet<>();
     
     public EntityLootTables(HolderLookup.Provider registries) {
         super(FeatureFlags.REGISTRY.allFlags(), registries);
@@ -46,7 +46,7 @@ public class EntityLootTables extends EntityLootSubProvider {
 
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> entityTypes = Services.ENTITY_TYPES_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
+        Set<Identifier> entityTypes = Services.ENTITY_TYPES_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
         
         // Warn for each mod entity that didn't have a loot table registered
         entityTypes.removeAll(this.registeredEntities);

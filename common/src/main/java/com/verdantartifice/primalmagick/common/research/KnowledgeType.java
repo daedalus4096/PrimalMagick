@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 
@@ -25,9 +25,9 @@ public enum KnowledgeType implements StringRepresentable {
     private final int id;
     private final String name;
     private final short progression;  // How many points make a complete level for this knowledge type
-    private final ResourceLocation iconLocation;
+    private final Identifier iconLocation;
     
-    private KnowledgeType(int id, String name, int progression, @Nonnull ResourceLocation iconLocation) {
+    private KnowledgeType(int id, String name, int progression, @Nonnull Identifier iconLocation) {
         this.id = id;
         this.name = name;
         this.progression = (short)progression;
@@ -43,7 +43,7 @@ public enum KnowledgeType implements StringRepresentable {
     }
     
     @Nonnull
-    public ResourceLocation getIconLocation() {
+    public Identifier getIconLocation() {
         return this.iconLocation;
     }
     

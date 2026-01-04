@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,7 +23,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class RunecarvingTableScreen extends AbstractContainerScreenPM<RunecarvingTableMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/runecarving_table.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/runecarving_table.png");
     
     protected float sliderProgress;
     protected boolean clickedOnSroll;

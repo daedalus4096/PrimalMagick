@@ -10,7 +10,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -30,7 +30,7 @@ import java.util.Set;
  * @author Daedalus4096
  */
 public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialInstance> activeMaterials, List<AbstractReward<?>> otherRewards, double baseSuccessChance, double baseRewardMultiplier,
-        Optional<ResourceLocation> aidBlock) {
+        Optional<Identifier> aidBlock) {
     public static Codec<Project> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResourceKey.codec(RegistryKeysPM.PROJECT_TEMPLATES).fieldOf("templateKey").forGetter(Project::templateKey),
@@ -38,7 +38,7 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
                 AbstractReward.dispatchCodec().listOf().fieldOf("otherRewards").forGetter(Project::otherRewards),
                 Codec.DOUBLE.fieldOf("baseSuccessChance").forGetter(Project::baseSuccessChance),
                 Codec.DOUBLE.fieldOf("baseRewardMultiplier").forGetter(Project::baseRewardMultiplier),
-                ResourceLocation.CODEC.optionalFieldOf("aidBlock").forGetter(Project::aidBlock)
+                Identifier.CODEC.optionalFieldOf("aidBlock").forGetter(Project::aidBlock)
             ).apply(instance, Project::new));
     }
     
@@ -54,7 +54,7 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
                 Project::baseSuccessChance,
                 ByteBufCodecs.DOUBLE,
                 Project::baseRewardMultiplier,
-                ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC),
+                ByteBufCodecs.optional(Identifier.STREAM_CODEC),
                 Project::aidBlock,
                 Project::new);
     }

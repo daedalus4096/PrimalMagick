@@ -20,7 +20,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
@@ -353,16 +353,16 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNKNOWN_RESEARCH = create("unknown_research");
     
     // Commonly used research icons
-    private static final ResourceLocation ICON_MANAWEAVING = ResourceUtils.loc("textures/research/discipline_manaweaving.png");
-    private static final ResourceLocation ICON_ALCHEMY = ResourceUtils.loc("textures/research/discipline_alchemy.png");
-    private static final ResourceLocation ICON_SORCERY = ResourceUtils.loc("textures/research/discipline_sorcery.png");
-    private static final ResourceLocation ICON_RUNEWORKING = ResourceUtils.loc("textures/research/discipline_runeworking.png");
-    private static final ResourceLocation ICON_RITUAL = ResourceUtils.loc("textures/research/discipline_ritual.png");
-    private static final ResourceLocation ICON_MAGITECH = ResourceUtils.loc("textures/research/discipline_magitech.png");
-    private static final ResourceLocation ICON_BAG = ResourceUtils.loc("textures/research/research_bag.png");
-    private static final ResourceLocation ICON_MAP = ResourceUtils.loc("textures/research/research_map.png");
-    private static final ResourceLocation ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
-    private static final ResourceLocation ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
+    private static final Identifier ICON_MANAWEAVING = ResourceUtils.loc("textures/research/discipline_manaweaving.png");
+    private static final Identifier ICON_ALCHEMY = ResourceUtils.loc("textures/research/discipline_alchemy.png");
+    private static final Identifier ICON_SORCERY = ResourceUtils.loc("textures/research/discipline_sorcery.png");
+    private static final Identifier ICON_RUNEWORKING = ResourceUtils.loc("textures/research/discipline_runeworking.png");
+    private static final Identifier ICON_RITUAL = ResourceUtils.loc("textures/research/discipline_ritual.png");
+    private static final Identifier ICON_MAGITECH = ResourceUtils.loc("textures/research/discipline_magitech.png");
+    private static final Identifier ICON_BAG = ResourceUtils.loc("textures/research/research_bag.png");
+    private static final Identifier ICON_MAP = ResourceUtils.loc("textures/research/research_map.png");
+    private static final Identifier ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
+    private static final Identifier ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, ResourceUtils.loc(name));

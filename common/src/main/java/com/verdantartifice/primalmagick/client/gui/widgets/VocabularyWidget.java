@@ -11,7 +11,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import java.awt.Color;
@@ -23,7 +23,7 @@ import java.util.Collections;
  * @author Daedalus4096
  */
 public class VocabularyWidget extends AbstractWidget {
-    private static final ResourceLocation BORDER_SPRITE = ResourceUtils.loc("scribe_table/glyph_border");
+    private static final Identifier BORDER_SPRITE = ResourceUtils.loc("scribe_table/glyph_border");
 
     protected Holder<BookLanguage> language;
     protected int amount;

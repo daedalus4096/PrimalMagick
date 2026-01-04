@@ -14,11 +14,11 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class RecipeExpertiseWidget extends AbstractWidget {
-    protected static final ResourceLocation ICON_LOC = ResourceUtils.loc("textures/research/expertise_expert.png");
+    protected static final Identifier ICON_LOC = ResourceUtils.loc("textures/research/expertise_expert.png");
     
     protected final RecipeHolder<?> recipeHolder;
     

@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -40,7 +40,7 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<RunescribingAltarTileEntity> {
-    public static final ResourceLocation RUNE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_rune_slot");
+    public static final Identifier RUNE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_rune_slot");
     public static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runescribing_altar.slot.input");
     public static final Component RUNE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runescribing_altar.slot.rune");
 

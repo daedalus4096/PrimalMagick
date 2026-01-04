@@ -5,7 +5,7 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -16,13 +16,13 @@ import javax.annotation.Nullable;
  * @author Daedalus4096
  */
 public abstract class RecipeCategoryPM<T> implements IRecipeCategory<T> {
-    protected final ResourceLocation uid;
+    protected final Identifier uid;
     protected final IGuiHelper guiHelper;
     
     protected Component title;
     private IDrawable icon;
     
-    public RecipeCategoryPM(IGuiHelper guiHelper, ResourceLocation uid, String titleTranslationKey) {
+    public RecipeCategoryPM(IGuiHelper guiHelper, Identifier uid, String titleTranslationKey) {
         this.guiHelper = guiHelper;
         this.uid = uid;
         this.title = Component.translatable(titleTranslationKey);

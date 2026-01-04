@@ -8,7 +8,7 @@ import commonnetwork.networking.data.Side;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Packet sent from the server to trigger the opening of the Grimoire GUI on the client.
@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class OpenGrimoireScreenPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("open_grimoire_screen");
+    public static final Identifier CHANNEL = ResourceUtils.loc("open_grimoire_screen");
     public static final StreamCodec<RegistryFriendlyByteBuf, OpenGrimoireScreenPacket> STREAM_CODEC = StreamCodec.ofMember(OpenGrimoireScreenPacket::encode, OpenGrimoireScreenPacket::decode);
 
     public OpenGrimoireScreenPacket() {}

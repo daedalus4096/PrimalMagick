@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.layers.HexiumGol
 import com.verdantartifice.primalmagick.common.entities.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Entity renderer for a hexium golem.
@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class HexiumGolemRenderer extends AbstractEnchantedGolemRenderer<HexiumGolemEntity> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/hexium_golem/hexium_golem.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/hexium_golem/hexium_golem.png");
     
     public HexiumGolemRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -20,7 +20,7 @@ public class HexiumGolemRenderer extends AbstractEnchantedGolemRenderer<HexiumGo
     }
 
     @Override
-    public ResourceLocation getTextureLocation(HexiumGolemEntity entity) {
+    public Identifier getTextureLocation(HexiumGolemEntity entity) {
         return TEXTURE;
     }
 }

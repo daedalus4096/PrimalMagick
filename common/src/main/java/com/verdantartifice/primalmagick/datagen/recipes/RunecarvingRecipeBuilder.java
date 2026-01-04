@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -39,7 +39,7 @@ public class RunecarvingRecipeBuilder {
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected Optional<Integer> baseExpertiseOverride = Optional.empty();
     protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
-    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+    protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
     protected RunecarvingRecipeBuilder(ItemLike item, int count) {
@@ -167,7 +167,7 @@ public class RunecarvingRecipeBuilder {
         return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
     }
     
-    public RunecarvingRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+    public RunecarvingRecipeBuilder expertiseGroup(Identifier groupLoc) {
         this.expertiseGroup = Optional.ofNullable(groupLoc);
         return this;
     }
@@ -197,7 +197,7 @@ public class RunecarvingRecipeBuilder {
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(RecipeOutput output, ResourceLocation id) {
+    public void build(RecipeOutput output, Identifier id) {
         this.validate(id);
         RunecarvingRecipe recipe = new RunecarvingRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient1, this.ingredient2, this.getFinalRequirement(),
                 this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
@@ -212,8 +212,8 @@ public class RunecarvingRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        ResourceLocation id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
-        ResourceLocation saveLoc = ResourceLocation.parse(save);
+        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
+        Identifier saveLoc = Identifier.parse(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Runecarving Recipe " + save + " should remove its 'save' argument");
         } else {
@@ -235,7 +235,7 @@ public class RunecarvingRecipeBuilder {
      * 
      * @param id the ID of the recipe
      */
-    protected void validate(ResourceLocation id) {
+    protected void validate(Identifier id) {
         if ( this.ingredient1 == null || this.ingredient1.isEmpty() ||
              this.ingredient2 == null || this.ingredient2.isEmpty() ) {
             throw new IllegalStateException("Missing ingredient for runecarving recipe " + id + "!");

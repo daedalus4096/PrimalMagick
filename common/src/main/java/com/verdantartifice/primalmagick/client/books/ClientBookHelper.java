@@ -18,7 +18,7 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringDecomposer;
@@ -72,7 +72,7 @@ public class ClientBookHelper {
     
     private static String getForewordTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceLocation bookLoc = bookHolder.value().bookId();
+            Identifier bookLoc = bookHolder.value().bookId();
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "foreword");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
@@ -81,7 +81,7 @@ public class ClientBookHelper {
 
     private static String getAfterwordTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceLocation bookLoc = bookHolder.value().bookId();
+            Identifier bookLoc = bookHolder.value().bookId();
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "afterword");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
@@ -90,7 +90,7 @@ public class ClientBookHelper {
 
     private static String getAuthorTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceLocation bookLoc = bookHolder.value().bookId();
+            Identifier bookLoc = bookHolder.value().bookId();
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "author");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
@@ -99,7 +99,7 @@ public class ClientBookHelper {
 
     private static String getTextTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceLocation bookLoc = bookHolder.value().bookId();
+            Identifier bookLoc = bookHolder.value().bookId();
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "text");
         }, enchHolder -> {
             ResourceKey<Enchantment> enchKey = enchHolder.unwrapKey().get();

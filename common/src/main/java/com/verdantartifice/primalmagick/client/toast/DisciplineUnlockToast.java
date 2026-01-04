@@ -4,12 +4,12 @@ import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
 public class DisciplineUnlockToast extends AbstractToastPM {
-    protected static final ResourceLocation BACKGROUND_SPRITE = ResourceUtils.loc("toast/discipline");
+    protected static final Identifier BACKGROUND_SPRITE = ResourceUtils.loc("toast/discipline");
 
     protected final ResearchDiscipline discipline;
 
@@ -18,7 +18,7 @@ public class DisciplineUnlockToast extends AbstractToastPM {
     }
 
     @Override
-    protected ResourceLocation getBackgroundSprite() {
+    protected Identifier getBackgroundSprite() {
         return BACKGROUND_SPRITE;
     }
 
@@ -53,7 +53,7 @@ public class DisciplineUnlockToast extends AbstractToastPM {
     }
 
     @Override
-    protected Optional<ResourceLocation> getIcon() {
+    protected Optional<Identifier> getIcon() {
         return Optional.of(this.discipline.iconLocation());
     }
 }

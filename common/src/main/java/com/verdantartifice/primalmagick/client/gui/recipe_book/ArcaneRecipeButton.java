@@ -10,7 +10,7 @@ import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -24,7 +24,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class ArcaneRecipeButton extends AbstractWidget {
-    protected static final WidgetSprites SLOT_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/slot_craftable"), ResourceLocation.withDefaultNamespace("recipe_book/slot_uncraftable"), ResourceLocation.withDefaultNamespace("recipe_book/slot_many_craftable"), ResourceLocation.withDefaultNamespace("recipe_book/slot_many_uncraftable"));
+    protected static final WidgetSprites SLOT_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/slot_craftable"), Identifier.withDefaultNamespace("recipe_book/slot_uncraftable"), Identifier.withDefaultNamespace("recipe_book/slot_many_craftable"), Identifier.withDefaultNamespace("recipe_book/slot_many_uncraftable"));
     protected static final float ANIMATION_TIME = 15.0F;
     protected static final int BACKGROUND_SIZE = 25;
     public static final int TICKS_TO_SWAP = 30;
@@ -84,7 +84,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
             this.animationTime -= p_93679_;
         }
         
-        ResourceLocation spriteLoc = SLOT_SPRITES.get(this.collection.hasCraftable(), this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1);
+        Identifier spriteLoc = SLOT_SPRITES.get(this.collection.hasCraftable(), this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1);
         guiGraphics.blitSprite(spriteLoc, this.getX(), this.getY(), this.width, this.height);
         List<RecipeHolder<?>> recipeList = this.getOrderedRecipes();
         this.currentIndex = Mth.floor(this.time / (float)TICKS_TO_SWAP) % recipeList.size();

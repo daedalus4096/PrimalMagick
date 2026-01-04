@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class CalcinatorScreen extends AbstractContainerScreenPM<CalcinatorMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/calcinator.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/calcinator.png");
 
     public CalcinatorScreen(CalcinatorMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);

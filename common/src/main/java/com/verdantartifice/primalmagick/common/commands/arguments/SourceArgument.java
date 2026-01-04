@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class SourceArgument implements ArgumentType<ResourceLocation> {
+public class SourceArgument implements ArgumentType<Identifier> {
     private static final Collection<String> EXAMPLES = Arrays.asList("foo", "foo:bar", "012");
     private static final DynamicCommandExceptionType ERROR_UNKNOWN_SOURCE = new DynamicCommandExceptionType((p_308368_) -> {
         return Component.translatableEscape("commands.primalmagick.source.noexist", p_308368_);
@@ -33,7 +33,7 @@ public class SourceArgument implements ArgumentType<ResourceLocation> {
     }
     
     public static Source getSource(CommandContext<CommandSourceStack> pContext, String pName) throws CommandSyntaxException {
-        ResourceLocation loc = getId(pContext, pName);
+        Identifier loc = getId(pContext, pName);
         Source retVal = Sources.get(loc);
         if (retVal == null) {
             throw ERROR_UNKNOWN_SOURCE.create(loc);
@@ -42,13 +42,13 @@ public class SourceArgument implements ArgumentType<ResourceLocation> {
         }
     }
 
-    public static ResourceLocation getId(CommandContext<CommandSourceStack> pContext, String pName) {
-        return pContext.getArgument(pName, ResourceLocation.class);
+    public static Identifier getId(CommandContext<CommandSourceStack> pContext, String pName) {
+        return pContext.getArgument(pName, Identifier.class);
     }
 
     @Override
-    public ResourceLocation parse(StringReader reader) throws CommandSyntaxException {
-        return ResourceLocation.read(reader);
+    public Identifier parse(StringReader reader) throws CommandSyntaxException {
+        return Identifier.read(reader);
     }
 
     @Override

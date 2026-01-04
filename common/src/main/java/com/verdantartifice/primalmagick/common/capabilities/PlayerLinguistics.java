@@ -11,7 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import org.joml.Vector2i;
@@ -29,22 +29,22 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PlayerLinguistics implements IPlayerLinguistics {
     // Map of language IDs to comprehension scores
-    private final Map<ResourceLocation, Integer> comprehension = new ConcurrentHashMap<>();
+    private final Map<Identifier, Integer> comprehension = new ConcurrentHashMap<>();
     
     // Map of language IDs to vocabulary scores
-    private final Map<ResourceLocation, Integer> vocabulary = new ConcurrentHashMap<>();
+    private final Map<Identifier, Integer> vocabulary = new ConcurrentHashMap<>();
     
     // Map of language IDs to sets of book definition IDs, marking what books the player has opened in what languages
-    private final Map<ResourceLocation, Set<ResourceLocation>> booksRead = new ConcurrentHashMap<>();
+    private final Map<Identifier, Set<Identifier>> booksRead = new ConcurrentHashMap<>();
     
     // Table of book definition IDs to language IDs to study counts
-    private final Table<ResourceLocation, ResourceLocation, Integer> studyCounts = HashBasedTable.create();
+    private final Table<Identifier, Identifier, Integer> studyCounts = HashBasedTable.create();
     
     // Map of grid definition IDs to sets of unlocked node coordinates
-    private final Map<ResourceLocation, Set<Vector2i>> unlocks = new ConcurrentHashMap<>();
+    private final Map<Identifier, Set<Vector2i>> unlocks = new ConcurrentHashMap<>();
     
     // Map of grid definition IDs to last modified times
-    private final Map<ResourceLocation, Long> gridModificationTimes = new ConcurrentHashMap<>();
+    private final Map<Identifier, Long> gridModificationTimes = new ConcurrentHashMap<>();
     
     // Current scribe table mode
     private ScribeTableMode scribeTableMode = ScribeTableMode.STUDY_VOCABULARY;
@@ -57,7 +57,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         
         // Serialize recorded comprehension values
         ListTag comprehensionList = new ListTag();
-        for (Map.Entry<ResourceLocation, Integer> entry : this.comprehension.entrySet()) {
+        for (Map.Entry<Identifier, Integer> entry : this.comprehension.entrySet()) {
             if (entry != null) {
                 CompoundTag tag = new CompoundTag();
                 tag.putString("Language", entry.getKey().toString());
@@ -69,7 +69,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         
         // Serialize recorded vocabulary scores
         ListTag vocabularyList = new ListTag();
-        for (Map.Entry<ResourceLocation, Integer> entry : this.vocabulary.entrySet()) {
+        for (Map.Entry<Identifier, Integer> entry : this.vocabulary.entrySet()) {
             if (entry != null) {
                 CompoundTag tag = new CompoundTag();
                 tag.putString("Language", entry.getKey().toString());
@@ -81,12 +81,12 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         
         // Serialize books read
         ListTag booksReadLanguageList = new ListTag();
-        for (Map.Entry<ResourceLocation, Set<ResourceLocation>> entry : this.booksRead.entrySet()) {
+        for (Map.Entry<Identifier, Set<Identifier>> entry : this.booksRead.entrySet()) {
             if (entry != null) {
                 CompoundTag langTag = new CompoundTag();
                 langTag.putString("Language", entry.getKey().toString());
                 ListTag bookList = new ListTag();
-                for (ResourceLocation bookId : entry.getValue()) {
+                for (Identifier bookId : entry.getValue()) {
                     if (bookId != null) {
                         bookList.add(StringTag.valueOf(bookId.toString()));
                     }
@@ -99,7 +99,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         
         // Serialize recorded study counts
         ListTag studyCountList = new ListTag();
-        for (Table.Cell<ResourceLocation, ResourceLocation, Integer> cell : this.studyCounts.cellSet()) {
+        for (Table.Cell<Identifier, Identifier, Integer> cell : this.studyCounts.cellSet()) {
             if (cell != null) {
                 CompoundTag tag = new CompoundTag();
                 tag.putString("Book", cell.getRowKey().toString());
@@ -112,7 +112,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         
         // Serialize unlocked node coordinates
         ListTag unlockGridList = new ListTag();
-        for (Map.Entry<ResourceLocation, Set<Vector2i>> gridEntry : this.unlocks.entrySet()) {
+        for (Map.Entry<Identifier, Set<Vector2i>> gridEntry : this.unlocks.entrySet()) {
             if (gridEntry != null) {
                 CompoundTag gridTag = new CompoundTag();
                 gridTag.putString("GridDef", gridEntry.getKey().toString());
@@ -133,7 +133,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         
         // Serialize grid last modification times
         ListTag modifiedList = new ListTag();
-        for (Map.Entry<ResourceLocation, Long> entry : this.gridModificationTimes.entrySet()) {
+        for (Map.Entry<Identifier, Long> entry : this.gridModificationTimes.entrySet()) {
             if (entry != null) {
                 CompoundTag tag = new CompoundTag();
                 tag.putString("GridDef", entry.getKey().toString());
@@ -162,24 +162,24 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         ListTag comprehensionList = nbt.getList("Comprehension", Tag.TAG_COMPOUND);
         for (int index = 0; index < comprehensionList.size(); index++) {
             CompoundTag tag = comprehensionList.getCompound(index);
-            this.setComprehension(ResourceLocation.parse(tag.getString("Language")), tag.getInt("Value"));
+            this.setComprehension(Identifier.parse(tag.getString("Language")), tag.getInt("Value"));
         }
         
         // Deserialize vocabulary values
         ListTag vocabularyList = nbt.getList("Vocabulary", Tag.TAG_COMPOUND);
         for (int index = 0; index < vocabularyList.size(); index++) {
             CompoundTag tag = vocabularyList.getCompound(index);
-            this.setVocabulary(ResourceLocation.parse(tag.getString("Language")), tag.getInt("Value"));
+            this.setVocabulary(Identifier.parse(tag.getString("Language")), tag.getInt("Value"));
         }
         
         // Deserialize books read values
         ListTag booksReadList = nbt.getList("BooksRead", Tag.TAG_COMPOUND);
         for (int langIndex = 0; langIndex < booksReadList.size(); langIndex++) {
             CompoundTag langTag = booksReadList.getCompound(langIndex);
-            ResourceLocation langId = ResourceLocation.parse(langTag.getString("Language"));
+            Identifier langId = Identifier.parse(langTag.getString("Language"));
             ListTag booksList = langTag.getList("Books", Tag.TAG_STRING);
             for (int bookIndex = 0; bookIndex < booksList.size(); bookIndex++) {
-                ResourceLocation bookId = ResourceLocation.parse(booksList.getString(bookIndex));
+                Identifier bookId = Identifier.parse(booksList.getString(bookIndex));
                 this.markRead(bookId, langId);
             }
         }
@@ -188,14 +188,14 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         ListTag studyCountList = nbt.getList("StudyCounts", Tag.TAG_COMPOUND);
         for (int index = 0; index < studyCountList.size(); index++) {
             CompoundTag tag = studyCountList.getCompound(index);
-            this.setTimesStudied(ResourceLocation.parse(tag.getString("Book")), ResourceLocation.parse(tag.getString("Language")), tag.getInt("Value"));
+            this.setTimesStudied(Identifier.parse(tag.getString("Book")), Identifier.parse(tag.getString("Language")), tag.getInt("Value"));
         }
         
         // Deserialize unlocked node coordinates
         ListTag unlockGridList = nbt.getList("Unlocks", Tag.TAG_COMPOUND);
         for (int gridIndex = 0; gridIndex < unlockGridList.size(); gridIndex++) {
             CompoundTag gridTag = unlockGridList.getCompound(gridIndex);
-            ResourceLocation gridId = ResourceLocation.parse(gridTag.getString("GridDef"));
+            Identifier gridId = Identifier.parse(gridTag.getString("GridDef"));
             ListTag coordsList = gridTag.getList("Coords", Tag.TAG_COMPOUND);
             for (int coordsIndex = 0; coordsIndex < coordsList.size(); coordsIndex++) {
                 CompoundTag coordsTag = coordsList.getCompound(coordsIndex);
@@ -207,7 +207,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         ListTag modifiedList = nbt.getList("GridModifiedTimes", Tag.TAG_COMPOUND);
         for (int index = 0; index < modifiedList.size(); index++) {
             CompoundTag tag = modifiedList.getCompound(index);
-            this.setLastModified(ResourceLocation.parse(tag.getString("GridDef")), tag.getLong("LastModified"));
+            this.setLastModified(Identifier.parse(tag.getString("GridDef")), tag.getLong("LastModified"));
         }
         
         ScribeTableMode mode = ScribeTableMode.fromName(nbt.getString("ScribeTableMode"));
@@ -226,43 +226,43 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     }
 
     @Override
-    public boolean isLanguageKnown(ResourceLocation languageId) {
+    public boolean isLanguageKnown(Identifier languageId) {
         return (this.booksRead.getOrDefault(languageId, Collections.emptySet()).size() > 0) ||
                 (this.getVocabulary(languageId) > 0) || (this.getComprehension(languageId) > 0);
     }
 
     @Override
-    public boolean markRead(ResourceLocation bookDefinitionId, ResourceLocation languageId) {
+    public boolean markRead(Identifier bookDefinitionId, Identifier languageId) {
         return this.booksRead.computeIfAbsent(languageId, key -> new HashSet<>()).add(bookDefinitionId);
     }
 
     @Override
-    public int getComprehension(ResourceLocation languageId) {
+    public int getComprehension(Identifier languageId) {
         return this.comprehension.getOrDefault(languageId, 0);
     }
 
     @Override
-    public void setComprehension(ResourceLocation languageId, int value) {
+    public void setComprehension(Identifier languageId, int value) {
         this.comprehension.put(languageId, value);
     }
 
     @Override
-    public int getVocabulary(ResourceLocation languageId) {
+    public int getVocabulary(Identifier languageId) {
         return this.vocabulary.getOrDefault(languageId, 0);
     }
 
     @Override
-    public void setVocabulary(ResourceLocation languageId, int value) {
+    public void setVocabulary(Identifier languageId, int value) {
         this.vocabulary.put(languageId, value);
     }
 
     @Override
-    public int getTimesStudied(ResourceLocation bookDefinitionId, ResourceLocation languageId) {
+    public int getTimesStudied(Identifier bookDefinitionId, Identifier languageId) {
         return this.studyCounts.contains(bookDefinitionId, languageId) ? this.studyCounts.get(bookDefinitionId, languageId) : 0;
     }
 
     @Override
-    public void setTimesStudied(ResourceLocation bookDefinitionId, ResourceLocation languageId, int value) {
+    public void setTimesStudied(Identifier bookDefinitionId, Identifier languageId, int value) {
         this.studyCounts.put(bookDefinitionId, languageId, Mth.clamp(value, 0, MAX_STUDY_COUNT));
     }
 
@@ -277,28 +277,28 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     }
 
     @Override
-    public Set<Vector2i> getUnlockedNodes(ResourceLocation gridDefinitionId) {
+    public Set<Vector2i> getUnlockedNodes(Identifier gridDefinitionId) {
         return Collections.unmodifiableSet(this.unlocks.getOrDefault(gridDefinitionId, Collections.emptySet()));
     }
 
     @Override
-    public void clearUnlockedNodes(ResourceLocation gridDefinitionId) {
+    public void clearUnlockedNodes(Identifier gridDefinitionId) {
         this.setLastModified(gridDefinitionId, System.currentTimeMillis());
         this.unlocks.remove(gridDefinitionId);
     }
 
     @Override
-    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2i nodePos) {
+    public boolean unlockNode(Identifier gridDefinitionId, Vector2i nodePos) {
         this.setLastModified(gridDefinitionId, System.currentTimeMillis());
         return this.unlocks.computeIfAbsent(gridDefinitionId, k -> new HashSet<>()).add(nodePos);
     }
 
     @Override
-    public long getGridLastModified(ResourceLocation gridDefinitionId) {
+    public long getGridLastModified(Identifier gridDefinitionId) {
         return this.gridModificationTimes.getOrDefault(gridDefinitionId, 0L);
     }
 
-    private void setLastModified(ResourceLocation gridDefinitionId, long lastModified) {
+    private void setLastModified(Identifier gridDefinitionId, long lastModified) {
         this.gridModificationTimes.put(gridDefinitionId, lastModified);
     }
 

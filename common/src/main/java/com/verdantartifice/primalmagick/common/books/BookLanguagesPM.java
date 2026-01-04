@@ -9,7 +9,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
@@ -38,9 +38,9 @@ public class BookLanguagesPM {
     }
     
     public static void bootstrap(BootstrapContext<BookLanguage> context) {
-        context.register(BookLanguagesPM.DEFAULT, new BookLanguage(ResourceUtils.loc("default"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceLocation.withDefaultNamespace("default"))), 0, false));
-        context.register(BookLanguagesPM.GALACTIC, new BookLanguage(ResourceUtils.loc("galactic"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceLocation.withDefaultNamespace("alt"))), -1, false));
-        context.register(BookLanguagesPM.ILLAGER, new BookLanguage(ResourceUtils.loc("illager"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceLocation.withDefaultNamespace("illageralt"))), -1, false));
+        context.register(BookLanguagesPM.DEFAULT, new BookLanguage(ResourceUtils.loc("default"), Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("default"))), 0, false));
+        context.register(BookLanguagesPM.GALACTIC, new BookLanguage(ResourceUtils.loc("galactic"), Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("alt"))), -1, false));
+        context.register(BookLanguagesPM.ILLAGER, new BookLanguage(ResourceUtils.loc("illager"), Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("illageralt"))), -1, false));
         context.register(BookLanguagesPM.BABELTONGUE, new BookLanguage(ResourceUtils.loc("babeltongue"), Style.EMPTY.withObfuscated(true), 60, true));
         context.register(BookLanguagesPM.EARTH, new BookLanguage(ResourceUtils.loc("earth"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("earth"))), 60, false));
         context.register(BookLanguagesPM.SEA, new BookLanguage(ResourceUtils.loc("sea"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("sea"))), 60, false));

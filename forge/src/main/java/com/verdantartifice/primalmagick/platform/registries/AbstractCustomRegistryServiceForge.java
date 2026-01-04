@@ -13,7 +13,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.Utf8String;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -48,7 +48,7 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
     }
 
     @Override
-    public @Nullable R get(ResourceLocation id) {
+    public @Nullable R get(Identifier id) {
         return this.getRegistry().get().getValue(id);
     }
 
@@ -58,7 +58,7 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
     }
 
     @Override
-    public Set<ResourceLocation> getAllKeys() {
+    public Set<Identifier> getAllKeys() {
         return this.getRegistry().get().getKeys();
     }
 
@@ -68,7 +68,7 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
     }
 
     @Override
-    public boolean containsKey(ResourceLocation id) {
+    public boolean containsKey(Identifier id) {
         return this.getRegistry().get().containsKey(id);
     }
 
@@ -79,7 +79,7 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
 
     @Override
     public Codec<R> codec() {
-        return ResourceLocation.CODEC.flatXmap(loc -> {
+        return Identifier.CODEC.flatXmap(loc -> {
             return Optional.ofNullable(this.getRegistry().get().getValue(loc)).map(DataResult::success).orElseGet(() -> {
                 return DataResult.error(() -> {
                     return "Unknown registry key in " + this.getRegistry().get().getRegistryKey() + ": " + loc;
@@ -99,13 +99,13 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
         return new StreamCodec<>() {
             @Override
             public R decode(RegistryFriendlyByteBuf pBuffer) {
-                ResourceLocation id = ResourceLocation.parse(Utf8String.read(pBuffer, 32767));
+                Identifier id = Identifier.parse(Utf8String.read(pBuffer, 32767));
                 return AbstractCustomRegistryServiceForge.this.getRegistry().get().getValue(id);
             }
 
             @Override
             public void encode(RegistryFriendlyByteBuf pBuffer, R pValue) {
-                ResourceLocation id = AbstractCustomRegistryServiceForge.this.getRegistry().get().getKey(pValue);
+                Identifier id = AbstractCustomRegistryServiceForge.this.getRegistry().get().getKey(pValue);
                 Utf8String.write(pBuffer, id.toString(), 32767);
             }
         };
@@ -116,13 +116,13 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
         return new StreamCodec<>() {
             @Override
             public R decode(FriendlyByteBuf pBuffer) {
-                ResourceLocation id = ResourceLocation.parse(Utf8String.read(pBuffer, 32767));
+                Identifier id = Identifier.parse(Utf8String.read(pBuffer, 32767));
                 return AbstractCustomRegistryServiceForge.this.getRegistry().get().getValue(id);
             }
 
             @Override
             public void encode(FriendlyByteBuf pBuffer, R pValue) {
-                ResourceLocation id = AbstractCustomRegistryServiceForge.this.getRegistry().get().getKey(pValue);
+                Identifier id = AbstractCustomRegistryServiceForge.this.getRegistry().get().getKey(pValue);
                 Utf8String.write(pBuffer, id.toString(), 32767);
             }
         };

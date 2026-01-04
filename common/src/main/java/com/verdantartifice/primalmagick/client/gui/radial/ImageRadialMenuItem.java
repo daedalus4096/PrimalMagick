@@ -3,15 +3,15 @@ package com.verdantartifice.primalmagick.client.gui.radial;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Collections;
 
 public class ImageRadialMenuItem extends TextRadialMenuItem {
-    private final ResourceLocation imageLoc;
+    private final Identifier imageLoc;
     private final int slot;
 
-    public ImageRadialMenuItem(GenericRadialMenu owner, int slot, ResourceLocation imageLoc, Component altText) {
+    public ImageRadialMenuItem(GenericRadialMenu owner, int slot, Identifier imageLoc, Component altText) {
         super(owner, altText, 0x7FFFFFFF);
         this.imageLoc = imageLoc;
         this.slot = slot;
@@ -21,7 +21,7 @@ public class ImageRadialMenuItem extends TextRadialMenuItem {
         return this.slot;
     }
     
-    public ResourceLocation getImageLoc() {
+    public Identifier getImageLoc() {
         return this.imageLoc;
     }
     

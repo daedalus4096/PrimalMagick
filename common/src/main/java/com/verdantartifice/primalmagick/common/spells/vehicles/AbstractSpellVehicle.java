@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Comparator;
 import java.util.List;
@@ -72,7 +72,7 @@ public abstract class AbstractSpellVehicle<T extends AbstractSpellVehicle<T>> im
     protected abstract List<SpellProperty> getPropertiesInner();
 
     @Override
-    public SpellProperty getProperty(ResourceLocation id) {
+    public SpellProperty getProperty(Identifier id) {
         return this.getPropertiesInner().stream().filter(prop -> prop.id().equals(id)).findFirst().orElse(null);
     }
 }

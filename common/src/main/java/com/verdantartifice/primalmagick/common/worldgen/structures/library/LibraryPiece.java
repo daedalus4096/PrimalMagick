@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
  * @see net.minecraft.world.level.levelgen.structure.structures.DesertPyramidPiece
  */
 public class LibraryPiece extends AbstractLibraryPiece {
-    protected static final ResourceLocation TEMPLATE = ResourceUtils.loc("library/default");
+    protected static final Identifier TEMPLATE = ResourceUtils.loc("library/default");
     
     public LibraryPiece(StructureTemplateManager templateManager, ResourceKey<Culture> cultureKey, BlockPos pos) {
         super(templateManager, TEMPLATE, cultureKey, pos);

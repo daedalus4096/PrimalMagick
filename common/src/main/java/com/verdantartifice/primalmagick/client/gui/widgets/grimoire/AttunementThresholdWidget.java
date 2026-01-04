@@ -18,7 +18,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -42,7 +42,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
     protected final Source source;
     protected final AttunementThreshold threshold;
     protected final boolean suppressed;
-    protected final ResourceLocation texture;
+    protected final Identifier texture;
     
     public AttunementThresholdWidget(@Nonnull Source source, @Nonnull AttunementThreshold threshold, int x, int y) {
         super(x, y, 18, 18, Component.empty());

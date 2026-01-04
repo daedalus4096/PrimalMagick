@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,13 +31,13 @@ import net.minecraft.world.level.Level;
 import java.util.Optional;
 
 public class WandGlamourTableMenu extends AbstractContainerMenu {
-    public static final ResourceLocation CAP_SLOT_TEXTURE = WandAssemblyTableMenu.CAP_SLOT_TEXTURE;
-    public static final ResourceLocation CORE_SLOT_TEXTURE = WandAssemblyTableMenu.CORE_SLOT_TEXTURE;
-    public static final ResourceLocation GEM_SLOT_TEXTURE = WandAssemblyTableMenu.GEM_SLOT_TEXTURE;
+    public static final Identifier CAP_SLOT_TEXTURE = WandAssemblyTableMenu.CAP_SLOT_TEXTURE;
+    public static final Identifier CORE_SLOT_TEXTURE = WandAssemblyTableMenu.CORE_SLOT_TEXTURE;
+    public static final Identifier GEM_SLOT_TEXTURE = WandAssemblyTableMenu.GEM_SLOT_TEXTURE;
     protected static final Component CORE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_glamour_table.slot.core");
     protected static final Component CAP_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_glamour_table.slot.cap");
     protected static final Component GEM_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_glamour_table.slot.gem");
-    protected static final ResourceLocation RECIPE_LOC = ResourceUtils.loc("wand_glamour");
+    protected static final Identifier RECIPE_LOC = ResourceUtils.loc("wand_glamour");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final GlamourComponentInventory componentInv = new GlamourComponentInventory();

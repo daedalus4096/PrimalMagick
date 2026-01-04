@@ -8,7 +8,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Optional;
@@ -31,7 +31,7 @@ public class StatValueTrigger extends SimpleCriterionTrigger<StatValueTrigger.Tr
         public static Codec<StatValueTrigger.TriggerInstance> codec() {
             return RecordCodecBuilder.create(instance -> instance.group(
                     EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(StatValueTrigger.TriggerInstance::player), 
-                    ResourceLocation.CODEC.fieldOf("stat").xmap(loc -> StatsManager.getStat(loc), stat -> stat.key()).forGetter(StatValueTrigger.TriggerInstance::stat),
+                    Identifier.CODEC.fieldOf("stat").xmap(loc -> StatsManager.getStat(loc), stat -> stat.key()).forGetter(StatValueTrigger.TriggerInstance::stat),
                     Codec.INT.fieldOf("threshold").forGetter(StatValueTrigger.TriggerInstance::threshold)
                 ).apply(instance, StatValueTrigger.TriggerInstance::new));
         }

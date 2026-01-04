@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -70,7 +70,7 @@ import java.util.UUID;
  */
 public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob, RangedAttackMob {
     public static final String HONORED_NAME = "Corspilla";
-    private static final ResourceLocation SPEED_MODIFIER_DRINKING_ID = ResourceLocation.withDefaultNamespace("drinking");
+    private static final Identifier SPEED_MODIFIER_DRINKING_ID = Identifier.withDefaultNamespace("drinking");
     private static final AttributeModifier SPEED_MODIFIER_DRINKING = new AttributeModifier(SPEED_MODIFIER_DRINKING_ID, -0.25, AttributeModifier.Operation.ADD_VALUE);
     private static final EntityDataAccessor<Boolean> DATA_USING_ITEM = SynchedEntityData.defineId(FriendlyWitchEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(FriendlyWitchEntity.class, EntityDataSerializers.INT);

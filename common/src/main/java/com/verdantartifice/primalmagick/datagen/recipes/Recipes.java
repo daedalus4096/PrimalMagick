@@ -38,7 +38,7 @@ import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.data.recipes.SmithingTrimRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
@@ -1355,7 +1355,7 @@ public abstract class Recipes extends RecipeProvider {
                                 .setGroup("essence_" + upgradeType.getSerializedName());
                         baseType.getUpgradeResearchEntry().ifPresent(builder::requiredResearch);
                         source.getDiscoverKey().ifPresent(key -> builder.requiredResearch(key.getRootKey()));
-                        builder.build(consumer, ResourceLocation.fromNamespaceAndPath(source.getId().getNamespace(), name));
+                        builder.build(consumer, Identifier.fromNamespaceAndPath(source.getId().getNamespace(), name));
                     }
                 });
             }
@@ -1376,7 +1376,7 @@ public abstract class Recipes extends RecipeProvider {
                             .setGroup("essence_" + downgradeType.getSerializedName());
                         baseType.getDowngradeResearchEntry().ifPresent(builder::requiredResearch);
                         source.getDiscoverKey().ifPresent(key -> builder.requiredResearch(key.getRootKey()));
-                        builder.build(consumer, ResourceLocation.fromNamespaceAndPath(source.getId().getNamespace(), name));
+                        builder.build(consumer, Identifier.fromNamespaceAndPath(source.getId().getNamespace(), name));
                     }
                 });
             }

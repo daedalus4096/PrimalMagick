@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
@@ -31,7 +31,7 @@ public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item, ItemLangu
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(Item base) {
+    protected Identifier getBaseRegistryKey(Item base) {
         return Objects.requireNonNull(Services.ITEMS_REGISTRY.getKey(base));
     }
 

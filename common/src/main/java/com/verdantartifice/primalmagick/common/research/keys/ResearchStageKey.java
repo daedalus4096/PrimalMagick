@@ -13,7 +13,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -32,7 +32,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
             ResearchStageKey::getStage,
             ResearchStageKey::new);
     
-    private static final ResourceLocation ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
+    private static final Identifier ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
 
     protected final ResourceKey<ResearchEntry> rootKey;
     protected final int stage;

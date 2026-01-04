@@ -7,15 +7,15 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Optional;
 
 public class WardingHudOverlay {
-    public static final ResourceLocation ID = ResourceUtils.loc("warding_hud_overlay");
-    protected static final ResourceLocation GUI_ICONS_LOCATION = ResourceUtils.loc("textures/gui/hud.png");
+    public static final Identifier ID = ResourceUtils.loc("warding_hud_overlay");
+    protected static final Identifier GUI_ICONS_LOCATION = ResourceUtils.loc("textures/gui/hud.png");
     
     public static boolean shouldRender() {
         Minecraft mc = Minecraft.getInstance();

@@ -7,7 +7,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Packet sent from the server to trigger a teleport arrival particle effect on the client.
@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class TeleportArrivalPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("teleport_arrival");
+    public static final Identifier CHANNEL = ResourceUtils.loc("teleport_arrival");
     public static final StreamCodec<RegistryFriendlyByteBuf, TeleportArrivalPacket> STREAM_CODEC = StreamCodec.ofMember(TeleportArrivalPacket::encode, TeleportArrivalPacket::decode);
 
     protected final double x;

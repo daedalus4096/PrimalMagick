@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeB
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -76,7 +76,7 @@ public class ArcaneRecipeBookManager {
         } else {
             recipeBook.get().clear();
             RecipeManager recipeManager = player.level().getRecipeManager();
-            Set<ResourceLocation> idsToAdd = new HashSet<>();
+            Set<Identifier> idsToAdd = new HashSet<>();
             ResearchEntries.stream(player.level().registryAccess()).filter(e -> e.key().isKnownBy(player)).forEach(e -> idsToAdd.addAll(e.getKnownRecipeIds(player)));
             ArcaneRecipeBookManager.addRecipes(idsToAdd.stream().map(id -> recipeManager.byKey(id).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet()), player);
             return true;

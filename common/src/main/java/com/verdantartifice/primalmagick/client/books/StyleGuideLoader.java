@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -44,11 +44,11 @@ public class StyleGuideLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+    protected void apply(Map<Identifier, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
         // Load style guides explicitly defined in resource packs
         StyleGuideManager.clearStyleGuides();
         pObject.entrySet().forEach(entry -> {
-            ResourceLocation location = entry.getKey();
+            Identifier location = entry.getKey();
             // Filter anything beginning with "_" as it's used for metadata.
             if (!location.getPath().startsWith("_")) {
                 StyleGuide.CODEC.parse(JsonOps.INSTANCE, entry.getValue())

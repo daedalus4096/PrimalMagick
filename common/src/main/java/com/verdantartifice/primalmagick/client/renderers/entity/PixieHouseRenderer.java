@@ -9,11 +9,11 @@ import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class PixieHouseRenderer extends LivingEntityRenderer<PixieHouseEntity, PixieHouseModel> {
-    public static final ResourceLocation DEFAULT_SKIN_LOCATION = ResourceUtils.loc("textures/entity/pixie_house.png");
+    public static final Identifier DEFAULT_SKIN_LOCATION = ResourceUtils.loc("textures/entity/pixie_house.png");
 
     public PixieHouseRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new PixieHouseModel(pContext.bakeLayer(ModelLayersPM.PIXIE_HOUSE)), 0.0F);
@@ -21,7 +21,7 @@ public class PixieHouseRenderer extends LivingEntityRenderer<PixieHouseEntity, P
     }
 
     @Override
-    public ResourceLocation getTextureLocation(PixieHouseEntity pixieHouseEntity) {
+    public Identifier getTextureLocation(PixieHouseEntity pixieHouseEntity) {
         return DEFAULT_SKIN_LOCATION;
     }
 

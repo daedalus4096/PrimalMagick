@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.StringUtil;
 
@@ -183,10 +183,10 @@ public class StyleGuide {
     }
     
     public static class Builder {
-        protected final ResourceLocation langId;
+        protected final Identifier langId;
         protected final List<Entry> entries = new ArrayList<>();
         
-        protected Builder(ResourceLocation langId) {
+        protected Builder(Identifier langId) {
             this.langId = langId;
         }
         
@@ -202,7 +202,7 @@ public class StyleGuide {
             return new StyleGuide(this.entries);
         }
         
-        public void save(BiConsumer<ResourceLocation, StyleGuide> consumer) {
+        public void save(BiConsumer<Identifier, StyleGuide> consumer) {
             consumer.accept(this.langId, this.build());
         }
     }

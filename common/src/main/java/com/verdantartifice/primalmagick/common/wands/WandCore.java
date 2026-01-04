@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Rarity;
 
 import javax.annotation.Nonnull;
@@ -55,14 +55,14 @@ public class WandCore implements IWandComponent {
     protected final int spellSlots;                 // The base number of spell slots offered by the core
     protected final Source bonusSlot;               // The source of the core's bonus spell slot, if any
     protected final List<Source> aligned;           // List of sources to which the core is aligned
-    protected final ResourceLocation wandMrlNamespace;  // Resource location of the wand core's model, stored in a blockstate file
-    protected final ResourceLocation staffMrlNamespace; // Resource location of the staff core's model, stored in a blockstate file
+    protected final Identifier wandMrlNamespace;  // Resource location of the wand core's model, stored in a blockstate file
+    protected final Identifier staffMrlNamespace; // Resource location of the staff core's model, stored in a blockstate file
 
     public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned) {
         this(tag, rarity, spellSlots, bonusSlot, aligned, ResourceUtils.loc(tag + "_wand_core"), ResourceUtils.loc(tag + "_staff_core"));
     }
     
-    public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned, @Nonnull ResourceLocation wmrln, @Nonnull ResourceLocation smrln) {
+    public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned, @Nonnull Identifier wmrln, @Nonnull Identifier smrln) {
         if (REGISTRY.containsKey(tag)) {
             // Don't allow a given core to be registered more than once
             throw new IllegalArgumentException("Wand core " + tag + " already registered!");
@@ -107,12 +107,12 @@ public class WandCore implements IWandComponent {
     }
     
     @Nonnull
-    public ResourceLocation getWandModelResourceLocationNamespace() {
+    public Identifier getWandModelResourceLocationNamespace() {
         return this.wandMrlNamespace;
     }
     
     @Nonnull
-    public ResourceLocation getStaffModelResourceLocationNamespace() {
+    public Identifier getStaffModelResourceLocationNamespace() {
         return this.staffMrlNamespace;
     }
     

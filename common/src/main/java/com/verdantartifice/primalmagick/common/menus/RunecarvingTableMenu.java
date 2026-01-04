@@ -15,7 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<RunecarvingTableTileEntity> implements IItemHandlerChangeListener {
-    public static final ResourceLocation BASE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_slab_slot");
-    public static final ResourceLocation ETCHING_SLOT_TEXTURE = ResourceUtils.loc("item/empty_lapis_slot");
+    public static final Identifier BASE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_slab_slot");
+    public static final Identifier ETCHING_SLOT_TEXTURE = ResourceUtils.loc("item/empty_lapis_slot");
     protected static final Component BASE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runecarving_table.slot.base");
     protected static final Component ETCHING_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runecarving_table.slot.etching");
 

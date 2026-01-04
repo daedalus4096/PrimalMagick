@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public abstract class AbstractTokenizedLanguageBuilder extends AbstractLanguageB
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(String base) {
+    protected Identifier getBaseRegistryKey(String base) {
         return ResourceUtils.loc(base.toLowerCase());
     }
     

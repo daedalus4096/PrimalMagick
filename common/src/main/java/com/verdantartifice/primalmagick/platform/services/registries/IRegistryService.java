@@ -8,7 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 
 import javax.annotation.Nullable;
@@ -46,7 +46,7 @@ public interface IRegistryService<R> {
      * @param id the ID of the value to be retrieved
      * @return the named value, or null if not present in this registry
      */
-    @Nullable R get(ResourceLocation id);
+    @Nullable R get(Identifier id);
 
     /**
      * Retrieve all registered values in this registry.
@@ -60,7 +60,7 @@ public interface IRegistryService<R> {
      *
      * @return a set of the keys of all registered values in this registry
      */
-    Set<ResourceLocation> getAllKeys();
+    Set<Identifier> getAllKeys();
 
     /**
      * Get the entry set of all mapping entries of resource key to registered value for this registry.
@@ -75,7 +75,7 @@ public interface IRegistryService<R> {
      * @param id the ID of the value to be queried
      * @return true if the identified value is present in this registry, false otherwise
      */
-    boolean containsKey(ResourceLocation id);
+    boolean containsKey(Identifier id);
 
     /**
      * Get the resource key for the given value, if it exists in the registry.
@@ -91,7 +91,7 @@ public interface IRegistryService<R> {
      * @param value the value to be queried
      * @return the resource location identifying the given value if it exists in the registry, or null otherwise
      */
-    @Nullable default ResourceLocation getKey(R value) { return this.getResourceKey(value).map(ResourceKey::location).orElse(null); }
+    @Nullable default Identifier getKey(R value) { return this.getResourceKey(value).map(ResourceKey::location).orElse(null); }
 
     /**
      * Retrieve the serialization codec for this registry.

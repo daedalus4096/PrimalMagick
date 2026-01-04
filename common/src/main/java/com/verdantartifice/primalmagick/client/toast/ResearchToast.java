@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ResearchToast extends AbstractToastPM {
-    protected static final ResourceLocation BACKGROUND_SPRITE = ResourceUtils.loc("toast/research");
+    protected static final Identifier BACKGROUND_SPRITE = ResourceUtils.loc("toast/research");
 
     protected final ResearchEntry entry;
     protected final boolean isComplete;
@@ -25,7 +25,7 @@ public class ResearchToast extends AbstractToastPM {
     }
 
     @Override
-    protected ResourceLocation getBackgroundSprite() {
+    protected Identifier getBackgroundSprite() {
         return BACKGROUND_SPRITE;
     }
 
@@ -60,7 +60,7 @@ public class ResearchToast extends AbstractToastPM {
     }
 
     @Override
-    protected Optional<ResourceLocation> getIcon() {
+    protected Optional<Identifier> getIcon() {
         return Optional.empty();
     }
 }

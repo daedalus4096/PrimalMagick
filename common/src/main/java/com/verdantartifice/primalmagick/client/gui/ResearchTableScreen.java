@@ -27,7 +27,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -44,8 +44,8 @@ import java.util.Set;
  * @author Daedalus4096
  */
 public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTableMenu> {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table.png");
-    private static final ResourceLocation OVERLAY = ResourceUtils.loc("textures/gui/research_table_overlay.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/research_table.png");
+    private static final Identifier OVERLAY = ResourceUtils.loc("textures/gui/research_table_overlay.png");
     private static final DecimalFormat FORMATTER = new DecimalFormat("###.#");
     
     protected long lastCheck = 0L;

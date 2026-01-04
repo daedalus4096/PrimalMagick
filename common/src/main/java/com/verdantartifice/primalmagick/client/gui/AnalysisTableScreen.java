@@ -16,7 +16,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -32,7 +32,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class AnalysisTableScreen extends AbstractContainerScreenPM<AnalysisTableMenu> {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/analysis_table.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/analysis_table.png");
     
     protected Level world;
     protected final List<AffinityWidget> affinityWidgets = new ArrayList<>();

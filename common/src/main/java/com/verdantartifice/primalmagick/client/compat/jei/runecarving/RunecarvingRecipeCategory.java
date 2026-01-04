@@ -18,7 +18,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -30,9 +30,9 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRunecarvingRecipe>> {
-    public static final ResourceLocation UID = ResourceUtils.loc("runecarving_table");
-    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/runecarving_table.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = ResourceUtils.loc("textures/item/grimoire.png");
+    public static final Identifier UID = ResourceUtils.loc("runecarving_table");
+    private static final Identifier BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/runecarving_table.png");
+    private static final Identifier RESEARCH_TEXTURE = ResourceUtils.loc("textures/item/grimoire.png");
     private static final int RESEARCH_X_OFFSET = 79;
     private static final int RESEARCH_Y_OFFSET = 19;
     private static final int BG_WIDTH = 125;

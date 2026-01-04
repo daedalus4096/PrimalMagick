@@ -25,7 +25,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringDecomposer;
@@ -42,14 +42,14 @@ import java.util.stream.IntStream;
  * @author Daedalus4096
  */
 public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<ScribeStudyVocabularyMenu> {
-    private static final ResourceLocation[] ENABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 10).mapToObj("scribe_table/level_%d"::formatted).map(ResourceUtils::loc).toArray(ResourceLocation[]::new);
-    private static final ResourceLocation[] DISABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 10).mapToObj("scribe_table/level_%d_disabled"::formatted).map(ResourceUtils::loc).toArray(ResourceLocation[]::new);
-    private static final ResourceLocation SLOT_DISABLED_SPRITE = ResourceUtils.loc("scribe_table/slot_disabled");
-    private static final ResourceLocation SLOT_HIGHLIGHTED_SPRITE = ResourceUtils.loc("scribe_table/slot_highlighted");
-    private static final ResourceLocation SLOT_SPRITE = ResourceUtils.loc("scribe_table/slot");
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/scribe_study_vocabulary.png");
-    /** The ResourceLocation containing the texture for the Book rendered above the enchantment table */
-    private static final ResourceLocation ENCHANTING_BOOK_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/enchanting_table_book.png");
+    private static final Identifier[] ENABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 10).mapToObj("scribe_table/level_%d"::formatted).map(ResourceUtils::loc).toArray(Identifier[]::new);
+    private static final Identifier[] DISABLED_LEVEL_SPRITES = IntStream.rangeClosed(1, 10).mapToObj("scribe_table/level_%d_disabled"::formatted).map(ResourceUtils::loc).toArray(Identifier[]::new);
+    private static final Identifier SLOT_DISABLED_SPRITE = ResourceUtils.loc("scribe_table/slot_disabled");
+    private static final Identifier SLOT_HIGHLIGHTED_SPRITE = ResourceUtils.loc("scribe_table/slot_highlighted");
+    private static final Identifier SLOT_SPRITE = ResourceUtils.loc("scribe_table/slot");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/scribe_study_vocabulary.png");
+    /** The Identifier containing the texture for the Book rendered above the enchantment table */
+    private static final Identifier ENCHANTING_BOOK_LOCATION = Identifier.withDefaultNamespace("textures/entity/enchanting_table_book.png");
 
     private final RandomSource random = RandomSource.create();
     private BookModel bookModel;
@@ -76,7 +76,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     }
 
     @Override
-    protected ResourceLocation getBgTexture() {
+    protected Identifier getBgTexture() {
         return TEXTURE;
     }
 

@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.gui;
 import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 import javax.annotation.Nonnull;
@@ -25,7 +25,7 @@ public abstract class AbstractRunescribingAltarScreen<T extends AbstractRunescri
     }
     
     @Nonnull
-    protected abstract ResourceLocation getTextureLocation();
+    protected abstract Identifier getTextureLocation();
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {

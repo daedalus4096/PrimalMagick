@@ -10,7 +10,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
  * @author Daedalus4096
  */
 public class ScanEntityPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("scan_entity");
+    public static final Identifier CHANNEL = ResourceUtils.loc("scan_entity");
     public static final StreamCodec<RegistryFriendlyByteBuf, ScanEntityPacket> STREAM_CODEC = StreamCodec.ofMember(ScanEntityPacket::encode, ScanEntityPacket::decode);
 
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -34,7 +34,7 @@ public class ScanEntityPacket implements IMessageToServer {
         this.type = type;
     }
     
-    protected ScanEntityPacket(ResourceLocation typeLoc) {
+    protected ScanEntityPacket(Identifier typeLoc) {
         this.type = Services.ENTITY_TYPES_REGISTRY.get(typeLoc);
     }
 

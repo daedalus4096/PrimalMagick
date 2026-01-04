@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -111,7 +111,7 @@ public class BlockIngredient implements Predicate<Block> {
     private static BlockIngredient fromNetwork(RegistryFriendlyByteBuf buf) {
         int size = buf.readVarInt();
         return fromBlockListStream(Stream.generate(() -> {
-            ResourceLocation loc = buf.readResourceLocation();
+            Identifier loc = buf.readResourceLocation();
             return new BlockIngredient.SingleBlockValue(Services.BLOCKS_REGISTRY.get(loc));
         }).limit(size));
     }

@@ -11,7 +11,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     protected static final float ANIMATION_TIME_TOTAL = 15.0F;
-    protected static final WidgetSprites SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/tab"), ResourceLocation.withDefaultNamespace("recipe_book/tab_selected"));
+    protected static final WidgetSprites SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/tab"), Identifier.withDefaultNamespace("recipe_book/tab_selected"));
 
     protected final ArcaneRecipeBookCategories category;
     protected float animationTime;
@@ -67,7 +67,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
             
             Minecraft mc = Minecraft.getInstance();
             RenderSystem.disableDepthTest();
-            ResourceLocation spriteLoc = this.sprites.get(true, this.isStateTriggered);
+            Identifier spriteLoc = this.sprites.get(true, this.isStateTriggered);
             int x = this.getX();
             if (this.isStateTriggered) {
                 x -= 2;

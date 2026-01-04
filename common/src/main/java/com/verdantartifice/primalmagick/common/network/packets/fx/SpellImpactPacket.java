@@ -7,7 +7,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Packet sent from the server to trigger a spell impact particle effect on the client.
@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class SpellImpactPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("spell_impact");
+    public static final Identifier CHANNEL = ResourceUtils.loc("spell_impact");
     public static final StreamCodec<RegistryFriendlyByteBuf, SpellImpactPacket> STREAM_CODEC = StreamCodec.ofMember(SpellImpactPacket::encode, SpellImpactPacket::decode);
 
     protected final double x;

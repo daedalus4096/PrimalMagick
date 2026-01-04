@@ -9,7 +9,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,20 +21,20 @@ import org.joml.Vector2i;
  * @author Daedalus4096
  */
 public class UnlockGridNodeActionPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("unlock_grid_node_action");
+    public static final Identifier CHANNEL = ResourceUtils.loc("unlock_grid_node_action");
     public static final StreamCodec<RegistryFriendlyByteBuf, UnlockGridNodeActionPacket> STREAM_CODEC = StreamCodec.ofMember(UnlockGridNodeActionPacket::encode, UnlockGridNodeActionPacket::decode);
 
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected final ResourceLocation gridDefinitionKey;
+    protected final Identifier gridDefinitionKey;
     protected final Vector2i nodePos;
     
-    public UnlockGridNodeActionPacket(ResourceLocation key, Vector2i pos) {
+    public UnlockGridNodeActionPacket(Identifier key, Vector2i pos) {
         this.gridDefinitionKey = key;
         this.nodePos = pos;
     }
     
-    protected UnlockGridNodeActionPacket(ResourceLocation key, int x, int y) {
+    protected UnlockGridNodeActionPacket(Identifier key, int x, int y) {
         this(key, new Vector2i(x, y));
     }
 
