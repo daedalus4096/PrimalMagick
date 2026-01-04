@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  */
 public class WrittenLanguageLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<BookLanguage>, WrittenLanguageLanguageBuilder> {
     public WrittenLanguageLanguageBuilder(ResourceKey<BookLanguage> langKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(langKey, () -> Util.makeDescriptionId("written_language", langKey.location()), untracker, adder);
+        super(langKey, () -> Util.makeDescriptionId("written_language", langKey.identifier()), untracker, adder);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class WrittenLanguageLanguageBuilder extends AbstractLanguageBuilder<Reso
 
     @Override
     protected Identifier getBaseRegistryKey(ResourceKey<BookLanguage> base) {
-        return Objects.requireNonNull(base).location();
+        return Objects.requireNonNull(base).identifier();
     }
     
     public WrittenLanguageLanguageBuilder description(String value) {

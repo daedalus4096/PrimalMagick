@@ -70,7 +70,7 @@ public class StaticBookItem extends Item {
     }
     
     protected static MutableComponent getStaticAttribute(ResourceKey<BookDefinition> bookId, String attrName) {
-        return Component.translatable(String.join(".", "written_book", bookId.location().getNamespace(), bookId.location().getPath().replace('/', '.'), attrName));
+        return Component.translatable(String.join(".", "written_book", bookId.identifier().getNamespace(), bookId.identifier().getPath().replace('/', '.'), attrName));
     }
     
     protected static Component getNameFromBookId(ResourceKey<BookDefinition> bookId) {

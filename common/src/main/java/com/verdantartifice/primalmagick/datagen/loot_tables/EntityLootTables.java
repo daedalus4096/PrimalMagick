@@ -69,7 +69,7 @@ public class EntityLootTables extends EntityLootSubProvider {
     // loader-specific version of the base class.
     protected Stream<EntityType<?>> getKnownEntityTypes() {
         // Limit this data provider to entity types added by the mod
-        return Services.ENTITY_TYPES_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue);
+        return Services.ENTITY_TYPES_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().identifier().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue);
     }
 
     @Override

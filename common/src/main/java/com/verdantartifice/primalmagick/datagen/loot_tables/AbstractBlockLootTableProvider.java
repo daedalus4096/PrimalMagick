@@ -83,7 +83,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     // loader-specific version of the base class.
     protected Iterable<Block> getKnownBlocks() {
         // Limit this data provider to blocks added by the mod
-        return Services.BLOCKS_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue).toList();
+        return Services.BLOCKS_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().identifier().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue).toList();
     }
 
     private void registerLootTableBuilder(Block block, LootTable.Builder builder) {

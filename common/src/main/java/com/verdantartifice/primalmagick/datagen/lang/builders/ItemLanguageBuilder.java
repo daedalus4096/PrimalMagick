@@ -54,7 +54,7 @@ public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item, ItemLangu
     }
     
     public ItemLanguageBuilder concoctionName(ConcoctionType type, Holder<Potion> potion, String name) {
-        String effectName = potion.unwrapKey().orElseThrow().location().getPath();
+        String effectName = potion.unwrapKey().orElseThrow().identifier().getPath();
         return this.concoctionName(type, effectName, name);
     }
     

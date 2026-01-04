@@ -49,7 +49,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
     
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "research_discipline", Constants.MOD_ID, this.key.getRootKey().location().getPath());
+        return String.join(".", "research_discipline", Constants.MOD_ID, this.key.getRootKey().identifier().getPath());
     }
     
     public Stream<ResearchEntry> getEntryStream(RegistryAccess registryAccess) {

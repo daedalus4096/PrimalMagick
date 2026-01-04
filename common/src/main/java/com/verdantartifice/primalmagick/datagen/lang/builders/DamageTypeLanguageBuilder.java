@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  */
 public class DamageTypeLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<DamageType>, DamageTypeLanguageBuilder> {
     public DamageTypeLanguageBuilder(ResourceKey<DamageType> patternKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(patternKey, () -> String.join(".", "death", "attack", Constants.MOD_ID, patternKey.location().getPath()), untracker, adder);
+        super(patternKey, () -> String.join(".", "death", "attack", Constants.MOD_ID, patternKey.identifier().getPath()), untracker, adder);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class DamageTypeLanguageBuilder extends AbstractLanguageBuilder<ResourceK
 
     @Override
     protected Identifier getBaseRegistryKey(ResourceKey<DamageType> base) {
-        return base.location();
+        return base.identifier();
     }
     
     public DamageTypeLanguageBuilder player(String value) {

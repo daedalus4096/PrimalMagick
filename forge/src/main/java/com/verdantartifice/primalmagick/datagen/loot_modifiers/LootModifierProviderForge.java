@@ -130,77 +130,77 @@ public class LootModifierProviderForge extends GlobalLootModifierProvider {
                 }));
         this.add("humming_artifact_abandoned_mineshaft", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.ABANDONED_MINESHAFT.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.ABANDONED_MINESHAFT.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_ancient_city", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.ANCIENT_CITY.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.ANCIENT_CITY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_bastion_treasure", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.BASTION_TREASURE.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.BASTION_TREASURE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_buried_treasure", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.BURIED_TREASURE.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.BURIED_TREASURE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_desert_pyramid", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_end_city_treasure", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.END_CITY_TREASURE.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.END_CITY_TREASURE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_igloo_chest", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.IGLOO_CHEST.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.IGLOO_CHEST.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_jungle_temple", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_nether_fortress", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.NETHER_BRIDGE.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.NETHER_BRIDGE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_pillager_outpost", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.PILLAGER_OUTPOST.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.PILLAGER_OUTPOST.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_shipwreck_treasure", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.SHIPWRECK_TREASURE.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.SHIPWRECK_TREASURE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_simple_dungeon", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.4F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_stronghold_library", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.STRONGHOLD_LIBRARY.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.STRONGHOLD_LIBRARY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_underwater_ruin_big", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_woodland_mansion", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.WOODLAND_MANSION.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.WOODLAND_MANSION.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
                 }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("essence_thief", new EssenceThiefModifier(
@@ -254,49 +254,49 @@ public class LootModifierProviderForge extends GlobalLootModifierProvider {
 
         this.add("lore_fragment_desert_well_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_desert_pyramid_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID_ARCHAEOLOGY.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID_ARCHAEOLOGY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_trail_ruins_archaeology_common", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.02F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_trail_ruins_archaeology_rare", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_ocean_ruin_warm_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_ocean_ruin_cold_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY.location()).build(),
+                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_underwater_ruin_small_chest", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_SMALL.location()).build()
+                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_SMALL.identifier()).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(1, 3)));
         this.add("lore_fragment_underwater_ruin_big_chest", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG.location()).build()
+                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG.identifier()).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
         this.add("lore_fragment_desert_pyramid_chest", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID.location()).build()
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID.identifier()).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
         this.add("lore_fragment_jungle_temple_chest", new AddItemModifier(
                 new LootItemCondition[] {
-                        LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE.location()).build()
+                        LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE.identifier()).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
     }
 }

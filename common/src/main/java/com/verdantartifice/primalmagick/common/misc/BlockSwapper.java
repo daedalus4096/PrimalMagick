@@ -59,7 +59,7 @@ public class BlockSwapper {
     
     @Nonnull
     public static Queue<BlockSwapper> getWorldSwappers(@Nonnull Level world) {
-        return REGISTRY.computeIfAbsent(world.dimension().location(), (key) -> {
+        return REGISTRY.computeIfAbsent(world.dimension().identifier(), (key) -> {
             return new LinkedBlockingQueue<>();
         });
     }

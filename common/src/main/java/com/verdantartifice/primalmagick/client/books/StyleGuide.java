@@ -37,7 +37,7 @@ public class StyleGuide {
     }
     
     public static StyleGuide.Builder builder(ResourceKey<BookLanguage> language) {
-        return new StyleGuide.Builder(language.location());
+        return new StyleGuide.Builder(language.identifier());
     }
     
     protected List<Entry> getEntries() {

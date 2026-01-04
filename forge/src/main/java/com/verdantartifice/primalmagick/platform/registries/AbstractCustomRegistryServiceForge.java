@@ -86,7 +86,7 @@ abstract class AbstractCustomRegistryServiceForge<R> implements IRegistryService
                 });
             });
         }, element -> {
-            return this.getRegistry().get().getResourceKey(element).map(ResourceKey::location).map(DataResult::success).orElseGet(() -> {
+            return this.getRegistry().get().getResourceKey(element).map(ResourceKey::identifier).map(DataResult::success).orElseGet(() -> {
                 return DataResult.error(() -> {
                     return "Unknown registry element in " + this.getRegistry().get().getRegistryKey() + ": " + element;
                 });

@@ -40,7 +40,7 @@ public record TipDefinition(String translationKey, Optional<AbstractRequirement<
     }
 
     public static Builder builder(ResourceKey<TipDefinition> key) {
-        return new Builder(key.location());
+        return new Builder(key.identifier());
     }
     
     public static Builder builder(Identifier id) {

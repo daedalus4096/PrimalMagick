@@ -138,7 +138,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             this.costs[index] = 0;
             this.levelCostClues[index] = 0;
         }
-        this.languageClue.set(BookLanguagesPM.DEFAULT.location().toString().hashCode());
+        this.languageClue.set(BookLanguagesPM.DEFAULT.identifier().toString().hashCode());
         this.vocabularyCount.set(0);
     }
     
@@ -198,7 +198,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     
     public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
-        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().location().toString().hashCode() == hashCode).findFirst()
+        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().identifier().toString().hashCode() == hashCode).findFirst()
                 .orElse(BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, this.level.registryAccess()));
     }
 

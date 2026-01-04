@@ -63,7 +63,7 @@ public class ComprehensionRewardBuilder {
 
         @Override
         public OptionalInt getComprehensionPoints(Identifier bookLanguageId) {
-            return this.language.location().equals(bookLanguageId) ? OptionalInt.of(this.points) : OptionalInt.empty();
+            return this.language.identifier().equals(bookLanguageId) ? OptionalInt.of(this.points) : OptionalInt.empty();
         }
     }
 }

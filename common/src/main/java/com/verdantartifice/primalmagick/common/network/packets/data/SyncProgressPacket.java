@@ -67,12 +67,12 @@ public class SyncProgressPacket implements IMessageToServer {
             if (message.firstSync != ResearchManager.isResearchStarted(player, message.key)) {
                 // If called for, ensure that prerequisites for the next stage are checked and consumed
                 if (message.runChecks && !checkAndConsumePrerequisites(player, message.key)) {
-                    LOGGER.debug("Requirements not met for research {} by player {}", message.key.getRootKey().location(), player.getName().getString());
+                    LOGGER.debug("Requirements not met for research {} by player {}", message.key.getRootKey().identifier(), player.getName().getString());
                     return;
                 }
                 
                 // Do the actual progression
-                LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey().location(), player.getName().getString());
+                LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey().identifier(), player.getName().getString());
                 ResearchManager.progressResearch(player, message.key, true, !message.noFlags, !message.noPopups);
             }
         }

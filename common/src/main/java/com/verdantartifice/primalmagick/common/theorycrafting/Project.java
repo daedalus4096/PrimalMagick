@@ -61,12 +61,12 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
     
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "research_project", this.templateKey.location().getNamespace(), this.templateKey.location().getPath(), "name");
+        return String.join(".", "research_project", this.templateKey.identifier().getNamespace(), this.templateKey.identifier().getPath(), "name");
     }
     
     @Nonnull
     public String getTextTranslationKey() {
-        return String.join(".", "research_project", this.templateKey.location().getNamespace(), this.templateKey.location().getPath(), "text");
+        return String.join(".", "research_project", this.templateKey.identifier().getNamespace(), this.templateKey.identifier().getPath(), "text");
     }
 
     protected double getSuccessChancePerMaterial() {

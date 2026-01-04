@@ -46,7 +46,7 @@ public class TrimPatternsPM {
     }
     
     private static void register(BootstrapContext<TrimPattern> context, ResourceKey<TrimPattern> patternKey) {
-        context.register(patternKey, new TrimPattern(patternKey.location(), Component.translatable(Util.makeDescriptionId("trim_pattern", patternKey.location())), false));
+        context.register(patternKey, new TrimPattern(patternKey.identifier(), Component.translatable(Util.makeDescriptionId("trim_pattern", patternKey.identifier())), false));
     }
     
     public static void bootstrap(BootstrapContext<TrimPattern> context) {

@@ -81,7 +81,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
     
     public String getBaseTranslationKey() {
-        return String.join(".", "research", this.key.getRootKey().location().getNamespace(), this.key.getRootKey().location().getPath());
+        return String.join(".", "research", this.key.getRootKey().identifier().getNamespace(), this.key.getRootKey().identifier().getPath());
     }
     
     public String getNameTranslationKey() {

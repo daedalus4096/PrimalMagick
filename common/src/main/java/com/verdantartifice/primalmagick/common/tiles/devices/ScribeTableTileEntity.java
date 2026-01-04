@@ -120,7 +120,7 @@ public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM
                     Services.CAPABILITIES.linguistics(serverPlayer).ifPresent(linguistics -> {
                         // Construct the translated result book if all prerequisites are met
                         ItemStack resultStack = sourceStack.copyWithCount(1);
-                        int playerComprehension = linguistics.getComprehension(sourceLanguageOpt.get().unwrapKey().get().location());
+                        int playerComprehension = linguistics.getComprehension(sourceLanguageOpt.get().unwrapKey().get().identifier());
                         int sourceComprehension = StaticBookItem.getTranslatedComprehension(sourceStack).orElse(0);
                         int maxComprehension = Math.max(playerComprehension, sourceComprehension);
                         StaticBookItem.setTranslatedComprehension(resultStack, maxComprehension <= 0 ? Optional.empty() : Optional.of(maxComprehension));

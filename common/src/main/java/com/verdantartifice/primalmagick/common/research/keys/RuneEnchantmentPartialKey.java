@@ -44,7 +44,7 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
 
     @Override
     public String toString() {
-        return PREFIX + this.enchant.unwrapKey().get().location().toString() + "." + this.runeType.getSerializedName();
+        return PREFIX + this.enchant.unwrapKey().get().identifier().toString() + "." + this.runeType.getSerializedName();
     }
 
     @Override

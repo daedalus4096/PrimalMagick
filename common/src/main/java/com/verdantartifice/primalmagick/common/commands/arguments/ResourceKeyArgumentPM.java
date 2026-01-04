@@ -77,7 +77,7 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
     private static <T> Holder.Reference<T> resolveKey(CommandContext<CommandSourceStack> pContext, String pArgument, ResourceKey<Registry<T>> pRegistryKey, DynamicCommandExceptionType pException) throws CommandSyntaxException {
         ResourceKey<T> resourcekey = getRegistryKey(pContext, pArgument, pRegistryKey, pException);
         return getRegistry(pContext, pRegistryKey).getHolder(resourcekey).orElseThrow(() -> {
-            return pException.create(resourcekey.location());
+            return pException.create(resourcekey.identifier());
         });
     }
 
@@ -125,7 +125,7 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
 
         @Override
         public void serializeToJson(Info<T>.Template pTemplate, JsonObject pJson) {
-            pJson.addProperty("registry", pTemplate.registryKey.location().toString());
+            pJson.addProperty("registry", pTemplate.registryKey.identifier().toString());
         }
 
         @Override

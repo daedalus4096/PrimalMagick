@@ -80,7 +80,7 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
             registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).holders().map(bookHolder -> new BookView(Either.left(bookHolder), langHolder, 0)).forEach(view -> {
                 lexicon.addWords(ClientBookHelper.getUnencodedWords(view));
             });
-            LexiconManager.setLexicon(langHolder.key().location(), lexicon);
+            LexiconManager.setLexicon(langHolder.key().identifier(), lexicon);
         });
     }
 }

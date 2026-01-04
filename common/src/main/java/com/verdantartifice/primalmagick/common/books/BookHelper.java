@@ -49,7 +49,7 @@ public class BookHelper {
     private static Component getTitleTextInner(BookView view) {
         MutableComponent retVal = Component.empty();
         String titleTranslationKey = getTitleTranslationKey(view);
-        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().location()).orElseThrow();
+        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().identifier()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
         
         // Add the encoded title text
@@ -77,7 +77,7 @@ public class BookHelper {
     
     private static Component getAuthorTextInner(BookView view, Component unencodedText) {
         MutableComponent retVal = Component.empty();
-        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().location()).orElseThrow();
+        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().identifier()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
         
         // Add the encoded title text

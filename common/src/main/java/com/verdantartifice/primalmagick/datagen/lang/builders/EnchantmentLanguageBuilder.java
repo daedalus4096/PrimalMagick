@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  */
 public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<Enchantment>, EnchantmentLanguageBuilder> {
     public EnchantmentLanguageBuilder(ResourceKey<Enchantment> enchKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(enchKey, () -> Util.makeDescriptionId("enchantment", enchKey.location()), untracker, adder);
+        super(enchKey, () -> Util.makeDescriptionId("enchantment", enchKey.identifier()), untracker, adder);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<Resource
 
     @Override
     protected Identifier getBaseRegistryKey(ResourceKey<Enchantment> base) {
-        return Objects.requireNonNull(base).location();
+        return Objects.requireNonNull(base).identifier();
     }
 
     public EnchantmentLanguageBuilder description(String value) {

@@ -32,7 +32,7 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
 
     @Override
     public String toString() {
-        return PREFIX + this.enchant.unwrapKey().get().location().toString();
+        return PREFIX + this.enchant.unwrapKey().get().identifier().toString();
     }
 
     @Override

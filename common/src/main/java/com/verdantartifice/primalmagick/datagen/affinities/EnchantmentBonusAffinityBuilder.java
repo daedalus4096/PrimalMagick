@@ -52,7 +52,7 @@ public class EnchantmentBonusAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer) {
-        this.build(consumer, this.targetId.location());
+        this.build(consumer, this.targetId.identifier());
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {
@@ -61,7 +61,7 @@ public class EnchantmentBonusAffinityBuilder {
     
     public void build(Consumer<IFinishedAffinity> consumer, Identifier id) {
         this.validate(id);
-        consumer.accept(new EnchantmentBonusAffinityBuilder.Result(id, this.targetId.location(), this.multiplierValues.build()));
+        consumer.accept(new EnchantmentBonusAffinityBuilder.Result(id, this.targetId.identifier(), this.multiplierValues.build()));
     }
     
     public static class Result implements IFinishedAffinity {

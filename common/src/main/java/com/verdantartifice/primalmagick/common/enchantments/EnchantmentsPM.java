@@ -655,7 +655,7 @@ public class EnchantmentsPM {
     }
 
     private static void register(BootstrapContext<Enchantment> pContext, ResourceKey<Enchantment> pKey, Enchantment.Builder pBuilder) {
-        pContext.register(pKey, pBuilder.build(pKey.location()));
+        pContext.register(pKey, pBuilder.build(pKey.identifier()));
     }
 
     private static ResourceKey<Enchantment> key(String pName) {

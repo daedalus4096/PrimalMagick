@@ -24,6 +24,6 @@ public class ResearchDisciplineLanguageBuilder extends AbstractLanguageBuilder<R
 
     @Override
     protected Identifier getBaseRegistryKey(ResearchDiscipline base) {
-        return ResourceUtils.loc(base.key().getRootKey().location().getPath().toLowerCase());
+        return ResourceUtils.loc(base.key().getRootKey().identifier().getPath().toLowerCase());
     }
 }

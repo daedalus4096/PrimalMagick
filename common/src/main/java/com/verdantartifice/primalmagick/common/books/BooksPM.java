@@ -194,7 +194,7 @@ public class BooksPM {
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
-        return context.register(key, new BookDefinition(Identifier.fromNamespaceAndPath(key.location().getNamespace(), key.location().getPath().replace('/', '.'))));
+        return context.register(key, new BookDefinition(Identifier.fromNamespaceAndPath(key.identifier().getNamespace(), key.identifier().getPath().replace('/', '.'))));
     }
     
     /**

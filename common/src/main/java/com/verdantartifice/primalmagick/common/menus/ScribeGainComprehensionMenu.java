@@ -71,13 +71,13 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
         ItemStack bookStack = this.studySlot.getItem();
         ResourceKey<BookLanguage> langKey = bookStack.is(ItemTagsPM.STATIC_BOOKS) ? StaticBookItem.getBookLanguageId(bookStack).orElse(BookLanguagesPM.DEFAULT) : BookLanguagesPM.DEFAULT;
         Holder.Reference<BookLanguage> lang = BookLanguagesPM.getLanguageOrDefault(langKey, this.level.registryAccess(), BookLanguagesPM.DEFAULT);
-        this.languageClue.set(langKey.location().hashCode());
+        this.languageClue.set(langKey.identifier().hashCode());
         this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
     }
     
     public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
-        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().location().hashCode() == hashCode).findFirst()
+        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().identifier().hashCode() == hashCode).findFirst()
                 .orElse(BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, this.level.registryAccess()));
     }
     

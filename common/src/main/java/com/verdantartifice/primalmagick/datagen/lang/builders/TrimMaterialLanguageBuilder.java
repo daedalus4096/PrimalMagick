@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  */
 public class TrimMaterialLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<TrimMaterial>, TrimMaterialLanguageBuilder> {
     public TrimMaterialLanguageBuilder(ResourceKey<TrimMaterial> materialKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(materialKey, () -> String.join(".", "trim_material", Constants.MOD_ID, materialKey.location().getPath()), untracker, adder);
+        super(materialKey, () -> String.join(".", "trim_material", Constants.MOD_ID, materialKey.identifier().getPath()), untracker, adder);
     }
 
     @Override
@@ -26,6 +26,6 @@ public class TrimMaterialLanguageBuilder extends AbstractLanguageBuilder<Resourc
 
     @Override
     protected Identifier getBaseRegistryKey(ResourceKey<TrimMaterial> base) {
-        return base.location();
+        return base.identifier();
     }
 }

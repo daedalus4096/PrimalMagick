@@ -78,7 +78,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         super.init();
         Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
         this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 151, this.topPos + 17));
-        this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().location());
+        this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().identifier());
         
         // Initialize the node buttons for the grid
         for (int y = GridDefinition.MIN_POS; y <= GridDefinition.MAX_POS; y++) {
@@ -153,7 +153,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     
     protected void refreshGrid() {
         Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
-        PlayerGrid newGrid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().location());
+        PlayerGrid newGrid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().identifier());
         if (this.grid == null || newGrid == null || newGrid.getLastModified() > this.grid.getLastModified() || !this.grid.getDefinition().getLanguage().equals(newGrid.getDefinition().getLanguage())) {
             this.grid = newGrid;
         }

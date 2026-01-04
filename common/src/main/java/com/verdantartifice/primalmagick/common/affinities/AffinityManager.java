@@ -476,7 +476,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         // Determine bonus affinities from NBT-attached enchantment data
         ItemEnchantments enchants = stack.getEnchantments();
         enchants.entrySet().forEach(entry -> {
-            IAffinity bonus = this.getAffinity(AffinityTypesPM.ENCHANTMENT_BONUS.get(), entry.getKey().unwrapKey().get().location());
+            IAffinity bonus = this.getAffinity(AffinityTypesPM.ENCHANTMENT_BONUS.get(), entry.getKey().unwrapKey().get().identifier());
             if (bonus != null) {
                 bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()).thenApply(enchantBonus -> enchantBonus.multiply(entry.getIntValue())));
             }

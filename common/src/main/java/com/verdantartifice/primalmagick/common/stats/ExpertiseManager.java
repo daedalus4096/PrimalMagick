@@ -95,7 +95,7 @@ public class ExpertiseManager {
                 });
             }
         }
-        LOGGER.debug("Final expertise threshold value for {} tier {}: {}", discKey.getRootKey().location(), tier.getSerializedName(), retVal.intValue());
+        LOGGER.debug("Final expertise threshold value for {} tier {}: {}", discKey.getRootKey().identifier(), tier.getSerializedName(), retVal.intValue());
         return retVal.intValue();
     }
     

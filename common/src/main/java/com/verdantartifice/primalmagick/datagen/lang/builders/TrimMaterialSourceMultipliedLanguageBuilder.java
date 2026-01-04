@@ -22,7 +22,7 @@ public class TrimMaterialSourceMultipliedLanguageBuilder extends AbstractSourceM
     public TrimMaterialSourceMultipliedLanguageBuilder(String builderKey, List<ResourceKey<TrimMaterial>> bases,
             Function<Source, String> sourceNameMapper, Consumer<ILanguageBuilder> untracker, 
             BiConsumer<String, String> adder) {
-        super(builderKey, bases, key -> String.join(".", "trim_material", Constants.MOD_ID, key.location().getPath()), TrimMaterialsPM::getSource, sourceNameMapper, untracker, adder);
+        super(builderKey, bases, key -> String.join(".", "trim_material", Constants.MOD_ID, key.identifier().getPath()), TrimMaterialsPM::getSource, sourceNameMapper, untracker, adder);
     }
 
     @Override

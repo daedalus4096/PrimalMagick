@@ -82,7 +82,7 @@ public class BlockBreaker {
             return false;
         } else {
             int delay = Math.max(0, delayTicks);
-            SCHEDULE.computeIfAbsent(world.dimension().location(), key -> {
+            SCHEDULE.computeIfAbsent(world.dimension().identifier(), key -> {
                 return new ConcurrentSkipListMap<>();
             }).computeIfAbsent(delay, key -> {
                 return new ConcurrentHashMap<>();
@@ -98,7 +98,7 @@ public class BlockBreaker {
      * @return the collection of block breakers that should be executed now
      */
     public static Iterable<BlockBreaker> tick(@NotNull Level world) {
-        ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.dimension().location());
+        ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.dimension().identifier());
         if (tree == null) {
             return Collections.emptyList();
         } else {
@@ -113,14 +113,14 @@ public class BlockBreaker {
                 }
             }
             if (!newTree.isEmpty()) {
-                SCHEDULE.put(world.dimension().location(), newTree);
+                SCHEDULE.put(world.dimension().identifier(), newTree);
             }
             return retVal;
         }
     }
     
     public static boolean hasBreakerQueued(@NotNull Level world, @NotNull BlockPos pos) {
-        ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.dimension().location());
+        ConcurrentNavigableMap<Integer, Map<BlockPos, BlockBreaker>> tree = SCHEDULE.get(world.dimension().identifier());
         if (tree != null) {
             for (Map<BlockPos, BlockBreaker> tickMap : tree.values()) {
                 if (tickMap.containsKey(pos)) {

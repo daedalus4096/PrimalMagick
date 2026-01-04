@@ -31,12 +31,12 @@ public class ModelProviderPMNeoforge extends AbstractModelProviderPM {
 
     @Override
     protected Stream<? extends Holder<Block>> getKnownBlocks() {
-        return BuiltInRegistries.BLOCK.listElements().filter(holder -> holder.getKey().location().getNamespace().equals(this.modIdentifier));
+        return BuiltInRegistries.BLOCK.listElements().filter(holder -> holder.getKey().identifier().getNamespace().equals(this.modIdentifier));
     }
 
     @Override
     protected Stream<? extends Holder<Item>> getKnownItems() {
-        return BuiltInRegistries.ITEM.listElements().filter(holder -> holder.getKey().location().getNamespace().equals(this.modIdentifier));
+        return BuiltInRegistries.ITEM.listElements().filter(holder -> holder.getKey().identifier().getNamespace().equals(this.modIdentifier));
     }
 
     @Override

@@ -424,7 +424,7 @@ public abstract class StoryAdvancementsPM {
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("scan_chest").icon(Items.CHEST).build())
                 .parent(craftArcanometer)
                 .addCriterion("scan_chest", ScanLocationTrigger.TriggerInstance.itemUsedOnBlock(
-                        LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(CommonTags.Blocks.CHESTS)),
+                        LocationPredicate.Builder.identifier().setBlock(BlockPredicate.Builder.block().of(CommonTags.Blocks.CHESTS)),
                         ItemPredicate.Builder.item().of(ItemsPM.ARCANOMETER.get())))
                 .save(saver, ResourceUtils.loc("story/scan_chest").toString());
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_seascribe_pen").icon(ItemsPM.SEASCRIBE_PEN.get()).build())
@@ -505,11 +505,11 @@ public abstract class StoryAdvancementsPM {
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
         LogManager.getLogger().debug("Rune enchantment definitions found in advancement datagen: {}", registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().count());
-        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().map(defHolder -> defHolder.key().location()).forEach(LogManager.getLogger()::debug);
+        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().map(defHolder -> defHolder.key().identifier()).forEach(LogManager.getLogger()::debug);
         LogManager.getLogger().debug("Enchantment definitions found in advancement dataget: {}", registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().count());
-        registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().map(enchHolder -> enchHolder.key().location()).forEach(LogManager.getLogger()::debug);
-        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().sorted(Comparator.comparing(defHolder -> defHolder.key().location().toString())).forEach(defHolder -> {
-            builder.addCriterion(defHolder.key().location().toString(), RunescribingTrigger.TriggerInstance.enchantment(defHolder.value().result()));
+        registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().map(enchHolder -> enchHolder.key().identifier()).forEach(LogManager.getLogger()::debug);
+        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().sorted(Comparator.comparing(defHolder -> defHolder.key().identifier().toString())).forEach(defHolder -> {
+            builder.addCriterion(defHolder.key().identifier().toString(), RunescribingTrigger.TriggerInstance.enchantment(defHolder.value().result()));
         });
         if (type == AdvancementType.CHALLENGE) {
             builder.rewards(AdvancementRewards.Builder.experience(100));
@@ -521,8 +521,8 @@ public abstract class StoryAdvancementsPM {
         Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
-        registries.lookupOrThrow(Registries.POTION).listElements().filter(potHolder -> !potHolder.value().getEffects().isEmpty()).sorted(Comparator.comparing(potHolder -> potHolder.key().location().toString())).forEach(potHolder -> {
-            builder.addCriterion(potHolder.key().location().toString(), InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ItemsPM.ALCHEMICAL_BOMB.get()).withSubPredicate(ItemSubPredicates.POTIONS, new ItemPotionsPredicate(HolderSet.direct(potHolder)))));
+        registries.lookupOrThrow(Registries.POTION).listElements().filter(potHolder -> !potHolder.value().getEffects().isEmpty()).sorted(Comparator.comparing(potHolder -> potHolder.key().identifier().toString())).forEach(potHolder -> {
+            builder.addCriterion(potHolder.key().identifier().toString(), InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ItemsPM.ALCHEMICAL_BOMB.get()).withSubPredicate(ItemSubPredicates.POTIONS, new ItemPotionsPredicate(HolderSet.direct(potHolder)))));
         });
         if (type == AdvancementType.CHALLENGE) {
             builder.rewards(AdvancementRewards.Builder.experience(100));

@@ -54,7 +54,7 @@ public class IconDefinition {
     }
     
     public static IconDefinition of(TagKey<Item> tagKey) {
-        return new IconDefinition(false, true, tagKey.location(), Optional.empty());
+        return new IconDefinition(false, true, tagKey.identifier(), Optional.empty());
     }
     
     public static IconDefinition of(Identifier loc) {

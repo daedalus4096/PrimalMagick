@@ -981,7 +981,7 @@ public class GrimoireScreen extends Screen {
     
     protected void parseRuneEnchantmentPage(Holder<Enchantment> enchant) {
         Minecraft mc = Minecraft.getInstance();
-        Identifier enchantKey = enchant.unwrapKey().get().location();
+        Identifier enchantKey = enchant.unwrapKey().get().identifier();
         String rawText = ResearchManager.isResearchComplete(mc.player, new RuneEnchantmentKey(enchant)) ?
                 (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "text"))).getString() :
                 (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "partial_text"))).getString();

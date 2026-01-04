@@ -344,7 +344,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         if (this.lootTable == null) {
             return false;
         } else {
-            output.putString("LootTable", this.lootTable.location().toString());
+            output.putString("LootTable", this.lootTable.identifier().toString());
             output.putLong("LootTableSeed", this.lootTableSeed);
             return true;
         }

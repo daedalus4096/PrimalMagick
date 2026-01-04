@@ -103,15 +103,15 @@ public class ClientBookHelper {
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "text");
         }, enchHolder -> {
             ResourceKey<Enchantment> enchKey = enchHolder.unwrapKey().get();
-            String key = String.join(".", "enchantment", enchKey.location().getNamespace(), enchKey.location().getPath(), "desc");
+            String key = String.join(".", "enchantment", enchKey.identifier().getNamespace(), enchKey.identifier().getPath(), "desc");
             if (I18n.exists(key)) {
                 return key;
             } else {
-                key = String.join(".", "enchantment", enchKey.location().getNamespace(), enchKey.location().getPath(), "rune_enchantment", "text");
+                key = String.join(".", "enchantment", enchKey.identifier().getNamespace(), enchKey.identifier().getPath(), "rune_enchantment", "text");
                 if (I18n.exists(key)) {
                     return key;
                 } else {
-                    return String.join(".", "enchantment", enchKey.location().getNamespace(), enchKey.location().getPath());
+                    return String.join(".", "enchantment", enchKey.identifier().getNamespace(), enchKey.identifier().getPath());
                 }
             }
         });
@@ -127,9 +127,9 @@ public class ClientBookHelper {
         String textTranslationKey = getTextTranslationKey(view);
         
         final Holder<BookLanguage> lang = view.language();
-        final Lexicon langLex = LexiconManager.getLexicon(lang.unwrapKey().get().location()).orElseThrow();
+        final Lexicon langLex = LexiconManager.getLexicon(lang.unwrapKey().get().identifier()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
-        final Optional<StyleGuide> langStyleGuideOpt = StyleGuideManager.getStyleGuide(lang.unwrapKey().get().location());
+        final Optional<StyleGuide> langStyleGuideOpt = StyleGuideManager.getStyleGuide(lang.unwrapKey().get().identifier());
 
         // Add the un-encoded foreword
         view.bookDef().ifLeft(bookHolder -> {
@@ -227,7 +227,7 @@ public class ClientBookHelper {
             return 1;
         } else {
             List<String> bookWords = getUnencodedWords(view);
-            final Lexicon langLex = LexiconManager.getLexicon(bookLang.unwrapKey().get().location()).orElseThrow();
+            final Lexicon langLex = LexiconManager.getLexicon(bookLang.unwrapKey().get().identifier()).orElseThrow();
             int totalCount = bookWords.size();
             int translatedCount = (int)bookWords.stream().filter(word -> langLex.isWordTranslated(word, view.comprehension(), bookLang.value().complexity())).count();
             return Mth.clamp((double)translatedCount / (double)totalCount, 0, 1);

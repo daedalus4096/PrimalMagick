@@ -24,7 +24,7 @@ public class ResearchEntryLanguageBuilder extends AbstractLanguageBuilder<Resear
 
     @Override
     protected Identifier getBaseRegistryKey(ResearchEntry base) {
-        return ResourceUtils.loc(base.key().getRootKey().location().getPath().toLowerCase());
+        return ResourceUtils.loc(base.key().getRootKey().identifier().getPath().toLowerCase());
     }
 
     @Override

@@ -44,7 +44,7 @@ public class TrimMaterialsPM {
     }
     
     private static void register(BootstrapContext<TrimMaterial> context, ResourceKey<TrimMaterial> materialKey, Item item, Style textStyle, float itemModelIndex) {
-        context.register(materialKey, TrimMaterial.create(materialKey.location().getPath(), item, itemModelIndex, Component.translatable(Util.makeDescriptionId("trim_material", materialKey.location())).withStyle(textStyle), Map.of()));
+        context.register(materialKey, TrimMaterial.create(materialKey.identifier().getPath(), item, itemModelIndex, Component.translatable(Util.makeDescriptionId("trim_material", materialKey.identifier())).withStyle(textStyle), Map.of()));
     }
     
     private static Style getStyle(Source source) {

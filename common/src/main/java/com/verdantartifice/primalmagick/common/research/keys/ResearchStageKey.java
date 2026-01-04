@@ -54,7 +54,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     
     @Override
     public String toString() {
-        return this.rootKey.location().toString() + "@" + this.stage;
+        return this.rootKey.identifier().toString() + "@" + this.stage;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.rootKey.registry(), this.rootKey.location(), this.stage);
+        return Objects.hash(this.rootKey.registry(), this.rootKey.identifier(), this.stage);
     }
 
     @Override

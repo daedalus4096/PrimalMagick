@@ -934,13 +934,13 @@ public class PrimalMagickCommand {
     }
 
     private static int getLanguageComprehension(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage) {
-        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.get", target.getName(), bookLanguage.key().location(), LinguisticsManager.getComprehension(target, bookLanguage)), true);
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.get", target.getName(), bookLanguage.key().identifier(), LinguisticsManager.getComprehension(target, bookLanguage)), true);
         return 0;
     }
 
     private static int setLanguageComprehension(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage, int value) {
         int complexity = bookLanguage.value().complexity();
-        Identifier langKey = bookLanguage.key().location();
+        Identifier langKey = bookLanguage.key().identifier();
         LinguisticsManager.setComprehension(target, bookLanguage, value);
         int newValue = LinguisticsManager.getComprehension(target, bookLanguage);
         if (value > complexity) {
@@ -959,12 +959,12 @@ public class PrimalMagickCommand {
     }
 
     private static int getLanguageVocabulary(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage) {
-        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.get", target.getName(), bookLanguage.key().location(), LinguisticsManager.getVocabulary(target, bookLanguage)), true);
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.get", target.getName(), bookLanguage.key().identifier(), LinguisticsManager.getVocabulary(target, bookLanguage)), true);
         return 0;
     }
 
     private static int setLanguageVocabulary(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage, int value) {
-        Identifier langKey = bookLanguage.key().location();
+        Identifier langKey = bookLanguage.key().identifier();
         LinguisticsManager.setVocabulary(target, bookLanguage, value);
         int newValue = LinguisticsManager.getVocabulary(target, bookLanguage);
         source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.set.success", target.getName(), langKey.toString(), newValue), true);
@@ -975,13 +975,13 @@ public class PrimalMagickCommand {
     }
 
     private static int getBookStudyCount(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage) {
-        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.get", target.getName(), bookDef.key().location(), bookLanguage.key().location(), LinguisticsManager.getTimesStudied(target, bookDef, bookLanguage)), true);
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.get", target.getName(), bookDef.key().identifier(), bookLanguage.key().identifier(), LinguisticsManager.getTimesStudied(target, bookDef, bookLanguage)), true);
         return 0;
     }
 
     private static int setBookStudyCount(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage, int value) {
-        Identifier bookId = bookDef.key().location();
-        Identifier langKey = bookLanguage.key().location();
+        Identifier bookId = bookDef.key().identifier();
+        Identifier langKey = bookLanguage.key().identifier();
         LinguisticsManager.setTimesStudied(target, bookDef, bookLanguage, value);
         int newValue = LinguisticsManager.getTimesStudied(target, bookDef, bookLanguage);
         if (value > IPlayerLinguistics.MAX_STUDY_COUNT) {

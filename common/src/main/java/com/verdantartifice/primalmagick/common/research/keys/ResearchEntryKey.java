@@ -33,7 +33,7 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
 
     @Override
     public String toString() {
-        return this.rootKey.location().toString();
+        return this.rootKey.identifier().toString();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.rootKey.registry(), this.rootKey.location());
+        return Objects.hash(this.rootKey.registry(), this.rootKey.identifier());
     }
 
     @Override
