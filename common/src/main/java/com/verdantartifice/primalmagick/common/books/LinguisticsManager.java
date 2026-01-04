@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.books;
 
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
 import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;

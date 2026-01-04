@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.attunements;
 
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;

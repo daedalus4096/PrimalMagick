@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;

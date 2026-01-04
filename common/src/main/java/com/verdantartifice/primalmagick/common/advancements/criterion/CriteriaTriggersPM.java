@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.advancements.critereon;
+package com.verdantartifice.primalmagick.common.advancements.criterion;
 
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.platform.Services;

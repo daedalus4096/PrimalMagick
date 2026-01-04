@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypesPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;

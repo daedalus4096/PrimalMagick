@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
 import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
