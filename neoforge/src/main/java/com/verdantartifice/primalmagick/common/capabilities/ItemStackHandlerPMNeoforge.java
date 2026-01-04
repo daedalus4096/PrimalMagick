@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.util.RecipeContainerWrapper;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;

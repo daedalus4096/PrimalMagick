@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.items.armor;
 
 import com.verdantartifice.primalmagick.common.items.EquipmentAssetsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.equipment.ArmorMaterial;

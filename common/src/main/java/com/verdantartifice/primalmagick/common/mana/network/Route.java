@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.mana.network;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;

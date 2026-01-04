@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagick.common.blockstates.properties.SkyglassPaneSide;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;

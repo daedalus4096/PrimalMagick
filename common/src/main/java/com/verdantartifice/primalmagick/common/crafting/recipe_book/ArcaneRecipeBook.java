@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.crafting.recipe_book;
 
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
-import net.minecraft.ResourceLocationException;
+import net.minecraft.IdentifierException;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -164,7 +164,7 @@ public class ArcaneRecipeBook {
                 }, () -> {
                     LOGGER.error("Failed to load unrecognized recipe: {}, removing", locStr);
                 });
-            } catch (ResourceLocationException e) {
+            } catch (IdentifierException e) {
                 LOGGER.error("Failed to load improperly formatted recipe: {}, removing", locStr, e);
             }
         }

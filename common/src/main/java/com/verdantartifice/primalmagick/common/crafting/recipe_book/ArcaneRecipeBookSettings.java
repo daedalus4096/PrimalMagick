@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.crafting.recipe_book;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.nbt.CompoundTag;
 
 import java.util.Map;

@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEn
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

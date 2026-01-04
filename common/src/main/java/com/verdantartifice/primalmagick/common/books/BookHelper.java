@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.books;
 
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;

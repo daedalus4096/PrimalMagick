@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.recipe_book;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeCollection;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.SessionSearchTrees;
 import net.minecraft.client.searchtree.FullTextSearchTree;

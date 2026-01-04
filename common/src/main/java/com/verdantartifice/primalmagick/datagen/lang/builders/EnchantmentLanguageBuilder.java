@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;

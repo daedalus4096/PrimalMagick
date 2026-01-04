@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.books;
 import com.google.common.base.Suppliers;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;

@@ -15,7 +15,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.common.tiles.base.IHasCustomScanContents;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;

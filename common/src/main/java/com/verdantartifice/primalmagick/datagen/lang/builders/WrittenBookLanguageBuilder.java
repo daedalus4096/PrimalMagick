@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 
