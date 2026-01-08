@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import net.minecraft.util.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,12 +15,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.TimeUtil;
+import net.minecraft.util.Util;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -61,7 +62,6 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Definition of a friendly witch entity who will trade with players.  RIP Corspilla.
@@ -73,7 +73,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     private static final Identifier SPEED_MODIFIER_DRINKING_ID = Identifier.withDefaultNamespace("drinking");
     private static final AttributeModifier SPEED_MODIFIER_DRINKING = new AttributeModifier(SPEED_MODIFIER_DRINKING_ID, -0.25, AttributeModifier.Operation.ADD_VALUE);
     private static final EntityDataAccessor<Boolean> DATA_USING_ITEM = SynchedEntityData.defineId(FriendlyWitchEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(FriendlyWitchEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(FriendlyWitchEntity.class, EntityDataSerializers.LONG);
     private static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     private static final List<VillagerTrades.ItemListing> TRADE_LISTINGS = Util.make(new ArrayList<>(), list -> {
         list.add(new ItemsForEmeralds(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), 1, 1, 5));
@@ -81,7 +81,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
         list.add(new ItemsForEmeralds(ItemsPM.SHEEP_TOME.get(), 8, 1, 5));
     });
 
-    protected UUID angerTarget;
+    protected EntityReference<LivingEntity> angerTarget;
     private int usingTime;
     
     public FriendlyWitchEntity(EntityType<? extends FriendlyWitchEntity> type, Level level) {
@@ -106,7 +106,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(DATA_USING_ITEM, false);
-        pBuilder.define(ANGER_TIME, 0);
+        pBuilder.define(ANGER_END_TIME, 0);
     }
 
     @Override
@@ -321,27 +321,27 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.getEntityData().get(ANGER_TIME);
+    public long getPersistentAngerEndTime() {
+        return this.getEntityData().get(ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.getEntityData().set(ANGER_TIME, time);
+    public void setPersistentAngerEndTime(long time) {
+        this.getEntityData().set(ANGER_END_TIME, time);
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID target) {
+    public void setPersistentAngerTarget(EntityReference<LivingEntity> target) {
         this.angerTarget = target;
     }
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
+        this.setTimeToRemainAngry(ANGER_TIME_RANGE.sample(this.random));
     }
 }

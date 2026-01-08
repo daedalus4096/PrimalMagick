@@ -27,6 +27,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
@@ -57,7 +58,7 @@ import java.util.UUID;
 public class PixieHouseEntity extends Mob implements NeutralMob {
     public static final EntityDataAccessor<ItemStack> DATA_HOUSED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.ITEM_STACK);
     public static final EntityDataAccessor<Optional<UUID>> DATA_DEPLOYED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-    public static final EntityDataAccessor<Integer> DATA_ANGER_TIME = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Long> DATA_ANGER_END_TIME = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.LONG);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     public static final long WOBBLE_TIME = 5L;
     private static final byte HIT_EVENT = 32;
@@ -65,7 +66,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     @NotNull private ItemStack housedPixie = ItemStack.EMPTY;
     @Nullable private AbstractGuardianPixieEntity deployedPixieCache;
     @Nullable private LivingEntity target;
-    @Nullable protected UUID angerTarget;
+    @Nullable protected EntityReference<LivingEntity> angerTarget;
     protected int targetTimestamp;
     public long lastHit;
 
@@ -106,7 +107,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
         super.defineSynchedData(pBuilder);
         pBuilder.define(DATA_HOUSED_PIXIE, ItemStack.EMPTY);
         pBuilder.define(DATA_DEPLOYED_PIXIE, Optional.empty());
-        pBuilder.define(DATA_ANGER_TIME, 0);
+        pBuilder.define(DATA_ANGER_END_TIME, 0L);
     }
 
     public ItemStack getHousedPixie() {
@@ -435,28 +436,28 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.entityData.get(DATA_ANGER_TIME);
+    public long getPersistentAngerEndTime() {
+        return this.entityData.get(DATA_ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.entityData.set(DATA_ANGER_TIME, time);
+    public void setPersistentAngerEndTime(long time) {
+        this.entityData.set(DATA_ANGER_END_TIME, time);
     }
 
     @Override
-    public @Nullable UUID getPersistentAngerTarget() {
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(@Nullable UUID target) {
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> target) {
         this.angerTarget = target;
     }
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
+        this.setTimeToRemainAngry(ANGER_TIME_RANGE.sample(this.random));
     }
 
     @Override

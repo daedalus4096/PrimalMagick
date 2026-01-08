@@ -25,6 +25,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
@@ -46,9 +47,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.EnumSet;
-import java.util.UUID;
 
 /**
  * Base definition for a pixie entity.  Follows the player around as a companion.  Has other capabilities
@@ -57,12 +56,12 @@ import java.util.UUID;
  * @author Daedalus4096
  */
 public abstract class AbstractPixieEntity extends AbstractCompanionEntity implements NeutralMob, FlyingAnimal, IPixie {
-    protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(AbstractPixieEntity.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(AbstractPixieEntity.class, EntityDataSerializers.LONG);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     protected static final byte PIXIE_DUST_EVENT = 15;
 
     protected int attackTimer;
-    protected UUID angerTarget;
+    protected EntityReference<LivingEntity> angerTarget;
     protected SpellPackage spellCache;
 
     public AbstractPixieEntity(EntityType<? extends AbstractPixieEntity> type, Level worldIn) {
@@ -70,13 +69,13 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
         this.moveControl = new FlyingMoveControl(this, 20, false);
     }
 
-    @Nonnull
+    @NotNull
     public abstract Source getPixieSource();
     
-    @Nonnull
+    @NotNull
     protected abstract SpawnEggItem getSpawnItem();
     
-    @Nonnull
+    @NotNull
     protected SpellPackage createSpellPackage() {
         // Not all pixie spells need the duration property, but those that don't will ignore it
         return SpellPackage.builder().name("Pixie Bolt")
@@ -85,10 +84,10 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
                 .build();
     }
     
-    @Nonnull
+    @NotNull
     protected abstract AbstractSpellPayload<?> getSpellPayload();
     
-    @Nonnull
+    @NotNull
     protected SpellPackage getSpellPackage() {
         if (this.spellCache == null) {
             this.spellCache = this.createSpellPackage();
@@ -120,7 +119,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     @Override
     protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
-        pBuilder.define(ANGER_TIME, 0);
+        pBuilder.define(ANGER_END_TIME, 0L);
     }
 
     @Override
@@ -189,37 +188,33 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.entityData.get(ANGER_TIME);
+    public long getPersistentAngerEndTime() {
+        return this.entityData.get(ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.entityData.set(ANGER_TIME, time);
+    public void setPersistentAngerEndTime(long time) {
+        this.entityData.set(ANGER_END_TIME, time);
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID target) {
+    public void setPersistentAngerTarget(EntityReference<LivingEntity> target) {
         this.angerTarget = target;
     }
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
+        this.setTimeToRemainAngry(ANGER_TIME_RANGE.sample(this.random));
     }
 
     @Override
     public CompanionType getCompanionType() {
         return CompanionType.PIXIE;
-    }
-
-    public int getAttackTimer() {
-        return this.attackTimer;
     }
 
     @Override
@@ -235,6 +230,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
+    @NotNull
     protected InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         Level level = this.level();
         InteractionResult actionResult = super.mobInteract(player, hand);
@@ -303,13 +299,13 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
 
         @Override
         public boolean canUse() {
-            MoveControl movementcontroller = this.pixie.getMoveControl();
-            if (!movementcontroller.hasWanted()) {
+            MoveControl movementController = this.pixie.getMoveControl();
+            if (!movementController.hasWanted()) {
                 return true;
             } else {
-                double dx = movementcontroller.getWantedX() - this.pixie.getX();
-                double dy = movementcontroller.getWantedY() - this.pixie.getY();
-                double dz = movementcontroller.getWantedZ() - this.pixie.getZ();
+                double dx = movementController.getWantedX() - this.pixie.getX();
+                double dy = movementController.getWantedY() - this.pixie.getY();
+                double dz = movementController.getWantedZ() - this.pixie.getZ();
                 double dist = dx * dx + dy * dy + dz * dz;
                 return dist < 1.0D || dist > 3600.0D;
             }

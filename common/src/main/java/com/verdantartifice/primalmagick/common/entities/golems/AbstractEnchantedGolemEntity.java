@@ -25,6 +25,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
@@ -55,7 +56,6 @@ import org.joml.Math;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
@@ -65,11 +65,11 @@ import java.util.stream.Stream;
  * @author Daedalus4096
  */
 public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEntity implements NeutralMob {
-    protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(AbstractEnchantedGolemEntity.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(AbstractEnchantedGolemEntity.class, EntityDataSerializers.LONG);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
 
     protected int attackTimer;
-    protected UUID angerTarget;
+    protected EntityReference<LivingEntity> angerTarget;
     protected long lastStayChangeTime;
 
     public AbstractEnchantedGolemEntity(EntityType<? extends AbstractEnchantedGolemEntity> type, Level worldIn) {
@@ -106,7 +106,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     @Override
     protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
-        pBuilder.define(ANGER_TIME, 0);
+        pBuilder.define(ANGER_END_TIME, 0L);
     }
 
     @Override
@@ -176,28 +176,28 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.entityData.get(ANGER_TIME);
+    public long getPersistentAngerEndTime() {
+        return this.entityData.get(ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.entityData.set(ANGER_TIME, time);
+    public void setPersistentAngerEndTime(long time) {
+        this.entityData.set(ANGER_END_TIME, time);
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID target) {
+    public void setPersistentAngerTarget(EntityReference<LivingEntity> target) {
         this.angerTarget = target;
     }
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
+        this.setTimeToRemainAngry(ANGER_TIME_RANGE.sample(this.random));
     }
 
     @Override

@@ -56,7 +56,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.EnumSet;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Definition of a guardian pixie that is deployed by a Pixie House in self-defense.
@@ -64,7 +63,7 @@ import java.util.UUID;
  * @author Daedalus4096
  */
 public abstract class AbstractGuardianPixieEntity extends PathfinderMob implements NeutralMob, FlyingAnimal, RangedAttackMob, IPixie {
-    protected static final EntityDataAccessor<Integer> DATA_ANGER_TIME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Long> DATA_ANGER_END_TIME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.LONG);
     protected static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> DATA_HOME = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
     protected static final EntityDataAccessor<String> DATA_SOURCE_TAG = SynchedEntityData.defineId(AbstractGuardianPixieEntity.class, EntityDataSerializers.STRING);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
@@ -73,7 +72,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     @Nullable protected Source source;
     @Nullable protected SpellPackage spellCache;
     protected int attackTimer;
-    @Nullable protected UUID angerTarget;
+    @Nullable protected EntityReference<LivingEntity> angerTarget;
     @Nullable protected PixieHouseEntity homeCache;
 
     protected AbstractGuardianPixieEntity(EntityType<? extends AbstractGuardianPixieEntity> pEntityType, Level pLevel) {
@@ -163,7 +162,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     @Override
     protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
-        pBuilder.define(DATA_ANGER_TIME, 0);
+        pBuilder.define(DATA_ANGER_END_TIME, 0L);
         pBuilder.define(DATA_HOME, Optional.empty());
         pBuilder.define(DATA_SOURCE_TAG, Sources.EARTH.getId().toString());
     }
@@ -209,28 +208,28 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.entityData.get(DATA_ANGER_TIME);
+    public long getPersistentAngerEndTime() {
+        return this.entityData.get(DATA_ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.entityData.set(DATA_ANGER_TIME, time);
+    public void setPersistentAngerEndTime(long time) {
+        this.entityData.set(DATA_ANGER_END_TIME, time);
     }
 
     @Override
-    public @Nullable UUID getPersistentAngerTarget() {
+    public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(@Nullable UUID target) {
+    public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> target) {
         this.angerTarget = target;
     }
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
+        this.setTimeToRemainAngry(ANGER_TIME_RANGE.sample(this.random));
     }
 
     @Override
@@ -474,7 +473,7 @@ public abstract class AbstractGuardianPixieEntity extends PathfinderMob implemen
 
         @Override
         public void start() {
-            this.mob.setPersistentAngerTarget(this.attacked.getUUID());
+            this.mob.setPersistentAngerTarget(EntityReference.of(this.attacked));
             this.mob.setTarget(this.attacked);
             PixieHouseEntity home = this.mob.getHome();
             if (home != null) {
