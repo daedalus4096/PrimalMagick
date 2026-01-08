@@ -13,10 +13,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.scores.PlayerTeam;
@@ -50,7 +50,7 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     public void addAdditionalSaveData(@NotNull ValueOutput output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("CompanionStaying", this.isCompanionStaying());
-        if (this.hasCompanionOwner()) {
+        if (this.getCompanionOwnerReference() != null) {
             this.getCompanionOwnerReference().store(output, "CompanionOwner");
         }
     }
@@ -174,7 +174,7 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     @Override
     public void die(@NotNull DamageSource cause) {
         Level level = this.level();
-        if (level instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getCompanionOwner() instanceof ServerPlayer player) {
+        if (level instanceof ServerLevel serverLevel && serverLevel.getGameRules().get(GameRules.SHOW_DEATH_MESSAGES) && this.getCompanionOwner() instanceof ServerPlayer player) {
             player.displayClientMessage(this.getCombatTracker().getDeathMessage(), false);
         }
         super.die(cause);
