@@ -50,7 +50,7 @@ public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseEntity, Pixie
     @Override
     public void render(PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, PixieHouseEntity pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         ItemStack pixieStack = pLivingEntity.getHousedPixie();
-        if (pixieStack.getItem() instanceof IPixieItem pixieItem && pLivingEntity.getDeployedPixieUUID().isEmpty()) {
+        if (pixieStack.getItem() instanceof IPixieItem pixieItem && pLivingEntity.getDeployedPixieReference().isEmpty()) {
             // Render pixie house occupant if present and not deployed
             PixieRank rank = pixieItem.getPixieRank();
             PixieModel model = rank == PixieRank.MAJESTIC ? this.royalPixieModel : this.basePixieModel;

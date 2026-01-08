@@ -11,8 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -29,7 +27,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -47,17 +44,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class PixieHouseEntity extends Mob implements NeutralMob {
     public static final EntityDataAccessor<ItemStack> DATA_HOUSED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.ITEM_STACK);
-    public static final EntityDataAccessor<Optional<UUID>> DATA_DEPLOYED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    public static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> DATA_DEPLOYED_PIXIE = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
     public static final EntityDataAccessor<Long> DATA_ANGER_END_TIME = SynchedEntityData.defineId(PixieHouseEntity.class, EntityDataSerializers.LONG);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     public static final long WOBBLE_TIME = 5L;
@@ -103,32 +100,33 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(DATA_HOUSED_PIXIE, ItemStack.EMPTY);
         pBuilder.define(DATA_DEPLOYED_PIXIE, Optional.empty());
         pBuilder.define(DATA_ANGER_END_TIME, 0L);
     }
 
+    @NotNull
     public ItemStack getHousedPixie() {
         return this.housedPixie;
     }
 
-    public void setHousedPixie(ItemStack pixie) {
+    public void setHousedPixie(@NotNull ItemStack pixie) {
         this.housedPixie = pixie.copy();
         this.entityData.set(DATA_HOUSED_PIXIE, this.housedPixie);
     }
 
     @NotNull
-    public Optional<UUID> getDeployedPixieUUID() {
+    public Optional<EntityReference<LivingEntity>> getDeployedPixieReference() {
         return this.entityData.get(DATA_DEPLOYED_PIXIE);
     }
 
     @Nullable
     public AbstractGuardianPixieEntity getDeployedPixie() {
-        if (this.deployedPixieCache == null && this.level() instanceof ServerLevel serverLevel) {
+        if (this.deployedPixieCache == null) {
             this.deployedPixieCache = this.entityData.get(DATA_DEPLOYED_PIXIE)
-                    .map(u -> serverLevel.getEntity(u) instanceof AbstractGuardianPixieEntity pixie ? pixie : null)
+                    .map(u -> EntityReference.getLivingEntity(u, this.level()) instanceof AbstractGuardianPixieEntity pixie ? pixie : null)
                     .orElse(null);
         }
         return this.deployedPixieCache;
@@ -136,7 +134,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
 
     public void setDeployedPixie(@NotNull AbstractGuardianPixieEntity pixie) {
         this.deployedPixieCache = pixie;
-        this.entityData.set(DATA_DEPLOYED_PIXIE, Optional.of(pixie.getUUID()));
+        this.entityData.set(DATA_DEPLOYED_PIXIE, Optional.of(EntityReference.of(pixie)));
     }
 
     public void removeDeployedPixie() {
@@ -168,57 +166,38 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     }
 
     @Override
-    public Iterable<ItemStack> getArmorSlots() {
-        return List.of();
-    }
-
-    @Override
-    public ItemStack getItemBySlot(EquipmentSlot equipmentSlot) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack) {
-    }
-
-    @Override
+    @NotNull
     public HumanoidArm getMainArm() {
         return HumanoidArm.RIGHT;
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
-        if (this.level() instanceof ServerLevel serverLevel) {
-            this.readPersistentAngerSaveData(serverLevel, compoundTag);
-            if (compoundTag.hasUUID("DeployedPixie") && serverLevel.getEntity(compoundTag.getUUID("DeployedPixie")) instanceof AbstractGuardianPixieEntity pixie) {
-                this.setDeployedPixie(pixie);
-            }
+    public void readAdditionalSaveData(@NotNull ValueInput input) {
+        Level level = this.level();
+        this.readPersistentAngerSaveData(level, input);
+        if (EntityReference.getLivingEntity(EntityReference.read(input, "DeployedPixie"), level) instanceof AbstractGuardianPixieEntity pixie) {
+            this.setDeployedPixie(pixie);
         }
-        if (compoundTag.contains("HousedPixie", Tag.TAG_COMPOUND)) {
-            this.setHousedPixie(ItemStack.parseOptional(this.registryAccess(), compoundTag.getCompound("HousedPixie")));
-        }
+        input.read("HousedPixie", ItemStack.OPTIONAL_CODEC).ifPresent(this::setHousedPixie);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-        this.addPersistentAngerSaveData(compoundTag);
-        if (!this.housedPixie.isEmpty()) {
-            compoundTag.put("HousedPixie", this.housedPixie.saveOptional(this.registryAccess()));
-        }
-        if (this.deployedPixieCache != null) {
-            compoundTag.putUUID("DeployedPixie", this.deployedPixieCache.getUUID());
-        }
+    public void addAdditionalSaveData(@NotNull ValueOutput output) {
+        this.addPersistentAngerSaveData(output);
+        output.store("HousedPixie", ItemStack.OPTIONAL_CODEC, this.housedPixie);
+        this.getDeployedPixieReference().ifPresent(ref -> ref.store(output, "DeployedPixie"));
     }
 
     public boolean isPushable() {
         return false;
     }
 
-    protected void doPush(Entity pEntity) {
+    protected void doPush(@NotNull Entity pEntity) {
     }
 
     @Override
-    public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
+    @NotNull
+    public InteractionResult interactAt(@NotNull Player pPlayer, @NotNull Vec3 pVec, @NotNull InteractionHand pHand) {
         ItemStack heldStack = pPlayer.getItemInHand(pHand);
         if (heldStack.getItem() instanceof IPixieItem) {
             ItemStack stack = heldStack.copyWithCount(1);
@@ -240,65 +219,59 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     }
 
     @Override
-    public boolean hurt(DamageSource pSource, float pAmount) {
+    public boolean hurtServer(@NotNull ServerLevel serverLevel, @NotNull DamageSource pSource, float pAmount) {
         if (this.isRemoved()) {
             return false;
         } else {
-            if (this.level() instanceof ServerLevel serverLevel) {
-                if (pSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-                    this.kill();
+            if (pSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+                this.kill(serverLevel);
+                return false;
+            } else if (!this.isInvulnerableTo(serverLevel, pSource)) {
+                if (pSource.is(DamageTypeTags.IS_EXPLOSION)) {
+                    this.brokenByAnything(serverLevel, pSource);
+                    this.kill(serverLevel);
                     return false;
-                } else if (!this.isInvulnerableTo(pSource)) {
-                    if (pSource.is(DamageTypeTags.IS_EXPLOSION)) {
-                        this.brokenByAnything(serverLevel, pSource);
-                        this.kill();
-                        return false;
-                    } else if (pSource.is(DamageTypeTagsPM.IGNITES_PIXIE_HOUSES)) {
-                        if (this.isOnFire()) {
-                            this.causeDamage(serverLevel, pSource, 0.15F);
-                        } else {
-                            this.igniteForSeconds(5.0F);
-                        }
+                } else if (pSource.is(DamageTypeTagsPM.IGNITES_PIXIE_HOUSES)) {
+                    if (this.isOnFire()) {
+                        this.causeDamage(serverLevel, pSource, 0.15F);
+                    } else {
+                        this.igniteForSeconds(5.0F);
+                    }
 
-                        return false;
-                    } else if (pSource.is(DamageTypeTagsPM.BURNS_PIXIE_HOUSES) && this.getHealth() > 0.5F) {
-                        this.causeDamage(serverLevel, pSource, 4.0F);
+                    return false;
+                } else if (pSource.is(DamageTypeTagsPM.BURNS_PIXIE_HOUSES) && this.getHealth() > 0.5F) {
+                    this.causeDamage(serverLevel, pSource, 4.0F);
+                    return false;
+                } else {
+                    boolean canBreak = pSource.is(DamageTypeTagsPM.CAN_BREAK_PIXIE_HOUSES);
+                    boolean alwaysKill = pSource.is(DamageTypeTagsPM.ALWAYS_KILLS_PIXIE_HOUSES);
+                    if (!canBreak && !alwaysKill) {
                         return false;
                     } else {
-                        boolean canBreak = pSource.is(DamageTypeTagsPM.CAN_BREAK_PIXIE_HOUSES);
-                        boolean alwaysKill = pSource.is(DamageTypeTagsPM.ALWAYS_KILLS_PIXIE_HOUSES);
-                        if (!canBreak && !alwaysKill) {
-                            return false;
-                        } else {
-                            if (pSource.getEntity() instanceof Player player) {
-                                if (!player.getAbilities().mayBuild) {
-                                    return false;
-                                }
-                            }
-
-                            if (pSource.isCreativePlayer()) {
-                                this.playBrokenSound();
-                                this.showBreakingParticles();
-                                this.kill();
-                                return true;
-                            } else {
-                                long i = serverLevel.getGameTime();
-                                if (i - this.lastHit > WOBBLE_TIME && !alwaysKill) {
-                                    serverLevel.broadcastEntityEvent(this, HIT_EVENT);
-                                    this.gameEvent(GameEvent.ENTITY_DAMAGE, pSource.getEntity());
-                                    this.lastHit = i;
-                                } else {
-                                    this.brokenByPlayer(serverLevel, pSource);
-                                    this.showBreakingParticles();
-                                    this.kill();
-                                }
-
-                                return true;
+                        if (pSource.getEntity() instanceof Player player) {
+                            if (!player.getAbilities().mayBuild) {
+                                return false;
                             }
                         }
+
+                        if (pSource.isCreativePlayer()) {
+                            this.playBrokenSound();
+                            this.showBreakingParticles();
+                            this.kill(serverLevel);
+                        } else {
+                            long i = serverLevel.getGameTime();
+                            if (i - this.lastHit > WOBBLE_TIME && !alwaysKill) {
+                                serverLevel.broadcastEntityEvent(this, HIT_EVENT);
+                                this.gameEvent(GameEvent.ENTITY_DAMAGE, pSource.getEntity());
+                                this.lastHit = i;
+                            } else {
+                                this.brokenByPlayer(serverLevel, pSource);
+                                this.showBreakingParticles();
+                                this.kill(serverLevel);
+                            }
+                        }
+                        return true;
                     }
-                } else {
-                    return false;
                 }
             } else {
                 return false;
@@ -309,9 +282,10 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     @Override
     public void handleEntityEvent(byte pId) {
         if (pId == HIT_EVENT) {
-            if (this.level().isClientSide()) {
-                this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_HIT, this.getSoundSource(), 0.3F, 1.0F, false);
-                this.lastHit = this.level().getGameTime();
+            Level level = this.level();
+            if (level.isClientSide()) {
+                level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_HIT, this.getSoundSource(), 0.3F, 1.0F, false);
+                this.lastHit = level.getGameTime();
             }
         } else {
             super.handleEntityEvent(pId);
@@ -339,7 +313,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
         float newHealth = this.getHealth() - pDamageAmount;
         if (newHealth <= 0.5F) {
             this.brokenByAnything(pLevel, pDamageSource);
-            this.kill();
+            this.kill(pLevel);
         } else {
             this.setHealth(newHealth);
             this.gameEvent(GameEvent.ENTITY_DAMAGE, pDamageSource.getEntity());
@@ -374,39 +348,39 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     }
 
     @Override
-    protected float tickHeadTurn(float pYRot, float pAnimStep) {
+    protected void tickHeadTurn(float pYRot) {
         this.yBodyRotO = this.yRotO;
         this.yBodyRot = this.getYRot();
-        return 0.0F;
     }
 
     @Override
-    public void travel(Vec3 pTravelVector) {
+    public void travel(@NotNull Vec3 pTravelVector) {
         if (this.hasPhysics()) {
             super.travel(pTravelVector);
         }
     }
 
     @Override
-    public void kill() {
-        this.handlePixiesWhenBroken(this.level());
+    public void kill(@NotNull ServerLevel serverLevel) {
+        this.handlePixiesWhenBroken(serverLevel);
         this.remove(RemovalReason.KILLED);
         this.gameEvent(GameEvent.ENTITY_DIE);
     }
 
     @Override
-    public boolean skipAttackInteraction(Entity pEntity) {
+    public boolean skipAttackInteraction(@NotNull Entity pEntity) {
         return pEntity instanceof Player player && !this.level().mayInteract(player, this.blockPosition());
     }
 
     @Override
+    @NotNull
     public LivingEntity.Fallsounds getFallSounds() {
         return new LivingEntity.Fallsounds(SoundEvents.ARMOR_STAND_FALL, SoundEvents.ARMOR_STAND_FALL);
     }
 
     @Override
     @Nullable
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
         return SoundEvents.ARMOR_STAND_HIT;
     }
 
@@ -417,7 +391,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     }
 
     @Override
-    public void thunderHit(ServerLevel pLevel, LightningBolt pLightning) {
+    public void thunderHit(@NotNull ServerLevel pLevel, @NotNull LightningBolt pLightning) {
     }
 
     @Override
@@ -509,7 +483,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
             Vec3 pos = this.getPosition(0F).add(0D, 1.5D, 0D);
             AbstractGuardianPixieEntity pixie = AbstractGuardianPixieEntity.spawn(entityType, entitySource, this, serverLevel, BlockPos.containing(pos));
             this.setDeployedPixie(pixie);
-            this.level().playSound(null, pos.x(), pos.y(), pos.z(), SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+            serverLevel.playSound(null, pos.x(), pos.y(), pos.z(), SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
     }
 
