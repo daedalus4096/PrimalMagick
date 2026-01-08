@@ -32,6 +32,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -149,7 +150,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         
         // Create fuel handler
         retVal.set(FUEL_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(FUEL_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> isFuel(stack))
+                .itemValidFunction((slot, stack) -> this.level != null && isFuel(stack, this.level.fuelValues()))
                 .build());
 
         // Create output handler
@@ -211,7 +212,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
             if (entity.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
                 // If the calcinator isn't burning, but has meltable input in place, light it up
                 if (!entity.isBurning() && entity.canCalcinate(inputStack)) {
-                    entity.burnTime = Services.EVENTS.getBurnTime(fuelStack, null);
+                    entity.burnTime = Services.EVENTS.getBurnTime(fuelStack, null, level.fuelValues());
                     entity.burnTimeTotal = entity.burnTime;
                     if (entity.isBurning()) {
                         shouldMarkDirty = true;
@@ -277,8 +278,8 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
 
     protected abstract int getCookTimeTotal();
 
-    public static boolean isFuel(ItemStack stack) {
-        return Services.EVENTS.getBurnTime(stack, null) > 0;
+    public static boolean isFuel(ItemStack stack, FuelValues fuelValues) {
+        return Services.EVENTS.getBurnTime(stack, null, fuelValues) > 0;
     }
 
     protected boolean canCalcinate(ItemStack inputStack) {
