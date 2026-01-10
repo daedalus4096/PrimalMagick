@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -38,11 +39,10 @@ public abstract class AbstractConjureFluidSpellPayload<T extends AbstractConjure
     
     @Override
     public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
-        if (!(caster instanceof Player)) {
+        if (!(caster instanceof Player player)) {
             return;
         }
-        
-        Player player = (Player)caster;
+
         if (target != null) {
             ItemStack stack = this.getSimulatedItemStack(this.fluid);
             if (target.getType() == HitResult.Type.BLOCK) {
@@ -59,7 +59,7 @@ public abstract class AbstractConjureFluidSpellPayload<T extends AbstractConjure
             } else if (target.getType() == HitResult.Type.ENTITY) {
                 // If the target is an entity, place the fluid at the entity's position
                 BlockHitResult blockTarget = RayTraceUtils.getBlockResultFromEntityResult((EntityHitResult)target);
-                if (world.mayInteract(player, blockTarget.getBlockPos()) && player.mayUseItemAt(blockTarget.getBlockPos(), blockTarget.getDirection(), stack)) {
+                if (blockTarget != null && world.mayInteract(player, blockTarget.getBlockPos()) && player.mayUseItemAt(blockTarget.getBlockPos(), blockTarget.getDirection(), stack)) {
                     // Only place if the caster is allowed to modify the target location
                     this.placeFluid(player, world, blockTarget.getBlockPos(), blockTarget);
                 }
@@ -85,7 +85,7 @@ public abstract class AbstractConjureFluidSpellPayload<T extends AbstractConjure
         boolean isSolid = state.isSolid();
         boolean isReplaceable = state.canBeReplaced();
         if (world.isEmptyBlock(pos) || !isSolid || isReplaceable || (block instanceof LiquidBlockContainer lbc && lbc.canPlaceLiquid(player, world, pos, state, this.fluid))) {
-            if (world.dimensionType().ultraWarm() && this.fluid.is(FluidTags.WATER)) {
+            if (world.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pos) && this.fluid.is(FluidTags.WATER)) {
                 // Do nothing for water in the Nether or similar dimensions
                 return;
             } else if (block instanceof LiquidBlockContainer lbc && this.fluid == Fluids.WATER) {
