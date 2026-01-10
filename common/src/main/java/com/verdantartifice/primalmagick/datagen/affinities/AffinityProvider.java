@@ -20,6 +20,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -38,27 +39,24 @@ public class AffinityProvider implements DataProvider {
     }
 
     @Override
-    public CompletableFuture<?> run(CachedOutput cache) {
+    @NotNull
+    public CompletableFuture<?> run(@NotNull CachedOutput cache) {
         return this.lookupProviderFuture.thenCompose(p -> {
             ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
-            Map<AffinityType, Map<Identifier, IFinishedAffinity>> map = new HashMap<>();
+            Map<AffinityType<?>, Map<Identifier, IFinishedAffinity>> map = new HashMap<>();
             this.registerAffinities(p, affinity -> {
-                if (map.computeIfAbsent(affinity.getType(), (type) -> { return new HashMap<>(); }).put(affinity.getId(), affinity) != null) {
-                    LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
+                if (map.computeIfAbsent(affinity.getType(), type -> new HashMap<>()).put(affinity.getId(), affinity) != null) {
+                    LOGGER.debug("Duplicate affinity in data generation: {}", affinity.getId().toString());
                 }
             });
-            map.entrySet().forEach(typeEntry -> {
-                typeEntry.getValue().entrySet().forEach(affinityEntry -> {
-                    IFinishedAffinity affinity = affinityEntry.getValue();
-                    futuresBuilder.add(DataProvider.saveStable(cache, affinity.getAffinityJson(), this.getPath(this.packOutput, affinity.getType(), affinityEntry.getKey())));
-                });
-            });
+            map.forEach((affinityType, affinityMap) -> affinityMap.forEach((affinityId, affinity) ->
+                    futuresBuilder.add(DataProvider.saveStable(cache, affinity.getAffinityJson(), this.getPath(this.packOutput, affinity.getType(), affinityId)))));
             return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
         });
     }
 
-    private Path getPath(PackOutput output, AffinityType affinityType, Identifier entryLoc) {
-        return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("affinities").resolve(affinityType.getFolder()).resolve(entryLoc.getPath() + ".json");
+    private Path getPath(PackOutput output, AffinityType<?> affinityType, Identifier entryLoc) {
+        return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("affinities").resolve(affinityType.folder()).resolve(entryLoc.getPath() + ".json");
     }
     
     protected void registerAffinities(HolderLookup.Provider lookupProvider, Consumer<IFinishedAffinity> consumer) {
@@ -1156,6 +1154,7 @@ public class AffinityProvider implements DataProvider {
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Primal Magick Affinities";
     }
