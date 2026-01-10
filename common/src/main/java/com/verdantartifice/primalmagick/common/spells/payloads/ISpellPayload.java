@@ -11,9 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Primary interface for a spell payload component.  Spell payloads define the primary effect of the
@@ -31,27 +30,26 @@ public interface ISpellPayload extends ISpellComponent {
      * @param burstPoint the initial impact location of the spell if it has a Burst mod, or null if it does not
      * @param spell the full spell package containing this payload
      * @param world the world in which the payload should be executed
-     * @param caster the player that originally casted the spell
+     * @param caster the player that originally cast the spell
      * @param spellSource the wand or scroll containing the spell package
      * @param projectileEntity the entity carrying this spell payload, if it's a projectile
      */
-    public void execute(@Nullable HitResult target, @Nullable Vec3 burstPoint, @Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, @Nullable Entity projectileEntity);
+    void execute(@Nullable HitResult target, @Nullable Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, @Nullable ItemStack spellSource, @Nullable Entity projectileEntity);
     
     /**
      * Get the primal source of the payload.  Determines the type of mana that must be spent to cast it.
      * 
      * @return the primal source of the payload
      */
-    @Nonnull
-    public Source getSource();
+    @NotNull
+    Source getSource();
     
     /**
      * Get the base mana cost of a spell containing this payload, in whole mana points.
      * 
      * @return the base mana cost of the spell
      */
-    @Nonnull
-    public int getBaseManaCost(SpellPropertyConfiguration properties);
+    int getBaseManaCost(SpellPropertyConfiguration properties);
     
     /**
      * Play the sound event corresponding to this spell payload.
@@ -59,5 +57,5 @@ public interface ISpellPayload extends ISpellComponent {
      * @param world the world in which the sound event should be played
      * @param origin the origin position of the sound to be played
      */
-    public void playSounds(@Nonnull Level world, @Nonnull BlockPos origin);
+    void playSounds(@NotNull Level world, @NotNull BlockPos origin);
 }
