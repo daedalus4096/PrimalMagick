@@ -115,12 +115,10 @@ public class AlchemicalBombItem extends Item {
     public static void registerCreativeTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier) {
         Item item = itemSupplier.get().asItem();
         output.accept(item.getDefaultInstance());    // Add basic water bomb separately
-        params.holders().lookup(Registries.POTION).ifPresent(registryLookup -> {
-            registryLookup.listElements().filter(potionRef -> {
-                return !potionRef.value().getEffects().isEmpty();
-            }).map(potionRef -> {
-                return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionContents.createItemStack(item, potionRef), ConcoctionType.BOMB), FuseType.MEDIUM);
-            }).forEach(output::accept);
-        });
+        params.holders().lookup(Registries.POTION).ifPresent(registryLookup ->
+                registryLookup.listElements()
+                        .filter(potionRef -> !potionRef.value().getEffects().isEmpty())
+                        .map(potionRef -> ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionContents.createItemStack(item, potionRef), ConcoctionType.BOMB), FuseType.MEDIUM))
+                        .forEach(output::accept));
     }
 }
