@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.LevelTimeAccess;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.NotNull;
@@ -19,19 +19,10 @@ public interface IPhasingBlock {
      * Get the current phase of the block based on the current game time.
      *
      * @param level the game world
+     * @param pos the position of the block
      * @return the block's current phase
      */
-    TimePhase getCurrentPhase(@NotNull LevelTimeAccess level);
-
-    /**
-     * Determine whether the given level object allows access to the necessary time data to safely phase the block.
-     *
-     * @param level the game world
-     * @return whether the level provides access to the necessary time data
-     */
-    default boolean canPhase(@NotNull LevelReader level) {
-        return level instanceof LevelTimeAccess;
-    }
+    TimePhase getCurrentPhase(@NotNull LevelReader level, @NotNull BlockPos pos);
 
     /**
      * Update the time phase of the given block state based on the given level's current time, if the given level
@@ -39,14 +30,13 @@ public interface IPhasingBlock {
      *
      * @param state the block state to be updated
      * @param level the game world
+     * @param pos the position of the block
      * @return the new block state
      */
-    default BlockState updateBlockPhase(@NotNull BlockState state, @NotNull LevelReader level) {
-        if (level instanceof LevelTimeAccess timeAccess) {
-            TimePhase newPhase = this.getCurrentPhase(timeAccess);
-            if (newPhase != state.getValue(PHASE)) {
-                state = state.setValue(PHASE, newPhase);
-            }
+    default BlockState updateBlockPhase(@NotNull BlockState state, @NotNull LevelReader level, @NotNull BlockPos pos) {
+        TimePhase newPhase = this.getCurrentPhase(level, pos);
+        if (newPhase != state.getValue(PHASE)) {
+            state = state.setValue(PHASE, newPhase);
         }
         return state;
     }

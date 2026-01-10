@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.blockstates.properties;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelTimeAccess;
+import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.level.LevelReader;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Representation of the current phase of a block that phases in and out over time.
@@ -23,8 +25,15 @@ public enum TimePhase implements StringRepresentable {
         this.light = light;
     }
     
-    public static TimePhase getSunPhase(LevelTimeAccess world) {
-        float angle = world.getTimeOfDay(1.0F);
+    public static TimePhase getSunPhase(@NotNull LevelReader world, @NotNull BlockPos pos) {
+        return getPhaseFromAngle(world.environmentAttributes().getValue(EnvironmentAttributes.SUN_ANGLE, pos));
+    }
+    
+    public static TimePhase getMoonPhase(@NotNull LevelReader world, @NotNull BlockPos pos) {
+        return getPhaseFromAngle(world.environmentAttributes().getValue(EnvironmentAttributes.MOON_ANGLE, pos));
+    }
+
+    private static TimePhase getPhaseFromAngle(float angle) {
         if (angle < 0.1875F) {
             return FULL;    // Afternoon
         } else if (angle < 0.25F) {
@@ -42,31 +51,13 @@ public enum TimePhase implements StringRepresentable {
         }
     }
     
-    public static TimePhase getMoonPhase(LevelTimeAccess world) {
-        float angle = world.getTimeOfDay(1.0F);
-        if (angle < 0.1875F) {
-            return FADED;   // Afternoon
-        } else if (angle < 0.25F) {
-            return WANING;  // Just before sunset
-        } else if (angle < 0.3125F) {
-            return WAXING;  // Just after sunset
-        } else if (angle < 0.6875F) {
-            return FULL;    // Night
-        } else if (angle < 0.75F) {
-            return WAXING;  // Just before sunrise
-        } else if (angle < 0.8125F) {
-            return WANING;  // Just after sunrise
-        } else {
-            return FADED;   // Morning
-        }
-    }
-    
     @Override
     public String toString() {
         return this.name;
     }
 
     @Override
+    @NotNull
     public String getSerializedName() {
         return this.name;
     }

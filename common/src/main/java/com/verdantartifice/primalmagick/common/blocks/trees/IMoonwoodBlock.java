@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
-import net.minecraft.world.level.LevelTimeAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -11,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface IMoonwoodBlock extends IPhasingBlock {
     @Override
-    default TimePhase getCurrentPhase(@NotNull LevelTimeAccess level) {
-        return TimePhase.getMoonPhase(level);
+    default TimePhase getCurrentPhase(@NotNull LevelReader level, @NotNull BlockPos pos) {
+        return TimePhase.getMoonPhase(level, pos);
     }
 }

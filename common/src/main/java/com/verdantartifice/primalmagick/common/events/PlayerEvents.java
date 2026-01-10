@@ -256,15 +256,15 @@ public class PlayerEvents {
             
             // If the player is working on the Sun Source research, check if they're in the desert during the daytime
             if (SOURCE_SUN_START.isKnownBy(player) && !SOURCE_SUN_END.isKnownBy(player)) {
-                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SUN)) {
+                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level, player.blockPosition()) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SUN)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_SUN);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
-            // If the player is working on the Moon Source research, check if they're in the forest during the night-time
+            // If the player is working on the Moon Source research, check if they're in the forest during the nighttime
             if (SOURCE_MOON_START.isKnownBy(player) && !SOURCE_MOON_END.isKnownBy(player)) {
-                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_MOON)) {
+                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level, player.blockPosition()) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_MOON)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_MOON);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }

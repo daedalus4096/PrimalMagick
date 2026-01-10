@@ -51,7 +51,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IPhasi
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Set the block's phase upon placement
-        TimePhase phase = this.getCurrentPhase(context.getLevel());
+        TimePhase phase = this.getCurrentPhase(context.getLevel(), context.getClickedPos());
         return updateDistance(this.defaultBlockState().setValue(PHASE, phase).setValue(PERSISTENT, Boolean.TRUE), context.getLevel(), context.getClickedPos());
     }
     
@@ -69,7 +69,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IPhasi
         }
 
         // Periodically check to see if the block's phase needs to be updated
-        TimePhase newPhase = this.getCurrentPhase(worldIn);
+        TimePhase newPhase = this.getCurrentPhase(worldIn, pos);
         if (newPhase != state.getValue(PHASE)) {
             worldIn.setBlock(pos, state.setValue(PHASE, newPhase), Block.UPDATE_ALL);
         }
@@ -98,11 +98,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IPhasi
 
         // Immediately check to see if the block's phase needs to be updated when one of its neighbors changes
         BlockState newState = super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
-        if (this.canPhase(level)) {
-            newState = this.updateBlockPhase(newState, level);
-        } else {
-            LOGGER.warn("Attempting to change time phase with incompatible level type {}", level);
-        }
+        newState = this.updateBlockPhase(newState, level, pos);
         return newState;
     }
     

@@ -40,7 +40,7 @@ public abstract class AbstractPhasingStairsBlock extends StairBlock implements I
     public BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
         // Set the block's phase upon placement
         BlockState state = super.getStateForPlacement(context);
-        TimePhase phase = this.getCurrentPhase(context.getLevel());
+        TimePhase phase = this.getCurrentPhase(context.getLevel(), context.getClickedPos());
         return state.setValue(PHASE, phase);
     }
     
@@ -48,7 +48,7 @@ public abstract class AbstractPhasingStairsBlock extends StairBlock implements I
     public void randomTick(@NotNull BlockState state, @NotNull ServerLevel worldIn, @NotNull BlockPos pos, @NotNull RandomSource random) {
         // Periodically check to see if the block's phase needs to be updated
         super.randomTick(state, worldIn, pos, random);
-        TimePhase newPhase = this.getCurrentPhase(worldIn);
+        TimePhase newPhase = this.getCurrentPhase(worldIn, pos);
         if (newPhase != state.getValue(PHASE)) {
             worldIn.setBlock(pos, state.setValue(PHASE, newPhase), Block.UPDATE_ALL);
         }
@@ -61,11 +61,7 @@ public abstract class AbstractPhasingStairsBlock extends StairBlock implements I
                                   @NotNull RandomSource random) {
         // Immediately check to see if the block's phase needs to be updated when one of its neighbors changes
         BlockState newState = super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
-        if (this.canPhase(level)) {
-            newState = this.updateBlockPhase(newState, level);
-        } else {
-            LOGGER.warn("Attempting to change time phase with incompatible level type {}", level);
-        }
+        newState = this.updateBlockPhase(newState, level, pos);
         return newState;
     }
 }
