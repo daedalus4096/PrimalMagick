@@ -20,7 +20,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
@@ -40,7 +40,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
- * Definition for a thrown alchemcial bomb entity.  Detonates after a short time and applies a loaded
+ * Definition for a thrown alchemical bomb entity.  Detonates after a short time and applies a loaded
  * potion effect to all living entities in range.
  * 
  * @author Daedalus4096
