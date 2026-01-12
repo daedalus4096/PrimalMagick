@@ -62,24 +62,25 @@ public class BlockIngredient implements Predicate<Block> {
 
     @Override
     public boolean test(@Nullable Block testBlock) {
-        if (testBlock == null) {
-            return false;
-        } else {
+        if (testBlock != null) {
             this.determineMatchingBlocks();
             for (Block block : this.matchingBlocks) {
                 if (testBlock == block) {
                     return true;
                 }
             }
-            return false;
         }
+        return false;
     }
     
     private static void toNetwork(RegistryFriendlyByteBuf buf, BlockIngredient ing) {
         ing.determineMatchingBlocks();
         buf.writeVarInt(ing.matchingBlocks.length);
         for (int index = 0; index < ing.matchingBlocks.length; index++) {
-            buf.writeResourceLocation(Services.BLOCKS_REGISTRY.getKey(ing.matchingBlocks[index]));
+            Identifier identifier = Services.BLOCKS_REGISTRY.getKey(ing.matchingBlocks[index]);
+            if (identifier != null) {
+                buf.writeIdentifier(identifier);
+            }
         }
     }
     
@@ -111,7 +112,7 @@ public class BlockIngredient implements Predicate<Block> {
     private static BlockIngredient fromNetwork(RegistryFriendlyByteBuf buf) {
         int size = buf.readVarInt();
         return fromBlockListStream(Stream.generate(() -> {
-            Identifier loc = buf.readResourceLocation();
+            Identifier loc = buf.readIdentifier();
             return new BlockIngredient.SingleBlockValue(Services.BLOCKS_REGISTRY.get(loc));
         }).limit(size));
     }
@@ -152,9 +153,8 @@ public class BlockIngredient implements Predicate<Block> {
     }
     
     protected record SingleBlockValue(Block block) implements BlockIngredient.Value {
-        protected static final Codec<BlockIngredient.SingleBlockValue> CODEC = RecordCodecBuilder.create(instance -> {
-            return instance.group(CodecUtils.BLOCK_NONAIR_CODEC.fieldOf("block").forGetter(sbl -> sbl.block)).apply(instance, BlockIngredient.SingleBlockValue::new);
-        });
+        protected static final Codec<BlockIngredient.SingleBlockValue> CODEC = RecordCodecBuilder.create(instance ->
+                instance.group(CodecUtils.BLOCK_NONAIR_CODEC.fieldOf("block").forGetter(sbl -> sbl.block)).apply(instance, SingleBlockValue::new));
         
         @Override
         public Collection<Block> getBlocks() {
@@ -163,9 +163,8 @@ public class BlockIngredient implements Predicate<Block> {
     }
     
     protected record TagValue(TagKey<Block> tag) implements BlockIngredient.Value {
-        protected static final Codec<BlockIngredient.TagValue> CODEC = RecordCodecBuilder.create(instance -> {
-            return instance.group(TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(tl -> tl.tag)).apply(instance, BlockIngredient.TagValue::new);
-        });
+        protected static final Codec<BlockIngredient.TagValue> CODEC = RecordCodecBuilder.create(instance ->
+                instance.group(TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(tl -> tl.tag)).apply(instance, TagValue::new));
         
         @Override
         public Collection<Block> getBlocks() {
