@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.google.common.collect.ImmutableSet;
 import com.mojang.logging.LogUtils;
-import CriteriaTriggersPM;
+import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
