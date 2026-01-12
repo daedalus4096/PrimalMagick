@@ -85,7 +85,7 @@ public class CombatEvents {
                         Arrays.asList(targetEntity, attacker), LivingEntity.class, 4.0D, EntitySelectorsPM.validHellishChainTarget(attacker));
                 if (!targets.isEmpty()) {
                     LivingEntity target = targets.getFirst();
-                    target.hurt(DamageSourcesPM.hellishChain(attackerLevel.registryAccess(), attacker), amount / 2.0F);
+                    target.hurtServer(serverLevel, DamageSourcesPM.hellishChain(attackerLevel.registryAccess(), attacker), amount / 2.0F);
                     PacketHandler.sendToAllAround(new SpellBoltPacket(targetEntity.getEyePosition(1.0F), target.getEyePosition(1.0F), Sources.INFERNAL.getColor()),
                             serverLevel, targetEntity.blockPosition(), 64.0D);
                     attackerLevel.playSound(null, targetEntity.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attackerLevel.random.nextGaussian() * 0.05D));
@@ -212,8 +212,8 @@ public class CombatEvents {
                     entity.getMaxHealth() / 20.0F;
             int wholeGems = Mth.floor(gems);
             int slivers = Mth.floor(Mth.frac(gems) * 10.0F);
-            Containers.dropItemStack(entity.getCommandSenderWorld(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsPM.SOUL_GEM.get(), wholeGems));
-            Containers.dropItemStack(entity.getCommandSenderWorld(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), slivers));
+            Containers.dropItemStack(entity.level(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsPM.SOUL_GEM.get(), wholeGems));
+            Containers.dropItemStack(entity.level(), entity.getX(), entity.getY(), entity.getZ(), new ItemStack(ItemsPM.SOUL_GEM_SLIVER.get(), slivers));
         }
 
         // Do not cancel the event
@@ -248,11 +248,7 @@ public class CombatEvents {
     }
     
     public static boolean isPotionApplicable(LivingEntity livingEntity, MobEffectInstance effectInstance) {
-        if (effectInstance.getEffect().is(EffectsPM.BLEEDING.getHolder()) && livingEntity.isInvertedHealAndHarm()) {
-            // The undead can't bleed
-            return false;
-        } else {
-            return true;
-        }
+        // The undead can't bleed
+        return !effectInstance.getEffect().is(EffectsPM.BLEEDING.getKey()) || !livingEntity.isInvertedHealAndHarm();
     }
 }
