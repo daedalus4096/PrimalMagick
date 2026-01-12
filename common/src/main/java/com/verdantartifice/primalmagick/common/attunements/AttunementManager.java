@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.attunements;
 
-import CriteriaTriggersPM;
+import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -272,12 +272,14 @@ public class AttunementManager {
      * @param deltas the amounts of change to apply, may be negative
      */
     public static void incrementAttunement(@Nullable Player player, @Nullable AttunementType type, @Nullable SourceList deltas) {
-        SourceList.Builder newValues = SourceList.builder();
-        for (Source source : deltas.getSources()) {
-            int oldValue = getAttunement(player, source, type);
-            newValues.with(source, oldValue + deltas.getAmount(source));
+        if (deltas != null) {
+            SourceList.Builder newValues = SourceList.builder();
+            for (Source source : deltas.getSources()) {
+                int oldValue = getAttunement(player, source, type);
+                newValues.with(source, oldValue + deltas.getAmount(source));
+            }
+            setAttunement(player, type, newValues.build());
         }
-        setAttunement(player, type, newValues.build());
     }
     
     /**
@@ -300,7 +302,7 @@ public class AttunementManager {
      */
     public static void removeAllAttributeModifiers(@Nullable Player player) {
         if (player instanceof ServerPlayer) {
-            MODIFIERS.stream().forEach(modifier -> modifier.removeFromEntity(player));
+            MODIFIERS.forEach(modifier -> modifier.removeFromEntity(player));
         }
     }
     
