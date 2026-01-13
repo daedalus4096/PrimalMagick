@@ -20,10 +20,11 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -47,9 +48,10 @@ public class EntityEvents {
         // An Enderward must cover the entire vertical space within its blocked XZ region, to prevent the case where a
         // creature attempts to teleport significantly above or below the ward and is redirected to a valid block inside
         // the ward's range by LivingEntity#randomTeleport.
+        Level level = entity.level();
         AABB searchAABB = new AABB(BlockPos.containing(target)).inflate(EnderwardBlock.EFFECT_RADIUS)
-                .setMinY(entity.level().getMinBuildHeight()).setMaxY(entity.level().getMaxBuildHeight());
-        if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> entity.level().getBlockState(pos).is(BlocksPM.ENDERWARD.get()))) {
+                .setMinY(level.getMinY()).setMaxY(level.getMaxY());
+        if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> level.getBlockState(pos).is(BlocksPM.ENDERWARD.get()))) {
             if (entity instanceof Player player) {
                 player.displayClientMessage(Component.translatable("event.primalmagick.enderward.block").withStyle(ChatFormatting.RED), true);
             }
@@ -86,9 +88,9 @@ public class EntityEvents {
         int delta = maxDuration - currentDuration;
         int enchantLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.BULWARK, entity.registryAccess());
         if (stack.getItem() instanceof ShieldItem && delta > 0 && delta % 5 == 0 && enchantLevel > 0) {
-            MobEffectInstance effectInstance = entity.getEffect(MobEffects.DAMAGE_RESISTANCE);
+            MobEffectInstance effectInstance = entity.getEffect(MobEffects.RESISTANCE);
             int amplifier = (effectInstance == null) ? 0 : Mth.clamp(1 + effectInstance.getAmplifier(), 0, enchantLevel - 1);
-            entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 10, amplifier));
+            entity.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 10, amplifier));
         }
     }
     
