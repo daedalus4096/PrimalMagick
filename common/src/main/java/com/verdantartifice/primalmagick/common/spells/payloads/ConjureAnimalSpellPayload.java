@@ -15,17 +15,16 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertyConfiguration
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
@@ -33,6 +32,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -120,11 +120,12 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload<ConjureAnima
         // Get a random entity type for either land or water, depending on the fluid state of the target location
         EntityType<?> entityType = state.is(FluidTags.WATER) ? WATER_ANIMALS.getRandom(world.random) : LAND_ANIMALS.getRandom(world.random);
         if (entityType != null && world instanceof ServerLevel serverWorld) {
-            entityType.spawn(serverWorld, null, null, pos, MobSpawnType.MOB_SUMMONED, false, false);
+            entityType.spawn(serverWorld, null, null, pos, EntitySpawnReason.MOB_SUMMONED, false, false);
         }
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.BLOOD;
     }
@@ -135,7 +136,7 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload<ConjureAnima
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundsPM.EGG_CRACK.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
