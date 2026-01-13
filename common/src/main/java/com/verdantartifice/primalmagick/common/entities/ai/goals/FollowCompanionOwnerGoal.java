@@ -20,7 +20,7 @@ import java.util.EnumSet;
  * AI goal for a companion to follow its owner.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.entity.ai.goal.FollowOwnerGoal}
+ * @see net.minecraft.world.entity.ai.goal.FollowMobGoal
  */
 public class FollowCompanionOwnerGoal extends Goal {
     protected final AbstractCompanionEntity entity;
@@ -123,7 +123,7 @@ public class FollowCompanionOwnerGoal extends Goal {
         } else if (!this.isTeleportFriendlyBlock(new BlockPos(x, y, z))) {
             return false;
         } else {
-            this.entity.moveTo((double)x + 0.5D, (double)y, (double)z + 0.5D, this.entity.getYRot(), this.entity.getXRot());
+            this.entity.snapTo((double)x + 0.5D, y, (double)z + 0.5D, this.entity.getYRot(), this.entity.getXRot());
             this.navigator.stop();
             return true;
         }
