@@ -17,8 +17,8 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap.Builder;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -306,7 +306,7 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+    protected void applyImplicitComponents(@NotNull DataComponentGetter pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
         pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
@@ -317,8 +317,9 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
         pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag pTag) {
-        pTag.remove("ManaStorage");
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("ManaStorage");
     }
 }
