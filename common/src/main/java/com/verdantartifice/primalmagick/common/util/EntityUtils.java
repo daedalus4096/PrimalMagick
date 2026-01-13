@@ -13,7 +13,7 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -43,10 +43,10 @@ public class EntityUtils {
     @Nonnull
     public static ItemStack getEntityItemStack(Entity entity) {
         ItemStack stack = ItemStack.EMPTY;
-        if (entity instanceof ItemEntity) {
-            stack = ((ItemEntity)entity).getItem();
-        } else if (entity instanceof Boat) {
-            stack = new ItemStack(((Boat)entity).getDropItem());
+        if (entity instanceof ItemEntity itemEntity) {
+            stack = itemEntity.getItem();
+        } else if (entity instanceof AbstractBoat boat) {
+            stack = new ItemStack(boat.getDropItem());
         } else if (entity.getType().equals(EntityType.ITEM_FRAME)) {
             stack = new ItemStack(Items.ITEM_FRAME);
         } else if (entity.getType().equals(EntityType.ARMOR_STAND)) {
