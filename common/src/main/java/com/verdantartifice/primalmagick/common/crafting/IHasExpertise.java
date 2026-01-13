@@ -6,10 +6,12 @@ import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Util;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.crafting.Recipe;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.HashSet;
@@ -90,7 +92,7 @@ public interface IHasExpertise extends IHasRequirement {
      * @param registryAccess a registry access object
      * @return the recipe's research discipline, if any
      */
-    default Optional<ResearchDisciplineKey> getResearchDiscipline(RegistryAccess registryAccess, Identifier recipeId) {
+    default Optional<ResearchDisciplineKey> getResearchDiscipline(RegistryAccess registryAccess, ResourceKey<Recipe<?>> recipeId) {
         return this.getResearchDisciplineOverride().or(() -> {
             return this.getRequirement().flatMap(req -> {
                 Set<ResearchDisciplineKey> foundDisciplines = new HashSet<>();

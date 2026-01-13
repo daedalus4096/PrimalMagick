@@ -5,7 +5,9 @@ import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.Recipe;
 
 import javax.annotation.Nullable;
 
@@ -57,7 +59,7 @@ public interface IPlayerStats extends INBTSerializablePM<CompoundTag> {
      * @param recipeId the ID of the recipe to be queried
      * @return whether the player has crafted the given recipe before
      */
-    boolean isRecipeCrafted(@Nullable Identifier recipeId);
+    boolean isRecipeCrafted(@Nullable ResourceKey<Recipe<?>> recipeId);
     
     /**
      * Determine whether the player has crafted the given recipe group before, for the purposes of bonus expertise.
@@ -80,7 +82,7 @@ public interface IPlayerStats extends INBTSerializablePM<CompoundTag> {
      * 
      * @param recipeId the ID of the recipe to be updated
      */
-    void setRecipeCrafted(@Nullable Identifier recipeId);
+    void setRecipeCrafted(@Nullable ResourceKey<Recipe<?>> recipeId);
     
     /**
      * Mark the given recipe group as having been crafted, and thus ineligible for further bonus expertise.

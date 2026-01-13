@@ -140,13 +140,14 @@ public class ExpertiseManager {
      */
     public static void awardExpertise(@Nullable Player player, @Nullable RecipeHolder<?> recipeHolder) {
         if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
-            expRecipe.getResearchDiscipline(player.level().registryAccess(), recipeHolder.id()).ifPresent(discKey -> {
+            Level level = player.level();
+            expRecipe.getResearchDiscipline(level.registryAccess(), recipeHolder.id()).ifPresent(discKey -> {
                 // Award base expertise for this recipe to the player's discipline score
-                incrementValue(player, discKey, expRecipe.getExpertiseReward(player.level().registryAccess()));
+                incrementValue(player, discKey, expRecipe.getExpertiseReward(level.registryAccess()));
                 
                 // Award bonus expertise for this recipe to the player's discipline score if eligible, then mark it as having been crafted
                 if (isBonusEligible(player, recipeHolder)) {
-                    incrementValue(player, discKey, expRecipe.getBonusExpertiseReward(player.level().registryAccess()));
+                    incrementValue(player, discKey, expRecipe.getBonusExpertiseReward(level.registryAccess()));
                     markCrafted(player, recipeHolder);
                 }
             });
@@ -185,8 +186,12 @@ public class ExpertiseManager {
     }
     
     public static boolean isBonusEligible(Player player, Holder<Enchantment> enchantment) {
-        Identifier enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
-        return player != null && enchKey != null && Services.CAPABILITIES.stats(player).map(stats -> !stats.isRuneEnchantmentCrafted(enchKey)).orElse(false);
+        if (player == null) {
+            return false;
+        } else {
+            Identifier enchKey = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
+            return enchKey != null && Services.CAPABILITIES.stats(player).map(stats -> !stats.isRuneEnchantmentCrafted(enchKey)).orElse(false);
+        }
     }
     
     /**

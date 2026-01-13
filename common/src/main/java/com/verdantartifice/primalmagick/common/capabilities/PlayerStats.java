@@ -11,7 +11,9 @@ import net.minecraft.nbt.LongArrayTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.Recipe;
 
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerStats implements IPlayerStats {
     private final Map<Identifier, Integer> stats = new ConcurrentHashMap<>();     // Map of stat locations to values
     private final Set<Long> discoveredShrines = ConcurrentHashMap.newKeySet();          // Set of long-encoded block positions of shrine locations
-    private final Set<Identifier> craftedRecipes = ConcurrentHashMap.newKeySet(); // Set of IDs of expertise-eligible recipes crafted by the player
+    private final Set<ResourceKey<Recipe<?>>> craftedRecipes = ConcurrentHashMap.newKeySet(); // Set of IDs of expertise-eligible recipes crafted by the player
     private final Set<Identifier> craftedGroups = ConcurrentHashMap.newKeySet();  // Set of IDs of expertise-eligible recipe groups crafted by the player
     private final Set<Identifier> craftedEnchs = ConcurrentHashMap.newKeySet();   // Set of IDs of expertise-eligible rune enchantments crafted by the player
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
@@ -40,7 +42,7 @@ public class PlayerStats implements IPlayerStats {
             if (entry != null && entry.getKey() != null && entry.getValue() != null) {
                 CompoundTag tag = new CompoundTag();
                 tag.putString("Key", entry.getKey().toString());
-                tag.putInt("Value", entry.getValue().intValue());
+                tag.putInt("Value", entry.getValue());
                 statList.add(tag);
             }
         }
@@ -50,13 +52,13 @@ public class PlayerStats implements IPlayerStats {
         long[] locs = new long[this.discoveredShrines.size()];
         int index = 0;
         for (Long loc : this.discoveredShrines) {
-            locs[index++] = loc.longValue();
+            locs[index++] = loc;
         }
         rootTag.put("ShrineLocations", new LongArrayTag(locs));
         
         // Serialize crafted recipe IDs
         ListTag recipeList = new ListTag();
-        for (Identifier recipeId : this.craftedRecipes) {
+        for (ResourceKey<Recipe<?>> recipeId : this.craftedRecipes) {
             recipeList.add(StringTag.valueOf(recipeId.toString()));
         }
         rootTag.put("CraftedRecipes", recipeList);
@@ -101,7 +103,7 @@ public class PlayerStats implements IPlayerStats {
         // Deserialize discovered shrine locations
         long[] locs = nbt.getLongArray("ShrineLocations");
         for (long loc : locs) {
-            this.discoveredShrines.add(Long.valueOf(loc));
+            this.discoveredShrines.add(loc);
         }
         
         // Deserialize crafted recipe IDs
@@ -140,14 +142,14 @@ public class PlayerStats implements IPlayerStats {
         if (stat == null) {
             return 0;
         } else {
-            return this.stats.getOrDefault(stat.key(), Integer.valueOf(0)).intValue();
+            return this.stats.getOrDefault(stat.key(), 0);
         }
     }
 
     @Override
     public void setValue(Stat stat, int value) {
         if (stat != null) {
-            this.stats.put(stat.key(), Integer.valueOf(value));
+            this.stats.put(stat.key(), value);
         }
     }
 
@@ -156,19 +158,19 @@ public class PlayerStats implements IPlayerStats {
         if (pos == null) {
             return false;
         } else {
-            return this.discoveredShrines.contains(Long.valueOf(pos.asLong()));
+            return this.discoveredShrines.contains(pos.asLong());
         }
     }
 
     @Override
     public void setLocationDiscovered(BlockPos pos) {
         if (pos != null) {
-            this.discoveredShrines.add(Long.valueOf(pos.asLong()));
+            this.discoveredShrines.add(pos.asLong());
         }
     }
 
     @Override
-    public boolean isRecipeCrafted(Identifier recipeId) {
+    public boolean isRecipeCrafted(ResourceKey<Recipe<?>> recipeId) {
         return this.craftedRecipes.contains(recipeId);
     }
 
@@ -183,7 +185,7 @@ public class PlayerStats implements IPlayerStats {
     }
 
     @Override
-    public void setRecipeCrafted(Identifier recipeId) {
+    public void setRecipeCrafted(ResourceKey<Recipe<?>> recipeId) {
         this.craftedRecipes.add(recipeId);
     }
 
