@@ -40,18 +40,18 @@ public class DataPackUtils {
         {
             "pack": {
               "description": "Primal Magick ModPack Base Item Affinities",
-              "pack_format": %d
+              "pack_format": %s
             }
         }
-    """.formatted(SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
+    """.formatted(SharedConstants.getCurrentVersion().packVersion(PackType.SERVER_DATA));
 
     // I'm also assuming that explicitly setting 0 for things is free, so if people use these templates without cleaning them up
     // noone'll care.
     // I'm also also assuming that if you're writing a modpack you don't care about spoilers. 
     // SPOILERS:
     static String itemTemplate = """
-            { "type": "item", 
-              "set": { 
+            { "type": "item",
+              "set": {
                 "primalmagick:earth": 0,
                 "primalmagick:sun": 0,
                 "primalmagick:moon": 0,
@@ -61,14 +61,14 @@ public class DataPackUtils {
                 "primalmagick:infernal": 0,
                 "primalmagick:void": 0,
                 "primalmagick:hallowed": 0
-              }, 
+              },
               "target": "%s"
             }
         """;
 
     static String entityTemplate = """
-            { "type": "entity_type", 
-              "values": { 
+            { "type": "entity_type",
+              "values": {
                 "primalmagick:earth": 0,
                 "primalmagick:sun": 0,
                 "primalmagick:moon": 0,
@@ -78,7 +78,7 @@ public class DataPackUtils {
                 "primalmagick:infernal": 0,
                 "primalmagick:void": 0,
                 "primalmagick:hallowed": 0
-              }, 
+              },
               "target": "%s"
             }
         """;
