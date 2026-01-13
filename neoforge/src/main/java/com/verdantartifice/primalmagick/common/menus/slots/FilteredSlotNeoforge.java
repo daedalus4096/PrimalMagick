@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -36,7 +35,7 @@ public class FilteredSlotNeoforge extends SlotItemHandler implements IHasTooltip
         this.backgrounds = properties.getBackgrounds();
         
         // Set the default background to the first active one, if any
-        this.getActiveBackgrounds().stream().findFirst().ifPresent(loc -> this.setBackground(InventoryMenu.BLOCK_ATLAS, loc));
+        this.getActiveBackgrounds().stream().findFirst().ifPresent(this::setBackground);
     }
 
     @Override
@@ -64,7 +63,7 @@ public class FilteredSlotNeoforge extends SlotItemHandler implements IHasTooltip
         List<Identifier> active = this.getActiveBackgrounds();
         if (!active.isEmpty()) {
             int backgroundIndex = (this.ticks++ / BACKGROUND_CHANGE_TICK_RATE) % active.size();
-            this.setBackground(InventoryMenu.BLOCK_ATLAS, active.get(backgroundIndex));
+            this.setBackground(active.get(backgroundIndex));
         }
     }
     
