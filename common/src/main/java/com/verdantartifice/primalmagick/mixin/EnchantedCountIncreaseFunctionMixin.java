@@ -57,11 +57,11 @@ public abstract class EnchantedCountIncreaseFunctionMixin extends LootItemCondit
 
     @Inject(method = "run", at = @At("HEAD"), cancellable = true)
     protected void onRun(ItemStack pStack, LootContext pContext, CallbackInfoReturnable<ItemStack> cir) {
-        DamageSource damageSource = pContext.getParamOrNull(LootContextParams.DAMAGE_SOURCE);
+        DamageSource damageSource = pContext.getOptionalParameter(LootContextParams.DAMAGE_SOURCE);
         if (this.enchantment.is(Enchantments.LOOTING) &&
                 damageSource != null &&
                 (damageSource.is(DamageTypeTagsPM.IS_SORCERY) || damageSource.is(DamageTypeTags.IS_PLAYER_ATTACK)) &&
-                pContext.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity livingEntity) {
+                pContext.getOptionalParameter(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity livingEntity) {
             // Use the better of Treasure or Looting when doing wand or staff damage
             Holder<Enchantment> treasureHolder = pContext.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.TREASURE);
             int enchantmentLevel = Math.max(EnchantmentHelper.getEnchantmentLevel(this.enchantment, livingEntity),
