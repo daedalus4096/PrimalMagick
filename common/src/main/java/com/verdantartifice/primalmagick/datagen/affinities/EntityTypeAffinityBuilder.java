@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.affinities;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
+import com.verdantartifice.primalmagick.common.affinities.AffinityTypesPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -36,10 +37,10 @@ public class EntityTypeAffinityBuilder {
     
     private void validate(Identifier id) {
         if (this.targetId == null) {
-            throw new IllegalStateException("No target entity type for affinity " + id.toString());
+            throw new IllegalStateException("No target entity type for affinity " + id);
         }
         if (!Services.ENTITY_TYPES_REGISTRY.containsKey(this.targetId)) {
-            throw new IllegalStateException("Unknown target entity type " + this.targetId.toString() + " for affinity " + id.toString());
+            throw new IllegalStateException("Unknown target entity type " + this.targetId + " for affinity " + id);
         }
     }
 
@@ -68,8 +69,8 @@ public class EntityTypeAffinityBuilder {
         }
 
         @Override
-        public AffinityType getType() {
-            return AffinityType.ENTITY_TYPE;
+        public AffinityType<?> getType() {
+            return AffinityTypesPM.ENTITY_TYPE.get();
         }
 
         @Override

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.affinities;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
+import com.verdantartifice.primalmagick.common.affinities.AffinityTypesPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.core.Holder;
@@ -37,10 +38,10 @@ public class PotionBonusAffinityBuilder {
     
     private void validate(Identifier id) {
         if (this.targetId == null) {
-            throw new IllegalStateException("No target potion for affinity " + id.toString());
+            throw new IllegalStateException("No target potion for affinity " + id);
         }
         if (!BuiltInRegistries.POTION.containsKey(this.targetId)) {
-            throw new IllegalStateException("Unknown target potion " + this.targetId.toString() + " for affinity " + id.toString());
+            throw new IllegalStateException("Unknown target potion " + this.targetId + " for affinity " + id);
         }
     }
     
@@ -69,8 +70,8 @@ public class PotionBonusAffinityBuilder {
         }
 
         @Override
-        public AffinityType getType() {
-            return AffinityType.POTION_BONUS;
+        public AffinityType<?> getType() {
+            return AffinityTypesPM.POTION_BONUS.get();
         }
 
         @Override

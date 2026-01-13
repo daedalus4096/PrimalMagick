@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.affinities;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
+import com.verdantartifice.primalmagick.common.affinities.AffinityTypesPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.core.HolderLookup;
@@ -44,10 +45,10 @@ public class EnchantmentBonusAffinityBuilder {
     
     private void validate(Identifier id) {
         if (this.targetId == null) {
-            throw new IllegalStateException("No target enchantment for affinity " + id.toString());
+            throw new IllegalStateException("No target enchantment for affinity " + id);
         }
         if (this.registries.lookupOrThrow(Registries.ENCHANTMENT).get(this.targetId).isEmpty()) {
-            throw new IllegalStateException("Unknown target enchantment " + this.targetId.toString() + " for affinity " + id.toString());
+            throw new IllegalStateException("Unknown target enchantment " + this.targetId + " for affinity " + id);
         }
     }
     
@@ -76,8 +77,8 @@ public class EnchantmentBonusAffinityBuilder {
         }
 
         @Override
-        public AffinityType getType() {
-            return AffinityType.ENCHANTMENT_BONUS;
+        public AffinityType<?> getType() {
+            return AffinityTypesPM.ENCHANTMENT_BONUS.get();
         }
 
         @Override

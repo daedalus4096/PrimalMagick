@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import net.minecraft.resources.Identifier;
 
 public interface IFinishedAffinity {
-    AffinityType getType();
+    AffinityType<?> getType();
     
     Identifier getId();
     
@@ -13,7 +13,7 @@ public interface IFinishedAffinity {
     
     default JsonObject getAffinityJson() {
         JsonObject json = new JsonObject();
-        json.addProperty("type", this.getType().getSerializedName());
+        json.addProperty("type", this.getType().id().toString());
         this.serialize(json);
         return json;
     }

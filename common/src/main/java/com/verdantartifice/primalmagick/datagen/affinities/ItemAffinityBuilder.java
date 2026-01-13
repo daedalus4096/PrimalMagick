@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.affinities;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
+import com.verdantartifice.primalmagick.common.affinities.AffinityTypesPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -76,20 +77,20 @@ public class ItemAffinityBuilder {
     
     private void validate(Identifier id) {
         if (this.targetId == null) {
-            throw new IllegalStateException("No target item for affinity " + id.toString());
+            throw new IllegalStateException("No target item for affinity " + id);
         }
         if (!Services.ITEMS_REGISTRY.containsKey(this.targetId)) {
-            throw new IllegalStateException("Unknown target item " + this.targetId.toString() + " for affinity " + id.toString());
+            throw new IllegalStateException("Unknown target item " + this.targetId + " for affinity " + id);
         }
         
         if (this.baseId != null && this.hasSetValues) {
-            throw new IllegalStateException("Both base and set-values defined for affinity " + id.toString());
+            throw new IllegalStateException("Both base and set-values defined for affinity " + id);
         } else if (this.baseId != null && !Services.ITEMS_REGISTRY.containsKey(this.baseId)) {
-            throw new IllegalStateException("Unknown base item " + this.baseId.toString() + " for affinity " + id.toString());
-        } else if (this.baseId != null && this.targetId.equals(this.baseId)) {
-            throw new IllegalStateException("Target defines itself as a base for affinity " + id.toString());
+            throw new IllegalStateException("Unknown base item " + this.baseId + " for affinity " + id);
+        } else if (this.targetId.equals(this.baseId)) {
+            throw new IllegalStateException("Target defines itself as a base for affinity " + id);
         } else if (this.baseId == null && !this.hasSetValues) {
-            throw new IllegalStateException("Neither base nor set-values defined for affinity " + id.toString());
+            throw new IllegalStateException("Neither base nor set-values defined for affinity " + id);
         }
     }
     
@@ -124,8 +125,8 @@ public class ItemAffinityBuilder {
         }
         
         @Override
-        public AffinityType getType() {
-            return AffinityType.ITEM;
+        public AffinityType<?> getType() {
+            return AffinityTypesPM.ITEM.get();
         }
 
         @Override
