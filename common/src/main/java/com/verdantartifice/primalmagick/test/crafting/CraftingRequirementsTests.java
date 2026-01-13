@@ -39,16 +39,16 @@ public class CraftingRequirementsTests extends AbstractBaseTest {
         // Get the Manafruit recipe from the recipe manager
         var container = CraftingInput.of(3, 1, List.of(new ItemStack(Items.APPLE), new ItemStack(Items.HONEY_BOTTLE), new ItemStack(ItemsPM.MANA_SALTS.get())));
         var recipe = helper.getLevel().recipeAccess().getRecipeFor(RecipeTypesPM.RITUAL.get(), container, helper.getLevel());
-        this.assertTrue(helper, recipe.isPresent(), "Recipe not found when expected");
+        assertTrue(helper, recipe.isPresent(), "Recipe not found when expected");
         
         // Confirm that it has a requirement which the mock player does not yet meet
         var reqOpt = recipe.get().value().getRequirement();
-        this.assertTrue(helper, reqOpt.isPresent(), "Recipe requirement not found when expected");
-        this.assertFalse(helper, reqOpt.get().isMetBy(player), "Player meets requirement without research");
+        assertTrue(helper, reqOpt.isPresent(), "Recipe requirement not found when expected");
+        assertFalse(helper, reqOpt.get().isMetBy(player), "Player meets requirement without research");
         
         // Grant the required research and confirm that the requirement is then met
         ResearchManager.forceGrantWithAllParents(player, ResearchEntries.MANAFRUIT);
-        this.assertTrue(helper, reqOpt.get().isMetBy(player), "Player does not meet requirement after being granted required research");
+        assertTrue(helper, reqOpt.get().isMetBy(player), "Player does not meet requirement after being granted required research");
         helper.succeed();
     }
 }
