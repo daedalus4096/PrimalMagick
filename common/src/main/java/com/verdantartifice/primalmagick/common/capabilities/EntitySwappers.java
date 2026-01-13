@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -36,9 +36,9 @@ public class EntitySwappers implements IEntitySwappers {
             return;
         }
         this.swappers.clear();
-        ListTag swapperList = nbt.getList("Swappers", Tag.TAG_COMPOUND);
+        ListTag swapperList = nbt.getListOrEmpty("Swappers");
         for (int index = 0; index < swapperList.size(); index++) {
-            CompoundTag swapperTag = swapperList.getCompound(index);
+            CompoundTag swapperTag = swapperList.getCompoundOrEmpty(index);
             EntitySwapper swapper = new EntitySwapper(registries, swapperTag);
             if (swapper.isValid()) {
                 // Only accept valid swappers
@@ -57,6 +57,7 @@ public class EntitySwappers implements IEntitySwappers {
     }
 
     @Override
+    @NotNull
     public Queue<EntitySwapper> getQueue() {
         return this.swappers;
     }
