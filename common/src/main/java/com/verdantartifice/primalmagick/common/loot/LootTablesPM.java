@@ -20,6 +20,8 @@ public class LootTablesPM {
     private static final Set<ResourceKey<LootTable>> SUBSET_THEORYCRAFTING = new HashSet<>();
     private static final Set<ResourceKey<LootTable>> SUBSET_LIBRARY = new HashSet<>();
 
+    public static final ResourceKey<LootTable> EMPTY = ResourceKey.create(Registries.LOOT_TABLE, ResourceUtils.loc("gameplay/empty"));
+
     public static final ResourceKey<LootTable> TREEFOLK_BARTERING = registerTreefolk("gameplay/treefolk_bartering");
     public static final ResourceKey<LootTable> TREEFOLK_BARTERING_FOOD = registerTreefolk("gameplay/treefolk_bartering/food");
     public static final ResourceKey<LootTable> TREEFOLK_BARTERING_SAPLINGS = registerTreefolk("gameplay/treefolk_bartering/saplings");
