@@ -24,6 +24,7 @@ import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -178,7 +179,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
             }
 
             // Fill the internal water tank from the environment if waterlogged and surrounded by water source
-            if (FluidUtils.isInfiniteSource(level, pos, Fluids.WATER)) {
+            if (level instanceof ServerLevel serverLevel && FluidUtils.isInfiniteSource(serverLevel, pos, Fluids.WATER)) {
                 entity.waterTank.fill(Services.FLUIDS.makeFluidStack(Fluids.WATER, PASSIVE_WATER_INPUT), false);
             }
 
