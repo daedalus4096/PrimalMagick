@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
@@ -20,6 +19,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Item definition for a flying carpet.  Spawns a flying carpet entity when used for the player to
@@ -33,16 +33,16 @@ public class FlyingCarpetItem extends Item implements IHasDyeColor {
     public static final CauldronInteraction DYED_CARPET = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
         Item item = stack.getItem();
         if (!(item instanceof FlyingCarpetItem carpet)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         } else {
             if (carpet.getDyeColor(stack) == null) {
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                return InteractionResult.TRY_WITH_EMPTY_HAND;
             } else {
                 if (!level.isClientSide()) {
                     carpet.removeDyeColor(stack);
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                 }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                return InteractionResult.SUCCESS;
             }
         }
     };
@@ -62,9 +62,10 @@ public class FlyingCarpetItem extends Item implements IHasDyeColor {
     }
 
     @Override
+    @NotNull
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
-        if (!world.isClientSide()) {
+        if (!world.isClientSide() && context.getPlayer() != null) {
             if (context.getClickedFace() != Direction.UP) {
                 return InteractionResult.PASS;
             }
