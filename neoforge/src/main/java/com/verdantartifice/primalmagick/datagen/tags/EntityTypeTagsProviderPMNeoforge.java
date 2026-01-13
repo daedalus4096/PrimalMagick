@@ -9,27 +9,28 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Data provider for all of the mod's entity type tags, both original tags and modifications to vanilla tags.
+ * Data provider for all the mod's entity type tags, both original tags and modifications to vanilla tags.
  * 
  * @author Daedalus4096
  */
 public class EntityTypeTagsProviderPMNeoforge extends EntityTypeTagsProvider {
-    public EntityTypeTagsProviderPMNeoforge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(packOutput, lookupProvider, Constants.MOD_ID, existingFileHelper);
+    public EntityTypeTagsProviderPMNeoforge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider, Constants.MOD_ID);
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Primal Magick Entity Type Tags";
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider lookupProvider) {
+    protected void addTags(@NotNull HolderLookup.Provider lookupProvider) {
         // Add entries to vanilla tags
         this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(EntityTypesPM.MANA_ARROW.get(), EntityTypesPM.PRIMALITE_TRIDENT.get(), EntityTypesPM.HEXIUM_TRIDENT.get(),
                 EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), EntityTypesPM.FORBIDDEN_TRIDENT.get(), EntityTypesPM.APPLE.get());
