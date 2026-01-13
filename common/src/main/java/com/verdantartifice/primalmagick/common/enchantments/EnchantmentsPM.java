@@ -15,8 +15,8 @@ import net.minecraft.advancements.criterion.TagPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.EntityTypeTags;
@@ -69,6 +69,7 @@ public class EnchantmentsPM {
     public static void bootstrap(BootstrapContext<Enchantment> pContext) {
         HolderGetter<Item> itemHolderGetter = pContext.lookup(Registries.ITEM);
         HolderGetter<Enchantment> enchantmentHolderGetter = pContext.lookup(Registries.ENCHANTMENT);
+        HolderGetter<EntityType<?>> entityTypeHolderGetter = pContext.lookup(Registries.ENTITY_TYPE);
 
         /*
          * Definition of an enchantment that steals life from entities wounded by this weapon.  Gives a
@@ -80,7 +81,7 @@ public class EnchantmentsPM {
                 Enchantment.enchantment(
                         Enchantment.definition(
                                 itemHolderGetter.getOrThrow(ItemTagsPM.MELEE_ENCHANTABLE),
-                                itemHolderGetter.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                                 2,
                                 5,
                                 Enchantment.dynamicCost(5, 10),
@@ -107,7 +108,7 @@ public class EnchantmentsPM {
                 Enchantment.enchantment(
                         Enchantment.definition(
                                 itemHolderGetter.getOrThrow(ItemTagsPM.MELEE_ENCHANTABLE),
-                                itemHolderGetter.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                                itemHolderGetter.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                                 2,
                                 5,
                                 Enchantment.dynamicCost(5, 10),
@@ -151,7 +152,7 @@ public class EnchantmentsPM {
                         EnchantmentEffectComponents.DAMAGE,
                         new AddValue(LevelBasedValue.perLevel(2.5F)),
                         LootItemEntityPropertyCondition.hasProperties(
-                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EntityTypeTags.SENSITIVE_TO_SMITE))
+                                LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(entityTypeHolderGetter, EntityTypeTags.SENSITIVE_TO_SMITE))
                         )
                 )
         );
@@ -368,7 +369,7 @@ public class EnchantmentsPM {
                         EnchantmentTarget.VICTIM,
                         new AddValue(LevelBasedValue.perLevel(0.01F)),
                         LootItemEntityPropertyCondition.hasProperties(
-                            LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EntityType.PLAYER))
+                            LootContext.EntityTarget.ATTACKER, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(entityTypeHolderGetter, EntityType.PLAYER))
                         )
                 )
         );
