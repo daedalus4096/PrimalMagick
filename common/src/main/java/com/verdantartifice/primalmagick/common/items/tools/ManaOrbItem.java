@@ -12,27 +12,27 @@ import com.verdantartifice.primalmagick.common.wands.IManaContainer;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.equipment.Equippable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomRenderer, ITieredDevice, IManaContainer {
+public abstract class ManaOrbItem extends Item implements IHasCustomRenderer, ITieredDevice, IManaContainer {
     private final DeviceTier tier;
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ManaOrbItem(DeviceTier tier, Item.Properties pProperties) {
-        super(pProperties);
+        super(pProperties.component(DataComponents.EQUIPPABLE, Equippable.builder(EquipmentSlot.OFFHAND).setDamageOnHurt(false).build()));
         this.tier = tier;
     }
 
@@ -50,28 +50,8 @@ public abstract class ManaOrbItem extends Item implements Equipable, IHasCustomR
     }
 
     @Override
-    public @NotNull EquipmentSlot getEquipmentSlot() {
-        return EquipmentSlot.OFFHAND;
-    }
-
-    @Override
     public DeviceTier getDeviceTier() {
         return this.tier;
-    }
-
-    @Override
-    public boolean isEnchantable(@NotNull ItemStack pStack) {
-        return true;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return switch (this.getDeviceTier()) {
-            case BASIC -> 13;
-            case ENCHANTED -> 18;
-            case FORBIDDEN -> 23;
-            case HEAVENLY, CREATIVE -> 28;
-        };
     }
 
     private static @NotNull Optional<WandGem> getWandGemEquivalent(@NotNull ItemStack stack) {

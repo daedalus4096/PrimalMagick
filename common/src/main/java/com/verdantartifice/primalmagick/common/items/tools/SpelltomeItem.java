@@ -13,16 +13,15 @@ import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.equipment.Equippable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,12 +31,12 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public abstract class SpelltomeItem extends Item implements Equipable, IHasCustomRenderer, ITieredDevice, ISpellContainer {
+public abstract class SpelltomeItem extends Item implements IHasCustomRenderer, ITieredDevice, ISpellContainer {
     private final DeviceTier tier;
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public SpelltomeItem(DeviceTier tier, Item.Properties pProperties) {
-        super(pProperties);
+        super(pProperties.component(DataComponents.EQUIPPABLE, Equippable.builder(EquipmentSlot.OFFHAND).setDamageOnHurt(false).setEquipSound(SoundsPM.PAGE.getHolder()).build()));
         this.tier = tier;
     }
 
@@ -55,16 +54,6 @@ public abstract class SpelltomeItem extends Item implements Equipable, IHasCusto
     }
 
     @Override
-    public @NotNull EquipmentSlot getEquipmentSlot() {
-        return EquipmentSlot.OFFHAND;
-    }
-
-    @Override
-    public @NotNull Holder<SoundEvent> getEquipSound() {
-        return SoundsPM.PAGE.getHolder();
-    }
-
-    @Override
     public DeviceTier getDeviceTier() {
         return this.tier;
     }
@@ -79,17 +68,7 @@ public abstract class SpelltomeItem extends Item implements Equipable, IHasCusto
     }
 
     @Override
-    public boolean isEnchantable(ItemStack pStack) {
-        return true;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return 8 + (5 * this.getSpellCapacity());
-    }
-
-    @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, TooltipDisplay pTooltipDisplay, Consumer<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+    public void appendHoverText(@NotNull ItemStack pStack, @NotNull TooltipContext pContext, @NotNull TooltipDisplay pTooltipDisplay, @NotNull Consumer<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
         Player player = Services.PLATFORM.isClientDist() ? ClientUtils.getCurrentPlayer() : null;
         boolean showDetails = Services.PLATFORM.isClientDist() && ClientUtils.hasShiftDown();
         if (showDetails) {
