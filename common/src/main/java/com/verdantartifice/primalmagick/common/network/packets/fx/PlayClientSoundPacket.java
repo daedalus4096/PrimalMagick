@@ -41,19 +41,19 @@ public class PlayClientSoundPacket implements IMessageToClient {
     }
 
     public static void encode(PlayClientSoundPacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeResourceLocation(message.eventLoc);
+        buf.writeIdentifier(message.eventLoc);
         buf.writeFloat(message.volume);
         buf.writeFloat(message.pitch);
     }
     
     public static PlayClientSoundPacket decode(RegistryFriendlyByteBuf buf) {
-        return new PlayClientSoundPacket(buf.readResourceLocation(), buf.readFloat(), buf.readFloat());
+        return new PlayClientSoundPacket(buf.readIdentifier(), buf.readFloat(), buf.readFloat());
     }
     
     public static void onMessage(PacketContext<PlayClientSoundPacket> ctx) {
         PlayClientSoundPacket message = ctx.message();
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
-        if (message.eventLoc != null) {
+        if (player != null && message.eventLoc != null) {
             SoundEvent soundEvent = Services.SOUND_EVENTS_REGISTRY.get(message.eventLoc);
             if (soundEvent != null) {
                 player.playSound(soundEvent, message.volume, message.pitch);
