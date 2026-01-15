@@ -20,7 +20,7 @@ public interface IEntitySwappers extends INBTSerializablePM<CompoundTag> {
      * @param swapper the entity swapper to be added
      * @return true if the addition was successful, false otherwise
      */
-    public boolean enqueue(@Nullable EntitySwapper swapper);
+    boolean enqueue(@Nullable EntitySwapper swapper);
     
     /**
      * Get the entity swapper queue for the world.
@@ -28,7 +28,7 @@ public interface IEntitySwappers extends INBTSerializablePM<CompoundTag> {
      * @return the entity swapper queue
      */
     @Nonnull
-    public Queue<EntitySwapper> getQueue();
+    Queue<EntitySwapper> getQueue();
     
     /**
      * Replace the entity swapper queue for the world with a copy of the given one.
@@ -36,5 +36,5 @@ public interface IEntitySwappers extends INBTSerializablePM<CompoundTag> {
      * @param queue the new entity swapper queue
      * @return true if the replacement was successful, false otherwise
      */
-    public boolean setQueue(@Nullable Queue<EntitySwapper> queue);
+    boolean setQueue(@Nullable Queue<EntitySwapper> queue);
 }
