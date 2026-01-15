@@ -382,7 +382,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                         return false;
                     }
                     this.ghostRecipe.clear();
-                    PacketHandler.sendToServer(new PlaceArcaneRecipePacket(this.mc.player.containerMenu.containerId, recipe, Screen.hasShiftDown()));
+                    PacketHandler.sendToServer(new PlaceArcaneRecipePacket(this.mc.player.containerMenu.containerId, recipe, Minecraft.getInstance().hasShiftDown()));
                     if (!this.isOffsetNextToMainGUI()) {
                         this.setVisible(false);
                     }

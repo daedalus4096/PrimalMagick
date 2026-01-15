@@ -4,11 +4,15 @@ import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import commonnetwork.networking.data.PacketContext;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
@@ -21,14 +25,14 @@ public class PlaceArcaneRecipePacket implements IMessageToServer {
     public static final StreamCodec<RegistryFriendlyByteBuf, PlaceArcaneRecipePacket> STREAM_CODEC = StreamCodec.ofMember(PlaceArcaneRecipePacket::encode, PlaceArcaneRecipePacket::decode);
 
     protected final int containerId;
-    protected final Identifier recipeId;
+    protected final ResourceKey<Recipe<?>> recipeId;
     protected final boolean shiftDown;
 
     public PlaceArcaneRecipePacket(int containerId, RecipeHolder<?> recipe, boolean shiftDown) {
         this(containerId, recipe.id(), shiftDown);
     }
     
-    protected PlaceArcaneRecipePacket(int containerId, Identifier recipeId, boolean shiftDown) {
+    protected PlaceArcaneRecipePacket(int containerId, ResourceKey<Recipe<?>> recipeId, boolean shiftDown) {
         this.containerId = containerId;
         this.recipeId = recipeId;
         this.shiftDown = shiftDown;
@@ -40,20 +44,21 @@ public class PlaceArcaneRecipePacket implements IMessageToServer {
 
     public static void encode(PlaceArcaneRecipePacket message, RegistryFriendlyByteBuf buf) {
         buf.writeVarInt(message.containerId);
-        buf.writeResourceLocation(message.recipeId);
+        buf.writeResourceKey(message.recipeId);
         buf.writeBoolean(message.shiftDown);
     }
     
     public static PlaceArcaneRecipePacket decode(RegistryFriendlyByteBuf buf) {
-        return new PlaceArcaneRecipePacket(buf.readVarInt(), buf.readResourceLocation(), buf.readBoolean());
+        return new PlaceArcaneRecipePacket(buf.readVarInt(), buf.readResourceKey(Registries.RECIPE), buf.readBoolean());
     }
     
     public static void onMessage(PacketContext<PlaceArcaneRecipePacket> ctx) {
         PlaceArcaneRecipePacket message = ctx.message();
         ServerPlayer player = ctx.sender();
+        ServerLevel level = player.level();
         player.resetLastActionTime();
         if (!player.isSpectator() && player.containerMenu.containerId == message.containerId && player.containerMenu instanceof IArcaneRecipeBookMenu<?, ?> bookMenu) {
-            player.getServer().getRecipeManager().byKey(message.recipeId).ifPresent(recipe -> {
+            level.getServer().getRecipeManager().byKey(message.recipeId).ifPresent(recipe -> {
                 bookMenu.handlePlacement(message.shiftDown, recipe, player);
             });
         }

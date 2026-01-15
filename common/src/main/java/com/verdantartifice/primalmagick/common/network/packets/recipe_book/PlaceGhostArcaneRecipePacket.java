@@ -5,10 +5,13 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
@@ -21,13 +24,13 @@ public class PlaceGhostArcaneRecipePacket implements IMessageToClient {
     public static final StreamCodec<RegistryFriendlyByteBuf, PlaceGhostArcaneRecipePacket> STREAM_CODEC = StreamCodec.ofMember(PlaceGhostArcaneRecipePacket::encode, PlaceGhostArcaneRecipePacket::decode);
 
     protected final int containerId;
-    protected final Identifier recipeId;
+    protected final ResourceKey<Recipe<?>> recipeId;
     
     public PlaceGhostArcaneRecipePacket(int containerId, RecipeHolder<?> recipe) {
         this(containerId, recipe.id());
     }
     
-    protected PlaceGhostArcaneRecipePacket(int containerId, Identifier recipeId) {
+    protected PlaceGhostArcaneRecipePacket(int containerId, ResourceKey<Recipe<?>> recipeId) {
         this.containerId = containerId;
         this.recipeId = recipeId;
     }
@@ -38,11 +41,11 @@ public class PlaceGhostArcaneRecipePacket implements IMessageToClient {
 
     public static void encode(PlaceGhostArcaneRecipePacket message, RegistryFriendlyByteBuf buf) {
         buf.writeVarInt(message.containerId);
-        buf.writeResourceLocation(message.recipeId);
+        buf.writeResourceKey(message.recipeId);
     }
     
     public static PlaceGhostArcaneRecipePacket decode(RegistryFriendlyByteBuf buf) {
-        return new PlaceGhostArcaneRecipePacket(buf.readVarInt(), buf.readResourceLocation());
+        return new PlaceGhostArcaneRecipePacket(buf.readVarInt(), buf.readResourceKey(Registries.RECIPE));
     }
     
     public static void onMessage(PacketContext<PlaceGhostArcaneRecipePacket> ctx) {
