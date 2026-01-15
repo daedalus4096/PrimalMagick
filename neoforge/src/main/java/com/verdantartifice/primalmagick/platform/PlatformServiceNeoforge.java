@@ -18,11 +18,12 @@ public class PlatformServiceNeoforge implements IPlatformService {
 
     @Override
     public boolean isDevelopmentEnvironment() {
-        return !FMLLoader.isProduction();
+        FMLLoader loader = FMLLoader.getCurrentOrNull();
+        return loader != null && !loader.isProduction();
     }
 
     @Override
     public boolean isClientDist() {
-        return FMLEnvironment.dist.isClient();
+        return FMLEnvironment.getDist().isClient();
     }
 }
