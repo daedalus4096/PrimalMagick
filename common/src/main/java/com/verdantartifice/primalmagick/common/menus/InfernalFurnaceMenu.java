@@ -55,11 +55,11 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
         this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(InfernalFurnaceTileEntity.INPUT_INV_INDEX), 0, 44, 17));
         
         // Slot 2: ignyx input
-        this.ignyxSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(InfernalFurnaceTileEntity.WAND_INV_INDEX), 0, 44, 53,
+        this.ignyxSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(InfernalFurnaceTileEntity.FUEL_INV_INDEX), 0, 44, 53,
                 new FilteredSlotProperties().background(IGNYX_SLOT_TEXTURE).tooltip(IGNYX_SLOT_TOOLTIP).tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL)));
         
         // Slot 3: wand input
-        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(InfernalFurnaceTileEntity.WAND_INV_INDEX), 1, 8, 62, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(InfernalFurnaceTileEntity.WAND_INV_INDEX), 0, 8, 62, false));
         
         // Slots 4-30: player backpack
         for (int i = 0; i < 3; i++) {

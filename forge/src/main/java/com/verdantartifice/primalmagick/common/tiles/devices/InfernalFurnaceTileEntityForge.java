@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.tiles.IHasItemHandlerCapabilityFo
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -30,7 +31,9 @@ public class InfernalFurnaceTileEntityForge extends InfernalFurnaceTileEntity im
     @Override
     public void onLoad() {
         super.onLoad();
-        this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
+        if (this.level instanceof ServerLevel serverLevel) {
+            this.processTimeTotal = getTotalCookTime(serverLevel, this, DEFAULT_COOK_TIME);
+        }
     }
 
     @Override

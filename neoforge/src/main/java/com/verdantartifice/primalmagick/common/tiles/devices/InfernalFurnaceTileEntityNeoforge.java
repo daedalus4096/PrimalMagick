@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class InfernalFurnaceTileEntityNeoforge extends InfernalFurnaceTileEntity {
@@ -11,6 +12,8 @@ public class InfernalFurnaceTileEntityNeoforge extends InfernalFurnaceTileEntity
     @Override
     public void onLoad() {
         super.onLoad();
-        this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
+        if (this.level instanceof ServerLevel serverLevel) {
+            this.processTimeTotal = getTotalCookTime(serverLevel, this, DEFAULT_COOK_TIME);
+        }
     }
 }
