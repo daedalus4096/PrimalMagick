@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.treefolk;
 
-import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.ai.behavior.BehaviorControl;
 import net.minecraft.world.entity.ai.behavior.declarative.BehaviorBuilder;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -10,7 +10,7 @@ public class StopHoldingItemIfNoLongerAdmiring {
         return BehaviorBuilder.create(treefolkInstance -> {
             return treefolkInstance.group(treefolkInstance.absent(MemoryModuleType.ADMIRING_ITEM)).apply(treefolkInstance, admiringItemAccessor -> {
                 return (level, entity, gameTime) -> {
-                    if (!entity.getOffhandItem().isEmpty() && !Services.ITEM_ABILITIES.canShieldBlock(entity.getOffhandItem())) {
+                    if (!entity.getOffhandItem().isEmpty() && !entity.getOffhandItem().has(DataComponents.BLOCKS_ATTACKS)) {
                         TreefolkAi.stopHoldingOffHandItem(entity, true);
                         return true;
                     } else {

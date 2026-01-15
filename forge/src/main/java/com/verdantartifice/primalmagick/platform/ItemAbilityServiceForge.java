@@ -13,11 +13,6 @@ public class ItemAbilityServiceForge implements IItemAbilityService {
     }
 
     @Override
-    public boolean canShieldBlock(ItemStack stack) {
-        return stack.canPerformAction(ToolActions.SHIELD_BLOCK);
-    }
-
-    @Override
     public LootItemCondition.Builder makeShearsDigLootCondition() {
         return CanToolPerformAction.canToolPerformAction(ToolActions.SHEARS_DIG);
     }
