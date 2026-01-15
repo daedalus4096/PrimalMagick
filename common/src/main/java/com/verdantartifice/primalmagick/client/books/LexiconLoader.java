@@ -51,13 +51,13 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener<Lexicon> {
     @Override
     protected void apply(@NotNull Map<Identifier, Lexicon> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
         // Load lexicons explicitly defined in resource packs
-        for (Map.Entry<Identifier, Lexicon> entry : pObject.entrySet()) {
-            if (entry.getValue() == null) {
-                LOGGER.error("Failed to load lexicon {}", entry.getKey());
+        pObject.forEach((location, lexicon) -> {
+            if (lexicon == null) {
+                LOGGER.error("Failed to load lexicon {}", location);
             } else {
-                LexiconManager.setLexicon(entry.getKey(), entry.getValue());
+                LexiconManager.setLexicon(location, lexicon);
             }
-        }
+        });
 
         // Invalidate book helper caches
         BookHelper.invalidate();
