@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.config;
 
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.KeyMapping;
 import org.lwjgl.glfw.GLFW;
 
@@ -12,7 +13,7 @@ import java.util.function.Consumer;
  * @author Daedalus4096
  */
 public class KeyBindings {
-    public static final String KEY_CATEGORY = "key.categories." + Constants.MOD_ID;
+    public static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(ResourceUtils.loc(Constants.MOD_ID));
     
     public static final KeyMapping CHANGE_SPELL_KEY = new KeyMapping("key.primalmagick.change_spell", GLFW.GLFW_KEY_R, KEY_CATEGORY);                   // Key for changing the active spell of a wand
     public static final KeyMapping CARPET_FORWARD_KEY = new KeyMapping("key.primalmagick.carpet_forward", GLFW.GLFW_KEY_W, KEY_CATEGORY);               // Key for commanding a flying carpet forward
