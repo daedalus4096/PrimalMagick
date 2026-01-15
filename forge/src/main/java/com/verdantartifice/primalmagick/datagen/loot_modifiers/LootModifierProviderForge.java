@@ -21,14 +21,15 @@ import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
+import net.minecraft.advancements.criterion.DataComponentMatchers;
 import net.minecraft.advancements.criterion.EnchantmentPredicate;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.FishingHookPredicate;
-import net.minecraft.advancements.criterion.ItemEnchantmentsPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.ItemSubPredicates;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.predicates.DataComponentPredicates;
+import net.minecraft.core.component.predicates.EnchantmentsPredicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;
@@ -54,7 +55,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Data provider for all of the mod's loot modifiers.
+ * Data provider for all the mod's loot modifiers.
  * 
  * @author Daedalus4096
  */
@@ -65,7 +66,7 @@ public class LootModifierProviderForge extends GlobalLootModifierProvider {
 
     @Override
     protected void start(HolderLookup.Provider registries) {
-        HolderLookup.RegistryLookup<Enchantment> enchLookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
+        HolderLookup.RegistryLookup<Enchantment> enchantLookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         this.add("bloody_flesh", new BloodyFleshModifier(
                 new LootItemCondition[] {
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
@@ -75,16 +76,19 @@ public class LootModifierProviderForge extends GlobalLootModifierProvider {
         this.add("bounty_farming", new BountyFarmingModifier(
                 new LootItemCondition[] {
                         MatchBlockTag.builder(BlockTagsPM.BOUNTY_CROPS).build(),
-                        MatchTool.toolMatches(ItemPredicate.Builder.item().withSubPredicate(ItemSubPredicates.ENCHANTMENTS, ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchLookup.getOrThrow(EnchantmentsPM.BOUNTY), MinMaxBounds.Ints.atLeast(1)))))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().withComponents(DataComponentMatchers.Builder.components()
+                                .partial(DataComponentPredicates.ENCHANTMENTS, EnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchantLookup.getOrThrow(EnchantmentsPM.BOUNTY), MinMaxBounds.Ints.atLeast(1))))).build())).build()
                 }, 0.25F));
         this.add("bounty_fishing", new BountyFishingModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(FishingHookPredicate.inOpenWater(true))).build(),
-                        MatchTool.toolMatches(ItemPredicate.Builder.item().withSubPredicate(ItemSubPredicates.ENCHANTMENTS, ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchLookup.getOrThrow(EnchantmentsPM.BOUNTY), MinMaxBounds.Ints.atLeast(1)))))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().withComponents(DataComponentMatchers.Builder.components()
+                                .partial(DataComponentPredicates.ENCHANTMENTS, EnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchantLookup.getOrThrow(EnchantmentsPM.BOUNTY), MinMaxBounds.Ints.atLeast(1))))).build())).build()
                 }, 0.25F));
         this.add("lucky_strike", new BonusNuggetModifier(
                 new LootItemCondition[] {
-                        MatchTool.toolMatches(ItemPredicate.Builder.item().withSubPredicate(ItemSubPredicates.ENCHANTMENTS, ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchLookup.getOrThrow(EnchantmentsPM.LUCKY_STRIKE), MinMaxBounds.Ints.atLeast(1)))))).build()
+                        MatchTool.toolMatches(ItemPredicate.Builder.item().withComponents(DataComponentMatchers.Builder.components()
+                                .partial(DataComponentPredicates.ENCHANTMENTS, EnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchantLookup.getOrThrow(EnchantmentsPM.LUCKY_STRIKE), MinMaxBounds.Ints.atLeast(1))))).build())).build()
                 }, ImmutableMap.<TagKey<Block>, TagKey<Item>>builder()
                     .put(CommonTags.Blocks.ORES_IRON, CommonTags.Items.NUGGETS_IRON)
                     .put(CommonTags.Blocks.ORES_GOLD, CommonTags.Items.NUGGETS_GOLD)
