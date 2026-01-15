@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
 /**
@@ -43,8 +43,8 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         float yaw = Mth.rotLerp(entity.yRotO, entity.getYRot(), partialTicks);
         float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
         float ticks = (float)entity.tickCount + partialTicks;
-        int coreColor = FastColor.ARGB32.color(FastColor.as8BitChannel(1.0F), entity.getColor());
-        int glowColor = FastColor.ARGB32.color(FastColor.as8BitChannel(0.5F), entity.getColor());
+        int coreColor = ARGB.color(ARGB.as8BitChannel(1.0F), entity.getColor());
+        int glowColor = ARGB.color(ARGB.as8BitChannel(0.5F), entity.getColor());
         matrixStack.pushPose();
         matrixStack.translate(0.0D, 0.15D, 0.0D);
         matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the projectile like a shulker bullet
