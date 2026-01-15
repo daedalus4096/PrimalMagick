@@ -13,11 +13,11 @@ import java.util.List;
 public class GuiGraphicsServiceNeoforge implements IGuiGraphicsService {
     @Override
     public void renderComponentTooltip(GuiGraphics pGuiGraphics, Font pFont, List<? extends FormattedText> pTooltipLines, int pMouseX, int pMouseY, ItemStack stack) {
-        pGuiGraphics.renderComponentTooltip(pFont, pTooltipLines, pMouseX, pMouseY, stack);
+        pGuiGraphics.setComponentTooltipForNextFrame(pFont, pTooltipLines, pMouseX, pMouseY, stack);
     }
 
     @Override
     public void renderComponentTooltipFromElements(GuiGraphics pGuiGraphics, Font pFont, List<Either<FormattedText, TooltipComponent>> pElements, int pMouseX, int pMouseY, ItemStack stack) {
-        pGuiGraphics.renderComponentTooltipFromElements(pFont, pElements, pMouseX, pMouseY, stack);
+        pGuiGraphics.setComponentTooltipFromElementsForNextFrame(pFont, pElements, pMouseX, pMouseY, stack);
     }
 }
