@@ -14,7 +14,7 @@ public class IngredientsPM {
     private static final DeferredRegister<IIngredientSerializer<?>> DEFERRED_SERIALIZERS = DeferredRegister.create(ForgeRegistries.INGREDIENT_SERIALIZERS, Constants.MOD_ID);
     
     public static void init() {
-        DEFERRED_SERIALIZERS.register(PrimalMagick.getModLoadingContext().getModEventBus());
+        DEFERRED_SERIALIZERS.register(PrimalMagick.getModLoadingContext().getModBusGroup());
     }
     
     public static final RegistryObject<IIngredientSerializer<PartialComponentIngredient>> PARTIAL_COMPONENT = register("partial_component", () -> PartialComponentIngredient.SERIALIZER);
