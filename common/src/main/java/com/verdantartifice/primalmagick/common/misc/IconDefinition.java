@@ -54,7 +54,7 @@ public class IconDefinition {
     }
     
     public static IconDefinition of(TagKey<Item> tagKey) {
-        return new IconDefinition(false, true, tagKey.identifier(), Optional.empty());
+        return new IconDefinition(false, true, tagKey.location(), Optional.empty());
     }
     
     public static IconDefinition of(Identifier loc) {
@@ -90,8 +90,8 @@ public class IconDefinition {
     public List<Component> getTooltipLines() {
         if (this.tooltipOverrideOpt.isPresent()) {
             return ImmutableList.of(Component.translatable(this.tooltipOverrideOpt.get()));
-        } else if (this.isItem) {
-            return ImmutableList.of(this.asItem().getName());
+        } else if (this.isItem && this.asItem() instanceof Item castItem) {
+            return ImmutableList.of(castItem.getName());
         } else if (this.isTag) {
             return Services.ITEMS_REGISTRY.getTag(this.asTagKey()).map(tag -> tag.stream().map(Item::getName).toList()).orElse(ImmutableList.of());
         } else {
