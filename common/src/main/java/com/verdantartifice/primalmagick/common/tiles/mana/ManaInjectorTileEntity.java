@@ -110,7 +110,7 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
             int lastColor = this.lastSource.getColor();
             int nextColor = this.nextSource.getColor();
             float blend = Mth.clamp(((this.ticks % TICKS_PER_PHASE) + partialTicks) / (TICKS_PER_PHASE / 2F), 0F, 1F);
-            return ARGB.lerp(blend, lastColor, nextColor);
+            return ARGB.linearLerp(blend, lastColor, nextColor);
         }
     }
 
