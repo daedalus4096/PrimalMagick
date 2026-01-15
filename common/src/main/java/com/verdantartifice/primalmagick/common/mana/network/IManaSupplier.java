@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
