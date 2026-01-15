@@ -14,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -39,10 +40,11 @@ public abstract class ModularStaffItem extends ModularWandItem implements IStaff
     }
 
     public static Tool createToolProperties() {
-        return new Tool(List.of(), 1.0F, 2);
+        return new Tool(List.of(), 1.0F, 2, false);
     }
 
     @Override
+    @NotNull
     public Component getName(ItemStack stack) {
         // A modular staff's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Staff")
         WandCore core = this.getWandCore(stack);
