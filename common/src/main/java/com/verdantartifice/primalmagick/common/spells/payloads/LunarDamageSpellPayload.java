@@ -27,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -65,12 +66,13 @@ public class LunarDamageSpellPayload extends AbstractDamageSpellPayload<LunarDam
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.MOON;
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundsPM.MOONBEAM.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
@@ -80,11 +82,11 @@ public class LunarDamageSpellPayload extends AbstractDamageSpellPayload<LunarDam
     }
 
     @Override
-    protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+    protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource) {
         int duration = this.getDurationSeconds(spell, spellSource, caster, world.registryAccess());
         if (target != null && target.getType() == HitResult.Type.ENTITY && duration > 0) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity livingTarget) {
+            if (entityTarget.getEntity() instanceof LivingEntity livingTarget) {
                 int potency = (int)((1.0F + this.getModdedPropertyValue(SpellPropertiesPM.POWER.get(), spell, spellSource, caster, world.registryAccess())) / 3.0F);   // 0, 1, 1, 1, 2
                 livingTarget.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * duration, potency));
             }

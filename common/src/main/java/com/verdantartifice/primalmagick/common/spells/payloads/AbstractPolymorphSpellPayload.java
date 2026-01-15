@@ -24,6 +24,7 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
     protected abstract EntityType<?> getNewEntityType();
     
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
             if (SpellManager.canPolymorph(entityTarget.getEntity().getType())) {
@@ -68,6 +69,7 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
     }
     
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.MOON;
     }
@@ -80,7 +82,7 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
     protected abstract SoundEvent getCastSoundEvent(HolderLookup.Provider lookupProvider);
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, this.getCastSoundEvent(world.registryAccess()), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

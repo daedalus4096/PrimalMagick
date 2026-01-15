@@ -17,6 +17,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ConjureStoneSpellPayload extends AbstractConjureBlockSpellPayload<C
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_STONE));
     
     public ConjureStoneSpellPayload() {
-        super(() -> Blocks.STONE.defaultBlockState());
+        super(Blocks.STONE::defaultBlockState);
     }
     
     public static AbstractRequirement<?> getRequirement() {
@@ -58,6 +59,7 @@ public class ConjureStoneSpellPayload extends AbstractConjureBlockSpellPayload<C
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.EARTH;
     }
@@ -68,7 +70,7 @@ public class ConjureStoneSpellPayload extends AbstractConjureBlockSpellPayload<C
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundsPM.ROCKSLIDE.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

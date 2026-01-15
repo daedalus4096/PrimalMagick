@@ -102,14 +102,17 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload<ConjureAnima
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (burstPoint != null) {
             // Do nothing if this is a burst spell
             return;
         } else if (target.getType() == HitResult.Type.BLOCK) {
             this.placeRandomAnimal(world, (BlockHitResult)target);
         } else if (target.getType() == HitResult.Type.ENTITY) {
-            this.placeRandomAnimal(world, RayTraceUtils.getBlockResultFromEntityResult((EntityHitResult)target));
+            BlockHitResult blockHitResult = RayTraceUtils.getBlockResultFromEntityResult((EntityHitResult)target);
+            if (blockHitResult != null) {
+                this.placeRandomAnimal(world, blockHitResult);
+            }
         }
     }
     

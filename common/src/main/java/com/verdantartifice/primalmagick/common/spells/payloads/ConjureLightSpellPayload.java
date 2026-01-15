@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -18,6 +17,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -59,6 +59,7 @@ public class ConjureLightSpellPayload extends AbstractConjureBlockSpellPayload<C
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.SUN;
     }
@@ -69,7 +70,7 @@ public class ConjureLightSpellPayload extends AbstractConjureBlockSpellPayload<C
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundEvents.FLINTANDSTEEL_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

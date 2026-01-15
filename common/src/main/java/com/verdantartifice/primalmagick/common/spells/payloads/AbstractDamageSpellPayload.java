@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,10 +15,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -29,7 +29,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class AbstractDamageSpellPayload<T extends AbstractDamageSpellPayload<T>> extends AbstractSpellPayload<T> {
-    private static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.POWER.get());
+    private static final Supplier<List<SpellProperty>> PROPERTIES = () -> List.of(SpellPropertiesPM.POWER.get());
 
     @Override
     protected List<SpellProperty> getPropertiesInner() {
@@ -73,17 +73,16 @@ public abstract class AbstractDamageSpellPayload<T extends AbstractDamageSpellPa
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() != null) {
+
+            if (world instanceof ServerLevel serverLevel) {
                 // Damage the target entity
-                entityTarget.getEntity().hurt(this.getDamageSource(caster, spell, projectileEntity), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource, caster, world.registryAccess()));
-                
+                entityTarget.getEntity().hurtServer(serverLevel, this.getDamageSource(caster, spell, projectileEntity), this.getTotalDamage(entityTarget.getEntity(), spell, spellSource, caster, world.registryAccess()));
+
                 // Update the caster's last hurt mob
-                if (caster != null) {
-                    caster.setLastHurtMob(entityTarget.getEntity());
-                }
+                caster.setLastHurtMob(entityTarget.getEntity());
             }
         }
         
@@ -91,7 +90,7 @@ public abstract class AbstractDamageSpellPayload<T extends AbstractDamageSpellPa
         this.applySecondaryEffects(target, burstPoint, spell, world, caster, spellSource);
     }
     
-    protected void applySecondaryEffects(@Nullable HitResult target, @Nullable Vec3 burstPoint, @Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource) {
+    protected void applySecondaryEffects(@Nullable HitResult target, @Nullable Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, @Nullable ItemStack spellSource) {
         // Do nothing by default
     }
 }

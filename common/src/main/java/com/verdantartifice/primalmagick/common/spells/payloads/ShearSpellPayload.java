@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -43,6 +44,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -80,19 +82,21 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         ItemStack fakeShears = new ItemStack(Items.SHEARS);
         RandomSource rand = world.random;
         int treasureLevel = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.TREASURE, world.registryAccess());
-        if (caster instanceof Player player) {
+        if (caster instanceof Player player && world instanceof ServerLevel serverLevel) {
             if (target.getType() == HitResult.Type.ENTITY) {
                 EntityHitResult entityHitResult = (EntityHitResult)target;
                 Entity entity = entityHitResult.getEntity();
                 if (Services.SHEARABLE.isShearable(entity, player, fakeShears, world, entity.blockPosition())) {
                     List<ItemStack> drops = Services.SHEARABLE.onSheared(entity, player, ItemStack.EMPTY, world, entity.blockPosition(), treasureLevel);
                     drops.forEach(d -> {
-                        ItemEntity ent = entity.spawnAtLocation(d, 1F);
-                        ent.setDeltaMovement(ent.getDeltaMovement().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
+                        ItemEntity ent = entity.spawnAtLocation(serverLevel, d, 1F);
+                        if (ent != null) {
+                            ent.setDeltaMovement(ent.getDeltaMovement().add((rand.nextFloat() - rand.nextFloat()) * 0.1F, rand.nextFloat() * 0.05F, (rand.nextFloat() - rand.nextFloat()) * 0.1F));
+                        }
                     });
                 }
             } else if (target.getType() == HitResult.Type.BLOCK) {
@@ -122,7 +126,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
                 if (state.getBlock() instanceof BeehiveBlock beehive && state.getValue(BeehiveBlock.HONEY_LEVEL) >= BeehiveBlock.MAX_HONEY_LEVELS) {
                     // Handle special beehive case
                     world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BEEHIVE_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    BeehiveBlock.dropHoneycomb(world, pos);
+                    BeehiveBlock.dropHoneycomb(serverLevel, spellSource, state, null, null, pos);
                     world.gameEvent(player, GameEvent.SHEAR, pos);
                     if (!CampfireBlock.isSmokeyPos(world, pos)) {
                         if (beehive.hiveContainsBees(world, pos)) {
@@ -145,6 +149,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.SKY;
     }
@@ -155,7 +160,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundEvents.SHEEP_SHEAR, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

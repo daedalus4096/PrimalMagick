@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class EmptySpellPayload extends AbstractSpellPayload<EmptySpellPayload> {
     public static final String TYPE = "none";
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         // Do nothing
     }
 
@@ -60,6 +61,7 @@ public class EmptySpellPayload extends AbstractSpellPayload<EmptySpellPayload> {
     }
     
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.EARTH;
     }
@@ -70,7 +72,7 @@ public class EmptySpellPayload extends AbstractSpellPayload<EmptySpellPayload> {
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         // Do nothing
     }
 

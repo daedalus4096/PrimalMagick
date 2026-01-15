@@ -23,6 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition for an earth damage spell.  Does standard damage to the target and knocks it back.  The
@@ -58,15 +59,16 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload<EarthDam
     }
     
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.EARTH;
     }
     
     @Override
-    protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+    protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity livingTarget) {
+            if (entityTarget.getEntity() instanceof LivingEntity livingTarget) {
                 Vec3 knockbackVec;
                 if (entityTarget.getEntity().equals(caster)) {
                     // If for some reason the caster targets themselves, knock them directly backward
@@ -83,7 +85,7 @@ public class EarthDamageSpellPayload extends AbstractDamageSpellPayload<EarthDam
     }
     
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundsPM.ROCKSLIDE.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
     
