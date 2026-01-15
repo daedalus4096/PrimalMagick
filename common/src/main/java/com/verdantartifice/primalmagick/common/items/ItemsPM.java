@@ -855,10 +855,10 @@ public class ItemsPM {
     public static final IRegistryItem<Item, StaffCoreItem> PURE_PRIMAL_STAFF_CORE_ITEM = registerSupplier("pure_primal_staff_core_item", () -> new StaffCoreItem(WandCore.PURE_PRIMAL, new Item.Properties()));
 
     // Register spawn egg items
-    public static final IRegistryItem<Item, SpawnEggItem> TREEFOLK_SPAWN_EGG = registerSupplier("treefolk_spawn_egg", () -> new SpawnEggItem(EntityTypesPM.TREEFOLK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, SpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = registerSupplier("primalite_golem_spawn_egg", () -> new SpawnEggItem(EntityTypesPM.PRIMALITE_GOLEM.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, SpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = registerSupplier("hexium_golem_spawn_egg", () -> new SpawnEggItem(EntityTypesPM.HEXIUM_GOLEM.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, SpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = registerSupplier("hallowsteel_golem_spawn_egg", () -> new SpawnEggItem(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, SpawnEggItem> TREEFOLK_SPAWN_EGG = registerSupplier("treefolk_spawn_egg", () -> new SpawnEggItem(new Item.Properties().spawnEgg(EntityTypesPM.TREEFOLK.get())));
+    public static final IRegistryItem<Item, SpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = registerSupplier("primalite_golem_spawn_egg", () -> new SpawnEggItem(new Item.Properties().spawnEgg(EntityTypesPM.PRIMALITE_GOLEM.get())));
+    public static final IRegistryItem<Item, SpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = registerSupplier("hexium_golem_spawn_egg", () -> new SpawnEggItem(new Item.Properties().spawnEgg(EntityTypesPM.HEXIUM_GOLEM.get())));
+    public static final IRegistryItem<Item, SpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = registerSupplier("hallowsteel_golem_spawn_egg", () -> new SpawnEggItem(new Item.Properties().spawnEgg(EntityTypesPM.HALLOWSTEEL_GOLEM.get())));
     public static final IRegistryItem<Item, SpawnEggItem> BASIC_EARTH_PIXIE = registerSupplier("pixie_basic_earth", () -> new PixieItem(EntityTypesPM.BASIC_EARTH_PIXIE.get(), PixieRank.BASIC, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
     public static final IRegistryItem<Item, SpawnEggItem> GRAND_EARTH_PIXIE = registerSupplier("pixie_grand_earth", () -> new PixieItem(EntityTypesPM.GRAND_EARTH_PIXIE.get(), PixieRank.GRAND, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_EARTH_PIXIE = registerSupplier("pixie_majestic_earth", () -> new PixieItem(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), PixieRank.MAJESTIC, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));

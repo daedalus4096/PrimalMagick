@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
+import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.items.tools.ManaOrbItem;
@@ -317,7 +318,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         this.spawnEggItem(ItemsPM.HALLOWSTEEL_GOLEM_SPAWN_EGG.get());
         
         // Generate pixie and drained pixie items
-        PixieItemNeoforge.getAllPixies().forEach(this::pixieItem);
+        PixieItem.getAllPixies().forEach(this::pixieItem);
         
         // Generate book items
         this.basicItem(ItemsPM.STATIC_BOOK.get());
@@ -592,7 +593,7 @@ public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderP
         return this.itemWithParent(item, Identifier.withDefaultNamespace("item/template_spawn_egg"));
     }
     
-    private void pixieItem(PixieItemNeoforge item) {
+    private void pixieItem(PixieItem item) {
         this.itemWithParent(item, ResourceUtils.loc("item/template_pixie"));
         this.getBuilder(this.key(item).withPrefix("drained_").toString()).parent(this.existingModel(ResourceUtils.loc("item/template_drained_pixie")));
     }

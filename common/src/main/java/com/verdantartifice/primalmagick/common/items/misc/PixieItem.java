@@ -19,6 +19,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +39,7 @@ public class PixieItem extends SpawnEggItem implements IPixieItem {
     protected final Source source;
 
     public PixieItem(EntityType<? extends AbstractPixieEntity> defaultType, PixieRank rank, Source source, Properties properties) {
-        super(defaultType, properties.component(DataComponentsPM.SOURCE_TINT.get(), source));
+        super(properties.spawnEgg(defaultType).component(DataComponentsPM.SOURCE_TINT.get(), source));
         this.rank = rank;
         this.source = source;
         PIXIES.add(this);
@@ -55,6 +56,7 @@ public class PixieItem extends SpawnEggItem implements IPixieItem {
     }
 
     @Override
+    @NotNull
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         if (level instanceof ServerLevel serverLevel) {
@@ -63,7 +65,10 @@ public class PixieItem extends SpawnEggItem implements IPixieItem {
             Direction dir = context.getClickedFace();
             BlockState state = level.getBlockState(pos);
             Player player = context.getPlayer();
-            EntityType<?> entityType = this.getType(level.registryAccess(), stack);
+            EntityType<?> entityType = this.getType(stack);
+            if (entityType == null) {
+                return InteractionResult.FAIL;
+            }
 
             BlockPos spawnPos = state.getCollisionShape(level, pos).isEmpty() ? pos : pos.relative(dir);
             Entity spawned = entityType.spawn(serverLevel, stack, player, spawnPos, EntitySpawnReason.SPAWN_ITEM_USE, true, !Objects.equals(pos, spawnPos) && dir == Direction.UP);
