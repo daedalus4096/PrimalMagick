@@ -4,6 +4,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Custom GUI slot for generic device outputs.
@@ -20,12 +21,13 @@ public class GenericResultSlotForge extends SlotItemHandler {
     }
     
     @Override
-    public boolean mayPlace(ItemStack stack) {
+    public boolean mayPlace(@NotNull ItemStack stack) {
         // Don't allow anything to be dropped into the slot
         return false;
     }
     
     @Override
+    @NotNull
     public ItemStack remove(int amount) {
         if (this.hasItem()) {
             this.removeCount += Math.min(amount, this.getItem().getCount());
@@ -34,7 +36,7 @@ public class GenericResultSlotForge extends SlotItemHandler {
     }
     
     @Override
-    public void onTake(Player thePlayer, ItemStack stack) {
+    public void onTake(@NotNull Player thePlayer, @NotNull ItemStack stack) {
         this.checkTakeAchievements(stack);
         super.onTake(thePlayer, stack);
     }
@@ -49,14 +51,14 @@ public class GenericResultSlotForge extends SlotItemHandler {
     }
 
     @Override
-    protected void onQuickCraft(ItemStack stack, int amount) {
+    protected void onQuickCraft(@NotNull ItemStack stack, int amount) {
         this.removeCount += amount;
         this.checkTakeAchievements(stack);
     }
     
     @Override
     protected void checkTakeAchievements(ItemStack stack) {
-        stack.onCraftedBy(this.player.level(), this.player, this.removeCount);
+        stack.onCraftedBy(this.player, this.removeCount);
         this.removeCount = 0;
     }
 }
