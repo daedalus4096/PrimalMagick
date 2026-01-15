@@ -7,6 +7,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Rarity;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -58,11 +59,13 @@ public class WandGem implements IWandComponent {
     }
     
     @Override
+    @NotNull
     public String getTag() {
         return this.tag;
     }
     
     @Override
+    @NotNull
     public Type getComponentType() {
         return IWandComponent.Type.GEM;
     }
@@ -77,6 +80,7 @@ public class WandGem implements IWandComponent {
     }
     
     @Override
+    @NotNull
     public Rarity getRarity() {
         return this.rarity;
     }

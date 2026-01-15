@@ -2,6 +2,7 @@ v7.0.0
 ------
 * Updated to Minecraft 1.21.10
 * Earthshatter Hammers no longer have limited durability
+* Wands and staves now have a fixed enchantability, rather than scaling with their components
 
 v6.0.7
 ------

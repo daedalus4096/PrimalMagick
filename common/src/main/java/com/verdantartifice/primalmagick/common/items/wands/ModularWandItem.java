@@ -17,7 +17,9 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -25,16 +27,16 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Item definition for a modular wand.  Modular wands are made up of cores, caps, and gems, and their
@@ -48,7 +50,7 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ModularWandItem(Properties properties) {
-        super(properties);
+        super(properties.enchantable(36));
     }
 
     @Override
@@ -101,7 +103,7 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
     
     @Override
-    public boolean isGlamoured(ItemStack stack) {
+    public boolean isGlamoured(@NotNull ItemStack stack) {
         return stack.has(DataComponentsPM.WAND_CORE_APPEARANCE.get()) || stack.has(DataComponentsPM.WAND_CAP_APPEARANCE.get()) || stack.has(DataComponentsPM.WAND_GEM_APPEARANCE.get());
     }
 
@@ -188,11 +190,12 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     
     @Nonnull
     protected List<IWandComponent> getComponents(@Nonnull ItemStack stack) {
-        return Arrays.asList(this.getWandCore(stack), this.getWandCap(stack), this.getWandGem(stack)).stream().filter(Objects::nonNull).collect(Collectors.toList());
+        return Stream.of(this.getWandCore(stack), this.getWandCap(stack), this.getWandGem(stack)).filter(Objects::nonNull).collect(Collectors.toList());
     }
     
     @Override
-    public Component getName(ItemStack stack) {
+    @NotNull
+    public Component getName(@NotNull ItemStack stack) {
         // A modular wand's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Wand")
         WandCore core = this.getWandCore(stack);
         Component coreName = (core == null) ? Component.translatable("wand_core.primalmagick.unknown") : Component.translatable(core.getNameTranslationKey());
@@ -221,11 +224,6 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
         return retVal;
     }
     
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return true;
-    }
-
     public static void registerCreativeTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier) {
         Item item = itemSupplier.get().asItem();
         if (item instanceof ModularWandItem wandItem) {
@@ -250,8 +248,8 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
     
     @Override
-    public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull ServerLevel worldIn, @NotNull Entity entityIn, EquipmentSlot slot) {
+        super.inventoryTick(stack, worldIn, entityIn, slot);
         
         // Smoothly regenerate one mana per second for core-aligned sources
         WandCore core = this.getWandCore(stack);

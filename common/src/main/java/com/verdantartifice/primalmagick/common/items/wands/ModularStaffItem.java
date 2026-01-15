@@ -29,7 +29,7 @@ public abstract class ModularStaffItem extends ModularWandItem implements IStaff
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ModularStaffItem(Item.Properties properties) {
-        super(properties);
+        super(properties.enchantable(36));
     }
     
     public static ItemAttributeModifiers createAttributes(double damage, double attackSpeed) {

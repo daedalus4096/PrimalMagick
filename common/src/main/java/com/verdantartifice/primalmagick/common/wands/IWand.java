@@ -59,7 +59,7 @@ public interface IWand extends ISpellContainer, IManaContainer {
      * @param stack the wand stack to be queried
      * @return true if the wand has a glamour applied, false otherwise
      */
-    boolean isGlamoured(@Nullable ItemStack stack);
+    boolean isGlamoured(@NotNull ItemStack stack);
 
     default InteractionResult onWandUseFirst(ItemStack stack, UseOnContext context) {
         // Only process on server side
