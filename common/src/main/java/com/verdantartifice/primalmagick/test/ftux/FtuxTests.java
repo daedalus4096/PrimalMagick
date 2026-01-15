@@ -64,7 +64,6 @@ public class FtuxTests extends AbstractBaseTest {
         // Place a bed and sleep in it
         BlockPos bedPos = new BlockPos(2, 2, 2);
         TestUtils.placeBed(helper, bedPos);
-        helper.setNight();
         player.startSleepInBed(helper.absolutePos(bedPos));
         player.stopSleeping();
         

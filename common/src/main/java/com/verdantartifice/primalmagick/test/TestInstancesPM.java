@@ -372,7 +372,7 @@ public class TestInstancesPM {
         registerFunction(context, FONT_DISCOVERY_SKY, TestFunctionsPM.FONT_DISCOVERY_SKY.getKey());
         registerFunction(context, FONT_DISCOVERY_SUN, TestFunctionsPM.FONT_DISCOVERY_SUN.getKey());
         registerFunction(context, FONT_DISCOVERY_MOON, TestFunctionsPM.FONT_DISCOVERY_MOON.getKey());
-        registerFunction(context, SLEEP_AFTER_SHRINE_GRANTS_DREAM, TestFunctionsPM.SLEEP_AFTER_SHRINE_GRANTS_DREAM.getKey(), ResourceUtils.loc("test/floor5x5x5"));
+        registerFunction(context, SLEEP_AFTER_SHRINE_GRANTS_DREAM, TestFunctionsPM.SLEEP_AFTER_SHRINE_GRANTS_DREAM.getKey(), TestEnvironmentsPM.NIGHTTIME_ENV, ResourceUtils.loc("test/floor5x5x5"));
         registerFunction(context, MUNDANE_WAND_CRAFTING_EARTH, TestFunctionsPM.MUNDANE_WAND_CRAFTING_EARTH.getKey());
         registerFunction(context, MUNDANE_WAND_CRAFTING_SEA, TestFunctionsPM.MUNDANE_WAND_CRAFTING_SEA.getKey());
         registerFunction(context, MUNDANE_WAND_CRAFTING_SKY, TestFunctionsPM.MUNDANE_WAND_CRAFTING_SKY.getKey());
