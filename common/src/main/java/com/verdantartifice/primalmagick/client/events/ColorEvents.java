@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -84,42 +85,42 @@ public class ColorEvents {
             if (stack.getItem() instanceof BlockItem blockItem) {
                 if (blockItem.getBlock() instanceof StainedSkyglassBlock skyglassBlock) {
                     int color = skyglassBlock.getColor().getFireworkColor();
-                    if (FastColor.ARGB32.alpha(color) == 0) {
+                    if (ARGB.alpha(color) == 0) {
                         // Assume color is opaque if alpha channel is set to zero
-                        color = FastColor.ARGB32.opaque(color);
+                        color = ARGB.opaque(color);
                     }
                     return color;
                 }
             }
-            return FastColor.ARGB32.opaque(DyeColor.WHITE.getFireworkColor());
+            return ARGB.opaque(DyeColor.WHITE.getFireworkColor());
         }, ItemsPM.STAINED_SKYGLASS_BLACK.get(), ItemsPM.STAINED_SKYGLASS_BLUE.get(), ItemsPM.STAINED_SKYGLASS_BROWN.get(), ItemsPM.STAINED_SKYGLASS_CYAN.get(), ItemsPM.STAINED_SKYGLASS_GRAY.get(), ItemsPM.STAINED_SKYGLASS_GREEN.get(), ItemsPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), ItemsPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), ItemsPM.STAINED_SKYGLASS_LIME.get(), ItemsPM.STAINED_SKYGLASS_MAGENTA.get(), ItemsPM.STAINED_SKYGLASS_ORANGE.get(), ItemsPM.STAINED_SKYGLASS_PINK.get(), ItemsPM.STAINED_SKYGLASS_PURPLE.get(), ItemsPM.STAINED_SKYGLASS_RED.get(), ItemsPM.STAINED_SKYGLASS_WHITE.get(), ItemsPM.STAINED_SKYGLASS_YELLOW.get());
 
         itemColors.register((stack, dummy) -> {
             if (stack.getItem() instanceof BlockItem blockItem) {
                 if (blockItem.getBlock() instanceof StainedSkyglassPaneBlock skyglassBlock) {
                     int color = skyglassBlock.getColor().getFireworkColor();
-                    if (FastColor.ARGB32.alpha(color) == 0) {
+                    if (ARGB.alpha(color) == 0) {
                         // Assume color is opaque if alpha channel is set to zero
-                        color = FastColor.ARGB32.opaque(color);
+                        color = ARGB.opaque(color);
                     }
                     return color;
                 }
             }
-            return FastColor.ARGB32.opaque(DyeColor.WHITE.getFireworkColor());
+            return ARGB.opaque(DyeColor.WHITE.getFireworkColor());
         }, ItemsPM.STAINED_SKYGLASS_PANE_BLACK.get(), ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get(), ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get(), ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get(), ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get(), ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get(), ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), ItemsPM.STAINED_SKYGLASS_PANE_LIME.get(), ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get(), ItemsPM.STAINED_SKYGLASS_PANE_PINK.get(), ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get(), ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get(), ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get());
         
         itemColors.register((stack, dummy) -> {
             if (stack.getItem() instanceof BlockItem blockItem) {
                 if (blockItem.getBlock() instanceof RitualCandleBlock candleBlock) {
                     int color = candleBlock.getColor().getFireworkColor();
-                    if (FastColor.ARGB32.alpha(color) == 0) {
+                    if (ARGB.alpha(color) == 0) {
                         // Assume color is opaque if alpha channel is set to zero
-                        color = FastColor.ARGB32.opaque(color);
+                        color = ARGB.opaque(color);
                     }
                     return color;
                 }
             }
-            return FastColor.ARGB32.opaque(DyeColor.WHITE.getFireworkColor());
+            return ARGB.opaque(DyeColor.WHITE.getFireworkColor());
         }, ItemsPM.RITUAL_CANDLE_BLACK.get(), ItemsPM.RITUAL_CANDLE_BLUE.get(), ItemsPM.RITUAL_CANDLE_BROWN.get(), ItemsPM.RITUAL_CANDLE_CYAN.get(), ItemsPM.RITUAL_CANDLE_GRAY.get(), ItemsPM.RITUAL_CANDLE_GREEN.get(), ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get(), ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get(), ItemsPM.RITUAL_CANDLE_LIME.get(), ItemsPM.RITUAL_CANDLE_MAGENTA.get(), ItemsPM.RITUAL_CANDLE_ORANGE.get(), ItemsPM.RITUAL_CANDLE_PINK.get(), ItemsPM.RITUAL_CANDLE_PURPLE.get(), ItemsPM.RITUAL_CANDLE_RED.get(), ItemsPM.RITUAL_CANDLE_WHITE.get(), ItemsPM.RITUAL_CANDLE_YELLOW.get());
         
         itemColors.register((stack, color) -> {
@@ -133,9 +134,9 @@ public class ColorEvents {
 
     private static int getStackColor(ItemStack stack, int tintIndex, Function<Integer, Integer> baseColorGetter) {
         int color = baseColorGetter.apply(tintIndex);
-        if (FastColor.ARGB32.alpha(color) == 0) {
+        if (ARGB.alpha(color) == 0) {
             // Assume color is opaque if alpha channel is set to zero
-            color = FastColor.ARGB32.opaque(color);
+            color = ARGB.opaque(color);
         }
         return color;
     }

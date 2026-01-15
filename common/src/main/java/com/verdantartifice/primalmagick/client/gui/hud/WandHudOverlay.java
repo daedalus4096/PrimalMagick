@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.item.ItemStack;
 
@@ -118,14 +119,14 @@ public class WandHudOverlay {
     }
     
     private static float getRed(int color) {
-        return FastColor.ARGB32.red(color) / 255.0F;
+        return ARGB.red(color) / 255.0F;
     }
 
     private static float getGreen(int color) {
-        return FastColor.ARGB32.green(color) / 255.0F;
+        return ARGB.green(color) / 255.0F;
     }
 
     private static float getBlue(int color) {
-        return FastColor.ARGB32.blue(color) / 255.0F;
+        return ARGB.blue(color) / 255.0F;
     }
 }
