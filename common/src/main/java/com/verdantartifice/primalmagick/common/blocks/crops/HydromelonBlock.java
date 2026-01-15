@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -44,7 +45,7 @@ public class HydromelonBlock extends Block {
                                           @NotNull BlockHitResult pHit) {
         if (Services.ITEM_ABILITIES.canAxeStrip(stack)) {
             // If the player right-clicks on the hydromelon with an axe, replace this block with water (or vapor if in the Nether)
-            boolean shouldVaporize = pLevel.dimensionType().ultraWarm();
+            boolean shouldVaporize = pLevel.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pPos);
             RandomSource rng = pPlayer.getRandom();
             pLevel.playSound(pPlayer, pPos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (shouldVaporize) {
