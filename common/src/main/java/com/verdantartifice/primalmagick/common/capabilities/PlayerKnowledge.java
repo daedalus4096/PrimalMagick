@@ -76,7 +76,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             ).apply(instance, PlayerKnowledge::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerKnowledge> STREAM_CODEC = StreamCodecUtils.composite(
-            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).<Set<AbstractResearchKey<?>>>map(ImmutableSet::copyOf, ImmutableList::copyOf), k -> k.research,
+            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), k -> k.research,
             StageEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).<Map<AbstractResearchKey<?>, Integer>>map(
                 entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(StageEntry::key, StageEntry::stage)),
                 entryMap -> entryMap.entrySet().stream().map(e -> new StageEntry(e.getKey(), e.getValue())).toList()
@@ -387,13 +387,9 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             RegistryOps<Tag> registryOps = player.level().registryAccess().createSerializationContext(NbtOps.INSTANCE);
             CODEC.encodeStart(registryOps, this)
                     .resultOrPartial(err -> LOGGER.error("Failed to encode knowledge data for syncing"))
-                    .ifPresent(tag -> {
-                        CODEC.parse(registryOps, tag)
-                                .resultOrPartial(err -> LOGGER.error("Failed to parse knowledge data for syncing"))
-                                .ifPresent(knowledge -> {
-                                    PacketHandler.sendToPlayer(new SyncKnowledgePacket(knowledge), player);
-                                });
-                    });
+                    .flatMap(tag -> CODEC.parse(registryOps, tag)
+                            .resultOrPartial(err -> LOGGER.error("Failed to parse knowledge data for syncing")))
+                    .ifPresent(knowledge -> PacketHandler.sendToPlayer(new SyncKnowledgePacket(knowledge), player));
 
             // Remove all popup flags after syncing to prevent spam
             this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
