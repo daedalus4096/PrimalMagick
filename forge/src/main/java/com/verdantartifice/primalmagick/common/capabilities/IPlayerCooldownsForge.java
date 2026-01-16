@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.util.INBTSerializable;
 
 @AutoRegisterCapability
 @SuppressWarnings("deprecation")
-public interface IPlayerCooldownsForge extends IPlayerCooldowns, INBTSerializable<CompoundTag> {
+public interface IPlayerCooldownsForge extends IPlayerCooldowns, INBTSerializable<Tag> {
 }

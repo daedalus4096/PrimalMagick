@@ -3,11 +3,12 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.Identifier;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 public class PlayerCooldownsForge extends PlayerCooldowns implements IPlayerCooldownsForge {
     /**
@@ -16,14 +17,15 @@ public class PlayerCooldownsForge extends PlayerCooldowns implements IPlayerCool
      * @author Daedalus4096
      * @see com.verdantartifice.primalmagick.common.events.CapabilityEvents
      */
-    public static class Provider implements ICapabilitySerializable<CompoundTag> {
+    public static class Provider implements ICapabilitySerializable<Tag> {
         public static final Identifier NAME = ResourceUtils.loc("capability_cooldowns");
 
         private final PlayerCooldowns instance = new PlayerCooldownsForge();
         private final LazyOptional<IPlayerCooldowns> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance
 
         @Override
-        public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        @NotNull
+        public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
             if (cap == CapabilitiesForge.COOLDOWNS) {
                 return holder.cast();
             } else {
@@ -31,15 +33,13 @@ public class PlayerCooldownsForge extends PlayerCooldowns implements IPlayerCool
             }
         }
 
-        @SuppressWarnings("deprecation")
         @Override
-        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+        public Tag serializeNBT(HolderLookup.Provider registries) {
             return instance.serializeNBT(registries);
         }
 
-        @SuppressWarnings("deprecation")
         @Override
-        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+        public void deserializeNBT(HolderLookup.Provider registries, Tag nbt) {
             instance.deserializeNBT(registries, nbt);
         }
     }
