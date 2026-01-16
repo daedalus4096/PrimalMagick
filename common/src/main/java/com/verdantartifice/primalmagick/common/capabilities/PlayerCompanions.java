@@ -68,7 +68,7 @@ public class PlayerCompanions implements IPlayerCompanions {
         RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
         this.syncTimestamp = System.currentTimeMillis();
         return CODEC.encodeStart(registryOps, this)
-                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player attunements: {}", msg))
+                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player companions: {}", msg))
                 .orElse(null);
     }
 
