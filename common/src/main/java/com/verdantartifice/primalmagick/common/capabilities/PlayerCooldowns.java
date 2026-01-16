@@ -112,11 +112,6 @@ public class PlayerCooldowns implements IPlayerCooldowns {
     }
 
     @Override
-    public void clearCooldowns() {
-        this.cooldowns.clear();
-    }
-
-    @Override
     public void sync(ServerPlayer player) {
         if (player != null) {
             this.syncTimestamp = System.currentTimeMillis();

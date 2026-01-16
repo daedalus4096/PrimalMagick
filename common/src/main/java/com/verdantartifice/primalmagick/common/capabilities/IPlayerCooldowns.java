@@ -48,12 +48,7 @@ public interface IPlayerCooldowns extends INBTSerializablePM<Tag> {
      * @param durationTicks the length of the cooldown to set, in ticks
      */
     void setCooldown(@Nullable CooldownType type, int durationTicks);
-    
-    /**
-     * Reset all active cooldowns.
-     */
-    void clearCooldowns();
-    
+
     /**
      * Sync the given player's cooldown data to their client.
      * 
