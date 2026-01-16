@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
+import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanions;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -20,35 +20,27 @@ import net.minecraft.world.entity.player.Player;
  */
 public class SyncCompanionsPacket implements IMessageToClient {
     public static final Identifier CHANNEL = ResourceUtils.loc("sync_companions");
-    public static final StreamCodec<RegistryFriendlyByteBuf, SyncCompanionsPacket> STREAM_CODEC = StreamCodec.ofMember(SyncCompanionsPacket::encode, SyncCompanionsPacket::decode);
+    public static final StreamCodec<RegistryFriendlyByteBuf, SyncCompanionsPacket> STREAM_CODEC = StreamCodec.composite(
+            PlayerCompanions.STREAM_CODEC, p -> p.packetCompanions,
+            SyncCompanionsPacket::new);
 
-    protected final CompoundTag data;
+    protected final PlayerCompanions packetCompanions;
 
-    public SyncCompanionsPacket(Player player) {
-        this.data = Services.CAPABILITIES.companions(player).map(c -> c.serializeNBT(player.registryAccess())).orElse(null);
+    public SyncCompanionsPacket(PlayerCompanions companions) {
+        this.packetCompanions = companions;
     }
     
-    protected SyncCompanionsPacket(CompoundTag data) {
-        this.data = data;
-    }
-
     public static CustomPacketPayload.Type<CustomPacketPayload> type() {
         return new CustomPacketPayload.Type<>(CHANNEL);
     }
 
-    public static void encode(SyncCompanionsPacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeNbt(message.data);
-    }
-    
-    public static SyncCompanionsPacket decode(RegistryFriendlyByteBuf buf) {
-        return new SyncCompanionsPacket(buf.readNbt());
-    }
-    
     public static void onMessage(PacketContext<SyncCompanionsPacket> ctx) {
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
         if (player != null) {
             Services.CAPABILITIES.companions(player).ifPresent(companions -> {
-                companions.deserializeNBT(player.registryAccess(), ctx.message().data);
+                if (companions instanceof PlayerCompanions playerCompanions) {
+                    playerCompanions.copyFrom(ctx.message().packetCompanions);
+                }
             });
         }
     }

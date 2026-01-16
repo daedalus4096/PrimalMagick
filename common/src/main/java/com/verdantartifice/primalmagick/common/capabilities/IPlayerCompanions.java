@@ -1,27 +1,33 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
-import net.minecraft.nbt.CompoundTag;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.IntFunction;
 
 /**
  * Capability interface for storing player companion IDs.  Attached to player entities.
  * 
  * @author Daedalus4096
  */
-public interface IPlayerCompanions extends INBTSerializablePM<CompoundTag> {
+public interface IPlayerCompanions extends INBTSerializablePM<Tag> {
     /**
      * Adds the given entity ID for the given companion type to the player's data.  Removes and returns
      * the oldest companion ID for the given type if the new ID would put the player over the limit for
      * that companion type.
      * 
-     * @param type the type of comapanion to add
+     * @param type the type of companion to add
      * @param id the companion ID to be added
      * @return the oldest companion ID if this would exceed the companion limit, or null 
      */
@@ -66,18 +72,29 @@ public interface IPlayerCompanions extends INBTSerializablePM<CompoundTag> {
     void sync(@Nullable ServerPlayer player);
     
     enum CompanionType implements StringRepresentable {
-        GOLEM("golem", 1),
-        PIXIE("pixie", 3);
-        
+        GOLEM(0, "golem", 1),
+        PIXIE(1, "pixie", 3);
+
+        private static final IntFunction<CompanionType> BY_ID = ByIdMap.continuous(CompanionType::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
+        public static final Codec<CompanionType> CODEC = StringRepresentable.fromValues(CompanionType::values);
+        public static final StreamCodec<ByteBuf, CompanionType> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, CompanionType::getId);
+
+        private final int id;
         private final String name;
         private final int limit;
         
-        private CompanionType(@Nonnull String name, int limit) {
+        CompanionType(int id, @NotNull String name, int limit) {
+            this.id = id;
             this.name = name;
             this.limit = limit;
         }
 
+        public int getId() {
+            return this.id;
+        }
+
         @Override
+        @NotNull
         public String getSerializedName() {
             return this.name;
         }
