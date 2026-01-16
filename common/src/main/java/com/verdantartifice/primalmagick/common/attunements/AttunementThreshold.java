@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 
@@ -22,7 +23,7 @@ public enum AttunementThreshold implements StringRepresentable {
     private final String tag;
     private final int value;
     
-    private AttunementThreshold(String tag, int value) {
+    AttunementThreshold(String tag, int value) {
         this.tag = tag;
         this.value = value;
     }
@@ -47,5 +48,15 @@ public enum AttunementThreshold implements StringRepresentable {
     @Override
     public String getSerializedName() {
         return this.tag;
+    }
+
+    @Nullable
+    public static AttunementThreshold fromName(@Nullable String name) {
+        for (AttunementThreshold threshold : AttunementThreshold.values()) {
+            if (threshold.getSerializedName().equals(name)) {
+                return threshold;
+            }
+        }
+        return null;
     }
 }

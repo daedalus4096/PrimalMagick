@@ -9,10 +9,10 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.util.Collections;
 import java.util.Map;
@@ -39,19 +39,19 @@ public class PlayerAttunements implements IPlayerAttunements {
         
         // Serialize recorded attunement values
         ListTag attunementList = new ListTag();
-        for (Map.Entry<Source, Map<AttunementType, Integer>> sourceEntry : this.attunements.entrySet()) {
-            if (sourceEntry != null) {
-                for (Map.Entry<AttunementType, Integer> typeEntry : sourceEntry.getValue().entrySet()) {
-                    if (typeEntry != null && sourceEntry.getKey() != null && typeEntry.getKey() != null && typeEntry.getValue() != null) {
+        this.attunements.forEach((source, typeMap) -> {
+            if (source != null) {
+                typeMap.forEach((type, value) -> {
+                    if (type != null && value != null) {
                         CompoundTag tag = new CompoundTag();
-                        tag.putString("Source", sourceEntry.getKey().getId().toString());
-                        tag.putString("Type", typeEntry.getKey().name());
-                        tag.putInt("Value", typeEntry.getValue().intValue());
+                        tag.putString("Source", source.getId().toString());
+                        tag.putString("Type", type.name());
+                        tag.putInt("Value", value);
                         attunementList.add(tag);
                     }
-                }
+                });
             }
-        }
+        });
         rootTag.put("Attunements", attunementList);
         
         // Serialize recorded suppression values
@@ -70,31 +70,39 @@ public class PlayerAttunements implements IPlayerAttunements {
 
     @Override
     public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-        if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
+        if (nbt == null || nbt.getLongOr("SyncTimestamp", 0L) <= this.syncTimestamp) {
             return;
         }
 
-        this.syncTimestamp = nbt.getLong("SyncTimestamp");
+        this.syncTimestamp = nbt.getLongOr("SyncTimestamp", 0L);
         this.clear();
         
         // Deserialize attunement values
-        ListTag attunementList = nbt.getList("Attunements", Tag.TAG_COMPOUND);
+        ListTag attunementList = nbt.getListOrEmpty("Attunements");
         for (int index = 0; index < attunementList.size(); index++) {
-            CompoundTag tag = attunementList.getCompound(index);
-            Source source = Sources.get(Identifier.parse(tag.getString("Source")));
-            AttunementType type = null;
-            try {
-                type = AttunementType.valueOf(tag.getString("Type"));
-            } catch (Exception e) {}
-            int value = tag.getInt("Value");
-            this.setValue(source, type, value);
+            CompoundTag tag = attunementList.getCompoundOrEmpty(index);
+
+            MutableObject<Source> source = new MutableObject<>();
+            tag.getString("Source").ifPresent(sourceStr -> source.setValue(Sources.get(Identifier.parse(sourceStr))));
+
+            MutableObject<AttunementType> type = new MutableObject<>();
+            tag.getString("Type").ifPresent(typeStr -> type.setValue(AttunementType.fromName(typeStr)));
+
+            int value = tag.getIntOr("Value", 0);
+            if (source.get() != null && type.get() != null) {
+                this.setValue(source.get(), type.get(), value);
+            }
         }
         
         // Deserialize suppression values
-        ListTag suppressionList = nbt.getList("Suppressions", Tag.TAG_STRING);
+        ListTag suppressionList = nbt.getListOrEmpty("Suppressions");
         for (int index = 0; index < suppressionList.size(); index++) {
-            Source source = Sources.get(Identifier.parse(suppressionList.getString(index)));
-            this.setSuppressed(source, true);
+            suppressionList.getString(index).ifPresent(sourceStr -> {
+                Source source = Sources.get(Identifier.parse(sourceStr));
+                if (source != null) {
+                    this.setSuppressed(source, true);
+                }
+            });
         }
     }
 
@@ -106,7 +114,7 @@ public class PlayerAttunements implements IPlayerAttunements {
 
     @Override
     public int getValue(Source source, AttunementType type) {
-        return this.attunements.getOrDefault(source, Collections.emptyMap()).getOrDefault(type, Integer.valueOf(0)).intValue();
+        return this.attunements.getOrDefault(source, Collections.emptyMap()).getOrDefault(type, 0);
     }
 
     @Override
@@ -120,7 +128,7 @@ public class PlayerAttunements implements IPlayerAttunements {
             int toSet = type.isCapped() ? Mth.clamp(value, 0, type.getMaximum()) : Math.max(0, value);
             
             // Add the given value to the type map
-            typeMap.put(type, Integer.valueOf(toSet));
+            typeMap.put(type, toSet);
         }
     }
 

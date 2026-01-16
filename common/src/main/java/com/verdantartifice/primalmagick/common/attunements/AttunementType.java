@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagick.common.attunements;
 
 import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.util.StringRepresentable;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a type of magickal attunement.  Permanent attunement is gained through research and
@@ -21,7 +21,7 @@ public enum AttunementType implements StringRepresentable {
     private final String name;
     private final int maximum;    // The maximum attunement amount of this type that the player can have at once
     
-    private AttunementType(String name, int max) {
+    AttunementType(String name, int max) {
         this.name = name;
         this.maximum = max;
     }
@@ -34,13 +34,24 @@ public enum AttunementType implements StringRepresentable {
         return this.maximum;
     }
     
-    @Nonnull
+    @NotNull
     public String getNameTranslationKey() {
         return String.join(".", "attunement_type", Constants.MOD_ID, this.getSerializedName());
     }
 
     @Override
+    @NotNull
     public String getSerializedName() {
         return this.name;
+    }
+
+    @Nullable
+    public static AttunementType fromName(@Nullable String name) {
+        for (AttunementType type : AttunementType.values()) {
+            if (type.getSerializedName().equals(name)) {
+                return type;
+            }
+        }
+        return null;
     }
 }
