@@ -1,18 +1,27 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.resources.Identifier;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import org.apache.commons.lang3.mutable.MutableObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.Map;
@@ -25,85 +34,72 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Daedalus4096
  */
 public class PlayerAttunements implements IPlayerAttunements {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
+    public static final Codec<PlayerAttunements> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Entry.CODEC.listOf().<Map<Source, Map<AttunementType, Integer>>>xmap(
+                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::source, Entry::typeVals)),
+                    entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
+            ).fieldOf("attunements").forGetter(a -> a.attunements),
+            Source.CODEC.listOf().<Set<Source>>xmap(ImmutableSet::copyOf, ImmutableList::copyOf).fieldOf("suppressions").forGetter(a -> a.suppressions),
+            Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(a -> a.syncTimestamp)
+    ).apply(instance, PlayerAttunements::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, PlayerAttunements> STREAM_CODEC = StreamCodec.composite(
+            Entry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
+                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::source, Entry::typeVals)),
+                    entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
+            ), a -> a.attunements,
+            Source.STREAM_CODEC.apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), a -> a.suppressions,
+            ByteBufCodecs.VAR_LONG, a -> a.syncTimestamp,
+            PlayerAttunements::new
+    );
+
     // Nested map of sources to attunement types to values
     private final Map<Source, Map<AttunementType, Integer>> attunements = new ConcurrentHashMap<>();
     
     // Set of sources currently having their attunements suppressed
     private final Set<Source> suppressions = ConcurrentHashMap.newKeySet();
     
-    private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
+    private long syncTimestamp;    // Last timestamp at which this capability received a sync from the server
 
-    @Override
-    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
-        CompoundTag rootTag = new CompoundTag();
-        
-        // Serialize recorded attunement values
-        ListTag attunementList = new ListTag();
-        this.attunements.forEach((source, typeMap) -> {
-            if (source != null) {
-                typeMap.forEach((type, value) -> {
-                    if (type != null && value != null) {
-                        CompoundTag tag = new CompoundTag();
-                        tag.putString("Source", source.getId().toString());
-                        tag.putString("Type", type.name());
-                        tag.putInt("Value", value);
-                        attunementList.add(tag);
-                    }
-                });
-            }
-        });
-        rootTag.put("Attunements", attunementList);
-        
-        // Serialize recorded suppression values
-        ListTag suppressionList = new ListTag();
-        for (Source source : this.suppressions) {
-            if (source != null) {
-                suppressionList.add(StringTag.valueOf(source.getId().toString()));
-            }
-        }
-        rootTag.put("Suppressions", suppressionList);
-        
-        rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
-        
-        return rootTag;
+    public PlayerAttunements() {
+        this(Map.of(), Set.of(), 0L);
+    }
+
+    protected PlayerAttunements(Map<Source, Map<AttunementType, Integer>> attunements, Set<Source> suppressions, long syncTimestamp) {
+        this.attunements.putAll(attunements);
+        this.suppressions.addAll(suppressions);
+        this.syncTimestamp = syncTimestamp;
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-        if (nbt == null || nbt.getLongOr("SyncTimestamp", 0L) <= this.syncTimestamp) {
+    public Tag serializeNBT(@NotNull HolderLookup.Provider registries) {
+        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
+        this.syncTimestamp = System.currentTimeMillis();
+        return CODEC.encodeStart(registryOps, this)
+                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player knowledge: {}", msg))
+                .orElse(null);
+    }
+
+    @Override
+    public void deserializeNBT(@NotNull HolderLookup.Provider registries, @NotNull Tag nbt) {
+        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
+        CODEC.parse(registryOps, nbt)
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(this::copyFrom);
+    }
+
+    public void copyFrom(@Nullable PlayerAttunements other) {
+        if (other == null || other.syncTimestamp <= this.syncTimestamp) {
             return;
         }
 
-        this.syncTimestamp = nbt.getLongOr("SyncTimestamp", 0L);
+        this.syncTimestamp = other.syncTimestamp;
         this.clear();
-        
-        // Deserialize attunement values
-        ListTag attunementList = nbt.getListOrEmpty("Attunements");
-        for (int index = 0; index < attunementList.size(); index++) {
-            CompoundTag tag = attunementList.getCompoundOrEmpty(index);
 
-            MutableObject<Source> source = new MutableObject<>();
-            tag.getString("Source").ifPresent(sourceStr -> source.setValue(Sources.get(Identifier.parse(sourceStr))));
-
-            MutableObject<AttunementType> type = new MutableObject<>();
-            tag.getString("Type").ifPresent(typeStr -> type.setValue(AttunementType.fromName(typeStr)));
-
-            int value = tag.getIntOr("Value", 0);
-            if (source.get() != null && type.get() != null) {
-                this.setValue(source.get(), type.get(), value);
-            }
-        }
-        
-        // Deserialize suppression values
-        ListTag suppressionList = nbt.getListOrEmpty("Suppressions");
-        for (int index = 0; index < suppressionList.size(); index++) {
-            suppressionList.getString(index).ifPresent(sourceStr -> {
-                Source source = Sources.get(Identifier.parse(sourceStr));
-                if (source != null) {
-                    this.setSuppressed(source, true);
-                }
-            });
-        }
+        this.attunements.putAll(other.attunements);
+        this.suppressions.addAll(other.suppressions);
     }
 
     @Override
@@ -153,7 +149,47 @@ public class PlayerAttunements implements IPlayerAttunements {
     @Override
     public void sync(ServerPlayer player) {
         if (player != null) {
-            PacketHandler.sendToPlayer(new SyncAttunementsPacket(player), player);
+            this.syncTimestamp = System.currentTimeMillis();
+
+            // Clone this data before passing it to the network
+            RegistryOps<Tag> registryOps = player.level().registryAccess().createSerializationContext(NbtOps.INSTANCE);
+            CODEC.encodeStart(registryOps, this)
+                    .resultOrPartial(err -> LOGGER.error("Failed to encode attunement data for syncing"))
+                    .flatMap(tag -> CODEC.parse(registryOps, tag)
+                            .resultOrPartial(err -> LOGGER.error("Failed to parse attunement data for syncing")))
+                    .ifPresent(attunements -> PacketHandler.sendToPlayer(new SyncAttunementsPacket(attunements), player));
         }
+    }
+
+    protected record Entry(Source source, Map<AttunementType, Integer> typeVals) {
+        public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Source.CODEC.fieldOf("source").forGetter(Entry::source),
+                SubEntry.CODEC.listOf().<Map<AttunementType, Integer>>xmap(
+                        subEntryList -> subEntryList.stream().collect(ImmutableMap.toImmutableMap(SubEntry::type, SubEntry::value)),
+                        subEntryMap -> subEntryMap.entrySet().stream().map(e -> new SubEntry(e.getKey(), e.getValue())).toList()
+                ).fieldOf("typeVals").forGetter(e -> e.typeVals)
+        ).apply(instance, Entry::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, Entry> STREAM_CODEC = StreamCodec.composite(
+                Source.STREAM_CODEC, Entry::source,
+                SubEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
+                        subEntryList -> subEntryList.stream().collect(ImmutableMap.toImmutableMap(SubEntry::type, SubEntry::value)),
+                        subEntryMap -> subEntryMap.entrySet().stream().map(e -> new SubEntry(e.getKey(), e.getValue())).toList()
+                ), Entry::typeVals,
+                Entry::new
+        );
+    }
+
+    protected record SubEntry(AttunementType type, int value) {
+        public static final Codec<SubEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                AttunementType.CODEC.fieldOf("type").forGetter(SubEntry::type),
+                Codec.INT.fieldOf("value").forGetter(SubEntry::value)
+        ).apply(instance, SubEntry::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, SubEntry> STREAM_CODEC = StreamCodec.composite(
+                AttunementType.STREAM_CODEC, SubEntry::type,
+                ByteBufCodecs.VAR_INT, SubEntry::value,
+                SubEntry::new
+        );
     }
 }
