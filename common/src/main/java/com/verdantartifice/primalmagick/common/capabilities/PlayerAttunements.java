@@ -52,8 +52,7 @@ public class PlayerAttunements implements IPlayerAttunements {
             ), a -> a.attunements,
             Source.STREAM_CODEC.apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), a -> a.suppressions,
             ByteBufCodecs.VAR_LONG, a -> a.syncTimestamp,
-            PlayerAttunements::new
-    );
+            PlayerAttunements::new);
 
     // Nested map of sources to attunement types to values
     private final Map<Source, Map<AttunementType, Integer>> attunements = new ConcurrentHashMap<>();
@@ -78,7 +77,7 @@ public class PlayerAttunements implements IPlayerAttunements {
         RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
         this.syncTimestamp = System.currentTimeMillis();
         return CODEC.encodeStart(registryOps, this)
-                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player knowledge: {}", msg))
+                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player attunements: {}", msg))
                 .orElse(null);
     }
 
