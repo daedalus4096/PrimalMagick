@@ -5,18 +5,18 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
-import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PlayerCompanions extends AbstractCapability<PlayerCompanions> implements IPlayerCompanions {
     public static final Codec<PlayerCompanions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Entry.CODEC.listOf().<Map<CompanionType, LinkedList<UUID>>>xmap(
+            Entry.CODEC.listOf().<Map<CompanionType, LinkedList<EntityReference<LivingEntity>>>>xmap(
                     entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::companionType, Entry::idList)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
             ).fieldOf("companions").forGetter(c -> c.companions),
@@ -41,13 +41,13 @@ public class PlayerCompanions extends AbstractCapability<PlayerCompanions> imple
             ByteBufCodecs.VAR_LONG, AbstractCapability::getSyncTimestamp,
             PlayerCompanions::new);
 
-    private final Map<CompanionType, LinkedList<UUID>> companions = new ConcurrentHashMap<>();
+    private final Map<CompanionType, LinkedList<EntityReference<LivingEntity>>> companions = new ConcurrentHashMap<>();
 
     public PlayerCompanions() {
         this(Map.of(), 0L);
     }
 
-    protected PlayerCompanions(Map<CompanionType, LinkedList<UUID>> companions, long syncTimestamp) {
+    protected PlayerCompanions(Map<CompanionType, LinkedList<EntityReference<LivingEntity>>> companions, long syncTimestamp) {
         super(syncTimestamp);
         this.companions.putAll(companions);
     }
@@ -64,8 +64,8 @@ public class PlayerCompanions extends AbstractCapability<PlayerCompanions> imple
     }
 
     @Override
-    public UUID add(CompanionType type, UUID id) {
-        LinkedList<UUID> list = this.companions.computeIfAbsent(type, (t) -> new LinkedList<>());
+    public EntityReference<LivingEntity> add(CompanionType type, EntityReference<LivingEntity> id) {
+        LinkedList<EntityReference<LivingEntity>> list = this.companions.computeIfAbsent(type, t -> new LinkedList<>());
         if (list.contains(id)) {
             return null;
         } else {
@@ -79,17 +79,17 @@ public class PlayerCompanions extends AbstractCapability<PlayerCompanions> imple
     }
 
     @Override
-    public boolean contains(CompanionType type, UUID id) {
+    public boolean contains(CompanionType type, EntityReference<LivingEntity> id) {
         return this.companions.getOrDefault(type, new LinkedList<>()).contains(id);
     }
 
     @Override
-    public List<UUID> get(CompanionType type) {
+    public List<EntityReference<LivingEntity>> get(CompanionType type) {
         return Collections.unmodifiableList(this.companions.getOrDefault(type, new LinkedList<>()));
     }
 
     @Override
-    public boolean remove(CompanionType type, UUID id) {
+    public boolean remove(CompanionType type, EntityReference<LivingEntity> id) {
         return this.companions.getOrDefault(type, new LinkedList<>()).remove(id);
     }
 
@@ -103,15 +103,15 @@ public class PlayerCompanions extends AbstractCapability<PlayerCompanions> imple
         this.sync(player, SyncCompanionsPacket::new);
     }
 
-    protected record Entry(CompanionType companionType, LinkedList<UUID> idList) {
+    protected record Entry(CompanionType companionType, LinkedList<EntityReference<LivingEntity>> idList) {
         public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 CompanionType.CODEC.fieldOf("companionType").forGetter(Entry::companionType),
-                UUIDUtil.CODEC.listOf().xmap(LinkedList::new, ImmutableList::copyOf).fieldOf("idList").forGetter(Entry::idList)
+                EntityReference.<LivingEntity>codec().listOf().xmap(LinkedList::new, ImmutableList::copyOf).fieldOf("idList").forGetter(Entry::idList)
             ).apply(instance, Entry::new));
 
         public static final StreamCodec<RegistryFriendlyByteBuf, Entry> STREAM_CODEC = StreamCodec.composite(
                 CompanionType.STREAM_CODEC, Entry::companionType,
-                UUIDUtil.STREAM_CODEC.apply(ByteBufCodecs.list()).map(LinkedList::new, ImmutableList::copyOf), Entry::idList,
+                EntityReference.<LivingEntity>streamCodec().apply(ByteBufCodecs.list()).map(LinkedList::new, ImmutableList::copyOf), Entry::idList,
                 Entry::new
         );
     }

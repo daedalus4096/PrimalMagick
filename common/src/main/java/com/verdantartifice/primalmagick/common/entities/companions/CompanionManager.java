@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.entities.companions;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nullable;
@@ -41,14 +43,11 @@ public class CompanionManager {
         if (owner != null && companion != null) {
             companion.setCompanionOwner(owner);
             Services.CAPABILITIES.companions(owner).ifPresent(companions -> {
-                UUID oldCompanion = companions.add(companion.getCompanionType(), companion.getUUID());
+                EntityReference<LivingEntity> oldCompanion = companions.add(companion.getCompanionType(), EntityReference.of(companion));
                 if (oldCompanion != null && owner.level() instanceof ServerLevel serverLevel) {
-                    for (ServerLevel sl : serverLevel.getServer().getAllLevels()) {
-                        Entity entity = sl.getEntity(oldCompanion);
-                        if (entity != null) {
-                            entity.kill(sl);
-                            break;
-                        }
+                    Entity entity = EntityReference.getLivingEntity(oldCompanion, serverLevel);
+                    if (entity != null) {
+                        entity.kill(serverLevel);
                     }
                 }
                 CompanionManager.scheduleSync(owner);
@@ -66,7 +65,7 @@ public class CompanionManager {
         if (player != null && companion != null) {
             companion.setCompanionOwner(null);
             Services.CAPABILITIES.companions(player).ifPresent(companions -> {
-                if (companions.remove(companion.getCompanionType(), companion.getUUID())) {
+                if (companions.remove(companion.getCompanionType(), EntityReference.of(companion))) {
                     CompanionManager.scheduleSync(player);
                 }
             });
@@ -77,7 +76,7 @@ public class CompanionManager {
         if (player == null || companion == null) {
             return false;
         } else {
-            return Services.CAPABILITIES.companions(player).map(c -> c.contains(companion.getCompanionType(), companion.getUUID())).orElse(false);
+            return Services.CAPABILITIES.companions(player).map(c -> c.contains(companion.getCompanionType(), EntityReference.of(companion))).orElse(false);
         }
     }
 }
