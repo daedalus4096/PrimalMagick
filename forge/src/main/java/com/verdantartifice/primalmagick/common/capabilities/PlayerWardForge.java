@@ -3,11 +3,12 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.Identifier;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 public class PlayerWardForge extends PlayerWard implements IPlayerWardForge {
     /**
@@ -16,14 +17,15 @@ public class PlayerWardForge extends PlayerWard implements IPlayerWardForge {
      * @author Daedalus4096
      * @see com.verdantartifice.primalmagick.common.events.CapabilityEvents
      */
-    public static class Provider implements ICapabilitySerializable<CompoundTag> {
+    public static class Provider implements ICapabilitySerializable<Tag> {
         public static final Identifier NAME = ResourceUtils.loc("capability_ward");
 
         private final IPlayerWard instance = new PlayerWard();
         private final LazyOptional<IPlayerWard> holder = LazyOptional.of(() -> instance);   // Cache a lazy optional of the capability instance
 
         @Override
-        public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        @NotNull
+        public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
             if (cap == CapabilitiesForge.WARD) {
                 return holder.cast();
             } else {
@@ -32,12 +34,12 @@ public class PlayerWardForge extends PlayerWard implements IPlayerWardForge {
         }
 
         @Override
-        public CompoundTag serializeNBT(HolderLookup.Provider registries) {
+        public Tag serializeNBT(HolderLookup.Provider registries) {
             return instance.serializeNBT(registries);
         }
 
         @Override
-        public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
+        public void deserializeNBT(HolderLookup.Provider registries, Tag nbt) {
             instance.deserializeNBT(registries, nbt);
         }
     }
