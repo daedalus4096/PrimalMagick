@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -58,5 +59,5 @@ public interface IPlayerAttunements extends INBTSerializablePM<Tag> {
      * 
      * @param player the player whose client should receive the data
      */
-    void sync(@Nullable ServerPlayer player);
+    void sync(@NotNull ServerPlayer player);
 }

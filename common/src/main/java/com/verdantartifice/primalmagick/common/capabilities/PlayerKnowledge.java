@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -17,18 +16,12 @@ import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearch
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
@@ -50,9 +43,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @author Daedalus4096
  */
-public class PlayerKnowledge implements IPlayerKnowledge {
-    private static final Logger LOGGER = LogManager.getLogger();
-
+public class PlayerKnowledge extends AbstractCapability<PlayerKnowledge> implements IPlayerKnowledge {
     public static final int LEGACY_VERSION = 0;
     public static final int UNREAD_FLAG_VERSION = 1;
     public static final int CURRENT_SCHEMA_VERSION = UNREAD_FLAG_VERSION;
@@ -72,7 +63,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 Project.codec().optionalFieldOf("project").forGetter(k -> k.project),
                 AbstractResearchTopic.dispatchCodec().optionalFieldOf("topic").forGetter(k -> k.topic),
                 Codec.INT.optionalFieldOf("schemaVersion", UNREAD_FLAG_VERSION).forGetter(k -> k.schemaVersion),
-                Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(k -> k.syncTimestamp)
+                Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(AbstractCapability::getSyncTimestamp)
             ).apply(instance, PlayerKnowledge::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerKnowledge> STREAM_CODEC = StreamCodecUtils.composite(
@@ -90,7 +81,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             ByteBufCodecs.optional(Project.streamCodec()), k -> k.project,
             ByteBufCodecs.optional(AbstractResearchTopic.dispatchStreamCodec()), k -> k.topic,
             ByteBufCodecs.VAR_INT, k -> k.schemaVersion,
-            ByteBufCodecs.VAR_LONG, k -> k.syncTimestamp,
+            ByteBufCodecs.VAR_LONG, AbstractCapability::getSyncTimestamp,
             PlayerKnowledge::new);
     
     private final Set<AbstractResearchKey<?>> research = ConcurrentHashMap.newKeySet();                 // Set of known research
@@ -102,7 +93,6 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private Optional<Project> project;                  // Currently active research project
     private Optional<AbstractResearchTopic<?>> topic;   // Last active grimoire research topic
     private int schemaVersion;                          // Version of this object's schema, used to know when certain legacy updates should be done
-    private long syncTimestamp;                         // Last timestamp at which this capability received a sync from the server
 
     public PlayerKnowledge() {
         this(Set.of(), Map.of(), Map.of(), Map.of(), List.of(), Optional.empty(), Optional.empty(), CURRENT_SCHEMA_VERSION, 0L);
@@ -112,6 +102,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                               Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags, Map<KnowledgeType, Integer> knowledge,
                               List<AbstractResearchTopic<?>> topicHistory, Optional<Project> project,
                               Optional<AbstractResearchTopic<?>> topic, int schemaVersion, long syncTimestamp) {
+        super(syncTimestamp);
         this.research.addAll(research);
         this.stages.putAll(stages);
         this.flags.putAll(flags);
@@ -120,7 +111,6 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.project = project;
         this.topic = topic;
         this.schemaVersion = schemaVersion;
-        this.syncTimestamp = syncTimestamp;
     }
 
     @VisibleForTesting
@@ -128,37 +118,19 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         return this.schemaVersion;
     }
 
-    @Nullable
-    @Override
-    public Tag serializeNBT(@NotNull HolderLookup.Provider registryAccess) {
-        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
-        this.syncTimestamp = System.currentTimeMillis();
-        return CODEC.encodeStart(registryOps, this)
-                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player knowledge: {}", msg))
-                .orElse(null);
-    }
-
-    @Override
-    public synchronized void deserializeNBT(@NotNull HolderLookup.Provider registryAccess, @NotNull Tag nbt) {
-        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
-        CODEC.parse(registryOps, nbt)
-                .resultOrPartial(LOGGER::error)
-                .ifPresent(this::copyFrom);
-    }
-
     protected boolean isReadByDefault(ResearchEntryKey key) {
         return this.research.contains(key) && !this.hasResearchFlag(key, ResearchFlag.NEW) && !this.hasResearchFlag(key, ResearchFlag.UPDATED);
     }
 
-    public void copyFrom(@Nullable PlayerKnowledge other) {
-        if (other == null || other.syncTimestamp <= this.syncTimestamp) {
-            return;
-        }
+    @Override
+    public Codec<PlayerKnowledge> codec() {
+        return CODEC;
+    }
 
-        this.syncTimestamp = other.syncTimestamp;
+    @Override
+    protected void copyFromInner(@NotNull PlayerKnowledge other) {
         this.clearResearch();
         this.clearKnowledge();
-
         this.research.addAll(other.research);
         this.stages.putAll(other.stages);
         this.flags.putAll(other.flags);
@@ -379,21 +351,11 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public void sync(@Nullable ServerPlayer player) {
-        if (player != null) {
-            this.syncTimestamp = System.currentTimeMillis();
+    public void sync(@NotNull ServerPlayer player) {
+        this.sync(player, SyncKnowledgePacket::new);
 
-            // Clone this data before passing it to the network
-            RegistryOps<Tag> registryOps = player.level().registryAccess().createSerializationContext(NbtOps.INSTANCE);
-            CODEC.encodeStart(registryOps, this)
-                    .resultOrPartial(err -> LOGGER.error("Failed to encode knowledge data for syncing"))
-                    .flatMap(tag -> CODEC.parse(registryOps, tag)
-                            .resultOrPartial(err -> LOGGER.error("Failed to parse knowledge data for syncing")))
-                    .ifPresent(knowledge -> PacketHandler.sendToPlayer(new SyncKnowledgePacket(knowledge), player));
-
-            // Remove all popup flags after syncing to prevent spam
-            this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
-        }
+        // Remove all popup flags after syncing to prevent spam
+        this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
     }
 
     @Override

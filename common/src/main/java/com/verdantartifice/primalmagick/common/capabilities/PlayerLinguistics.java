@@ -6,25 +6,17 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
-import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguisticsPacket;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
 import com.verdantartifice.primalmagick.common.util.IdentifiedScoreEntry;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2i;
 
 import java.util.Collections;
@@ -38,9 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @author Daedalus4096
  */
-public class PlayerLinguistics implements IPlayerLinguistics {
-    private static final Logger LOGGER = LogManager.getLogger();
-
+public class PlayerLinguistics extends AbstractCapability<PlayerLinguistics> implements IPlayerLinguistics {
     public static final Codec<PlayerLinguistics> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             IdentifiedScoreEntry.CODEC.listOf().<Map<Identifier, Integer>>xmap(
                     entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
@@ -67,7 +57,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
                     entryMap -> entryMap.entrySet().stream().map(e -> new GridModificationTimeEntry(e.getKey(), e.getValue())).toList()
             ).fieldOf("gridModificationTimes").forGetter(l -> l.gridModificationTimes),
             ScribeTableMode.CODEC.fieldOf("scribeTableMode").forGetter(l -> l.scribeTableMode),
-            Codec.LONG.fieldOf("syncTimestamp").forGetter(l -> l.syncTimestamp)
+            Codec.LONG.fieldOf("syncTimestamp").forGetter(AbstractCapability::getSyncTimestamp)
     ).apply(instance, PlayerLinguistics::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerLinguistics> STREAM_CODEC = StreamCodec.composite(
@@ -96,7 +86,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
                     entryMap -> entryMap.entrySet().stream().map(e -> new GridModificationTimeEntry(e.getKey(), e.getValue())).toList()
             ), l -> l.gridModificationTimes,
             ScribeTableMode.STREAM_CODEC, l -> l.scribeTableMode,
-            ByteBufCodecs.VAR_LONG, l -> l.syncTimestamp,
+            ByteBufCodecs.VAR_LONG, AbstractCapability::getSyncTimestamp,
             PlayerLinguistics::new);
 
     // Map of language IDs to comprehension scores
@@ -120,8 +110,6 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     // Current scribe table mode
     private ScribeTableMode scribeTableMode;
     
-    private long syncTimestamp;    // Last timestamp at which this capability received a sync from the server
-
     public PlayerLinguistics() {
         this(Map.of(), Map.of(), Map.of(), Map.of(), Map.of(), Map.of(), ScribeTableMode.STUDY_VOCABULARY, 0L);
     }
@@ -130,6 +118,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
                                 Map<Identifier, Set<Identifier>> booksRead, Map<Identifier, Map<Identifier, Integer>> studyCounts,
                                 Map<Identifier, Set<Vector2i>> unlocks, Map<Identifier, Long> gridModificationTimes,
                                 ScribeTableMode scribeTableMode, long syncTimestamp) {
+        super(syncTimestamp);
         this.comprehension.putAll(comprehension);
         this.vocabulary.putAll(vocabulary);
         this.booksRead.putAll(booksRead);
@@ -137,35 +126,16 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         this.unlocks.putAll(unlocks);
         this.gridModificationTimes.putAll(gridModificationTimes);
         this.scribeTableMode = scribeTableMode;
-        this.syncTimestamp = syncTimestamp;
-    }
-
-    @Nullable
-    @Override
-    public Tag serializeNBT(@NotNull HolderLookup.Provider registryAccess) {
-        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
-        this.syncTimestamp = System.currentTimeMillis();
-        return CODEC.encodeStart(registryOps, this)
-                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player linguistics: {}", msg))
-                .orElse(null);
     }
 
     @Override
-    public synchronized void deserializeNBT(@NotNull HolderLookup.Provider registryAccess, @NotNull Tag nbt) {
-        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
-        CODEC.parse(registryOps, nbt)
-                .resultOrPartial(LOGGER::error)
-                .ifPresent(this::copyFrom);
+    public Codec<PlayerLinguistics> codec() {
+        return CODEC;
     }
 
-    public void copyFrom(@Nullable PlayerLinguistics other) {
-        if (other == null || other.syncTimestamp <= this.syncTimestamp) {
-            return;
-        }
-
-        this.syncTimestamp = other.syncTimestamp;
+    @Override
+    protected void copyFromInner(@NotNull PlayerLinguistics other) {
         this.clear();
-
         this.comprehension.putAll(other.comprehension);
         this.vocabulary.putAll(other.vocabulary);
         this.booksRead.putAll(other.booksRead);
@@ -265,18 +235,8 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     }
 
     @Override
-    public void sync(ServerPlayer player) {
-        if (player != null) {
-            this.syncTimestamp = System.currentTimeMillis();
-
-            // Clone this data before passing it to the network
-            RegistryOps<Tag> registryOps = player.registryAccess().createSerializationContext(NbtOps.INSTANCE);
-            CODEC.encodeStart(registryOps, this)
-                    .resultOrPartial(err -> LOGGER.error("Failed to encode companion data for syncing"))
-                    .flatMap(tag -> CODEC.parse(registryOps, tag)
-                            .resultOrPartial(err -> LOGGER.error("Failed to parse companion data for syncing")))
-                    .ifPresent(linguistics -> PacketHandler.sendToPlayer(new SyncLinguisticsPacket(linguistics), player));
-        }
+    public void sync(@NotNull ServerPlayer player) {
+        this.sync(player, SyncLinguisticsPacket::new);
     }
 
     protected record BooksReadEntry(Identifier languageId, Set<Identifier> bookIds) {

@@ -65,12 +65,12 @@ public class PlayerStats extends AbstractCapability<PlayerStats> implements IPla
 
     protected PlayerStats(Map<Identifier, Integer> stats, Set<BlockPos> discoveredShrines, Set<ResourceKey<Recipe<?>>> craftedRecipes,
                           Set<Identifier> craftedGroups, Set<Identifier> craftedEnchants, long syncTimestamp) {
+        super(syncTimestamp);
         this.stats.putAll(stats);
         this.discoveredShrines.addAll(discoveredShrines);
         this.craftedRecipes.addAll(craftedRecipes);
         this.craftedGroups.addAll(craftedGroups);
         this.craftedEnchants.addAll(craftedEnchants);
-        this.setSyncTimestamp(syncTimestamp);
     }
 
     @Override
@@ -160,7 +160,7 @@ public class PlayerStats extends AbstractCapability<PlayerStats> implements IPla
     }
 
     @Override
-    public void sync(ServerPlayer player) {
+    public void sync(@NotNull ServerPlayer player) {
         this.sync(player, SyncStatsPacket::new);
     }
 }

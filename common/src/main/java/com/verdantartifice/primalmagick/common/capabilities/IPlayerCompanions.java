@@ -11,7 +11,6 @@ import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.IntFunction;
@@ -69,7 +68,7 @@ public interface IPlayerCompanions extends INBTSerializablePM<Tag> {
      * 
      * @param player the player whose client should receive the data
      */
-    void sync(@Nullable ServerPlayer player);
+    void sync(@NotNull ServerPlayer player);
     
     enum CompanionType implements StringRepresentable {
         GOLEM(0, "golem", 1),

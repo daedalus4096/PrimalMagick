@@ -3,25 +3,17 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
-import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.Map;
@@ -33,16 +25,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @author Daedalus4096
  */
-public class PlayerAttunements implements IPlayerAttunements {
-    private static final Logger LOGGER = LogUtils.getLogger();
-
+public class PlayerAttunements extends AbstractCapability<PlayerAttunements> implements IPlayerAttunements {
     public static final Codec<PlayerAttunements> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Entry.CODEC.listOf().<Map<Source, Map<AttunementType, Integer>>>xmap(
                     entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::source, Entry::typeVals)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
             ).fieldOf("attunements").forGetter(a -> a.attunements),
             Source.CODEC.listOf().<Set<Source>>xmap(ImmutableSet::copyOf, ImmutableList::copyOf).fieldOf("suppressions").forGetter(a -> a.suppressions),
-            Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(a -> a.syncTimestamp)
+            Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(AbstractCapability::getSyncTimestamp)
     ).apply(instance, PlayerAttunements::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerAttunements> STREAM_CODEC = StreamCodec.composite(
@@ -51,7 +41,7 @@ public class PlayerAttunements implements IPlayerAttunements {
                     entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
             ), a -> a.attunements,
             Source.STREAM_CODEC.apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), a -> a.suppressions,
-            ByteBufCodecs.VAR_LONG, a -> a.syncTimestamp,
+            ByteBufCodecs.VAR_LONG, AbstractCapability::getSyncTimestamp,
             PlayerAttunements::new);
 
     // Nested map of sources to attunement types to values
@@ -60,43 +50,24 @@ public class PlayerAttunements implements IPlayerAttunements {
     // Set of sources currently having their attunements suppressed
     private final Set<Source> suppressions = ConcurrentHashMap.newKeySet();
     
-    private long syncTimestamp;    // Last timestamp at which this capability received a sync from the server
-
     public PlayerAttunements() {
         this(Map.of(), Set.of(), 0L);
     }
 
     protected PlayerAttunements(Map<Source, Map<AttunementType, Integer>> attunements, Set<Source> suppressions, long syncTimestamp) {
+        super(syncTimestamp);
         this.attunements.putAll(attunements);
         this.suppressions.addAll(suppressions);
-        this.syncTimestamp = syncTimestamp;
     }
 
     @Override
-    public Tag serializeNBT(@NotNull HolderLookup.Provider registries) {
-        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
-        this.syncTimestamp = System.currentTimeMillis();
-        return CODEC.encodeStart(registryOps, this)
-                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player attunements: {}", msg))
-                .orElse(null);
+    public Codec<PlayerAttunements> codec() {
+        return CODEC;
     }
 
     @Override
-    public void deserializeNBT(@NotNull HolderLookup.Provider registries, @NotNull Tag nbt) {
-        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
-        CODEC.parse(registryOps, nbt)
-                .resultOrPartial(LOGGER::error)
-                .ifPresent(this::copyFrom);
-    }
-
-    public void copyFrom(@Nullable PlayerAttunements other) {
-        if (other == null || other.syncTimestamp <= this.syncTimestamp) {
-            return;
-        }
-
-        this.syncTimestamp = other.syncTimestamp;
+    protected void copyFromInner(@NotNull PlayerAttunements other) {
         this.clear();
-
         this.attunements.putAll(other.attunements);
         this.suppressions.addAll(other.suppressions);
     }
@@ -146,18 +117,8 @@ public class PlayerAttunements implements IPlayerAttunements {
     }
 
     @Override
-    public void sync(ServerPlayer player) {
-        if (player != null) {
-            this.syncTimestamp = System.currentTimeMillis();
-
-            // Clone this data before passing it to the network
-            RegistryOps<Tag> registryOps = player.level().registryAccess().createSerializationContext(NbtOps.INSTANCE);
-            CODEC.encodeStart(registryOps, this)
-                    .resultOrPartial(err -> LOGGER.error("Failed to encode attunement data for syncing"))
-                    .flatMap(tag -> CODEC.parse(registryOps, tag)
-                            .resultOrPartial(err -> LOGGER.error("Failed to parse attunement data for syncing")))
-                    .ifPresent(attunements -> PacketHandler.sendToPlayer(new SyncAttunementsPacket(attunements), player));
-        }
+    public void sync(@NotNull ServerPlayer player) {
+        this.sync(player, SyncAttunementsPacket::new);
     }
 
     protected record Entry(Source source, Map<AttunementType, Integer> typeVals) {

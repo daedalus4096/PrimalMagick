@@ -21,6 +21,10 @@ public abstract class AbstractCapability<T extends AbstractCapability<T>> implem
 
     private long syncTimestamp;   // Last timestamp at which this capability received a sync from the server
 
+    protected AbstractCapability(long syncTimestamp) {
+        this.syncTimestamp = syncTimestamp;
+    }
+
     @SuppressWarnings("unchecked")
     private T self() {
         return (T)this;

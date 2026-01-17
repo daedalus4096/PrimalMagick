@@ -54,7 +54,7 @@ public interface IPlayerCooldowns extends INBTSerializablePM<Tag> {
      * 
      * @param player the player whose client should receive the data
      */
-    void sync(@Nullable ServerPlayer player);
+    void sync(@NotNull ServerPlayer player);
     
     enum CooldownType implements StringRepresentable {
         SPELL(0, "spell"),

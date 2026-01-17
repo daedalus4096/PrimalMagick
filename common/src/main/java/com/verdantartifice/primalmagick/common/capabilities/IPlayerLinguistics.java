@@ -8,7 +8,6 @@ import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
-import javax.annotation.Nullable;
 import java.util.Set;
 
 /**
@@ -145,5 +144,5 @@ public interface IPlayerLinguistics extends INBTSerializablePM<Tag> {
      * 
      * @param player the player whose client should receive the data
      */
-    void sync(@Nullable ServerPlayer player);
+    void sync(@NotNull ServerPlayer player);
 }

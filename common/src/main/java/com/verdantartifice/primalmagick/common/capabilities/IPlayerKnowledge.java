@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -214,7 +213,7 @@ public interface IPlayerKnowledge extends INBTSerializablePM<Tag> {
      * 
      * @param player the player whose client should receive the data
      */
-    void sync(@Nullable ServerPlayer player);
+    void sync(@NotNull ServerPlayer player);
     
     enum ResearchStatus {
         UNKNOWN,
