@@ -2,12 +2,12 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
 
@@ -16,7 +16,7 @@ import java.util.Set;
  * 
  * @author Daedalus4096
  */
-public interface IPlayerLinguistics extends INBTSerializablePM<CompoundTag> {
+public interface IPlayerLinguistics extends INBTSerializablePM<Tag> {
     int MAX_STUDY_COUNT = 3;
     
     /**
@@ -96,7 +96,7 @@ public interface IPlayerLinguistics extends INBTSerializablePM<CompoundTag> {
      * 
      * @return the current scribe table mode
      */
-    @Nonnull
+    @NotNull
     ScribeTableMode getScribeTableMode();
     
     /**
@@ -104,7 +104,7 @@ public interface IPlayerLinguistics extends INBTSerializablePM<CompoundTag> {
      * 
      * @param mode the new scribe table mode
      */
-    void setScribeTableMode(@Nonnull ScribeTableMode mode);
+    void setScribeTableMode(@NotNull ScribeTableMode mode);
     
     /**
      * Gets an unmodifiable view of the currently unlocked node coordinates for the given grid.  To unlock
@@ -141,7 +141,7 @@ public interface IPlayerLinguistics extends INBTSerializablePM<CompoundTag> {
     long getGridLastModified(Identifier gridDefinitionId);
     
     /**
-     * Sync the given player's linguistics data to the their client.
+     * Sync the given player's linguistics data to their client.
      * 
      * @param player the player whose client should receive the data
      */
