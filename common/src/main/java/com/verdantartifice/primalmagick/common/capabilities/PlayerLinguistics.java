@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguisticsPacket;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
+import com.verdantartifice.primalmagick.common.util.IdentifiedScoreEntry;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.NbtOps;
@@ -276,18 +277,6 @@ public class PlayerLinguistics implements IPlayerLinguistics {
                             .resultOrPartial(err -> LOGGER.error("Failed to parse companion data for syncing")))
                     .ifPresent(linguistics -> PacketHandler.sendToPlayer(new SyncLinguisticsPacket(linguistics), player));
         }
-    }
-
-    protected record IdentifiedScoreEntry(Identifier id, int score) {
-        public static final Codec<IdentifiedScoreEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Identifier.CODEC.fieldOf("id").forGetter(IdentifiedScoreEntry::id),
-                Codec.INT.fieldOf("score").forGetter(IdentifiedScoreEntry::score)
-        ).apply(instance, IdentifiedScoreEntry::new));
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, IdentifiedScoreEntry> STREAM_CODEC = StreamCodec.composite(
-                Identifier.STREAM_CODEC, IdentifiedScoreEntry::id,
-                ByteBufCodecs.VAR_INT, IdentifiedScoreEntry::score,
-                IdentifiedScoreEntry::new);
     }
 
     protected record BooksReadEntry(Identifier languageId, Set<Identifier> bookIds) {

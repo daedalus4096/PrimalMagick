@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
  * 
  * @author Daedalus4096
  */
-public interface IPlayerStats extends INBTSerializablePM<CompoundTag> {
+public interface IPlayerStats extends INBTSerializablePM<Tag> {
     /**
      * Remove all statistics data from the player.
      */
@@ -99,7 +99,7 @@ public interface IPlayerStats extends INBTSerializablePM<CompoundTag> {
     void setRuneEnchantmentCrafted(@Nullable Identifier enchantmentId);
     
     /**
-     * Sync the given player's statistics data to the their client.
+     * Sync the given player's statistics data to their client.
      * 
      * @param player the player whose client should receive the data
      */
