@@ -189,7 +189,7 @@ public class PlayerLinguistics extends AbstractCapability<PlayerLinguistics> imp
 
     @Override
     public int getTimesStudied(Identifier bookDefinitionId, Identifier languageId) {
-        return this.studyCounts.computeIfAbsent(bookDefinitionId, l -> new ConcurrentHashMap<>()).getOrDefault(languageId, 0);
+        return this.studyCounts.getOrDefault(bookDefinitionId, Map.of()).getOrDefault(languageId, 0);
     }
 
     @Override
