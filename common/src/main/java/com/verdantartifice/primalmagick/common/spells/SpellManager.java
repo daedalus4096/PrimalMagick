@@ -100,10 +100,11 @@ public class SpellManager {
             });
 
             // Show the shared cooldown visually
-            player.getCooldowns().addCooldown(ItemsPM.SPELL_SCROLL_FILLED.get(), durationTicks);
-            player.getCooldowns().addCooldown(ItemsPM.MUNDANE_WAND.get(), durationTicks);
-            player.getCooldowns().addCooldown(ItemsPM.MODULAR_WAND.get(), durationTicks);
-            player.getCooldowns().addCooldown(ItemsPM.MODULAR_STAFF.get(), durationTicks);
+            // FIXME Should these use the USE_COOLDOWN data component for a cooldown group?
+            player.getCooldowns().addCooldown(ItemsPM.SPELL_SCROLL_FILLED.getId(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MUNDANE_WAND.getId(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MODULAR_WAND.getId(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MODULAR_STAFF.getId(), durationTicks);
         }
     }
 
