@@ -7,11 +7,11 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.SoundDefinition;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +27,8 @@ public class SoundDefinitionsProviderPMNeoforge extends SoundDefinitionsProvider
 
     private final List<Identifier> generatedSounds = new ArrayList<>();
 
-    public SoundDefinitionsProviderPMNeoforge(PackOutput output, ExistingFileHelper helper) {
-        super(output, Constants.MOD_ID, helper);
+    public SoundDefinitionsProviderPMNeoforge(PackOutput output) {
+        super(output, Constants.MOD_ID);
     }
     
     @Override
@@ -62,17 +62,17 @@ public class SoundDefinitionsProviderPMNeoforge extends SoundDefinitionsProvider
     }
 
     private void addSingle(IRegistryItem<SoundEvent, SoundEvent> eventSupplier) {
-        this.add(eventSupplier, definition().with(sound(eventSupplier.getId())));
+        this.add(eventSupplier.get(), definition().with(sound(eventSupplier.getId())));
     }
     
     private void addMultiple(IRegistryItem<SoundEvent, SoundEvent> eventSupplier, int count) {
         SoundDefinition def = definition();
         IntStream.rangeClosed(1, count).forEach(val -> def.with(sound(eventSupplier.getId().withSuffix(Integer.toString(val)))));
-        this.add(eventSupplier, def);
+        this.add(eventSupplier.get(), def);
     }
 
     @Override
-    protected void add(Identifier soundEvent, SoundDefinition definition) {
+    protected void add(@NotNull Identifier soundEvent, @NotNull SoundDefinition definition) {
         super.add(soundEvent, definition);
         this.generatedSounds.add(soundEvent);
     }
