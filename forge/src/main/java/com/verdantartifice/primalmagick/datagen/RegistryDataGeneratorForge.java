@@ -35,6 +35,7 @@ import net.minecraft.resources.RegistryDataLoader;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -46,7 +47,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public class RegistryDataGeneratorForge extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-            .add(Registries.CONFIGURED_FEATURE, context -> { ConfiguredFeaturesPM.bootstrap(context); })    // FIXME Compile error when just using ConfiguredFeaturesPM::bootstrap for some reason
+            .add(Registries.CONFIGURED_FEATURE, ConfiguredFeaturesPM::bootstrap)
             .add(Registries.PLACED_FEATURE, PlacedFeaturesPM::bootstrap)
             .add(Registries.STRUCTURE, StructuresPM::bootstrap)
             .add(Registries.STRUCTURE_SET, StructureSetsPM::bootstrap)
@@ -86,6 +87,7 @@ public class RegistryDataGeneratorForge extends DatapackBuiltinEntriesProvider {
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Mod-specific Datapack Registries";
     }

@@ -32,9 +32,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DataPackRegistriesHooks;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -46,7 +46,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public class RegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-            .add(Registries.CONFIGURED_FEATURE, context -> { ConfiguredFeaturesPM.bootstrap(context); })    // FIXME Compile error when just using ConfiguredFeaturesPM::bootstrap for some reason
+            .add(Registries.CONFIGURED_FEATURE, ConfiguredFeaturesPM::bootstrap)
             .add(Registries.PLACED_FEATURE, PlacedFeaturesPM::bootstrap)
             .add(Registries.STRUCTURE, StructuresPM::bootstrap)
             .add(Registries.STRUCTURE_SET, StructureSetsPM::bootstrap)
@@ -69,13 +69,13 @@ public class RegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesProvide
         super(output, provider, BUILDER, Set.of(Constants.MOD_ID));
     }
     
-    public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
+    public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
         RegistryDataGeneratorNeoforge registryDataGenerator = generator.addProvider(isServer, new RegistryDataGeneratorNeoforge(output, provider));
         // TODO Move to DataGenerators once Forge allows tagging datapack registries
         generator.addProvider(isServer, new DamageTypeTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER))));
-        generator.addProvider(isServer, new StructureTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new StructureTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER))));
         generator.addProvider(isServer, new BookLanguageTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER))));
-        generator.addProvider(isServer, new ResearchEntryTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new ResearchEntryTagsProviderPMNeoforge(output, provider.thenApply(r -> append(r, BUILDER))));
         return registryDataGenerator.getRegistryProvider();
     }
 
@@ -86,6 +86,7 @@ public class RegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesProvide
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Mod-specific Datapack Registries";
     }
