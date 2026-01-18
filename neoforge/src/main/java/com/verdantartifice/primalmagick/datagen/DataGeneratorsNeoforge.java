@@ -70,7 +70,7 @@ public class DataGeneratorsNeoforge {
         generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new BiomeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
-        generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new MobEffectTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
