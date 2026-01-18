@@ -55,11 +55,11 @@ public class ResearchDisciplines {
     
     @Nullable
     public static ResearchDiscipline getDiscipline(RegistryAccess registryAccess, ResourceKey<ResearchDiscipline> rawKey) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(rawKey);
+        return registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).getValue(rawKey);
     }
 
     public static Stream<ResearchDiscipline> stream(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).stream();
+        return registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).stream();
     }
     
     /**
@@ -70,6 +70,6 @@ public class ResearchDisciplines {
      * @return a list of the research disciplines that should be shown in the grimoire index
      */
     public static Stream<ResearchDiscipline> streamIndexDisciplines(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).stream().filter(d -> d.indexSortOrder().isPresent()).sorted(Comparator.comparingInt(a -> a.indexSortOrder().getAsInt()));
+        return registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).stream().filter(d -> d.indexSortOrder().isPresent()).sorted(Comparator.comparingInt(a -> a.indexSortOrder().getAsInt()));
     }
 }

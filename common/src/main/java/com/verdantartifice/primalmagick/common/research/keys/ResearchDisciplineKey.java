@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.misc.IconDefinition;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -11,8 +11,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
@@ -69,7 +69,7 @@ public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplin
 
     @Override
     public IconDefinition getIcon(RegistryAccess registryAccess) {
-        return IconDefinition.of(registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).getHolder(this.rootKey).map(ref -> ref.value().iconLocation()).orElse(ICON_UNKNOWN));
+        return IconDefinition.of(registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(this.rootKey).map(ref -> ref.value().iconLocation()).orElse(ICON_UNKNOWN));
     }
 
     @Override
@@ -77,16 +77,14 @@ public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplin
         if (player == null) {
             return false;
         }
-        RegistryAccess registryAccess = player.level().registryAccess();
-        Holder.Reference<ResearchDiscipline> discipline = registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).getHolderOrThrow(this.rootKey);
+        RegistryAccess registryAccess = player.registryAccess();
+        Holder.Reference<ResearchDiscipline> discipline = registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).getOrThrow(this.rootKey);
         MutableBoolean retVal = new MutableBoolean(false);
         discipline.value().unlockRequirementOpt().ifPresentOrElse(req -> {
             // If the discipline does have an unlock requirement, then the discipline is only known if that requirement is met
-            retVal.setValue(req.isMetBy(player));
-        }, () -> {
             // If the discipline has no unlock requirement, then it's known to the player
-            retVal.setTrue();
-        });
+            retVal.setValue(req.isMetBy(player));
+        }, retVal::setTrue);
         return retVal.booleanValue();
     }
     

@@ -53,7 +53,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
     }
     
     public Stream<ResearchEntry> getEntryStream(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isForDiscipline(this.key));
+        return registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isForDiscipline(this.key));
     }
 
     public boolean isUnlocked(Player player) {
@@ -88,7 +88,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
      */
     @Nonnull
     public List<ResearchEntry> getFinaleEntries(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isFinaleFor(this.key.getRootKey())).toList();
+        return registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isFinaleFor(this.key.getRootKey())).toList();
     }
     
     public static Builder builder(ResourceKey<ResearchDiscipline> key) {
