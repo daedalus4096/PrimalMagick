@@ -25,7 +25,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.function.BiConsumer;
 
 /**
- * Data provider for all of the mod's theorycrafting reward loot tables.
+ * Data provider for all the mod's theorycrafting reward loot tables.
  * 
  * @author Daedalus4096
  */
@@ -89,7 +89,7 @@ public class TheorycraftingRewardLootTables extends AbstractGameplayLootTableSub
         this.registerLootTable(writer, LootTablesPM.THEORYCRAFTING_RICH_TRADE, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(LootItem.lootTableItem(Items.DIAMOND_LEGGINGS).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(this.registries, UniformGenerator.between(5.0F, 19.0F))))
                 .add(LootItem.lootTableItem(Items.DIAMOND_CHESTPLATE).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(this.registries, UniformGenerator.between(5.0F, 19.0F))))
-                .add(LootItem.lootTableItem(Items.SUSPICIOUS_STEW).setWeight(70).apply(SetStewEffectFunction.stewEffect().withEffect(MobEffects.NIGHT_VISION, UniformGenerator.between(7.0F, 10.0F)).withEffect(MobEffects.JUMP, UniformGenerator.between(7.0F, 10.0F)).withEffect(MobEffects.SATURATION, UniformGenerator.between(7.0F, 10.0F))))
+                .add(LootItem.lootTableItem(Items.SUSPICIOUS_STEW).setWeight(70).apply(SetStewEffectFunction.stewEffect().withEffect(MobEffects.NIGHT_VISION, UniformGenerator.between(7.0F, 10.0F)).withEffect(MobEffects.JUMP_BOOST, UniformGenerator.between(7.0F, 10.0F)).withEffect(MobEffects.SATURATION, UniformGenerator.between(7.0F, 10.0F))))
                 .add(LootItem.lootTableItem(Items.ITEM_FRAME).setWeight(10))
                 .add(LootItem.lootTableItem(Items.GLOBE_BANNER_PATTERN).setWeight(9))
                 .add(LootItem.lootTableItem(Items.ENDER_PEARL).setWeight(14))
