@@ -9,10 +9,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -55,11 +52,12 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
     }
     
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new SpellcraftingAltarMenu(windowId, playerInv, this.getBlockPos(), this);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -99,24 +97,26 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
     }
     
     protected void nextRotationPhase() {
-        this.currentRotation = this.currentRotation.getNext();
-        if (!this.currentRotation.isPause()) {
-            this.lastSegment = this.nextSegment;
-            Segment[] nextPossibleSegments = Arrays.stream(Segment.values()).filter(s -> !s.equals(this.lastSegment)).toArray(Segment[]::new);
-            this.nextSegment = nextPossibleSegments[this.level.random.nextInt(nextPossibleSegments.length)];
-            
-            this.lastSource = this.nextSource;
-            Source[] nextPossibleSources = ALLOWED_SOURCES.stream().filter(s -> !s.equals(this.lastSource)).toArray(Source[]::new);
-            this.nextSource = nextPossibleSources[this.level.random.nextInt(nextPossibleSources.length)];
-        }
-        this.nextUpdate = this.currentRotation.getDuration(this.lastSegment, this.nextSegment);
-        this.phaseTicks = 0;
-        
-        this.setChanged();
-        this.syncTile(true);
-        
-        if (!this.level.isClientSide() && this.currentRotation.isPause()) {
-            this.emitRuneParticle();
+        if (this.level != null) {
+            this.currentRotation = this.currentRotation.getNext();
+            if (!this.currentRotation.isPause()) {
+                this.lastSegment = this.nextSegment;
+                Segment[] nextPossibleSegments = Arrays.stream(Segment.values()).filter(s -> !s.equals(this.lastSegment)).toArray(Segment[]::new);
+                this.nextSegment = nextPossibleSegments[this.level.random.nextInt(nextPossibleSegments.length)];
+
+                this.lastSource = this.nextSource;
+                Source[] nextPossibleSources = ALLOWED_SOURCES.stream().filter(s -> !s.equals(this.lastSource)).toArray(Source[]::new);
+                this.nextSource = nextPossibleSources[this.level.random.nextInt(nextPossibleSources.length)];
+            }
+            this.nextUpdate = this.currentRotation.getDuration(this.lastSegment, this.nextSegment);
+            this.phaseTicks = 0;
+
+            this.setChanged();
+            this.syncTile(true);
+
+            if (this.level instanceof ServerLevel serverLevel && this.currentRotation.isPause()) {
+                this.emitRuneParticle(serverLevel);
+            }
         }
     }
     
@@ -147,24 +147,22 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         }
     }
     
-    protected void emitRuneParticle() {
+    protected void emitRuneParticle(@NotNull ServerLevel serverLevel) {
         Vec3 center = Vec3.upFromBottomCenterOf(this.worldPosition, 1.1875D);
-        Vec3 facingNormal = Vec3.atLowerCornerOf(this.getBlockState().getValue(SpellcraftingAltarBlock.FACING).getNormal());
+        Vec3 facingNormal = Vec3.atLowerCornerOf(this.getBlockState().getValue(SpellcraftingAltarBlock.FACING).getUnitVec3i());
         Vec3 centerOffset = facingNormal.scale(0.5D);
         Vec3 movement = facingNormal.scale(0.05D);
-        long time = this.getLevel().getLevelData().getGameTime();
+        long time = serverLevel.getLevelData().getGameTime();
         double bobDelta = 0.125D * Math.sin(time * (2D * Math.PI / (double)BOB_CYCLE_TIME_TICKS));
 
-        if (this.level instanceof ServerLevel serverLevel) {
-            PacketHandler.sendToAllAround(
-                    new SpellcraftingRunePacket(this.nextSegment, center.x + centerOffset.x, center.y + bobDelta, center.z + centerOffset.z, movement.x, 0D, movement.z, this.nextSource.getColor()),
-                    serverLevel,
-                    this.worldPosition,
-                    64.0D);
-        }
+        PacketHandler.sendToAllAround(
+                new SpellcraftingRunePacket(this.nextSegment, center.x + centerOffset.x, center.y + bobDelta, center.z + centerOffset.z, movement.x, 0D, movement.z, this.nextSource.getColor()),
+                serverLevel,
+                this.worldPosition,
+                64.0D);
     }
     
-    public static enum Segment {
+    public enum Segment {
         U1(0),
         V1(45),
         T1(90),
@@ -176,7 +174,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         
         private final int degreeOffset;
         
-        private Segment(int degrees) {
+        Segment(int degrees) {
             this.degreeOffset = degrees;
         }
         
@@ -184,7 +182,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
             return this.degreeOffset;
         }
         
-        public int getDegreeTarget(Segment last, RotationPhase rotation) {
+        private int getDegreeTarget(Segment last, RotationPhase rotation) {
             if (rotation.isReverse() && this.degreeOffset >= last.degreeOffset) {
                 return this.degreeOffset - 360;
             } else if (!rotation.isReverse() && this.degreeOffset <= last.degreeOffset) {
@@ -195,7 +193,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         }
     }
     
-    protected static enum RotationPhase {
+    protected enum RotationPhase {
         CLOCKWISE(false, false),
         CLOCKWISE_PAUSE(false, true),
         COUNTER_CLOCKWISE(true, false),
@@ -204,7 +202,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         private final boolean reverse;
         private final boolean pause;
         
-        private RotationPhase(boolean reverse, boolean pause) {
+        RotationPhase(boolean reverse, boolean pause) {
             this.reverse = reverse;
             this.pause = pause;
         }
@@ -218,32 +216,22 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         }
         
         public int getDuration(Segment last, Segment next) {
-            switch (this) {
-            case CLOCKWISE:
-            case COUNTER_CLOCKWISE:
-                int segmentDelta = Math.abs(next.getDegreeTarget(last, this) - last.getDegreeOffset()) / 45;
-                return TICKS_PER_SEGMENT_ROTATION * segmentDelta;
-            case CLOCKWISE_PAUSE:
-            case COUNTER_CLOCKWISE_PAUSE:
-                return TICKS_PER_PAUSE;
-            default:
-                throw new IndexOutOfBoundsException("No such rotation phase!");
-            }
+            return switch (this) {
+                case CLOCKWISE, COUNTER_CLOCKWISE -> {
+                    int segmentDelta = Math.abs(next.getDegreeTarget(last, this) - last.getDegreeOffset()) / 45;
+                    yield TICKS_PER_SEGMENT_ROTATION * segmentDelta;
+                }
+                case CLOCKWISE_PAUSE, COUNTER_CLOCKWISE_PAUSE -> TICKS_PER_PAUSE;
+            };
         }
         
         public RotationPhase getNext() {
-            switch (this) {
-            case CLOCKWISE:
-                return CLOCKWISE_PAUSE;
-            case CLOCKWISE_PAUSE:
-                return COUNTER_CLOCKWISE;
-            case COUNTER_CLOCKWISE:
-                return COUNTER_CLOCKWISE_PAUSE;
-            case COUNTER_CLOCKWISE_PAUSE:
-                return CLOCKWISE;
-            default:
-                throw new IndexOutOfBoundsException("No such rotation phase!");
-            }
+            return switch (this) {
+                case CLOCKWISE -> CLOCKWISE_PAUSE;
+                case CLOCKWISE_PAUSE -> COUNTER_CLOCKWISE;
+                case COUNTER_CLOCKWISE -> COUNTER_CLOCKWISE_PAUSE;
+                case COUNTER_CLOCKWISE_PAUSE -> CLOCKWISE;
+            };
         }
     }
 }
