@@ -19,10 +19,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.joml.Vector3d;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -44,6 +43,10 @@ public class RayTraceUtils {
     public static HitResult getMouseOver(Level level, Player player) {
         Minecraft mc = Minecraft.getInstance();
         Entity viewEntity = mc.getCameraEntity();
+        if (viewEntity == null) {
+            return null;
+        }
+        
         double reachDistance = player.blockInteractionRange();
         Vec3 eyePos = viewEntity.getEyePosition(1.0F);
         
@@ -78,11 +81,10 @@ public class RayTraceUtils {
      * @param selector an optional predicate to filter out entities from the search set
      * @param maxSqDistance the square of the maximum distance to search
      * @return a raytrace result with the closest found entity that meets the given criteria, or null if none were found
-     * @see {@link net.minecraft.entity.projectile.ProjectileHelper#getEntityHitResult}
+     * @see net.minecraft.world.entity.projectile.ProjectileUtil#getEntityHitResult
      */
     @Nullable
-    public static EntityHitResult rayTraceEntities(@Nonnull Level world, @Nullable Entity excludeEntity, @Nonnull Vec3 startVec, @Nonnull Vec3 endVec, @Nonnull AABB aabb, @Nullable Predicate<Entity> selector, double maxSqDistance) {
-        double sqDistThreshold = maxSqDistance;
+    public static EntityHitResult rayTraceEntities(@NotNull Level world, @Nullable Entity excludeEntity, @NotNull Vec3 startVec, @NotNull Vec3 endVec, @NotNull AABB aabb, @NotNull Predicate<Entity> selector, double maxSqDistance) {
         Entity hitEntity = null;
         Vec3 hitVec = null;
         
@@ -93,7 +95,7 @@ public class RayTraceUtils {
             if (optionalHitVec.isPresent()) {
                 // If the entity is hit by the ray, determine if it's the closest one yet
                 double sqDist = startVec.distanceToSqr(optionalHitVec.get());
-                if (sqDist < sqDistThreshold) {
+                if (sqDist < maxSqDistance) {
                     hitEntity = entity;
                     hitVec = optionalHitVec.get();
                 }
@@ -127,7 +129,7 @@ public class RayTraceUtils {
         
         // Calculate a direction vector based on the raytrace result's hitVec and the entity's position
         Vec3 dirVec = entityVec.subtract(targetVec);
-        Direction dir = Direction.getNearest(dirVec.x, dirVec.y, dirVec.z);
+        Direction dir = Direction.getApproximateNearest(dirVec.x, dirVec.y, dirVec.z);
         
         return new BlockHitResult(entityResult.getLocation(), dir, entityPos, false);
     }
@@ -149,7 +151,7 @@ public class RayTraceUtils {
         ClipContext context = new ClipContext(sourceVec, targetVec, ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, source);
         BlockHitResult result = source.level().clip(context);
         
-        if (result == null || result.getType() == HitResult.Type.MISS) {
+        if (result.getType() == HitResult.Type.MISS) {
             return true;
         } else if (result.getType() == HitResult.Type.BLOCK) {
             return target.equals(result.getBlockPos());
@@ -187,7 +189,7 @@ public class RayTraceUtils {
     }
     
     /**
-     * @see {@link net.minecraft.world.IBlockReader#rayTraceBlocks(RayTraceContext)}
+     * @see net.minecraft.world.level.BlockGetter#clip(ClipContext)
      */
     protected static BlockHitResult rayTraceBlocksIgnoringSource(EntitylessRayTraceContext context) {
         return iterateRayTrace(context, RayTraceUtils::doRayTraceCheck, RayTraceUtils::createMiss);
@@ -211,11 +213,11 @@ public class RayTraceUtils {
     protected static BlockHitResult createMiss(EntitylessRayTraceContext context) {
         Vec3 endVec = context.getEndVec();
         Vec3 delta = context.getStartVec().subtract(endVec);
-        return BlockHitResult.miss(endVec, Direction.getNearest(delta.x, delta.y, delta.z), BlockPos.containing(endVec));
+        return BlockHitResult.miss(endVec, Direction.getApproximateNearest(delta.x, delta.y, delta.z), BlockPos.containing(endVec));
     }
     
     /**
-     * @see {@link net.minecraft.world.IBlockReader#rayTraceBlocks(Vector3d, Vector3d, BlockPos, VoxelShape, BlockState)}
+     * @see net.minecraft.world.level.BlockGetter#clipWithInteractionOverride(Vec3, Vec3, BlockPos, VoxelShape, BlockState)
      */
     @Nullable
     protected static BlockHitResult doCollisionCheck(BlockGetter world, Vec3 startVec, Vec3 endVec, BlockPos iteratedPos, VoxelShape iteratedShape, BlockState iteratedState) {
@@ -230,14 +232,12 @@ public class RayTraceUtils {
     }
     
     /**
-     * @see {@link net.minecraft.world.IBlockReader#traverseBlocks(RayTraceContext, BiFunction, Function)}
+     * @see net.minecraft.world.level.BlockGetter#traverseBlocks(Vec3, Vec3, Object, BiFunction, Function)
      */
     protected static BlockHitResult iterateRayTrace(EntitylessRayTraceContext context, BiFunction<EntitylessRayTraceContext, BlockPos, BlockHitResult> checkFunc, Function<EntitylessRayTraceContext, BlockHitResult> missFunc) {
         Vec3 startVec = context.getStartVec();
         Vec3 endVec = context.getEndVec();
-        if (startVec.equals(endVec)) {
-            return missFunc.apply(context);
-        } else {
+        if (!startVec.equals(endVec)) {
             double adjEndX = Mth.lerp(-1.0E-7D, endVec.x, startVec.x);
             double adjEndY = Mth.lerp(-1.0E-7D, endVec.y, startVec.y);
             double adjEndZ = Mth.lerp(-1.0E-7D, endVec.z, startVec.z);
@@ -255,13 +255,13 @@ public class RayTraceUtils {
             int signDeltaX = Mth.sign(deltaX);
             int signDeltaY = Mth.sign(deltaY);
             int signDeltaZ = Mth.sign(deltaZ);
-            double d9 = signDeltaX == 0 ? Double.MAX_VALUE : (double)signDeltaX / deltaX;
-            double d10 = signDeltaY == 0 ? Double.MAX_VALUE : (double)signDeltaY / deltaY;
-            double d11 = signDeltaZ == 0 ? Double.MAX_VALUE : (double)signDeltaZ / deltaZ;
+            double d9 = signDeltaX == 0 ? Double.MAX_VALUE : (double) signDeltaX / deltaX;
+            double d10 = signDeltaY == 0 ? Double.MAX_VALUE : (double) signDeltaY / deltaY;
+            double d11 = signDeltaZ == 0 ? Double.MAX_VALUE : (double) signDeltaZ / deltaZ;
             double d12 = d9 * (signDeltaX > 0 ? 1.0D - Mth.frac(adjStartX) : Mth.frac(adjStartX));
             double d13 = d10 * (signDeltaY > 0 ? 1.0D - Mth.frac(adjStartY) : Mth.frac(adjStartY));
             double d14 = d11 * (signDeltaZ > 0 ? 1.0D - Mth.frac(adjStartZ) : Mth.frac(adjStartZ));
-            
+
             while (d12 <= 1.0D || d13 <= 1.0D || d14 <= 1.0D) {
                 if (d12 < d13) {
                     if (d12 < d14) {
@@ -278,21 +278,21 @@ public class RayTraceUtils {
                     adjStartZFloor += signDeltaZ;
                     d14 += d11;
                 }
-                
+
                 BlockHitResult result = checkFunc.apply(context, mbp.set(adjStartXFloor, adjStartYFloor, adjStartZFloor));
                 if (result != null) {
                     return result;
                 }
             }
-            return missFunc.apply(context);
         }
+        return missFunc.apply(context);
     }
     
     /**
-     * Like a normal RayTraceContext, but uses a dummy selection context and doesn't require an Entity.
+     * Like a normal ClipContext, but uses a dummy selection context and doesn't require an Entity.
      * 
      * @author Daedalus4096
-     * @see {@link net.minecraft.util.math.RayTraceContext}
+     * @see net.minecraft.world.level.ClipContext
      */
     protected static class EntitylessRayTraceContext {
         private final BlockGetter world;
