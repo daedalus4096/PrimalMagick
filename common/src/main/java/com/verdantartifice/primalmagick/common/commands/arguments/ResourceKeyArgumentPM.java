@@ -23,6 +23,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -75,21 +76,17 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
 
     private static <T> Holder.Reference<T> resolveKey(CommandContext<CommandSourceStack> pContext, String pArgument, ResourceKey<Registry<T>> pRegistryKey, DynamicCommandExceptionType pException) throws CommandSyntaxException {
         ResourceKey<T> resourcekey = getRegistryKey(pContext, pArgument, pRegistryKey, pException);
-        return getRegistry(pContext, pRegistryKey).getHolder(resourcekey).orElseThrow(() -> {
-            return pException.create(resourcekey.identifier());
-        });
+        return getRegistry(pContext, pRegistryKey).get(resourcekey).orElseThrow(() -> pException.create(resourcekey.identifier()));
     }
 
     private static <T> ResourceKey<T> getRegistryKey(CommandContext<CommandSourceStack> pContext, String pArgument, ResourceKey<Registry<T>> pRegistryKey, DynamicCommandExceptionType pException) throws CommandSyntaxException {
         ResourceKey<?> resourcekey = pContext.getArgument(pArgument, ResourceKey.class);
         Optional<ResourceKey<T>> optional = resourcekey.cast(pRegistryKey);
-        return optional.orElseThrow(() -> {
-            return pException.create(resourcekey);
-        });
+        return optional.orElseThrow(() -> pException.create(resourcekey));
     }
 
     private static <T> Registry<T> getRegistry(CommandContext<CommandSourceStack> pContext, ResourceKey<? extends Registry<T>> pRegistryKey) {
-        return pContext.getSource().getServer().registryAccess().registryOrThrow(pRegistryKey);
+        return pContext.getSource().getServer().registryAccess().lookupOrThrow(pRegistryKey);
     }
 
     @Override
@@ -140,11 +137,12 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
             }
 
             @Override
-            public ResourceKeyArgumentPM<T> instantiate(CommandBuildContext pContext) {
+            public ResourceKeyArgumentPM<T> instantiate(@NotNull CommandBuildContext pContext) {
                 return new ResourceKeyArgumentPM<>(this.registryKey);
             }
 
             @Override
+            @NotNull
             public ArgumentTypeInfo<ResourceKeyArgumentPM<T>, ?> type() {
                 return Info.this;
             }
