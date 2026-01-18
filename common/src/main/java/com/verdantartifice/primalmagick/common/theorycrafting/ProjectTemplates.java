@@ -510,7 +510,7 @@ public class ProjectTemplates {
                 .build());
         context.register(RAIDING_THE_RAIDERS, ProjectTemplate.builder().rewardMultiplier(0.5D)
                 .weightFunction(new ConstantWeight(5))
-                .material(ItemProjectMaterial.builder(Raid.getLeaderBannerInstance(bannerPatternGetter)).consumed().matchNbt().bonusReward(0.25D).weight(1).build())
+                .material(ItemProjectMaterial.builder(Raid.getOminousBannerInstance(bannerPatternGetter)).consumed().matchNbt().bonusReward(0.25D).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.BLOODY_FLESH.get()).consumed().weight(1).build())
                 .material(ItemProjectMaterial.builder(Items.CROSSBOW).consumed().weight(3).build())
                 .material(ItemProjectMaterial.builder(Items.IRON_SWORD).consumed().weight(3).build())
@@ -666,6 +666,6 @@ public class ProjectTemplates {
     }
     
     public static Stream<ProjectTemplate> stream(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).stream();
+        return registryAccess.lookupOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).stream();
     }
 }
