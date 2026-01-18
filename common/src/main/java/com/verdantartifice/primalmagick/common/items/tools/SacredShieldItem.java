@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -29,14 +30,9 @@ public class SacredShieldItem extends AbstractTieredShieldItem implements IEncha
         super(ToolMaterialsPM.HALLOWSTEEL, properties);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public String getDescriptionId(ItemStack stack) {
-        // Don't use the version defined in ShieldItem; we don't support coloring
-        return this.getDescriptionId();
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext level, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext level, @NotNull TooltipDisplay tooltipDisplay, @NotNull Consumer<Component> tooltip, @NotNull TooltipFlag flag) {
         // Do nothing; we don't support banner patterns
     }
 
