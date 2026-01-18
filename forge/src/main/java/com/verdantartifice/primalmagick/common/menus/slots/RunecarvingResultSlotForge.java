@@ -35,12 +35,11 @@ public class RunecarvingResultSlotForge extends GenericResultSlotForge {
 
     @Override
     public void onTake(Player thePlayer, ItemStack stack) {
-        Level level = thePlayer.level();
         this.menu.getTileInventory(Direction.UP).extractItem(0, 1, false);
         this.menu.getTileInventory(Direction.UP).extractItem(1, 1, false);
-        this.menu.updateRecipeResultSlot(level.registryAccess());
+        this.menu.updateRecipeResultSlot(thePlayer.registryAccess());
 
-        stack.getItem().onCraftedBy(stack, level, thePlayer);
+        stack.getItem().onCraftedBy(stack, thePlayer);
         this.menu.getContainerLevelAccess().execute((world, pos) -> {
             long time = world.getGameTime();
             if (this.menu.getLastOnTake() != time) {
