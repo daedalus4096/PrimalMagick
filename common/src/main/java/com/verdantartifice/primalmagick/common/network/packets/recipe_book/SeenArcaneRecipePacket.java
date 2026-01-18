@@ -4,11 +4,14 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import commonnetwork.networking.data.PacketContext;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
@@ -20,13 +23,13 @@ public class SeenArcaneRecipePacket implements IMessageToServer {
     public static final Identifier CHANNEL = ResourceUtils.loc("seen_arcane_recipe");
     public static final StreamCodec<RegistryFriendlyByteBuf, SeenArcaneRecipePacket> STREAM_CODEC = StreamCodec.ofMember(SeenArcaneRecipePacket::encode, SeenArcaneRecipePacket::decode);
 
-    protected final Identifier recipeId;
+    protected final ResourceKey<Recipe<?>> recipeId;
     
     public SeenArcaneRecipePacket(RecipeHolder<?> recipe) {
         this(recipe.id());
     }
     
-    public SeenArcaneRecipePacket(Identifier recipeId) {
+    public SeenArcaneRecipePacket(ResourceKey<Recipe<?>> recipeId) {
         this.recipeId = recipeId;
     }
 
@@ -35,21 +38,19 @@ public class SeenArcaneRecipePacket implements IMessageToServer {
     }
 
     public static void encode(SeenArcaneRecipePacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeResourceLocation(message.recipeId);
+        buf.writeResourceKey(message.recipeId);
     }
     
     public static SeenArcaneRecipePacket decode(RegistryFriendlyByteBuf buf) {
-        return new SeenArcaneRecipePacket(buf.readResourceLocation());
+        return new SeenArcaneRecipePacket(buf.readResourceKey(Registries.RECIPE));
     }
     
     public static void onMessage(PacketContext<SeenArcaneRecipePacket> ctx) {
         SeenArcaneRecipePacket message = ctx.message();
         ServerPlayer player = ctx.sender();
-        player.getServer().getRecipeManager().byKey(message.recipeId).ifPresent(recipe -> {
-            player.getRecipeBook().removeHighlight(recipe);
-            Services.CAPABILITIES.arcaneRecipeBook(player).ifPresent(recipeBook -> {
-                recipeBook.get().removeHighlight(recipe);
-            });
+        player.level().recipeAccess().byKey(message.recipeId).ifPresent(recipe -> {
+            player.getRecipeBook().removeHighlight(recipe.id());
+            Services.CAPABILITIES.arcaneRecipeBook(player).ifPresent(recipeBook -> recipeBook.get().removeHighlight(recipe));
         });
     }
 }

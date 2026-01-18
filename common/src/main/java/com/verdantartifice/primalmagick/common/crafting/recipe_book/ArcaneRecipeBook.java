@@ -2,11 +2,13 @@ package com.verdantartifice.primalmagick.common.crafting.recipe_book;
 
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import net.minecraft.IdentifierException;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.apache.logging.log4j.LogManager;
@@ -28,8 +30,8 @@ import java.util.function.Consumer;
 public class ArcaneRecipeBook {
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected final Set<Identifier> known = new HashSet<>();
-    protected final Set<Identifier> highlight = new HashSet<>();
+    protected final Set<ResourceKey<Recipe<?>>> known = new HashSet<>();
+    protected final Set<ResourceKey<Recipe<?>>> highlight = new HashSet<>();
     protected final ArcaneRecipeBookSettings settings = new ArcaneRecipeBookSettings();
 
     public void copyOverData(ArcaneRecipeBook other) {
@@ -46,11 +48,11 @@ public class ArcaneRecipeBook {
         this.settings.clear();
     }
     
-    public Set<Identifier> getKnown() {
+    public Set<ResourceKey<Recipe<?>>> getKnown() {
         return Collections.unmodifiableSet(this.known);
     }
     
-    public Set<Identifier> getHighlight() {
+    public Set<ResourceKey<Recipe<?>>> getHighlight() {
         return Collections.unmodifiableSet(this.highlight);
     }
     
@@ -64,15 +66,15 @@ public class ArcaneRecipeBook {
         }
     }
     
-    protected void add(Identifier loc) {
+    protected void add(ResourceKey<Recipe<?>> loc) {
         this.known.add(loc);
     }
     
     public boolean contains(@Nullable RecipeHolder<?> recipe) {
-        return recipe == null ? false : this.contains(recipe.id());
+        return recipe != null && this.contains(recipe.id());
     }
     
-    public boolean contains(Identifier loc) {
+    public boolean contains(ResourceKey<Recipe<?>> loc) {
         return this.known.contains(loc);
     }
     
@@ -80,7 +82,7 @@ public class ArcaneRecipeBook {
         this.remove(recipe.id());
     }
     
-    protected void remove(Identifier loc) {
+    protected void remove(ResourceKey<Recipe<?>> loc) {
         this.known.remove(loc);
         this.highlight.remove(loc);
     }
@@ -131,15 +133,15 @@ public class ArcaneRecipeBook {
         this.getBookSettings().write(tag);
         
         ListTag knownList = new ListTag();
-        for (Identifier loc : this.known) {
-            knownList.add(StringTag.valueOf(loc.toString()));
-        }
+        this.known.stream()
+                .map(loc -> StringTag.valueOf(loc.toString()))
+                .forEach(knownList::add);
         tag.put("Recipes", knownList);
         
         ListTag highlightList = new ListTag();
-        for (Identifier loc : this.highlight) {
-            highlightList.add(StringTag.valueOf(loc.toString()));
-        }
+        this.highlight.stream()
+                .map(loc -> StringTag.valueOf(loc.toString()))
+                .forEach(highlightList::add);
         tag.put("ToBeDisplayed", highlightList);
         
         return tag;
@@ -148,25 +150,21 @@ public class ArcaneRecipeBook {
     public void fromNbt(CompoundTag tag, RecipeManager recipeManager) {
         this.clear();
         this.setBookSettings(ArcaneRecipeBookSettings.read(tag));
-        this.loadRecipes(tag.getList("Recipes", Tag.TAG_STRING), this::add, recipeManager);
-        this.loadRecipes(tag.getList("ToBeDisplayed", Tag.TAG_STRING), this::addHighlight, recipeManager);
+        this.loadRecipes(tag.getListOrEmpty("Recipes"), this::add, recipeManager);
+        this.loadRecipes(tag.getListOrEmpty("ToBeDisplayed"), this::addHighlight, recipeManager);
     }
     
     protected void loadRecipes(ListTag tag, Consumer<RecipeHolder<?>> consumer, RecipeManager recipeManager) {
         for (int index = 0; index < tag.size(); index++) {
-            String locStr = tag.getString(index);
-            
-            try {
-                Identifier loc = Identifier.parse(locStr);
-                Optional<RecipeHolder<?>> recipeOpt = recipeManager.byKey(loc);
-                recipeOpt.ifPresentOrElse(recipe -> {
-                    consumer.accept(recipe);
-                }, () -> {
-                    LOGGER.error("Failed to load unrecognized recipe: {}, removing", locStr);
-                });
-            } catch (IdentifierException e) {
-                LOGGER.error("Failed to load improperly formatted recipe: {}, removing", locStr, e);
-            }
+            tag.getString(index).ifPresent(locStr -> {
+                try {
+                    ResourceKey<Recipe<?>> loc = ResourceKey.create(Registries.RECIPE, Identifier.parse(locStr));
+                    Optional<RecipeHolder<?>> recipeOpt = recipeManager.byKey(loc);
+                    recipeOpt.ifPresentOrElse(consumer, () -> LOGGER.error("Failed to load unrecognized recipe: {}, removing", locStr));
+                } catch (IdentifierException e) {
+                    LOGGER.error("Failed to load improperly formatted recipe: {}, removing", locStr, e);
+                }
+            });
         }
     }
 }

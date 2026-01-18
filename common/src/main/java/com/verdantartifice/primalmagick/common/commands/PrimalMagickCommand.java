@@ -58,6 +58,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Util;
@@ -65,6 +66,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -822,18 +824,18 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
             // List all known arcane research book entries for the target player
-            Set<Identifier> knownSet = recipeBook.get().getKnown();
+            Set<ResourceKey<Recipe<?>>> knownSet = recipeBook.get().getKnown();
             String[] knownList = knownSet.stream()
-                                        .map(Identifier::toString)
+                                        .map(ResourceKey::toString)
                                         .collect(Collectors.toSet())
                                         .toArray(new String[knownSet.size()]);
             String knownOutput = String.join(", ", knownList);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.list.known", target.getName(), knownOutput), true);
 
             // List all highlighted arcane research book entries for the target player
-            Set<Identifier> highlightSet = recipeBook.get().getHighlight();
+            Set<ResourceKey<Recipe<?>>> highlightSet = recipeBook.get().getHighlight();
             String[] highlightList = highlightSet.stream()
-                                        .map(Identifier::toString)
+                                        .map(ResourceKey::toString)
                                         .collect(Collectors.toSet())
                                         .toArray(new String[highlightSet.size()]);
             String highlightOutput = String.join(", ", highlightList);
