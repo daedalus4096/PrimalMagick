@@ -172,10 +172,9 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
     
     public boolean isUpcoming(@Nonnull Player player) {
-        Registry<ResearchEntry> registry = player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES);
-        return !this.parents.stream().map(k -> registry.getHolder(k.getRootKey())).anyMatch(opt -> {
-            return opt.isPresent() && ((opt.get().is(ResearchEntryTagsPM.OPAQUE) && !opt.get().value().key().isKnownBy(player)) || !opt.get().value().isAvailable(player));
-        });
+        Registry<ResearchEntry> registry = player.level().registryAccess().lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES);
+        return this.parents.stream().map(k -> registry.get(k.getRootKey())).noneMatch(opt ->
+                opt.isPresent() && ((opt.get().is(ResearchEntryTagsPM.OPAQUE) && !opt.get().value().key().isKnownBy(player)) || !opt.get().value().isAvailable(player)));
     }
 
     public boolean isVisible(@Nonnull Player player) {
@@ -220,7 +219,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
                     }
                 });
             }
-            registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
+            registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
                 if (!searchEntry.addenda().isEmpty() && knowledge.isResearchComplete(registryAccess, searchEntry.key())) {
                     for (ResearchAddendum addendum : searchEntry.addenda()) {
                         addendum.completionRequirementOpt().ifPresent(req -> {
