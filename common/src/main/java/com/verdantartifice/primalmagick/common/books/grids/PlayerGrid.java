@@ -18,6 +18,7 @@ import org.joml.Vector2ic;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -66,7 +67,7 @@ public class PlayerGrid {
     public Stream<GridNodeDefinition> getLockedNodes() {
         return this.definition.getNodes().entrySet().stream()
                 .filter(e -> !this.unlocked.contains(e.getKey()))
-                .map(e -> e.getValue());
+                .map(Map.Entry::getValue);
     }
     
     public long getLastModified() {
@@ -83,7 +84,7 @@ public class PlayerGrid {
         }
         
         // If the language cannot be found, fail the unlock
-        Optional<Holder.Reference<BookLanguage>> langHolderOpt = registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(this.definition.language);
+        Optional<Holder.Reference<BookLanguage>> langHolderOpt = registryAccess.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).get(this.definition.language);
         if (langHolderOpt.isEmpty()) {
             return false;
         }
@@ -117,7 +118,7 @@ public class PlayerGrid {
                     retVal.setTrue();
                 }
             });
-            return retVal.getValue();
+            return retVal.isTrue();
         }
     }
     
@@ -134,7 +135,7 @@ public class PlayerGrid {
             // Can't unlock a node that isn't in the grid definition
             return false;
         }
-        if (!this.definition.getStartPos().equals(node) && !this.unlocked.stream().anyMatch(v -> areAdjacent(node, v))) {
+        if (!this.definition.getStartPos().equals(node) && this.unlocked.stream().noneMatch(v -> areAdjacent(node, v))) {
             // Can't unlock a node that the player doesn't have a path to
             return false;
         }
