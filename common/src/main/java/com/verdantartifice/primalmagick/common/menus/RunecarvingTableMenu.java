@@ -190,7 +190,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
             stack = slotStack.copy();
             if (index == 2) {
                 // If transferring the output item, move it into the player's backpack or hotbar
-                slotStack.getItem().onCraftedBy(slotStack, playerIn.level(), playerIn);
+                slotStack.getItem().onCraftedBy(slotStack, playerIn);
                 if (!this.moveItemStackTo(slotStack, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
