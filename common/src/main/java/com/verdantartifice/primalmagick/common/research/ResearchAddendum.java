@@ -24,14 +24,16 @@ import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 
@@ -47,13 +49,13 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt,
-                               List<Identifier> recipes, List<AbstractResearchKey<?>> siblings, List<AbstractReward<?>> rewards) {
+                               List<ResourceKey<Recipe<?>>> recipes, List<AbstractResearchKey<?>> siblings, List<AbstractReward<?>> rewards) {
     public static Codec<ResearchAddendum> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchAddendum::parentKey),
                 Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchAddendum::textTranslationKey),
                 AbstractRequirement.dispatchCodec().optionalFieldOf("completionRequirementOpt").forGetter(ResearchAddendum::completionRequirementOpt),
-                Identifier.CODEC.listOf().fieldOf("recipes").forGetter(ResearchAddendum::recipes),
+                ResourceKey.codec(Registries.RECIPE).listOf().fieldOf("recipes").forGetter(ResearchAddendum::recipes),
                 AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchAddendum::siblings),
                 AbstractReward.dispatchCodec().listOf().optionalFieldOf("rewards", List.of()).forGetter(ResearchAddendum::rewards)
             ).apply(instance, ResearchAddendum::new));
@@ -64,7 +66,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
                 ResearchEntryKey.STREAM_CODEC, ResearchAddendum::parentKey,
                 ByteBufCodecs.STRING_UTF8, ResearchAddendum::textTranslationKey,
                 ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), ResearchAddendum::completionRequirementOpt,
-                Identifier.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchAddendum::recipes,
+                ResourceKey.streamCodec(Registries.RECIPE).apply(ByteBufCodecs.list()), ResearchAddendum::recipes,
                 AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchAddendum::siblings,
                 AbstractReward.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchAddendum::rewards,
                 ResearchAddendum::new);
@@ -75,7 +77,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         protected final ResearchEntry.Builder entryBuilder;
         protected final ResearchEntryKey parentKey;
         protected final int addendumIndex;
-        protected final List<Identifier> recipes = new ArrayList<>();
+        protected final List<ResourceKey<Recipe<?>>> recipes = new ArrayList<>();
         protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
         protected final List<AbstractReward<?>> rewards = new ArrayList<>();
@@ -102,8 +104,12 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         public Builder recipe(ItemLike itemLike) {
             return this.recipe(Services.ITEMS_REGISTRY.getKey(itemLike.asItem()));
         }
+
+        private Builder recipe(Identifier id) {
+            return this.recipe(ResourceKey.create(Registries.RECIPE, id));
+        }
         
-        public Builder recipe(Identifier recipe) {
+        public Builder recipe(ResourceKey<Recipe<?>> recipe) {
             this.recipes.add(recipe);
             return this;
         }

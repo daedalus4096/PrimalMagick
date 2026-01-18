@@ -22,6 +22,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 
 import javax.annotation.Nonnull;
@@ -160,11 +161,11 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
 
     public boolean isComplete(@Nonnull Player player) {
-        return this.getKnowledge(player).getResearchStatus(player.level().registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.COMPLETE;
+        return this.getKnowledge(player).getResearchStatus(player.registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.COMPLETE;
     }
     
     public boolean isInProgress(@Nonnull Player player) {
-        return this.getKnowledge(player).getResearchStatus(player.level().registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS;
+        return this.getKnowledge(player).getResearchStatus(player.registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS;
     }
     
     public boolean isAvailable(@Nonnull Player player) {
@@ -172,7 +173,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
     
     public boolean isUpcoming(@Nonnull Player player) {
-        Registry<ResearchEntry> registry = player.level().registryAccess().lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES);
+        Registry<ResearchEntry> registry = player.registryAccess().lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES);
         return this.parents.stream().map(k -> registry.get(k.getRootKey())).noneMatch(opt ->
                 opt.isPresent() && ((opt.get().is(ResearchEntryTagsPM.OPAQUE) && !opt.get().value().key().isKnownBy(player)) || !opt.get().value().isAvailable(player)));
     }
@@ -186,20 +187,20 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
     
     @Nonnull
-    public Set<Identifier> getAllRecipeIds() {
+    public Set<ResourceKey<Recipe<?>>> getAllRecipeIds() {
         return Stream.concat(this.stages.stream().flatMap(stage -> stage.recipes().stream()), this.addenda.stream().flatMap(addendum -> addendum.recipes().stream())).collect(Collectors.toSet());
     }
     
     @Nonnull
-    public Set<Identifier> getKnownRecipeIds(Player player) {
-        Set<Identifier> retVal = new HashSet<>();
+    public Set<ResourceKey<Recipe<?>>> getKnownRecipeIds(Player player) {
+        Set<ResourceKey<Recipe<?>>> retVal = new HashSet<>();
         if (this.stages().isEmpty()) {
             // If this research entry has no stages, then it can't have any recipes, so just abort
             return retVal;
         }
         
         IPlayerKnowledge knowledge = this.getKnowledge(player);
-        RegistryAccess registryAccess = player.level().registryAccess();
+        RegistryAccess registryAccess = player.registryAccess();
         
         ResearchStage currentStage = null;
         int currentStageNum = knowledge.getResearchStage(this.key);
@@ -235,7 +236,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         return retVal;
     }
     
-    public static record Flags(boolean hidden, boolean hasHint, boolean internal, boolean finaleExempt) {
+    public record Flags(boolean hidden, boolean hasHint, boolean internal, boolean finaleExempt) {
         public static final ResearchEntry.Flags EMPTY = new Flags(false, false, false, false);
         
         public static final Codec<ResearchEntry.Flags> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -395,7 +396,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         public ResearchEntry build() {
             this.validate();
             return new ResearchEntry(this.key, this.disciplineKeyOpt, this.tierOpt, this.nameKeyOpt, this.iconOpt, this.parents, this.flagsBuilder.build(), this.finales,
-                    this.stageBuilders.stream().map(b -> b.build()).toList(), this.addendumBuilders.stream().map(b -> b.build()).toList());
+                    this.stageBuilders.stream().map(ResearchStage.Builder::build).toList(), this.addendumBuilders.stream().map(ResearchAddendum.Builder::build).toList());
         }
     }
 }

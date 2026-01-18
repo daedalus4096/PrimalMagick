@@ -3,8 +3,6 @@ package com.verdantartifice.primalmagick.common.research;
 import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.affinities.AffinityIndexEntry;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
-import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
-import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -14,31 +12,30 @@ import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey
 import com.verdantartifice.primalmagick.common.research.keys.EntityScanKey;
 import com.verdantartifice.primalmagick.common.research.keys.ItemScanKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.util.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -76,15 +73,15 @@ public class ResearchManager {
     }
     
     public static boolean addCraftingReference(int reference) {
-        return CRAFTING_REFERENCES.add(Integer.valueOf(reference));
+        return CRAFTING_REFERENCES.add(reference);
     }
     
     static void clearCraftingReferences() {
         CRAFTING_REFERENCES.clear();
     }
     
-    @Nullable
-    public static Optional<ResearchEntry> getEntryForRecipe(RegistryAccess registryAccess, Identifier recipeId) {
+    @NotNull
+    public static Optional<ResearchEntry> getEntryForRecipe(RegistryAccess registryAccess, ResourceKey<Recipe<?>> recipeId) {
         return ResearchEntries.stream(registryAccess)
                 .filter(entry -> entry.getAllRecipeIds().contains(recipeId))
                 .findFirst();
@@ -94,9 +91,9 @@ public class ResearchManager {
         return FIRST_STEPS.isKnownBy(player);
     }
     
-    public static boolean isRecipeVisible(Identifier recipeId, Player player) {
+    public static boolean isRecipeVisible(ResourceKey<Recipe<?>> recipeId, Player player) {
         IPlayerKnowledge know = Services.CAPABILITIES.knowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
-        ResearchEntry entry = ResearchManager.getEntryForRecipe(player.level().registryAccess(), recipeId).orElse(null);
+        ResearchEntry entry = ResearchManager.getEntryForRecipe(player.registryAccess(), recipeId).orElse(null);
         if (entry == null) {
             // If the recipe has no controlling research, then assume it's not visible
             return false;
@@ -149,7 +146,7 @@ public class ResearchManager {
             return true;
         }
         if (key instanceof ResearchEntryKey entryKey) {
-            Optional<Holder.Reference<ResearchEntry>> entryRefOpt = player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getHolder(entryKey.getRootKey());
+            Optional<Holder.Reference<ResearchEntry>> entryRefOpt = player.registryAccess().lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).get(entryKey.getRootKey());
             if (entryRefOpt.isEmpty() || entryRefOpt.get().value().parents().isEmpty()) {
                 return true;
             } else {
@@ -161,7 +158,7 @@ public class ResearchManager {
         }
     }
     
-    public static boolean isResearchStarted(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+    public static boolean isResearchStarted(@Nullable Player player, @NotNull ResourceKey<ResearchEntry> rawKey) {
         return isResearchStarted(player, new ResearchEntryKey(rawKey));
     }
     
@@ -172,7 +169,7 @@ public class ResearchManager {
         return Services.CAPABILITIES.knowledge(player).map(k -> k.isResearchKnown(key)).orElse(false);
     }
     
-    public static boolean isResearchComplete(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+    public static boolean isResearchComplete(@Nullable Player player, @NotNull ResourceKey<ResearchEntry> rawKey) {
         return isResearchComplete(player, new ResearchEntryKey(rawKey));
     }
     
@@ -180,11 +177,11 @@ public class ResearchManager {
         if (player == null || key == null) {
             return false;
         }
-        RegistryAccess registryAccess = player.level().registryAccess();
+        RegistryAccess registryAccess = player.registryAccess();
         return Services.CAPABILITIES.knowledge(player).map(k -> k.isResearchComplete(registryAccess, key)).orElse(false);
     }
     
-    public static boolean completeResearch(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+    public static boolean completeResearch(@Nullable Player player, @NotNull ResourceKey<ResearchEntry> rawKey) {
         return completeResearch(player, new ResearchEntryKey(rawKey));
     }
     
@@ -207,31 +204,22 @@ public class ResearchManager {
         return retVal;
     }
     
-    public static void forceGrantWithAllParents(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+    public static void forceGrantWithAllParents(@Nullable Player player, @NotNull ResourceKey<ResearchEntry> rawKey) {
         forceGrantWithAllParents(player, new ResearchEntryKey(rawKey));
     }
     
     public static void forceGrantWithAllParents(@Nullable Player player, @Nullable ResearchEntryKey key) {
         if (player != null && key != null) {
-            RegistryAccess registryAccess = player.level().registryAccess();
+            RegistryAccess registryAccess = player.registryAccess();
             Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 if (!knowledge.isResearchComplete(registryAccess, key)) {
-                    ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
-                    if (entry != null) {
-                        // Recursively force-grant all of this entry's parent entries, even if not all of them are required
-                        entry.parents().forEach(parentKey -> forceGrantWithAllParents(player, parentKey));
+                    forceGrantInner(player, key);
 
-                        for (ResearchStage stage : entry.stages()) {
-                            // Force complete any requirements for any of the entry's stages
-                            stage.completionRequirementOpt().ifPresent(req -> req.forceComplete(player));
-                        }
-                    }
-                    
                     // Once all prerequisites are out of the way, complete this entry itself
                     completeResearch(player, key, true, true, false);
                     
                     // Mark as updated any research entry that has a stage which requires completion of this entry
-                    registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
+                    registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
                         for (ResearchStage searchStage : searchEntry.stages()) {
                             if (searchStage.completionRequirementOpt().isPresent() && searchStage.completionRequirementOpt().get().contains(key)) {
                                 knowledge.addResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
@@ -244,22 +232,27 @@ public class ResearchManager {
             });
         }
     }
-    
+
+    private static void forceGrantInner(@NotNull Player player, @NotNull ResearchEntryKey key) {
+        RegistryAccess registryAccess = player.registryAccess();
+        ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
+        if (entry != null) {
+            // Recursively force-grant all of this entry's parent entries, even if not all of them are required
+            entry.parents().forEach(parentKey -> forceGrantWithAllParents(player, parentKey));
+
+            for (ResearchStage stage : entry.stages()) {
+                // Force complete any requirements for any of the entry's stages
+                stage.completionRequirementOpt().ifPresent(req -> req.forceComplete(player));
+            }
+        }
+    }
+
     public static void forceGrantParentsOnly(@Nullable Player player, @Nullable ResearchEntryKey key) {
         if (player != null && key != null) {
-            RegistryAccess registryAccess = player.level().registryAccess();
+            RegistryAccess registryAccess = player.registryAccess();
             Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 if (!knowledge.isResearchComplete(registryAccess, key)) {
-                    ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
-                    if (entry != null) {
-                        // Recursively force-grant all of this entry's parent entries, even if not all of them are required
-                        entry.parents().forEach(parentKey -> forceGrantWithAllParents(player, parentKey));
-
-                        for (ResearchStage stage : entry.stages()) {
-                            // Force complete any requirements for any of the entry's stages
-                            stage.completionRequirementOpt().ifPresent(req -> req.forceComplete(player));
-                        }
-                    }
+                    forceGrantInner(player, key);
                 }
             });
         }
@@ -267,21 +260,21 @@ public class ResearchManager {
     
     public static void forceGrantAll(@Nullable Player player) {
         if (player != null) {
-            player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(entry -> forceGrantWithAllParents(player, entry.key()));
+            player.registryAccess().lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(entry -> forceGrantWithAllParents(player, entry.key()));
         }
     }
     
-    public static void forceRevokeWithAllChildren(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+    public static void forceRevokeWithAllChildren(@Nullable Player player, @NotNull ResourceKey<ResearchEntry> rawKey) {
         forceRevokeWithAllChildren(player, new ResearchEntryKey(rawKey));
     }
     
     public static void forceRevokeWithAllChildren(@Nullable Player player, @Nullable ResearchEntryKey key) {
         if (player != null && key != null) {
-            RegistryAccess registryAccess = player.level().registryAccess();
+            RegistryAccess registryAccess = player.registryAccess();
             Services.CAPABILITIES.knowledge(player).ifPresent(knowledge -> {
                 if (knowledge.isResearchComplete(registryAccess, key)) {
                     // Revoke all child research of this entry
-                    registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(entry -> {
+                    registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(entry -> {
                         if (entry.parents().contains(key)) {
                             forceRevokeWithAllChildren(player, entry.key());
                         }
@@ -312,9 +305,9 @@ public class ResearchManager {
         
         // Remove all recipes that are unlocked by the given research from the player's arcane recipe book
         if (player instanceof ServerPlayer serverPlayer) {
-            ResearchEntry entry = ResearchEntries.getEntry(player.level().registryAccess(), key);
+            ResearchEntry entry = ResearchEntries.getEntry(player.registryAccess(), key);
             if (entry != null) {
-                RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
+                RecipeManager recipeManager = serverPlayer.level().recipeAccess();
                 Set<RecipeHolder<?>> recipesToRemove = entry.getAllRecipeIds().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                 ArcaneRecipeBookManager.removeRecipes(recipesToRemove, serverPlayer);
                 serverPlayer.resetRecipes(recipesToRemove);
@@ -328,7 +321,7 @@ public class ResearchManager {
         return true;
     }
     
-    public static boolean progressResearch(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+    public static boolean progressResearch(@Nullable Player player, @NotNull ResourceKey<ResearchEntry> rawKey) {
         return progressResearch(player, new ResearchEntryKey(rawKey));
     }
     
@@ -347,7 +340,7 @@ public class ResearchManager {
         if (player == null || key == null) {
             return false;
         }
-        RegistryAccess registryAccess = player.level().registryAccess();
+        RegistryAccess registryAccess = player.registryAccess();
 
         IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         if (knowledge == null) {
@@ -403,7 +396,7 @@ public class ResearchManager {
                     currentStage.rewards().forEach(r -> r.grant(serverPlayer));
 
                     // Add any unlocked recipes from the current stage to the player's arcane recipe book
-                    RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
+                    RecipeManager recipeManager = serverPlayer.level().recipeAccess();
                     Set<RecipeHolder<?>> recipesToUnlock = currentStage.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                     ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                     serverPlayer.awardRecipes(recipesToUnlock);
@@ -433,7 +426,7 @@ public class ResearchManager {
             }
             
             if (entryComplete && !entry.addenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
-                RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
+                RecipeManager recipeManager = serverPlayer.level().recipeAccess();
                 for (ResearchAddendum addendum : entry.addenda()) {
                     if (addendum.completionRequirementOpt().isEmpty() || addendum.completionRequirementOpt().get().isMetBy(player)) {
                         // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
@@ -468,7 +461,7 @@ public class ResearchManager {
             }
             
             // Reveal any addenda that depended on this research
-            registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
+            registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
                 if (!searchEntry.addenda().isEmpty() && knowledge.isResearchComplete(registryAccess, searchEntry.key())) {
                     for (ResearchAddendum addendum : searchEntry.addenda()) {
                         addendum.completionRequirementOpt().filter(req -> req.contains(key) && req.isMetBy(player)).ifPresent(req -> {
@@ -483,7 +476,7 @@ public class ResearchManager {
                                 addendum.rewards().forEach(r -> r.grant(serverPlayer));
 
                                 // Add any unlocked recipes to the player's arcane recipe book
-                                RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
+                                RecipeManager recipeManager = serverPlayer.level().recipeAccess();
                                 Set<RecipeHolder<?>> recipesToUnlock = addendum.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                                 ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                                 serverPlayer.awardRecipes(recipesToUnlock);
@@ -508,13 +501,17 @@ public class ResearchManager {
             // If completing this entry finished its discipline, reveal any appropriate finale research
             if (entry != null) {
                 entry.disciplineKeyOpt().ifPresent(disciplineKey -> {
-                    ResearchDiscipline discipline = registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(disciplineKey.getRootKey());
+                    ResearchDiscipline discipline = registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).getValue(disciplineKey.getRootKey());
                     if (discipline != null) {
                         for (ResearchEntry finaleEntry : discipline.getFinaleEntries(registryAccess)) {
                             ResearchEntryKey finaleKey = finaleEntry.key();
                             if (!knowledge.isResearchKnown(finaleKey)) {
-                                boolean shouldUnlock = finaleEntry.finales().stream().map(k -> registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(k.getRootKey()))
-                                        .filter(Objects::nonNull).flatMap(d -> d.getEntryStream(registryAccess)).filter(e -> e.finales().isEmpty() && !e.flags().finaleExempt()).allMatch(e -> e.isComplete(player));
+                                boolean shouldUnlock = finaleEntry.finales().stream().map(k -> registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(k.getRootKey()))
+                                        .map(holderRefOpt -> holderRefOpt.map(Holder.Reference::value).orElse(null))
+                                        .filter(Objects::nonNull)
+                                        .flatMap(d -> d.getEntryStream(registryAccess))
+                                        .filter(e -> e.finales().isEmpty() && !e.flags().finaleExempt())
+                                        .allMatch(e -> e.isComplete(player));
                                 if (shouldUnlock) {
                                     knowledge.addResearch(finaleKey);
                                     if (showPopups) {
@@ -623,7 +620,7 @@ public class ResearchManager {
         Optional<SourceList> affinitiesOpt = AffinityManager.getInstance().getAffinityValues(stack, player.level());
         if (affinitiesOpt.isPresent()) {
             SourceList affinities = affinitiesOpt.get();
-            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, stack.getItem()))) {
+            if (affinities.isEmpty() && (!(player instanceof ServerPlayer serverPlayer) || !hasScanTriggers(serverPlayer, stack.getItem()))) {
                 // If the given itemstack has no affinities, consider it already scanned
                 return true;
             }
@@ -652,10 +649,10 @@ public class ResearchManager {
         if (type == null || player == null) {
             return false;
         }
-        Optional<SourceList> affinitiesOpt = AffinityManager.getInstance().getAffinityValues(type, player.level().registryAccess());
+        Optional<SourceList> affinitiesOpt = AffinityManager.getInstance().getAffinityValues(type, player.registryAccess());
         if (affinitiesOpt.isPresent()) {
             SourceList affinities = affinitiesOpt.get();
-            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, type))) {
+            if (affinities.isEmpty() && (!(player instanceof ServerPlayer serverPlayer) || !hasScanTriggers(serverPlayer, type))) {
                 // If the given entity has no affinities, consider it already scanned
                 return true;
             }
@@ -671,7 +668,7 @@ public class ResearchManager {
             return CompletableFuture.completedFuture(Boolean.FALSE);
         }
         
-        return AffinityManager.getInstance().getAffinityValuesAsync(type, player.level().registryAccess()).thenApply(affinities -> {
+        return AffinityManager.getInstance().getAffinityValuesAsync(type, player.registryAccess()).thenApply(affinities -> {
             if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, type))) {
                 // If the given entity has no affinities, consider it already scanned
                 return true;
@@ -699,9 +696,9 @@ public class ResearchManager {
         
         // Generate a research key for the itemstack and add that research to the player
         ItemScanKey key = new ItemScanKey(stack);
-        if (key != null && knowledge.addResearch(key)) {
+        if (knowledge.addResearch(key)) {
             // Determine how many observation points the itemstack is worth and add those to the player's knowledge
-            getObservationPointsAsync(stack, player.getCommandSenderWorld()).thenAccept(obsPoints -> {
+            getObservationPointsAsync(stack, player.level()).thenAccept(obsPoints -> {
                 if (obsPoints > 0) {
                     addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
                 }
@@ -739,9 +736,9 @@ public class ResearchManager {
         
         // Generate a research key for the entity type and add that research to the player
         EntityScanKey key = new EntityScanKey(type);
-        if (key != null && knowledge.addResearch(key)) {
+        if (knowledge.addResearch(key)) {
             // Determine how many observation points the entity is worth and add those to the player's knowledge
-            getObservationPointsAsync(type, player.getCommandSenderWorld()).thenAccept(obsPoints -> {
+            getObservationPointsAsync(type, player.level()).thenAccept(obsPoints -> {
                 if (obsPoints > 0) {
                     addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
                 }
@@ -782,11 +779,11 @@ public class ResearchManager {
             stack = new ItemStack(item);
             if (!stack.isEmpty()) { // Skip over air
                 key = new ItemScanKey(stack);
-                if (key != null && knowledge.addResearch(key)) {
+                if (knowledge.addResearch(key)) {
                     count++;
         
                     // Determine how many observation points the itemstack is worth and queue them up to add to the player's knowledge
-                    obsPointsFutures.add(getObservationPointsAsync(stack, player.getCommandSenderWorld()));
+                    obsPointsFutures.add(getObservationPointsAsync(stack, player.level()));
                     
                     // Check to see if any scan triggers need to be run for the item
                     checkScanTriggers(player, item);
@@ -814,12 +811,12 @@ public class ResearchManager {
         return count;
     }
 
-    private static CompletableFuture<Integer> getObservationPointsAsync(@Nonnull ItemStack stack, @Nonnull Level world) {
+    private static CompletableFuture<Integer> getObservationPointsAsync(@NotNull ItemStack stack, @NotNull Level world) {
         // Calculate observation points for the itemstack based on its affinities
         return AffinityManager.getInstance().getAffinityValuesAsync(stack, world).thenApply(ResearchManager::getObservationPoints);
     }
     
-    private static CompletableFuture<Integer> getObservationPointsAsync(@Nonnull EntityType<?> type, @Nonnull Level level) {
+    private static CompletableFuture<Integer> getObservationPointsAsync(@NotNull EntityType<?> type, @NotNull Level level) {
         // Get affinities from affinity manager for entity type
         return AffinityManager.getInstance().getAffinityValuesAsync(type, level.registryAccess()).thenApply(ResearchManager::getObservationPoints);
     }

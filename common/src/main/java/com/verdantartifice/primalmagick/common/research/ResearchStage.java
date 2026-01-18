@@ -30,6 +30,7 @@ import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -39,6 +40,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +61,7 @@ import java.util.stream.Stream;
  * 
  * @author Daedalus4096
  */
-public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<Identifier> recipes,
+public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceKey<Recipe<?>>> recipes,
                             List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, List<ResearchEntryKey> highlights, List<AbstractReward<?>> rewards,
                             Optional<TopicLink> ctaLinkOpt) {
     public static Codec<ResearchStage> codec() { 
@@ -67,7 +69,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             ResearchEntryKey.CODEC.codec().fieldOf("parentKey").forGetter(ResearchStage::parentKey),
             Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchStage::textTranslationKey),
             AbstractRequirement.dispatchCodec().optionalFieldOf("completionRequirementOpt").forGetter(ResearchStage::completionRequirementOpt),
-            Identifier.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
+            ResourceKey.codec(Registries.RECIPE).listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
             AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
             ResearchEntryKey.CODEC.codec().listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
             ResearchEntryKey.CODEC.codec().listOf().optionalFieldOf("highlights", List.of()).forGetter(ResearchStage::highlights),
@@ -81,7 +83,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
                 ResearchEntryKey.STREAM_CODEC, ResearchStage::parentKey,
                 ByteBufCodecs.STRING_UTF8, ResearchStage::textTranslationKey,
                 ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), ResearchStage::completionRequirementOpt,
-                Identifier.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::recipes,
+                ResourceKey.streamCodec(Registries.RECIPE).apply(ByteBufCodecs.list()), ResearchStage::recipes,
                 AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()), ResearchStage::siblings,
                 ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::revelations,
                 ResearchEntryKey.STREAM_CODEC.apply(ByteBufCodecs.list()), ResearchStage::highlights,
@@ -99,19 +101,13 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             return false;
         } else {
             MutableBoolean retVal = new MutableBoolean(false);
-            this.completionRequirementOpt.ifPresent(req -> {
-                retVal.setValue(req.isMetBy(player));
-            });
+            this.completionRequirementOpt.ifPresent(req -> retVal.setValue(req.isMetBy(player)));
             return retVal.booleanValue();
         }
     }
     
     public List<AbstractRequirement<?>> getRequirementsByCategory(RequirementCategory category) {
-        if (this.completionRequirementOpt.isEmpty()) {
-            return Collections.emptyList();
-        } else {
-            return this.completionRequirementOpt.get().streamByCategory(category).toList();
-        }
+        return this.completionRequirementOpt.map(abstractRequirement -> abstractRequirement.streamByCategory(category).toList()).orElse(List.of());
     }
     
     public List<Boolean> getRequirementCompletionByCategory(@Nullable Player player, RequirementCategory category) {
@@ -133,7 +129,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         protected final ResearchEntryKey parentKey;
         protected final int stageIndex;
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
-        protected final List<Identifier> recipes = new ArrayList<>();
+        protected final List<ResourceKey<Recipe<?>>> recipes = new ArrayList<>();
         protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
         protected final List<ResearchEntryKey> revelations = new ArrayList<>();
         protected final List<ResearchEntryKey> highlights = new ArrayList<>();
@@ -235,8 +231,12 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         public Builder recipe(ItemLike itemLike) {
             return this.recipe(Services.ITEMS_REGISTRY.getKey(itemLike.asItem()));
         }
+
+        private Builder recipe(Identifier id) {
+            return this.recipe(ResourceKey.create(Registries.RECIPE, id));
+        }
         
-        public Builder recipe(Identifier recipe) {
+        public Builder recipe(ResourceKey<Recipe<?>> recipe) {
             this.recipes.add(recipe);
             return this;
         }
