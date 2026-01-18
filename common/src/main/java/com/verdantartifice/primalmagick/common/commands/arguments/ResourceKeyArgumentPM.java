@@ -35,13 +35,12 @@ import java.util.function.Function;
  * ResourceKeyArgument in vanilla Minecraft, but extended to work with additional registry types.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.commands.arguments.ResourceKeyArgument}
+ * @see net.minecraft.commands.arguments.ResourceKeyArgument
  */
 public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
     private static final Collection<String> EXAMPLES = Arrays.asList("foo", "foo:bar", "012");
-    private static final Function<String, DynamicCommandExceptionType> ERROR_MESSAGE = messageKey -> new DynamicCommandExceptionType(err -> {
-        return Component.translatable(messageKey, err);
-    });
+    private static final Function<String, DynamicCommandExceptionType> ERROR_MESSAGE = messageKey ->
+            new DynamicCommandExceptionType(err -> Component.translatable(messageKey, err));
 
     protected final ResourceKey<? extends Registry<T>> registryKey;
 
