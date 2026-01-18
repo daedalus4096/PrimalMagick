@@ -74,7 +74,7 @@ public class DataGeneratorsNeoforge {
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new LootModifierProviderNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new StoryAdvancementsProviderNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new StoryAdvancementsProviderNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
                 BlockLootTables.getSubProviderEntry(), 
                 EntityLootTables.getSubProviderEntry(), 
