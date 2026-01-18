@@ -12,7 +12,7 @@ import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 public class ResourceEventListeners {
     @SubscribeEvent
     public static void onResourceReload(AddServerReloadListenersEvent event) {
-        event.addListener(AffinityManager.getOrCreateInstance());
+        event.addListener(ResourceUtils.loc("affinities"), AffinityManager.getOrCreateInstance());
         event.addListener(ResourceUtils.loc("linguistics_grids"), GridDefinitionLoader.getOrCreateInstance());
     }
 }
