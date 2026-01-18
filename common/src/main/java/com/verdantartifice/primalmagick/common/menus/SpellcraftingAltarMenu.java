@@ -25,13 +25,12 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.ConfiguredSpellVe
 import com.verdantartifice.primalmagick.common.spells.vehicles.EmptySpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.SpellVehicleType;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
@@ -44,6 +43,7 @@ import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -57,7 +57,6 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarTileEntity> {
-    protected static final Identifier RECIPE_LOC = ResourceUtils.loc("spellcrafting");
     protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.spellcrafting_altar.slot.scroll");
 
     protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);
@@ -147,7 +146,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         Optional<Component> secondaryModPiece = this.getSpellSecondaryModComponent().filter(mod -> mod.getComponent().isActive()).map(mod -> mod.getComponent().getDefaultNamePiece());
         boolean primaryActive = primaryModPiece.isPresent();
         boolean secondaryActive = secondaryModPiece.isPresent();
-        if (vehiclePiece == null || payloadPiece == null || vehiclePiece.getString().isEmpty() || payloadPiece.getString().isEmpty()) {
+        if (vehiclePiece.getString().isEmpty() || payloadPiece.getString().isEmpty()) {
             // If the constructed spell is invalid, don't show a default name
             return Component.literal("");
         } else if (!primaryActive && !secondaryActive) {
@@ -169,9 +168,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         // Clear the spell package cache and trigger a regeneration of the output item on change
         this.spellName = name;
         this.spellPackageCache = null;
-        this.containerLevelAccess.execute((world, blockPos) -> {
-            this.slotChangedCraftingGrid(world);
-        });
+        this.containerLevelAccess.execute((world, blockPos) -> this.slotChangedCraftingGrid(world));
     }
     
     @Nonnull
@@ -201,9 +198,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         index = Mth.clamp(index, 0, SpellManager.getVehicleTypes(this.player).size() - 1);
         this.spellVehicleTypeIndex = index;
         this.spellPackageCache = null;
-        this.containerLevelAccess.execute((world, blockPos) -> {
-            this.slotChangedCraftingGrid(world);
-        });
+        this.containerLevelAccess.execute((world, blockPos) -> this.slotChangedCraftingGrid(world));
     }
     
     protected ConfiguredSpellPayload<?> getSpellPayloadComponent() {
@@ -232,9 +227,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         index = Mth.clamp(index, 0, SpellManager.getPayloadTypes(this.player).size() - 1);
         this.spellPayloadTypeIndex = index;
         this.spellPackageCache = null;
-        this.containerLevelAccess.execute((world, blockPos) -> {
-            this.slotChangedCraftingGrid(world);
-        });
+        this.containerLevelAccess.execute((world, blockPos) -> this.slotChangedCraftingGrid(world));
     }
     
     private Optional<ConfiguredSpellMod<?>> getSpellModComponentInner(SpellComponent componentType, int index) {
@@ -266,9 +259,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         index = Mth.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellPrimaryModTypeIndex = index;
         this.spellPackageCache = null;
-        this.containerLevelAccess.execute((world, blockPos) -> {
-            this.slotChangedCraftingGrid(world);
-        });
+        this.containerLevelAccess.execute((world, blockPos) -> this.slotChangedCraftingGrid(world));
     }
     
     protected Optional<ConfiguredSpellMod<?>> getSpellSecondaryModComponent() {
@@ -284,9 +275,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         index = Mth.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellSecondaryModTypeIndex = index;
         this.spellPackageCache = null;
-        this.containerLevelAccess.execute((world, blockPos) -> {
-            this.slotChangedCraftingGrid(world);
-        });
+        this.containerLevelAccess.execute((world, blockPos) -> this.slotChangedCraftingGrid(world));
     }
     
     public void setSpellPropertyValue(SpellComponent component, SpellProperty property, int value) {
@@ -294,14 +283,12 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         if (component != null && property != null) {
             this.spellPropertyCache.get(component).put(property, value);
             this.spellPackageCache = null;
-            this.containerLevelAccess.execute((world, blockPos) -> {
-                this.slotChangedCraftingGrid(world);
-            });
+            this.containerLevelAccess.execute((world, blockPos) -> this.slotChangedCraftingGrid(world));
         }
     }
     
     @Override
-    public void removed(Player playerIn) {
+    public void removed(@NotNull Player playerIn) {
         // Return input scroll and wand to the player's inventory when the GUI is closed
         super.removed(playerIn);
         this.clearContainer(playerIn, this.wandInv);
@@ -309,10 +296,11 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     }
     
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 0) {
@@ -372,29 +360,26 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     }
     
     @Override
-    public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+    public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slotIn) {
         return slotIn.container != this.resultInv && super.canTakeItemForPickAll(stack, slotIn);
     }
     
     @Override
-    public void slotsChanged(Container inventoryIn) {
+    public void slotsChanged(@NotNull Container inventoryIn) {
         super.slotsChanged(inventoryIn);
-        this.containerLevelAccess.execute((world, blockPos) -> {
-            this.slotChangedCraftingGrid(world);
-        });
+        this.containerLevelAccess.execute((world, blockPos) -> this.slotChangedCraftingGrid(world));
     }
 
-    protected void slotChangedCraftingGrid(Level world) {
-        if (!world.isClientSide() && this.player instanceof ServerPlayer) {
-            ServerPlayer spe = (ServerPlayer)this.player;
+    protected void slotChangedCraftingGrid(Level level) {
+        if (level instanceof ServerLevel serverLevel && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
+            Optional<RecipeHolder<?>> opt = serverLevel.recipeAccess().byKey(SpellcraftingRecipe.RECIPE_ID);
             if (opt.isPresent() && opt.get().value() instanceof SpellcraftingRecipe recipe) {
                 // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
-                if (recipe.matches(this.scrollInv.asCraftInput(), world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
-                    stack = recipe.assemble(this.scrollInv.asCraftInput(), world.registryAccess());
-                    if (stack != null && stack.getItem() instanceof SpellScrollItem) {
-                        ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getSpellPackage());
+                if (recipe.matches(this.scrollInv.asCraftInput(), level) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
+                    stack = recipe.assemble(this.scrollInv.asCraftInput(), level.registryAccess());
+                    if (stack.getItem() instanceof SpellScrollItem scrollItem) {
+                        scrollItem.setSpell(stack, this.getSpellPackage());
                     }
                 }
             }
@@ -407,7 +392,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     
     protected boolean wandContainsEnoughMana(Player player) {
         ItemStack stack = this.wandInv.getItem(0);
-        if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof IWand wand)) {
+        if (stack.isEmpty() || !(stack.getItem() instanceof IWand wand)) {
             return false;
         }
         return wand.containsMana(stack, player, this.getManaCosts(), player.registryAccess());

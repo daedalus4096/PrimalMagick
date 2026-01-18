@@ -676,7 +676,7 @@ public abstract class Recipes extends RecipeProvider {
 
         SpecialRecipeBuilder.special(WandAssemblyRecipe::new).save(consumer, ResourceUtils.loc("wand_assembly"));
         SpecialRecipeBuilder.special(WandInscriptionRecipe::new).save(consumer, ResourceUtils.loc("wand_inscription"));
-        SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(consumer, ResourceUtils.loc("spellcrafting"));
+        SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(consumer, SpellcraftingRecipe.RECIPE_ID);
         SpecialRecipeBuilder.special(FlyingCarpetDyeRecipe::new).save(consumer, ResourceUtils.loc("flying_carpet_dye"));
         SpecialRecipeBuilder.special(TieredShieldDecorationRecipe::new).save(consumer, ResourceUtils.loc("tiered_shield_decoration"));
         SpecialRecipeBuilder.special(WandGlamourRecipe::new).save(consumer, ResourceUtils.loc("wand_glamour"));
