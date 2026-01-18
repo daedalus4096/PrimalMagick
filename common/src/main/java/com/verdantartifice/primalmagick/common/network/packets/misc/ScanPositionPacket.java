@@ -64,7 +64,7 @@ public class ScanPositionPacket implements IMessageToServer {
     public static void onMessage(PacketContext<ScanPositionPacket> ctx) {
         ScanPositionPacket message = ctx.message();
         ServerPlayer player = ctx.sender();
-        Level world = player.getCommandSenderWorld();
+        Level world = player.level();
 
         // Only process blocks that are currently loaded into the world.  Safety check to prevent
         // resource thrashing from falsified packets.
@@ -73,9 +73,10 @@ public class ScanPositionPacket implements IMessageToServer {
                 // Scan the block
                 List<CompletableFuture<Boolean>> foundFutures = new ArrayList<>();
                 ItemStack posStack = new ItemStack(world.getBlockState(message.pos).getBlock());
-                foundFutures.add(CompletableFuture.completedFuture(posStack).thenCombine(ResearchManager.isScannedAsync(posStack, player), (stack, isScanned) -> {
-                    return !isScanned && ResearchManager.setScanned(stack, player, false);
-                }));
+                foundFutures.add(CompletableFuture.completedFuture(posStack)
+                        .thenCombine(
+                                ResearchManager.isScannedAsync(posStack, player),
+                                (stack, isScanned) -> !isScanned && ResearchManager.setScanned(stack, player, false)));
                 
                 // If the given block has an inventory, scan its contents too
                 Services.CAPABILITIES.itemHandler(world, message.pos, Direction.UP).ifPresent(handler -> {
@@ -89,9 +90,10 @@ public class ScanPositionPacket implements IMessageToServer {
                                 player.displayClientMessage(Component.translatable("event.primalmagick.scan.toobig").withStyle(ChatFormatting.RED), true);
                                 break;
                             } else {
-                                foundFutures.add(CompletableFuture.completedFuture(chestStack).thenCombine(ResearchManager.isScannedAsync(chestStack, player), (stack, isScanned) -> {
-                                    return !isScanned && ResearchManager.setScanned(stack, player, false);
-                                }));
+                                foundFutures.add(CompletableFuture.completedFuture(chestStack)
+                                        .thenCombine(
+                                                ResearchManager.isScannedAsync(chestStack, player),
+                                                (stack, isScanned) -> !isScanned && ResearchManager.setScanned(stack, player, false)));
                                 scanCount++;
                             }
                         }
@@ -100,11 +102,11 @@ public class ScanPositionPacket implements IMessageToServer {
 
                 // If the block has a block entity that has custom scan contents, scan those too
                 if (world.getBlockEntity(message.pos) instanceof IHasCustomScanContents customScanContents) {
-                    customScanContents.getCustomScanContents().forEach(customStack -> {
-                        foundFutures.add(CompletableFuture.completedFuture(customStack).thenCombine(ResearchManager.isScannedAsync(customStack, player), (stack, isScanned) -> {
-                            return !isScanned && ResearchManager.setScanned(stack, player, false);
-                        }));
-                    });
+                    customScanContents.getCustomScanContents().forEach(customStack ->
+                        foundFutures.add(CompletableFuture.completedFuture(customStack)
+                            .thenCombine(
+                                    ResearchManager.isScannedAsync(customStack, player),
+                                    (stack, isScanned) -> !isScanned && ResearchManager.setScanned(stack, player, false))));
                 }
 
                 // If at least one unscanned item was processed, send a success message
@@ -116,7 +118,7 @@ public class ScanPositionPacket implements IMessageToServer {
                         player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
                     }
                 }).exceptionally(e -> {
-                    LOGGER.error("Failed to scan block at position " + message.pos, e);
+                    LOGGER.error("Failed to scan block at position {}", message.pos, e);
                     return null;
                 });
                 

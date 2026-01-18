@@ -16,6 +16,8 @@ import net.minecraft.world.entity.EntityType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Objects;
+
 /**
  * Packet sent to trigger a server-side scan of a given entity.  Used by the arcanometer for
  * scanning entities in the world.
@@ -43,11 +45,11 @@ public class ScanEntityPacket implements IMessageToServer {
     }
 
     public static void encode(ScanEntityPacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeResourceLocation(Services.ENTITY_TYPES_REGISTRY.getKey(message.type));
+        buf.writeIdentifier(Objects.requireNonNull(Services.ENTITY_TYPES_REGISTRY.getKey(message.type)));
     }
     
     public static ScanEntityPacket decode(RegistryFriendlyByteBuf buf) {
-        return new ScanEntityPacket(buf.readResourceLocation());
+        return new ScanEntityPacket(buf.readIdentifier());
     }
     
     public static void onMessage(PacketContext<ScanEntityPacket> ctx) {
@@ -63,7 +65,7 @@ public class ScanEntityPacket implements IMessageToServer {
                     player.displayClientMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED), true);
                 }
             }).exceptionally(e -> {
-                LOGGER.error("Failed to scan entity type " + message.type.toString(), e);
+                LOGGER.error("Failed to scan entity type {}", message.type, e);
                 return null;
             });
         }
