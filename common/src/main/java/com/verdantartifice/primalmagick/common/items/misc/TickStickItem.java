@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition of a debug item that forces a random tick for the block on which it's used.
@@ -21,15 +22,16 @@ public class TickStickItem extends Item {
     }
 
     @Override
+    @NotNull
     public InteractionResult useOn(UseOnContext pContext) {
         Level level = pContext.getLevel();
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
             BlockPos pos = pContext.getClickedPos();
             BlockState state = level.getBlockState(pos);
             Player player = pContext.getPlayer();
-            if (player.canUseGameMasterBlocks() && state.isRandomlyTicking()) {
+            if (player != null && player.canUseGameMasterBlocks() && state.isRandomlyTicking()) {
                 state.randomTick(serverLevel, pos, serverLevel.random);
-                return InteractionResult.sidedSuccess(level.isClientSide());
+                return InteractionResult.SUCCESS;
             } else {
                 return InteractionResult.FAIL;
             }
@@ -39,7 +41,7 @@ public class TickStickItem extends Item {
     }
 
     @Override
-    public boolean isFoil(ItemStack pStack) {
+    public boolean isFoil(@NotNull ItemStack pStack) {
         return true;
     }
 }
