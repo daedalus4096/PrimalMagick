@@ -191,8 +191,8 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
                 stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
             }
             return InteractionResult.SUCCESS;
-        } else if (!level.isClientSide()) {
-            return TreefolkAi.mobInteract(this, player, hand);
+        } else if (level instanceof ServerLevel serverLevel) {
+            return TreefolkAi.mobInteract(serverLevel, this, player, hand);
         } else {
             boolean flag = TreefolkAi.canAdmire(this, stack) && this.getArmPose() != TreefolkArmPose.ADMIRING_ITEM;
             return flag ? InteractionResult.SUCCESS : InteractionResult.PASS;
@@ -207,7 +207,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     @Override
     protected void pickUpItem(@NotNull ServerLevel pServerLevel, @NotNull ItemEntity pItemEntity) {
         this.onItemPickup(pItemEntity);
-        TreefolkAi.pickUpItem(this, pItemEntity);
+        TreefolkAi.pickUpItem(pServerLevel, this, pItemEntity);
     }
 
     public void holdInOffHand(ItemStack stack) {
@@ -241,7 +241,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     public boolean hurtServer(@NotNull ServerLevel pServerLevel, @NotNull DamageSource pSource, float pAmount) {
         boolean flag = super.hurtServer(pServerLevel, pSource, pAmount);
         if (flag && pSource.getEntity() instanceof LivingEntity livingSource) {
-            TreefolkAi.wasHurtBy(this, livingSource);
+            TreefolkAi.wasHurtBy(pServerLevel, this, livingSource);
         }
         return flag;
     }
