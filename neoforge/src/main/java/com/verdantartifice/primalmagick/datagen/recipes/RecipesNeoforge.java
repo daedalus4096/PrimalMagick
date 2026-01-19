@@ -3,8 +3,6 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -14,6 +12,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -25,23 +24,19 @@ import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class RecipesNeoforge extends Recipes {
-    public RecipesNeoforge(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
-        super(packOutput, registries);
+    public RecipesNeoforge(HolderLookup.Provider registries, RecipeOutput output) {
+        super(registries, output);
     }
 
     private static ICondition tagsNotEmpty(List<TagKey<Item>> tags) {
         List<ICondition> subConditions = tags.stream().<ICondition>map(t -> new NotCondition(new TagEmptyCondition(t))).toList();
         return new AndCondition(subConditions);
-    }
-
-    @Override
-    protected void buildRecipes(RecipeOutput pRecipeOutput, HolderLookup.Provider holderLookup) {
-        this.buildRecipesInner(pRecipeOutput, holderLookup);
     }
 
     @Override
@@ -224,5 +219,23 @@ public class RecipesNeoforge extends Recipes {
                 .setGroup("uranium_dust_dissolution")
                 .defaultManaCost()
                 .build(consumer.withConditions(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_URANIUM, ItemExtensionTags.RAW_MATERIALS_URANIUM))), ResourceUtils.loc("uranium_dust_from_dissolving_raw_metal"));
+    }
+
+    public static class Runner extends RecipeProvider.Runner {
+        public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
+            super(packOutput, registries);
+        }
+
+        @Override
+        @NotNull
+        protected RecipeProvider createRecipeProvider(@NotNull HolderLookup.Provider provider, @NotNull RecipeOutput recipeOutput) {
+            return new RecipesNeoforge(provider, recipeOutput);
+        }
+
+        @Override
+        @NotNull
+        public String getName() {
+            return "Primal Magick Recipes (NeoForge)";
+        }
     }
 }
