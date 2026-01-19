@@ -41,7 +41,7 @@ public class RecipesForge extends Recipes {
     }
 
     @Override
-    protected void registerEarthshatterHammerConditionalRecipes(RecipeOutput consumer) {
+    protected void registerEarthshatterHammerConditionalRecipes() {
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_IRON, CommonTags.Items.ORES_IRON)))
                 .condition(TrueCondition.INSTANCE)
@@ -51,7 +51,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("iron_grit_from_ore")))
-                .save(consumer, ResourceUtils.loc("iron_grit_from_ore"));
+                .save(this.output, ResourceUtils.loc("iron_grit_from_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_IRON, CommonTags.Items.RAW_MATERIALS_IRON)))
                 .condition(TrueCondition.INSTANCE)
@@ -61,7 +61,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("iron_grit_from_raw_metal")))
-                .save(consumer, ResourceUtils.loc("iron_grit_from_raw_metal"));
+                .save(this.output, ResourceUtils.loc("iron_grit_from_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_GOLD, CommonTags.Items.ORES_GOLD)))
                 .condition(TrueCondition.INSTANCE)
@@ -71,7 +71,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("gold_grit_from_ore")))
-                .save(consumer, ResourceUtils.loc("gold_grit_from_ore"));
+                .save(this.output, ResourceUtils.loc("gold_grit_from_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_GOLD, CommonTags.Items.RAW_MATERIALS_GOLD)))
                 .condition(TrueCondition.INSTANCE)
@@ -81,7 +81,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("gold_grit_from_raw_metal")))
-                .save(consumer, ResourceUtils.loc("gold_grit_from_raw_metal"));
+                .save(this.output, ResourceUtils.loc("gold_grit_from_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_COPPER, CommonTags.Items.ORES_COPPER)))
                 .condition(TrueCondition.INSTANCE)
@@ -91,7 +91,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("copper_grit_from_ore")))
-                .save(consumer, ResourceUtils.loc("copper_grit_from_ore"));
+                .save(this.output, ResourceUtils.loc("copper_grit_from_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_COPPER, CommonTags.Items.RAW_MATERIALS_COPPER)))
                 .condition(TrueCondition.INSTANCE)
@@ -101,7 +101,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("copper_grit_from_raw_metal")))
-                .save(consumer, ResourceUtils.loc("copper_grit_from_raw_metal"));
+                .save(this.output, ResourceUtils.loc("copper_grit_from_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_TIN, ItemExtensionTags.ORES_TIN)))
                 .condition(TrueCondition.INSTANCE)
@@ -111,7 +111,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("tin_dust_from_ore")))
-                .save(consumer, ResourceUtils.loc("tin_dust_from_ore"));
+                .save(this.output, ResourceUtils.loc("tin_dust_from_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_TIN, ItemExtensionTags.RAW_MATERIALS_TIN)))
                 .condition(TrueCondition.INSTANCE)
@@ -121,7 +121,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("tin_dust_from_raw_metal")))
-                .save(consumer, ResourceUtils.loc("tin_dust_from_raw_metal"));
+                .save(this.output, ResourceUtils.loc("tin_dust_from_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_LEAD, ItemExtensionTags.ORES_LEAD)))
                 .condition(TrueCondition.INSTANCE)
@@ -131,7 +131,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("lead_dust_from_ore")))
-                .save(consumer, ResourceUtils.loc("lead_dust_from_ore"));
+                .save(this.output, ResourceUtils.loc("lead_dust_from_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_LEAD, ItemExtensionTags.RAW_MATERIALS_LEAD)))
                 .condition(TrueCondition.INSTANCE)
@@ -141,7 +141,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("lead_dust_from_raw_metal")))
-                .save(consumer, ResourceUtils.loc("lead_dust_from_raw_metal"));
+                .save(this.output, ResourceUtils.loc("lead_dust_from_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_SILVER, ItemExtensionTags.ORES_SILVER)))
                 .condition(TrueCondition.INSTANCE)
@@ -151,7 +151,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("silver_dust_from_ore")))
-                .save(consumer, ResourceUtils.loc("silver_dust_from_ore"));
+                .save(this.output, ResourceUtils.loc("silver_dust_from_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_SILVER, ItemExtensionTags.RAW_MATERIALS_SILVER)))
                 .condition(TrueCondition.INSTANCE)
@@ -161,7 +161,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("silver_dust_from_raw_metal")))
-                .save(consumer, ResourceUtils.loc("silver_dust_from_raw_metal"));
+                .save(this.output, ResourceUtils.loc("silver_dust_from_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_URANIUM, ItemExtensionTags.ORES_URANIUM)))
                 .condition(TrueCondition.INSTANCE)
@@ -171,7 +171,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("uranium_dust_from_ore")))
-                .save(consumer, ResourceUtils.loc("uranium_dust_from_ore"));
+                .save(this.output, ResourceUtils.loc("uranium_dust_from_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_URANIUM, ItemExtensionTags.RAW_MATERIALS_URANIUM)))
                 .condition(TrueCondition.INSTANCE)
@@ -181,7 +181,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("earthshatter_hammer_grit")
                         .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                         .build(output, ResourceUtils.loc("uranium_dust_from_raw_metal")))
-                .save(consumer, ResourceUtils.loc("uranium_dust_from_raw_metal"));
+                .save(this.output, ResourceUtils.loc("uranium_dust_from_raw_metal"));
     }
 
     @Override
@@ -203,7 +203,7 @@ public class RecipesForge extends Recipes {
     }
 
     @Override
-    protected void registerDissolutionChamberConditionalRecipes(RecipeOutput consumer) {
+    protected void registerDissolutionChamberConditionalRecipes() {
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_IRON, CommonTags.Items.ORES_IRON)))
                 .condition(TrueCondition.INSTANCE)
@@ -212,7 +212,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("iron_grit_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("iron_grit_from_dissolving_ore")))
-                .save(consumer, ResourceUtils.loc("iron_grit_from_dissolving_ore"));
+                .save(this.output, ResourceUtils.loc("iron_grit_from_dissolving_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_IRON, CommonTags.Items.RAW_MATERIALS_IRON)))
                 .condition(TrueCondition.INSTANCE)
@@ -221,7 +221,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("iron_grit_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("iron_grit_from_dissolving_raw_metal")))
-                .save(consumer, ResourceUtils.loc("iron_grit_from_dissolving_raw_metal"));
+                .save(this.output, ResourceUtils.loc("iron_grit_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_GOLD, CommonTags.Items.ORES_GOLD)))
                 .condition(TrueCondition.INSTANCE)
@@ -230,7 +230,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("gold_grit_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("gold_grit_from_dissolving_ore")))
-                .save(consumer, ResourceUtils.loc("gold_grit_from_dissolving_ore"));
+                .save(this.output, ResourceUtils.loc("gold_grit_from_dissolving_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_GOLD, CommonTags.Items.RAW_MATERIALS_GOLD)))
                 .condition(TrueCondition.INSTANCE)
@@ -239,7 +239,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("gold_grit_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("gold_grit_from_dissolving_raw_metal")))
-                .save(consumer, ResourceUtils.loc("gold_grit_from_dissolving_raw_metal"));
+                .save(this.output, ResourceUtils.loc("gold_grit_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_COPPER, CommonTags.Items.ORES_COPPER)))
                 .condition(TrueCondition.INSTANCE)
@@ -248,7 +248,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("copper_grit_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("copper_grit_from_dissolving_ore")))
-                .save(consumer, ResourceUtils.loc("copper_grit_from_dissolving_ore"));
+                .save(this.output, ResourceUtils.loc("copper_grit_from_dissolving_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_COPPER, CommonTags.Items.RAW_MATERIALS_COPPER)))
                 .condition(TrueCondition.INSTANCE)
@@ -257,7 +257,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("copper_grit_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("copper_grit_from_dissolving_raw_metal")))
-                .save(consumer, ResourceUtils.loc("copper_grit_from_dissolving_raw_metal"));
+                .save(this.output, ResourceUtils.loc("copper_grit_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_TIN, ItemExtensionTags.ORES_TIN)))
                 .condition(TrueCondition.INSTANCE)
@@ -266,7 +266,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("tin_dust_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("tin_dust_from_dissolving_ore")))
-                .save(consumer, ResourceUtils.loc("tin_dust_from_dissolving_ore"));
+                .save(this.output, ResourceUtils.loc("tin_dust_from_dissolving_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_TIN, ItemExtensionTags.RAW_MATERIALS_TIN)))
                 .condition(TrueCondition.INSTANCE)
@@ -275,7 +275,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("tin_dust_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("tin_dust_from_dissolving_raw_metal")))
-                .save(consumer, ResourceUtils.loc("tin_dust_from_dissolving_raw_metal"));
+                .save(this.output, ResourceUtils.loc("tin_dust_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_LEAD, ItemExtensionTags.ORES_LEAD)))
                 .condition(TrueCondition.INSTANCE)
@@ -284,7 +284,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("lead_dust_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("lead_dust_from_dissolving_ore")))
-                .save(consumer, ResourceUtils.loc("lead_dust_from_dissolving_ore"));
+                .save(this.output, ResourceUtils.loc("lead_dust_from_dissolving_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_LEAD, ItemExtensionTags.RAW_MATERIALS_LEAD)))
                 .condition(TrueCondition.INSTANCE)
@@ -293,7 +293,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("lead_dust_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("lead_dust_from_dissolving_raw_metal")))
-                .save(consumer, ResourceUtils.loc("lead_dust_from_dissolving_raw_metal"));
+                .save(this.output, ResourceUtils.loc("lead_dust_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_SILVER, ItemExtensionTags.ORES_SILVER)))
                 .condition(TrueCondition.INSTANCE)
@@ -302,7 +302,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("silver_dust_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("silver_dust_from_dissolving_ore")))
-                .save(consumer, ResourceUtils.loc("silver_dust_from_dissolving_ore"));
+                .save(this.output, ResourceUtils.loc("silver_dust_from_dissolving_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_SILVER, ItemExtensionTags.RAW_MATERIALS_SILVER)))
                 .condition(TrueCondition.INSTANCE)
@@ -311,7 +311,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("silver_dust_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("silver_dust_from_dissolving_raw_metal")))
-                .save(consumer, ResourceUtils.loc("silver_dust_from_dissolving_raw_metal"));
+                .save(this.output, ResourceUtils.loc("silver_dust_from_dissolving_raw_metal"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_URANIUM, ItemExtensionTags.ORES_URANIUM)))
                 .condition(TrueCondition.INSTANCE)
@@ -320,7 +320,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("uranium_dust_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("uranium_dust_from_dissolving_ore")))
-                .save(consumer, ResourceUtils.loc("uranium_dust_from_dissolving_ore"));
+                .save(this.output, ResourceUtils.loc("uranium_dust_from_dissolving_ore"));
         ConditionalRecipe.builder()
                 .mainCondition(tagsNotEmpty(List.of(ItemExtensionTags.DUSTS_URANIUM, ItemExtensionTags.RAW_MATERIALS_URANIUM)))
                 .condition(TrueCondition.INSTANCE)
@@ -329,7 +329,7 @@ public class RecipesForge extends Recipes {
                         .setGroup("uranium_dust_dissolution")
                         .defaultManaCost()
                         .build(output, ResourceUtils.loc("uranium_dust_from_dissolving_raw_metal")))
-                .save(consumer, ResourceUtils.loc("uranium_dust_from_dissolving_raw_metal"));
+                .save(this.output, ResourceUtils.loc("uranium_dust_from_dissolving_raw_metal"));
     }
 
     public static class Runner extends RecipeProvider.Runner {
