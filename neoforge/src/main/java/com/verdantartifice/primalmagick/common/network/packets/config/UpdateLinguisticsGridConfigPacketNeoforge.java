@@ -11,6 +11,7 @@ import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class UpdateLinguisticsGridConfigPacketNeoforge implements CustomPacketPa
         this.gridDefs = new HashMap<>();
         int mapSize = buf.readVarInt();
         for (int index = 0; index < mapSize; index++) {
-            Identifier loc = buf.readResourceLocation();
+            Identifier loc = buf.readIdentifier();
             GridDefinition gridDef = GridDefinition.streamCodec().decode(buf);
             this.gridDefs.put(loc, gridDef);
         }
@@ -38,10 +39,10 @@ public class UpdateLinguisticsGridConfigPacketNeoforge implements CustomPacketPa
 
     public static void encode(UpdateLinguisticsGridConfigPacketNeoforge message, FriendlyByteBuf buf) {
         buf.writeVarInt(message.gridDefs.size());
-        for (Map.Entry<Identifier, GridDefinition> entry : message.gridDefs.entrySet()) {
-            buf.writeResourceLocation(entry.getKey());
-            GridDefinition.streamCodec().encode(buf, entry.getValue());
-        }
+        message.gridDefs.forEach((id, def) -> {
+            buf.writeIdentifier(id);
+            GridDefinition.streamCodec().encode(buf, def);
+        });
     }
 
     public static UpdateLinguisticsGridConfigPacketNeoforge decode(FriendlyByteBuf buf) {
@@ -49,6 +50,7 @@ public class UpdateLinguisticsGridConfigPacketNeoforge implements CustomPacketPa
     }
 
     @Override
+    @NotNull
     public Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }

@@ -29,7 +29,7 @@ public class UpdateLinguisticsGridConfigPacketForge implements IMessageToClient 
         this.gridDefs = new HashMap<>();
         int mapSize = buf.readVarInt();
         for (int index = 0; index < mapSize; index++) {
-            Identifier loc = buf.readResourceLocation();
+            Identifier loc = buf.readIdentifier();
             GridDefinition gridDef = GridDefinition.streamCodec().decode(buf);
             this.gridDefs.put(loc, gridDef);
         }
@@ -37,10 +37,10 @@ public class UpdateLinguisticsGridConfigPacketForge implements IMessageToClient 
 
     public static void encode(UpdateLinguisticsGridConfigPacketForge message, FriendlyByteBuf buf) {
         buf.writeVarInt(message.gridDefs.size());
-        for (Map.Entry<Identifier, GridDefinition> entry : message.gridDefs.entrySet()) {
-            buf.writeResourceLocation(entry.getKey());
-            GridDefinition.streamCodec().encode(buf, entry.getValue());
-        }
+        message.gridDefs.forEach((id, def) -> {
+            buf.writeIdentifier(id);
+            GridDefinition.streamCodec().encode(buf, def);
+        });
     }
 
     public static UpdateLinguisticsGridConfigPacketForge decode(FriendlyByteBuf buf) {
