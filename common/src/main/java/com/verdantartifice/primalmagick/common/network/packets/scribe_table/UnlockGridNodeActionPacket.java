@@ -43,20 +43,20 @@ public class UnlockGridNodeActionPacket implements IMessageToServer {
     }
 
     public static void encode(UnlockGridNodeActionPacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeResourceLocation(message.gridDefinitionKey);
+        buf.writeIdentifier(message.gridDefinitionKey);
         buf.writeVarInt(message.nodePos.x());
         buf.writeVarInt(message.nodePos.y());
     }
     
     public static UnlockGridNodeActionPacket decode(RegistryFriendlyByteBuf buf) {
-        return new UnlockGridNodeActionPacket(buf.readResourceLocation(), buf.readVarInt(), buf.readVarInt());
+        return new UnlockGridNodeActionPacket(buf.readIdentifier(), buf.readVarInt(), buf.readVarInt());
     }
     
     public static void onMessage(PacketContext<UnlockGridNodeActionPacket> ctx) {
         UnlockGridNodeActionPacket message = ctx.message();
         ServerPlayer player = ctx.sender();
         PlayerGrid grid = LinguisticsManager.getPlayerGrid(player, message.gridDefinitionKey);
-        if (grid == null || !grid.unlock(message.nodePos, player.level().registryAccess())) {
+        if (grid == null || !grid.unlock(message.nodePos, player.registryAccess())) {
             LOGGER.warn("Failed to unlock server side node ({}, {}) for linguistics grid {}", message.nodePos.x(), message.nodePos.y(), message.gridDefinitionKey);
         } else if (player.containerMenu instanceof ScribeGainComprehensionMenu menu) {
             // If the unlock action was successful, have the menu re-sync its data to the client to update vocabulary count
