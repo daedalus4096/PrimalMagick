@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Daedalus4096
  */
 public class SpellcraftingRecipe extends CustomRecipe {
-    public static final ResourceKey<Recipe<?>> RECIPE_ID = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("spellcrafting"));
+    public static final ResourceKey<Recipe<?>> RECIPE_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("spellcrafting"));
 
     public SpellcraftingRecipe(CraftingBookCategory category) {
         super(category);

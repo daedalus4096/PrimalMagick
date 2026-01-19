@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
-import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -27,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -37,7 +37,6 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
     protected static final Component CORE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_glamour_table.slot.core");
     protected static final Component CAP_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_glamour_table.slot.cap");
     protected static final Component GEM_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_glamour_table.slot.gem");
-    protected static final Identifier RECIPE_LOC = ResourceUtils.loc("wand_glamour");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final GlamourComponentInventory componentInv = new GlamourComponentInventory();
@@ -91,10 +90,11 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player player, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 0) {
@@ -170,33 +170,31 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@NotNull Player player) {
         return stillValid(this.worldPosCallable, player, BlocksPM.WAND_GLAMOUR_TABLE.get());
     }
 
     @Override
-    public void removed(Player player) {
+    public void removed(@NotNull Player player) {
         super.removed(player);
         this.clearContainer(player, this.componentInv);
     }
 
     @Override
-    public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {
+    public boolean canTakeItemForPickAll(@NotNull ItemStack stack, @NotNull Slot slot) {
         return slot.container != this.resultInv && super.canTakeItemForPickAll(stack, slot);
     }
 
     @Override
-    public void slotsChanged(Container inv) {
+    public void slotsChanged(@NotNull Container inv) {
         super.slotsChanged(inv);
-        this.worldPosCallable.execute((world, blockPos) -> {
-            this.slotChangedCraftingGrid(world);
-        });
+        this.worldPosCallable.execute((world, blockPos) -> this.slotChangedCraftingGrid(world));
     }
 
     protected void slotChangedCraftingGrid(Level world) {
         if (!world.isClientSide() && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
+            Optional<RecipeHolder<?>> opt = spe.level().recipeAccess().byKey(WandGlamourRecipe.RECIPE_KEY);
             if (opt.isPresent() && opt.get().value() instanceof WandGlamourRecipe recipe) {
                 // If the inputs are valid, show the output
                 CraftingInput craftInput = this.componentInv.asCraftInput();

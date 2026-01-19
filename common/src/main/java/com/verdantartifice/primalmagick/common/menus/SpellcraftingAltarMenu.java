@@ -373,7 +373,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
     protected void slotChangedCraftingGrid(Level level) {
         if (level instanceof ServerLevel serverLevel && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = serverLevel.recipeAccess().byKey(SpellcraftingRecipe.RECIPE_ID);
+            Optional<RecipeHolder<?>> opt = serverLevel.recipeAccess().byKey(SpellcraftingRecipe.RECIPE_KEY);
             if (opt.isPresent() && opt.get().value() instanceof SpellcraftingRecipe recipe) {
                 // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
                 if (recipe.matches(this.scrollInv.asCraftInput(), level) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {

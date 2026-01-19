@@ -25,6 +25,7 @@ import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -37,7 +38,6 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
     protected static final Component CASTER_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.caster");
     protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.scroll");
     protected static final Identifier TOME_BACKGROUND = ResourceUtils.loc("item/empty_book_slot");
-    protected static final Identifier RECIPE_LOC = ResourceUtils.loc("wand_inscription");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final InscriptionComponentInventory componentInv = new InscriptionComponentInventory();
@@ -82,22 +82,23 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player playerIn) {
+    public boolean stillValid(@NotNull Player playerIn) {
         return stillValid(this.worldPosCallable, playerIn, BlocksPM.WAND_INSCRIPTION_TABLE.get());
     }
 
     @Override
-    public void removed(Player playerIn) {
+    public void removed(@NotNull Player playerIn) {
         // Return components to the player's inventory when the GUI is closed
         super.removed(playerIn);
         this.clearContainer(playerIn, this.componentInv);
     }
     
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 0) {
@@ -157,23 +158,20 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
     }
     
     @Override
-    public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+    public boolean canTakeItemForPickAll(@NotNull ItemStack stack, @NotNull Slot slotIn) {
         return slotIn.container != this.resultInv && super.canTakeItemForPickAll(stack, slotIn);
     }
     
     @Override
-    public void slotsChanged(Container inventoryIn) {
+    public void slotsChanged(@NotNull Container inventoryIn) {
         super.slotsChanged(inventoryIn);
-        this.worldPosCallable.execute((world, blockPos) -> {
-            this.slotChangedCraftingGrid(world);
-        });
+        this.worldPosCallable.execute((world, blockPos) -> this.slotChangedCraftingGrid(world));
     }
     
     protected void slotChangedCraftingGrid(Level world) {
-        if (!world.isClientSide() && this.player instanceof ServerPlayer) {
-            ServerPlayer spe = (ServerPlayer)this.player;
+        if (!world.isClientSide() && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
+            Optional<RecipeHolder<?>> opt = spe.level().recipeAccess().byKey(WandInscriptionRecipe.RECIPE_KEY);
             if (opt.isPresent() && opt.get().value() instanceof WandInscriptionRecipe recipe) {
                 // If the inputs are valid for inscribing a spell onto a wand, show the output
                 if (recipe.matches(this.componentInv.asCraftInput(), world)) {

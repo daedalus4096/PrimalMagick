@@ -674,16 +674,16 @@ public abstract class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 40).add(Sources.SEA, 40).add(Sources.SKY, 40).add(Sources.SUN, 40).add(Sources.MOON, 40))
             .build(consumer);
 
-        SpecialRecipeBuilder.special(WandAssemblyRecipe::new).save(consumer, ResourceUtils.loc("wand_assembly"));
-        SpecialRecipeBuilder.special(WandInscriptionRecipe::new).save(consumer, ResourceUtils.loc("wand_inscription"));
-        SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(consumer, SpellcraftingRecipe.RECIPE_ID);
-        SpecialRecipeBuilder.special(FlyingCarpetDyeRecipe::new).save(consumer, ResourceUtils.loc("flying_carpet_dye"));
-        SpecialRecipeBuilder.special(TieredShieldDecorationRecipe::new).save(consumer, ResourceUtils.loc("tiered_shield_decoration"));
-        SpecialRecipeBuilder.special(WandGlamourRecipe::new).save(consumer, ResourceUtils.loc("wand_glamour"));
-        SpecialRecipeBuilder.special(WardingModuleApplicationRecipe::new).save(consumer, ResourceUtils.loc("warding_module_application"));
-        SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(consumer, ResourceUtils.loc("static_book_cloning"));
-        SpecialRecipeBuilder.special(WritableBookCraftingRecipe::new).save(consumer, ResourceUtils.loc("writable_book_crafting"));
-        SpecialRecipeBuilder.special(AttuneManaOrbRecipe::new).save(consumer, ResourceUtils.loc("attune_mana_orb"));
+        SpecialRecipeBuilder.special(WandAssemblyRecipe::new).save(consumer, WandAssemblyRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(WandInscriptionRecipe::new).save(consumer, WandInscriptionRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(consumer, SpellcraftingRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(FlyingCarpetDyeRecipe::new).save(consumer, FlyingCarpetDyeRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(TieredShieldDecorationRecipe::new).save(consumer, TieredShieldDecorationRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(WandGlamourRecipe::new).save(consumer, WandGlamourRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(WardingModuleApplicationRecipe::new).save(consumer, WardingModuleApplicationRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(consumer, StaticBookCloningRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(WritableBookCraftingRecipe::new).save(consumer, WritableBookCraftingRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(AttuneManaOrbRecipe::new).save(consumer, AttuneManaOrbRecipe.RECIPE_KEY);
     }
 
     protected void registerMarbleRecipes(RecipeOutput consumer) {
