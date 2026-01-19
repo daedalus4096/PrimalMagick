@@ -56,7 +56,7 @@ public class WithdrawCaskEssencePacket implements IMessageToServer {
     public static void onMessage(PacketContext<WithdrawCaskEssencePacket> ctx) {
         WithdrawCaskEssencePacket message = ctx.message();
         ServerPlayer player = ctx.sender();
-        Level level = player.getCommandSenderWorld();
+        Level level = player.level();
 
         // Only process blocks that are currently loaded into the world.  Safety check to prevent
         // resource thrashing from falsified packets.
