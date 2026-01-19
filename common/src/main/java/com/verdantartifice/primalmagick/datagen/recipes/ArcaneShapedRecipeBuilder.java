@@ -13,6 +13,8 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
@@ -20,6 +22,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
 
@@ -36,6 +39,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ArcaneShapedRecipeBuilder {
+    protected final HolderGetter<Item> itemGetter;
     protected final ItemStack result;
     protected final List<String> patternRows = new ArrayList<>();
     protected final Map<Character, Ingredient> key = new LinkedHashMap<>();
@@ -47,7 +51,8 @@ public class ArcaneShapedRecipeBuilder {
     protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
     
-    protected ArcaneShapedRecipeBuilder(ItemLike result, int count) {
+    protected ArcaneShapedRecipeBuilder(HolderGetter<Item> itemGetter, ItemLike result, int count) {
+        this.itemGetter = itemGetter;
         this.result = new ItemStack(result, count);
     }
     
@@ -58,8 +63,8 @@ public class ArcaneShapedRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a shaped arcane recipe
      */
-    public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(ItemLike result, int count) {
-        return new ArcaneShapedRecipeBuilder(result, count);
+    public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(HolderGetter<Item> itemGetter, ItemLike result, int count) {
+        return new ArcaneShapedRecipeBuilder(itemGetter, result, count);
     }
     
     /**
@@ -68,8 +73,8 @@ public class ArcaneShapedRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a shaped arcane recipe
      */
-    public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(ItemLike result) {
-        return arcaneShapedRecipe(result, 1);
+    public static ArcaneShapedRecipeBuilder arcaneShapedRecipe(HolderGetter<Item> itemGetter, ItemLike result) {
+        return arcaneShapedRecipe(itemGetter, result, 1);
     }
     
     /**
@@ -109,7 +114,7 @@ public class ArcaneShapedRecipeBuilder {
      * @return the modified builder
      */
     public ArcaneShapedRecipeBuilder key(Character symbol, TagKey<Item> tag) {
-        return key(symbol, Ingredient.of(tag));
+        return key(symbol, Ingredient.of(this.itemGetter.getOrThrow(tag)));
     }
     
     /**
@@ -119,7 +124,7 @@ public class ArcaneShapedRecipeBuilder {
      * @return the modified builder
      */
     public ArcaneShapedRecipeBuilder patternLine(String pattern) {
-        if (!this.patternRows.isEmpty() && pattern.length() != this.patternRows.get(0).length()) {
+        if (!this.patternRows.isEmpty() && pattern.length() != this.patternRows.getFirst().length()) {
             throw new IllegalArgumentException("Pattern must be the same width on every line!");
         } else {
             this.patternRows.add(pattern);
@@ -198,7 +203,7 @@ public class ArcaneShapedRecipeBuilder {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
         } else if (this.requirements.size() == 1) {
-            return Optional.of(this.requirements.get(0));
+            return Optional.of(this.requirements.getFirst());
         } else {
             return Optional.of(new AndRequirement(this.requirements));
         }
@@ -210,11 +215,15 @@ public class ArcaneShapedRecipeBuilder {
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(RecipeOutput output, Identifier id) {
+    public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         ShapedRecipePattern pattern = this.validate(id);
         ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.getFinalRequirement(), 
                 Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
         output.accept(id, recipe, null);
+    }
+
+    protected void build(RecipeOutput output, Identifier id) {
+        this.build(output, ResourceKey.create(Registries.RECIPE, id));
     }
     
     /**
@@ -226,8 +235,8 @@ public class ArcaneShapedRecipeBuilder {
      */
     public void build(RecipeOutput output, String save) {
         Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
-        Identifier saveLoc = Identifier.parse(save);
-        if (saveLoc.equals(id)) {
+        ResourceKey<Recipe<?>> saveLoc = ResourceKey.create(Registries.RECIPE, Identifier.parse(save));
+        if (saveLoc.identifier().equals(id)) {
             throw new IllegalStateException("Arcane Shaped Recipe " + save + " should remove its 'save' argument");
         } else {
             this.build(output, saveLoc);
@@ -248,10 +257,10 @@ public class ArcaneShapedRecipeBuilder {
      * 
      * @param id the ID of the recipe
      */
-    protected ShapedRecipePattern validate(Identifier id) {
+    protected ShapedRecipePattern validate(ResourceKey<Recipe<?>> id) {
         if (this.requirements.isEmpty()) {
             throw new IllegalStateException("No requirement is defined for arcane shaped recipe " + id + "!");
-        } else if (this.patternRows.size() == 1 && this.patternRows.get(0).length() == 1) {
+        } else if (this.patternRows.size() == 1 && this.patternRows.getFirst().length() == 1) {
             throw new IllegalStateException("Arcane shaped recipe " + id + " only takes in a single item - should it be a shapeless recipe instead?");
         }
         return ShapedRecipePattern.of(this.key, this.patternRows);

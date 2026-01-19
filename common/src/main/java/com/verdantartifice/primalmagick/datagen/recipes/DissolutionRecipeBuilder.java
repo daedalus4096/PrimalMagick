@@ -3,12 +3,14 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.Objects;
@@ -19,25 +21,27 @@ import java.util.Objects;
  * @author Daedalus4096
  */
 public class DissolutionRecipeBuilder {
+    protected final HolderGetter<Item> itemGetter;
     protected final ItemStack result;
     protected Ingredient ingredient;
     protected String group;
     protected SourceList manaCosts;
 
-    protected DissolutionRecipeBuilder(ItemStack result) {
+    protected DissolutionRecipeBuilder(HolderGetter<Item> itemGetter, ItemStack result) {
+        this.itemGetter = itemGetter;
         this.result = result.copy();
     }
     
-    public static DissolutionRecipeBuilder dissolutionRecipe(ItemStack result) {
-        return new DissolutionRecipeBuilder(result);
+    public static DissolutionRecipeBuilder dissolutionRecipe(HolderGetter<Item> itemGetter, ItemStack result) {
+        return new DissolutionRecipeBuilder(itemGetter, result);
     }
     
-    public static DissolutionRecipeBuilder dissolutionRecipe(ItemLike item, int count) {
-        return dissolutionRecipe(new ItemStack(item.asItem(), count));
+    public static DissolutionRecipeBuilder dissolutionRecipe(HolderGetter<Item> itemGetter, ItemLike item, int count) {
+        return dissolutionRecipe(itemGetter, new ItemStack(item.asItem(), count));
     }
     
-    public static DissolutionRecipeBuilder dissolutionRecipe(ItemLike item) {
-        return dissolutionRecipe(item, 1);
+    public static DissolutionRecipeBuilder dissolutionRecipe(HolderGetter<Item> itemGetter, ItemLike item) {
+        return dissolutionRecipe(itemGetter, item, 1);
     }
     
     public DissolutionRecipeBuilder ingredient(Ingredient ingredient) {
@@ -50,7 +54,7 @@ public class DissolutionRecipeBuilder {
     }
     
     public DissolutionRecipeBuilder ingredient(TagKey<Item> tag) {
-        return this.ingredient(Ingredient.of(tag));
+        return this.ingredient(Ingredient.of(this.itemGetter.getOrThrow(tag)));
     }
     
     public DissolutionRecipeBuilder setGroup(String group) {
@@ -71,13 +75,13 @@ public class DissolutionRecipeBuilder {
         return this;
     }
     
-    protected void validate(Identifier id) {
+    protected void validate(ResourceKey<Recipe<?>> id) {
         if (this.ingredient == null) {
             throw new IllegalStateException("No ingredient defined for dissolution recipe " + id + "!");
         }
     }
     
-    public void build(RecipeOutput output, Identifier id) {
+    public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
         DissolutionRecipe recipe = new DissolutionRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);
