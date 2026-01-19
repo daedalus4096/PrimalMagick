@@ -16,6 +16,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
+import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
@@ -28,11 +29,11 @@ import java.util.stream.Stream;
  */
 public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaItemUsedStatRequirement> implements IVanillaStatRequirement {
     public static final MapCodec<VanillaItemUsedStatRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            Identifier.CODEC.fieldOf("item").xmap(loc -> Services.ITEMS_REGISTRY.get(loc), item -> Services.ITEMS_REGISTRY.getKey(item)).forGetter(req -> req.stat.getValue()),
+            Identifier.CODEC.fieldOf("item").xmap(Services.ITEMS_REGISTRY::get, Services.ITEMS_REGISTRY::getKey).forGetter(req -> req.stat.getValue()),
             Codec.INT.fieldOf("threshold").forGetter(VanillaItemUsedStatRequirement::getThreshold)
         ).apply(instance, VanillaItemUsedStatRequirement::new));
     public static final StreamCodec<ByteBuf, VanillaItemUsedStatRequirement> STREAM_CODEC = StreamCodec.composite(
-            Identifier.STREAM_CODEC.map(loc -> Services.ITEMS_REGISTRY.get(loc), item -> Services.ITEMS_REGISTRY.getKey(item)),
+            Identifier.STREAM_CODEC.map(Services.ITEMS_REGISTRY::get, Services.ITEMS_REGISTRY::getKey),
             req -> req.stat.getValue(),
             ByteBufCodecs.VAR_INT,
             VanillaItemUsedStatRequirement::getThreshold,
@@ -73,7 +74,7 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
     @Override
     public Component getStatDescription() {
         Component baseLabel = this.stat.getType().getDisplayName();
-        Component itemLabel = this.stat.getValue().getDescription();
+        Component itemLabel = this.stat.getValue().getName();
         return Component.translatable("tooltip.primalmagick.stat_description.vanilla", baseLabel, itemLabel);
     }
 
@@ -86,10 +87,12 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
         if (player instanceof ServerPlayer serverPlayer) {
             return serverPlayer.getStats().getValue(this.stat);
         } else if (Services.PLATFORM.isClientDist()) {
-            return ClientUtils.getStatsCounter().getValue(this.stat);
-        } else {
-            throw new IllegalStateException("Player is neither server nor client side!");
+            StatsCounter statsCounter = ClientUtils.getStatsCounter();
+            if (statsCounter != null) {
+                return statsCounter.getValue(this.stat);
+            }
         }
+        throw new IllegalStateException("Player is neither server nor client side!");
     }
 
     @Override

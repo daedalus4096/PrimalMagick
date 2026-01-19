@@ -59,7 +59,7 @@ public class ClientUtils {
     @Nullable
     public static StatsCounter getStatsCounter() {
         Minecraft mc = Minecraft.getInstance();
-        return mc.player.getStats();
+        return mc.player != null ? mc.player.getStats() : null;
     }
     
     /**
