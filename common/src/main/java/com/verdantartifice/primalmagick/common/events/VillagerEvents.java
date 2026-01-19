@@ -3,11 +3,10 @@ package com.verdantartifice.primalmagick.common.events;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
-import net.minecraft.world.entity.npc.VillagerTrades.EmeraldForItems;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemsForEmeralds;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
+import net.minecraft.world.entity.npc.villager.VillagerTrades.EmeraldForItems;
+import net.minecraft.world.entity.npc.villager.VillagerTrades.ItemListing;
+import net.minecraft.world.entity.npc.villager.VillagerTrades.ItemsForEmeralds;
 
 import java.util.List;
 
