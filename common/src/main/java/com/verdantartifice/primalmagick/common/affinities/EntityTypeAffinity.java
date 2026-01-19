@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -25,7 +25,7 @@ public class EntityTypeAffinity extends AbstractAffinity<EntityTypeAffinity> {
             DataResult.error(() -> "Unknown target entity type " + eta.targetId
         ));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, EntityTypeAffinity> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<FriendlyByteBuf, EntityTypeAffinity> STREAM_CODEC = StreamCodec.composite(
             Identifier.STREAM_CODEC, EntityTypeAffinity::getTarget,
             SourceList.STREAM_CODEC, eta -> eta.values,
             EntityTypeAffinity::new);

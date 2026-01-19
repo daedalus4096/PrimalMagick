@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -19,8 +19,8 @@ public abstract class AbstractAffinity<T extends AbstractAffinity<T>> implements
         return Services.AFFINITY_TYPES_REGISTRY.codec().dispatch("type", AbstractAffinity::getType, AffinityType::codec);
     }
 
-    public static StreamCodec<RegistryFriendlyByteBuf, AbstractAffinity<?>> dispatchStreamCodec() {
-        return Services.AFFINITY_TYPES_REGISTRY.registryFriendlyStreamCodec().dispatch(AbstractAffinity::getType, AffinityType::streamCodec);
+    public static StreamCodec<FriendlyByteBuf, AbstractAffinity<?>> dispatchStreamCodec() {
+        return Services.AFFINITY_TYPES_REGISTRY.friendlyStreamCodec().dispatch(AbstractAffinity::getType, AffinityType::streamCodec);
     }
 
     protected Identifier targetId;

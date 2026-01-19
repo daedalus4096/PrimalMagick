@@ -1,9 +1,7 @@
 package com.verdantartifice.primalmagick.common.network.packets.config;
 
+import com.verdantartifice.primalmagick.common.affinities.AbstractAffinity;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
-import com.verdantartifice.primalmagick.common.affinities.AffinityType;
-import com.verdantartifice.primalmagick.common.affinities.IAffinity;
-import com.verdantartifice.primalmagick.common.affinities.IAffinitySerializer;
 import com.verdantartifice.primalmagick.common.network.ConfigPacketHandlerForge;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,9 +19,9 @@ public class UpdateAffinitiesConfigPacketForge implements IMessageToClient {
     public static final StreamCodec<FriendlyByteBuf, UpdateAffinitiesConfigPacketForge> STREAM_CODEC = StreamCodec.ofMember(UpdateAffinitiesConfigPacketForge::encode, UpdateAffinitiesConfigPacketForge::decode);
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected final List<IAffinity> affinities;
+    protected final List<AbstractAffinity<?>> affinities;
 
-    public UpdateAffinitiesConfigPacketForge(Collection<IAffinity> affinities) {
+    public UpdateAffinitiesConfigPacketForge(Collection<AbstractAffinity<?>> affinities) {
         this.affinities = new ArrayList<>(affinities);
     }
 
@@ -35,21 +33,12 @@ public class UpdateAffinitiesConfigPacketForge implements IMessageToClient {
         return new UpdateAffinitiesConfigPacketForge(buf.readList(UpdateAffinitiesConfigPacketForge::fromNetwork));
     }
 
-    public static IAffinity fromNetwork(FriendlyByteBuf buf) {
-        // TODO Replace this with a dispatched stream codec
-        String typeStr = buf.readUtf();
-        AffinityType type = AffinityType.parse(typeStr);
-        IAffinitySerializer<?> serializer = AffinityManager.getSerializer(type);
-        if (serializer == null) {
-            throw new IllegalArgumentException("Unknown affinity serializer " + typeStr);
-        }
-        return serializer.fromNetwork(buf);
+    public static AbstractAffinity<?> fromNetwork(FriendlyByteBuf buf) {
+        return AbstractAffinity.dispatchStreamCodec().decode(buf);
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T extends IAffinity> void toNetwork(FriendlyByteBuf buf, T affinity) {
-        buf.writeUtf(affinity.getType().getSerializedName());
-        ((IAffinitySerializer<T>)affinity.getSerializer()).toNetwork(buf, affinity);
+    public static void toNetwork(FriendlyByteBuf buf, AbstractAffinity<?> affinity) {
+        AbstractAffinity.dispatchStreamCodec().encode(buf, affinity);
     }
 
     public static void onMessage(UpdateAffinitiesConfigPacketForge message, CustomPayloadEvent.Context ctx) {

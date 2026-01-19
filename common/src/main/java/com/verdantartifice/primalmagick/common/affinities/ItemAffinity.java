@@ -9,11 +9,11 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +33,7 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
             dv -> ia.targetId.equals(dv.base) ? DataResult.error(() -> "Affinity base must not match target " + ia.targetId) : DataResult.success(ia)
         ));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, ItemAffinity> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<FriendlyByteBuf, ItemAffinity> STREAM_CODEC = StreamCodec.composite(
             Identifier.STREAM_CODEC, ItemAffinity::getTarget,
             ByteBufCodecs.either(FixedValues.STREAM_CODEC, DerivedValues.STREAM_CODEC), ia -> ia.valuesEither,
             ByteBufCodecs.optional(ResourceKey.streamCodec(Registries.RECIPE)), ItemAffinity::getSourceRecipe,
@@ -80,7 +80,7 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
                 SourceList.CODEC.fieldOf("set").forGetter(FixedValues::set)
             ).apply(instance, FixedValues::new));
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, FixedValues> STREAM_CODEC = StreamCodec.composite(
+        public static final StreamCodec<FriendlyByteBuf, FixedValues> STREAM_CODEC = StreamCodec.composite(
                 SourceList.STREAM_CODEC, FixedValues::set,
                 FixedValues::new);
     }
@@ -90,13 +90,13 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
                 Identifier.CODEC.fieldOf("base").validate(
                         rl -> Services.ITEMS_REGISTRY.containsKey(rl) ?
                                 DataResult.success(rl) :
-                                DataResult.error(() -> "Item " + rl.toString() + " not defined")
+                                DataResult.error(() -> "Item " + rl + " not defined")
                     ).forGetter(DerivedValues::base),
                 SourceList.CODEC.optionalFieldOf("add", SourceList.EMPTY).forGetter(DerivedValues::add),
                 SourceList.CODEC.optionalFieldOf("remove", SourceList.EMPTY).forGetter(DerivedValues::remove)
             ).apply(instance, DerivedValues::new));
 
-        public static final StreamCodec<RegistryFriendlyByteBuf, DerivedValues> STREAM_CODEC = StreamCodec.composite(
+        public static final StreamCodec<FriendlyByteBuf, DerivedValues> STREAM_CODEC = StreamCodec.composite(
                 Identifier.STREAM_CODEC, DerivedValues::base,
                 SourceList.STREAM_CODEC, DerivedValues::add,
                 SourceList.STREAM_CODEC, DerivedValues::remove,

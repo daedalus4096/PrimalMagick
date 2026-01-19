@@ -60,7 +60,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     
     public static final int MAX_SCAN_COUNT = 108;   // Enough to scan a 9x12 inventory
     
-    private final Map<AffinityType<?>, Map<Identifier, IAffinity>> affinities = new HashMap<>();
+    private final Map<AffinityType<?>, Map<Identifier, AbstractAffinity<?>>> affinities = new HashMap<>();
     
     private final Map<AffinityType<?>, Map<Identifier, CompletableFuture<SourceList>>> resultCache = new ConcurrentHashMap<>();
     private final Object resultCacheLock = new Object();
@@ -100,7 +100,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         });
     }
     
-    public void replaceAffinities(List<IAffinity> affinities) {
+    public void replaceAffinities(List<AbstractAffinity<?>> affinities) {
         this.affinities.clear();
         this.clearCachedResults();
         affinities.forEach(this::registerAffinity);
@@ -110,12 +110,12 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     }
 
     @Nullable
-    protected IAffinity getAffinity(AffinityType<?> type, Identifier id) {
+    protected AbstractAffinity<?> getAffinity(AffinityType<?> type, Identifier id) {
         return this.affinities.getOrDefault(type, Collections.emptyMap()).get(id);
     }
     
-    public CompletableFuture<IAffinity> getOrGenerateItemAffinityAsync(@NotNull Identifier id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
-        Map<Identifier, IAffinity> map = this.affinities.computeIfAbsent(AffinityTypesPM.ITEM.get(), affinityType -> new HashMap<>());
+    public CompletableFuture<AbstractAffinity<?>> getOrGenerateItemAffinityAsync(@NotNull Identifier id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
+        Map<Identifier, AbstractAffinity<?>> map = this.affinities.computeIfAbsent(AffinityTypesPM.ITEM.get(), affinityType -> new HashMap<>());
         if (map.containsKey(id)) {
             return CompletableFuture.completedFuture(map.get(id));
         } else {
@@ -124,11 +124,11 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     }
     
     @NotNull
-    public Collection<IAffinity> getAllAffinities() {
+    public Collection<AbstractAffinity<?>> getAllAffinities() {
         return this.affinities.values().stream().flatMap(typeMap -> typeMap.values().stream()).collect(Collectors.toSet());
     }
     
-    protected void registerAffinity(@NotNull IAffinity affinity) {
+    protected void registerAffinity(@NotNull AbstractAffinity<?> affinity) {
         this.affinities.computeIfAbsent(affinity.getType(), affinityType -> new HashMap<>()).put(affinity.getTarget(), affinity);
     }
     
@@ -207,7 +207,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     
     public CompletableFuture<SourceList> getAffinityValuesAsync(EntityType<?> type, RegistryAccess registryAccess) {
         return CompletableFuture.supplyAsync(() -> {
-            IAffinity entityAffinity = this.getAffinity(AffinityTypesPM.ENTITY_TYPE.get(), Services.ENTITY_TYPES_REGISTRY.getKey(type));
+            AbstractAffinity<?> entityAffinity = this.getAffinity(AffinityTypesPM.ENTITY_TYPE.get(), Services.ENTITY_TYPES_REGISTRY.getKey(type));
             if (entityAffinity == null) {
                 return SourceList.EMPTY;
             } else {
@@ -276,7 +276,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         }
 
         // First try looking up the affinity data from the registry
-        CompletableFuture<IAffinity> itemAffinityFuture;
+        CompletableFuture<AbstractAffinity<?>> itemAffinityFuture;
         if (this.isRegistered(AffinityTypesPM.ITEM.get(), stackItemLoc)) {
             itemAffinityFuture = CompletableFuture.completedFuture(this.getAffinity(AffinityTypesPM.ITEM.get(), stackItemLoc));
         } else {
@@ -298,7 +298,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         });
     }
     
-    protected CompletableFuture<IAffinity> generateItemAffinityAsync(@NotNull Identifier id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
+    protected CompletableFuture<AbstractAffinity<?>> generateItemAffinityAsync(@NotNull Identifier id, @NotNull RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
         // If the affinity is already registered, just return that
         if (this.isRegistered(AffinityTypesPM.ITEM.get(), id)) {
             return CompletableFuture.completedFuture(this.getAffinity(AffinityTypesPM.ITEM.get(), id));
@@ -467,7 +467,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         // Determine bonus affinities from NBT-attached potion data
         Optional<Holder<Potion>> potionHolderOpt = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).potion();
         potionHolderOpt.ifPresent(potionHolder -> {
-            IAffinity bonus = this.getAffinity(AffinityTypesPM.POTION_BONUS.get(), BuiltInRegistries.POTION.getKey(potionHolder.value()));
+            AbstractAffinity<?> bonus = this.getAffinity(AffinityTypesPM.POTION_BONUS.get(), BuiltInRegistries.POTION.getKey(potionHolder.value()));
             if (bonus != null) {
                 bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()));
             }
@@ -476,7 +476,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         // Determine bonus affinities from NBT-attached enchantment data
         ItemEnchantments enchants = stack.getEnchantments();
         enchants.entrySet().forEach(entry -> {
-            IAffinity bonus = this.getAffinity(AffinityTypesPM.ENCHANTMENT_BONUS.get(), entry.getKey().unwrapKey().get().identifier());
+            AbstractAffinity<?> bonus = this.getAffinity(AffinityTypesPM.ENCHANTMENT_BONUS.get(), entry.getKey().unwrapKey().get().identifier());
             if (bonus != null) {
                 bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()).thenApply(enchantBonus -> enchantBonus.multiply(entry.getIntValue())));
             }

@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -25,7 +25,7 @@ public class PotionBonusAffinity extends AbstractAffinity<PotionBonusAffinity> {
             DataResult.error(() -> "Unknown target potion type " + pba.targetId
         ));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, PotionBonusAffinity> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<FriendlyByteBuf, PotionBonusAffinity> STREAM_CODEC = StreamCodec.composite(
             Identifier.STREAM_CODEC, PotionBonusAffinity::getTarget,
             SourceList.STREAM_CODEC, pba -> pba.bonusValues,
             PotionBonusAffinity::new);
