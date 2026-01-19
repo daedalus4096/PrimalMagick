@@ -1,16 +1,15 @@
 package com.verdantartifice.primalmagick.common.armortrim;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.util.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Item;
+import net.minecraft.util.Util;
+import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 
 import java.util.HashMap;
@@ -42,9 +41,10 @@ public class TrimMaterialsPM {
         SOURCE_MAPPING.put(key, source);
         return key;
     }
-    
-    private static void register(BootstrapContext<TrimMaterial> context, ResourceKey<TrimMaterial> materialKey, Item item, Style textStyle, float itemModelIndex) {
-        context.register(materialKey, TrimMaterial.create(materialKey.identifier().getPath(), item, itemModelIndex, Component.translatable(Util.makeDescriptionId("trim_material", materialKey.identifier())).withStyle(textStyle), Map.of()));
+
+    private static void register(BootstrapContext<TrimMaterial> pContext, ResourceKey<TrimMaterial> pKey, Style pStyle, MaterialAssetGroup pAssets) {
+        Component component = Component.translatable(Util.makeDescriptionId("trim_material", pKey.identifier())).withStyle(pStyle);
+        pContext.register(pKey, new TrimMaterial(pAssets, component));
     }
     
     private static Style getStyle(Source source) {
@@ -60,14 +60,14 @@ public class TrimMaterialsPM {
     }
     
     public static void bootstrap(BootstrapContext<TrimMaterial> context) {
-        register(context, RUNE_EARTH, ItemsPM.RUNE_EARTH.get(), getStyle(Sources.EARTH), 0.7F);          // Use emerald model index
-        register(context, RUNE_SEA, ItemsPM.RUNE_SEA.get(), getStyle(Sources.SEA), 0.9F);                // Use lapis model index
-        register(context, RUNE_SKY, ItemsPM.RUNE_SKY.get(), getStyle(Sources.SKY), 0.8F);                // Use diamond model index
-        register(context, RUNE_SUN, ItemsPM.RUNE_SUN.get(), getStyle(Sources.SUN), 0.6F);                // Use gold model index
-        register(context, RUNE_MOON, ItemsPM.RUNE_MOON.get(), getStyle(Sources.MOON), 0.2F);             // Use iron model index
-        register(context, RUNE_BLOOD, ItemsPM.RUNE_BLOOD.get(), getStyle(Sources.BLOOD), 0.4F);          // Use redstone model index
-        register(context, RUNE_INFERNAL, ItemsPM.RUNE_INFERNAL.get(), getStyle(Sources.INFERNAL), 0.5F); // Use copper model index
-        register(context, RUNE_VOID, ItemsPM.RUNE_VOID.get(), getStyle(Sources.VOID), 1.0F);             // Use amethyst model index
-        register(context, RUNE_HALLOWED, ItemsPM.RUNE_HALLOWED.get(), getStyle(Sources.HALLOWED), 0.1F); // Use quartz model index
+        register(context, RUNE_EARTH, getStyle(Sources.EARTH), MaterialAssetGroup.EMERALD);         // Use emerald model index
+        register(context, RUNE_SEA, getStyle(Sources.SEA), MaterialAssetGroup.LAPIS);               // Use lapis model index
+        register(context, RUNE_SKY, getStyle(Sources.SKY), MaterialAssetGroup.DIAMOND);             // Use diamond model index
+        register(context, RUNE_SUN, getStyle(Sources.SUN), MaterialAssetGroup.GOLD);                // Use gold model index
+        register(context, RUNE_MOON, getStyle(Sources.MOON), MaterialAssetGroup.IRON);              // Use iron model index
+        register(context, RUNE_BLOOD, getStyle(Sources.BLOOD), MaterialAssetGroup.REDSTONE);        // Use redstone model index
+        register(context, RUNE_INFERNAL, getStyle(Sources.INFERNAL), MaterialAssetGroup.COPPER);    // Use copper model index
+        register(context, RUNE_VOID, getStyle(Sources.VOID), MaterialAssetGroup.AMETHYST);          // Use amethyst model index
+        register(context, RUNE_HALLOWED, getStyle(Sources.HALLOWED), MaterialAssetGroup.QUARTZ);    // Use quartz model index
     }
 }
