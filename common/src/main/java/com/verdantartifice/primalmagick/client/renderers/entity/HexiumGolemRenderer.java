@@ -1,10 +1,12 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
 import com.verdantartifice.primalmagick.client.renderers.entity.layers.HexiumGolemCracksLayer;
+import com.verdantartifice.primalmagick.client.renderers.entity.state.EnchantedGolemRenderState;
 import com.verdantartifice.primalmagick.common.entities.golems.HexiumGolemEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Entity renderer for a hexium golem.
@@ -20,7 +22,8 @@ public class HexiumGolemRenderer extends AbstractEnchantedGolemRenderer<HexiumGo
     }
 
     @Override
-    public Identifier getTextureLocation(HexiumGolemEntity entity) {
+    @NotNull
+    public Identifier getTextureLocation(EnchantedGolemRenderState state) {
         return TEXTURE;
     }
 }
