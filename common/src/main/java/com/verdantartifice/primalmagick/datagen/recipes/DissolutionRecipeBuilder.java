@@ -3,8 +3,12 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -80,7 +84,24 @@ public class DissolutionRecipeBuilder {
             throw new IllegalStateException("No ingredient defined for dissolution recipe " + id + "!");
         }
     }
-    
+
+    /**
+     * Builds this recipe into a finished recipe. Use {@link #build(RecipeOutput, ResourceKey)} if save is the same as the ID for
+     * the result.
+     *
+     * @param output a consumer for the finished recipe
+     * @param save custom ID for the finished recipe
+     */
+    public void build(RecipeOutput output, String save) {
+        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
+        ResourceKey<Recipe<?>> saveLoc = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc(save));
+        if (saveLoc.identifier().equals(id)) {
+            throw new IllegalStateException("Dissolution Recipe " + save + " should remove its 'save' argument");
+        } else {
+            this.build(output, saveLoc);
+        }
+    }
+
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
         DissolutionRecipe recipe = new DissolutionRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));

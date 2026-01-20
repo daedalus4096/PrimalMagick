@@ -235,7 +235,7 @@ public class ArcaneShapedRecipeBuilder {
      */
     public void build(RecipeOutput output, String save) {
         Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
-        ResourceKey<Recipe<?>> saveLoc = ResourceKey.create(Registries.RECIPE, Identifier.parse(save));
+        ResourceKey<Recipe<?>> saveLoc = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc(save));
         if (saveLoc.identifier().equals(id)) {
             throw new IllegalStateException("Arcane Shaped Recipe " + save + " should remove its 'save' argument");
         } else {

@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponentPredicate;
+import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -140,7 +140,7 @@ public class RecipesNeoforge extends Recipes {
     private Ingredient makeWaterIngredientInner(ItemLike baseItem) {
         return DataComponentIngredient.of(
                 false,
-                DataComponentPredicate.builder()
+                DataComponentExactPredicate.builder()
                         .expect(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER))
                         .expect(DataComponentsPM.CONCOCTION_TYPE.get(), ConcoctionType.WATER)
                         .build(),
