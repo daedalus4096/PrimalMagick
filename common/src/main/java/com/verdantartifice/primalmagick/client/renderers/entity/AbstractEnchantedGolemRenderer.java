@@ -26,6 +26,13 @@ public abstract class AbstractEnchantedGolemRenderer<T extends AbstractEnchanted
     }
 
     @Override
+    public void extractRenderState(T entity, EnchantedGolemRenderState renderState, float partialTicks) {
+        super.extractRenderState(entity, renderState, partialTicks);
+        renderState.attackTicksRemaining = (float)entity.getAttackAnimationTick() > 0.0F ? (float)entity.getAttackAnimationTick() - partialTicks : 0.0F;
+        renderState.crackiness = entity.getCrackLevel();
+    }
+
+    @Override
     protected void setupRotations(EnchantedGolemRenderState renderState, @NotNull PoseStack poseStack, float bodyRot, float scale) {
         super.setupRotations(renderState, poseStack, bodyRot, scale);
         if (!((double)renderState.walkAnimationSpeed < 0.01D)) {

@@ -24,6 +24,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Crackiness;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
@@ -205,13 +206,17 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
         return CompanionType.GOLEM;
     }
 
-    public AbstractEnchantedGolemEntity.Cracks getCrackLevel() {
-        return AbstractEnchantedGolemEntity.Cracks.getForHealthPercentage(this.getHealth() / this.getMaxHealth());
+    public int getAttackAnimationTick() {
+        return this.attackTimer;
+    }
+
+    public Crackiness.Level getCrackLevel() {
+        return Crackiness.GOLEM.byFraction(this.getHealth() / this.getMaxHealth());
     }
     
     @Override
     public boolean hurtServer(@NotNull ServerLevel serverLevel, @NotNull DamageSource source, float amount) {
-        AbstractEnchantedGolemEntity.Cracks cracksBefore = this.getCrackLevel();
+        Crackiness.Level cracksBefore = this.getCrackLevel();
         boolean success = super.hurtServer(serverLevel, source, amount);
         if (success && cracksBefore != this.getCrackLevel()) {
             this.playSound(SoundEvents.IRON_GOLEM_DAMAGE, 1.0F, 1.0F);
