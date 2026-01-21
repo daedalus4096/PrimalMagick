@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.GrandPixieRender
 import com.verdantartifice.primalmagick.client.renderers.entity.MajesticPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieHouseModel;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel;
+import com.verdantartifice.primalmagick.client.renderers.entity.state.PixieHouseRenderState;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.pixies.PixieRank;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
@@ -28,7 +29,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
 
-public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseEntity, PixieHouseModel> {
+public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseRenderState, PixieHouseModel> {
     private static final Map<PixieRank, Identifier> TEXTURES = ImmutableMap.of(
             PixieRank.BASIC, BasicPixieRenderer.TEXTURE,
             PixieRank.GRAND, GrandPixieRenderer.TEXTURE,
@@ -39,7 +40,7 @@ public class PixieHouseOccupantLayer extends RenderLayer<PixieHouseEntity, Pixie
     private final PixieModel baseDrainedPixieModel;
     private final PixieModel royalDrainedPixieModel;
 
-    public PixieHouseOccupantLayer(RenderLayerParent<PixieHouseEntity, PixieHouseModel> pRenderer, EntityModelSet pModelSet) {
+    public PixieHouseOccupantLayer(RenderLayerParent<PixieHouseRenderState, PixieHouseModel> pRenderer, EntityModelSet pModelSet) {
         super(pRenderer);
         this.basePixieModel = new PixieModel(pModelSet.bakeLayer(ModelLayersPM.PIXIE_BASIC));
         this.royalPixieModel = new PixieModel(pModelSet.bakeLayer(ModelLayersPM.PIXIE_ROYAL));
