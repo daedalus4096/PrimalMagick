@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.renderers.entity.model;
 
-import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
-import net.minecraft.client.model.HierarchicalModel;
+import com.verdantartifice.primalmagick.client.renderers.entity.state.FlyingCarpetRenderState;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -14,11 +14,9 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
  * 
  * @author Daedalus4096
  */
-public class FlyingCarpetModel extends HierarchicalModel<FlyingCarpetEntity> {
-    protected final ModelPart root;
-    
+public class FlyingCarpetModel extends EntityModel<FlyingCarpetRenderState> {
     public FlyingCarpetModel(ModelPart modelPart) {
-        this.root = modelPart;
+        super(modelPart);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -29,12 +27,7 @@ public class FlyingCarpetModel extends HierarchicalModel<FlyingCarpetEntity> {
     }
     
     @Override
-    public ModelPart root() {
-        return this.root;
-    }
-
-    @Override
-    public void setupAnim(FlyingCarpetEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(FlyingCarpetRenderState renderState) {
         // Nothing to do here
     }
 }
