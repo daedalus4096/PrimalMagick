@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.client.renderers.entity.model;
 
+import com.verdantartifice.primalmagick.client.renderers.entity.state.PixieRenderState;
 import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,19 +14,18 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Definition of a 3D model for a basic earth pixie.
+ * Definition of a 3D model for a pixie.
  * 
  * @author Daedalus4096
  */
-public class PixieModel extends HierarchicalModel<AbstractPixieEntity> {
-    protected final ModelPart root;
+public class PixieModel extends EntityModel<PixieRenderState> {
     protected final ModelPart head;
     protected final ModelPart body;
     protected final ModelPart rightWing;
     protected final ModelPart leftWing;
 
     public PixieModel(ModelPart modelPart) {
-        this.root = modelPart;
+        super(modelPart);
         this.head = modelPart.getChild("head");
         this.body = modelPart.getChild("body");
         this.rightWing = this.body.getChild("right_wing");
@@ -52,27 +53,23 @@ public class PixieModel extends HierarchicalModel<AbstractPixieEntity> {
     }
 
     @Override
-    public ModelPart root() {
-        return this.root;
-    }
-
-    @Override
-    public void setupAnim(@Nullable AbstractPixieEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.head.xRot = headPitch * ((float)Math.PI / 180F);
-        this.head.yRot = entityIn == null ? 0F : netHeadYaw * ((float)Math.PI / 180F);
+    public void setupAnim(@Nullable PixieRenderState renderState) {
+        super.setupAnim(renderState);
+        this.head.xRot = renderState == null ? 0F : renderState.xRot * ((float)Math.PI / 180F);
+        this.head.yRot = renderState == null ? 0F : renderState.yRot * ((float)Math.PI / 180F);
         this.head.zRot = 0.0F;
-        if (entityIn == null) {
+        if (renderState == null) {
             this.head.setPos(0.0F, 1.0F, 0.0F);
         } else {
             this.head.setPos(0.0F, 0.0F, 0.0F);
         }
-        if (entityIn == null || entityIn.getDeltaMovement().lengthSqr() > 0.0F) {
+        if (renderState == null || renderState.walkAnimationSpeed > 0.0F) {
             this.body.xRot = ((float)Math.PI / 8F);
         }
         this.body.yRot = 0.0F;
         this.rightWing.setPos(0.0F, 0.0F, 0.0F);
         this.leftWing.setPos(0.0F, 0.0F, 0.0F);
-        this.rightWing.yRot = Mth.cos(ageInTicks * 1.3F) * (float)Math.PI * 0.25F;
+        this.rightWing.yRot = renderState == null ? 0F : Mth.cos(renderState.ageInTicks * 1.3F) * (float)Math.PI * 0.25F;
         this.leftWing.yRot = -this.rightWing.yRot;
     }
 }

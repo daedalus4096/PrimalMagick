@@ -6,7 +6,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 
 /**
- * Definition of a 3D model for a primalite golem.
+ * Definition of a 3D model for a magickal-metal golem.
  * 
  * @author Daedalus4096
  */
@@ -27,10 +27,12 @@ public class EnchantedGolemModel extends EntityModel<EnchantedGolemRenderState> 
     }
 
     @Override
-    public void setupAnim(EnchantedGolemRenderState state) {
-        float attackTimer = state.attackTicksRemaining;
-        float limbSwingSpeed = state.walkAnimationSpeed;
-        float limbSwing = state.walkAnimationPos;
+    public void setupAnim(EnchantedGolemRenderState renderState) {
+        super.setupAnim(renderState);
+
+        float attackTimer = renderState.attackTicksRemaining;
+        float limbSwingSpeed = renderState.walkAnimationSpeed;
+        float limbSwing = renderState.walkAnimationPos;
 
         if (attackTimer > 0F) {
             this.golemRightArm.xRot = -2.0F + 1.5F * Mth.triangleWave(attackTimer, 10.0F);
@@ -40,8 +42,8 @@ public class EnchantedGolemModel extends EntityModel<EnchantedGolemRenderState> 
             this.golemLeftArm.xRot = (-0.2F - 1.5F * Mth.triangleWave(limbSwing, 13.0F)) * limbSwingSpeed;
         }
 
-        this.golemHead.yRot = state.yRot * ((float)Math.PI / 180F);
-        this.golemHead.xRot = state.xRot * ((float)Math.PI / 180F);
+        this.golemHead.yRot = renderState.yRot * ((float)Math.PI / 180F);
+        this.golemHead.xRot = renderState.xRot * ((float)Math.PI / 180F);
         this.golemLeftLeg.xRot = -1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingSpeed;
         this.golemRightLeg.xRot = 1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingSpeed;
         this.golemLeftLeg.yRot = 0.0F;
