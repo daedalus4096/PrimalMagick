@@ -5,9 +5,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 
@@ -17,8 +20,8 @@ import javax.annotation.Nonnull;
  * @author Daedalus4096
  */
 public class AidUnlockWidget extends AbstractWidget {
-    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
-    
+    protected static final Identifier UNLOCK_SPRITE = ResourceUtils.loc("research_table/unlock");
+
     protected Block aidBlock;
 
     public AidUnlockWidget(int x, int y, @Nonnull Block aidBlock) {
@@ -32,17 +35,17 @@ public class AidUnlockWidget extends AbstractWidget {
         // Draw padlock icon
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
-        guiGraphics.blit(TEXTURE, 0, 0, 198, 0, 8, 8);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, UNLOCK_SPRITE, 0, 0, 8, 8);
         guiGraphics.pose().popMatrix();
     }
-    
+
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent mouseButtonEvent, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput pNarrationElementOutput) {
     }
 }

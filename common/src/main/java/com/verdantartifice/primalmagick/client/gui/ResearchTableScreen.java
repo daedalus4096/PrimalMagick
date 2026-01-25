@@ -24,6 +24,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -45,7 +46,7 @@ import java.util.Set;
  */
 public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTableMenu> {
     private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/research_table.png");
-    private static final Identifier OVERLAY = ResourceUtils.loc("textures/gui/research_table_overlay.png");
+    private static final Identifier BG_SPRITE = ResourceUtils.loc("research_table/parchment");
     private static final DecimalFormat FORMATTER = new DecimalFormat("###.#");
     
     protected long lastCheck = 0L;
@@ -134,7 +135,7 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
         
         // If a research project is ready to go, render the page overlay
         if (this.isProjectReady()) {
-            guiGraphics.blit(OVERLAY, this.leftPos + 34, this.topPos + 7, 0, 0, 162, 128);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BG_SPRITE, this.leftPos + 34, this.topPos + 7, 162, 128);
         }
     }
     

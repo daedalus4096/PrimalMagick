@@ -5,10 +5,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -18,8 +21,8 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class AidListWidget extends AbstractWidget {
-    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
-    
+    protected static final Identifier AID_LIST_SPRITE = ResourceUtils.loc("research_table/aid_list");
+
     protected final List<Component> aidNames;
 
     public AidListWidget(int x, int y, List<Component> aidNames) {
@@ -37,17 +40,17 @@ public class AidListWidget extends AbstractWidget {
         // Draw padlock icon
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
-        guiGraphics.blit(TEXTURE, 0, 0, 206, 0, 8, 8);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, AID_LIST_SPRITE, 0, 0, 8, 8);
         guiGraphics.pose().popMatrix();
     }
-    
+
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent mouseButtonEvent, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput p_169152_) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput pNarrationElementOutput) {
     }
 }
