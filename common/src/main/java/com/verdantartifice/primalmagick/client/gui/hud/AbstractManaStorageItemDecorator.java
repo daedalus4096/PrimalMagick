@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,11 +33,11 @@ public abstract class AbstractManaStorageItemDecorator {
             int yPos = yOffset + 13;
             if (stack.isBarVisible()) {
                 // Bump up the mana bar by a pixel if the durability bar is visible
-                guiGraphics.fill(RenderType.guiOverlay(), xPos, yPos - 1, xPos + 13, yPos, -16777216);
-                guiGraphics.fill(RenderType.guiOverlay(), xPos, yPos - 1, xPos + width, yPos, color | -16777216);
+                guiGraphics.fill(RenderPipelines.GUI, xPos, yPos - 1, xPos + 13, yPos, -16777216);
+                guiGraphics.fill(RenderPipelines.GUI, xPos, yPos - 1, xPos + width, yPos, color | -16777216);
             } else {
-                guiGraphics.fill(RenderType.guiOverlay(), xPos, yPos, xPos + 13, yPos + 2, -16777216);
-                guiGraphics.fill(RenderType.guiOverlay(), xPos, yPos, xPos + width, yPos + 1, color | -16777216);
+                guiGraphics.fill(RenderPipelines.GUI, xPos, yPos, xPos + 13, yPos + 2, -16777216);
+                guiGraphics.fill(RenderPipelines.GUI, xPos, yPos, xPos + width, yPos + 1, color | -16777216);
             }
         }
         return false;
