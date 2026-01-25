@@ -48,20 +48,20 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         // Draw the colored source icon
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
         guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
         guiGraphics.blit(discovered ? this.source.getImage() : Source.getUnknownImage(), 0, 0, 0, 0, 255, 255);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         // Draw the amount string
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         Component amountText = Component.literal(this.getAmountString());
         int width = mc.font.width(amountText.getString());
         guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
         guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
         guiGraphics.drawString(mc.font, amountText, 0, 0, this.getAmountStringColor());
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         // Draw the tooltip if applicable
         if (this.isHoveredOrFocused()) {

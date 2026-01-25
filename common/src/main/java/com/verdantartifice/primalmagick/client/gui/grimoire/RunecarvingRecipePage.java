@@ -69,12 +69,12 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         int overlayHeight = 13;
         
         // Render overlay background
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().translate(x + 16 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 68, 0.0F);
         guiGraphics.pose().scale(2.0F, 2.0F, 1.0F);
         guiGraphics.blit(OVERLAY, 0, 0, 0, 51, overlayWidth, overlayHeight);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 }

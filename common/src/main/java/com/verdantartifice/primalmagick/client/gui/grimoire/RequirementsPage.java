@@ -115,7 +115,7 @@ public class RequirementsPage extends AbstractPage {
         this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
         y += 53;
         
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
@@ -127,6 +127,6 @@ public class RequirementsPage extends AbstractPage {
         y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.RESEARCH, "grimoire.primalmagick.required_research_header", labelX, y, 16);   // Render research requirement section
         y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.STAT, "grimoire.primalmagick.required_stats_header", labelX, y, 18);          // Render stat requirement section
         
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 }

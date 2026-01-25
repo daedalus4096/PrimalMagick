@@ -55,11 +55,11 @@ public class ManaCostSummaryWidget extends AbstractWidget {
         // Render the base widget
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
         guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
         guiGraphics.blit(TEXTURE, 0, 0, 0, 0, 255, 255);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
     
     @Override

@@ -47,19 +47,19 @@ public class BackButton extends Button {
         float scaleMod = this.isHoveredOrFocused() ? Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F : 0.0F;
         int dx = this.width / 2;
         int dy = this.height / 2;
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy, 0.0F);
         guiGraphics.pose().scale(1.5F + scaleMod, 1.5F + scaleMod, 1.0F);
         guiGraphics.blit(TEXTURE, -dx, -dy, 40, 204, this.width, this.height);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
 
         // If the previous topic is unread, show the unread icon above the button
         if (this.screen.getPreviousTopic().map(topic -> topic.isUnread(mc.player)).orElse(false)) {
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + dx + 1, this.getY() - dy, 5F);
             guiGraphics.pose().scale(0.4F, 0.4F, 1F);
             guiGraphics.blitSprite(UNREAD_SPRITE, 0, 0, UNREAD_WIDTH, UNREAD_HEIGHT);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 

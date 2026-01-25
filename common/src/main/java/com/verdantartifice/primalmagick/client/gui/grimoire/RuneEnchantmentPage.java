@@ -73,11 +73,11 @@ public class RuneEnchantmentPage extends AbstractPage {
             this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
             y += 77;
             
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
             guiGraphics.blit(OVERLAY, 6, 0, 0, 51, overlayWidth, overlayHeight);
             guiGraphics.blit(OVERLAY, 26, 0, 0, 51, overlayWidth, overlayHeight);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         } else {
             y += 25;
         }

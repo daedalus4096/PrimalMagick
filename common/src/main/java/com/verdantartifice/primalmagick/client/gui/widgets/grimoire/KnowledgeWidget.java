@@ -36,30 +36,30 @@ public class KnowledgeWidget extends AbstractWidget {
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         
         // Draw knowledge type icon
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
         guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
         guiGraphics.blit(this.type.getIconLocation(), 0, 0, 0, 0, 255, 255);
         
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         // Draw amount str
         Component amountText = Component.literal(Integer.toString(this.amount));
         int width = mc.font.width(amountText.getString());
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
         guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
         guiGraphics.drawString(mc.font, amountText, 0, 0, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + 8, this.getY(), 100.0F);
             guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
     

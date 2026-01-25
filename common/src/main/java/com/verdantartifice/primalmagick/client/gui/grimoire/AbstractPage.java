@@ -66,27 +66,27 @@ public abstract class AbstractPage implements GuiEventListener {
         if (width <= 124) {
             guiGraphics.drawString(mc.font, headerText, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB(), false);
             if (icon != null) {
-                guiGraphics.pose().pushPose();
+                guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21, 0.0F);
                 guiGraphics.pose().scale(0.06F, 0.06F, 0.06F);
                 guiGraphics.blit(icon, 0, 0, 0, 0, 255, 255);
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
             }
         } else {
             // Scale down the title text if necessary to make it fit on one line
             float scale = 124.0F / width;
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
             guiGraphics.pose().scale(scale, scale, scale);
             guiGraphics.drawString(mc.font, headerText, 0, 0, Color.BLACK.getRGB(), false);
             if (icon != null) {
-                guiGraphics.pose().pushPose();
+                guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale) - 17, y + 21, 0.0F);
                 guiGraphics.pose().scale(0.06F, 0.06F, 0.06F);
                 guiGraphics.blit(icon, 0, 0, 0, 0, 255, 255);
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
             }
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 

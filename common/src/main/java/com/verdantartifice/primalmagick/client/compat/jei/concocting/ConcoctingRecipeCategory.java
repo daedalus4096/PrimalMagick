@@ -80,10 +80,10 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<ICon
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
         if (recipe.getRequirement().isPresent()) {
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 

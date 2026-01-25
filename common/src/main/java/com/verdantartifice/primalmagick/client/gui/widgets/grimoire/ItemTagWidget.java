@@ -59,19 +59,19 @@ public class ItemTagWidget extends AbstractWidget {
             if (this.amount > 1) {
                 Component amountText = Component.literal(Integer.toString(this.amount));
                 int width = mc.font.width(amountText.getString());
-                guiGraphics.pose().pushPose();
+                guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
                 guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
                 guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
             }
             
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
-                guiGraphics.pose().pushPose();
+                guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(this.getX() + 8, this.getY(), 200.0F);
                 guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
             }
             
             // Update the widget tooltip if necessary

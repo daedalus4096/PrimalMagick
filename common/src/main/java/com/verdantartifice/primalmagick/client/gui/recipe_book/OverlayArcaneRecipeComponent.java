@@ -134,7 +134,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             this.time += partialTicks;
             RenderSystem.enableBlend();
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(0.0D, 0.0D, 170.0D);
             
             int maxRowSize = (this.recipeButtons.size() <= 16) ? MAX_ROW : MAX_ROW_LARGE;
@@ -147,7 +147,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
                 recipeButton.render(guiGraphics, mouseX, mouseY, partialTicks);
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 
@@ -205,20 +205,20 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             WidgetSprites sprites = OverlayArcaneRecipeComponent.this.useFurnaceStyle ? OverlayArcaneRecipeComponent.FURNACE_OVERLAY_SPRITES : OverlayArcaneRecipeComponent.CRAFTING_OVERLAY_SPRITES;
             Identifier spriteLoc = sprites.get(this.isCraftable, this.isHoveredOrFocused());
             guiGraphics.blitSprite(spriteLoc, this.getX(), this.getY(), this.width, this.height);
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate((double)(this.getX() + 2), (double)(this.getY() + 2), 125.0D);
 
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos pos : this.ingredientPos) {
-                guiGraphics.pose().pushPose();
+                guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(pos.x, pos.y, 0.0D);
                 guiGraphics.pose().scale(0.375F, 0.375F, 1.0F);
                 guiGraphics.pose().translate(-8.0D, -8.0D, 0.0D);
                 RenderSystem.applyModelViewMatrix();
                 guiGraphics.renderItem(pos.ingredients[Mth.floor(OverlayArcaneRecipeComponent.this.time / 30.0F) % pos.ingredients.length], 0, 0);
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
 
         protected class Pos {

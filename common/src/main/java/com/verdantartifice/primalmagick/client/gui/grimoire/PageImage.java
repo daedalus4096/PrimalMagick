@@ -49,11 +49,11 @@ public class PageImage implements IPageElement {
         // Render the image at this element's resource location to the screen
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5, 0.0F);
         guiGraphics.pose().scale(this.scale, this.scale, this.scale);
         guiGraphics.blit(this.location, 0, 0, this.x, this.y, this.width, this.height);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 
     @Override

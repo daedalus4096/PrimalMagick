@@ -57,7 +57,7 @@ public class GuiUtils {
         if (stack != null && !stack.isEmpty()) {
             Minecraft mc = Minecraft.getInstance();
             
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(0.0F, 0.0F, 32.0F);   // Bring the item stack up in the Z-order
             
             // Render the item stack into the GUI and, if applicable, its stack size and/or damage bar
@@ -66,7 +66,7 @@ public class GuiUtils {
                 guiGraphics.renderItemDecorations(mc.font, stack, x, y, text);
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
             
             retVal = true;
         }
@@ -80,10 +80,10 @@ public class GuiUtils {
             ItemRenderer itemRenderer = mc.getItemRenderer();
             BakedModel bakedModel = itemRenderer.getModel(stack, mc.level, mc.player, 0);
             
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(0.0F, 0.0F, 32.0F);
             
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(x + 8, y + 8, 150);
             
             try {
@@ -121,13 +121,13 @@ public class GuiUtils {
                 throw new ReportedException(crashreport);
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
 
             if (!hideStackOverlay) {
                 guiGraphics.renderItemDecorations(mc.font, stack, x, y, text);
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
             
             retVal = true;
         }
@@ -154,7 +154,7 @@ public class GuiUtils {
         if (sources == null || sources.isEmpty()) {
             return;
         }
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         int x = 0;
         int index = 0;
         
@@ -172,7 +172,7 @@ public class GuiUtils {
                 index++;
             }
         }
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
     
     public static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nullable Source source, int amount, double z) {
@@ -191,11 +191,11 @@ public class GuiUtils {
         
         Minecraft mc = Minecraft.getInstance();
         
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         
         // Render the source's icon
         @SuppressWarnings("deprecation")
@@ -208,24 +208,24 @@ public class GuiUtils {
         builder.addVertex(x + 0.0F, y + 0.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
         buffer.endBatch();
 
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         // Render an amount string for the source, if an amount has been given
         if (amount > 0) {
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(0.0D, 0.0D, z + 1.0D);
             guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.font.width(amountStr);
             guiGraphics.drawString(mc.font, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.font.lineHeight + (y * 2)), Color.WHITE.getRGB());
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
         
         // Restore changed GL attributes
         if (!isBlendOn) {
             RenderSystem.disableBlend();
         }
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
     
     public static void renderSourcesBillboard(PoseStack poseStack, MultiBufferSource buffers, double x, double y, double z, SourceList sources, float partialTicks) {
@@ -276,7 +276,7 @@ public class GuiUtils {
     }
     
     public static void renderIconFromDefinition(GuiGraphics guiGraphics, IconDefinition iconDef, int x, int y) {
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().translate(x, y, 0.0F);
@@ -288,7 +288,7 @@ public class GuiUtils {
             guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
             guiGraphics.blit(iconDef.getLocation(), 0, 0, 0, 0, 255, 255);
         }
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
     
     protected static ItemStack getTagDisplayStack(TagKey<Item> key) {

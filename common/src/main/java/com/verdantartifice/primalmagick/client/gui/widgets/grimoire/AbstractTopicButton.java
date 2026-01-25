@@ -50,7 +50,7 @@ public abstract class AbstractTopicButton extends Button {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         if (this.isHoveredOrFocused()) {
@@ -67,11 +67,11 @@ public abstract class AbstractTopicButton extends Button {
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)(this.width - dx) / (float)strWidth;
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + (1.0F * scale), 0.0F);
             guiGraphics.pose().scale(scale, scale, scale);
             guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
         if (this.icon != null) {
             if (this.isHighlighted()) {
@@ -83,14 +83,14 @@ public abstract class AbstractTopicButton extends Button {
             if (this.isUnread()) {
                 float s = this.icon.isLarge() ? 0.5F : 0.4F;
                 int dx2 = this.icon.isLarge() ? 11 : 7;
-                guiGraphics.pose().pushPose();
+                guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(this.getX() + dx2 - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1) - 2, 5F);
                 guiGraphics.pose().scale(s, s, 1F);
                 guiGraphics.blitSprite(UNREAD_SPRITE, 0, 0, UNREAD_WIDTH, UNREAD_HEIGHT);
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
             }
         }
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
     
     @Override

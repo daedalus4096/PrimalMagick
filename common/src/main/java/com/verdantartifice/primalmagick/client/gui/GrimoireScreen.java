@@ -311,11 +311,11 @@ public class GrimoireScreen extends Screen {
         super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
         // Render the grimoire background
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.scaledLeft, this.scaledTop, 0.0F);
         guiGraphics.pose().scale(SCALE, SCALE, 1.0F);
         guiGraphics.blit(TEXTURE, 0, 0, 0, 0, BG_WIDTH, BG_HEIGHT);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         // Render the two visible pages
         int current = 0;

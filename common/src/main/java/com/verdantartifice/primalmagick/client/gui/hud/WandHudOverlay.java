@@ -45,7 +45,7 @@ public class WandHudOverlay {
     }
     
     private static void renderHud(Minecraft mc, GuiGraphics guiGraphics, ItemStack mainHandStack, ItemStack offHandStack, float partialTick) {
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         
         int posY = 0;
         SpellPackage activeSpell = SpellManager.getActiveSpell(mainHandStack, offHandStack);
@@ -67,7 +67,7 @@ public class WandHudOverlay {
             posY += renderManaGauge(guiGraphics, 0, posY, ratioText, ratio, source.getColor(), (++index == discoveredSources.size()), partialTick, mc.font);
         }
 
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 
     private static int renderSpellDisplay(GuiGraphics guiGraphics, int x, int y, Identifier spellIcon, float partialTick) {
@@ -80,10 +80,10 @@ public class WandHudOverlay {
         
         // Render the spell icon, if present
         if (spellIcon != null) {
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().scale(0.5F, 0.5F, 1F);
             guiGraphics.blit(spellIcon, x + 10, y + 10, 0, 0, 32, 32, 32, 32);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
 
         return 26;
@@ -109,10 +109,10 @@ public class WandHudOverlay {
         // Render the mana text by the gauge if holding shift
         guiGraphics.setColor(1, 1, 1, 1);
         if (Screen.hasShiftDown()) {
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(61, 2, 0);
             guiGraphics.drawString(font, text, x, y, -1);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
         
         return 12;

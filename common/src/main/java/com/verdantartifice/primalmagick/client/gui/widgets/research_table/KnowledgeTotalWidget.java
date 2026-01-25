@@ -57,37 +57,37 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         lines.add(Component.translatable(this.type.getNameTranslationKey()));
         
         // Draw knowledge type icon
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
         guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
         guiGraphics.blit(this.type.getIconLocation(), 0, 0, 0, 0, 255, 255);        
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         // Draw progress bar background
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY() + 17, 0.0F);
         guiGraphics.blit(TEXTURE, 0, 0, 182, 2, 16, 2);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         this.knowledgeOpt.ifPresent(knowledge -> {
             // Draw amount str
             int levels = knowledge.getKnowledge(this.type);
             Component amountText = Component.literal(Integer.toString(levels));
             int width = mc.font.width(amountText);
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
             
             // Draw progress bar foreground
             int rawPoints = knowledge.getKnowledgeRaw(this.type);
             int levelPoints = rawPoints % this.type.getProgression();
             int px = (int)(16.0D * ((double)levelPoints / (double)this.type.getProgression()));
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX(), this.getY() + 17, 1.0F);
             guiGraphics.blit(TEXTURE, 0, 0, 182, 0, px, 2);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         });
         
         this.successDeltaOpt.ifPresent(points -> {
@@ -97,11 +97,11 @@ public class KnowledgeTotalWidget extends AbstractWidget {
                 // Draw theory gain preview str
                 Component previewText = Component.translatable("label.primalmagick.research_table.theory_gain_preview.positive", levelStr).withStyle(ChatFormatting.GREEN);
                 int width = mc.font.width(previewText);
-                guiGraphics.pose().pushPose();
+                guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY(), 5.0F);
                 guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
                 guiGraphics.drawString(mc.font, previewText, 0, 0, Color.WHITE.getRGB());
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
                 
                 // Prepare tooltip addition
                 if (levels == 1D) {

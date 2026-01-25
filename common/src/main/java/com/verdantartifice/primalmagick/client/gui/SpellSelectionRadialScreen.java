@@ -139,9 +139,9 @@ public class SpellSelectionRadialScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         super.render(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
 
         if (this.mainHandStack.getItem() instanceof ISpellContainer || this.offHandStack.getItem() instanceof ISpellContainer) {
             if (this.needsRecheckSpells) {

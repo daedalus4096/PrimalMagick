@@ -30,14 +30,14 @@ public class ImageRadialMenuItem extends TextRadialMenuItem {
         if (this.imageLoc == null) {
             super.draw(context);
         } else {
-            context.guiGraphics.pose().pushPose();
+            context.guiGraphics.pose().pushMatrix();
             context.guiGraphics.pose().translate(-8, -8, context.z + 200);
             context.guiGraphics.pose().scale(0.5F, 0.5F, 1F);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             context.guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             context.guiGraphics.blit(this.imageLoc, 2 * (int)context.x, 2 * (int)context.y, 0, 0, 32, 32, 32, 32);
-            context.guiGraphics.pose().popPose();
+            context.guiGraphics.pose().popMatrix();
         }
     }
 

@@ -43,11 +43,11 @@ public class AffinityRecordWidget extends AbstractTopicButton {
         // Draw the relevant affinity rating where the stack count would normally be
         Minecraft mc = Minecraft.getInstance();
         int width = mc.font.width(this.amountText);
-        pGuiGraphics.pose().pushPose();
+        pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
         pGuiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
         pGuiGraphics.drawString(mc.font, this.amountText, 0, 0, Color.WHITE.getRGB());
-        pGuiGraphics.pose().popPose();
+        pGuiGraphics.pose().popMatrix();
 
         // Draw the tooltip if applicable
         if (this.isHoveredOrFocused()) {

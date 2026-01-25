@@ -59,7 +59,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
         if (this.sprites != null) {
             if (this.animationTime > 0.0F) {
                 float f = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / ANIMATION_TIME_TOTAL * (float)Math.PI));
-                pGuiGraphics.pose().pushPose();
+                pGuiGraphics.pose().pushMatrix();
                 pGuiGraphics.pose().translate((double)(this.getX() + 8), (double)(this.getY() + 12), 0.0D);
                 pGuiGraphics.pose().scale(1.0F, f, 1.0F);
                 pGuiGraphics.pose().translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)), 0.0D);
@@ -77,7 +77,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
             RenderSystem.enableDepthTest();
             this.renderIcon(pGuiGraphics, mc.getItemRenderer());
             if (this.animationTime > 0.0F) {
-                pGuiGraphics.pose().popPose();
+                pGuiGraphics.pose().popMatrix();
                 this.animationTime -= pPartialTick;
             }
         }

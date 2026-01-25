@@ -111,11 +111,11 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
 
         if (lang.value().isComplex()) {
             // Draw the parchment background for the comprehension grid
-            pGuiGraphics.pose().pushPose();
+            pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(this.leftPos + 31, this.topPos + 17, 0);
             pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
             pGuiGraphics.blitSprite(PARCHMENT_SPRITE, 0, 0, 228, 216);
-            pGuiGraphics.pose().popPose();
+            pGuiGraphics.pose().popMatrix();
             
             // Update the node buttons for each node in the grid definition
             if (this.grid != null) {
@@ -237,17 +237,17 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             }
 
             // Render node button background
-            pGuiGraphics.pose().pushPose();
+            pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(this.getX(), this.getY(), 0);
             pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
             Identifier resourcelocation = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
             pGuiGraphics.blitSprite(resourcelocation, 0, 0, this.width * 2, this.height * 2);
-            pGuiGraphics.pose().popPose();
+            pGuiGraphics.pose().popMatrix();
 
             // Render node contents, if they exist
             this.gridDef.flatMap(d -> d.getNode(this.xIndex, this.yIndex)).ifPresent(node -> {
                 // Render the reward icon
-                pGuiGraphics.pose().pushPose();
+                pGuiGraphics.pose().pushMatrix();
                 int dx = this.width / 2;
                 int dy = this.height / 2;
                 pGuiGraphics.pose().translate(this.getX() + 2 + (dx * 0.75F), this.getY() + 2 + (dy * 0.75F), 5);
@@ -258,17 +258,17 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                     pGuiGraphics.pose().scale(scale, scale, 1F);
                 }
                 pGuiGraphics.blit(node.getReward().getIconLocation(this.player), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 0, 0, 0, 16, 16, 16, 16);
-                pGuiGraphics.pose().popPose();
+                pGuiGraphics.pose().popMatrix();
                 
                 // Render the node amount string, if applicable
                 node.getReward().getAmountText().ifPresent(text -> {
-                    pGuiGraphics.pose().pushPose();
+                    pGuiGraphics.pose().pushMatrix();
                     Minecraft mc = Minecraft.getInstance();
                     int width = mc.font.width(text.getString());
                     pGuiGraphics.pose().translate(this.getX() + 11 - width / 2, this.getY() + 7, 10);
                     pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
                     pGuiGraphics.drawString(mc.font, text, 0, 0, Color.WHITE.getRGB());
-                    pGuiGraphics.pose().popPose();
+                    pGuiGraphics.pose().popMatrix();
                 });
             });
         }

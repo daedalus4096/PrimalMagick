@@ -70,10 +70,10 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
     public void draw(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
         if (recipe.value().getRequirement().isPresent()) {
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 

@@ -310,7 +310,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.isVisible()) {
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(0.0D, 0.0D, 100.0D);
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             int xPos = (this.width - 147) / 2 - this.xOffset;
@@ -330,7 +330,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
             }
 
             this.recipeBookPage.render(guiGraphics, xPos, yPos, mouseX, mouseY, partialTicks);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
     

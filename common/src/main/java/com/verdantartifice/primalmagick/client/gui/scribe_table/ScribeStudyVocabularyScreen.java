@@ -245,7 +245,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         float f = Mth.lerp(pPartialTick, this.oOpen, this.open);
         float f1 = Mth.lerp(pPartialTick, this.oFlip, this.flip);
         Lighting.setupForEntityInInventory();
-        pGuiGraphics.pose().pushPose();
+        pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate((float)pX + 33.0F, (float)pY + 59.0F, 100.0F);
         float f2 = 40.0F;
         pGuiGraphics.pose().scale(-f2, f2, f2);
@@ -260,7 +260,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         VertexConsumer vertexconsumer = pGuiGraphics.bufferSource().getBuffer(this.bookModel.renderType(ENCHANTING_BOOK_LOCATION));
         this.bookModel.renderToBuffer(pGuiGraphics.pose(), vertexconsumer, 15728880, OverlayTexture.NO_OVERLAY, -1);
         pGuiGraphics.flush();
-        pGuiGraphics.pose().popPose();
+        pGuiGraphics.pose().popMatrix();
         Lighting.setupFor3DItems();
     }
     

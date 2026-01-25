@@ -23,11 +23,11 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw observation icon
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
         guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
         guiGraphics.blit(KnowledgeType.OBSERVATION.getIconLocation(), 0, 0, 0, 0, 255, 255);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         // Draw base class stuff
         super.renderWidget(guiGraphics, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);

@@ -115,7 +115,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         super.render(guiGraphics, side, x, y, mouseX, mouseY);
         y += 79;
         
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
@@ -147,6 +147,6 @@ public class RitualRecipePage extends AbstractRecipePage {
         guiGraphics.drawString(mc.font, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
 
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 }

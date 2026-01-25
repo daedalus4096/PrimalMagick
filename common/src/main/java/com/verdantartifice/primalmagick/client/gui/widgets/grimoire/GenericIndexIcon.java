@@ -25,12 +25,12 @@ public class GenericIndexIcon extends AbstractIndexIcon {
         if (this.iconLocation != null) {
             float s = this.large ? 0.06F : 0.04F;
             int d = this.large ? 8 : 5;
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(x + d, y + d, 0D);
             guiGraphics.pose().scale(s, s, 1F);
             guiGraphics.pose().scale(scale, scale, 1F);
             guiGraphics.blit(this.iconLocation, (int)(-d / s), (int)(-d / s), 0, 0, 255, 255);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 }

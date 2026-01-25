@@ -40,7 +40,7 @@ public class PageButton extends Button {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
 
         // When hovered, scale the button up and down to create a pulsing effect
         float scaleMod = this.isHoveredOrFocused() ? Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F : 0.0F;
@@ -50,7 +50,7 @@ public class PageButton extends Button {
         guiGraphics.pose().scale(1.5F + scaleMod, 1.5F + scaleMod, 1.0F);
         guiGraphics.blit(TEXTURE, -dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
 
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
 }
     
     @Override

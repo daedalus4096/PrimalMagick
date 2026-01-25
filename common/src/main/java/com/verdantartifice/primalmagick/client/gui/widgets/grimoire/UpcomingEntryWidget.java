@@ -64,7 +64,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int strWidth = mc.font.width(this.getMessage().getString());
@@ -78,16 +78,16 @@ public class UpcomingEntryWidget extends AbstractWidget {
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)(this.width - dx) / (float)strWidth;
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + (1.0F * scale), 0.0F);
             guiGraphics.pose().scale(scale, scale, scale);
             guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.GRAY.getRGB(), false);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
             if (this.icon != null) {
                 this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
             }
         }
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 
     @Override

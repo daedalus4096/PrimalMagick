@@ -61,10 +61,10 @@ public class ResearchWidget extends AbstractWidget {
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + 8, this.getY(), 250.0F);
             guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
         
         // Prepare the tooltip

@@ -216,18 +216,18 @@ public class GenericRadialMenu {
         int y = owner.height / 2;
         float z = 0;
 
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(0, animTop, 0);
 
         drawBackground(guiGraphics, x, y, z, radiusIn, radiusOut);
 
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
 
         if (isReady())
         {
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             drawItems(guiGraphics, x, y, z, owner.width, owner.height, fontRenderer);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
 
             Component currentCentralText = centralText;
             for (int i = 0; i < visibleItems.size(); i++)
@@ -249,9 +249,9 @@ public class GenericRadialMenu {
                 guiGraphics.drawString(fontRenderer, text, textX, textY, 0xFFFFFFFF);
             }
 
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             drawTooltips(guiGraphics, mouseX, mouseY);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 

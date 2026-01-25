@@ -89,11 +89,11 @@ public abstract class AbstractToastPM implements Toast {
 
         // Render the toast icon if present
         this.getIcon().ifPresent(iconLoc -> {
-            pGuiGraphics.pose().pushPose();
+            pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(8, 8, 0);
             pGuiGraphics.pose().scale(this.getIconWidth() / 256F, this.getIconHeight() / 256F, 1F);
             pGuiGraphics.blit(iconLoc, 0, 0, 0, 0, 255, 255);
-            pGuiGraphics.pose().popPose();
+            pGuiGraphics.pose().popMatrix();
         });
 
         return (double)pTimeSinceLastVisible >= DISPLAY_TIME * pToastComponent.getNotificationDisplayTimeMultiplier() ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
