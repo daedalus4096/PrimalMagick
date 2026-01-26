@@ -37,14 +37,14 @@ public class VanillaStatProgressWidget extends AbstractWidget {
         if (this.isComplete) {
             // Render completion checkmark if appropriate
             pGuiGraphics.pose().pushMatrix();
-            pGuiGraphics.pose().translate(this.getX() + 8, this.getY(), 100.0F);
+            pGuiGraphics.pose().translate(this.getX() + 8, this.getY());
             pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
             pGuiGraphics.pose().popMatrix();
         }
         
         // Draw progress bar background
         pGuiGraphics.pose().pushMatrix();
-        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 0.0F);
+        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
         pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 234, 16, 2);
         pGuiGraphics.pose().popMatrix();
         
@@ -53,7 +53,7 @@ public class VanillaStatProgressWidget extends AbstractWidget {
         int currentValue = this.requirement.getCurrentValue(mc.player);
         int px = (int)(16.0D * ((double)currentValue / (double)this.requirement.getThreshold()));
         pGuiGraphics.pose().pushMatrix();
-        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 1.0F);
+        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
         pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 232, px, 2);
         pGuiGraphics.pose().popMatrix();
         

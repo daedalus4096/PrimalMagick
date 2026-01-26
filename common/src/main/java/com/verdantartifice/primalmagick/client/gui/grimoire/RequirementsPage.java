@@ -118,8 +118,7 @@ public class RequirementsPage extends AbstractPage {
         guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
-        
+
         int labelX = x - 3 + (side * 140);
         y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.MUST_OBTAIN, "grimoire.primalmagick.must_obtain_header", labelX, y, 16);      // Render obtain requirement section
         y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.MUST_CRAFT, "grimoire.primalmagick.must_craft_header", labelX, y, 16);        // Render craft requirement section

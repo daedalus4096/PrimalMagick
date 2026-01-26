@@ -56,7 +56,7 @@ public class ManaGaugeWidget extends AbstractWidget {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        guiGraphics.pose().translate(this.getX(), this.getY());
 
         // Render gauge background texture
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);

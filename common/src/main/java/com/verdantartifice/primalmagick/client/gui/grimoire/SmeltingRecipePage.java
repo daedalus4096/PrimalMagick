@@ -66,7 +66,7 @@ public class SmeltingRecipePage extends AbstractRecipePage {
         guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().translate(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2), 0.0F);
+        guiGraphics.pose().translate(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2));
         guiGraphics.pose().scale(2.0F, 2.0F, 1.0F);
         guiGraphics.blit(OVERLAY, -(overlayWidth / 2), -(overlayHeight / 2), 51, 0, overlayWidth, overlayHeight);
         guiGraphics.pose().popMatrix();

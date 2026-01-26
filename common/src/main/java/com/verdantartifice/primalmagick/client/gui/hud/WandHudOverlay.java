@@ -110,7 +110,7 @@ public class WandHudOverlay {
         guiGraphics.setColor(1, 1, 1, 1);
         if (Screen.hasShiftDown()) {
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(61, 2, 0);
+            guiGraphics.pose().translate(61, 2);
             guiGraphics.drawString(font, text, x, y, -1);
             guiGraphics.pose().popMatrix();
         }

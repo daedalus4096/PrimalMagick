@@ -44,7 +44,7 @@ public class AffinityRecordWidget extends AbstractTopicButton {
         Minecraft mc = Minecraft.getInstance();
         int width = mc.font.width(this.amountText);
         pGuiGraphics.pose().pushMatrix();
-        pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
+        pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
         pGuiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
         pGuiGraphics.drawString(mc.font, this.amountText, 0, 0, Color.WHITE.getRGB());
         pGuiGraphics.pose().popMatrix();

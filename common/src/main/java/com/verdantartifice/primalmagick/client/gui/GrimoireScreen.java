@@ -312,7 +312,7 @@ public class GrimoireScreen extends Screen {
 
         // Render the grimoire background
         guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.scaledLeft, this.scaledTop, 0.0F);
+        guiGraphics.pose().translate(this.scaledLeft, this.scaledTop);
         guiGraphics.pose().scale(SCALE, SCALE, 1.0F);
         guiGraphics.blit(TEXTURE, 0, 0, 0, 0, BG_WIDTH, BG_HEIGHT);
         guiGraphics.pose().popMatrix();

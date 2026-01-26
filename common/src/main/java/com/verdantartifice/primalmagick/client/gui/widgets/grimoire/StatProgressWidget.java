@@ -50,7 +50,7 @@ public class StatProgressWidget extends AbstractWidget {
         pGuiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        pGuiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        pGuiGraphics.pose().translate(this.getX(), this.getY());
         pGuiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
         pGuiGraphics.blit(this.iconLoc, 0, 0, 0, 0, 255, 255);
         pGuiGraphics.pose().popMatrix();
@@ -58,21 +58,21 @@ public class StatProgressWidget extends AbstractWidget {
         if (this.isComplete) {
             // Render completion checkmark if appropriate
             pGuiGraphics.pose().pushMatrix();
-            pGuiGraphics.pose().translate(this.getX() + 8, this.getY(), 100.0F);
+            pGuiGraphics.pose().translate(this.getX() + 8, this.getY());
             pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
             pGuiGraphics.pose().popMatrix();
         }
         
         // Draw progress bar background
         pGuiGraphics.pose().pushMatrix();
-        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 0.0F);
+        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
         pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 234, 16, 2);
         pGuiGraphics.pose().popMatrix();
         
         // Draw progress bar foreground
         int px = this.getProgressionScaled();
         pGuiGraphics.pose().pushMatrix();
-        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 1.0F);
+        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
         pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 232, px, 2);
         pGuiGraphics.pose().popMatrix();
         

@@ -135,8 +135,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             RenderSystem.enableBlend();
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(0.0D, 0.0D, 170.0D);
-            
+
             int maxRowSize = (this.recipeButtons.size() <= 16) ? MAX_ROW : MAX_ROW_LARGE;
             int colCount = Math.min(this.recipeButtons.size(), maxRowSize);
             int rowCount = Mth.ceil((float)this.recipeButtons.size() / (float)maxRowSize);
@@ -206,13 +205,13 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             Identifier spriteLoc = sprites.get(this.isCraftable, this.isHoveredOrFocused());
             guiGraphics.blitSprite(spriteLoc, this.getX(), this.getY(), this.width, this.height);
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate((double)(this.getX() + 2), (double)(this.getY() + 2), 125.0D);
+            guiGraphics.pose().translate((double)(this.getX() + 2), (double)(this.getY() + 2));
 
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos pos : this.ingredientPos) {
                 guiGraphics.pose().pushMatrix();
-                guiGraphics.pose().translate(pos.x, pos.y, 0.0D);
+                guiGraphics.pose().translate(pos.x, pos.y);
                 guiGraphics.pose().scale(0.375F, 0.375F, 1.0F);
-                guiGraphics.pose().translate(-8.0D, -8.0D, 0.0D);
+                guiGraphics.pose().translate(-8.0D, -8.0D);
                 RenderSystem.applyModelViewMatrix();
                 guiGraphics.renderItem(pos.ingredients[Mth.floor(OverlayArcaneRecipeComponent.this.time / 30.0F) % pos.ingredients.length], 0, 0);
                 guiGraphics.pose().popMatrix();

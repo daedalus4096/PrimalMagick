@@ -39,7 +39,7 @@ public class KnowledgeWidget extends AbstractWidget {
         guiGraphics.pose().pushMatrix();
         
         // Draw knowledge type icon
-        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        guiGraphics.pose().translate(this.getX(), this.getY());
         guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
         guiGraphics.blit(this.type.getIconLocation(), 0, 0, 0, 0, 255, 255);
         
@@ -49,7 +49,7 @@ public class KnowledgeWidget extends AbstractWidget {
         Component amountText = Component.literal(Integer.toString(this.amount));
         int width = mc.font.width(amountText.getString());
         guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
+        guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
         guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
         guiGraphics.drawString(mc.font, amountText, 0, 0, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
         guiGraphics.pose().popMatrix();
@@ -57,7 +57,7 @@ public class KnowledgeWidget extends AbstractWidget {
         if (this.isComplete) {
             // Render completion checkmark if appropriate
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 100.0F);
+            guiGraphics.pose().translate(this.getX() + 8, this.getY());
             guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
             guiGraphics.pose().popMatrix();
         }

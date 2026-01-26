@@ -57,14 +57,14 @@ public class VocabularyWidget extends AbstractWidget {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         pGuiGraphics.pose().pushMatrix();
-        pGuiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        pGuiGraphics.pose().translate(this.getX(), this.getY());
 
         // Render border sprite
         pGuiGraphics.blitSprite(BORDER_SPRITE, 0, 0, 16, 16);
         
         // Render language glyph
         pGuiGraphics.pose().pushMatrix();
-        pGuiGraphics.pose().translate(4, 4, 2.0F);
+        pGuiGraphics.pose().translate(4, 4);
         pGuiGraphics.blitSprite(this.getLanguage().value().getGlyphSprite(), 0, 0, 8, 8);
         pGuiGraphics.pose().popMatrix();
 
@@ -72,7 +72,7 @@ public class VocabularyWidget extends AbstractWidget {
         pGuiGraphics.pose().pushMatrix();
         Component amountText = Component.literal(Integer.toString(this.getAmount()));
         int width = mc.font.width(amountText.getString());
-        pGuiGraphics.pose().translate(16 - width / 2, 12, 5.0F);
+        pGuiGraphics.pose().translate(16 - width / 2, 12);
         pGuiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
         pGuiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
         pGuiGraphics.pose().popMatrix();

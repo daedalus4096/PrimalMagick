@@ -50,7 +50,7 @@ public class PageImage implements IPageElement {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5, 0.0F);
+        guiGraphics.pose().translate(x - 15 + (side * 152) + ((124 - this.adjustedWidth) / 2), y - 5);
         guiGraphics.pose().scale(this.scale, this.scale, this.scale);
         guiGraphics.blit(this.location, 0, 0, this.x, this.y, this.width, this.height);
         guiGraphics.pose().popMatrix();

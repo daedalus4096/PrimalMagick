@@ -79,7 +79,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)(this.width - dx) / (float)strWidth;
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + (1.0F * scale), 0.0F);
+            guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + (1.0F * scale));
             guiGraphics.pose().scale(scale, scale, scale);
             guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.GRAY.getRGB(), false);
             guiGraphics.pose().popMatrix();

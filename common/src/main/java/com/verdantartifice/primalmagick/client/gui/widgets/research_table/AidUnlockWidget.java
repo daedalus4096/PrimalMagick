@@ -34,7 +34,7 @@ public class AidUnlockWidget extends AbstractWidget {
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Draw padlock icon
         guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        guiGraphics.pose().translate(this.getX(), this.getY());
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, UNLOCK_SPRITE, 0, 0, 8, 8);
         guiGraphics.pose().popMatrix();
     }

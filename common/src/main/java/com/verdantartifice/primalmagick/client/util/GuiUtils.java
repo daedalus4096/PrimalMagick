@@ -58,8 +58,7 @@ public class GuiUtils {
             Minecraft mc = Minecraft.getInstance();
             
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(0.0F, 0.0F, 32.0F);   // Bring the item stack up in the Z-order
-            
+
             // Render the item stack into the GUI and, if applicable, its stack size and/or damage bar
             guiGraphics.renderItem(stack, x, y);
             if (!hideStackOverlay) {
@@ -81,10 +80,9 @@ public class GuiUtils {
             BakedModel bakedModel = itemRenderer.getModel(stack, mc.level, mc.player, 0);
             
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(0.0F, 0.0F, 32.0F);
-            
+
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(x + 8, y + 8, 150);
+            guiGraphics.pose().translate(x + 8, y + 8);
             
             try {
                 guiGraphics.pose().mulPose((new Matrix4f()).scaling(1.0F, -1.0F, 1.0F));
@@ -213,7 +211,6 @@ public class GuiUtils {
         // Render an amount string for the source, if an amount has been given
         if (amount > 0) {
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(0.0D, 0.0D, z + 1.0D);
             guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.font.width(amountStr);
@@ -279,7 +276,7 @@ public class GuiUtils {
         guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().translate(x, y, 0.0F);
+        guiGraphics.pose().translate(x, y);
         if (iconDef.isItem()) {
             GuiUtils.renderItemStack(guiGraphics, new ItemStack(iconDef.asItem()), 0, 0, null, true);
         } else if (iconDef.isTag()) {

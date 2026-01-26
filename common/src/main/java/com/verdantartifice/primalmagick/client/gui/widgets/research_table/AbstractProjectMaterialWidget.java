@@ -52,21 +52,21 @@ public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMat
         if (this.complete) {
             // Render completion checkmark if appropriate
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 200.0F);
+            guiGraphics.pose().translate(this.getX() + 8, this.getY());
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE_SPRITE, 0, 0, 10, 10);
             guiGraphics.pose().popMatrix();
         }
         if (this.consumed) {
             // Render consumption exclamation point if appropriate
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() - 3, this.getY() - 2, 200.0F);
+            guiGraphics.pose().translate(this.getX() - 3, this.getY() - 2);
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, CONSUMED_SPRITE, 0, 0, 10, 10);
             guiGraphics.pose().popMatrix();
         }
         if (this.hasBonus) {
             // Render bonus indicator if appropriate
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() - 1, this.getY() + 10, 200.0F);
+            guiGraphics.pose().translate(this.getX() - 1, this.getY() + 10);
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BONUS_SPRITE, 0, 0, 6, 5);
             guiGraphics.pose().popMatrix();
         }

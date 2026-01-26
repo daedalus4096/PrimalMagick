@@ -62,7 +62,7 @@ public class ResearchWidget extends AbstractWidget {
         if (this.isComplete) {
             // Render completion checkmark if appropriate
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 250.0F);
+            guiGraphics.pose().translate(this.getX() + 8, this.getY());
             guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
             guiGraphics.pose().popMatrix();
         }

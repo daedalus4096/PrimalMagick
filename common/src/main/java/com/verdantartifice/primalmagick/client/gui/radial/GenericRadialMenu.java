@@ -217,7 +217,7 @@ public class GenericRadialMenu {
         float z = 0;
 
         guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(0, animTop, 0);
+        guiGraphics.pose().translate(0, animTop);
 
         drawBackground(guiGraphics, x, y, z, radiusIn, radiusOut);
 

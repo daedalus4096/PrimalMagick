@@ -24,7 +24,6 @@ public class SectionHeaderWidget extends AbstractWidget {
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int strWidth = mc.font.width(this.getMessage().getString());
@@ -35,7 +34,7 @@ public class SectionHeaderWidget extends AbstractWidget {
             // Scale the string down to fit on one line, if need be
             float scale = (float)this.width / (float)strWidth;
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX(), this.getY() + dy + (1.0F * scale), 0.0F);
+            guiGraphics.pose().translate(this.getX(), this.getY() + dy + (1.0F * scale));
             guiGraphics.pose().scale(scale, scale, scale);
             guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
             guiGraphics.pose().popMatrix();

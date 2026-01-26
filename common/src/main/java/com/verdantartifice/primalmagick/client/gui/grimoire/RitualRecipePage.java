@@ -118,7 +118,6 @@ public class RitualRecipePage extends AbstractRecipePage {
         guiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
         Minecraft mc = Minecraft.getInstance();
 
         // Render ingredients section header

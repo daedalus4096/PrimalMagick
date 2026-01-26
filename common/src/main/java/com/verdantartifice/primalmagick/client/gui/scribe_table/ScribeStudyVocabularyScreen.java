@@ -246,11 +246,11 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         float f1 = Mth.lerp(pPartialTick, this.oFlip, this.flip);
         Lighting.setupForEntityInInventory();
         pGuiGraphics.pose().pushMatrix();
-        pGuiGraphics.pose().translate((float)pX + 33.0F, (float)pY + 59.0F, 100.0F);
+        pGuiGraphics.pose().translate((float)pX + 33.0F, (float)pY + 59.0F);
         float f2 = 40.0F;
         pGuiGraphics.pose().scale(-f2, f2, f2);
         pGuiGraphics.pose().mulPose(Axis.XP.rotationDegrees(25.0F));
-        pGuiGraphics.pose().translate((1.0F - f) * 0.2F, (1.0F - f) * 0.1F, (1.0F - f) * 0.25F);
+        pGuiGraphics.pose().translate((1.0F - f) * 0.2F, (1.0F - f) * 0.1F);
         float f3 = -(1.0F - f) * 90.0F - 90.0F;
         pGuiGraphics.pose().mulPose(Axis.YP.rotationDegrees(f3));
         pGuiGraphics.pose().mulPose(Axis.XP.rotationDegrees(180.0F));
