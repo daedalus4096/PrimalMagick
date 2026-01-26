@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * GUI screen for basic runescribing altar blocks.
@@ -19,6 +20,7 @@ public class RunescribingAltarBasicScreen extends AbstractRunescribingAltarScree
     }
     
     @Override
+    @NotNull
     protected Identifier getTextureLocation() {
         return TEXTURE;
     }
