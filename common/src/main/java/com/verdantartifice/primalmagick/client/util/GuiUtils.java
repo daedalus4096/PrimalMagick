@@ -86,9 +86,9 @@ public class GuiUtils {
             
             try {
                 guiGraphics.pose().mulPose((new Matrix4f()).scaling(1.0F, -1.0F, 1.0F));
-                guiGraphics.pose().scale(16.0F, 16.0F, 16.0F);
+                guiGraphics.pose().scale(16.0F, 16.0F);
                 scaleOpt.ifPresent(scale -> {
-                    guiGraphics.pose().scale((float)scale.x, (float)scale.y, (float)scale.z);
+                    guiGraphics.pose().scale((float)scale.x, (float)scale.y);
                 });
                 
                 boolean flag = !bakedModel.usesBlockLight();
@@ -211,7 +211,7 @@ public class GuiUtils {
         // Render an amount string for the source, if an amount has been given
         if (amount > 0) {
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
+            guiGraphics.pose().scale(0.5F, 0.5F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.font.width(amountStr);
             guiGraphics.drawString(mc.font, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.font.lineHeight + (y * 2)), Color.WHITE.getRGB());
@@ -282,7 +282,7 @@ public class GuiUtils {
         } else if (iconDef.isTag()) {
             GuiUtils.renderItemStack(guiGraphics, getTagDisplayStack(iconDef.asTagKey()), 0, 0, null, true);
         } else {
-            guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+            guiGraphics.pose().scale(0.0625F, 0.0625F);
             guiGraphics.blit(iconDef.getLocation(), 0, 0, 0, 0, 255, 255);
         }
         guiGraphics.pose().popMatrix();

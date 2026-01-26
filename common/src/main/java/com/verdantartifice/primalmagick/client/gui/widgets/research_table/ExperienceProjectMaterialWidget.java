@@ -40,7 +40,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         float a = 0.5F;
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.pose().scale(0.25F, 0.25F, 0.25F);
+        guiGraphics.pose().scale(0.25F, 0.25F);
         RenderSystem.setShaderColor(r, g, b, a);
         guiGraphics.blit(EXPERIENCE_ORB_TEXTURES, 0, 0, uMin, vMin, 63, 63);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -52,7 +52,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
             int width = mc.font.width(amountText);
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
-            guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+            guiGraphics.pose().scale(0.5F, 0.5F);
             guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
             guiGraphics.pose().popMatrix();
         }

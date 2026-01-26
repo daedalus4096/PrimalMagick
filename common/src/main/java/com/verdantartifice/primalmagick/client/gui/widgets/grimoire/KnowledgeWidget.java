@@ -40,7 +40,7 @@ public class KnowledgeWidget extends AbstractWidget {
         
         // Draw knowledge type icon
         guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+        guiGraphics.pose().scale(0.0625F, 0.0625F);
         guiGraphics.blit(this.type.getIconLocation(), 0, 0, 0, 0, 255, 255);
         
         guiGraphics.pose().popMatrix();
@@ -50,7 +50,7 @@ public class KnowledgeWidget extends AbstractWidget {
         int width = mc.font.width(amountText.getString());
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
-        guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+        guiGraphics.pose().scale(0.5F, 0.5F);
         guiGraphics.drawString(mc.font, amountText, 0, 0, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
         guiGraphics.pose().popMatrix();
         

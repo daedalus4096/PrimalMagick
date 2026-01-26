@@ -210,7 +210,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos pos : this.ingredientPos) {
                 guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(pos.x, pos.y);
-                guiGraphics.pose().scale(0.375F, 0.375F, 1.0F);
+                guiGraphics.pose().scale(0.375F, 0.375F);
                 guiGraphics.pose().translate(-8.0D, -8.0D);
                 RenderSystem.applyModelViewMatrix();
                 guiGraphics.renderItem(pos.ingredients[Mth.floor(OverlayArcaneRecipeComponent.this.time / 30.0F) % pos.ingredients.length], 0, 0);

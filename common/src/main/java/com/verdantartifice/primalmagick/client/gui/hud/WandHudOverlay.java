@@ -81,7 +81,7 @@ public class WandHudOverlay {
         // Render the spell icon, if present
         if (spellIcon != null) {
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().scale(0.5F, 0.5F, 1F);
+            guiGraphics.pose().scale(0.5F, 0.5F);
             guiGraphics.blit(spellIcon, x + 10, y + 10, 0, 0, 32, 32, 32, 32);
             guiGraphics.pose().popMatrix();
         }

@@ -69,7 +69,7 @@ public abstract class AbstractTopicButton extends Button {
             float scale = (float)(this.width - dx) / (float)strWidth;
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + (1.0F * scale));
-            guiGraphics.pose().scale(scale, scale, scale);
+            guiGraphics.pose().scale(scale, scale);
             guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
             guiGraphics.pose().popMatrix();
         }
@@ -85,7 +85,7 @@ public abstract class AbstractTopicButton extends Button {
                 int dx2 = this.icon.isLarge() ? 11 : 7;
                 guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(this.getX() + dx2 - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1) - 2);
-                guiGraphics.pose().scale(s, s, 1F);
+                guiGraphics.pose().scale(s, s);
                 guiGraphics.blitSprite(UNREAD_SPRITE, 0, 0, UNREAD_WIDTH, UNREAD_HEIGHT);
                 guiGraphics.pose().popMatrix();
             }

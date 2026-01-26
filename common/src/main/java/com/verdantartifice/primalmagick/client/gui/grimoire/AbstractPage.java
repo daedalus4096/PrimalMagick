@@ -68,7 +68,7 @@ public abstract class AbstractPage implements GuiEventListener {
             if (icon != null) {
                 guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21);
-                guiGraphics.pose().scale(0.06F, 0.06F, 0.06F);
+                guiGraphics.pose().scale(0.06F, 0.06F);
                 guiGraphics.blit(icon, 0, 0, 0, 0, 255, 255);
                 guiGraphics.pose().popMatrix();
             }
@@ -77,12 +77,12 @@ public abstract class AbstractPage implements GuiEventListener {
             float scale = 124.0F / width;
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale), y + 25 + (1.0F * scale));
-            guiGraphics.pose().scale(scale, scale, scale);
+            guiGraphics.pose().scale(scale, scale);
             guiGraphics.drawString(mc.font, headerText, 0, 0, Color.BLACK.getRGB(), false);
             if (icon != null) {
                 guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale) - 17, y + 21);
-                guiGraphics.pose().scale(0.06F, 0.06F, 0.06F);
+                guiGraphics.pose().scale(0.06F, 0.06F);
                 guiGraphics.blit(icon, 0, 0, 0, 0, 255, 255);
                 guiGraphics.pose().popMatrix();
             }

@@ -79,7 +79,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
             float scale = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / 15.0F * (float)Math.PI));
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate((double)(this.getX() + 8), (double)(this.getY() + 12));
-            guiGraphics.pose().scale(scale, scale, 1.0F);
+            guiGraphics.pose().scale(scale, scale);
             guiGraphics.pose().translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)));
             this.animationTime -= p_93679_;
         }

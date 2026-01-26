@@ -47,7 +47,7 @@ public class PageButton extends Button {
         int dx = this.width / 2;
         int dy = this.height / 2;
         guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy);
-        guiGraphics.pose().scale(1.5F + scaleMod, 1.5F + scaleMod, 1.0F);
+        guiGraphics.pose().scale(1.5F + scaleMod, 1.5F + scaleMod);
         guiGraphics.blit(TEXTURE, -dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
 
         guiGraphics.pose().popMatrix();

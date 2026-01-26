@@ -113,7 +113,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Draw the parchment background for the comprehension grid
             pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(this.leftPos + 31, this.topPos + 17);
-            pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
+            pGuiGraphics.pose().scale(0.5F, 0.5F);
             pGuiGraphics.blitSprite(PARCHMENT_SPRITE, 0, 0, 228, 216);
             pGuiGraphics.pose().popMatrix();
             
@@ -239,7 +239,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Render node button background
             pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(this.getX(), this.getY());
-            pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
+            pGuiGraphics.pose().scale(0.5F, 0.5F);  // Scale down to 50% size for rendering
             Identifier resourcelocation = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
             pGuiGraphics.blitSprite(resourcelocation, 0, 0, this.width * 2, this.height * 2);
             pGuiGraphics.pose().popMatrix();
@@ -251,11 +251,11 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 int dx = this.width / 2;
                 int dy = this.height / 2;
                 pGuiGraphics.pose().translate(this.getX() + 2 + (dx * 0.75F), this.getY() + 2 + (dy * 0.75F));
-                pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
+                pGuiGraphics.pose().scale(0.5F, 0.5F);  // Scale down to 50% size for rendering
                 if (this.unlockable) {
                     // If the node can currently be unlocked, pulse its scale up and down for extra visibility
                     float scale = 1F + (0.1F * Mth.sin((this.player.tickCount + pPartialTick) / 3F));
-                    pGuiGraphics.pose().scale(scale, scale, 1F);
+                    pGuiGraphics.pose().scale(scale, scale);
                 }
                 pGuiGraphics.blit(node.getReward().getIconLocation(this.player), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 0, 0, 0, 16, 16, 16, 16);
                 pGuiGraphics.pose().popMatrix();
@@ -266,7 +266,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                     Minecraft mc = Minecraft.getInstance();
                     int width = mc.font.width(text.getString());
                     pGuiGraphics.pose().translate(this.getX() + 11 - width / 2, this.getY() + 7);
-                    pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
+                    pGuiGraphics.pose().scale(0.5F, 0.5F);  // Scale down to 50% size for rendering
                     pGuiGraphics.drawString(mc.font, text, 0, 0, Color.WHITE.getRGB());
                     pGuiGraphics.pose().popMatrix();
                 });

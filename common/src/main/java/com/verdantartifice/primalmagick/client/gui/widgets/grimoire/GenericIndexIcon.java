@@ -27,8 +27,8 @@ public class GenericIndexIcon extends AbstractIndexIcon {
             int d = this.large ? 8 : 5;
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(x + d, y + d);
-            guiGraphics.pose().scale(s, s, 1F);
-            guiGraphics.pose().scale(scale, scale, 1F);
+            guiGraphics.pose().scale(s, s);
+            guiGraphics.pose().scale(scale, scale);
             guiGraphics.blit(this.iconLocation, (int)(-d / s), (int)(-d / s), 0, 0, 255, 255);
             guiGraphics.pose().popMatrix();
         }

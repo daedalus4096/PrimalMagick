@@ -35,7 +35,7 @@ public class SectionHeaderWidget extends AbstractWidget {
             float scale = (float)this.width / (float)strWidth;
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX(), this.getY() + dy + (1.0F * scale));
-            guiGraphics.pose().scale(scale, scale, scale);
+            guiGraphics.pose().scale(scale, scale);
             guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
             guiGraphics.pose().popMatrix();
         }

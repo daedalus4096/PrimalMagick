@@ -63,7 +63,7 @@ public class RecipeExpertiseWidget extends AbstractWidget {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         pGuiGraphics.pose().translate(this.getX(), this.getY());
-        pGuiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+        pGuiGraphics.pose().scale(0.0625F, 0.0625F);
         pGuiGraphics.blit(ICON_LOC, 0, 0, 0, 0, 255, 255);
         pGuiGraphics.pose().popMatrix();
 

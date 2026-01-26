@@ -248,7 +248,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate((float)pX + 33.0F, (float)pY + 59.0F);
         float f2 = 40.0F;
-        pGuiGraphics.pose().scale(-f2, f2, f2);
+        pGuiGraphics.pose().scale(-f2, f2);
         pGuiGraphics.pose().mulPose(Axis.XP.rotationDegrees(25.0F));
         pGuiGraphics.pose().translate((1.0F - f) * 0.2F, (1.0F - f) * 0.1F);
         float f3 = -(1.0F - f) * 90.0F - 90.0F;

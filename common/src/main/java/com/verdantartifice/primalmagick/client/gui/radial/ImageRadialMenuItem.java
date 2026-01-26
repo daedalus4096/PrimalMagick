@@ -32,7 +32,7 @@ public class ImageRadialMenuItem extends TextRadialMenuItem {
         } else {
             context.guiGraphics.pose().pushMatrix();
             context.guiGraphics.pose().translate(-8, -8);
-            context.guiGraphics.pose().scale(0.5F, 0.5F, 1F);
+            context.guiGraphics.pose().scale(0.5F, 0.5F);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             context.guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);

@@ -68,7 +68,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
             // Render the icon appropriate for this widget's source and threshold
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX(), this.getY());
-            guiGraphics.pose().scale(0.0703125F, 0.0703125F, 0.0703125F);
+            guiGraphics.pose().scale(0.0703125F, 0.0703125F);
             guiGraphics.blit(this.texture, 0, 0, 0, 0, 255, 255);
             guiGraphics.pose().popMatrix();
         }

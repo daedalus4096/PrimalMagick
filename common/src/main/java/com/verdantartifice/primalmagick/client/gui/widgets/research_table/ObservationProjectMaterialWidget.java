@@ -25,7 +25,7 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
         // Draw observation icon
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+        guiGraphics.pose().scale(0.0625F, 0.0625F);
         guiGraphics.blit(KnowledgeType.OBSERVATION.getIconLocation(), 0, 0, 0, 0, 255, 255);
         guiGraphics.pose().popMatrix();
         

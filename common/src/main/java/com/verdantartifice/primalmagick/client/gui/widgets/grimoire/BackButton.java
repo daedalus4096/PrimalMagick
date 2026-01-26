@@ -49,7 +49,7 @@ public class BackButton extends Button {
         int dy = this.height / 2;
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy);
-        guiGraphics.pose().scale(1.5F + scaleMod, 1.5F + scaleMod, 1.0F);
+        guiGraphics.pose().scale(1.5F + scaleMod, 1.5F + scaleMod);
         guiGraphics.blit(TEXTURE, -dx, -dy, 40, 204, this.width, this.height);
         guiGraphics.pose().popMatrix();
 
@@ -57,7 +57,7 @@ public class BackButton extends Button {
         if (this.screen.getPreviousTopic().map(topic -> topic.isUnread(mc.player)).orElse(false)) {
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + dx + 1, this.getY() - dy);
-            guiGraphics.pose().scale(0.4F, 0.4F, 1F);
+            guiGraphics.pose().scale(0.4F, 0.4F);
             guiGraphics.blitSprite(UNREAD_SPRITE, 0, 0, UNREAD_WIDTH, UNREAD_HEIGHT);
             guiGraphics.pose().popMatrix();
         }

@@ -73,7 +73,7 @@ public class VocabularyWidget extends AbstractWidget {
         Component amountText = Component.literal(Integer.toString(this.getAmount()));
         int width = mc.font.width(amountText.getString());
         pGuiGraphics.pose().translate(16 - width / 2, 12);
-        pGuiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+        pGuiGraphics.pose().scale(0.5F, 0.5F);
         pGuiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
         pGuiGraphics.pose().popMatrix();
 

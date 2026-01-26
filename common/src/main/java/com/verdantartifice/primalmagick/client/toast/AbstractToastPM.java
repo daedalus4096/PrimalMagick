@@ -91,7 +91,7 @@ public abstract class AbstractToastPM implements Toast {
         this.getIcon().ifPresent(iconLoc -> {
             pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(8, 8);
-            pGuiGraphics.pose().scale(this.getIconWidth() / 256F, this.getIconHeight() / 256F, 1F);
+            pGuiGraphics.pose().scale(this.getIconWidth() / 256F, this.getIconHeight() / 256F);
             pGuiGraphics.blit(iconLoc, 0, 0, 0, 0, 255, 255);
             pGuiGraphics.pose().popMatrix();
         });

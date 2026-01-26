@@ -80,7 +80,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
             float scale = (float)(this.width - dx) / (float)strWidth;
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + (1.0F * scale));
-            guiGraphics.pose().scale(scale, scale, scale);
+            guiGraphics.pose().scale(scale, scale);
             guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.GRAY.getRGB(), false);
             guiGraphics.pose().popMatrix();
             if (this.icon != null) {

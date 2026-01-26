@@ -62,8 +62,8 @@ public class MarkReadButton extends Button {
 
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX() + dx, this.getY() + dy);
-        pGuiGraphics.pose().scale(BASE_SCALE, BASE_SCALE, 1F);
-        pGuiGraphics.pose().scale(scaleMod, scaleMod, 1F);
+        pGuiGraphics.pose().scale(BASE_SCALE, BASE_SCALE);
+        pGuiGraphics.pose().scale(scaleMod, scaleMod);
         pGuiGraphics.blitSprite(SPRITE, (int)(-dx / BASE_SCALE), (int)(-dy / BASE_SCALE), SPRITE_WIDTH, SPRITE_HEIGHT);
         pGuiGraphics.pose().popMatrix();
     }

@@ -61,7 +61,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
                 float f = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / ANIMATION_TIME_TOTAL * (float)Math.PI));
                 pGuiGraphics.pose().pushMatrix();
                 pGuiGraphics.pose().translate((double)(this.getX() + 8), (double)(this.getY() + 12));
-                pGuiGraphics.pose().scale(1.0F, f, 1.0F);
+                pGuiGraphics.pose().scale(1.0F, f);
                 pGuiGraphics.pose().translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)));
             }
             
