@@ -81,6 +81,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -314,7 +315,7 @@ public class GrimoireScreen extends Screen {
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.scaledLeft, this.scaledTop);
         guiGraphics.pose().scale(SCALE, SCALE);
-        guiGraphics.blit(TEXTURE, 0, 0, 0, 0, BG_WIDTH, BG_HEIGHT);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, 0, 0, 0, 0, BG_WIDTH, BG_HEIGHT, 256, 256);
         guiGraphics.pose().popMatrix();
         
         // Render the two visible pages

@@ -5,9 +5,11 @@ import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * GUI screen for honey extractor block.
@@ -16,7 +18,8 @@ import net.minecraft.world.entity.player.Inventory;
  */
 public class HoneyExtractorScreen extends AbstractContainerScreenPM<HoneyExtractorMenu> {
     protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/honey_extractor.png");
-    
+    protected static final Identifier PROGRESS_SPRITE = ResourceUtils.loc("progress_arrow");
+
     protected ManaGaugeWidget manaGauge;
 
     public HoneyExtractorScreen(HoneyExtractorMenu screenMenu, Inventory inv, Component titleIn) {
@@ -26,7 +29,7 @@ public class HoneyExtractorScreen extends AbstractContainerScreenPM<HoneyExtract
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.manaGauge.setCurrentMana(this.menu.getCurrentMana());
         this.manaGauge.setMaxMana(this.menu.getMaxMana());
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
@@ -42,10 +45,10 @@ public class HoneyExtractorScreen extends AbstractContainerScreenPM<HoneyExtract
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         // Render background texture
-        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         
         // Animate spin progress indicator
         int cook = this.menu.getSpinProgressionScaled();
-        guiGraphics.blit(TEXTURE, this.leftPos + 75, this.topPos + 34, 176, 0, cook + 1, 16);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_SPRITE, 24, 16, 0, 0, this.leftPos + 75, this.topPos + 34, cook, 16);
     }
 }

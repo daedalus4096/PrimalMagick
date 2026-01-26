@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,6 +17,7 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * GUI screen for concocter block.
@@ -25,7 +27,8 @@ import org.apache.logging.log4j.Logger;
 public class ConcocterScreen extends AbstractContainerScreenPM<ConcocterMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
     protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/concocter.png");
-    
+    protected static final Identifier PROGRESS_SPRITE = ResourceUtils.loc("progress_arrow");
+
     protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();
     protected boolean widthTooNarrow;
     protected ManaGaugeWidget manaGauge;
@@ -37,7 +40,7 @@ public class ConcocterScreen extends AbstractContainerScreenPM<ConcocterMenu> im
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.manaGauge.setCurrentMana(this.menu.getCurrentMana());
         this.manaGauge.setMaxMana(this.menu.getMaxMana());
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
@@ -79,14 +82,13 @@ public class ConcocterScreen extends AbstractContainerScreenPM<ConcocterMenu> im
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
+    protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         // Render background texture
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         
         // Animate spin progress indicator
         int cook = this.menu.getCookProgressionScaled();
-        guiGraphics.blit(TEXTURE, this.leftPos + 103, this.topPos + 34, 176, 0, cook + 1, 16);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_SPRITE, 24, 16, 0, 0, this.leftPos + 103, this.topPos + 34, cook, 16);
     }
 
     @Override
@@ -111,9 +113,9 @@ public class ConcocterScreen extends AbstractContainerScreenPM<ConcocterMenu> im
     }
 
     @Override
-    protected void slotClicked(Slot p_97778_, int p_97779_, int p_97780_, ClickType p_97781_) {
-        super.slotClicked(p_97778_, p_97779_, p_97780_, p_97781_);
-        this.recipeBookComponent.slotClicked(p_97778_);
+    protected void slotClicked(@NotNull Slot slot, int slotId, int mouseButton, @NotNull ClickType type) {
+        super.slotClicked(slot, slotId, mouseButton, type);
+        this.recipeBookComponent.slotClicked(slot);
     }
 
     @Override
