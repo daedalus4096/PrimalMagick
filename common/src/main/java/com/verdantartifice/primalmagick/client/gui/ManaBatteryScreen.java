@@ -7,9 +7,11 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.Map;
  */
 public class ManaBatteryScreen extends AbstractContainerScreenPM<ManaBatteryMenu> {
     protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/mana_battery.png");
+    protected static final Identifier PROGRESS_SPRITE = ResourceUtils.loc("progress_arrow");
     protected static final int AVAILABLE_GAUGE_WIDTH = 116;
     protected static final int GAUGE_START_X = 57;
     protected static final int GAUGE_WIDTH = 12;
@@ -50,7 +53,7 @@ public class ManaBatteryScreen extends AbstractContainerScreenPM<ManaBatteryMenu
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.manaGauges.forEach((source, gauge) -> {
             gauge.setCurrentMana(this.menu.getCurrentMana(source));
             gauge.setMaxMana(this.menu.getMaxMana(source));
@@ -62,10 +65,10 @@ public class ManaBatteryScreen extends AbstractContainerScreenPM<ManaBatteryMenu
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         // Render background texture
-        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         
         // Animate charge progress indicator
         int charge = this.menu.getChargeProgressionScaled();
-        guiGraphics.blit(TEXTURE, this.leftPos + 29, this.topPos + 34, 230, 0, charge + 1, 16);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_SPRITE, 24, 16, 0, 0, this.leftPos + 29, this.topPos + 34, charge, 16);
     }
 }
