@@ -46,6 +46,8 @@ public class StatProgressWidget extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        Minecraft mc = Minecraft.getInstance();
+
         // Render the icon
         pGuiGraphics.pose().pushMatrix();
         RenderSystem.enableBlend();
@@ -80,7 +82,7 @@ public class StatProgressWidget extends AbstractWidget {
         this.lastTooltip = this.tooltip;
         this.tooltip = Component.empty();
         this.stat.getHintTranslationKey().ifPresentOrElse(hintTranslationKey -> {
-            if (Screen.hasShiftDown()) {
+            if (mc.hasShiftDown()) {
                 this.tooltip.append(Component.translatable(hintTranslationKey));
             } else {
                 this.tooltip.append(this.getStatDescription());

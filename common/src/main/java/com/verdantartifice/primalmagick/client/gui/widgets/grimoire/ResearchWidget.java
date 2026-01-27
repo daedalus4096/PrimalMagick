@@ -73,7 +73,7 @@ public class ResearchWidget extends AbstractWidget {
         if (this.researchEntry != null) {
             // If there's a research entry behind this key, use its info for the tooltip
             this.researchEntry.getHintTranslationKey().ifPresentOrElse(hintTranslationKey -> {
-                if (Screen.hasShiftDown()) {
+                if (mc.hasShiftDown()) {
                     this.tooltip.append(Component.translatable(hintTranslationKey));
                 } else {
                     this.tooltip.append(Component.translatable(this.researchEntry.getNameTranslationKey()));

@@ -108,7 +108,7 @@ public class WandHudOverlay {
         
         // Render the mana text by the gauge if holding shift
         guiGraphics.setColor(1, 1, 1, 1);
-        if (Screen.hasShiftDown()) {
+        if (Minecraft.getInstance().hasShiftDown()) {
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(61, 2);
             guiGraphics.drawString(font, text, x, y, -1);
