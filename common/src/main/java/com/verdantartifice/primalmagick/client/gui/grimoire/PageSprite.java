@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -55,8 +53,6 @@ public record PageSprite(Identifier location, int width, int height, float scale
     @Override
     public void render(GuiGraphics guiGraphics, int side, int x, int y) {
         // Render the image at this element's resource location to the screen
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(x - 15 + (side * 152) + ((124 - this.adjustedWidth()) / 2), y - 5);
         guiGraphics.pose().scale(this.scale, this.scale);

@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BlockIngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
@@ -78,9 +76,9 @@ public class RitualRecipePage extends AbstractRecipePage {
         y += 28;
         
         // Init ingredient widgets
-        if (!this.recipe.value().getIngredients().isEmpty()) {
+        if (!this.recipe.value().placementInfo().ingredients().isEmpty()) {
             y += mc.font.lineHeight;   // Make room for section header
-            for (Ingredient ingredient : this.recipe.value().getIngredients()) {
+            for (Ingredient ingredient : this.recipe.value().placementInfo().ingredients()) {
                 if (deltaX >= (ITEMS_PER_ROW * 18)) {
                     deltaX = 0;
                     y += 18;
@@ -116,16 +114,14 @@ public class RitualRecipePage extends AbstractRecipePage {
         y += 79;
         
         guiGraphics.pose().pushMatrix();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft mc = Minecraft.getInstance();
 
         // Render ingredients section header
-        if (!this.recipe.value().getIngredients().isEmpty()) {
+        if (!this.recipe.value().placementInfo().ingredients().isEmpty()) {
             Component leadComponent = Component.translatable("grimoire.primalmagick.ritual_offerings_header").withStyle(ChatFormatting.UNDERLINE);
             guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
-            y += 18 * Mth.ceil((double)this.recipe.value().getIngredients().size() / (double)ITEMS_PER_ROW); // Make room for ingredient widgets
+            y += 18 * Mth.ceil((double)this.recipe.value().placementInfo().ingredients().size() / (double)ITEMS_PER_ROW); // Make room for ingredient widgets
             y += (int)(mc.font.lineHeight * 0.66F);
         }
         

@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
@@ -9,6 +7,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeExpert
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -44,8 +43,8 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         int overlayWidth = 13;
 
         // Render ingredient stacks
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().getIngredients().get(0), x - 6 + (side * 140) + (indent / 2), y + 99, screen));
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().getIngredients().get(1), x + 58 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 99, screen));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().placementInfo().ingredients().get(0), x - 6 + (side * 140) + (indent / 2), y + 99, screen));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().placementInfo().ingredients().get(1), x + 58 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 99, screen));
 
         // Render output stack
         screen.addWidgetToScreen(new ItemStackWidget(this.recipe.value().getResultItem(this.registryAccess), x + 29 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
@@ -70,11 +69,9 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         
         // Render overlay background
         guiGraphics.pose().pushMatrix();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().translate(x + 16 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 68);
         guiGraphics.pose().scale(2.0F, 2.0F);
-        guiGraphics.blit(OVERLAY, 0, 0, 0, 51, overlayWidth, overlayHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OVERLAY, 0, 0, 0, 51, overlayWidth, overlayHeight, 256, 256);
         guiGraphics.pose().popMatrix();
     }
 }

@@ -13,16 +13,10 @@ import java.awt.Color;
  * @author Daedalus4096
  */
 public record PageString(String str) implements IPageElement {
-    public String getString() {
-        return this.str;
-    }
-
     @Override
     public void render(GuiGraphics guiGraphics, int side, int x, int y) {
         // Render this element's string to the screen
         Minecraft mc = Minecraft.getInstance();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.drawString(mc.font, this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB(), false);
     }
 
