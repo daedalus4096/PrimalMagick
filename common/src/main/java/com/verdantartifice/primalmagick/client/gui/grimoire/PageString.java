@@ -12,13 +12,7 @@ import java.awt.Color;
  * 
  * @author Daedalus4096
  */
-public class PageString implements IPageElement {
-    protected String str;
-    
-    public PageString(String str) {
-        this.str = str;
-    }
-    
+public record PageString(String str) implements IPageElement {
     public String getString() {
         return this.str;
     }

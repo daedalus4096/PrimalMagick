@@ -6,11 +6,13 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * GUI button to navigate to the next or previous page of the current grimoire entry.
@@ -18,7 +20,8 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class PageButton extends Button {
-    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier NEXT_PAGE = ResourceUtils.loc("grimoire/next_page");
+    private static final Identifier PREV_PAGE = ResourceUtils.loc("grimoire/previous_page");
 
     protected GrimoireScreen screen;
     protected boolean isNext;
@@ -38,19 +41,21 @@ public class PageButton extends Button {
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderContents(@NotNull GuiGraphics guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.pose().pushMatrix();
+        if (mc.player != null) {
+            guiGraphics.pose().pushMatrix();
 
-        // When hovered, scale the button up and down to create a pulsing effect
-        float scaleMod = this.isHoveredOrFocused() ? Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F : 0.0F;
-        int dx = this.width / 2;
-        int dy = this.height / 2;
-        guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy);
-        guiGraphics.pose().scale(1.5F + scaleMod, 1.5F + scaleMod);
-        guiGraphics.blit(TEXTURE, -dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
+            // When hovered, scale the button up and down to create a pulsing effect
+            float scaleMod = this.isHoveredOrFocused() ? Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F : 0.0F;
+            int dx = this.width / 2;
+            int dy = this.height / 2;
+            guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy);
+            guiGraphics.pose().scale(1.5F + scaleMod, 1.5F + scaleMod);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.isNext ? NEXT_PAGE : PREV_PAGE, -dx, -dy, this.width, this.height);
 
-        guiGraphics.pose().popMatrix();
+            guiGraphics.pose().popMatrix();
+        }
 }
     
     @Override
@@ -60,9 +65,8 @@ public class PageButton extends Button {
 
     private static class Handler implements OnPress {
         @Override
-        public void onPress(Button button) {
-            if (button instanceof PageButton) {
-                PageButton gpb = (PageButton)button;
+        public void onPress(@NotNull Button button) {
+            if (button instanceof PageButton gpb) {
                 if (gpb.isNext()) {
                     gpb.getScreen().nextPage();
                 } else {

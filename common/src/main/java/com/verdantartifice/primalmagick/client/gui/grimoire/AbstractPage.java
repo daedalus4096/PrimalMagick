@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
@@ -19,7 +20,7 @@ import java.awt.Color;
  * @author Daedalus4096
  */
 public abstract class AbstractPage implements GuiEventListener {
-    private static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier SEPARATOR_SPRITE = ResourceUtils.loc("grimoire/separator");
 
     /**
      * Render this grimoire page
@@ -57,9 +58,9 @@ public abstract class AbstractPage implements GuiEventListener {
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft mc = Minecraft.getInstance();
         if (this.renderTopTitleBar()) {
-            guiGraphics.blit(GRIMOIRE_TEXTURE, x + 10 + (side * 140), y + 18, 24, 184, 96, 5);   // Render the separator bar above the title text
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SEPARATOR_SPRITE, x + 10 + (side * 140), y + 18, 96, 5);   // Render the separator bar above the title text
         }
-        guiGraphics.blit(GRIMOIRE_TEXTURE, x + 10 + (side * 140), y + 35, 24, 184, 96, 5);   // Render the separator bar below the title text
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SEPARATOR_SPRITE, x + 10 + (side * 140), y + 35, 96, 5);   // Render the separator bar below the title text
         Component headerText = this.getTitleText();
         int width = mc.font.width(headerText.getString());
         int indent = 124;
@@ -69,7 +70,7 @@ public abstract class AbstractPage implements GuiEventListener {
                 guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21);
                 guiGraphics.pose().scale(0.06F, 0.06F);
-                guiGraphics.blit(icon, 0, 0, 0, 0, 255, 255);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, icon, 0, 0, 0, 0, 255, 255, 256, 256);
                 guiGraphics.pose().popMatrix();
             }
         } else {
@@ -83,7 +84,7 @@ public abstract class AbstractPage implements GuiEventListener {
                 guiGraphics.pose().pushMatrix();
                 guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale) - 17, y + 21);
                 guiGraphics.pose().scale(0.06F, 0.06F);
-                guiGraphics.blit(icon, 0, 0, 0, 0, 255, 255);
+                guiGraphics.blit(RenderPipelines.GUI_TEXTURED, icon, 0, 0, 0, 0, 255, 255, 256, 256);
                 guiGraphics.pose().popMatrix();
             }
             guiGraphics.pose().popMatrix();
