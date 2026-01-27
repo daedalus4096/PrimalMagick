@@ -19,6 +19,7 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.CommonComponents;
@@ -257,7 +258,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                     float scale = 1F + (0.1F * Mth.sin((this.player.tickCount + pPartialTick) / 3F));
                     pGuiGraphics.pose().scale(scale, scale);
                 }
-                pGuiGraphics.blit(node.getReward().getIconLocation(this.player), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 0, 0, 0, 16, 16, 16, 16);
+                pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, node.getReward().getIconLocation(this.player), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 32, 32);
                 pGuiGraphics.pose().popMatrix();
                 
                 // Render the node amount string, if applicable

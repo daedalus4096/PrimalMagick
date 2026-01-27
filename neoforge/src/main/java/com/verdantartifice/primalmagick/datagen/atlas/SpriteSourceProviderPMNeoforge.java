@@ -114,8 +114,8 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(itemAtlas, PixieHouseISTER.TEXTURE);
 
         // Add source textures to the block atlas
-        this.addSingle(guiAtlas, Source.getUnknownAtlasLocation());
-        Sources.getAllSorted().forEach(source -> this.addSingle(guiAtlas, source.getAtlasLocation()));
+        this.addSingle(guiAtlas, Source.getUnknownImage());
+        Sources.getAllSorted().forEach(source -> this.addSingle(guiAtlas, source.getImage()));
 
         // Add robe armor trim item overlays to the item atlas
         itemAtlas.addSource(new PalettedPermutations(

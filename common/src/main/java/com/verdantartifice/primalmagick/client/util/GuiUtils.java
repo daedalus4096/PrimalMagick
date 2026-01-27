@@ -175,12 +175,12 @@ public class GuiUtils {
     
     public static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nullable Source source, int amount, double z) {
         if (source != null) {
-            renderSourceIcon(guiGraphics, x, y, source.getAtlasLocation(), amount, z);
+            renderSourceIcon(guiGraphics, x, y, source.getImage(), amount, z);
         }
     }
     
     public static void renderUnknownSourceIcon(GuiGraphics guiGraphics, int x, int y, int amount, double z) {
-        renderSourceIcon(guiGraphics, x, y, Source.getUnknownAtlasLocation(), amount, z);
+        renderSourceIcon(guiGraphics, x, y, Source.getUnknownImage(), amount, z);
     }
     
     protected static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nonnull Identifier imageLoc, int amount, double z) {
@@ -248,7 +248,7 @@ public class GuiUtils {
                 poseStack.translate(shiftX - startDeltaX, 0.0D, 0.0D);
                 poseStack.scale(scale, scale, scale);
 
-                Identifier texLoc = source.isDiscovered(mc.player) ? source.getAtlasLocation() : Source.getUnknownAtlasLocation();
+                Identifier texLoc = source.isDiscovered(mc.player) ? source.getImage() : Source.getUnknownImage();
                 @SuppressWarnings("deprecation")
                 TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(texLoc);
                 VertexConsumer builder = buffers.getBuffer(RenderType.cutout());

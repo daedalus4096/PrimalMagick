@@ -7,8 +7,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 
@@ -18,7 +21,7 @@ import java.awt.Color;
  * @author Daedalus4096
  */
 public class KnowledgeWidget extends AbstractWidget {
-    protected static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier COMPLETE = ResourceUtils.loc("grimoire/complete");
 
     protected KnowledgeType type;
     protected int amount;
@@ -40,8 +43,7 @@ public class KnowledgeWidget extends AbstractWidget {
         
         // Draw knowledge type icon
         guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.pose().scale(0.0625F, 0.0625F);
-        guiGraphics.blit(this.type.getIconLocation(), 0, 0, 0, 0, 255, 255);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.type.getIconLocation(), 0, 0, 16, 16);
         
         guiGraphics.pose().popMatrix();
         
@@ -58,18 +60,18 @@ public class KnowledgeWidget extends AbstractWidget {
             // Render completion checkmark if appropriate
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + 8, this.getY());
-            guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE, 0, 0, 10, 10);
             guiGraphics.pose().popMatrix();
         }
     }
     
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput output) {
     }
 }

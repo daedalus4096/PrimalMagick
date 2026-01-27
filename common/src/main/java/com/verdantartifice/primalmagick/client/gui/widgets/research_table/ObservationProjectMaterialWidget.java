@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
 
@@ -26,7 +27,7 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY());
         guiGraphics.pose().scale(0.0625F, 0.0625F);
-        guiGraphics.blit(KnowledgeType.OBSERVATION.getIconLocation(), 0, 0, 0, 0, 255, 255);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, KnowledgeType.OBSERVATION.getIconLocation(), 0, 0, 16, 16);
         guiGraphics.pose().popMatrix();
         
         // Draw base class stuff

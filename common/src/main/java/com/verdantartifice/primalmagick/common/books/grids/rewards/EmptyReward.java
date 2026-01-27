@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
 import com.mojang.serialization.MapCodec;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class EmptyReward extends AbstractReward<EmptyReward> {
     public static final EmptyReward INSTANCE = new EmptyReward();
     
-    protected static final Identifier ICON_LOCATION = Identifier.withDefaultNamespace("textures/item/barrier.png");
+    protected static final Identifier ICON_LOCATION = ResourceUtils.loc("error");
     protected static final Component DESCRIPTION = Component.translatable("label.primalmagick.scribe_table.grid.reward.empty");
     
     public static final MapCodec<EmptyReward> CODEC = MapCodec.unit(EmptyReward.INSTANCE);

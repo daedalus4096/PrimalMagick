@@ -15,8 +15,8 @@ import javax.annotation.Nullable;
 import java.util.function.IntFunction;
 
 public enum KnowledgeType implements StringRepresentable {
-    OBSERVATION(0, "observation", 16, ResourceUtils.loc("textures/research/knowledge_observation.png")),
-    THEORY(1, "theory", 32, ResourceUtils.loc("textures/research/knowledge_theory.png"));
+    OBSERVATION(0, "observation", 16, ResourceUtils.loc("research/knowledge_observation")),
+    THEORY(1, "theory", 32, ResourceUtils.loc("research/knowledge_theory"));
     
     private static final IntFunction<KnowledgeType> BY_ID = ByIdMap.continuous(KnowledgeType::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
     public static final Codec<KnowledgeType> CODEC = StringRepresentable.fromValues(KnowledgeType::values);
@@ -27,7 +27,7 @@ public enum KnowledgeType implements StringRepresentable {
     private final short progression;  // How many points make a complete level for this knowledge type
     private final Identifier iconLocation;
     
-    private KnowledgeType(int id, String name, int progression, @Nonnull Identifier iconLocation) {
+    KnowledgeType(int id, String name, int progression, @Nonnull Identifier iconLocation) {
         this.id = id;
         this.name = name;
         this.progression = (short)progression;
