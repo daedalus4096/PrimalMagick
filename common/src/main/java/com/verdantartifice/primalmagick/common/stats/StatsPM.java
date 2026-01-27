@@ -12,9 +12,9 @@ import net.minecraft.stats.StatFormatter;
  */
 public class StatsPM {
     // Commonly used research icons
-    private static final Identifier ICON_BAG = ResourceUtils.loc("textures/research/research_bag.png");
-    private static final Identifier ICON_MAP = ResourceUtils.loc("textures/research/research_map.png");
-    private static final Identifier ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
+    private static final Identifier ICON_BAG = ResourceUtils.loc("research/research_bag");
+    private static final Identifier ICON_MAP = ResourceUtils.loc("research/research_map");
+    private static final Identifier ICON_TUBE = ResourceUtils.loc("research/research_tube");
     
     // Display stats
     public static final Stat GRIMOIRE_READ = Stat.builder("grimoire_read").icon(ICON_BAG).build();

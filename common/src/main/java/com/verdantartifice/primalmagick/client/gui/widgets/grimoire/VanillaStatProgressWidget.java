@@ -9,12 +9,17 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 public class VanillaStatProgressWidget extends AbstractWidget {
-    protected static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier COMPLETE = ResourceUtils.loc("grimoire/complete");
+    private static final Identifier PROGRESS_FG = ResourceUtils.loc("grimoire/progress_foreground");
+    private static final Identifier PROGRESS_BG = ResourceUtils.loc("grimoire/progress_background");
     
     protected final IVanillaStatRequirement requirement;
     protected final boolean isComplete;
@@ -30,7 +35,7 @@ public class VanillaStatProgressWidget extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    protected void renderWidget(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render the icon
         GuiUtils.renderIconFromDefinition(pGuiGraphics, this.iconDef, this.getX(), this.getY());
         
@@ -38,14 +43,14 @@ public class VanillaStatProgressWidget extends AbstractWidget {
             // Render completion checkmark if appropriate
             pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(this.getX() + 8, this.getY());
-            pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
+            pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE, 0, 0, 10, 10);
             pGuiGraphics.pose().popMatrix();
         }
         
         // Draw progress bar background
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
-        pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 234, 16, 2);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_BG, 0, 0, 16, 2);
         pGuiGraphics.pose().popMatrix();
         
         // Draw progress bar foreground
@@ -54,7 +59,7 @@ public class VanillaStatProgressWidget extends AbstractWidget {
         int px = (int)(16.0D * ((double)currentValue / (double)this.requirement.getThreshold()));
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
-        pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 232, px, 2);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_FG, 0, 0, px, 2);
         pGuiGraphics.pose().popMatrix();
         
         // Prepare the tooltip
@@ -74,12 +79,12 @@ public class VanillaStatProgressWidget extends AbstractWidget {
     }
 
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput output) {
     }
 }
