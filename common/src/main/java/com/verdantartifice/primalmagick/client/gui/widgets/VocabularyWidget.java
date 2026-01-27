@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -9,10 +7,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.Collections;
@@ -54,18 +54,16 @@ public class VocabularyWidget extends AbstractWidget {
     protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
 
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX(), this.getY());
 
         // Render border sprite
-        pGuiGraphics.blitSprite(BORDER_SPRITE, 0, 0, 16, 16);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BORDER_SPRITE, 0, 0, 16, 16);
         
         // Render language glyph
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(4, 4);
-        pGuiGraphics.blitSprite(this.getLanguage().value().getGlyphSprite(), 0, 0, 8, 8);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.getLanguage().value().getGlyphSprite(), 0, 0, 8, 8);
         pGuiGraphics.pose().popMatrix();
 
         // Render the amount string
@@ -88,6 +86,6 @@ public class VocabularyWidget extends AbstractWidget {
     }
 
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput pNarrationElementOutput) {
+    protected void updateWidgetNarration(@NotNull NarrationElementOutput pNarrationElementOutput) {
     }
 }

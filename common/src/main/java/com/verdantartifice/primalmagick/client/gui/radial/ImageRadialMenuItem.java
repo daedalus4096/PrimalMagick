@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
@@ -21,10 +20,6 @@ public class ImageRadialMenuItem extends TextRadialMenuItem {
         return this.slot;
     }
     
-    public Identifier getImageLoc() {
-        return this.imageLoc;
-    }
-    
     @Override
     public void draw(DrawingContext context) {
         if (this.imageLoc == null) {
@@ -33,10 +28,7 @@ public class ImageRadialMenuItem extends TextRadialMenuItem {
             context.guiGraphics.pose().pushMatrix();
             context.guiGraphics.pose().translate(-8, -8);
             context.guiGraphics.pose().scale(0.5F, 0.5F);
-            RenderSystem.enableBlend();
-            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            context.guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            context.guiGraphics.blit(this.imageLoc, 2 * (int)context.x, 2 * (int)context.y, 0, 0, 32, 32, 32, 32);
+            context.guiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.imageLoc, 2 * (int)context.x, 2 * (int)context.y, 0, 0, 32, 32, 32, 32, -1);
             context.guiGraphics.pose().popMatrix();
         }
     }

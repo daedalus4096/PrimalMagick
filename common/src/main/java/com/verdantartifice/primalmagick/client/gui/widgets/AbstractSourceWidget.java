@@ -1,14 +1,15 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.List;
@@ -46,12 +47,9 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         boolean discovered = this.source.isDiscovered(mc.player);
         
         // Draw the colored source icon
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.pose().scale(0.0625F, 0.0625F);
-        guiGraphics.blit(discovered ? this.source.getImage() : Source.getUnknownImage(), 0, 0, 0, 0, 255, 255);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, discovered ? this.source.getImage() : Source.getUnknownImage(), 0, 0, 32, 32);
         guiGraphics.pose().popMatrix();
         
         // Draw the amount string
@@ -70,13 +68,13 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
     }
     
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput output) {
     }
     
     protected String getAmountString() {
