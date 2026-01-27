@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.client.util;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Either;
@@ -18,6 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -37,7 +36,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -184,15 +182,10 @@ public class GuiUtils {
     }
     
     protected static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nonnull Identifier imageLoc, int amount, double z) {
-        // Preserve previous value for blend GL attribute
-        boolean isBlendOn = GL11.glIsEnabled(GL11.GL_BLEND);
-        
         Minecraft mc = Minecraft.getInstance();
         
         guiGraphics.pose().pushMatrix();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        
+
         guiGraphics.pose().pushMatrix();
         
         // Render the source's icon
@@ -218,10 +211,6 @@ public class GuiUtils {
             guiGraphics.pose().popMatrix();
         }
         
-        // Restore changed GL attributes
-        if (!isBlendOn) {
-            RenderSystem.disableBlend();
-        }
         guiGraphics.pose().popMatrix();
     }
     
@@ -274,8 +263,6 @@ public class GuiUtils {
     
     public static void renderIconFromDefinition(GuiGraphics guiGraphics, IconDefinition iconDef, int x, int y) {
         guiGraphics.pose().pushMatrix();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().translate(x, y);
         if (iconDef.isItem()) {
             GuiUtils.renderItemStack(guiGraphics, new ItemStack(iconDef.asItem()), 0, 0, null, true);
@@ -283,7 +270,7 @@ public class GuiUtils {
             GuiUtils.renderItemStack(guiGraphics, getTagDisplayStack(iconDef.asTagKey()), 0, 0, null, true);
         } else {
             guiGraphics.pose().scale(0.0625F, 0.0625F);
-            guiGraphics.blit(iconDef.getLocation(), 0, 0, 0, 0, 255, 255);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, iconDef.getLocation(), 0, 0, 0, 0, 255, 255, 256, 256);
         }
         guiGraphics.pose().popMatrix();
     }
