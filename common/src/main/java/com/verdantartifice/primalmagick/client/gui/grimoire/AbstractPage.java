@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
@@ -54,8 +52,6 @@ public abstract class AbstractPage implements GuiEventListener {
     }
     
     protected void renderTitle(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY, @Nullable Identifier icon) {
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft mc = Minecraft.getInstance();
         if (this.renderTopTitleBar()) {
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SEPARATOR_SPRITE, x + 10 + (side * 140), y + 18, 96, 5);   // Render the separator bar above the title text
@@ -77,7 +73,7 @@ public abstract class AbstractPage implements GuiEventListener {
             // Scale down the title text if necessary to make it fit on one line
             float scale = 124.0F / width;
             guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale), y + 25 + (1.0F * scale));
+            guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale), y + 25 + scale);
             guiGraphics.pose().scale(scale, scale);
             guiGraphics.drawString(mc.font, headerText, 0, 0, Color.BLACK.getRGB(), false);
             if (icon != null) {

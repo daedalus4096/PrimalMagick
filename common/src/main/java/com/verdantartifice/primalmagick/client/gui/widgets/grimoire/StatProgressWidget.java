@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -11,7 +9,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
@@ -55,8 +52,6 @@ public class StatProgressWidget extends AbstractWidget {
 
         // Render the icon
         pGuiGraphics.pose().pushMatrix();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         pGuiGraphics.pose().translate(this.getX(), this.getY());
         pGuiGraphics.pose().scale(0.0625F, 0.0625F);
         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.iconLoc, 0, 0, 32, 32);
@@ -94,9 +89,7 @@ public class StatProgressWidget extends AbstractWidget {
                 this.tooltip.append(CommonComponents.NEW_LINE);
                 this.tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             }
-        }, () -> {
-            this.tooltip.append(this.getStatDescription());
-        });
+        }, () -> this.tooltip.append(this.getStatDescription()));
         if (!this.lastTooltip.equals(this.tooltip)) {
             this.setTooltip(Tooltip.create(this.tooltip));
         }
