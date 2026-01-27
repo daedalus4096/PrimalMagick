@@ -12,16 +12,20 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public class ExpertiseProgressWidget extends AbstractWidget {
-    protected static final Identifier GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier COMPLETE = ResourceUtils.loc("grimoire/complete");
+    private static final Identifier PROGRESS_FG = ResourceUtils.loc("grimoire/progress_foreground");
+    private static final Identifier PROGRESS_BG = ResourceUtils.loc("grimoire/progress_background");
     
     protected final ResearchDisciplineKey disciplineKey;
     protected final ResearchTier tier;
@@ -42,7 +46,12 @@ public class ExpertiseProgressWidget extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    protected void renderWidget(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) {
+            return;
+        }
+
         // Render the icon
         this.tier.getIconDefinition().ifPresent(iconDef -> GuiUtils.renderIconFromDefinition(pGuiGraphics, iconDef, this.getX(), this.getY()));
         
@@ -50,38 +59,35 @@ public class ExpertiseProgressWidget extends AbstractWidget {
             // Render completion checkmark if appropriate
             pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(this.getX() + 8, this.getY());
-            pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
+            pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE, 0, 0, 10, 10);
             pGuiGraphics.pose().popMatrix();
         }
         
         // Draw progress bar background
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
-        pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 234, 16, 2);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_BG, 0, 0, 16, 2);
         pGuiGraphics.pose().popMatrix();
         
         // Draw progress bar foreground
         int px = this.getProgressionScaled();
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
-        pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 232, px, 2);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_FG, 0, 0, px, 2);
         pGuiGraphics.pose().popMatrix();
         
         // Prepare the tooltip
-        Minecraft mc = Minecraft.getInstance();
         this.lastTooltip = this.tooltip;
         this.tooltip = Component.empty();
-        ExpertiseManager.getStat(mc.player.level().registryAccess(), this.disciplineKey).flatMap(Stat::getHintTranslationKey).ifPresentOrElse(hintTranslationKey -> {
-            if (Screen.hasShiftDown()) {
+        ExpertiseManager.getStat(mc.player.registryAccess(), this.disciplineKey).flatMap(Stat::getHintTranslationKey).ifPresentOrElse(hintTranslationKey -> {
+            if (mc.hasShiftDown()) {
                 this.tooltip.append(Component.translatable(hintTranslationKey));
             } else {
                 this.tooltip.append(this.getStatDescription());
                 this.tooltip.append(CommonComponents.NEW_LINE);
                 this.tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             }
-        }, () -> {
-            this.tooltip.append(this.getStatDescription());
-        });
+        }, () -> this.tooltip.append(this.getStatDescription()));
         if (!this.lastTooltip.equals(this.tooltip)) {
             this.setTooltip(Tooltip.create(this.tooltip));
         }
@@ -89,26 +95,27 @@ public class ExpertiseProgressWidget extends AbstractWidget {
 
     protected Component getStatDescription() {
         Minecraft mc = Minecraft.getInstance();
-        Optional<Stat> statOpt = ExpertiseManager.getStat(mc.player.level().registryAccess(), this.disciplineKey);
-        if (statOpt.isPresent()) {
-            Stat stat = statOpt.get();
-            Component baseDescription = Component.translatable(stat.getTranslationKey());
-            String currentValue = stat.formatter().format(Math.min(this.currentValue, this.maxValue));
-            String maxValue = stat.formatter().format(this.maxValue);
-            return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
-        } else {
-            return Component.empty();
+        if (mc.player != null) {
+            Optional<Stat> statOpt = ExpertiseManager.getStat(mc.player.registryAccess(), this.disciplineKey);
+            if (statOpt.isPresent()) {
+                Stat stat = statOpt.get();
+                Component baseDescription = Component.translatable(stat.getTranslationKey());
+                String currentValue = stat.formatter().format(Math.min(this.currentValue, this.maxValue));
+                String maxValue = stat.formatter().format(this.maxValue);
+                return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
+            }
         }
+        return Component.empty();
     }
     
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput output) {
     }
 
     protected int getProgressionScaled() {
