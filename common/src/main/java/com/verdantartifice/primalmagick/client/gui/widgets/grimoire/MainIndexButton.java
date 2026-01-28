@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * GUI button to go to the main index in the grimoire.
@@ -27,7 +28,7 @@ public class MainIndexButton extends Button {
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderContents(@NotNull GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Do nothing
     }
 
@@ -38,7 +39,7 @@ public class MainIndexButton extends Button {
 
     private static class Handler implements OnPress {
         @Override
-        public void onPress(Button button) {
+        public void onPress(@NotNull Button button) {
             if (button instanceof MainIndexButton indexButton) {
                 // Set the new grimoire topic and open a new screen for it
                 indexButton.getScreen().gotoTopic(MainIndexResearchTopic.INSTANCE, false);

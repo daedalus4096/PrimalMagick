@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
@@ -15,7 +14,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +36,8 @@ public class AffinityRecordWidget extends AbstractTopicButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.renderWidget(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+    public void renderContents(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.renderContents(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 
         // Draw the relevant affinity rating where the stack count would normally be
         Minecraft mc = Minecraft.getInstance();

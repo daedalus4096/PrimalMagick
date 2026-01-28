@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -34,7 +35,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(@NotNull GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw time-selected stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
         ItemStack toDisplay = this.getStackToDisplay();

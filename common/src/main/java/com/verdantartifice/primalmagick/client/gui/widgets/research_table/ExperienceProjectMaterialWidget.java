@@ -1,11 +1,12 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ExperienceProjectMaterial;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.level.block.Block;
 
 import java.awt.Color;
@@ -34,16 +35,11 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         int uMin = (textureIndex % 4 * 16) * 4;
         int vMin = (textureIndex / 4 * 16) * 4;
         double approxTicks = (System.currentTimeMillis() / 50.0D);
-        float r = (float)(Math.sin(approxTicks) + 1.0F) * 0.5F;
-        float g = 1.0F;
-        float b = (float)(Math.sin(approxTicks + 4.1887903F) + 1.0F) * 0.1F;
-        float a = 0.5F;
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY());
         guiGraphics.pose().scale(0.25F, 0.25F);
-        RenderSystem.setShaderColor(r, g, b, a);
-        guiGraphics.blit(EXPERIENCE_ORB_TEXTURES, 0, 0, uMin, vMin, 63, 63);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        int color = ARGB.colorFromFloat(0.5F, (float)(Math.sin(approxTicks) + 1.0F) * 0.5F, 1F, (float)(Math.sin(approxTicks + 4.1887903F) + 1.0F) * 0.1F);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, EXPERIENCE_ORB_TEXTURES, 0, 0, uMin, vMin, 63, 63, 64, 64, color);
         guiGraphics.pose().popMatrix();
 
         // If applicable, draw level count string

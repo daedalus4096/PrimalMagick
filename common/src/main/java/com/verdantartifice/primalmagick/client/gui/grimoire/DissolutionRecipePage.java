@@ -55,7 +55,7 @@ public class DissolutionRecipePage extends AbstractRecipePage {
         screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe.value(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
 
         // Render ingredient stacks
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().getIngredients().get(0), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 27, screen));
+        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().placementInfo().ingredients().getFirst(), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 27, screen));
     }
 
     @Override

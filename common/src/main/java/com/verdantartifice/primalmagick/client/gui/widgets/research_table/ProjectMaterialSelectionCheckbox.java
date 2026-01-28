@@ -4,8 +4,10 @@ import com.verdantartifice.primalmagick.client.gui.ResearchTableScreen;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * GUI button to select or deselect a project material in the research table screen.
@@ -36,16 +38,15 @@ public class ProjectMaterialSelectionCheckbox extends Button {
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        guiGraphics.blit(TEXTURE, this.getX(), this.getY(), this.selected ? 16 : 0, this.isHoveredOrFocused() ? 16 : 0, this.width, this.height);
+    public void renderContents(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.getX(), this.getY(), this.selected ? 16 : 0, this.isHoveredOrFocused() ? 16 : 0, this.width, this.height, 256, 256);
     }
     
     protected static class Handler implements OnPress {
         @Override
-        public void onPress(Button button) {
-            if (button instanceof ProjectMaterialSelectionCheckbox) {
-                ProjectMaterialSelectionCheckbox pmsc = (ProjectMaterialSelectionCheckbox)button;
-                pmsc.setSelected(!pmsc.isSelected());
+        public void onPress(@NotNull Button button) {
+            if (button instanceof ProjectMaterialSelectionCheckbox checkbox) {
+                checkbox.setSelected(!checkbox.isSelected());
             }
         }
     }

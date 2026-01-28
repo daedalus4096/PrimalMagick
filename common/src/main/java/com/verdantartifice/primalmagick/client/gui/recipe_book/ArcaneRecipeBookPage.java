@@ -135,7 +135,7 @@ public class ArcaneRecipeBookPage {
     
     public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.mc.screen != null && this.hoveredButton != null && !this.overlay.isVisible()) {
-            Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, this.mc.font, this.hoveredButton.getTooltipText(this.mc.screen),
+            Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, this.mc.font, this.hoveredButton.getTooltipText(),
                     mouseX, mouseY, this.hoveredButton.getRecipe().value().getResultItem(this.mc.level.registryAccess()));
         }
     }
