@@ -52,9 +52,7 @@ public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<Scrib
         protected static final Component TRANSCRIBE_BUTTON_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.button.transcribe");
 
         public TranscribeButton(ScribeTranscribeWorksMenu menu, int leftPos, int topPos) {
-            super(leftPos + 91, topPos + 62, 20, 18, BUTTON_SPRITES, button -> {
-                PacketHandler.sendToServer(new TranscribeActionPacket(menu.containerId));
-            });
+            super(leftPos + 91, topPos + 62, 20, 18, BUTTON_SPRITES, button -> PacketHandler.sendToServer(new TranscribeActionPacket(menu.containerId)));
             this.setTooltip(Tooltip.create(TRANSCRIBE_BUTTON_TOOLTIP));
         }
     }

@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.gui.widgets.VocabularyWidget;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
@@ -16,9 +13,10 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
-import net.minecraft.client.model.BookModel;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.model.object.book.BookModel;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -31,6 +29,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,24 +94,24 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     }
 
     @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
         int slotLeft = this.leftPos + 60;
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int slotTop = this.topPos + 42 + (19 * slotIndex);
-            double dx = pMouseX - (double)slotLeft;
-            double dy = pMouseY - (double)slotTop;
+            double dx = event.x() - (double)slotLeft;
+            double dy = event.y() - (double)slotTop;
             if (dx >= 0 && dy >= 0 && dx < 108 && dy < 19 && this.menu.checkStudyClick(this.minecraft.player, slotIndex)) {
                 PacketHandler.sendToServer(new StudyVocabularyActionPacket(this.menu.containerId, slotIndex));
                 return true;
             }
         }
-        return super.mouseClicked(pMouseX, pMouseY, pButton);
+        return super.mouseClicked(event, isDoubleClick);
     }
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
-        this.renderBook(pGuiGraphics, this.leftPos, this.topPos, pPartialTick);
+        this.renderBook(pGuiGraphics, this.leftPos, this.topPos);
         EnchantmentNames.getInstance().initSeed(this.menu.getNameSeed());
         Holder.Reference<BookLanguage> activeLanguage = this.menu.getBookLanguage();
         
@@ -144,34 +143,34 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
             int textColor = 6839882;
             int textWidth = 86;
             if (cost <= 0) {
-                pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
+                pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
                 if (cost < 0) {
                     // The drawCenteredString method doesn't have an option to omit the drop shadow, alas, so we do it manually
                     Component text = Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.already_studied");
                     pGuiGraphics.drawString(this.font, text, slotLeft + 54 - this.font.width(text) / 2, slotTop + 5, (textColor & 16711422) >> 1, false);
                 }
-            } else {
+            } else if (this.minecraft.player != null) {
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
                 FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.value().style()), textWidth, Style.EMPTY);
                 int levelCount = this.menu.levelCostClues[slotIndex];
                 if (!this.minecraft.player.getAbilities().instabuild && (this.minecraft.player.experienceLevel < minLevels || !PlayerUtils.canAffordXp(this.minecraft.player, cost))) {
-                    pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
+                    pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
                     if (levelCount > 0 && levelCount <= DISABLED_LEVEL_SPRITES.length) {
-                        pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
+                        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, DISABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
                     }
                     pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, (textColor & 16711422) >> 1);
                 } else {
                     // Highlight all non-disabled slots up to and including the hovered slot
                     if (slotIndex <= hoveredSlotIndex) {
-                        pGuiGraphics.blitSprite(SLOT_HIGHLIGHTED_SPRITE, slotLeft, slotTop, 108, 19);
+                        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHTED_SPRITE, slotLeft, slotTop, 108, 19);
                         textColor = 16777088;
                     } else {
-                        pGuiGraphics.blitSprite(SLOT_SPRITE, slotLeft, slotTop, 108, 19);
+                        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_SPRITE, slotLeft, slotTop, 108, 19);
                     }
 
                     // Render a level cost indicator for the number of full or partial levels that will be deducted
                     if (levelCount > 0 && levelCount <= ENABLED_LEVEL_SPRITES.length) {
-                        pGuiGraphics.blitSprite(ENABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
+                        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
                     }
 
                     pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, textColor);
@@ -188,12 +187,12 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     }
 
     @Override
-    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int cost = this.menu.costs[slotIndex];
             int minLevels = this.menu.minLevels[slotIndex];
-            if (this.isHovering(60, 42 + 19 * slotIndex, 108, 17, (double)pMouseX, (double)pMouseY) && cost > 0) {
+            if (this.isHovering(60, 42 + 19 * slotIndex, 108, 17, pMouseX, pMouseY) && cost > 0) {
                 // Determine how many vocabulary levels are awarded by the slot, if any
                 int studyDelta = 0;
                 for (int costIndex = 0; costIndex <= slotIndex && costIndex < this.menu.costs.length; costIndex++) {
@@ -202,7 +201,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     }
                 }
 
-                if (studyDelta > 0) {
+                if (studyDelta > 0 && this.minecraft.player != null) {
                     Holder.Reference<BookLanguage> activeLanguage = this.menu.getBookLanguage();
                     List<Component> tooltips = new ArrayList<>();
                     
@@ -234,34 +233,18 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     }
                     
                     // Render the output tooltip lines
-                    pGuiGraphics.renderComponentTooltip(this.font, tooltips, pMouseX, pMouseY);
+                    pGuiGraphics.setComponentTooltipForNextFrame(this.font, tooltips, pMouseX, pMouseY);
                     break;
                 }
             }
         }
     }
 
-    private void renderBook(GuiGraphics pGuiGraphics, int pX, int pY, float pPartialTick) {
+    private void renderBook(GuiGraphics pGuiGraphics, int pX, int pY) {
+        float pPartialTick = this.minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(false);
         float f = Mth.lerp(pPartialTick, this.oOpen, this.open);
         float f1 = Mth.lerp(pPartialTick, this.oFlip, this.flip);
-        Lighting.setupForEntityInInventory();
-        pGuiGraphics.pose().pushMatrix();
-        pGuiGraphics.pose().translate((float)pX + 33.0F, (float)pY + 59.0F);
-        float f2 = 40.0F;
-        pGuiGraphics.pose().scale(-f2, f2);
-        pGuiGraphics.pose().mulPose(Axis.XP.rotationDegrees(25.0F));
-        pGuiGraphics.pose().translate((1.0F - f) * 0.2F, (1.0F - f) * 0.1F);
-        float f3 = -(1.0F - f) * 90.0F - 90.0F;
-        pGuiGraphics.pose().mulPose(Axis.YP.rotationDegrees(f3));
-        pGuiGraphics.pose().mulPose(Axis.XP.rotationDegrees(180.0F));
-        float f4 = Mth.clamp(Mth.frac(f1 + 0.25F) * 1.6F - 0.3F, 0.0F, 1.0F);
-        float f5 = Mth.clamp(Mth.frac(f1 + 0.75F) * 1.6F - 0.3F, 0.0F, 1.0F);
-        this.bookModel.setupAnim(0.0F, f4, f5, f);
-        VertexConsumer vertexconsumer = pGuiGraphics.bufferSource().getBuffer(this.bookModel.renderType(ENCHANTING_BOOK_LOCATION));
-        this.bookModel.renderToBuffer(pGuiGraphics.pose(), vertexconsumer, 15728880, OverlayTexture.NO_OVERLAY, -1);
-        pGuiGraphics.flush();
-        pGuiGraphics.pose().popMatrix();
-        Lighting.setupFor3DItems();
+        pGuiGraphics.submitBookModelRenderState(this.bookModel, ENCHANTING_BOOK_LOCATION, 40.0F, f, f1, pX + 14, pY + 14, pX + 52, pY + 45);
     }
     
     public void tickBook() {
@@ -282,6 +265,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         for (int i = 0; i < 3; ++i) {
             if (this.menu.costs[i] != 0) {
                 flag = true;
+                break;
             }
         }
 
