@@ -222,7 +222,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // Generate miscellaneous items
         itemModels.generateFlatItem(ItemsPM.GRIMOIRE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.CREATIVE_GRIMOIRE.get(), ModelTemplates.FLAT_ITEM);
-        // TODO Generate arancometer
+        // TODO Generate arcanometer
         itemModels.generateFlatItem(ItemsPM.MAGNIFYING_GLASS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.ALCHEMICAL_WASTE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.BLOODY_FLESH.get(), ModelTemplates.FLAT_ITEM);
@@ -414,7 +414,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     private void addSlotStateAndRotationVariants(Block block, BlockModelGenerators blockModels, MultiPartGenerator generator, Condition condition, VariantMutator rotation) {
-        List.of(Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_0_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_TOP_LEFT), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_1_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_TOP_MID), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_2_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_TOP_RIGHT), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_3_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_BOTTOM_LEFT), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_4_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_BOTTOM_MID), Pair.of(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_5_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_BOTTOM_RIGHT)).forEach((pair) -> {
+        List.of(Pair.of(BlockStateProperties.SLOT_0_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_TOP_LEFT), Pair.of(BlockStateProperties.SLOT_1_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_TOP_MID), Pair.of(BlockStateProperties.SLOT_2_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_TOP_RIGHT), Pair.of(BlockStateProperties.SLOT_3_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_BOTTOM_LEFT), Pair.of(BlockStateProperties.SLOT_4_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_BOTTOM_MID), Pair.of(BlockStateProperties.SLOT_5_OCCUPIED, ModelTemplates.CHISELED_BOOKSHELF_SLOT_BOTTOM_RIGHT)).forEach((pair) -> {
             BooleanProperty booleanproperty = pair.getFirst();
             ModelTemplate modeltemplate = pair.getSecond();
             this.addBookSlotModel(block, blockModels, generator, condition, rotation, booleanproperty, modeltemplate, true);
