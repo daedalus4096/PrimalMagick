@@ -36,7 +36,6 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
-import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.client.renderer.block.model.multipart.CombinedCondition;
 import net.minecraft.client.renderer.block.model.multipart.Condition;
@@ -46,7 +45,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -91,6 +89,8 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createCarvedBookshelf(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get(), blockModels);
 
         // TODO Generate sunwood blocks
+        this.phasingWoodProvider(BlocksPM.SUNWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.SUNWOOD_LOG.get()).wood(BlocksPM.SUNWOOD_WOOD.get());
+
         // TODO Generate moonwood blocks
         // TODO Generate hallowood blocks
         // TODO Generate crop blocks
@@ -385,12 +385,9 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     private void generatePillarBlock(Block block, BlockModelGenerators blockModels) {
-        Variant baseVariant = new Variant(TexturedModelsPM.PILLAR.create(block, blockModels.modelOutput));
-        MultiVariant baseMultiVariant = new MultiVariant(WeightedList.of(baseVariant));
-        Variant bottomVariant = new Variant(TexturedModelsPM.PILLAR_BOTTOM.create(block, blockModels.modelOutput));
-        MultiVariant bottomMultiVariant = new MultiVariant(WeightedList.of(bottomVariant));
-        Variant topVariant = new Variant(TexturedModelsPM.PILLAR_TOP.create(block, blockModels.modelOutput));
-        MultiVariant topMultiVariant = new MultiVariant(WeightedList.of(topVariant));
+        MultiVariant baseMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR.create(block, blockModels.modelOutput));
+        MultiVariant bottomMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR_BOTTOM.create(block, blockModels.modelOutput));
+        MultiVariant topMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR_TOP.create(block, blockModels.modelOutput));
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                 .with(PropertyDispatch.initial(PillarBlock.PROPERTY_TYPE)
                         .select(PillarBlock.Type.BASE, baseMultiVariant)
@@ -424,9 +421,13 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     private void addBookSlotModel(Block block, BlockModelGenerators blockModels, MultiPartGenerator generator, Condition condition, VariantMutator rotation, BooleanProperty hasBookProperty, ModelTemplate template, boolean hasBook) {
         String suffix = hasBook ? "_occupied" : "_empty";
-        TextureMapping texturemapping = (new TextureMapping()).put(TextureSlot.TEXTURE, TextureMapping.getBlockTexture(block, suffix));
+        TextureMapping texturemapping = new TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getBlockTexture(block, suffix));
         BlockModelGenerators.BookSlotModelCacheKey blockmodelgenerators$bookslotmodelcachekey = new BlockModelGenerators.BookSlotModelCacheKey(template, suffix);
         MultiVariant multivariant = BlockModelGenerators.plainVariant(BlockModelGenerators.CHISELED_BOOKSHELF_SLOT_MODEL_CACHE.computeIfAbsent(blockmodelgenerators$bookslotmodelcachekey, (cacheKey) -> template.createWithSuffix(Blocks.CHISELED_BOOKSHELF, suffix, texturemapping, blockModels.modelOutput)));
         generator.with(new CombinedCondition(CombinedCondition.Operation.AND, List.of(condition, BlockModelGenerators.condition().term(hasBookProperty, hasBook).build())), multivariant.with(rotation));
+    }
+
+    private PhasingWoodProvider phasingWoodProvider(Block block, BlockModelGenerators blockModels) {
+        return new PhasingWoodProvider(PhasingTextureMapping.logColumn(block), blockModels);
     }
 }

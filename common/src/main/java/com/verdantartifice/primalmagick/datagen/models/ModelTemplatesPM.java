@@ -20,12 +20,4 @@ public class ModelTemplatesPM {
     public static ModelTemplate createItem(String name, TextureSlot... requiredSlots) {
         return new ModelTemplate(Optional.of(ResourceUtils.loc(name).withPrefix("item/")), Optional.empty(), requiredSlots);
     }
-
-    public static ModelTemplate createBlock(String name, String suffix, TextureSlot... requiredSlots) {
-        return new ModelTemplate(Optional.of(ResourceUtils.loc(name).withPrefix("block/")), Optional.empty(), requiredSlots);
-    }
-
-    public static ModelTemplate createItem(String name, String suffix, TextureSlot... requiredSlots) {
-        return new ModelTemplate(Optional.of(ResourceUtils.loc(name).withPrefix("item/")), Optional.empty(), requiredSlots);
-    }
 }
