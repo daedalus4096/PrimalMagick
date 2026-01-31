@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.platform.services.IItemStackService;
 import com.verdantartifice.primalmagick.platform.services.ILevelService;
 import com.verdantartifice.primalmagick.platform.services.IMenuService;
 import com.verdantartifice.primalmagick.platform.services.IModelResourceLocationService;
+import com.verdantartifice.primalmagick.platform.services.IModelTemplateService;
 import com.verdantartifice.primalmagick.platform.services.INetworkService;
 import com.verdantartifice.primalmagick.platform.services.IPartEntityService;
 import com.verdantartifice.primalmagick.platform.services.IParticleService;
@@ -111,6 +112,7 @@ public class Services {
     public static final IFluidService FLUIDS = load(IFluidService.class);
     public static final IFluidHandlerService FLUID_HANDLERS = load(IFluidHandlerService.class);
     public static final IBlockPrototypeService BLOCK_PROTOTYPES = load(IBlockPrototypeService.class);
+    public static final IModelTemplateService MODEL_TEMPLATES = load(IModelTemplateService.class);
 
     // Registry services
     public static final IBlockRegistryService BLOCKS_REGISTRY = load(IBlockRegistryService.class);
