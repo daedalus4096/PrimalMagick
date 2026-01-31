@@ -90,9 +90,16 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
         // TODO Generate sunwood blocks
         this.phasingWoodProvider(BlocksPM.SUNWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.SUNWOOD_LOG.get()).wood(BlocksPM.SUNWOOD_WOOD.get());
+        this.phasingWoodProvider(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.STRIPPED_SUNWOOD_LOG.get()).wood(BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
 
         // TODO Generate moonwood blocks
+        this.phasingWoodProvider(BlocksPM.MOONWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.MOONWOOD_LOG.get()).wood(BlocksPM.MOONWOOD_WOOD.get());
+        this.phasingWoodProvider(BlocksPM.STRIPPED_MOONWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.STRIPPED_MOONWOOD_LOG.get()).wood(BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
+
         // TODO Generate hallowood blocks
+        blockModels.woodProvider(BlocksPM.HALLOWOOD_LOG.get()).logWithHorizontal(BlocksPM.HALLOWOOD_LOG.get()).wood(BlocksPM.HALLOWOOD_WOOD.get());
+        blockModels.woodProvider(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()).logWithHorizontal(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()).wood(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get());
+
         // TODO Generate crop blocks
         // TODO Generate infused stone blocks
         // TODO Generate budding gem blocks
