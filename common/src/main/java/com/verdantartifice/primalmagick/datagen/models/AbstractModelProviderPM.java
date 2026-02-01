@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.items.EquipmentAssetsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
@@ -21,6 +22,7 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.color.item.Constant;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -53,12 +55,17 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
+    private static final Identifier SOLID_RENDER_TYPE = Identifier.withDefaultNamespace("solid");
+    private static final Identifier CUTOUT_RENDER_TYPE = Identifier.withDefaultNamespace("cutout");
+    private static final Identifier TRANSLUCENT_RENDER_TYPE = Identifier.withDefaultNamespace("translucent");
+
     public AbstractModelProviderPM(PackOutput output) {
         super(output);
     }
@@ -91,14 +98,17 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // TODO Generate sunwood blocks
         this.phasingWoodProvider(BlocksPM.SUNWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.SUNWOOD_LOG.get()).wood(BlocksPM.SUNWOOD_WOOD.get());
         this.phasingWoodProvider(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.STRIPPED_SUNWOOD_LOG.get()).wood(BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
+        this.createPhasingLeaves(BlocksPM.SUNWOOD_LEAVES.get(), blockModels);
 
         // TODO Generate moonwood blocks
         this.phasingWoodProvider(BlocksPM.MOONWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.MOONWOOD_LOG.get()).wood(BlocksPM.MOONWOOD_WOOD.get());
         this.phasingWoodProvider(BlocksPM.STRIPPED_MOONWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.STRIPPED_MOONWOOD_LOG.get()).wood(BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
+        this.createPhasingLeaves(BlocksPM.MOONWOOD_LEAVES.get(), blockModels);
 
         // TODO Generate hallowood blocks
         blockModels.woodProvider(BlocksPM.HALLOWOOD_LOG.get()).logWithHorizontal(BlocksPM.HALLOWOOD_LOG.get()).wood(BlocksPM.HALLOWOOD_WOOD.get());
         blockModels.woodProvider(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()).logWithHorizontal(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()).wood(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get());
+        blockModels.createTrivialBlock(BlocksPM.HALLOWOOD_LEAVES.get(), TexturedModel.LEAVES);
 
         // TODO Generate crop blocks
         // TODO Generate infused stone blocks
@@ -436,5 +446,18 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     private PhasingWoodProvider phasingWoodProvider(Block block, BlockModelGenerators blockModels) {
         return new PhasingWoodProvider(PhasingTextureMapping.logColumn(block), blockModels);
+    }
+
+    private void createPhasingLeaves(Block block, BlockModelGenerators blockModels) {
+        PhasingTextureMapping leavesMapping = PhasingTextureMapping.leaves(block);
+        Arrays.stream(TimePhase.values()).forEach(phase -> {
+            Identifier modelId = Services.MODEL_TEMPLATES.extend(ModelTemplates.LEAVES)
+                    .withRenderType(phase == TimePhase.FULL ? CUTOUT_RENDER_TYPE : TRANSLUCENT_RENDER_TYPE)
+                    .createWithSuffix(block, "_" + phase, leavesMapping.resolve(phase), blockModels.modelOutput);
+            blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(modelId)));
+            if (phase == TimePhase.FULL) {
+                blockModels.registerSimpleItemModel(block, modelId);
+            }
+        });
     }
 }

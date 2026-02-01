@@ -71,4 +71,9 @@ public class PhasingTextureMapping {
                 .put(TextureSlot.END, phase -> TextureMapping.getBlockTexture(block, "_top_" + phase))
                 .put(TextureSlot.PARTICLE, phase -> TextureMapping.getBlockTexture(block, "_" + phase));
     }
+
+    public static PhasingTextureMapping leaves(Block block) {
+        return new PhasingTextureMapping()
+                .put(TextureSlot.ALL, phase -> TextureMapping.getBlockTexture(block, "_" + phase));
+    }
 }

@@ -4,6 +4,7 @@ import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public abstract class AbstractModelTemplateExtender implements IModelTemplateExtender {
     protected final ModelTemplate modelTemplate;
@@ -39,6 +41,21 @@ public abstract class AbstractModelTemplateExtender implements IModelTemplateExt
     @Override
     public Identifier createWithOverride(@NotNull Block pBlock, @NotNull String pSuffix, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput) {
         return this.createInner(ModelLocationUtils.getModelLocation(pBlock, pSuffix), pTextureMapping, pOutput);
+    }
+
+    @Override
+    public Identifier create(@NotNull Block pBlock, @NotNull Function<Block, TextureMapping> pTextureMappingGetter, @NotNull BiConsumer<Identifier, ModelInstance> pOutput) {
+        return this.create(pBlock, pTextureMappingGetter.apply(pBlock), pOutput);
+    }
+
+    @Override
+    public Identifier createWithSuffix(@NotNull Block pBlock, @NotNull String pSuffix, @NotNull Function<Block, TextureMapping> pTextureMappingGetter, @NotNull BiConsumer<Identifier, ModelInstance> pOutput) {
+        return this.createWithSuffix(pBlock, pSuffix, pTextureMappingGetter.apply(pBlock), pOutput);
+    }
+
+    @Override
+    public Identifier createWithOverride(@NotNull Block pBlock, @NotNull String pSuffix, @NotNull Function<Block, TextureMapping> pTextureMappingGetter, @NotNull BiConsumer<Identifier, ModelInstance> pOutput) {
+        return this.createWithOverride(pBlock, pSuffix, pTextureMappingGetter.apply(pBlock), pOutput);
     }
 
     @Override
