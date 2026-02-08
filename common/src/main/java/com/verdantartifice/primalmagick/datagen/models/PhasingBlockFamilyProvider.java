@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.models;
 
+import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -9,7 +10,6 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,13 +20,14 @@ public class PhasingBlockFamilyProvider {
     private static final Identifier SOLID_RENDER_TYPE = AbstractModelProviderPM.SOLID_RENDER_TYPE;
     private static final Identifier TRANSLUCENT_RENDER_TYPE = AbstractModelProviderPM.TRANSLUCENT_RENDER_TYPE;
 
-    private static final Map<BlockFamily.Variant, BiConsumer<PhasingBlockFamilyProvider, Block>> SHAPE_CONSUMERS;
+    private static final Map<BlockFamily.Variant, BiConsumer<PhasingBlockFamilyProvider, Block>> SHAPE_CONSUMERS = ImmutableMap.<BlockFamily.Variant, BiConsumer<PhasingBlockFamilyProvider, Block>>builder()
+            .put(BlockFamily.Variant.SLAB, PhasingBlockFamilyProvider::slab)
+            .put(BlockFamily.Variant.STAIRS, PhasingBlockFamilyProvider::stairs)
+            .build();
 
     private final PhasingTextureMapping mapping;
     private final BlockModelGenerators blockModelGenerators;
-    private final Map<ModelTemplate, Identifier> models = new HashMap<>();
     private final Map<TimePhase, MultiVariant> fullBlockVariants = new HashMap<>();
-    private @Nullable BlockFamily family;
 
     public PhasingBlockFamilyProvider(PhasingTextureMapping mapping, BlockModelGenerators blockModelGenerators) {
         this.mapping = mapping;
@@ -35,7 +36,7 @@ public class PhasingBlockFamilyProvider {
 
     public PhasingBlockFamilyProvider fullBlock(Block block, ModelTemplate modelTemplate) {
         Arrays.stream(TimePhase.values()).forEach(phase -> {
-            Identifier modelId = this.createExtendedModel(block, ModelTemplates.CUBE_ALL, phase);
+            Identifier modelId = this.createExtendedModel(block, modelTemplate, phase);
             MultiVariant multiVariant = BlockModelGenerators.plainVariant(modelId);
             this.fullBlockVariants.put(phase, multiVariant);
             this.blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, multiVariant));
@@ -53,7 +54,7 @@ public class PhasingBlockFamilyProvider {
             } else {
                 Identifier bottomModelId = this.createExtendedModel(block, ModelTemplates.SLAB_BOTTOM, phase);
                 Identifier topModelId = this.createExtendedModel(block, ModelTemplates.SLAB_TOP, phase);
-                this.blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSlab(block, BlockModelGenerators.plainVariant(bottomModelId), BlockModelGenerators.plainVariant(topModelId), this.fullBlock));
+                this.blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSlab(block, BlockModelGenerators.plainVariant(bottomModelId), BlockModelGenerators.plainVariant(topModelId), this.fullBlockVariants.get(phase)));
                 if (phase == TimePhase.FULL) {
                     this.blockModelGenerators.registerSimpleItemModel(block, bottomModelId);
                 }
@@ -82,9 +83,11 @@ public class PhasingBlockFamilyProvider {
     }
 
     public PhasingBlockFamilyProvider generateFor(BlockFamily family) {
-        this.family = family;
         family.getVariants().forEach((variant, block) -> {
-
+            BiConsumer<PhasingBlockFamilyProvider, Block> consumer = SHAPE_CONSUMERS.get(variant);
+            if (consumer != null) {
+                consumer.accept(this, block);
+            }
         });
         return this;
     }

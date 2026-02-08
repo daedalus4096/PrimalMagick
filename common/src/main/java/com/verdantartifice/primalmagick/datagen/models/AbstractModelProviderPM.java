@@ -60,6 +60,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
     static final Identifier SOLID_RENDER_TYPE = Identifier.withDefaultNamespace("solid");
@@ -72,7 +73,9 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     protected void executeBlockModelGenerators(BlockModelGenerators blockModels) {
         // Generate models for defined block families
-        BlockFamiliesPM.getAllFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> blockModels.family(family.getBaseBlock()).generateFor(family));
+        BlockFamiliesPM.getStandardFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> blockModels.family(family.getBaseBlock()).generateFor(family));
+        // TODO Map texture mappings to phasing families
+        BlockFamiliesPM.getPhasingFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> this.phasingFamily(family.getBaseBlock(), null, blockModels));
 
         // Generate non-family marble blocks
         this.generatePillarBlock(BlocksPM.MARBLE_PILLAR.get(), blockModels);
@@ -449,6 +452,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     private PhasingWoodProvider phasingWoodProvider(Block block, BlockModelGenerators blockModels) {
         return new PhasingWoodProvider(PhasingTextureMapping.logColumn(block), blockModels);
+    }
+
+    private PhasingBlockFamilyProvider phasingFamily(Block block, Function<Block, PhasingTextureMapping> textureMapping, BlockModelGenerators blockModels) {
+        return new PhasingBlockFamilyProvider(textureMapping.apply(block), blockModels).fullBlock(block, ModelTemplates.CUBE);
     }
 
     private void createPhasingLeaves(Block block, BlockModelGenerators blockModels) {
