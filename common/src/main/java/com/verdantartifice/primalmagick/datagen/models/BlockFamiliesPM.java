@@ -57,6 +57,10 @@ public class BlockFamiliesPM {
             .stairs(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
             .wall(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get())
             .getFamily();
+    public static final  BlockFamily HALLOWOOD_PLANKS = familyBuilder(BlocksPM.HALLOWOOD_PLANKS.get())
+            .slab(BlocksPM.HALLOWOOD_SLAB.get())
+            .stairs(BlocksPM.HALLOWOOD_STAIRS.get())
+            .getFamily();
 
     private static BlockFamily.Builder familyBuilder(Block pBaseBlock) {
         BlockFamily.Builder builder = new BlockFamily.Builder(pBaseBlock);
