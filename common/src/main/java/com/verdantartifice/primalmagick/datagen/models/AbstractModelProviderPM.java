@@ -62,9 +62,9 @@ import java.util.Map;
 import java.util.Optional;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
-    private static final Identifier SOLID_RENDER_TYPE = Identifier.withDefaultNamespace("solid");
-    private static final Identifier CUTOUT_RENDER_TYPE = Identifier.withDefaultNamespace("cutout");
-    private static final Identifier TRANSLUCENT_RENDER_TYPE = Identifier.withDefaultNamespace("translucent");
+    static final Identifier SOLID_RENDER_TYPE = Identifier.withDefaultNamespace("solid");
+    static final Identifier CUTOUT_RENDER_TYPE = Identifier.withDefaultNamespace("cutout");
+    static final Identifier TRANSLUCENT_RENDER_TYPE = Identifier.withDefaultNamespace("translucent");
 
     public AbstractModelProviderPM(PackOutput output) {
         super(output);

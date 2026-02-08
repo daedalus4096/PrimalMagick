@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.Block;
 import java.util.Arrays;
 
 public class PhasingWoodProvider {
-    private static final Identifier SOLID_RENDER_TYPE = Identifier.withDefaultNamespace("solid");
-    private static final Identifier TRANSLUCENT_RENDER_TYPE = Identifier.withDefaultNamespace("translucent");
+    private static final Identifier SOLID_RENDER_TYPE = AbstractModelProviderPM.SOLID_RENDER_TYPE;
+    private static final Identifier TRANSLUCENT_RENDER_TYPE = AbstractModelProviderPM.TRANSLUCENT_RENDER_TYPE;
 
     private final PhasingTextureMapping logMapping;
     private final BlockModelGenerators blockModelGenerators;
