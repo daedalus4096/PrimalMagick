@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:earth": 5,
-    "primalmagick:infernal": 5
-  },
-  "target": "minecraft:obsidian"
-}

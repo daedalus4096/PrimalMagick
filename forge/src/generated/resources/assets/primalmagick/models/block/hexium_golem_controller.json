@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "front": "primalmagick:block/hexium_golem_controller_front",
-    "side": "primalmagick:block/hexium_golem_controller_side",
-    "top": "primalmagick:block/hexium_block"
-  }
-}

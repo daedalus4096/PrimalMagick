@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:sea": 1
-  },
-  "base": "minecraft:stone",
-  "target": "primalmagick:infused_stone_sea"
-}

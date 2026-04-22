@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:earth": 7,
-    "primalmagick:sun": 22
-  },
-  "target": "minecraft:lantern"
-}

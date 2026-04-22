@@ -1,9 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "primalmagick:pixie_grand_hallowed",
-  "values": {
-    "primalmagick:blood": 5,
-    "primalmagick:hallowed": 10,
-    "primalmagick:sky": 10
-  }
-}

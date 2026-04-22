@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "primalmagick:block/large_synthetic_emerald_bud"
-  }
-}

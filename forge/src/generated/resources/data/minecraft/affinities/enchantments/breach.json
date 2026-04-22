@@ -1,7 +1,0 @@
-{
-  "type": "enchantment_bonus",
-  "multiplier": {
-    "primalmagick:earth": 1
-  },
-  "target": "minecraft:breach"
-}

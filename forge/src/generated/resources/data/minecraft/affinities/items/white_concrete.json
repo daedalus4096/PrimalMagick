@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:sea": 1
-  },
-  "base": "minecraft:white_concrete_powder",
-  "target": "minecraft:white_concrete"
-}

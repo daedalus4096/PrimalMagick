@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:earth": 34,
-    "primalmagick:sky": 34
-  },
-  "target": "minecraft:chainmail_leggings"
-}

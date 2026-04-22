@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:sun": 5
-  },
-  "base": "minecraft:dead_brain_coral",
-  "target": "minecraft:brain_coral"
-}

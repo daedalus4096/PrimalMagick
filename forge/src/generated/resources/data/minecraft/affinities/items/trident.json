@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:earth": 15,
-    "primalmagick:sea": 25
-  },
-  "target": "minecraft:trident"
-}

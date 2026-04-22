@@ -1,8 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "minecraft:guardian",
-  "values": {
-    "primalmagick:blood": 10,
-    "primalmagick:sea": 10
-  }
-}

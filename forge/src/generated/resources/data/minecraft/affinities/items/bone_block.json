@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:blood": 20,
-    "primalmagick:moon": 10
-  },
-  "target": "minecraft:bone_block"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "minecraft:cow",
-  "values": {
-    "primalmagick:blood": 10
-  }
-}
