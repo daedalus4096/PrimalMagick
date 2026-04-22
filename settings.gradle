@@ -25,21 +25,6 @@ pluginManagement {
                 includeGroupAndSubgroups("org.spongepowered")
             }
         }
-        exclusiveContent {
-            forRepository {
-                maven {
-                    name = 'Forge'
-                    url = uri('https://maven.minecraftforge.net')
-                }
-            }
-            filter {
-                includeGroupAndSubgroups('net.minecraftforge')
-            }
-        }
-        maven {
-            name = 'Parchment'
-            url = 'https://maven.parchmentmc.org'
-        }
     }
 }
 
@@ -51,4 +36,3 @@ plugins {
 rootProject.name = 'PrimalMagick'
 include('common')
 include('neoforge')
-include('forge')
