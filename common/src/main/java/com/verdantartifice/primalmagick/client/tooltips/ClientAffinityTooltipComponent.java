@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Tooltip component renderer for an item's affinities.
@@ -21,17 +22,17 @@ public class ClientAffinityTooltipComponent implements ClientTooltipComponent {
     }
 
     @Override
-    public int getHeight() {
+    public int getHeight(@NotNull Font font) {
         return 18;
     }
 
     @Override
-    public int getWidth(Font font) {
+    public int getWidth(@NotNull Font font) {
         return 18 * this.affinities.getSources().size();
     }
 
     @Override
-    public void renderImage(Font font, int x, int y, GuiGraphics guiGraphics) {
+    public void renderImage(@NotNull Font font, int x, int y, int width, int height, @NotNull GuiGraphics guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
         GuiUtils.renderSourcesForPlayer(guiGraphics, this.affinities, mc.player, x, y);
     }

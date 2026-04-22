@@ -7,12 +7,15 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 
@@ -22,7 +25,7 @@ import java.awt.Color;
  * @author Daedalus4096
  */
 public class ItemStackWidget extends AbstractWidget {
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier COMPLETE = ResourceUtils.loc("grimoire/complete");
 
     protected ItemStack stack;
     protected boolean isComplete;
@@ -38,7 +41,7 @@ public class ItemStackWidget extends AbstractWidget {
 }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(@NotNull GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
         // Draw stack icon
@@ -48,19 +51,19 @@ public class ItemStackWidget extends AbstractWidget {
         if (this.stack.getCount() > 1) {
             Component amountText = Component.literal(Integer.toString(this.stack.getCount()));
             int width = mc.font.width(amountText.getString());
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
-            guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+            guiGraphics.pose().scale(0.5F, 0.5F);
             guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 200.0F);
-            guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(this.getX() + 8, this.getY());
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE, 0, 0, 10, 10);
+            guiGraphics.pose().popMatrix();
         }
         
         // Don't allow the widget to become focused, to prevent keyboard navigation from moving the active tooltip
@@ -68,12 +71,12 @@ public class ItemStackWidget extends AbstractWidget {
     }
     
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput output) {
     }
 }

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.books.grids;
 
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Primary interface for the serializer of a data-defined linguistics grid node definition.
@@ -13,7 +13,7 @@ public interface IGridNodeDefinitionSerializer {
     /**
      * Read a grid node definition from JSON
      */
-    GridNodeDefinition read(ResourceLocation gridId, JsonObject json);
+    GridNodeDefinition read(Identifier gridId, JsonObject json);
     
     /**
      * Read a grid node definition from the network

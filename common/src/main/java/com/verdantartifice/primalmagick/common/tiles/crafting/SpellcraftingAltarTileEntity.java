@@ -9,10 +9,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -21,7 +18,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.Arrays;
@@ -52,68 +52,71 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
     }
     
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new SpellcraftingAltarMenu(windowId, playerInv, this.getBlockPos(), this);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        
-        this.phaseTicks = compound.getInt("PhaseTicks");
-        this.nextUpdate = compound.getInt("NextUpdate");
-        this.lastSegment = Segment.values()[compound.getInt("LastSegmentIndex")];
-        this.nextSegment = Segment.values()[compound.getInt("NextSegmentIndex")];
-        this.currentRotation = RotationPhase.values()[compound.getInt("CurrentRotationIndex")];
-        
-        Source last = Sources.get(ResourceLocation.parse(compound.getString("LastSource")));
-        this.lastSource = last == null ? Sources.EARTH : last;
-        Source next = Sources.get(ResourceLocation.parse(compound.getString("NextSource")));
-        this.nextSource = next == null ? Sources.EARTH : next;
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+
+        Segment[] segments = Segment.values();
+        RotationPhase[] phases = RotationPhase.values();
+
+        this.phaseTicks = input.getIntOr("PhaseTicks", 0);
+        this.nextUpdate = input.getIntOr("NextUpdate", 0);
+        this.lastSegment = segments[Mth.clamp(input.getIntOr("LastSegmentIndex", 0), 0, segments.length)];
+        this.nextSegment = segments[Mth.clamp(input.getIntOr("NextSegmentIndex", 0), 0, segments.length)];
+        this.currentRotation = phases[Mth.clamp(input.getIntOr("CurrentRotationIndex", 0), 0, phases.length)];
+        this.lastSource = input.read("LastSource", Source.CODEC).orElse(Sources.EARTH);
+        this.nextSource = input.read("NextSource", Source.CODEC).orElse(Sources.EARTH);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("PhaseTicks", this.phaseTicks);
-        compound.putInt("NextUpdate", this.nextUpdate);
-        compound.putInt("LastSegmentIndex", this.lastSegment.ordinal());
-        compound.putInt("NextSegmentIndex", this.nextSegment.ordinal());
-        compound.putInt("CurrentRotationIndex", this.currentRotation.ordinal());
-        compound.putString("LastSource", this.lastSource.getId().toString());
-        compound.putString("NextSource", this.nextSource.getId().toString());
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("PhaseTicks", this.phaseTicks);
+        output.putInt("NextUpdate", this.nextUpdate);
+        output.putInt("LastSegmentIndex", this.lastSegment.ordinal());
+        output.putInt("NextSegmentIndex", this.nextSegment.ordinal());
+        output.putInt("CurrentRotationIndex", this.currentRotation.ordinal());
+        output.store("LastSource", Source.CODEC, this.lastSource);
+        output.store("NextSource", Source.CODEC, this.nextSource);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SpellcraftingAltarTileEntity entity) {
-        if (entity.phaseTicks++ >= entity.nextUpdate && !level.isClientSide) {
+        if (entity.phaseTicks++ >= entity.nextUpdate && !level.isClientSide()) {
             entity.nextRotationPhase();
         }
     }
     
     protected void nextRotationPhase() {
-        this.currentRotation = this.currentRotation.getNext();
-        if (!this.currentRotation.isPause()) {
-            this.lastSegment = this.nextSegment;
-            Segment[] nextPossibleSegments = Arrays.stream(Segment.values()).filter(s -> !s.equals(this.lastSegment)).toArray(Segment[]::new);
-            this.nextSegment = nextPossibleSegments[this.level.random.nextInt(nextPossibleSegments.length)];
-            
-            this.lastSource = this.nextSource;
-            Source[] nextPossibleSources = ALLOWED_SOURCES.stream().filter(s -> !s.equals(this.lastSource)).toArray(Source[]::new);
-            this.nextSource = nextPossibleSources[this.level.random.nextInt(nextPossibleSources.length)];
-        }
-        this.nextUpdate = this.currentRotation.getDuration(this.lastSegment, this.nextSegment);
-        this.phaseTicks = 0;
-        
-        this.setChanged();
-        this.syncTile(true);
-        
-        if (!this.level.isClientSide && this.currentRotation.isPause()) {
-            this.emitRuneParticle();
+        if (this.level != null) {
+            this.currentRotation = this.currentRotation.getNext();
+            if (!this.currentRotation.isPause()) {
+                this.lastSegment = this.nextSegment;
+                Segment[] nextPossibleSegments = Arrays.stream(Segment.values()).filter(s -> !s.equals(this.lastSegment)).toArray(Segment[]::new);
+                this.nextSegment = nextPossibleSegments[this.level.random.nextInt(nextPossibleSegments.length)];
+
+                this.lastSource = this.nextSource;
+                Source[] nextPossibleSources = ALLOWED_SOURCES.stream().filter(s -> !s.equals(this.lastSource)).toArray(Source[]::new);
+                this.nextSource = nextPossibleSources[this.level.random.nextInt(nextPossibleSources.length)];
+            }
+            this.nextUpdate = this.currentRotation.getDuration(this.lastSegment, this.nextSegment);
+            this.phaseTicks = 0;
+
+            this.setChanged();
+            this.syncTile(true);
+
+            if (this.level instanceof ServerLevel serverLevel && this.currentRotation.isPause()) {
+                this.emitRuneParticle(serverLevel);
+            }
         }
     }
     
@@ -144,24 +147,22 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         }
     }
     
-    protected void emitRuneParticle() {
+    protected void emitRuneParticle(@NotNull ServerLevel serverLevel) {
         Vec3 center = Vec3.upFromBottomCenterOf(this.worldPosition, 1.1875D);
-        Vec3 facingNormal = Vec3.atLowerCornerOf(this.getBlockState().getValue(SpellcraftingAltarBlock.FACING).getNormal());
+        Vec3 facingNormal = Vec3.atLowerCornerOf(this.getBlockState().getValue(SpellcraftingAltarBlock.FACING).getUnitVec3i());
         Vec3 centerOffset = facingNormal.scale(0.5D);
         Vec3 movement = facingNormal.scale(0.05D);
-        long time = this.getLevel().getLevelData().getGameTime();
+        long time = serverLevel.getLevelData().getGameTime();
         double bobDelta = 0.125D * Math.sin(time * (2D * Math.PI / (double)BOB_CYCLE_TIME_TICKS));
 
-        if (this.level instanceof ServerLevel serverLevel) {
-            PacketHandler.sendToAllAround(
-                    new SpellcraftingRunePacket(this.nextSegment, center.x + centerOffset.x, center.y + bobDelta, center.z + centerOffset.z, movement.x, 0D, movement.z, this.nextSource.getColor()),
-                    serverLevel,
-                    this.worldPosition,
-                    64.0D);
-        }
+        PacketHandler.sendToAllAround(
+                new SpellcraftingRunePacket(this.nextSegment, center.x + centerOffset.x, center.y + bobDelta, center.z + centerOffset.z, movement.x, 0D, movement.z, this.nextSource.getColor()),
+                serverLevel,
+                this.worldPosition,
+                64.0D);
     }
     
-    public static enum Segment {
+    public enum Segment {
         U1(0),
         V1(45),
         T1(90),
@@ -173,7 +174,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         
         private final int degreeOffset;
         
-        private Segment(int degrees) {
+        Segment(int degrees) {
             this.degreeOffset = degrees;
         }
         
@@ -181,7 +182,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
             return this.degreeOffset;
         }
         
-        public int getDegreeTarget(Segment last, RotationPhase rotation) {
+        private int getDegreeTarget(Segment last, RotationPhase rotation) {
             if (rotation.isReverse() && this.degreeOffset >= last.degreeOffset) {
                 return this.degreeOffset - 360;
             } else if (!rotation.isReverse() && this.degreeOffset <= last.degreeOffset) {
@@ -192,7 +193,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         }
     }
     
-    protected static enum RotationPhase {
+    protected enum RotationPhase {
         CLOCKWISE(false, false),
         CLOCKWISE_PAUSE(false, true),
         COUNTER_CLOCKWISE(true, false),
@@ -201,7 +202,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         private final boolean reverse;
         private final boolean pause;
         
-        private RotationPhase(boolean reverse, boolean pause) {
+        RotationPhase(boolean reverse, boolean pause) {
             this.reverse = reverse;
             this.pause = pause;
         }
@@ -215,32 +216,22 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         }
         
         public int getDuration(Segment last, Segment next) {
-            switch (this) {
-            case CLOCKWISE:
-            case COUNTER_CLOCKWISE:
-                int segmentDelta = Math.abs(next.getDegreeTarget(last, this) - last.getDegreeOffset()) / 45;
-                return TICKS_PER_SEGMENT_ROTATION * segmentDelta;
-            case CLOCKWISE_PAUSE:
-            case COUNTER_CLOCKWISE_PAUSE:
-                return TICKS_PER_PAUSE;
-            default:
-                throw new IndexOutOfBoundsException("No such rotation phase!");
-            }
+            return switch (this) {
+                case CLOCKWISE, COUNTER_CLOCKWISE -> {
+                    int segmentDelta = Math.abs(next.getDegreeTarget(last, this) - last.getDegreeOffset()) / 45;
+                    yield TICKS_PER_SEGMENT_ROTATION * segmentDelta;
+                }
+                case CLOCKWISE_PAUSE, COUNTER_CLOCKWISE_PAUSE -> TICKS_PER_PAUSE;
+            };
         }
         
         public RotationPhase getNext() {
-            switch (this) {
-            case CLOCKWISE:
-                return CLOCKWISE_PAUSE;
-            case CLOCKWISE_PAUSE:
-                return COUNTER_CLOCKWISE;
-            case COUNTER_CLOCKWISE:
-                return COUNTER_CLOCKWISE_PAUSE;
-            case COUNTER_CLOCKWISE_PAUSE:
-                return CLOCKWISE;
-            default:
-                throw new IndexOutOfBoundsException("No such rotation phase!");
-            }
+            return switch (this) {
+                case CLOCKWISE -> CLOCKWISE_PAUSE;
+                case CLOCKWISE_PAUSE -> COUNTER_CLOCKWISE;
+                case COUNTER_CLOCKWISE -> COUNTER_CLOCKWISE_PAUSE;
+                case COUNTER_CLOCKWISE_PAUSE -> CLOCKWISE;
+            };
         }
     }
 }

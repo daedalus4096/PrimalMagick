@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.platform.services.IItemStackService;
 import com.verdantartifice.primalmagick.platform.services.ILevelService;
 import com.verdantartifice.primalmagick.platform.services.IMenuService;
 import com.verdantartifice.primalmagick.platform.services.IModelResourceLocationService;
+import com.verdantartifice.primalmagick.platform.services.IModelTemplateService;
 import com.verdantartifice.primalmagick.platform.services.INetworkService;
 import com.verdantartifice.primalmagick.platform.services.IPartEntityService;
 import com.verdantartifice.primalmagick.platform.services.IParticleService;
@@ -31,8 +32,8 @@ import com.verdantartifice.primalmagick.platform.services.IRecipeService;
 import com.verdantartifice.primalmagick.platform.services.IShearableService;
 import com.verdantartifice.primalmagick.platform.services.ITagService;
 import com.verdantartifice.primalmagick.platform.services.ITestService;
+import com.verdantartifice.primalmagick.platform.services.registries.IAffinityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IArgumentTypeRegistryService;
-import com.verdantartifice.primalmagick.platform.services.registries.IArmorMaterialRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockEntityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IBlockRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.ICreativeModeTabRegistryService;
@@ -64,6 +65,7 @@ import com.verdantartifice.primalmagick.platform.services.registries.ISpellPrope
 import com.verdantartifice.primalmagick.platform.services.registries.ISpellVehicleTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IStructurePieceTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IStructureTypeRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.ITestFunctionRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IWeightFunctionTypeRegistryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -110,12 +112,12 @@ public class Services {
     public static final IFluidService FLUIDS = load(IFluidService.class);
     public static final IFluidHandlerService FLUID_HANDLERS = load(IFluidHandlerService.class);
     public static final IBlockPrototypeService BLOCK_PROTOTYPES = load(IBlockPrototypeService.class);
+    public static final IModelTemplateService MODEL_TEMPLATES = load(IModelTemplateService.class);
 
     // Registry services
     public static final IBlockRegistryService BLOCKS_REGISTRY = load(IBlockRegistryService.class);
     public static final IItemRegistryService ITEMS_REGISTRY = load(IItemRegistryService.class);
     public static final ICreativeModeTabRegistryService CREATIVE_MODE_TABS_REGISTRY = load(ICreativeModeTabRegistryService.class);
-    public static final IArmorMaterialRegistryService ARMOR_MATERIALS_REGISTRY = load(IArmorMaterialRegistryService.class);
     public static final IDataComponentTypeRegistryService DATA_COMPONENT_TYPES_REGISTRY = load(IDataComponentTypeRegistryService.class);
     public static final IEntityTypeRegistryService ENTITY_TYPES_REGISTRY = load(IEntityTypeRegistryService.class);
     public static final IBlockEntityTypeRegistryService BLOCK_ENTITY_TYPES_REGISTRY = load(IBlockEntityTypeRegistryService.class);
@@ -146,6 +148,8 @@ public class Services {
     public static final IGridRewardTypeRegistryService GRID_REWARD_TYPES_REGISTRY = load(IGridRewardTypeRegistryService.class);
     public static final IResearchTopicTypeRegistryService RESEARCH_TOPIC_TYPES_REGISTRY = load(IResearchTopicTypeRegistryService.class);
     public static final IRitualStepTypeRegistryService RITUAL_STEP_TYPES_REGISTRY = load(IRitualStepTypeRegistryService.class);
+    public static final ITestFunctionRegistryService TEST_FUNCTIONS_REGISTRY = load(ITestFunctionRegistryService.class);
+    public static final IAffinityTypeRegistryService AFFINITY_TYPES_REGISTRY = load(IAffinityTypeRegistryService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

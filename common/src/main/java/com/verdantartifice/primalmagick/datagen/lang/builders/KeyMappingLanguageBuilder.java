@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -26,7 +26,7 @@ public class KeyMappingLanguageBuilder extends AbstractLanguageBuilder<KeyMappin
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(KeyMapping base) {
+    protected Identifier getBaseRegistryKey(KeyMapping base) {
         return ResourceUtils.loc(this.regName.toLowerCase());
     }
 }

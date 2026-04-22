@@ -5,10 +5,11 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.tags.ResearchEntryTagsPM;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.TagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraft.data.tags.KeyTagProvider;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -17,13 +18,13 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public class ResearchEntryTagsProviderPMNeoforge extends TagsProvider<ResearchEntry> {
-    public ResearchEntryTagsProviderPMNeoforge(PackOutput output, CompletableFuture<Provider> future, ExistingFileHelper helper) {
-        super(output, RegistryKeysPM.RESEARCH_ENTRIES, future, Constants.MOD_ID, helper);
+public class ResearchEntryTagsProviderPMNeoforge extends KeyTagProvider<ResearchEntry> {
+    public ResearchEntryTagsProviderPMNeoforge(PackOutput output, CompletableFuture<Provider> future) {
+        super(output, RegistryKeysPM.RESEARCH_ENTRIES, future, Constants.MOD_ID);
     }
 
     @Override
-    protected void addTags(Provider pProvider) {
-        this.tag(ResearchEntryTagsPM.OPAQUE).add(ResearchEntries.DISCOVER_BLOOD, ResearchEntries.DISCOVER_INFERNAL, ResearchEntries.DISCOVER_VOID, ResearchEntries.DISCOVER_HALLOWED, ResearchEntries.DISCOVER_FORBIDDEN);
+    protected void addTags(@NotNull HolderLookup.Provider pProvider) {
+        this.tag(ResearchEntryTagsPM.OPAQUE).add(ResearchEntries.DISCOVER_BLOOD).add(ResearchEntries.DISCOVER_INFERNAL).add(ResearchEntries.DISCOVER_VOID).add(ResearchEntries.DISCOVER_HALLOWED).add(ResearchEntries.DISCOVER_FORBIDDEN);
     }
 }

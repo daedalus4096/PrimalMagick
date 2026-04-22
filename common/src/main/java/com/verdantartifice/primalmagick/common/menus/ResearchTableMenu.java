@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -36,8 +36,8 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTableTileEntity> implements IItemHandlerChangeListener {
-    public static final ResourceLocation PAPER_SLOT_TEXTURE = ResourceUtils.loc("item/empty_paper_slot");
-    public static final ResourceLocation PENCIL_SLOT_TEXTURE = ResourceUtils.loc("item/empty_pencil_slot");
+    public static final Identifier PAPER_SLOT_TEXTURE = ResourceUtils.loc("item/empty_paper_slot");
+    public static final Identifier PENCIL_SLOT_TEXTURE = ResourceUtils.loc("item/empty_pencil_slot");
     protected static final Component PAPER_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.research_table.slot.paper");
     protected static final Component PENCIL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.research_table.slot.pencil");
     

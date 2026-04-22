@@ -44,8 +44,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -108,11 +107,11 @@ public class TreefolkAi {
     }
     
     private static void initCoreActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new Swim(SWIM_CHANCE), new LookAtTargetSink(45, 90), new MoveToTargetSink(), StopHoldingItemIfNoLongerAdmiring.create(), StartAdmiringItemIfSeen.create(ADMIRE_DURATION), JoinDanceParty.create(DANCE_DURATION, RECENTLY_DANCED_DURATION), StopBeingAngryIfTargetDead.create()));
+        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new Swim<>(SWIM_CHANCE), new LookAtTargetSink(45, 90), new MoveToTargetSink(), StopHoldingItemIfNoLongerAdmiring.create(), StartAdmiringItemIfSeen.create(ADMIRE_DURATION), JoinDanceParty.create(DANCE_DURATION, RECENTLY_DANCED_DURATION), StopBeingAngryIfTargetDead.create()));
     }
     
     private static void initIdleActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new StartFertilizing<>(TreefolkEntity::isAdult), StartDancingSometimes.create(DANCE_DURATION, RECENTLY_DANCED_DURATION, DANCE_COOLDOWN), TryFindLand.create(MAX_LOOK_DIST, 1F), createIdleLookBehaviors(), createIdleMovementBehaviors(), SetLookAndInteract.create(EntityType.PLAYER, 4)));
+        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create((level, entity) -> entity.isAdult(), TreefolkAi::findNearestValidAttackTarget), new StartFertilizing<>(TreefolkEntity::isAdult), StartDancingSometimes.create(DANCE_DURATION, RECENTLY_DANCED_DURATION, DANCE_COOLDOWN), TryFindLand.create(MAX_LOOK_DIST, 1F), createIdleLookBehaviors(), createIdleMovementBehaviors(), SetLookAndInteract.create(EntityType.PLAYER, 4)));
     }
     
     private static void initAdmireItemActivity(Brain<TreefolkEntity> brain) {
@@ -120,9 +119,7 @@ public class TreefolkAi {
     }
     
     private static void initFightActivity(TreefolkEntity entity, Brain<TreefolkEntity> brain) {
-        brain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 10, ImmutableList.of(StopAttackingIfTargetInvalid.create(living -> {
-            return !isNearestValidAttackTarget(entity, living);
-        }), SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(SPEED_MULTIPLIER_WHEN_FIGHTING), MeleeAttack.create(MELEE_ATTACK_COOLDOWN), new LongDistanceRangedAttack<>(RANGED_ATTACK_COOLDOWN, MIN_RANGED_ATTACK_RANGE, MAX_RANGED_ATTACK_RANGE)), MemoryModuleType.ATTACK_TARGET);
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 10, ImmutableList.of(StopAttackingIfTargetInvalid.create((level, living) -> !isNearestValidAttackTarget(level, entity, living)), SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(SPEED_MULTIPLIER_WHEN_FIGHTING), MeleeAttack.create(MELEE_ATTACK_COOLDOWN), new LongDistanceRangedAttack<>(RANGED_ATTACK_COOLDOWN, MIN_RANGED_ATTACK_RANGE, MAX_RANGED_ATTACK_RANGE)), MemoryModuleType.ATTACK_TARGET);
     }
     
     private static void initAvoidActivity(Brain<TreefolkEntity> brain) {
@@ -130,13 +127,11 @@ public class TreefolkAi {
     }
 
     private static void initCelebrateActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivityAndRemoveMemoryWhenStopped(Activity.CELEBRATE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), BehaviorBuilder.triggerIf(t -> {
-            return !t.isDancing();
-        }, GoToTargetLocation.create(MemoryModuleType.CELEBRATE_LOCATION, 2, 1.0F)), BehaviorBuilder.triggerIf(TreefolkEntity::isDancing, GoToTargetLocation.create(MemoryModuleType.CELEBRATE_LOCATION, 4, 0.6F)), new RunOne<>(ImmutableList.of(Pair.of(SetEntityLookTarget.create(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(RandomStroll.stroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleType.CELEBRATE_LOCATION);
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.CELEBRATE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create((level, entity) -> entity.isAdult(), TreefolkAi::findNearestValidAttackTarget), BehaviorBuilder.triggerIf(t -> !t.isDancing(), GoToTargetLocation.create(MemoryModuleType.CELEBRATE_LOCATION, 2, 1.0F)), BehaviorBuilder.triggerIf(TreefolkEntity::isDancing, GoToTargetLocation.create(MemoryModuleType.CELEBRATE_LOCATION, 4, 0.6F)), new RunOne<>(ImmutableList.of(Pair.of(SetEntityLookTarget.create(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(RandomStroll.stroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleType.CELEBRATE_LOCATION);
     }
     
     private static void initWorkActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivityAndRemoveMemoryWhenStopped(Activity.WORK, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), GoToTargetLocation.create(MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), 2, SPEED_MULTIPLIER_WHEN_WORKING), new StopFertilizingIfTiredOfTryingToReachBlock<>(MAX_TIME_TO_WALK_TO_ITEM, HOW_LONG_TIME_TO_DISABLE_FERTILIZING_IF_CANT_REACH_BLOCK), new Fertilize<>(MAX_FERTILIZE_RANGE, FERTILIZE_COOLDOWN), new RunOne<>(ImmutableList.of(Pair.of(SetEntityLookTarget.create(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(RandomStroll.stroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleTypesPM.FERTILIZE_LOCATION.get());
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.WORK, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create((level, entity) -> entity.isAdult(), TreefolkAi::findNearestValidAttackTarget), GoToTargetLocation.create(MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), 2, SPEED_MULTIPLIER_WHEN_WORKING), new StopFertilizingIfTiredOfTryingToReachBlock<>(MAX_TIME_TO_WALK_TO_ITEM, HOW_LONG_TIME_TO_DISABLE_FERTILIZING_IF_CANT_REACH_BLOCK), new Fertilize<>(MAX_FERTILIZE_RANGE, FERTILIZE_COOLDOWN), new RunOne<>(ImmutableList.of(Pair.of(SetEntityLookTarget.create(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(RandomStroll.stroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleTypesPM.FERTILIZE_LOCATION.get());
     }
     
     private static RunOne<TreefolkEntity> createIdleLookBehaviors() {
@@ -155,10 +150,10 @@ public class TreefolkAi {
         return stack.is(ItemTagsPM.TREEFOLK_LOVED);
     }
     
-    private static Optional<? extends LivingEntity> findNearestValidAttackTarget(TreefolkEntity entity) {
+    private static Optional<? extends LivingEntity> findNearestValidAttackTarget(ServerLevel level, TreefolkEntity entity) {
         Brain<TreefolkEntity> brain = entity.getBrain();
         Optional<LivingEntity> angryAtOptional = getAngerTarget(entity);
-        if (angryAtOptional.isPresent() && Sensor.isEntityAttackableIgnoringLineOfSight(entity, angryAtOptional.get())) {
+        if (angryAtOptional.isPresent() && Sensor.isEntityAttackableIgnoringLineOfSight(level, entity, angryAtOptional.get())) {
             return angryAtOptional;
         } else {
             if (brain.hasMemoryValue(MemoryModuleType.UNIVERSAL_ANGER)) {
@@ -171,10 +166,8 @@ public class TreefolkAi {
         }
     }
     
-    private static boolean isNearestValidAttackTarget(TreefolkEntity entity, LivingEntity target) {
-        return findNearestValidAttackTarget(entity).filter(e -> {
-            return e == target;
-        }).isPresent();
+    private static boolean isNearestValidAttackTarget(ServerLevel level, TreefolkEntity entity, LivingEntity target) {
+        return findNearestValidAttackTarget(level, entity).filter(e -> e == target).isPresent();
     }
 
     private static boolean seesPlayerHoldingLovedItem(LivingEntity entity) {
@@ -220,11 +213,9 @@ public class TreefolkAi {
     }
 
     private static void throwItems(TreefolkEntity entity, List<ItemStack> stacks) {
-        entity.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_PLAYER).ifPresentOrElse(player -> {
-            throwItemsTowardPlayer(entity, player, stacks);
-        }, () -> {
-            throwItemsTowardRandomPos(entity, stacks);
-        });
+        entity.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_PLAYER).ifPresentOrElse(
+                player -> throwItemsTowardPlayer(entity, player, stacks),
+                () -> throwItemsTowardRandomPos(entity, stacks));
     }
 
     private static void throwItemsTowardPlayer(TreefolkEntity entity, Player player, List<ItemStack> stacks) {
@@ -258,14 +249,14 @@ public class TreefolkAi {
         }
     }
 
-    public static void pickUpItem(TreefolkEntity entity, ItemEntity itemEntity) {
+    public static void pickUpItem(ServerLevel level, TreefolkEntity entity, ItemEntity itemEntity) {
         stopWalking(entity);
         entity.take(itemEntity, 1);
         ItemStack stack = removeOneItemFromItemEntity(itemEntity);
         
         if (isLovedItem(stack)) {
             entity.getBrain().eraseMemory(MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM);
-            holdInOffhand(entity, stack);
+            holdInOffhand(level, entity, stack);
             admireLovedItem(entity);
         } else {
             throwItemsTowardRandomPos(entity, Collections.singletonList(stack));
@@ -288,9 +279,9 @@ public class TreefolkAi {
         return splitStack;
     }
 
-    private static void holdInOffhand(TreefolkEntity entity, ItemStack stack) {
+    private static void holdInOffhand(ServerLevel level, TreefolkEntity entity, ItemStack stack) {
         if (isHoldingItemInOffHand(entity)) {
-            entity.spawnAtLocation(entity.getItemInHand(InteractionHand.OFF_HAND));
+            entity.spawnAtLocation(level, entity.getItemInHand(InteractionHand.OFF_HAND));
         }
         entity.holdInOffHand(stack);
     }
@@ -321,7 +312,7 @@ public class TreefolkAi {
         entity.setDancing(brain.hasMemoryValue(MemoryModuleType.DANCING));
     }
 
-    public static void wasHurtBy(TreefolkEntity entity, LivingEntity target) {
+    public static void wasHurtBy(ServerLevel level, TreefolkEntity entity, LivingEntity target) {
         if (!(target instanceof TreefolkEntity)) {
             if (isHoldingItemInOffHand(entity)) {
                 stopHoldingOffHandItem(entity, false);
@@ -342,11 +333,11 @@ public class TreefolkAi {
             });
             if (entity.isBaby()) {
                 brain.setMemoryWithExpiry(MemoryModuleType.AVOID_TARGET, target, BABY_FLEE_DURATION_AFTER_GETTING_HIT);
-                if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
-                    broadcastAngerTarget(entity, target);
+                if (Sensor.isEntityAttackableIgnoringLineOfSight(level, entity, target)) {
+                    broadcastAngerTarget(level, entity, target);
                 }
             } else {
-                maybeRetaliate(entity, target);
+                maybeRetaliate(level, entity, target);
             }
         }
     }
@@ -355,58 +346,50 @@ public class TreefolkAi {
         return entity.getBrain().hasMemoryValue(MemoryModuleType.AVOID_TARGET) ? entity.getBrain().getMemory(MemoryModuleType.AVOID_TARGET) : Optional.empty();
     }
 
-    private static void maybeRetaliate(TreefolkEntity entity, LivingEntity target) {
+    private static void maybeRetaliate(ServerLevel level, TreefolkEntity entity, LivingEntity target) {
         if (!entity.getBrain().isActive(Activity.AVOID)) {
-            if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
+            if (Sensor.isEntityAttackableIgnoringLineOfSight(level, entity, target)) {
                 if (!BehaviorUtils.isOtherTargetMuchFurtherAwayThanCurrentAttackTarget(entity, target, 4D)) {
-                    if (target.getType() == EntityType.PLAYER && entity.level().getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
-                        setAngerTargetToNearestTargetablePlayerIfFound(entity, target);
-                        broadcastUniversalAnger(entity);
+                    if (target.getType() == EntityType.PLAYER && level.getGameRules().get(GameRules.UNIVERSAL_ANGER)) {
+                        setAngerTargetToNearestTargetablePlayerIfFound(level, entity, target);
+                        broadcastUniversalAnger(level, entity);
                     } else {
-                        setAngerTarget(entity, target);
-                        broadcastAngerTarget(entity, target);
+                        setAngerTarget(level, entity, target);
+                        broadcastAngerTarget(level, entity, target);
                     }
                 }
             }
         }
     }
 
-    private static void setAngerTargetToNearestTargetablePlayerIfFound(TreefolkEntity entity, LivingEntity currentTarget) {
-        getNearestVisibleTargetablePlayer(entity).ifPresentOrElse(player -> {
-            setAngerTarget(entity, player);
-        }, () -> {
-            setAngerTarget(entity, currentTarget);
-        });
+    private static void setAngerTargetToNearestTargetablePlayerIfFound(ServerLevel level, TreefolkEntity entity, LivingEntity currentTarget) {
+        getNearestVisibleTargetablePlayer(entity).ifPresentOrElse(
+                player -> setAngerTarget(level, entity, player),
+                () -> setAngerTarget(level, entity, currentTarget));
     }
 
     public static Optional<Player> getNearestVisibleTargetablePlayer(TreefolkEntity entity) {
         return entity.getBrain().hasMemoryValue(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER) ? entity.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER) : Optional.empty();
     }
 
-    private static void setAngerTarget(TreefolkEntity entity, LivingEntity target) {
-        Level level = entity.level();
-        if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
+    private static void setAngerTarget(ServerLevel level, TreefolkEntity entity, LivingEntity target) {
+        if (Sensor.isEntityAttackableIgnoringLineOfSight(level, entity, target)) {
             int angerDuration = ANGER_DURATION.sample(level.random);
             entity.getBrain().eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
             entity.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, target.getUUID(), angerDuration);
-            if (target.getType() == EntityType.PLAYER && level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
+            if (target.getType() == EntityType.PLAYER && level.getGameRules().get(GameRules.UNIVERSAL_ANGER)) {
                 entity.getBrain().setMemoryWithExpiry(MemoryModuleType.UNIVERSAL_ANGER, true, angerDuration);
             }
         }
     }
 
-    private static void broadcastUniversalAnger(TreefolkEntity entity) {
-        getNearbyAdultTreefolk(entity).forEach(t -> {
-            getNearestVisibleTargetablePlayer(t).ifPresent(p -> {
-                setAngerTarget(t, p);
-            });
-        });
+    private static void broadcastUniversalAnger(ServerLevel level, TreefolkEntity entity) {
+        getNearbyAdultTreefolk(entity).forEach(t ->
+                getNearestVisibleTargetablePlayer(t).ifPresent(p -> setAngerTarget(level, t, p)));
     }
 
-    private static void broadcastAngerTarget(TreefolkEntity entity, LivingEntity target) {
-        getNearbyAdultTreefolk(entity).forEach(t -> {
-            setAngerTargetIfCloserThanCurrent(t, target);
-        });
+    private static void broadcastAngerTarget(ServerLevel level, TreefolkEntity entity, LivingEntity target) {
+        getNearbyAdultTreefolk(entity).forEach(t -> setAngerTargetIfCloserThanCurrent(level, t, target));
     }
     
     private static List<TreefolkEntity> getNearbyTreefolk(TreefolkEntity entity) {
@@ -417,11 +400,11 @@ public class TreefolkAi {
         return entity.getBrain().getMemory(MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get()).orElse(ImmutableList.of());
     }
     
-    private static void setAngerTargetIfCloserThanCurrent(TreefolkEntity entity, LivingEntity currentTarget) {
+    private static void setAngerTargetIfCloserThanCurrent(ServerLevel level, TreefolkEntity entity, LivingEntity currentTarget) {
         Optional<LivingEntity> livingOpt = getAngerTarget(entity);
         LivingEntity nearestTarget = BehaviorUtils.getNearestTarget(entity, livingOpt, currentTarget);
-        if (!livingOpt.isPresent() || livingOpt.get() != nearestTarget) {
-            setAngerTarget(entity, nearestTarget);
+        if (livingOpt.isEmpty() || livingOpt.get() != nearestTarget) {
+            setAngerTarget(level, entity, nearestTarget);
         }
     }
 
@@ -437,18 +420,15 @@ public class TreefolkAi {
     }
     
     public static void broadcastCelebrateLocation(TreefolkEntity entity, int danceDuration) {
-        entity.getBrain().getMemory(MemoryModuleType.CELEBRATE_LOCATION).ifPresent(pos -> {
-            getNearbyTreefolk(entity).forEach(t -> {
-                t.getBrain().setMemoryWithExpiry(MemoryModuleType.CELEBRATE_LOCATION, pos, danceDuration);
-            });
-        });
+        entity.getBrain().getMemory(MemoryModuleType.CELEBRATE_LOCATION).ifPresent(pos ->
+                getNearbyTreefolk(entity).forEach(t -> t.getBrain().setMemoryWithExpiry(MemoryModuleType.CELEBRATE_LOCATION, pos, danceDuration)));
     }
     
-    public static InteractionResult mobInteract(TreefolkEntity entity, Player player, InteractionHand hand) {
+    public static InteractionResult mobInteract(ServerLevel level, TreefolkEntity entity, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (isLovedItem(stack)) {
             ItemStack splitStack = stack.split(1);
-            holdInOffhand(entity, splitStack);
+            holdInOffhand(level, entity, splitStack);
             admireLovedItem(entity);
             stopWalking(entity);
             return InteractionResult.CONSUME;

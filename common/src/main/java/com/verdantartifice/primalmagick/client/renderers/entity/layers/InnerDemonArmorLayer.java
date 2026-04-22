@@ -8,7 +8,7 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Layer renderer for the energy field surrounding an inner demon.
@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class InnerDemonArmorLayer extends EnergySwirlLayer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/inner_demon/inner_demon_armor.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/inner_demon/inner_demon_armor.png");
     protected final PlayerModel<InnerDemonEntity> model;
 
     public InnerDemonArmorLayer(RenderLayerParent<InnerDemonEntity, PlayerModel<InnerDemonEntity>> renderer, EntityModelSet modelSet, boolean slimModel) {
@@ -30,7 +30,7 @@ public class InnerDemonArmorLayer extends EnergySwirlLayer<InnerDemonEntity, Pla
     }
 
     @Override
-    protected ResourceLocation getTextureLocation() {
+    protected Identifier getTextureLocation() {
         return TEXTURE;
     }
 

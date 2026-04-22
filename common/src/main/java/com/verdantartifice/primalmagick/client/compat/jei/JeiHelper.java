@@ -47,7 +47,7 @@ import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -63,7 +63,7 @@ import java.util.List;
  */
 @JeiPlugin
 public class JeiHelper implements IModPlugin {
-    private static final ResourceLocation UID = ResourceUtils.loc("jei");
+    private static final Identifier UID = ResourceUtils.loc("jei");
     private static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
 
     @Nullable
@@ -78,7 +78,7 @@ public class JeiHelper implements IModPlugin {
     private IRecipeCategory<RecipeHolder<IRitualRecipe>> ritualCategory;
 
     @Override
-    public ResourceLocation getPluginUid() {
+    public Identifier getPluginUid() {
         return UID;
     }
 

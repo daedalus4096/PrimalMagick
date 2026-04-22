@@ -17,7 +17,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -27,8 +27,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  * @author Daedalus4096
  */
 public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDissolutionRecipe>> {
-    public static final ResourceLocation UID = ResourceUtils.loc("dissolution_chamber");
-    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/dissolution_chamber.png");
+    public static final Identifier UID = ResourceUtils.loc("dissolution_chamber");
+    private static final Identifier BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/dissolution_chamber.png");
     private static final int MANA_COST_X_OFFSET = 28;
     private static final int MANA_COST_Y_OFFSET = 1;
     private static final int BG_WIDTH = 82;

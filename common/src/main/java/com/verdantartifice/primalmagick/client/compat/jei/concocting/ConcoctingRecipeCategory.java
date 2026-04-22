@@ -20,7 +20,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -28,9 +28,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IConcoctingRecipe>> {
-    public static final ResourceLocation UID = ResourceUtils.loc("concocter");
-    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/arcane_workbench.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = ResourceUtils.loc("textures/item/grimoire.png");
+    public static final Identifier UID = ResourceUtils.loc("concocter");
+    private static final Identifier BACKGROUND_TEXTURE = ResourceUtils.loc("textures/gui/jei/arcane_workbench.png");
+    private static final Identifier RESEARCH_TEXTURE = ResourceUtils.loc("textures/item/grimoire.png");
     private static final int MANA_COST_X_OFFSET = 64;
     private static final int MANA_COST_Y_OFFSET = 1;
     private static final int RESEARCH_X_OFFSET = 64;
@@ -80,10 +80,10 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<ICon
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
         if (recipe.getRequirement().isPresent()) {
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().scale(0.5F, 0.5F);
             this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 

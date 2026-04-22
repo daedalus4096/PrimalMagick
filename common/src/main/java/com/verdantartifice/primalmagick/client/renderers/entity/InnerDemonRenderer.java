@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.resources.PlayerSkin;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 /**
@@ -35,7 +35,7 @@ public class InnerDemonRenderer extends HumanoidMobRenderer<InnerDemonEntity, Pl
     }
 
     @Override
-    public ResourceLocation getTextureLocation(InnerDemonEntity entity) {
+    public Identifier getTextureLocation(InnerDemonEntity entity) {
         // Use the viewing player's skin texture
         Minecraft mc = Minecraft.getInstance();
         return mc.player.getSkin().texture();

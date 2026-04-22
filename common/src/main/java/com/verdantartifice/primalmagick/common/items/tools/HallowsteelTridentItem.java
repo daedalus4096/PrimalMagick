@@ -20,7 +20,7 @@ public class HallowsteelTridentItem extends AbstractTieredTridentItem {
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public HallowsteelTridentItem(Item.Properties properties) {
-        super(ItemTierPM.HALLOWSTEEL, properties);
+        super(ToolMaterialsPM.HALLOWSTEEL, properties);
     }
 
     @Override

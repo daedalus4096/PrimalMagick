@@ -6,14 +6,19 @@ import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.IStaff;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Special definition for a wand glamour recipe.
@@ -21,6 +26,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WandGlamourRecipe extends CustomRecipe {
+    public static final ResourceKey<Recipe<?>> RECIPE_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("wand_glamour"));
+
     public WandGlamourRecipe(CraftingBookCategory category) {
         super(category);
     }
@@ -30,7 +37,7 @@ public class WandGlamourRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInput inv, Level worldIn) {
+    public boolean matches(@NotNull CraftingInput inv, @NotNull Level worldIn) {
         ItemStack wandStack = getItem(inv, 0);
         ItemStack coreStack = getItem(inv, 1);
         ItemStack capStack = getItem(inv, 2);
@@ -45,7 +52,8 @@ public class WandGlamourRecipe extends CustomRecipe {
     }
     
     @Override
-    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput inv, @NotNull HolderLookup.Provider registries) {
         ItemStack wandStack = getItem(inv, 0);
         ItemStack coreStack = getItem(inv, 1);
         ItemStack capStack = getItem(inv, 2);
@@ -78,12 +86,8 @@ public class WandGlamourRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return (width * height) >= 4;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    @NotNull
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return RecipeSerializersPM.WAND_GLAMOUR_SPECIAL.get();
     }
 }

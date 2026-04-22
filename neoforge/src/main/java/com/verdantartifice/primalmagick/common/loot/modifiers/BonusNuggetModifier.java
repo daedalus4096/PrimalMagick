@@ -14,6 +14,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -38,11 +39,13 @@ public class BonusNuggetModifier extends LootModifier {
     }
 
     @Override
-    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    @NotNull
+    protected ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
         return LootModifiers.bonusNugget(generatedLoot, context, this.chance, this.nuggetMap);
     }
 
     @Override
+    @NotNull
     public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }

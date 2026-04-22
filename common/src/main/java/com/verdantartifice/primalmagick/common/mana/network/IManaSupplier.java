@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
@@ -56,14 +57,14 @@ public interface IManaSupplier extends IManaNetworkNode {
             return;
         }
 
-        level.getProfiler().push("loadManaNetwork");
-        level.getProfiler().push("defaultManaSupplier");
+        Profiler.get().push("loadManaNetwork");
+        Profiler.get().push("defaultManaSupplier");
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 
         // Search for mana consumers which are in range of this node
-        level.getProfiler().push("findNodes");
+        Profiler.get().push("findNodes");
         List<IManaConsumer> consumers = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
                 .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaConsumer consumer ? consumer : null)
@@ -71,11 +72,11 @@ public interface IManaSupplier extends IManaNetworkNode {
                 .toList();
 
         // Create direct routes from this supplier for terminus consumers
-        level.getProfiler().popPush("createDirectConsumerEdges");
+        Profiler.get().popPush("createDirectConsumerEdges");
         consumers.forEach(consumer -> this.getRouteTable().add(this, consumer));
-        level.getProfiler().pop();
+        Profiler.get().pop();
 
-        level.getProfiler().pop();
-        level.getProfiler().pop();
+        Profiler.get().pop();
+        Profiler.get().pop();
     }
 }

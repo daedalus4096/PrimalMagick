@@ -18,6 +18,6 @@ public class CalcinatorResultSlotNeoforge extends GenericResultSlotNeoforge {
     @Override
     protected void checkTakeAchievements(ItemStack stack) {
         super.checkTakeAchievements(stack);
-        Services.EVENTS.firePlayerSmeltedEvent(this.player, stack);
+        Services.EVENTS.firePlayerSmeltedEvent(this.player, stack, this.removeCount);
     }
 }

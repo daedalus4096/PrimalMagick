@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 import java.awt.Color;
@@ -22,7 +21,7 @@ import java.awt.Color;
  * @author Daedalus4096
  */
 public abstract class AbstractTopicButton extends Button {
-    protected static final ResourceLocation UNREAD_SPRITE = ResourceUtils.loc("grimoire/unread");
+    protected static final Identifier UNREAD_SPRITE = ResourceUtils.loc("grimoire/unread");
     protected static final int UNREAD_WIDTH = 16;
     protected static final int UNREAD_HEIGHT = 16;
 
@@ -48,13 +47,11 @@ public abstract class AbstractTopicButton extends Button {
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderContents(GuiGraphics guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.pose().pushPose();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        guiGraphics.pose().pushMatrix();
         if (this.isHoveredOrFocused()) {
-            // When hovering, highlight with a transparent grey background
+            // When hovering, highlight with a transparent gray background
             int alpha = 0x22;
             int color = (alpha << 24);
             guiGraphics.fill(this.getX() - 5, this.getY(), this.getX() + this.width + 5, this.getY() + this.height, color);
@@ -67,14 +64,14 @@ public abstract class AbstractTopicButton extends Button {
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)(this.width - dx) / (float)strWidth;
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + (1.0F * scale), 0.0F);
-            guiGraphics.pose().scale(scale, scale, scale);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + scale);
+            guiGraphics.pose().scale(scale, scale);
             guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
         if (this.icon != null) {
-            if (this.isHighlighted()) {
+            if (this.isHighlighted() && mc.player != null) {
                 float scaleMod = Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 1.1F;
                 this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1), scaleMod);
             } else {
@@ -83,14 +80,14 @@ public abstract class AbstractTopicButton extends Button {
             if (this.isUnread()) {
                 float s = this.icon.isLarge() ? 0.5F : 0.4F;
                 int dx2 = this.icon.isLarge() ? 11 : 7;
-                guiGraphics.pose().pushPose();
-                guiGraphics.pose().translate(this.getX() + dx2 - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1) - 2, 5F);
-                guiGraphics.pose().scale(s, s, 1F);
-                guiGraphics.blitSprite(UNREAD_SPRITE, 0, 0, UNREAD_WIDTH, UNREAD_HEIGHT);
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().pushMatrix();
+                guiGraphics.pose().translate(this.getX() + dx2 - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1) - 2);
+                guiGraphics.pose().scale(s, s);
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, UNREAD_SPRITE, 0, 0, UNREAD_WIDTH, UNREAD_HEIGHT);
+                guiGraphics.pose().popMatrix();
             }
         }
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
     
     @Override

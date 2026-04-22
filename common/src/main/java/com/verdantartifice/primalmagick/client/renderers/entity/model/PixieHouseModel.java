@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.client.renderers.entity.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.verdantartifice.primalmagick.client.renderers.entity.state.PixieHouseRenderState;
 import com.verdantartifice.primalmagick.common.entities.misc.PixieHouseEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -14,27 +12,24 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class PixieHouseModel extends EntityModel<PixieHouseEntity> {
+public class PixieHouseModel extends EntityModel<PixieHouseRenderState> {
 	// Made with Blockbench 4.12.4
 	// Exported for Minecraft version 1.17 or later with Mojang mappings
 
-	private final ModelPart trunk;
-	private final ModelPart support1;
+    private final ModelPart support1;
 	private final ModelPart support2;
 	private final ModelPart support3;
-	private final ModelPart branch1;
-	private final ModelPart branch2;
-	private final ModelPart house;
 
-	public PixieHouseModel(ModelPart root) {
-		this.trunk = root.getChild("trunk");
-		this.support1 = root.getChild("support1");
+    public PixieHouseModel(ModelPart root) {
+		super(root);
+        root.getChild("trunk");
+        this.support1 = root.getChild("support1");
 		this.support2 = root.getChild("support2");
 		this.support3 = root.getChild("support3");
-		this.branch1 = root.getChild("branch1");
-		this.branch2 = root.getChild("branch2");
-		this.house = root.getChild("house");
-	}
+        root.getChild("branch1");
+        root.getChild("branch2");
+        root.getChild("house");
+    }
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
@@ -85,11 +80,10 @@ public class PixieHouseModel extends EntityModel<PixieHouseEntity> {
 	}
 
 	@Override
-	public void setupAnim(PixieHouseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		float partialTicks = ageInTicks - entity.tickCount;
-		float timeSinceLastHit = (float)(entity.level().getGameTime() - entity.lastHit) + partialTicks;
-		if (timeSinceLastHit < PixieHouseEntity.WOBBLE_TIME) {
-			float rot = 0.1F * Mth.sin(timeSinceLastHit / ((float)PixieHouseEntity.WOBBLE_TIME / 2F) * (float)Math.PI);
+	public void setupAnim(PixieHouseRenderState renderState) {
+		super.setupAnim(renderState);
+		if (renderState.wiggle < PixieHouseEntity.WOBBLE_TIME) {
+			float rot = 0.1F * Mth.sin(renderState.wiggle / ((float)PixieHouseEntity.WOBBLE_TIME / 2F) * (float)Math.PI);
 			this.support1.zRot = -rot;
 			this.support2.zRot = rot;
 			this.support3.xRot = rot;
@@ -98,16 +92,5 @@ public class PixieHouseModel extends EntityModel<PixieHouseEntity> {
 			this.support2.zRot = 0;
 			this.support3.xRot = 0;
 		}
-	}
-
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-		trunk.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		support1.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		support2.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		support3.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		branch1.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		branch2.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		house.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
 	}
 }

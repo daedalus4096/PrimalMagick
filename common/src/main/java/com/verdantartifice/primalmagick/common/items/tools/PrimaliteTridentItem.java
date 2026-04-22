@@ -20,7 +20,7 @@ public class PrimaliteTridentItem extends AbstractTieredTridentItem {
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public PrimaliteTridentItem(Item.Properties properties) {
-        super(ItemTierPM.PRIMALITE, properties);
+        super(ToolMaterialsPM.PRIMALITE, properties);
     }
 
     @Override

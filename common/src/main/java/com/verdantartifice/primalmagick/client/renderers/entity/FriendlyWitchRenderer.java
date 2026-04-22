@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.WitchItemLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Entity renderer for a friendly witch.
@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class FriendlyWitchRenderer extends MobRenderer<FriendlyWitchEntity, WitchModel<FriendlyWitchEntity>> {
-    private static final ResourceLocation WITCH_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/witch.png");
+    private static final Identifier WITCH_LOCATION = Identifier.withDefaultNamespace("textures/entity/witch.png");
     private static final float SCALE = 0.9375F;
 
     public FriendlyWitchRenderer(EntityRendererProvider.Context context) {
@@ -25,7 +25,7 @@ public class FriendlyWitchRenderer extends MobRenderer<FriendlyWitchEntity, Witc
     }
 
     @Override
-    public ResourceLocation getTextureLocation(FriendlyWitchEntity entity) {
+    public Identifier getTextureLocation(FriendlyWitchEntity entity) {
         return WITCH_LOCATION;
     }
 

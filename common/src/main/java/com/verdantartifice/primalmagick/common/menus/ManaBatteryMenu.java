@@ -18,7 +18,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -34,11 +34,11 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryTileEntity> {
-    public static final ResourceLocation DUST_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_dust_slot");
-    public static final ResourceLocation SHARD_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_shard_slot");
-    public static final ResourceLocation CRYSTAL_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_crystal_slot");
-    public static final ResourceLocation CLUSTER_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_cluster_slot");
-    public static final ResourceLocation WAND_SLOT_TEXTURE = ResourceUtils.loc("item/empty_wand_slot");
+    public static final Identifier DUST_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_dust_slot");
+    public static final Identifier SHARD_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_shard_slot");
+    public static final Identifier CRYSTAL_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_crystal_slot");
+    public static final Identifier CLUSTER_SLOT_TEXTURE = ResourceUtils.loc("item/empty_essence_cluster_slot");
+    public static final Identifier WAND_SLOT_TEXTURE = ResourceUtils.loc("item/empty_wand_slot");
     protected static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.mana_battery.slot.input");
     protected static final Component CHARGE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.mana_battery.slot.charge");
     protected static final AbstractRequirement<?> SHARD_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SHARD_SYNTHESIS));

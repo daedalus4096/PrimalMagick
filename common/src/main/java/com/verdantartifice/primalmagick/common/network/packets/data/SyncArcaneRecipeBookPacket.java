@@ -11,7 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class SyncArcaneRecipeBookPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_arcane_recipe_book");
+    public static final Identifier CHANNEL = ResourceUtils.loc("sync_arcane_recipe_book");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncArcaneRecipeBookPacket> STREAM_CODEC = StreamCodec.ofMember(SyncArcaneRecipeBookPacket::encode, SyncArcaneRecipeBookPacket::decode);
 
     protected final CompoundTag data;

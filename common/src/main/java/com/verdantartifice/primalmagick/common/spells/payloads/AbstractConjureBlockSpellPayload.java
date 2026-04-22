@@ -19,6 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -42,7 +43,7 @@ public abstract class AbstractConjureBlockSpellPayload<T extends AbstractConjure
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (!(caster instanceof Player player)) {
             return;
         }
@@ -82,7 +83,7 @@ public abstract class AbstractConjureBlockSpellPayload<T extends AbstractConjure
         boolean isReplaceable = state.canBeReplaced();
         if (world.isEmptyBlock(pos) || !isSolid || isReplaceable) {
             // Destroy the existing block at the target location if the new block would replace it
-            if (!world.isClientSide && (!isSolid || isReplaceable) && !state.liquid()) {
+            if (!world.isClientSide() && (!isSolid || isReplaceable) && !state.liquid()) {
                 world.destroyBlock(pos, true);
             }
             

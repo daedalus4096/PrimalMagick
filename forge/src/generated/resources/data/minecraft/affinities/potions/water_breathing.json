@@ -1,8 +1,0 @@
-{
-  "type": "potion_bonus",
-  "bonus": {
-    "primalmagick:sea": 1,
-    "primalmagick:sky": 1
-  },
-  "target": "minecraft:water_breathing"
-}

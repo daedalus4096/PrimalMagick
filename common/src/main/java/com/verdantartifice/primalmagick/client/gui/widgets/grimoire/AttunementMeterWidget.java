@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -11,17 +9,21 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
 
 public class AttunementMeterWidget extends AbstractWidget {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/attunement_meter.png");
+    private static final Identifier FOREGROUND = ResourceUtils.loc("grimoire/attunement_meter_foreground");
+    private static final Identifier BAR = ResourceUtils.loc("grimoire/attunement_meter_bar");
 
     protected final Source source;
     protected final Color permanentColor;
@@ -53,38 +55,32 @@ public class AttunementMeterWidget extends AbstractWidget {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Render attunement meter
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft mc = Minecraft.getInstance();
-        
+
         int p = AttunementManager.getAttunement(mc.player, this.source, AttunementType.PERMANENT);
         int i = AttunementManager.getAttunement(mc.player, this.source, AttunementType.INDUCED);
         int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
 
         // Render permanent meter bar
-        guiGraphics.setColor(this.permanentColor.getRed() / 255.0F, this.permanentColor.getGreen() / 255.0F, this.permanentColor.getBlue() / 255.0F, 1.0F);
-        guiGraphics.blit(TEXTURE, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p, 0, 100)), 0, 10, 10, Mth.clamp(p, 0, 100));
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p, 0, 100)), 10, Mth.clamp(p, 0, 100), this.permanentColor.getRGB());
         
         // Render induced meter bar
-        guiGraphics.setColor(this.inducedColor.getRed() / 255.0F, this.inducedColor.getGreen() / 255.0F, this.inducedColor.getBlue() / 255.0F, 1.0F);
-        guiGraphics.blit(TEXTURE, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i, 0, 100)), 0, 10, 10, Mth.clamp(i, 0, 100 - p));
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i, 0, 100)), 10, Mth.clamp(i, 0, 100 - p), this.inducedColor.getRGB());
         
         // Render temporary meter bar
-        guiGraphics.setColor(this.temporaryColor.getRed() / 255.0F, this.temporaryColor.getGreen() / 255.0F, this.temporaryColor.getBlue() / 255.0F, 1.0F);
-        guiGraphics.blit(TEXTURE, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 0, 10, 10, Mth.clamp(t, 0, 100 - p - i));
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 10, Mth.clamp(t, 0, 100 - p - i), this.temporaryColor.getRGB());
 
         // Render meter foreground
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        guiGraphics.blit(TEXTURE, this.getX(), this.getY(), 29, 9, 12, 102);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FOREGROUND, this.getX(), this.getY(), 12, 102);
     }
 
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput p_169152_) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput output) {
     }
 }

@@ -8,8 +8,8 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.StringUtil;
 
@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 
 /**
  * Represents a mapping of translation keys of localized words to the text styles that should be
- * used to render those words in static books, regardless of whether or not they're encoded in an
+ * used to render those words in static books, regardless of whether they're encoded in an
  * ancient language.
  * 
  * @author Daedalus4096
@@ -37,7 +37,7 @@ public class StyleGuide {
     }
     
     public static StyleGuide.Builder builder(ResourceKey<BookLanguage> language) {
-        return new StyleGuide.Builder(language.location());
+        return new StyleGuide.Builder(language.identifier());
     }
     
     protected List<Entry> getEntries() {
@@ -69,7 +69,7 @@ public class StyleGuide {
      * @return the style to be used with the word
      */
     public Style getStyle(String word, Style encodingStyle) {
-        return this.entries.stream().filter(entry -> entry.matches(word)).findFirst().<Style>map(entry -> encodingStyle.applyTo(entry.getStyle())).orElse(encodingStyle);
+        return this.entries.stream().filter(entry -> entry.matches(word)).findFirst().map(entry -> encodingStyle.applyTo(entry.getStyle())).orElse(encodingStyle);
     }
     
     /**
@@ -85,7 +85,7 @@ public class StyleGuide {
     /**
      * Returns the given word as a renderable text component with a merged style applied to it.  The
      * merged style is a combination of the given style and the style prescribed for the word by this 
-     * guide, with formatting elements of the given style taking precedence.  Typically this is used in 
+     * guide, with formatting elements of the given style taking precedence.  Typically, this is used in
      * cases where the given style specifies an encoding font in which the word should be rendered, 
      * which should not be overridden.
      * 
@@ -94,7 +94,7 @@ public class StyleGuide {
      * @return the stylized word
      */
     public Component getStylizedWord(String word, Style encodingStyle) {
-        return this.entries.stream().filter(entry -> entry.matches(word)).findFirst().<Component>map(entry -> entry.getStylizedWord(encodingStyle)).orElse(Component.literal(word).withStyle(encodingStyle));
+        return this.entries.stream().filter(entry -> entry.matches(word)).findFirst().map(entry -> entry.getStylizedWord(encodingStyle)).orElse(Component.literal(word).withStyle(encodingStyle));
     }
     
     public static class Entry {
@@ -126,7 +126,7 @@ public class StyleGuide {
         private Style getStyleInner() {
             return StringUtil.isNullOrEmpty(this.hoverTranslationKey) ?
                     this.style :
-                    this.style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(this.hoverTranslationKey)));
+                    this.style.withHoverEvent(new HoverEvent.ShowText(Component.translatable(this.hoverTranslationKey)));
         }
         
         protected Style getStyleRaw() {
@@ -183,10 +183,10 @@ public class StyleGuide {
     }
     
     public static class Builder {
-        protected final ResourceLocation langId;
+        protected final Identifier langId;
         protected final List<Entry> entries = new ArrayList<>();
         
-        protected Builder(ResourceLocation langId) {
+        protected Builder(Identifier langId) {
             this.langId = langId;
         }
         
@@ -202,7 +202,7 @@ public class StyleGuide {
             return new StyleGuide(this.entries);
         }
         
-        public void save(BiConsumer<ResourceLocation, StyleGuide> consumer) {
+        public void save(BiConsumer<Identifier, StyleGuide> consumer) {
             consumer.accept(this.langId, this.build());
         }
     }

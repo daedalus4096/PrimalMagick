@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Entity renderer for a treefolk.
@@ -14,15 +14,15 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class TreefolkRenderer extends HumanoidMobRenderer<TreefolkEntity, TreefolkModel<TreefolkEntity>> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/treefolk/treefolk.png");
-    protected static final ResourceLocation ANGRY_TEXTURE = ResourceUtils.loc("textures/entity/treefolk/treefolk_angry.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/treefolk/treefolk.png");
+    protected static final Identifier ANGRY_TEXTURE = ResourceUtils.loc("textures/entity/treefolk/treefolk_angry.png");
 
     public TreefolkRenderer(EntityRendererProvider.Context context) {
         super(context, new TreefolkModel<TreefolkEntity>(context.bakeLayer(ModelLayersPM.TREEFOLK)), 0.5F);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(TreefolkEntity entity) {
+    public Identifier getTextureLocation(TreefolkEntity entity) {
         return entity.isAngry() ? ANGRY_TEXTURE : TEXTURE;
     }
 }

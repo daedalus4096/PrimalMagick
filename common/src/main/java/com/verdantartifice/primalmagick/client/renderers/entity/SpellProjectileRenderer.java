@@ -13,8 +13,8 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
 /**
@@ -23,7 +23,7 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntity> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/spell_projectile.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/spell_projectile.png");
     protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);
 
     protected final SpellProjectileModel model;
@@ -43,8 +43,8 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         float yaw = Mth.rotLerp(entity.yRotO, entity.getYRot(), partialTicks);
         float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
         float ticks = (float)entity.tickCount + partialTicks;
-        int coreColor = FastColor.ARGB32.color(FastColor.as8BitChannel(1.0F), entity.getColor());
-        int glowColor = FastColor.ARGB32.color(FastColor.as8BitChannel(0.5F), entity.getColor());
+        int coreColor = ARGB.color(ARGB.as8BitChannel(1.0F), entity.getColor());
+        int glowColor = ARGB.color(ARGB.as8BitChannel(0.5F), entity.getColor());
         matrixStack.pushPose();
         matrixStack.translate(0.0D, 0.15D, 0.0D);
         matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the projectile like a shulker bullet
@@ -62,7 +62,7 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SpellProjectileEntity entity) {
+    public Identifier getTextureLocation(SpellProjectileEntity entity) {
         return TEXTURE;
     }
 }

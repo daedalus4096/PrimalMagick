@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -61,5 +61,5 @@ public abstract class AbstractTieredTridentISTER extends BlockEntityWithoutLevel
     
     public abstract ModelResourceLocation getModelResourceLocation();
     
-    public abstract ResourceLocation getTextureLocation();
+    public abstract Identifier getTextureLocation();
 }

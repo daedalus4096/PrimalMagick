@@ -13,14 +13,14 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class MarkReadButton extends Button {
-    protected static final ResourceLocation SPRITE = ResourceUtils.loc("grimoire/mark_all_as_read");
+    protected static final Identifier SPRITE = ResourceUtils.loc("grimoire/mark_all_as_read");
     protected static final int BUTTON_WIDTH = 10;
     protected static final int BUTTON_HEIGHT = 10;
     protected static final int SPRITE_WIDTH = 16;
@@ -60,12 +60,12 @@ public class MarkReadButton extends Button {
         int dx = this.width / 2;
         int dy = this.height / 2;
 
-        pGuiGraphics.pose().pushPose();
-        pGuiGraphics.pose().translate(this.getX() + dx, this.getY() + dy, 10.0F);
-        pGuiGraphics.pose().scale(BASE_SCALE, BASE_SCALE, 1F);
-        pGuiGraphics.pose().scale(scaleMod, scaleMod, 1F);
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX() + dx, this.getY() + dy);
+        pGuiGraphics.pose().scale(BASE_SCALE, BASE_SCALE);
+        pGuiGraphics.pose().scale(scaleMod, scaleMod);
         pGuiGraphics.blitSprite(SPRITE, (int)(-dx / BASE_SCALE), (int)(-dy / BASE_SCALE), SPRITE_WIDTH, SPRITE_HEIGHT);
-        pGuiGraphics.pose().popPose();
+        pGuiGraphics.pose().popMatrix();
     }
 
     @Override

@@ -13,7 +13,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -68,7 +68,7 @@ public class AttunementReward extends AbstractReward<AttunementReward> {
     }
 
     @Override
-    public ResourceLocation getIconLocation(Player player) {
+    public Identifier getIconLocation(Player player) {
         return this.source.isDiscovered(player) ? this.source.getImage() : Source.getUnknownImage();
     }
 

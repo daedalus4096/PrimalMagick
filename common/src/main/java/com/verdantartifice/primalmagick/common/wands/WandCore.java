@@ -7,13 +7,13 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Rarity;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,31 +38,31 @@ public class WandCore implements IWandComponent {
     public static final StreamCodec<ByteBuf, WandCore> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(WandCore::getWandCore, WandCore::getTag);
     
     public static final WandCore HEARTWOOD = new WandCore("heartwood", Rarity.COMMON, 1, null, Collections.emptyList());
-    public static final WandCore OBSIDIAN = new WandCore("obsidian", Rarity.COMMON, 1, Sources.EARTH, Arrays.asList(Sources.EARTH));
-    public static final WandCore CORAL = new WandCore("coral", Rarity.COMMON, 1, Sources.SEA, Arrays.asList(Sources.SEA));
-    public static final WandCore BAMBOO = new WandCore("bamboo", Rarity.COMMON, 1, Sources.SKY, Arrays.asList(Sources.SKY));
-    public static final WandCore SUNWOOD = new WandCore("sunwood", Rarity.COMMON, 1, Sources.SUN, Arrays.asList(Sources.SUN));
-    public static final WandCore MOONWOOD = new WandCore("moonwood", Rarity.COMMON, 1, Sources.MOON, Arrays.asList(Sources.MOON));
-    public static final WandCore BONE = new WandCore("bone", Rarity.UNCOMMON, 2, Sources.BLOOD, Arrays.asList(Sources.BLOOD));
-    public static final WandCore BLAZE_ROD = new WandCore("blaze_rod", Rarity.UNCOMMON, 2, Sources.INFERNAL, Arrays.asList(Sources.INFERNAL));
-    public static final WandCore PURPUR = new WandCore("purpur", Rarity.UNCOMMON, 2, Sources.VOID, Arrays.asList(Sources.VOID));
-    public static final WandCore PRIMAL = new WandCore("primal", Rarity.UNCOMMON, 2, null, Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON));
-    public static final WandCore DARK_PRIMAL = new WandCore("dark_primal", Rarity.RARE, 3, null, Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON, Sources.BLOOD, Sources.INFERNAL, Sources.VOID));
-    public static final WandCore PURE_PRIMAL = new WandCore("pure_primal", Rarity.EPIC, 4, null, Arrays.asList(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON, Sources.BLOOD, Sources.INFERNAL, Sources.VOID, Sources.HALLOWED));
+    public static final WandCore OBSIDIAN = new WandCore("obsidian", Rarity.COMMON, 1, Sources.EARTH, List.of(Sources.EARTH));
+    public static final WandCore CORAL = new WandCore("coral", Rarity.COMMON, 1, Sources.SEA, List.of(Sources.SEA));
+    public static final WandCore BAMBOO = new WandCore("bamboo", Rarity.COMMON, 1, Sources.SKY, List.of(Sources.SKY));
+    public static final WandCore SUNWOOD = new WandCore("sunwood", Rarity.COMMON, 1, Sources.SUN, List.of(Sources.SUN));
+    public static final WandCore MOONWOOD = new WandCore("moonwood", Rarity.COMMON, 1, Sources.MOON, List.of(Sources.MOON));
+    public static final WandCore BONE = new WandCore("bone", Rarity.UNCOMMON, 2, Sources.BLOOD, List.of(Sources.BLOOD));
+    public static final WandCore BLAZE_ROD = new WandCore("blaze_rod", Rarity.UNCOMMON, 2, Sources.INFERNAL, List.of(Sources.INFERNAL));
+    public static final WandCore PURPUR = new WandCore("purpur", Rarity.UNCOMMON, 2, Sources.VOID, List.of(Sources.VOID));
+    public static final WandCore PRIMAL = new WandCore("primal", Rarity.UNCOMMON, 2, null, List.of(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON));
+    public static final WandCore DARK_PRIMAL = new WandCore("dark_primal", Rarity.RARE, 3, null, List.of(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON, Sources.BLOOD, Sources.INFERNAL, Sources.VOID));
+    public static final WandCore PURE_PRIMAL = new WandCore("pure_primal", Rarity.EPIC, 4, null, List.of(Sources.EARTH, Sources.SEA, Sources.SKY, Sources.SUN, Sources.MOON, Sources.BLOOD, Sources.INFERNAL, Sources.VOID, Sources.HALLOWED));
     
     protected final String tag;                     // Unique identifier for the wand core
     protected final Rarity rarity;                  // The core's rarity, used to color its name and determine completed wand rarity
     protected final int spellSlots;                 // The base number of spell slots offered by the core
     protected final Source bonusSlot;               // The source of the core's bonus spell slot, if any
     protected final List<Source> aligned;           // List of sources to which the core is aligned
-    protected final ResourceLocation wandMrlNamespace;  // Resource location of the wand core's model, stored in a blockstate file
-    protected final ResourceLocation staffMrlNamespace; // Resource location of the staff core's model, stored in a blockstate file
+    protected final Identifier wandMrlNamespace;    // Resource location of the wand core's model, stored in a blockstate file
+    protected final Identifier staffMrlNamespace;   // Resource location of the staff core's model, stored in a blockstate file
 
     public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned) {
         this(tag, rarity, spellSlots, bonusSlot, aligned, ResourceUtils.loc(tag + "_wand_core"), ResourceUtils.loc(tag + "_staff_core"));
     }
     
-    public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned, @Nonnull ResourceLocation wmrln, @Nonnull ResourceLocation smrln) {
+    public WandCore(@Nonnull String tag, @Nonnull Rarity rarity, int spellSlots, @Nullable Source bonusSlot, @Nonnull List<Source> aligned, @Nonnull Identifier wmrln, @Nonnull Identifier smrln) {
         if (REGISTRY.containsKey(tag)) {
             // Don't allow a given core to be registered more than once
             throw new IllegalArgumentException("Wand core " + tag + " already registered!");
@@ -78,16 +78,19 @@ public class WandCore implements IWandComponent {
     }
     
     @Override
+    @NotNull
     public String getTag() {
         return this.tag;
     }
     
     @Override
+    @NotNull
     public Rarity getRarity() {
         return this.rarity;
     }
     
     @Override
+    @NotNull
     public Type getComponentType() {
         return IWandComponent.Type.CORE;
     }
@@ -107,12 +110,12 @@ public class WandCore implements IWandComponent {
     }
     
     @Nonnull
-    public ResourceLocation getWandModelResourceLocationNamespace() {
+    public Identifier getWandModelResourceLocationNamespace() {
         return this.wandMrlNamespace;
     }
     
     @Nonnull
-    public ResourceLocation getStaffModelResourceLocationNamespace() {
+    public Identifier getStaffModelResourceLocationNamespace() {
         return this.staffMrlNamespace;
     }
     

@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:earth": 10,
-    "primalmagick:sun": 10
-  },
-  "target": "minecraft:oak_log"
-}

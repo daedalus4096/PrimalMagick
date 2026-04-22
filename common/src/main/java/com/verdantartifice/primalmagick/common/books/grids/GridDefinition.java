@@ -16,7 +16,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.joml.Vector2i;
 
 import java.util.Collections;
@@ -37,7 +37,7 @@ public class GridDefinition {
     
     public static Codec<GridDefinition> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
-                ResourceLocation.CODEC.fieldOf("key").forGetter(GridDefinition::getKey),
+                Identifier.CODEC.fieldOf("key").forGetter(GridDefinition::getKey),
                 ResourceKey.codec(RegistryKeysPM.BOOK_LANGUAGES).fieldOf("language").forGetter(GridDefinition::getLanguage),
                 CodecUtils.VECTOR2I.fieldOf("startPos").forGetter(GridDefinition::getStartPos),
                 PlacedNode.codec().listOf().<Map<Vector2i, GridNodeDefinition>>xmap(nodeList -> {
@@ -54,7 +54,7 @@ public class GridDefinition {
     
     public static StreamCodec<FriendlyByteBuf, GridDefinition> streamCodec() {
         return StreamCodec.composite(
-                ResourceLocation.STREAM_CODEC, GridDefinition::getKey,
+                Identifier.STREAM_CODEC, GridDefinition::getKey,
                 ResourceKey.streamCodec(RegistryKeysPM.BOOK_LANGUAGES), GridDefinition::getLanguage,
                 StreamCodecUtils.VECTOR2I, GridDefinition::getStartPos,
                 PlacedNode.streamCodec().apply(ByteBufCodecs.list()).<Map<Vector2i, GridNodeDefinition>>map(nodeList -> {
@@ -69,19 +69,19 @@ public class GridDefinition {
                 GridDefinition::new);
     }
     
-    protected ResourceLocation key;
+    protected Identifier key;
     protected ResourceKey<BookLanguage> language;
     protected Vector2i startPos;
     protected final Map<Vector2i, GridNodeDefinition> nodes = new HashMap<>();
     
-    protected GridDefinition(ResourceLocation key, ResourceKey<BookLanguage> language, Vector2i startPos, Map<Vector2i, GridNodeDefinition> nodes) {
+    protected GridDefinition(Identifier key, ResourceKey<BookLanguage> language, Vector2i startPos, Map<Vector2i, GridNodeDefinition> nodes) {
         this.key = key;
         this.language = language;
         this.startPos = startPos;
         this.nodes.putAll(nodes);
     }
     
-    public ResourceLocation getKey() {
+    public Identifier getKey() {
         return this.key;
     }
     
@@ -130,13 +130,13 @@ public class GridDefinition {
     }
     
     public static class Builder {
-        protected final ResourceLocation key;
+        protected final Identifier key;
         protected final HolderLookup.Provider registries;
         protected final Map<Vector2i, GridNodeDefinition> nodes = new HashMap<>();
         protected ResourceKey<BookLanguage> language;
         protected Vector2i startPos;
         
-        protected Builder(ResourceLocation key, HolderLookup.Provider registries) {
+        protected Builder(Identifier key, HolderLookup.Provider registries) {
             this.key = Preconditions.checkNotNull(key);
             this.registries = registries;
         }
@@ -145,7 +145,7 @@ public class GridDefinition {
             return new Builder(ResourceUtils.loc(name), registries);
         }
         
-        public static Builder grid(ResourceLocation key, HolderLookup.Provider registries) {
+        public static Builder grid(Identifier key, HolderLookup.Provider registries) {
             return new Builder(key, registries);
         }
         

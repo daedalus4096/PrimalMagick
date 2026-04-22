@@ -116,7 +116,7 @@ public class AnalysisTableMenu extends AbstractContainerMenu {
     
     public void doScan() {
         Level level = this.player.level();
-        if (!level.isClientSide && this.player instanceof ServerPlayer serverPlayer) {
+        if (!level.isClientSide() && this.player instanceof ServerPlayer serverPlayer) {
             // Move the input item into the recently-scanned slot and mark it as scanned
             ItemStack stack = this.analysisInventory.getItem(0).copy();
             if (stack.is(ItemTagsPM.ANALYSIS_TABLE_FORBIDDEN)) {

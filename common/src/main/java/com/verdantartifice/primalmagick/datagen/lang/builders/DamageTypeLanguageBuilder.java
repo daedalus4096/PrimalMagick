@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.damagesource.DamageType;
 
 import java.util.function.BiConsumer;
@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  */
 public class DamageTypeLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<DamageType>, DamageTypeLanguageBuilder> {
     public DamageTypeLanguageBuilder(ResourceKey<DamageType> patternKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(patternKey, () -> String.join(".", "death", "attack", Constants.MOD_ID, patternKey.location().getPath()), untracker, adder);
+        super(patternKey, () -> String.join(".", "death", "attack", Constants.MOD_ID, patternKey.identifier().getPath()), untracker, adder);
     }
 
     @Override
@@ -25,8 +25,8 @@ public class DamageTypeLanguageBuilder extends AbstractLanguageBuilder<ResourceK
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(ResourceKey<DamageType> base) {
-        return base.location();
+    protected Identifier getBaseRegistryKey(ResourceKey<DamageType> base) {
+        return base.identifier();
     }
     
     public DamageTypeLanguageBuilder player(String value) {

@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPropertiesPM;
 import com.verdantartifice.primalmagick.common.spells.payloads.AbstractSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -26,6 +25,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
@@ -43,10 +43,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.EnumSet;
-import java.util.UUID;
 
 /**
  * Base definition for a pixie entity.  Follows the player around as a companion.  Has other capabilities
@@ -55,12 +56,12 @@ import java.util.UUID;
  * @author Daedalus4096
  */
 public abstract class AbstractPixieEntity extends AbstractCompanionEntity implements NeutralMob, FlyingAnimal, IPixie {
-    protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(AbstractPixieEntity.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(AbstractPixieEntity.class, EntityDataSerializers.LONG);
     protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     protected static final byte PIXIE_DUST_EVENT = 15;
 
     protected int attackTimer;
-    protected UUID angerTarget;
+    protected EntityReference<LivingEntity> angerTarget;
     protected SpellPackage spellCache;
 
     public AbstractPixieEntity(EntityType<? extends AbstractPixieEntity> type, Level worldIn) {
@@ -68,13 +69,13 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
         this.moveControl = new FlyingMoveControl(this, 20, false);
     }
 
-    @Nonnull
+    @NotNull
     public abstract Source getPixieSource();
     
-    @Nonnull
+    @NotNull
     protected abstract SpawnEggItem getSpawnItem();
     
-    @Nonnull
+    @NotNull
     protected SpellPackage createSpellPackage() {
         // Not all pixie spells need the duration property, but those that don't will ignore it
         return SpellPackage.builder().name("Pixie Bolt")
@@ -83,10 +84,10 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
                 .build();
     }
     
-    @Nonnull
+    @NotNull
     protected abstract AbstractSpellPayload<?> getSpellPayload();
     
-    @Nonnull
+    @NotNull
     protected SpellPackage getSpellPackage() {
         if (this.spellCache == null) {
             this.spellCache = this.createSpellPackage();
@@ -95,18 +96,15 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        this.addPersistentAngerSaveData(compound);
+    public void addAdditionalSaveData(@NotNull ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        this.addPersistentAngerSaveData(output);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        Level level = this.level();
-        if (!level.isClientSide) {
-            this.readPersistentAngerSaveData((ServerLevel)level, compound);
-        }
+    public void readAdditionalSaveData(@NotNull ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.readPersistentAngerSaveData(this.level(), input);
     }
 
     @Override
@@ -119,9 +117,9 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
-        pBuilder.define(ANGER_TIME, 0);
+        pBuilder.define(ANGER_END_TIME, 0L);
     }
 
     @Override
@@ -130,7 +128,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    protected void checkFallDamage(double y, boolean onGroundIn, @NotNull BlockState state, @NotNull BlockPos pos) {
         // Pixies fly, not fall
     }
 
@@ -158,7 +156,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
         }
         
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             this.updatePersistentAnger((ServerLevel)level, true);
             if (this.isAlive()) {
                 level.broadcastEntityEvent(this, PIXIE_DUST_EVENT);
@@ -185,33 +183,33 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    public boolean canAttack(LivingEntity target) {
-        return this.isCompanionOwner(target) ? false : super.canAttack(target);
+    public boolean canAttack(@NotNull LivingEntity target) {
+        return !this.isCompanionOwner(target) && super.canAttack(target);
     }
 
     @Override
-    public int getRemainingPersistentAngerTime() {
-        return this.entityData.get(ANGER_TIME);
+    public long getPersistentAngerEndTime() {
+        return this.entityData.get(ANGER_END_TIME);
     }
 
     @Override
-    public void setRemainingPersistentAngerTime(int time) {
-        this.entityData.set(ANGER_TIME, time);
+    public void setPersistentAngerEndTime(long time) {
+        this.entityData.set(ANGER_END_TIME, time);
     }
 
     @Override
-    public UUID getPersistentAngerTarget() {
+    public EntityReference<LivingEntity> getPersistentAngerTarget() {
         return this.angerTarget;
     }
 
     @Override
-    public void setPersistentAngerTarget(UUID target) {
+    public void setPersistentAngerTarget(EntityReference<LivingEntity> target) {
         this.angerTarget = target;
     }
 
     @Override
     public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
+        this.setTimeToRemainAngry(ANGER_TIME_RANGE.sample(this.random));
     }
 
     @Override
@@ -219,12 +217,8 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
         return CompanionType.PIXIE;
     }
 
-    public int getAttackTimer() {
-        return this.attackTimer;
-    }
-
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
         // TODO Replace with custom sounds
         return SoundEvents.BAT_HURT;
     }
@@ -236,21 +230,25 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected InteractionResult mobInteract(Player playerIn, InteractionHand hand) {
+    @NotNull
+    protected InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         Level level = this.level();
-        InteractionResult actionResult = super.mobInteract(playerIn, hand);
-        if (!actionResult.consumesAction() && !level.isClientSide && this.isCompanionOwner(playerIn)) {
-            ItemStack held = playerIn.getItemInHand(hand);
+        InteractionResult actionResult = super.mobInteract(player, hand);
+        if (!actionResult.consumesAction() && !level.isClientSide() && this.isCompanionOwner(player)) {
+            ItemStack held = player.getItemInHand(hand);
             ItemStack stack = new ItemStack(this.getSpawnItem());
             if (ItemStack.isSameItem(held, stack)) {
                 held.grow(1);
             } else if (held.isEmpty()) {
-                playerIn.setItemInHand(hand, stack);
+                player.setItemInHand(hand, stack);
             } else {
                 return InteractionResult.FAIL;
             }
             CompanionManager.removeCompanion(this.getCompanionOwner(), this);
-            this.playSound(this.getHurtSound(null), 1.0F, 1.0F);
+            SoundEvent hurtSound = this.getHurtSound(player.damageSources().playerAttack(player));
+            if (hurtSound != null) {
+                this.playSound(hurtSound, 1.0F, 1.0F);
+            }
             this.discard();
             return InteractionResult.SUCCESS;
         } else {
@@ -264,7 +262,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected void doPush(Entity entityIn) {
+    protected void doPush(@NotNull Entity entityIn) {
         // Pixies pass through other entities
     }
 
@@ -279,10 +277,10 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
     }
 
     @Override
-    protected PathNavigation createNavigation(Level worldIn) {
+    @NotNull
+    protected PathNavigation createNavigation(@NotNull Level worldIn) {
         FlyingPathNavigation nav = new FlyingPathNavigation(this, worldIn);
         nav.setCanOpenDoors(false);
-        nav.setCanPassDoors(true);
         return nav;
     }
 
@@ -301,13 +299,13 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
 
         @Override
         public boolean canUse() {
-            MoveControl movementcontroller = this.pixie.getMoveControl();
-            if (!movementcontroller.hasWanted()) {
+            MoveControl movementController = this.pixie.getMoveControl();
+            if (!movementController.hasWanted()) {
                 return true;
             } else {
-                double dx = movementcontroller.getWantedX() - this.pixie.getX();
-                double dy = movementcontroller.getWantedY() - this.pixie.getY();
-                double dz = movementcontroller.getWantedZ() - this.pixie.getZ();
+                double dx = movementController.getWantedX() - this.pixie.getX();
+                double dy = movementController.getWantedY() - this.pixie.getY();
+                double dz = movementController.getWantedZ() - this.pixie.getZ();
                 double dist = dx * dx + dy * dy + dz * dz;
                 return dist < 1.0D || dist > 3600.0D;
             }

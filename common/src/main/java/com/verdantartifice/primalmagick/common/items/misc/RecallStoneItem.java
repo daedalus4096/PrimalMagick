@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTriggersPM;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -8,12 +8,12 @@ import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition of an item that teleports the player back to their spawn point.
@@ -26,12 +26,13 @@ public class RecallStoneItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
-            if (serverLevel.dimension().equals(serverPlayer.getRespawnDimension())) {
+    @NotNull
+    public InteractionResult use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
+            if (serverLevel.dimension().equals(ServerPlayer.RespawnConfig.getDimensionOrDefault(serverPlayer.getRespawnConfig()))) {
                 // If the player's respawn point is in this dimension, teleport them to it
-                DimensionTransition respawn = serverPlayer.findRespawnPositionAndUseSpawnBlock(true, DimensionTransition.DO_NOTHING);
-                serverPlayer.teleportTo(serverLevel, respawn.pos().x(), respawn.pos().y(), respawn.pos().z(), respawn.yRot(), respawn.xRot());
+                TeleportTransition respawn = serverPlayer.findRespawnPositionAndUseSpawnBlock(true, TeleportTransition.DO_NOTHING);
+                serverPlayer.teleportTo(serverLevel, respawn.position().x(), respawn.position().y(), respawn.position().z(), respawn.relatives(), respawn.yRot(), respawn.xRot(), true);
                 serverPlayer.connection.send(new ClientboundLevelEventPacket(1032, BlockPos.ZERO, 0, false));   // Play the portal travel sound
                 if (!player.hasInfiniteMaterials()) {
                     player.getItemInHand(hand).shrink(1);

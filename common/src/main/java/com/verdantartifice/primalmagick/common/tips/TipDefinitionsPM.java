@@ -110,7 +110,7 @@ public class TipDefinitionsPM {
     }
 
     public static Stream<TipDefinition> stream(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.TIPS).stream();
+        return registryAccess.lookupOrThrow(RegistryKeysPM.TIPS).stream();
     }
 
     @NotNull

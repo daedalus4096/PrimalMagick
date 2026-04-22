@@ -82,7 +82,7 @@ public class ClientRenderEvents {
         Screen gui = mc.screen;
 
         // Assemble the tooltip components for showing primal affinities on an item stack
-        if (gui instanceof AbstractContainerScreen && (Services.INPUT.isKeyDown(KeyBindings.VIEW_AFFINITY_KEY) != Services.CONFIG.showAffinities()) && !mc.mouseHandler.isMouseGrabbed() && stack != null && !stack.isEmpty()) {
+        if (mc.level != null && gui instanceof AbstractContainerScreen && (Services.INPUT.isKeyDown(KeyBindings.VIEW_AFFINITY_KEY) != Services.CONFIG.showAffinities()) && !mc.mouseHandler.isMouseGrabbed() && stack != null && !stack.isEmpty()) {
             AffinityManager.getInstance().getAffinityValues(stack, mc.level).ifPresentOrElse(sources -> {
                 if (sources.isEmpty()) {
                     elements.add(Either.left(Component.translatable("tooltip.primalmagick.affinities.none")));
@@ -106,9 +106,9 @@ public class ClientRenderEvents {
     
     public static void onHighlightEntity(EntityHitResult target, PoseStack poseStack, MultiBufferSource multiBufferSource, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get()) {
+        if (mc.player != null && (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get())) {
             Entity entity = target.getEntity();
-            AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.level().registryAccess()).ifPresent(affinities -> {
+            AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.registryAccess()).ifPresent(affinities -> {
                 boolean isScanned = ResearchManager.isScanned(entity.getType(), mc.player);
                 if (isScanned && !affinities.isEmpty()) {
                     double interpolatedEntityX = entity.xo + (partialTicks * (entity.getX() - entity.xo));

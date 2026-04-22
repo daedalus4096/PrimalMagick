@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.InactiveWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ProgressButton;
@@ -115,11 +113,8 @@ public class RequirementsPage extends AbstractPage {
         this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
         y += 53;
         
-        guiGraphics.pose().pushPose();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
-        
+        guiGraphics.pose().pushMatrix();
+
         int labelX = x - 3 + (side * 140);
         y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.MUST_OBTAIN, "grimoire.primalmagick.must_obtain_header", labelX, y, 16);      // Render obtain requirement section
         y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.MUST_CRAFT, "grimoire.primalmagick.must_craft_header", labelX, y, 16);        // Render craft requirement section
@@ -127,6 +122,6 @@ public class RequirementsPage extends AbstractPage {
         y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.RESEARCH, "grimoire.primalmagick.required_research_header", labelX, y, 16);   // Render research requirement section
         y = this.renderRequirementsLabel(guiGraphics, RequirementCategory.STAT, "grimoire.primalmagick.required_stats_header", labelX, y, 18);          // Render stat requirement section
         
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 }

@@ -15,13 +15,10 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.common.tiles.base.IHasCustomScanContents;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -36,6 +33,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -81,23 +80,23 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     
     protected final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         @Override
-        protected void onOpen(Level level, BlockPos pos, BlockState state) {
+        protected void onOpen(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state) {
             level.playSound(null, pos, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
             level.setBlock(pos, state.setValue(EssenceCaskBlock.OPEN, true), Block.UPDATE_ALL);
         }
 
         @Override
-        protected void onClose(Level level, BlockPos pos, BlockState state) {
+        protected void onClose(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state) {
             level.playSound(null, pos, SoundEvents.BARREL_CLOSE, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
             level.setBlock(pos, state.setValue(EssenceCaskBlock.OPEN, false), Block.UPDATE_ALL);
         }
 
         @Override
-        protected void openerCountChanged(Level level, BlockPos pos, BlockState state, int previousCount, int currentCount) {
+        protected void openerCountChanged(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, int previousCount, int currentCount) {
         }
 
         @Override
-        protected boolean isOwnContainer(Player player) {
+        public boolean isOwnContainer(@NotNull Player player) {
             return player.containerMenu instanceof EssenceCaskMenu caskMenu && caskMenu.getTile() == EssenceCaskTileEntity.this;  // Reference comparison intended
         }
     };
@@ -112,13 +111,13 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     }
     
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceCaskTileEntity entity) {
-        if (!level.isClientSide && !entity.inventories.get(INPUT_INV_INDEX).isEmpty()) {
+        if (!level.isClientSide() && !entity.inventories.get(INPUT_INV_INDEX).isEmpty()) {
             ItemStack stack = entity.getItem(INPUT_INV_INDEX, 0);
             if (stack.getItem() instanceof EssenceItem essenceItem) {
                 EssenceType essenceType = essenceItem.getEssenceType();
                 Source essenceSource = essenceItem.getSource();
                 int inputCount = stack.getCount();
-                int currentCount = entity.contents.contains(essenceType, essenceSource) ? entity.contents.get(essenceType, essenceSource) : 0;
+                int currentCount = entity.getEssenceCount(essenceType, essenceSource);
                 int totalCount = entity.getTotalEssenceCount();
                 int capacity = entity.getTotalEssenceCapacity();
                 if (totalCount + inputCount <= capacity) {
@@ -134,11 +133,12 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new EssenceCaskMenu(windowId, playerInv, this.getBlockPos(), this, this.caskData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -152,11 +152,11 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     }
     
     public int getEssenceCountForType(EssenceType type) {
-        return this.contents.row(type).entrySet().stream().mapToInt(Map.Entry::getValue).sum();
+        return this.contents.row(type).values().stream().mapToInt(i -> i).sum();
     }
     
     public int getEssenceCountForSource(Source source) {
-        return this.contents.column(source).entrySet().stream().mapToInt(Map.Entry::getValue).sum();
+        return this.contents.column(source).values().stream().mapToInt(i -> i).sum();
     }
     
     protected EssenceType getEssenceTypeForIndex(int index) {
@@ -168,7 +168,12 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     }
     
     public int getEssenceCount(EssenceType essenceType, Source source) {
-        return this.contents.contains(essenceType, source) ? this.contents.get(essenceType, source) : 0;
+        if (this.contents.contains(essenceType, source)) {
+            Integer boxedCount = this.contents.get(essenceType, source);
+            return boxedCount != null ? boxedCount : 0;
+        } else {
+            return 0;
+        }
     }
     
     public int setEssenceCount(EssenceType type, Source source, int amount) {
@@ -191,7 +196,7 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
         }
         EssenceType row = this.getEssenceTypeForIndex(index);
         Source col = this.getEssenceSourceForIndex(index);
-        return this.contents.contains(row, col) ? this.contents.get(row, col) : 0;
+        return this.getEssenceCount(row, col);
     }
     
     public void setEssenceCountAtSlot(int index, int count) {
@@ -204,40 +209,30 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.loadContentsNbt(compound);
-    }
-    
-    protected void loadContentsNbt(CompoundTag compound) {
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
         this.contents.clear();
-        CompoundTag contentsTag = compound.getCompound("CaskContents");
-        for (EssenceType type : EssenceType.values()) {
-            CompoundTag typeContents = contentsTag.getCompound(type.getSerializedName());
-            for (Source source : Sources.getAllSorted()) {
-                int count = typeContents.getInt(source.getId().toString());
-                this.contents.put(type, source, count);
+        input.child("CaskContents").ifPresent(contentsInput -> {
+            for (EssenceType type : EssenceType.values()) {
+                ValueInput typeInput = contentsInput.childOrEmpty(type.getSerializedName());
+                for (Source source : Sources.getAllSorted()) {
+                    int count = typeInput.getIntOr(source.getId().toString(), 0);
+                    this.contents.put(type, source, count);
+                }
             }
-        }
+        });
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.put("CaskContents", this.getContentsNbt());
-    }
-    
-    protected CompoundTag getContentsNbt() {
-        CompoundTag contentsTag = new CompoundTag();
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        ValueOutput contentsOutput = output.child("CaskContents");
         for (EssenceType type : EssenceType.values()) {
-            CompoundTag typeContents = new CompoundTag();
+            ValueOutput typeOutput = contentsOutput.child(type.getSerializedName());
             for (Source source : Sources.getAllSorted()) {
-                int count = this.contents.contains(type, source) ? this.contents.get(type, source) : 0;
-                typeContents.put(source.getId().toString(), IntTag.valueOf(count));
+                typeOutput.putInt(source.getId().toString(), this.getEssenceCount(type, source));
             }
-            contentsTag.put(type.getSerializedName(), typeContents);
         }
-        return contentsTag;
     }
 
     public void dropContents() {
@@ -245,24 +240,26 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
         for (Table.Cell<EssenceType, Source, Integer> cell : this.contents.cellSet()) {
             ItemStack tempStack = EssenceItem.getEssence(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
             this.contents.put(cell.getRowKey(), cell.getColumnKey(), 0);
-            Containers.dropItemStack(this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), tempStack);
+            if (this.level != null) {
+                Containers.dropItemStack(this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), tempStack);
+            }
         }
     }
 
     public void startOpen(Player player) {
-        if (!this.remove && !player.isSpectator()) {
-            this.openersCounter.incrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
+        if (!this.remove && !player.isSpectator() && this.getLevel() != null) {
+            this.openersCounter.incrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState(), player.getContainerInteractionRange());
         }
     }
 
     public void stopOpen(Player player) {
-        if (!this.remove && !player.isSpectator()) {
+        if (!this.remove && !player.isSpectator() && this.getLevel() != null) {
             this.openersCounter.decrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
         }
     }
     
     public void recheckOpen() {
-        if (!this.remove) {
+        if (!this.remove && this.getLevel() != null) {
             this.openersCounter.recheckOpeners(this.getLevel(), this.getBlockPos(), this.getBlockState());
         }
     }

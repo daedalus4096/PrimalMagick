@@ -4,14 +4,16 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition for a thrown apple entity.  Thrown by treefolk.  Does light damage on impact.
@@ -24,14 +26,11 @@ public class AppleEntity extends ThrowableItemProjectile {
     }
     
     public AppleEntity(Level world, LivingEntity thrower) {
-        super(EntityTypesPM.APPLE.get(), thrower, world);
+        super(EntityTypesPM.APPLE.get(), thrower, world, Items.APPLE.getDefaultInstance());
     }
     
-    public AppleEntity(Level world, double x, double y, double z) {
-        super(EntityTypesPM.APPLE.get(), x, y, z, world);
-    }
-
     @Override
+    @NotNull
     protected Item getDefaultItem() {
         return Items.APPLE;
     }
@@ -40,9 +39,6 @@ public class AppleEntity extends ThrowableItemProjectile {
         return new ItemParticleOption(ParticleTypes.ITEM, this.getItem());
     }
 
-    /**
-     * Handler for {@link World#setEntityState}
-     */
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {
@@ -54,16 +50,18 @@ public class AppleEntity extends ThrowableItemProjectile {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult result) {
+    protected void onHitEntity(@NotNull EntityHitResult result) {
         super.onHitEntity(result);
-        result.getEntity().hurt(this.level().damageSources().thrown(this, this.getOwner()), 2.0F);
+        if (this.level() instanceof ServerLevel serverLevel) {
+            result.getEntity().hurtServer(serverLevel, serverLevel.damageSources().thrown(this, this.getOwner()), 2.0F);
+        }
     }
 
     @Override
-    protected void onHit(HitResult result) {
+    protected void onHit(@NotNull HitResult result) {
         super.onHit(result);
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             level.broadcastEntityEvent(this, (byte)3);
             this.discard();
         }

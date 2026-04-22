@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.util;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,7 +39,7 @@ public class InventoryUtils {
             return true;
         }
         int count = stack.getCount();
-        for (ItemStack searchStack : player.getInventory().items) {
+        for (ItemStack searchStack : player.getInventory().getNonEquipmentItems()) {
             // Determine if the stack items, and optionally NBT, match
             boolean areEqual = matchNBT ?
                     ItemStack.matches(stack, searchStack) :
@@ -103,7 +102,7 @@ public class InventoryUtils {
         if (tag == null) {
             return true;
         }
-        for (ItemStack searchStack : player.getInventory().items) {
+        for (ItemStack searchStack : player.getInventory().getNonEquipmentItems()) {
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && searchStack.is(tag)) {
                 amount -= searchStack.getCount();
@@ -141,8 +140,8 @@ public class InventoryUtils {
             return false;
         }
         int count = stack.getCount();
-        for (int index = 0; index < player.getInventory().items.size(); index++) {
-            ItemStack searchStack = player.getInventory().items.get(index);
+        for (int index = 0; index < player.getInventory().getNonEquipmentItems().size(); index++) {
+            ItemStack searchStack = player.getInventory().getNonEquipmentItems().get(index);
             // Determine if the stack items, and optionally NBT, match
             boolean areEqual = matchNBT ?
                     ItemStack.matches(stack, searchStack) :
@@ -151,14 +150,14 @@ public class InventoryUtils {
                 if (searchStack.getCount() > count) {
                     searchStack.shrink(count);
                     count = 0;
-                    if (player instanceof ServerPlayer) {
-                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(ClientboundContainerSetSlotPacket.PLAYER_INVENTORY, 0, index, searchStack));
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        serverPlayer.connection.send(new ClientboundContainerSetSlotPacket(-2, 0, index, searchStack));
                     }
                 } else {
                     count -= searchStack.getCount();
-                    player.getInventory().items.set(index, ItemStack.EMPTY);
-                    if (player instanceof ServerPlayer) {
-                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(ClientboundContainerSetSlotPacket.PLAYER_INVENTORY, 0, index, ItemStack.EMPTY));
+                    player.getInventory().getNonEquipmentItems().set(index, ItemStack.EMPTY);
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        serverPlayer.connection.send(new ClientboundContainerSetSlotPacket(-2, 0, index, ItemStack.EMPTY));
                     }
                 }
                 if (count <= 0) {
@@ -212,8 +211,8 @@ public class InventoryUtils {
             // If the player is not carrying enough of the given items, return false immediately
             return false;
         }
-        for (int index = 0; index < player.getInventory().items.size(); index++) {
-            ItemStack searchStack = player.getInventory().items.get(index);
+        for (int index = 0; index < player.getInventory().getNonEquipmentItems().size(); index++) {
+            ItemStack searchStack = player.getInventory().getNonEquipmentItems().get(index);
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && searchStack.is(tag)) {
                 if (searchStack.getCount() > amount) {
@@ -221,14 +220,14 @@ public class InventoryUtils {
                     searchStack.shrink(amount);
                     amount = 0;
                     if (player instanceof ServerPlayer) {
-                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(ClientboundContainerSetSlotPacket.PLAYER_INVENTORY, 0, index, searchStack));
+                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(-2, 0, index, searchStack));
                     }
                 } else {
                     addRefundItem(searchStack, searchStack.getCount(), player);
                     amount -= searchStack.getCount();
-                    player.getInventory().items.set(index, ItemStack.EMPTY);
+                    player.getInventory().getNonEquipmentItems().set(index, ItemStack.EMPTY);
                     if (player instanceof ServerPlayer) {
-                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(ClientboundContainerSetSlotPacket.PLAYER_INVENTORY, 0, index, ItemStack.EMPTY));
+                        ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(-2, 0, index, ItemStack.EMPTY));
                     }
                 }
                 if (amount <= 0) {
@@ -242,8 +241,9 @@ public class InventoryUtils {
     
     private static void addRefundItem(ItemStack stack, int refundCount, Player player) {
         ItemStack refundStack = ItemStack.EMPTY;
-        if (Services.ITEMS.hasCraftingRemainingItem(stack)) {
-            refundStack = Services.ITEMS.getCraftingRemainingItem(stack).copyWithCount(refundCount);
+        ItemStack remainderStack = stack.getItem().getCraftingRemainder();
+        if (!remainderStack.isEmpty()) {
+            refundStack = remainderStack.copyWithCount(refundCount);
         } else if (stack.is(Items.POTION)) {
             // Potions don't use the standard container mechanism, so test for them directly
             refundStack = new ItemStack(Items.GLASS_BOTTLE, refundCount);
@@ -275,7 +275,7 @@ public class InventoryUtils {
     public static NonNullList<ItemStack> find(@Nullable Player player, @Nullable ItemStack toFind, boolean matchNBT) {
         NonNullList<ItemStack> retVal = NonNullList.create();
         if (player != null && toFind != null && !toFind.isEmpty()) {
-            for (ItemStack searchStack : player.getInventory().items) {
+            for (ItemStack searchStack : player.getInventory().getNonEquipmentItems()) {
                 // Determine if the stack items, and optionally NBT, match
                 boolean areEqual = matchNBT ?
                         ItemStack.matches(toFind, searchStack) :
@@ -316,7 +316,7 @@ public class InventoryUtils {
     public static NonNullList<ItemStack> find(@Nullable Player player, @Nullable TagKey<Item> tag) {
         NonNullList<ItemStack> retVal = NonNullList.create();
         if (player != null && tag != null) {
-            for (ItemStack searchStack : player.getInventory().items) {
+            for (ItemStack searchStack : player.getInventory().getNonEquipmentItems()) {
                 // Only the items need match, not the NBT data
                 if (!searchStack.isEmpty() && searchStack.is(tag)) {
                     retVal.add(searchStack);

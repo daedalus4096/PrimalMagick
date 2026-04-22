@@ -14,7 +14,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
  * @author Daedalus4096
  */
 public class SyncProgressPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("sync_progress");
+    public static final Identifier CHANNEL = ResourceUtils.loc("sync_progress");
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncProgressPacket> STREAM_CODEC = StreamCodec.ofMember(SyncProgressPacket::encode, SyncProgressPacket::decode);
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -67,12 +67,12 @@ public class SyncProgressPacket implements IMessageToServer {
             if (message.firstSync != ResearchManager.isResearchStarted(player, message.key)) {
                 // If called for, ensure that prerequisites for the next stage are checked and consumed
                 if (message.runChecks && !checkAndConsumePrerequisites(player, message.key)) {
-                    LOGGER.debug("Requirements not met for research {} by player {}", message.key.getRootKey().location(), player.getName().getString());
+                    LOGGER.debug("Requirements not met for research {} by player {}", message.key.getRootKey().identifier(), player.getName().getString());
                     return;
                 }
                 
                 // Do the actual progression
-                LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey().location(), player.getName().getString());
+                LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey().identifier(), player.getName().getString());
                 ResearchManager.progressResearch(player, message.key, true, !message.noFlags, !message.noPopups);
             }
         }

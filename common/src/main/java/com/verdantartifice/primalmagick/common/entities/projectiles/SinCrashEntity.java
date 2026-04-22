@@ -7,14 +7,16 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.SpellTrailPack
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.hurtingprojectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Entity definition for an inner demon's sin crash projectile.
@@ -33,8 +35,7 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
     @Override
     public void tick() {
         super.tick();
-        Level level = this.level();
-        if (level instanceof ServerLevel serverLevel && this.isAlive() && this.tickCount % 2 == 0) {
+        if (this.level() instanceof ServerLevel serverLevel && this.isAlive() && this.tickCount % 2 == 0) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
                     new SpellTrailPacket(this.position(), Sources.VOID.getColor()),
@@ -45,11 +46,11 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult result) {
+    protected void onHitBlock(@NotNull BlockHitResult result) {
         // Only impact when hitting a block
         super.onHitBlock(result);
         Level level = this.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             SinCrystalEntity crystal = new SinCrystalEntity(level, result.getLocation().x, result.getLocation().y, result.getLocation().z);
             level.addFreshEntity(crystal);
             this.discard();
@@ -62,7 +63,7 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurtServer(@NotNull ServerLevel serverLevel, @NotNull DamageSource source, float amount) {
         return false;
     }
 
@@ -73,6 +74,6 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return ParticleTypes.DRAGON_BREATH;
+        return PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0F);
     }
 }

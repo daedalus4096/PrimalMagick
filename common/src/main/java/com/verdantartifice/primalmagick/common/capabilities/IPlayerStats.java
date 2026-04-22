@@ -3,9 +3,12 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.Recipe;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -14,7 +17,7 @@ import javax.annotation.Nullable;
  * 
  * @author Daedalus4096
  */
-public interface IPlayerStats extends INBTSerializablePM<CompoundTag> {
+public interface IPlayerStats extends INBTSerializablePM<Tag> {
     /**
      * Remove all statistics data from the player.
      */
@@ -57,7 +60,7 @@ public interface IPlayerStats extends INBTSerializablePM<CompoundTag> {
      * @param recipeId the ID of the recipe to be queried
      * @return whether the player has crafted the given recipe before
      */
-    boolean isRecipeCrafted(@Nullable ResourceLocation recipeId);
+    boolean isRecipeCrafted(@Nullable ResourceKey<Recipe<?>> recipeId);
     
     /**
      * Determine whether the player has crafted the given recipe group before, for the purposes of bonus expertise.
@@ -65,7 +68,7 @@ public interface IPlayerStats extends INBTSerializablePM<CompoundTag> {
      * @param groupId the ID of the recipe group to be queried
      * @return whether the player has crafted any recipe in the given group before
      */
-    boolean isRecipeGroupCrafted(@Nullable ResourceLocation groupId);
+    boolean isRecipeGroupCrafted(@Nullable Identifier groupId);
     
     /**
      * Determine whether the player has runescribed the given enchantment before, for the purposes of bonus expertise.
@@ -73,33 +76,33 @@ public interface IPlayerStats extends INBTSerializablePM<CompoundTag> {
      * @param enchantmentId the ID of the enchantment to be queried
      * @return whether the player has runescribed the given enchantment before
      */
-    boolean isRuneEnchantmentCrafted(@Nullable ResourceLocation enchantmentId);
+    boolean isRuneEnchantmentCrafted(@Nullable Identifier enchantmentId);
     
     /**
      * Mark the given recipe as having been crafted, and thus ineligible for further bonus expertise.
      * 
      * @param recipeId the ID of the recipe to be updated
      */
-    void setRecipeCrafted(@Nullable ResourceLocation recipeId);
+    void setRecipeCrafted(@Nullable ResourceKey<Recipe<?>> recipeId);
     
     /**
      * Mark the given recipe group as having been crafted, and thus ineligible for further bonus expertise.
      * 
      * @param groupId the ID of the recipe group to be updated
      */
-    void setRecipeGroupCrafted(@Nullable ResourceLocation groupId);
+    void setRecipeGroupCrafted(@Nullable Identifier groupId);
     
     /**
      * Mark the given enchantment as having been runescribed, and thus ineligible for further bonus expertise.
      * 
      * @param enchantmentId the ID of the enchantment to be updated
      */
-    void setRuneEnchantmentCrafted(@Nullable ResourceLocation enchantmentId);
+    void setRuneEnchantmentCrafted(@Nullable Identifier enchantmentId);
     
     /**
-     * Sync the given player's statistics data to the their client.
+     * Sync the given player's statistics data to their client.
      * 
      * @param player the player whose client should receive the data
      */
-    void sync(@Nullable ServerPlayer player);
+    void sync(@NotNull ServerPlayer player);
 }

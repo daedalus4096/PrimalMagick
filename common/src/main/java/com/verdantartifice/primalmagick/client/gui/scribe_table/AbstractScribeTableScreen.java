@@ -4,9 +4,12 @@ import com.verdantartifice.primalmagick.client.gui.AbstractContainerScreenPM;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     
     protected abstract ScribeTableMode getMode();
     
-    protected abstract ResourceLocation getBgTexture();
+    protected abstract Identifier getBgTexture();
 
     @Override
     protected void init() {
@@ -37,13 +40,13 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
         for (ScribeTableMode mode : ScribeTableMode.values()) {
             ScribeTableModeTabButton tab = new ScribeTableModeTabButton(mode, this);
             tab.setPosition(tabPosX, tabPosY + 27 * tabCount++);
-            tab.setStateTriggered(mode == this.getMode());
+            tab.setSelected(mode == this.getMode());
             this.tabButtons.add(tab);
         }
     }
 
     @Override
-    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
@@ -51,17 +54,17 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         // Render background texture
-        pGuiGraphics.blit(this.getBgTexture(), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.getBgTexture(), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         this.tabButtons.forEach(tab -> tab.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick));
     }
 
     @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
         for (ScribeTableModeTabButton tab : this.tabButtons) {
-            if (tab.mouseClicked(pMouseX, pMouseY, pButton)) {
+            if (tab.mouseClicked(event, isDoubleClick)) {
                 return true;
             }
         }
-        return super.mouseClicked(pMouseX, pMouseY, pButton);
+        return super.mouseClicked(event, isDoubleClick);
     }
 }

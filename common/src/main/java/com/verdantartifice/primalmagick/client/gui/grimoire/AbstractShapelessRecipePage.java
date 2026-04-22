@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -67,16 +66,11 @@ public abstract class AbstractShapelessRecipePage<T extends Recipe<?>> extends A
         int overlayWidth = 51;
         int overlayHeight = 51;
         
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);        
-        
         // Render overlay background
-        guiGraphics.pose().pushPose();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().translate(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2), 0.0F);
-        guiGraphics.pose().scale(2.0F, 2.0F, 1.0F);
-        guiGraphics.blit(OVERLAY, -(overlayWidth / 2), -(overlayHeight / 2), 0, 0, overlayWidth, overlayHeight);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().translate(x - 6 + (side * 140) + (indent / 2), y + 49 + (overlayHeight / 2));
+        guiGraphics.pose().scale(2.0F, 2.0F);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OVERLAY, -(overlayWidth / 2), -(overlayHeight / 2), 0, 0, overlayWidth, overlayHeight, 256, 256);
+        guiGraphics.pose().popMatrix();
     }
 }

@@ -11,11 +11,12 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -28,6 +29,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -88,12 +90,12 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
     
     @Override
-    public boolean stillValid(Player playerIn) {
+    public boolean stillValid(@NotNull Player playerIn) {
         return stillValid(this.worldPosCallable, playerIn, BlocksPM.ARCANE_WORKBENCH.get());
     }
     
     @Override
-    public void removed(Player playerIn) {
+    public void removed(@NotNull Player playerIn) {
         // Return crafting inputs and wand to the player's inventory when GUI is closed
         super.removed(playerIn);
         this.clearContainer(playerIn, this.wandInv);
@@ -101,7 +103,8 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
     
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot.hasItem()) {
@@ -152,22 +155,22 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
     
     @Override
-    public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+    public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slotIn) {
         return slotIn.container != this.resultInv && super.canTakeItemForPickAll(stack, slotIn);
     }
     
     @Override
-    public void slotsChanged(Container inventoryIn) {
+    public void slotsChanged(@NotNull Container inventoryIn) {
         super.slotsChanged(inventoryIn);
         this.slotChangedCraftingGrid(this.player.level());
     }
     
     protected void slotChangedCraftingGrid(Level world) {
         CraftingInput craftInput = this.craftingInv.asCraftInput();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             // Get the active recipe, if any, for client display of mana costs
             this.activeArcaneRecipe = null;
-            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);
+            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.recipeAccess().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);
             if (arcaneOptional.isPresent()) {
                 RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
                 if (recipe.value().getRequirement().isEmpty() || recipe.value().getRequirement().get().isMetBy(player)) {
@@ -175,10 +178,9 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
                 }
             }
         }
-        if (!world.isClientSide && this.player instanceof ServerPlayer) {
-            ServerPlayer spe = (ServerPlayer)this.player;
+        if (world instanceof ServerLevel serverLevel && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);
+            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = serverLevel.recipeAccess().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);
             if (arcaneOptional.isPresent()) {
                 // If the inputs match a defined arcane recipe, show the output if the player can use it
                 RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
@@ -186,7 +188,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
                     stack = recipe.value().assemble(craftInput, world.registryAccess());
                 }
             } else {
-                Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, craftInput, world);
+                Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = serverLevel.recipeAccess().getRecipeFor(RecipeType.CRAFTING, craftInput, world);
                 if (vanillaOptional.isPresent()) {
                     // If the inputs match a defined vanilla recipe, show the output if the player can use it
                     RecipeHolder<CraftingRecipe> recipe = vanillaOptional.get();
@@ -219,7 +221,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedContents contents) {
+    public void fillCraftSlotsStackedContents(StackedItemContents contents) {
         this.craftingInv.fillStackedContents(contents);
     }
 

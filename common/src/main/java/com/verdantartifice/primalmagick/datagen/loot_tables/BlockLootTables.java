@@ -2,12 +2,13 @@ package com.verdantartifice.primalmagick.datagen.loot_tables;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -24,7 +25,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.OptionalInt;
 
 /**
- * Data provider for all of the mod's block loot tables.
+ * Data provider for all the mod's block loot tables.
  * 
  * @author Daedalus4096
  */
@@ -139,7 +140,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
     }
 
     private void registerMarbleLootTables() {
-        this.registerBasicTable(BlocksPM.MARBLE_RAW.get());
+        this.registerBasicTable(BlocksPM.MARBLE.get());
         this.registerSlabTable(BlocksPM.MARBLE_BRICK_SLAB.get());
         this.registerBasicTable(BlocksPM.MARBLE_BRICK_STAIRS.get());
         this.registerBasicTable(BlocksPM.MARBLE_BRICK_WALL.get());
@@ -346,28 +347,30 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
     
     private void registerBuddingGemLootTables() {
         Holder<Enchantment> fortuneHolder = this.registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE);
-        this.registerLootTableBuilder(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.AMETHYST_SHARD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(fortuneHolder)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(this.applyExplosionDecay(b, LootItem.lootTableItem(Items.AMETHYST_SHARD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
+        HolderLookup.RegistryLookup<Item> itemLookup = this.registries.lookupOrThrow(Registries.ITEM);
+
+        this.registerLootTableBuilder(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.AMETHYST_SHARD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(fortuneHolder)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemLookup, ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(this.applyExplosionDecay(b, LootItem.lootTableItem(Items.AMETHYST_SHARD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
         this.dropWhenSilkTouch(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD.get());
         this.dropWhenSilkTouch(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD.get());
         this.dropWhenSilkTouch(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD.get());
         this.registerLootTableBuilder(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.AMETHYST_BLOCK)));
         this.registerLootTableBuilder(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get())));
         this.registerLootTableBuilder(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get())));
-        this.registerLootTableBuilder(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.DIAMOND).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(fortuneHolder)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(this.applyExplosionDecay(b, LootItem.lootTableItem(Items.DIAMOND).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
+        this.registerLootTableBuilder(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.DIAMOND).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(fortuneHolder)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemLookup, ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(this.applyExplosionDecay(b, LootItem.lootTableItem(Items.DIAMOND).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
         this.dropWhenSilkTouch(BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD.get());
         this.dropWhenSilkTouch(BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD.get());
         this.dropWhenSilkTouch(BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD.get());
         this.registerLootTableBuilder(BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.DIAMOND_BLOCK)));
         this.registerLootTableBuilder(BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(ItemsPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get())));
         this.registerLootTableBuilder(BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(ItemsPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get())));
-        this.registerLootTableBuilder(BlocksPM.SYNTHETIC_EMERALD_CLUSTER.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.EMERALD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(fortuneHolder)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(this.applyExplosionDecay(b, LootItem.lootTableItem(Items.EMERALD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
+        this.registerLootTableBuilder(BlocksPM.SYNTHETIC_EMERALD_CLUSTER.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.EMERALD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(fortuneHolder)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemLookup, ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(this.applyExplosionDecay(b, LootItem.lootTableItem(Items.EMERALD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
         this.dropWhenSilkTouch(BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD.get());
         this.dropWhenSilkTouch(BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD.get());
         this.dropWhenSilkTouch(BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD.get());
         this.registerLootTableBuilder(BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.EMERALD_BLOCK)));
         this.registerLootTableBuilder(BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(ItemsPM.DAMAGED_BUDDING_EMERALD_BLOCK.get())));
         this.registerLootTableBuilder(BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(ItemsPM.CHIPPED_BUDDING_EMERALD_BLOCK.get())));
-        this.registerLootTableBuilder(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.QUARTZ).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(fortuneHolder)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(this.applyExplosionDecay(b, LootItem.lootTableItem(Items.QUARTZ).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
+        this.registerLootTableBuilder(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.QUARTZ).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(fortuneHolder)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemLookup, ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(this.applyExplosionDecay(b, LootItem.lootTableItem(Items.QUARTZ).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
         this.dropWhenSilkTouch(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD.get());
         this.dropWhenSilkTouch(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD.get());
         this.dropWhenSilkTouch(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD.get());

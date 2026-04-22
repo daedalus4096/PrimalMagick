@@ -8,8 +8,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -18,9 +20,11 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * Display widget for showing all the possible itemstacks for a given crafting ingredient.  Used
@@ -47,7 +51,7 @@ public class IngredientWidget extends Button {
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderContents(@NotNull GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         this.lastStack = this.currentStack;
         this.currentStack = this.getDisplayStack();
         if (!this.currentStack.isEmpty()) {
@@ -62,9 +66,9 @@ public class IngredientWidget extends Button {
     }
 
     @Override
-    protected boolean isValidClickButton(int p_93652_) {
+    protected boolean isValidClickButton(@NotNull MouseButtonInfo buttonInfo) {
         ItemStack displayStack = this.getDisplayStack();
-        return super.isValidClickButton(p_93652_) && !displayStack.isEmpty() && this.screen.isIndexKey(displayStack.getHoverName().getString());
+        return super.isValidClickButton(buttonInfo) && !displayStack.isEmpty() && this.screen.isIndexKey(displayStack.getHoverName().getString());
     }
 
     @Override
@@ -79,23 +83,23 @@ public class IngredientWidget extends Button {
                     mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
         }
     }
-    
+
+    @SuppressWarnings("deprecation")
     @Nonnull
     protected ItemStack getDisplayStack() {
         if (this.ingredient != null) {
-            ItemStack[] matching = this.ingredient.getItems();
-            if (matching != null && matching.length > 0) {
-                // Cycle through each matching stack of the ingredient and display them one at a time
-                int index = (int)((System.currentTimeMillis() / 1000L) % matching.length);
-                return matching[index];
-            }
+            // Cycle through each matching stack of the ingredient and display them one at a time
+            long length = this.ingredient.items().count();
+            long index = ((System.currentTimeMillis() / 1000L) % length);
+            Optional<Holder<Item>> holderOpt = index > 0 ? this.ingredient.items().skip(index - 1).findFirst() : this.ingredient.items().findFirst();
+            return holderOpt.map(Holder::value).map(ItemStack::new).orElse(ItemStack.EMPTY);
         }
         return ItemStack.EMPTY;
     }
     
     private static class Handler implements OnPress {
         @Override
-        public void onPress(Button button) {
+        public void onPress(@NotNull Button button) {
             if (button instanceof IngredientWidget iw) {
                 // Set the new grimoire topic and open a new screen for it
                 iw.getScreen().gotoTopic(new OtherResearchTopic(iw.getDisplayStack().getHoverName().getString(), 0));

@@ -10,10 +10,10 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.QuorumRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
+import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
-import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.AbstractWeightFunction;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
@@ -22,18 +22,19 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, List<AbstractReward<?>> otherRewards, Optional<AbstractRequirement<?>> requirement,
-        Optional<Integer> requiredMaterialCountOverride, Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, List<ResourceLocation> aidBlocks,
+        Optional<Integer> requiredMaterialCountOverride, Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, List<Identifier> aidBlocks,
         Optional<AbstractWeightFunction<?>> weightFunction) {
     public static final int MAX_MATERIALS = 4;
     
@@ -57,7 +58,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
                 Codec.INT.optionalFieldOf("requiredMaterialCountOverride").forGetter(ProjectTemplate::requiredMaterialCountOverride),
                 Codec.DOUBLE.optionalFieldOf("baseSuccessChanceOverride").forGetter(ProjectTemplate::baseSuccessChanceOverride),
                 Codec.DOUBLE.fieldOf("rewardMultiplier").forGetter(ProjectTemplate::rewardMultiplier),
-                ResourceLocation.CODEC.listOf().fieldOf("aidBlocks").forGetter(ProjectTemplate::aidBlocks),
+                Identifier.CODEC.listOf().fieldOf("aidBlocks").forGetter(ProjectTemplate::aidBlocks),
                 AbstractWeightFunction.dispatchCodec().optionalFieldOf("weightFunction").forGetter(ProjectTemplate::weightFunction)
             ).apply(instance, ProjectTemplate::new));
     }
@@ -76,7 +77,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
                 ProjectTemplate::baseSuccessChanceOverride,
                 ByteBufCodecs.DOUBLE,
                 ProjectTemplate::rewardMultiplier,
-                ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()),
+                Identifier.STREAM_CODEC.apply(ByteBufCodecs.list()),
                 ProjectTemplate::aidBlocks,
                 ByteBufCodecs.optional(AbstractWeightFunction.dispatchStreamCodec()),
                 ProjectTemplate::weightFunction,
@@ -94,18 +95,18 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
             return null;
         }
         
-        RegistryAccess registryAccess = player.level().registryAccess();
-        ResourceKey<ProjectTemplate> key = registryAccess.registryOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).getResourceKey(this).orElse(null);
+        RegistryAccess registryAccess = player.registryAccess();
+        ResourceKey<ProjectTemplate> key = registryAccess.lookupOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).getResourceKey(this).orElse(null);
         if (key == null) {
             // If this isn't a registered project template, fail initialization to prevent use
             return null;
         }
         
-        ResourceLocation foundAid = null;
+        Identifier foundAid = null;
         if (!this.aidBlocks.isEmpty()) {
             boolean found = false;
-            Set<ResourceLocation> nearbyIds = nearby.stream().map(b -> Services.BLOCKS_REGISTRY.getKey(b)).collect(Collectors.toUnmodifiableSet());
-            for (ResourceLocation aidBlock : this.aidBlocks) {
+            Set<Identifier> nearbyIds = nearby.stream().map(Services.BLOCKS_REGISTRY::getKey).filter(Objects::nonNull).collect(Collectors.toUnmodifiableSet());
+            for (Identifier aidBlock : this.aidBlocks) {
                 if (nearbyIds.contains(aidBlock)) {
                     found = true;
                     foundAid = aidBlock;
@@ -141,15 +142,15 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         return new Project(key, materials, this.otherRewards, this.getBaseSuccessChance(player), this.rewardMultiplier, Optional.ofNullable(foundAid));
     }
     
-    protected int getRequiredMaterialCount(Player player) {
+    private int getRequiredMaterialCount(Player player) {
         return this.requiredMaterialCountOverride.orElseGet(() -> {
             // Get projects completed from stats and calculate based on that
             int completed = StatsManager.getValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
             return Math.min(MAX_MATERIALS, 1 + (completed / 5));
         });
     }
-    
-    protected double getBaseSuccessChance(Player player) {
+
+    private double getBaseSuccessChance(Player player) {
         return this.baseSuccessChanceOverride.orElseGet(() -> {
             // Get projects completed from stats and calculate based on that
             int completed = StatsManager.getValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
@@ -157,8 +158,8 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         });
     }
     
-    @Nonnull
-    protected WeightedRandomBag<AbstractProjectMaterial<?>> getMaterialOptions(ServerPlayer player) {
+    @NotNull
+    private WeightedRandomBag<AbstractProjectMaterial<?>> getMaterialOptions(ServerPlayer player) {
         WeightedRandomBag<AbstractProjectMaterial<?>> retVal = new WeightedRandomBag<>();
         for (AbstractProjectMaterial<?> material : this.materialOptions) {
             if (material.isAllowedInProject(player)) {
@@ -179,7 +180,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
         protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
         protected double rewardMultiplier = 0.25D;
-        protected final List<ResourceLocation> aidBlocks = new ArrayList<>();
+        protected final List<Identifier> aidBlocks = new ArrayList<>();
         protected Optional<AbstractWeightFunction<?>> weightFunction = Optional.empty();
         
         protected Builder() {}
@@ -237,7 +238,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
             if (this.requirements.isEmpty()) {
                 return Optional.empty();
             } else if (this.requirements.size() == 1) {
-                return Optional.of(this.requirements.get(0));
+                return Optional.of(this.requirements.getFirst());
             } else {
                 return Optional.of(new AndRequirement(this.requirements));
             }

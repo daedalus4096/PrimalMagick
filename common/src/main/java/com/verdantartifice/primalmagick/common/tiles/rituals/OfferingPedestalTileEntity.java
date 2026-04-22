@@ -7,12 +7,11 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -37,7 +36,7 @@ public abstract class OfferingPedestalTileEntity extends AbstractTileSidedInvent
     @Override
     protected Set<Integer> getSyncedSlotIndices(int inventoryIndex) {
         // Sync the pedestal's item stack for client rendering use
-        return inventoryIndex == INPUT_INV_INDEX ? ImmutableSet.of(Integer.valueOf(0)) : ImmutableSet.of();
+        return inventoryIndex == INPUT_INV_INDEX ? ImmutableSet.of(0) : ImmutableSet.of();
     }
     
     @Nullable
@@ -51,16 +50,16 @@ public abstract class OfferingPedestalTileEntity extends AbstractTileSidedInvent
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.altarPos = compound.contains("AltarPos", Tag.TAG_LONG) ? BlockPos.of(compound.getLong("AltarPos")) : null;
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        input.getLong("AltarPos").ifPresentOrElse(pos -> this.altarPos = BlockPos.of(pos), () -> this.altarPos = null);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
         if (this.altarPos != null) {
-            compound.putLong("AltarPos", this.altarPos.asLong());
+            output.putLong("AltarPos", this.altarPos.asLong());
         }
     }
 
@@ -69,7 +68,7 @@ public abstract class OfferingPedestalTileEntity extends AbstractTileSidedInvent
     }
     
     public ItemStack getSyncedStack() {
-        return this.syncedInventories.get(INPUT_INV_INDEX).get(0);
+        return this.syncedInventories.get(INPUT_INV_INDEX).getFirst();
     }
     
     public void setItem(ItemStack stack) {
@@ -109,6 +108,6 @@ public abstract class OfferingPedestalTileEntity extends AbstractTileSidedInvent
 
     @Override
     public Optional<IItemHandlerPM> getTargetRandomizedInventory() {
-        return Optional.ofNullable(this.itemHandlers.get(INPUT_INV_INDEX));
+        return Optional.of(this.itemHandlers.get(INPUT_INV_INDEX));
     }
 }

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.registries;
 
+import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.Culture;
@@ -50,6 +51,7 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<GridRewardType<?>>> GRID_REWARD_TYPES = key("grid_reward_types");
     public static final ResourceKey<Registry<ResearchTopicType<?>>> RESEARCH_TOPIC_TYPES = key("research_topic_types");
     public static final ResourceKey<Registry<RitualStepType<?>>> RITUAL_STEP_TYPES = key("ritual_step_types");
+    public static final ResourceKey<Registry<AffinityType<?>>> AFFINITY_TYPES = key("affinity_types");
     
     private static <T> ResourceKey<Registry<T>> key(String name) {
         return ResourceKey.createRegistryKey(ResourceUtils.loc(name));

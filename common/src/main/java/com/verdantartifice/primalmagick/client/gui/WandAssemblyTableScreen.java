@@ -3,8 +3,9 @@ package com.verdantartifice.primalmagick.client.gui;
 import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableMenu;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
@@ -13,7 +14,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class WandAssemblyTableScreen extends AbstractContainerScreenPM<WandAssemblyTableMenu> {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/wand_assembly_table.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/wand_assembly_table.png");
 
     public WandAssemblyTableScreen(WandAssemblyTableMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);
@@ -27,6 +28,6 @@ public class WandAssemblyTableScreen extends AbstractContainerScreenPM<WandAssem
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
 }

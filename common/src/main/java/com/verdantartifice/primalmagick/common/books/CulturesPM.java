@@ -34,6 +34,6 @@ public class CulturesPM {
         context.register(CulturesPM.SKY, new Culture(ResourceUtils.loc("sky"), LootTablesPM.LIBRARY_SKY, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get().defaultBlockState()));
         context.register(CulturesPM.SUN, new Culture(ResourceUtils.loc("sun"), LootTablesPM.LIBRARY_SUN, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, BlocksPM.STAINED_SKYGLASS_YELLOW.get().defaultBlockState()));
         context.register(CulturesPM.MOON, new Culture(ResourceUtils.loc("moon"), LootTablesPM.LIBRARY_MOON, LootTablesPM.LIBRARY_WELCOME, LootTablesPM.LIBRARY_HIDDEN, BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get().defaultBlockState()));
-        context.register(CulturesPM.FORBIDDEN, new Culture(ResourceUtils.loc("forbidden"), LootTablesPM.LIBRARY_FORBIDDEN, LootTablesPM.LIBRARY_WARNING, BuiltInLootTables.EMPTY, BlocksPM.STAINED_SKYGLASS_RED.get().defaultBlockState()));
+        context.register(CulturesPM.FORBIDDEN, new Culture(ResourceUtils.loc("forbidden"), LootTablesPM.LIBRARY_FORBIDDEN, LootTablesPM.LIBRARY_WARNING, LootTablesPM.EMPTY, BlocksPM.STAINED_SKYGLASS_RED.get().defaultBlockState()));
     }
 }

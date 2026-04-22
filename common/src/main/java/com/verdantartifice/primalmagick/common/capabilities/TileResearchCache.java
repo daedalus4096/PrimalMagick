@@ -2,15 +2,10 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.List;
 import java.util.Set;
@@ -23,42 +18,18 @@ import java.util.function.Predicate;
  * @author Daedalus4096
  */
 public class TileResearchCache implements ITileResearchCache {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     private final Set<AbstractResearchKey<?>> research = ConcurrentHashMap.newKeySet();
 
     @Override
-    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
-        CompoundTag rootTag = new CompoundTag();
-        
-        // Serialize cached completed research
-        ListTag researchList = new ListTag();
-        this.research.forEach(k -> {
-            AbstractResearchKey.dispatchCodec().encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), k)
-                .resultOrPartial(msg -> LOGGER.error("Failed to encode research key in tile research cache capability: {}", msg))
-                .ifPresent(encodedTag -> researchList.add(encodedTag));
-        });
-        rootTag.put("research", researchList);
-        
-        return rootTag;
+    public void serialize(ValueOutput output) {
+        ValueOutput.TypedOutputList<AbstractResearchKey<?>> childList = output.list("Research", AbstractResearchKey.dispatchCodec());
+        this.research.forEach(childList::add);
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-        if (nbt == null) {
-            return;
-        }
-        
+    public void deserialize(ValueInput input) {
         this.clear();
-        
-        // Deserialize completed research
-        ListTag researchList = nbt.getList("research", Tag.TAG_COMPOUND);
-        for (int index = 0; index < researchList.size(); index++) {
-            CompoundTag innerTag = researchList.getCompound(index);
-            AbstractResearchKey.dispatchCodec().parse(registries.createSerializationContext(NbtOps.INSTANCE), innerTag)
-                .resultOrPartial(msg -> LOGGER.error("Failed to decode research key in tile research cache capability: {}", msg))
-                .ifPresent(parsedKey -> this.research.add(parsedKey));
-        }
+        input.listOrEmpty("Research", AbstractResearchKey.dispatchCodec()).stream().forEach(this.research::add);
     }
 
     @Override
@@ -77,7 +48,7 @@ public class TileResearchCache implements ITileResearchCache {
 
     @Override
     public boolean isResearchComplete(List<AbstractResearchKey<?>> keys) {
-        return keys.stream().allMatch(k -> this.isResearchComplete(k));
+        return keys.stream().allMatch(this::isResearchComplete);
     }
     
     @Override

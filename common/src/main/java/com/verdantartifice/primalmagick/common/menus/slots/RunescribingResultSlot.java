@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -38,16 +39,16 @@ public class RunescribingResultSlot extends Slot {
     }
 
     @Override
-    public boolean mayPlace(ItemStack stack) {
+    public boolean mayPlace(@NotNull ItemStack stack) {
         return false;
     }
     
     @Override
-    protected void checkTakeAchievements(ItemStack stack) {
+    protected void checkTakeAchievements(@NotNull ItemStack stack) {
         super.checkTakeAchievements(stack);
         
         Level level = this.player.level();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             List<Rune> runes = RuneManager.getRunes(stack);
             Map<Holder<Enchantment>, Integer> enchants = RuneManager.getRuneEnchantments(level.registryAccess(), runes, stack, this.player, false);
 
@@ -56,9 +57,7 @@ public class RunescribingResultSlot extends Slot {
                 StatsManager.incrementValue(serverPlayer, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());
                 
                 // Award appropriate expertise and advancements for each enchant
-                enchants.keySet().forEach(enchant -> {
-                    CriteriaTriggersPM.RUNESCRIBING.get().trigger(serverPlayer, enchant);
-                });
+                enchants.keySet().forEach(enchant -> CriteriaTriggersPM.RUNESCRIBING.get().trigger(serverPlayer, enchant));
                 
                 // Assemble a frequency map of runes that go into the found enchants to determine which runes were used more than once
                 Map<Rune, Integer> outputFrequencyMap = enchants.keySet().stream()
@@ -67,8 +66,8 @@ public class RunescribingResultSlot extends Slot {
                         .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(element -> 1)));
                 Map<Rune, Integer> inputFrequencyMap = runes.stream()
                         .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(element -> 1)));
-                inputFrequencyMap.entrySet().stream()
-                        .map(entry -> Map.entry(entry.getKey(), Math.max(0, 1 + outputFrequencyMap.getOrDefault(entry.getKey(), 0) - inputFrequencyMap.get(entry.getKey()))))
+                inputFrequencyMap.keySet().stream()
+                        .map(rune -> Map.entry(rune, Math.max(0, 1 + outputFrequencyMap.getOrDefault(rune, 0) - inputFrequencyMap.get(rune))))
                         .forEach(entry -> CriteriaTriggersPM.RUNE_USE_COUNT.get().trigger(serverPlayer, entry.getKey(), entry.getValue()));
             }
 
@@ -76,14 +75,12 @@ public class RunescribingResultSlot extends Slot {
             if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS)) {
                 ResearchManager.completeResearch(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS);
             }
-            enchants.keySet().forEach(enchant -> {
-                ResearchManager.completeResearch(this.player, new RuneEnchantmentKey(enchant));
-            });
+            enchants.keySet().forEach(enchant -> ResearchManager.completeResearch(this.player, new RuneEnchantmentKey(enchant)));
         }
     }
     
     @Override
-    public void onTake(Player thePlayer, ItemStack stack) {
+    public void onTake(@NotNull Player thePlayer, @NotNull ItemStack stack) {
         // Handle crafting side effects
         this.checkTakeAchievements(stack);
         
@@ -97,7 +94,7 @@ public class RunescribingResultSlot extends Slot {
     }
 
     @Override
-    protected void onQuickCraft(ItemStack stack, int amount) {
+    protected void onQuickCraft(@NotNull ItemStack stack, int amount) {
         // Handle crafting side effects
         this.checkTakeAchievements(stack);
     }

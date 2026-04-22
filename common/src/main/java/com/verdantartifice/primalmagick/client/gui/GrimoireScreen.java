@@ -16,7 +16,7 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsDescripti
 import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsScorePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.OtherIndexPage;
-import com.verdantartifice.primalmagick.client.gui.grimoire.PageImage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.PageSprite;
 import com.verdantartifice.primalmagick.client.gui.grimoire.PageString;
 import com.verdantartifice.primalmagick.client.gui.grimoire.RecipeIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.RecipeMetadataPage;
@@ -33,7 +33,6 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexBut
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.TopicLinkButton;
 import com.verdantartifice.primalmagick.common.affinities.AffinityIndexEntry;
-import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
@@ -48,7 +47,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
-import com.verdantartifice.primalmagick.common.research.keys.ItemScanKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
@@ -63,7 +61,6 @@ import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearch
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.SourceResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.TopicLink;
-import com.verdantartifice.primalmagick.common.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.rewards.AttunementReward;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
@@ -81,6 +78,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -89,7 +87,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
@@ -111,7 +109,6 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * GUI screen for the grimoire research browser.
@@ -120,8 +117,8 @@ import java.util.stream.Stream;
  */
 public class GrimoireScreen extends Screen {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
-    private static final PageImage IMAGE_LINE = PageImage.parse("primalmagick:textures/gui/grimoire.png:24:184:95:6:1");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final PageSprite IMAGE_LINE = new PageSprite(ResourceUtils.loc("grimoire/separator"), 96, 5);
     private static final float SCALE = 1.3F;
     private static final int HISTORY_LIMIT = 64;
     private static final int BG_WIDTH = 256;
@@ -311,11 +308,11 @@ public class GrimoireScreen extends Screen {
         super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
         // Render the grimoire background
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(this.scaledLeft, this.scaledTop, 0.0F);
-        guiGraphics.pose().scale(SCALE, SCALE, 1.0F);
-        guiGraphics.blit(TEXTURE, 0, 0, 0, 0, BG_WIDTH, BG_HEIGHT);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().translate(this.scaledLeft, this.scaledTop);
+        guiGraphics.pose().scale(SCALE, SCALE);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, 0, 0, 0, 0, BG_WIDTH, BG_HEIGHT, 256, 256);
+        guiGraphics.pose().popMatrix();
         
         // Render the two visible pages
         int current = 0;
@@ -489,18 +486,18 @@ public class GrimoireScreen extends Screen {
         }
     }
     
-    private Tuple<List<String>, List<PageImage>> parseText(String rawText) {
+    private Tuple<List<String>, List<PageSprite>> parseText(String rawText) {
         // Process text
         rawText = rawText.replaceAll("<BR>", "~B\n\n");
         rawText = rawText.replaceAll("<LINE>", "~L");
         rawText = rawText.replaceAll("<PAGE>", "~P");
-        List<PageImage> images = new ArrayList<>();
+        List<PageSprite> images = new ArrayList<>();
         String[] imgSplit = rawText.split("<IMG>");
         for (String imgStr : imgSplit) {
             int index = imgStr.indexOf("</IMG>");
             if (index >= 0) {
                 String cleanStr = imgStr.substring(0, index);
-                PageImage newImage = PageImage.parse(cleanStr);
+                PageSprite newImage = PageSprite.parse(cleanStr);
                 if (newImage == null) {
                     rawText = rawText.replaceFirst(cleanStr, "\n");
                 } else {
@@ -584,16 +581,16 @@ public class GrimoireScreen extends Screen {
         
         // Process text
         int lineHeight = this.font.lineHeight;
-        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        Tuple<List<String>, List<PageSprite>> parsedData = this.parseText(rawText);
         List<String> parsedText = parsedData.getA();
-        List<PageImage> images = parsedData.getB();
+        List<PageSprite> images = parsedData.getB();
         
         // First page has less available space to account for title
         int heightRemaining = 137;
         
         // Break parsed text into pages
         StagePage tempPage = new StagePage(stage, true);
-        List<PageImage> tempImages = new ArrayList<>();
+        List<PageSprite> tempImages = new ArrayList<>();
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
@@ -619,8 +616,8 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                 tempPage.addElement(tempImages.remove(0));
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
@@ -638,12 +635,12 @@ public class GrimoireScreen extends Screen {
             tempPage = new StagePage(stage);
             heightRemaining = 165;
             while (!tempImages.isEmpty()) {
-                if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+                if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
                     heightRemaining = 165;
                     this.pages.add(tempPage);
                     tempPage = new StagePage(stage);
                 } else {
-                    heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                    heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                     tempPage.addElement(tempImages.remove(0));
                 }
             }
@@ -681,22 +678,22 @@ public class GrimoireScreen extends Screen {
         }
         
         // Generate recipe pages from stage and addenda
-        List<ResourceLocation> locList = new ArrayList<>();
-        for (ResourceLocation loc : stage.recipes()) {
+        List<Identifier> locList = new ArrayList<>();
+        for (Identifier loc : stage.recipes()) {
             if (!locList.contains(loc)) {
                 locList.add(loc);
             }
         }
         for (ResearchAddendum addendum : addenda) {
             if (addendum.completionRequirementOpt().isEmpty() || addendum.completionRequirementOpt().get().isMetBy(player)) {
-                for (ResourceLocation loc : addendum.recipes()) {
+                for (Identifier loc : addendum.recipes()) {
                     if (!locList.contains(loc)) {
                         locList.add(loc);
                     }
                 }
             }
         }
-        for (ResourceLocation recipeLoc : locList) {
+        for (Identifier recipeLoc : locList) {
             Optional<RecipeHolder<?>> opt = level.getRecipeManager().byKey(recipeLoc);
             opt.ifPresent(recipe -> {
                 AbstractRecipePage page = RecipePageFactory.createPage(recipe, level.registryAccess());
@@ -786,16 +783,16 @@ public class GrimoireScreen extends Screen {
         
         // Process text
         int lineHeight = this.font.lineHeight;
-        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        Tuple<List<String>, List<PageSprite>> parsedData = this.parseText(rawText);
         List<String> parsedText = parsedData.getA();
-        List<PageImage> images = parsedData.getB();
+        List<PageSprite> images = parsedData.getB();
         
         // Starting with the second page, so we have more space available
         int heightRemaining = 165;
         
         // Break parsed text into pages
         LinguisticsDescriptionPage tempPage = new LinguisticsDescriptionPage(language);
-        List<PageImage> tempImages = new ArrayList<>();
+        List<PageSprite> tempImages = new ArrayList<>();
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
@@ -821,8 +818,8 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                 tempPage.addElement(tempImages.remove(0));
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
@@ -839,12 +836,12 @@ public class GrimoireScreen extends Screen {
         tempPage = new LinguisticsDescriptionPage(language);
         heightRemaining = 165;
         while (!tempImages.isEmpty()) {
-            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+            if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
                 heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new LinguisticsDescriptionPage(language);
             } else {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                 tempPage.addElement(tempImages.remove(0));
             }
         }
@@ -906,22 +903,22 @@ public class GrimoireScreen extends Screen {
         // Add the first page with no contents to show the meter
         this.pages.add(new AttunementPage(source, true));
         
-        ResourceLocation sourceId = source.getId();
+        Identifier sourceId = source.getId();
         String componentKey = String.join(".", "source", sourceId.getNamespace(), sourceId.getPath(), "attunement", "text");
         String rawText = (Component.translatable(componentKey)).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;
-        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        Tuple<List<String>, List<PageSprite>> parsedData = this.parseText(rawText);
         List<String> parsedText = parsedData.getA();
-        List<PageImage> images = parsedData.getB();
+        List<PageSprite> images = parsedData.getB();
         
         // Starting with the second page, so we have more space available
         int heightRemaining = 165;
         
         // Break parsed text into pages
         AttunementPage tempPage = new AttunementPage(source);
-        List<PageImage> tempImages = new ArrayList<>();
+        List<PageSprite> tempImages = new ArrayList<>();
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
@@ -947,8 +944,8 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                 tempPage.addElement(tempImages.remove(0));
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
@@ -965,12 +962,12 @@ public class GrimoireScreen extends Screen {
         tempPage = new AttunementPage(source);
         heightRemaining = 165;
         while (!tempImages.isEmpty()) {
-            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+            if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
                 heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new AttunementPage(source);
             } else {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                 tempPage.addElement(tempImages.remove(0));
             }
         }
@@ -981,23 +978,23 @@ public class GrimoireScreen extends Screen {
     
     protected void parseRuneEnchantmentPage(Holder<Enchantment> enchant) {
         Minecraft mc = Minecraft.getInstance();
-        ResourceLocation enchantKey = enchant.unwrapKey().get().location();
+        Identifier enchantKey = enchant.unwrapKey().get().identifier();
         String rawText = ResearchManager.isResearchComplete(mc.player, new RuneEnchantmentKey(enchant)) ?
                 (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "text"))).getString() :
                 (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "partial_text"))).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;
-        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        Tuple<List<String>, List<PageSprite>> parsedData = this.parseText(rawText);
         List<String> parsedText = parsedData.getA();
-        List<PageImage> images = parsedData.getB();
+        List<PageSprite> images = parsedData.getB();
         
         // First page has less available space to account for title and rune combination
         int heightRemaining = 113;
 
         // Break parsed text into pages
         RuneEnchantmentPage tempPage = new RuneEnchantmentPage(enchant, true);
-        List<PageImage> tempImages = new ArrayList<>();
+        List<PageSprite> tempImages = new ArrayList<>();
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
@@ -1023,8 +1020,8 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                 tempPage.addElement(tempImages.remove(0));
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
@@ -1041,12 +1038,12 @@ public class GrimoireScreen extends Screen {
         tempPage = new RuneEnchantmentPage(enchant);
         heightRemaining = 165;
         while (!tempImages.isEmpty()) {
-            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+            if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
                 heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new RuneEnchantmentPage(enchant);
             } else {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                 tempPage.addElement(tempImages.remove(0));
             }
         }
@@ -1182,16 +1179,16 @@ public class GrimoireScreen extends Screen {
         
         // Process text
         int lineHeight = this.font.lineHeight;
-        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        Tuple<List<String>, List<PageSprite>> parsedData = this.parseText(rawText);
         List<String> parsedText = parsedData.getA();
-        List<PageImage> images = parsedData.getB();
+        List<PageSprite> images = parsedData.getB();
         
         // First page has less available space to account for title
         int heightRemaining = 137;
 
         // Break parsed text into pages
         TipsPage tempPage = new TipsPage(true);
-        List<PageImage> tempImages = new ArrayList<>();
+        List<PageSprite> tempImages = new ArrayList<>();
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
@@ -1217,8 +1214,8 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                 tempPage.addElement(tempImages.remove(0));
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
@@ -1235,12 +1232,12 @@ public class GrimoireScreen extends Screen {
         tempPage = new TipsPage();
         heightRemaining = 165;
         while (!tempImages.isEmpty()) {
-            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+            if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
                 heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new TipsPage();
             } else {
-                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
                 tempPage.addElement(tempImages.remove(0));
             }
         }

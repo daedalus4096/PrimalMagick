@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import com.google.common.collect.ImmutableSet;
 import com.mojang.logging.LogUtils;
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
@@ -18,15 +18,15 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,7 +34,6 @@ import org.slf4j.Logger;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Definition of an auto-charger tile entity.  Provides the siphoning functionality for the
@@ -48,7 +47,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     protected static final int INPUT_INV_INDEX = 0;
 
     protected int chargeTime;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
 
     public AutoChargerTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.AUTO_CHARGER.get(), pos, state);
@@ -61,45 +60,44 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.chargeTime = compound.getInt("ChargeTime");
-        this.ownerUUID = null;
-        if (compound.contains("OwnerUUID")) {
-            String ownerUUIDStr = compound.getString("OwnerUUID");
-            if (!ownerUUIDStr.isEmpty()) {
-                this.ownerUUID = UUID.fromString(ownerUUIDStr);
-            }
-        }
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.chargeTime = input.getIntOr("ChargeTime", 0);
+        this.owner = EntityReference.read(input, "Owner");
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("ChargeTime", this.chargeTime);
-        if (this.ownerUUID != null) {
-            compound.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("ChargeTime", this.chargeTime);
+        EntityReference.store(this.owner, output, "Owner");
     }
 
     @Override
     public void setTileOwner(@Nullable Player owner) {
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
     }
 
     @Override
-    public @Nullable Player getTileOwner() {
-        if (this.level instanceof ServerLevel serverLevel) {
-            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-        } else {
-            return null;
-        }
+    @Nullable
+    public Player getTileOwner() {
+        Level level = this.getLevel();
+        return level != null ? EntityReference.getPlayer(this.owner, level) : null;
+    }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        // Before the block entity is removed, invalidate its route table and drop its inventory
+        super.preRemoveSideEffects(pos, state);
+        this.getRouteTable().invalidate();
+        this.dropContents(this.getLevel(), pos);
     }
 
     @Override
     public int receiveMana(@NotNull Source source, int maxReceive, boolean simulate) {
+        Level level = this.getLevel();
         ItemStack chargeStack = this.getItem(INPUT_INV_INDEX, 0);
-        if (!this.getLevel().isClientSide() && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
+        if (level != null && !level.isClientSide() && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
             MutableInt actualReceived = new MutableInt(0);
             chargeStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, manaCap -> {
                 actualReceived.setValue(manaCap.receiveMana(source, maxReceive, simulate));
@@ -111,7 +109,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             ItemStack chargeStack = entity.getItem(INPUT_INV_INDEX, 0);
             if (entity.chargeTime % 5 == 0 && chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 final ManaStorage manaStorage = chargeStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
@@ -133,7 +131,7 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
     
     public ItemStack getSyncedStack() {
-        return this.syncedInventories.get(INPUT_INV_INDEX).get(0);
+        return this.syncedInventories.get(INPUT_INV_INDEX).getFirst();
     }
     
     public void setItem(ItemStack stack) {
@@ -197,7 +195,8 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public @NotNull RouteTable getRouteTable() {
+    @NotNull
+    public RouteTable getRouteTable() {
         return RouteManager.getRouteTable(this.getLevel());
     }
 }

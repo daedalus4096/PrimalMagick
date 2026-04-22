@@ -10,7 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * @author Daedalus4096
  */
 public class RemovePropMarkerPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("remove_prop_marker");
+    public static final Identifier CHANNEL = ResourceUtils.loc("remove_prop_marker");
     public static final StreamCodec<RegistryFriendlyByteBuf, RemovePropMarkerPacket> STREAM_CODEC = StreamCodec.ofMember(RemovePropMarkerPacket::encode, RemovePropMarkerPacket::decode);
 
     protected final BlockPos pos;

@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Collections;
 
 public class ImageRadialMenuItem extends TextRadialMenuItem {
-    private final ResourceLocation imageLoc;
+    private final Identifier imageLoc;
     private final int slot;
 
-    public ImageRadialMenuItem(GenericRadialMenu owner, int slot, ResourceLocation imageLoc, Component altText) {
+    public ImageRadialMenuItem(GenericRadialMenu owner, int slot, Identifier imageLoc, Component altText) {
         super(owner, altText, 0x7FFFFFFF);
         this.imageLoc = imageLoc;
         this.slot = slot;
@@ -21,23 +20,16 @@ public class ImageRadialMenuItem extends TextRadialMenuItem {
         return this.slot;
     }
     
-    public ResourceLocation getImageLoc() {
-        return this.imageLoc;
-    }
-    
     @Override
     public void draw(DrawingContext context) {
         if (this.imageLoc == null) {
             super.draw(context);
         } else {
-            context.guiGraphics.pose().pushPose();
-            context.guiGraphics.pose().translate(-8, -8, context.z + 200);
-            context.guiGraphics.pose().scale(0.5F, 0.5F, 1F);
-            RenderSystem.enableBlend();
-            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            context.guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            context.guiGraphics.blit(this.imageLoc, 2 * (int)context.x, 2 * (int)context.y, 0, 0, 32, 32, 32, 32);
-            context.guiGraphics.pose().popPose();
+            context.guiGraphics.pose().pushMatrix();
+            context.guiGraphics.pose().translate(-8, -8);
+            context.guiGraphics.pose().scale(0.5F, 0.5F);
+            context.guiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.imageLoc, 2 * (int)context.x, 2 * (int)context.y, 0, 0, 32, 32, 32, 32, -1);
+            context.guiGraphics.pose().popMatrix();
         }
     }
 

@@ -4,6 +4,8 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.mojang.logging.LogUtils;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.IAffinity;
 import com.verdantartifice.primalmagick.common.affinities.ItemAffinity;
@@ -42,31 +44,33 @@ import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.DataPackUtils;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.Util;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.commands.arguments.IdentifierArgument;
+import net.minecraft.commands.arguments.ResourceKeyArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
-import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -90,8 +94,8 @@ import java.util.stream.Collectors;
  */
 public class PrimalMagickCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext) {
-        LiteralCommandNode<CommandSourceStack> node = dispatcher.register(Commands.literal("primalmagick")
-            .requires((source) -> { return source.hasPermission(2); })
+        LiteralCommandNode<CommandSourceStack> node = dispatcher.register(Commands.literal(Constants.MOD_ID)
+            .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
             .then(Commands.literal("reset")
                 .then(Commands.argument("target", EntityArgument.player()).executes((context) -> { return resetAll(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
             )
@@ -169,12 +173,12 @@ public class PrimalMagickCommand {
                     .then(Commands.literal("reset").executes((context) -> { return resetStats(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("get")
                         // /pm stats <target> get <stat>
-                        .then(Commands.argument("stat", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(ResourceLocation::toString), sb)).executes((context) -> { return getStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "stat")); }))
+                        .then(Commands.argument("stat", IdentifierArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(Identifier::toString), sb)).executes((context) -> { return getStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), IdentifierArgument.getId(context, "stat")); }))
                     )
                     .then(Commands.literal("set")
-                        .then(Commands.argument("stat", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(ResourceLocation::toString), sb))
+                        .then(Commands.argument("stat", IdentifierArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggest(StatsManager.getStatLocations().stream().map(Identifier::toString), sb))
                             // /pm stats <target> set <stat> <value>
-                            .then(Commands.argument("value", StatValueArgument.value()).executes((context) -> { return setStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "stat"), IntegerArgumentType.getInteger(context, "value")); }))
+                            .then(Commands.argument("value", StatValueArgument.value()).executes((context) -> { return setStatValue(context.getSource(), EntityArgument.getPlayer(context, "target"), IdentifierArgument.getId(context, "stat"), IntegerArgumentType.getInteger(context, "value")); }))
                         )
                     )
                 )
@@ -223,11 +227,11 @@ public class PrimalMagickCommand {
                     .then(Commands.literal("sync").executes((context) -> { return syncArcaneRecipes(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
                     .then(Commands.literal("add")
                         // /pm recipes <target> add <recipe>
-                        .then(Commands.argument("recipe", ResourceLocationArgument.id()).suggests(SuggestionProviders.ALL_RECIPES).executes((context) -> { return addArcaneRecipe(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getRecipe(context, "recipe")); }))
+                        .then(Commands.argument("recipe", ResourceKeyArgument.key(Registries.RECIPE)).suggests((ctx, sb) -> ctx.getSource().suggestRegistryElements(Registries.RECIPE, SharedSuggestionProvider.ElementSuggestionType.ELEMENTS, sb, ctx)).executes((context) -> { return addArcaneRecipe(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceKeyArgument.getRecipe(context, "recipe")); }))
                     )
                     .then(Commands.literal("remove")
                         // /pm recipes <target> remove <recipe>
-                        .then(Commands.argument("recipe", ResourceLocationArgument.id()).suggests(SuggestionProviders.ALL_RECIPES).executes((context) -> { return removeArcaneRecipe(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getRecipe(context, "recipe")); }))
+                        .then(Commands.argument("recipe", ResourceKeyArgument.key(Registries.RECIPE)).suggests((ctx, sb) -> ctx.getSource().suggestRegistryElements(Registries.RECIPE, SharedSuggestionProvider.ElementSuggestionType.ELEMENTS, sb, ctx)).executes((context) -> { return removeArcaneRecipe(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceKeyArgument.getRecipe(context, "recipe")); }))
                     )
                 )
             )
@@ -292,9 +296,7 @@ public class PrimalMagickCommand {
                 )
             )
         );
-        dispatcher.register(Commands.literal("pm").requires((source) -> {
-            return source.hasPermission(2);
-        }).redirect(node));
+        dispatcher.register(Commands.literal("pm").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS)).redirect(node));
     }
 
     private static int resetAll(CommandSourceStack source, ServerPlayer player) {
@@ -315,7 +317,7 @@ public class PrimalMagickCommand {
             // List all unlocked research entries for the target player
             Set<AbstractResearchKey<?>> researchSet = knowledge.getResearchSet();
             String[] researchList = researchSet.stream()
-                                        .map(k -> k.toString())
+                                        .map(AbstractResearchKey::toString)
                                         .collect(Collectors.toSet())
                                         .toArray(String[]::new);
             String output = String.join(", ", researchList);
@@ -414,7 +416,7 @@ public class PrimalMagickCommand {
             int stage = knowledge.getResearchStage(entryKey);
             Set<IPlayerKnowledge.ResearchFlag> flagSet = knowledge.getResearchFlags(entryKey);
             String[] flagStrs = flagSet.stream()
-                                    .map(f -> f.name())
+                                    .map(Enum::name)
                                     .collect(Collectors.toSet())
                                     .toArray(String[]::new);
             String flagOutput = (flagStrs.length == 0) ? "none" : String.join(", ", flagStrs);
@@ -568,7 +570,7 @@ public class PrimalMagickCommand {
         return 0;
     }
 
-    private static int getStatValue(CommandSourceStack source, ServerPlayer target, ResourceLocation statLoc) {
+    private static int getStatValue(CommandSourceStack source, ServerPlayer target, Identifier statLoc) {
         // Look up the requested stat value for the given player and display it
         Stat stat = StatsManager.getStat(statLoc);
         if (stat == null) {
@@ -581,7 +583,7 @@ public class PrimalMagickCommand {
         return 0;
     }
 
-    private static int setStatValue(CommandSourceStack source, ServerPlayer target, ResourceLocation statLoc, int value) {
+    private static int setStatValue(CommandSourceStack source, ServerPlayer target, Identifier statLoc, int value) {
         // Set the given value for the given stat for the given player
         Stat stat = StatsManager.getStat(statLoc);
         if (stat == null) {
@@ -669,32 +671,32 @@ public class PrimalMagickCommand {
     private static int getSourcelessItems(CommandSourceStack source, Collection<String> excludeNamespaces) {
         ServerPlayer target = source.getPlayer();
 
-        Logger LOGGER = LogManager.getLogger();
+        Logger LOGGER = LogUtils.getLogger();
 
         ServerLevel level = source.getLevel();
-        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getLevel().getRecipeManager();
+        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getLevel().recipeAccess();
         RegistryAccess registryAccess = source.registryAccess();
 
         List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
 
         String excludeNote = "";
-        if ( (excludeNamespaces != null) && (excludeNamespaces.size() >0)) {
+        if ( (excludeNamespaces != null) && (!excludeNamespaces.isEmpty())) {
             excludeNote = " excluding resource namespaces: "+ String.join(", ", excludeNamespaces);
         }
 
-        target.sendSystemMessage(Component.literal("Found " + Integer.toString(sourcelessItems.size()) + " items without sources"+ excludeNote + "; check system logs for details"), false);
+        target.sendSystemMessage(Component.literal("Found " + sourcelessItems.size() + " items without sources"+ excludeNote + "; check system logs for details"), false);
 
         // note: technically this could result in a list with null elements. which is noncommunicative.
-        LOGGER.info("Items with no sources: " + sourcelessItems.stream().map(Services.ITEMS_REGISTRY::getKey).toList().toString());
+        LOGGER.info("Items with no sources: {}", sourcelessItems.stream().map(Services.ITEMS_REGISTRY::getKey).toList());
 
         return 0;
     }
 
     private static int writeSourcelessItemDatapack(CommandSourceStack source, Collection<String> excludeNamespaces) {
-        Logger LOGGER = LogManager.getLogger();
+        Logger LOGGER = LogUtils.getLogger();
         ServerPlayer target = source.getPlayer();
         ServerLevel level = source.getLevel();
-        RecipeManager recipeManager = source.getLevel().getRecipeManager();
+        RecipeManager recipeManager = source.getLevel().recipeAccess();
         RegistryAccess registryAccess = source.registryAccess();
 
         target.sendSystemMessage(Component.literal("Starting datapack template generation; this may take a while."));
@@ -707,7 +709,7 @@ public class PrimalMagickCommand {
             try {
                 itemsToDataPackTemplate = DataPackUtils.ItemsToDataPackTemplate(sourcelessItems, sourcelessEntities);
             } catch (IOException e) {
-                LOGGER.atError().withThrowable(e).log("Unable to generate datapack");
+                LOGGER.error("Unable to generate datapack", e);
                 target.sendSystemMessage(Component.literal("Failed to write datapack template"));
                 return;
             }
@@ -725,7 +727,7 @@ public class PrimalMagickCommand {
                 target.sendSystemMessage(Component.literal("Wrote datapack template for sourceless items and entities to disk; check system logs for location."));
                 LOGGER.atInfo().log("Wrote datapack to {}", filePath);
             } catch (IOException e) {
-                LOGGER.atError().withThrowable(e).log("Unable to write datapack");
+                LOGGER.error("Unable to write datapack", e);
                 target.sendSystemMessage(Component.literal("Failed to write datapack template"));
             }
         }, Util.backgroundExecutor()).exceptionally(e -> {
@@ -742,7 +744,7 @@ public class PrimalMagickCommand {
         Vector<EntityType<?>> retVal = new Vector<>();
 
         Services.ENTITY_TYPES_REGISTRY.getAll().forEach(entityType -> {
-            ResourceLocation resourceLocation = Services.ENTITY_TYPES_REGISTRY.getKey(entityType);
+            Identifier resourceLocation = Services.ENTITY_TYPES_REGISTRY.getKey(entityType);
             if (resourceLocation == null) {
                 // If the Item can't be resolved in registry, it's got problems I can't care about.
                 return;
@@ -771,7 +773,7 @@ public class PrimalMagickCommand {
 
         Vector<Item> items = new Vector<>();
         Services.ITEMS_REGISTRY.getAll().forEach( (item) -> {
-                ResourceLocation itemId = Services.ITEMS_REGISTRY.getKey(item);
+                Identifier itemId = Services.ITEMS_REGISTRY.getKey(item);
                 if (itemId == null) {
                     // If the Item can't be resolved in registry, it's got problems I can't care about.
                     return;
@@ -794,14 +796,11 @@ public class PrimalMagickCommand {
         return items;
     }
 
-    private static long getRecipeCountForItem(net.minecraft.world.item.crafting.RecipeManager recipeManager, RegistryAccess registryAccess, Item item){
-
-        long count = recipeManager.getRecipes().stream()
+    private static long getRecipeCountForItem(net.minecraft.world.item.crafting.RecipeManager recipeManager, RegistryAccess registryAccess, Item item) {
+        return recipeManager.getRecipes().stream()
             .map(RecipeHolder::value)
-            .filter(r -> r.getResultItem(registryAccess) != null && (r.getResultItem(registryAccess).getItem().equals(item)))
-            .count()
-        ;
-        return count; 
+            .filter(r -> r.getResultItem(registryAccess) instanceof ItemStack stack && stack.is(item))
+            .count();
     }
 
     private static int resetRecipes(CommandSourceStack source, ServerPlayer target) {
@@ -825,18 +824,18 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
             // List all known arcane research book entries for the target player
-            Set<ResourceLocation> knownSet = recipeBook.get().getKnown();
+            Set<ResourceKey<Recipe<?>>> knownSet = recipeBook.get().getKnown();
             String[] knownList = knownSet.stream()
-                                        .map(r -> r.toString())
+                                        .map(ResourceKey::toString)
                                         .collect(Collectors.toSet())
                                         .toArray(new String[knownSet.size()]);
             String knownOutput = String.join(", ", knownList);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.list.known", target.getName(), knownOutput), true);
 
             // List all highlighted arcane research book entries for the target player
-            Set<ResourceLocation> highlightSet = recipeBook.get().getHighlight();
+            Set<ResourceKey<Recipe<?>>> highlightSet = recipeBook.get().getHighlight();
             String[] highlightList = highlightSet.stream()
-                                        .map(r -> r.toString())
+                                        .map(ResourceKey::toString)
                                         .collect(Collectors.toSet())
                                         .toArray(new String[highlightSet.size()]);
             String highlightOutput = String.join(", ", highlightList);
@@ -934,13 +933,13 @@ public class PrimalMagickCommand {
     }
 
     private static int getLanguageComprehension(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage) {
-        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.get", target.getName(), bookLanguage.key().location(), LinguisticsManager.getComprehension(target, bookLanguage)), true);
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.get", target.getName(), bookLanguage.key().identifier(), LinguisticsManager.getComprehension(target, bookLanguage)), true);
         return 0;
     }
 
     private static int setLanguageComprehension(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage, int value) {
         int complexity = bookLanguage.value().complexity();
-        ResourceLocation langKey = bookLanguage.key().location();
+        Identifier langKey = bookLanguage.key().identifier();
         LinguisticsManager.setComprehension(target, bookLanguage, value);
         int newValue = LinguisticsManager.getComprehension(target, bookLanguage);
         if (value > complexity) {
@@ -959,12 +958,12 @@ public class PrimalMagickCommand {
     }
 
     private static int getLanguageVocabulary(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage) {
-        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.get", target.getName(), bookLanguage.key().location(), LinguisticsManager.getVocabulary(target, bookLanguage)), true);
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.get", target.getName(), bookLanguage.key().identifier(), LinguisticsManager.getVocabulary(target, bookLanguage)), true);
         return 0;
     }
 
     private static int setLanguageVocabulary(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookLanguage> bookLanguage, int value) {
-        ResourceLocation langKey = bookLanguage.key().location();
+        Identifier langKey = bookLanguage.key().identifier();
         LinguisticsManager.setVocabulary(target, bookLanguage, value);
         int newValue = LinguisticsManager.getVocabulary(target, bookLanguage);
         source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.set.success", target.getName(), langKey.toString(), newValue), true);
@@ -975,13 +974,13 @@ public class PrimalMagickCommand {
     }
 
     private static int getBookStudyCount(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage) {
-        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.get", target.getName(), bookDef.key().location(), bookLanguage.key().location(), LinguisticsManager.getTimesStudied(target, bookDef, bookLanguage)), true);
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.get", target.getName(), bookDef.key().identifier(), bookLanguage.key().identifier(), LinguisticsManager.getTimesStudied(target, bookDef, bookLanguage)), true);
         return 0;
     }
 
     private static int setBookStudyCount(CommandSourceStack source, ServerPlayer target, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage, int value) {
-        ResourceLocation bookId = bookDef.key().location();
-        ResourceLocation langKey = bookLanguage.key().location();
+        Identifier bookId = bookDef.key().identifier();
+        Identifier langKey = bookLanguage.key().identifier();
         LinguisticsManager.setTimesStudied(target, bookDef, bookLanguage, value);
         int newValue = LinguisticsManager.getTimesStudied(target, bookDef, bookLanguage);
         if (value > IPlayerLinguistics.MAX_STUDY_COUNT) {
@@ -1000,14 +999,12 @@ public class PrimalMagickCommand {
 
     private static int explainItemAffinity(CommandSourceStack source, ItemInput item) {
         // Get the affinity data for the item
-        ResourceLocation itemId = Services.ITEMS_REGISTRY.getKey(item.getItem());
-        IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getLevel().getRecipeManager(), source.registryAccess(), new ArrayList<>()).join();
+        Identifier itemId = Services.ITEMS_REGISTRY.getKey(item.getItem());
+        IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getLevel().recipeAccess(), source.registryAccess(), new ArrayList<>()).join();
         if (affinityData instanceof ItemAffinity itemAffinity) {
-            itemAffinity.getSourceRecipe().ifPresentOrElse(recipeLoc -> {
-                source.sendSuccess(() -> Component.translatable("commands.primalmagick.affinities.explain.from_recipe", itemId.toString(), recipeLoc.toString()), true);
-            }, () -> {
-                source.sendSuccess(() -> Component.translatable("commands.primalmagick.affinities.explain.from_data", itemId.toString()), true);
-            });
+            itemAffinity.getSourceRecipe().ifPresentOrElse(
+                    recipeLoc -> source.sendSuccess(() -> Component.translatable("commands.primalmagick.affinities.explain.from_recipe", itemId.toString(), recipeLoc.toString()), true),
+                    () -> source.sendSuccess(() -> Component.translatable("commands.primalmagick.affinities.explain.from_data", itemId.toString()), true));
         } else {
             source.sendFailure(Component.translatable("commands.primalmagick.affinities.explain.not_found", itemId.toString()));
         }

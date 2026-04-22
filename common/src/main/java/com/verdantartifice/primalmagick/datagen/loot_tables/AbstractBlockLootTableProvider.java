@@ -5,13 +5,13 @@ import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBl
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -31,6 +31,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.LimitCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
@@ -59,7 +60,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvider {
     private static final Logger LOGGER = LogManager.getLogger();
     
-    protected final Set<ResourceLocation> registeredBlocks = new HashSet<>();
+    protected final Set<Identifier> registeredBlocks = new HashSet<>();
     
     public AbstractBlockLootTableProvider(HolderLookup.Provider registries) {
         super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags(), registries);
@@ -82,7 +83,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     // loader-specific version of the base class.
     protected Iterable<Block> getKnownBlocks() {
         // Limit this data provider to blocks added by the mod
-        return Services.BLOCKS_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue).toList();
+        return Services.BLOCKS_REGISTRY.getEntries().stream().filter(entry -> entry.getKey().identifier().getNamespace().equals(Constants.MOD_ID)).map(Map.Entry::getValue).toList();
     }
 
     private void registerLootTableBuilder(Block block, LootTable.Builder builder) {
@@ -150,7 +151,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     }
     
     protected void registerManaBearingDeviceTable(Block block) {
-        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block).apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY).include(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())))
+        LootPool.Builder poolBuilder = LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(block).apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY).include(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())))
                 .when(ExplosionCondition.survivesExplosion());
         LootTable.Builder tableBuilder = LootTable.lootTable().withPool(poolBuilder);
         this.registerLootTableBuilder(block, tableBuilder);
@@ -182,7 +183,7 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> blocks = Services.BLOCKS_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
+        Set<Identifier> blocks = Services.BLOCKS_REGISTRY.getAllKeys().stream().filter(loc -> loc.getNamespace().equals(Constants.MOD_ID)).collect(Collectors.toSet());
         
         // Warn for each mod block that didn't have a loot table registered
         blocks.removeAll(this.registeredBlocks);

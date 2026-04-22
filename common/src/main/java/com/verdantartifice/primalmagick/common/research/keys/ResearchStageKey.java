@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.misc.IconDefinition;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -12,8 +12,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -32,7 +32,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
             ResearchStageKey::getStage,
             ResearchStageKey::new);
     
-    private static final ResourceLocation ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
+    private static final Identifier ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
 
     protected final ResourceKey<ResearchEntry> rootKey;
     protected final int stage;
@@ -54,7 +54,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     
     @Override
     public String toString() {
-        return this.rootKey.location().toString() + "@" + this.stage;
+        return this.rootKey.identifier() + "@" + this.stage;
     }
 
     @Override
@@ -69,12 +69,12 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
 
     @Override
     public IconDefinition getIcon(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getHolder(this.rootKey).flatMap(ref -> ref.value().iconOpt()).orElse(IconDefinition.of(ICON_UNKNOWN));
+        return registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).get(this.rootKey).flatMap(ref -> ref.value().iconOpt()).orElse(IconDefinition.of(ICON_UNKNOWN));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.rootKey.registry(), this.rootKey.location(), this.stage);
+        return Objects.hash(this.rootKey.registry(), this.rootKey.identifier(), this.stage);
     }
 
     @Override

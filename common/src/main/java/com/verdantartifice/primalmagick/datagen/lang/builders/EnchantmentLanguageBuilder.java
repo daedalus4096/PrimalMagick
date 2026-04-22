@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Objects;
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  */
 public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<Enchantment>, EnchantmentLanguageBuilder> {
     public EnchantmentLanguageBuilder(ResourceKey<Enchantment> enchKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(enchKey, () -> Util.makeDescriptionId("enchantment", enchKey.location()), untracker, adder);
+        super(enchKey, () -> Util.makeDescriptionId("enchantment", enchKey.identifier()), untracker, adder);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<Resource
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(ResourceKey<Enchantment> base) {
-        return Objects.requireNonNull(base).location();
+    protected Identifier getBaseRegistryKey(ResourceKey<Enchantment> base) {
+        return Objects.requireNonNull(base).identifier();
     }
 
     public EnchantmentLanguageBuilder description(String value) {

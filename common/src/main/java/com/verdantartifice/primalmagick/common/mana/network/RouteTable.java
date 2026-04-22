@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.util.FunctionUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.NotNull;
@@ -83,7 +84,7 @@ public class RouteTable {
     }
 
     protected void cullInactiveNodes(@NotNull Level level) {
-        level.getProfiler().push("cullInactiveRoutes");
+        Profiler.get().push("cullInactiveRoutes");
         boolean anyRemoved;
         synchronized (this.graph) {
             anyRemoved = this.graph.removeIf(pos -> !level.isLoaded(pos) || !(level.getBlockEntity(pos) instanceof IManaNetworkNode));
@@ -91,6 +92,6 @@ public class RouteTable {
         if (anyRemoved) {
             this.invalidate();
         }
-        level.getProfiler().pop();
+        Profiler.get().pop();
     }
 }

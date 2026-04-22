@@ -15,7 +15,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -31,7 +31,7 @@ import net.minecraft.client.gui.screens.recipebook.GhostRecipe;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -55,15 +55,15 @@ import java.util.stream.Collectors;
  */
 public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, NarratableEntry, RecipeShownListener, PlaceRecipe<Ingredient> {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected static final ResourceLocation RECIPE_BOOK_LOCATION = ResourceLocation.withDefaultNamespace("textures/gui/recipe_book.png");
+    protected static final Identifier RECIPE_BOOK_LOCATION = Identifier.withDefaultNamespace("textures/gui/recipe_book.png");
     protected static final Component SEARCH_HINT = (Component.translatable("gui.recipebook.search_hint")).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
     public static final int IMAGE_WIDTH = 147;
     public static final int IMAGE_HEIGHT = 166;
     private static final int OFFSET_X_POSITION = 86;
     private static final Component ONLY_CRAFTABLES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.craftable");
     private static final Component ALL_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.all");
-    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/filter_enabled"), ResourceLocation.withDefaultNamespace("recipe_book/filter_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/filter_enabled_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/filter_disabled_highlighted"));
-    private static final WidgetSprites FURNACE_FILTER_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_enabled_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_filter_disabled_highlighted"));
+    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/filter_enabled"), Identifier.withDefaultNamespace("recipe_book/filter_disabled"), Identifier.withDefaultNamespace("recipe_book/filter_enabled_highlighted"), Identifier.withDefaultNamespace("recipe_book/filter_disabled_highlighted"));
+    private static final WidgetSprites FURNACE_FILTER_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/furnace_filter_enabled"), Identifier.withDefaultNamespace("recipe_book/furnace_filter_disabled"), Identifier.withDefaultNamespace("recipe_book/furnace_filter_enabled_highlighted"), Identifier.withDefaultNamespace("recipe_book/furnace_filter_disabled_highlighted"));
 
     protected int xOffset;
     protected int width;
@@ -310,8 +310,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.isVisible()) {
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0.0D, 0.0D, 100.0D);
+            guiGraphics.pose().pushMatrix();
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
             int xPos = (this.width - 147) / 2 - this.xOffset;
             int yPos = (this.height - 166) / 2;
@@ -330,7 +329,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
             }
 
             this.recipeBookPage.render(guiGraphics, xPos, yPos, mouseX, mouseY, partialTicks);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
     
@@ -382,7 +381,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                         return false;
                     }
                     this.ghostRecipe.clear();
-                    PacketHandler.sendToServer(new PlaceArcaneRecipePacket(this.mc.player.containerMenu.containerId, recipe, Screen.hasShiftDown()));
+                    PacketHandler.sendToServer(new PlaceArcaneRecipePacket(this.mc.player.containerMenu.containerId, recipe, Minecraft.getInstance().hasShiftDown()));
                     if (!this.isOffsetNextToMainGUI()) {
                         this.setVisible(false);
                     }

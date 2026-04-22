@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -54,13 +54,13 @@ public class TheorycraftManager {
     }
     
     @Nonnull
-    protected static Set<ResourceLocation> getAllAidBlockIds(RegistryAccess registryAccess) {
+    protected static Set<Identifier> getAllAidBlockIds(RegistryAccess registryAccess) {
         return ProjectTemplates.stream(registryAccess).flatMap(t -> t.aidBlocks().stream()).filter(Objects::nonNull).collect(Collectors.toSet());
     }
     
     @Nonnull
     public static Set<Block> getNearbyAidBlocks(Level level, BlockPos pos) {
-        Set<ResourceLocation> allAids = getAllAidBlockIds(level.registryAccess());
+        Set<Identifier> allAids = getAllAidBlockIds(level.registryAccess());
         return getSurroundingsInner(level, pos, b -> allAids.contains(Services.BLOCKS_REGISTRY.getKey(b)));
     }
     

@@ -18,13 +18,15 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -32,6 +34,7 @@ import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
 import java.awt.Color;
@@ -47,8 +50,8 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<ScribeGainComprehensionMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/scribe_gain_comprehension.png");
-    protected static final ResourceLocation PARCHMENT_SPRITE = ResourceUtils.loc("scribe_table/parchment");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/scribe_gain_comprehension.png");
+    protected static final Identifier PARCHMENT_SPRITE = ResourceUtils.loc("scribe_table/parchment");
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected final Map<Vector2i, NodeButton> nodeButtons = new HashMap<>();
@@ -69,7 +72,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     }
 
     @Override
-    protected ResourceLocation getBgTexture() {
+    protected Identifier getBgTexture() {
         return TEXTURE;
     }
 
@@ -78,7 +81,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         super.init();
         Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
         this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 151, this.topPos + 17));
-        this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().location());
+        this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().identifier());
         
         // Initialize the node buttons for the grid
         for (int y = GridDefinition.MIN_POS; y <= GridDefinition.MAX_POS; y++) {
@@ -111,18 +114,16 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
 
         if (lang.value().isComplex()) {
             // Draw the parchment background for the comprehension grid
-            pGuiGraphics.pose().pushPose();
-            pGuiGraphics.pose().translate(this.leftPos + 31, this.topPos + 17, 0);
-            pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
-            pGuiGraphics.blitSprite(PARCHMENT_SPRITE, 0, 0, 228, 216);
-            pGuiGraphics.pose().popPose();
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate(this.leftPos + 31, this.topPos + 17);
+            pGuiGraphics.pose().scale(0.5F, 0.5F);
+            pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PARCHMENT_SPRITE, 0, 0, 228, 216);
+            pGuiGraphics.pose().popMatrix();
             
             // Update the node buttons for each node in the grid definition
             if (this.grid != null) {
-                this.nodeButtons.entrySet().forEach(entry -> {
-                    Vector2i nodePos = entry.getKey();
-                    NodeButton button = entry.getValue();
-                    if (this.grid.getDefinition().getNodes().keySet().contains(nodePos)) {
+                this.nodeButtons.forEach((nodePos, button) -> {
+                    if (this.grid.getDefinition().getNodes().containsKey(nodePos)) {
                         // If the button's position is part of the grid definition, update the button to reflect the node
                         boolean unlockable = this.grid.isUnlockable(nodePos);
                         boolean isUnlocked = this.grid.getUnlocked().contains(nodePos);
@@ -138,7 +139,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 });
             } else {
                 // If no grid is currently active, hide all node buttons
-                this.nodeButtons.entrySet().stream().map(e -> e.getValue()).forEach(b -> b.visible = false);
+                this.nodeButtons.values().forEach(b -> b.visible = false);
             }
         } else {
             // Render missing writing materials text
@@ -147,21 +148,23 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             pGuiGraphics.drawString(this.minecraft.font, text, this.leftPos + 7 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
 
             // If no grid is currently active, hide all node buttons
-            this.nodeButtons.entrySet().stream().map(e -> e.getValue()).forEach(b -> b.visible = false);
+            this.nodeButtons.values().forEach(b -> b.visible = false);
         }
     }
     
     protected void refreshGrid() {
-        Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
-        PlayerGrid newGrid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().location());
-        if (this.grid == null || newGrid == null || newGrid.getLastModified() > this.grid.getLastModified() || !this.grid.getDefinition().getLanguage().equals(newGrid.getDefinition().getLanguage())) {
-            this.grid = newGrid;
+        if (this.minecraft.player != null) {
+            Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
+            PlayerGrid newGrid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().identifier());
+            if (this.grid == null || newGrid == null || newGrid.getLastModified() > this.grid.getLastModified() || !this.grid.getDefinition().getLanguage().equals(newGrid.getDefinition().getLanguage())) {
+                this.grid = newGrid;
+            }
         }
     }
     
     protected static class NodeButton extends ImageButton {
         protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(ResourceUtils.loc("scribe_table/grid_node_button"), ResourceUtils.loc("scribe_table/grid_node_button_disabled"), ResourceUtils.loc("scribe_table/grid_node_button_highlighted"), ResourceUtils.loc("scribe_table/grid_node_button_disabled_highlighted"));
-        protected static final ResourceLocation PLACEHOLDER = ResourceUtils.loc("scribe_table/grid_node_placeholder");
+        protected static final Identifier PLACEHOLDER = ResourceUtils.loc("scribe_table/grid_node_placeholder");
         
         protected final Player player;
         protected final RegistryAccess registryAccess;
@@ -202,7 +205,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         }
 
         @Override
-        public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        public void renderContents(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
             // Configure tooltip
             this.lastTooltip = this.tooltip;
             MutableObject<Component> mutableTooltip = new MutableObject<>(Component.empty());
@@ -231,51 +234,51 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                     }
                 });
             });
-            this.tooltip = mutableTooltip.getValue();
+            this.tooltip = mutableTooltip.get();
             if (!this.lastTooltip.equals(this.tooltip)) {
                 this.setTooltip(Tooltip.create(this.tooltip));
             }
 
             // Render node button background
-            pGuiGraphics.pose().pushPose();
-            pGuiGraphics.pose().translate(this.getX(), this.getY(), 0);
-            pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
-            ResourceLocation resourcelocation = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
-            pGuiGraphics.blitSprite(resourcelocation, 0, 0, this.width * 2, this.height * 2);
-            pGuiGraphics.pose().popPose();
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate(this.getX(), this.getY());
+            pGuiGraphics.pose().scale(0.5F, 0.5F);  // Scale down to 50% size for rendering
+            Identifier id = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
+            pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, id, 0, 0, this.width * 2, this.height * 2);
+            pGuiGraphics.pose().popMatrix();
 
             // Render node contents, if they exist
             this.gridDef.flatMap(d -> d.getNode(this.xIndex, this.yIndex)).ifPresent(node -> {
                 // Render the reward icon
-                pGuiGraphics.pose().pushPose();
+                pGuiGraphics.pose().pushMatrix();
                 int dx = this.width / 2;
                 int dy = this.height / 2;
-                pGuiGraphics.pose().translate(this.getX() + 2 + (dx * 0.75F), this.getY() + 2 + (dy * 0.75F), 5);
-                pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
+                pGuiGraphics.pose().translate(this.getX() + 2 + (dx * 0.75F), this.getY() + 2 + (dy * 0.75F));
+                pGuiGraphics.pose().scale(0.5F, 0.5F);  // Scale down to 50% size for rendering
                 if (this.unlockable) {
                     // If the node can currently be unlocked, pulse its scale up and down for extra visibility
                     float scale = 1F + (0.1F * Mth.sin((this.player.tickCount + pPartialTick) / 3F));
-                    pGuiGraphics.pose().scale(scale, scale, 1F);
+                    pGuiGraphics.pose().scale(scale, scale);
                 }
-                pGuiGraphics.blit(node.getReward().getIconLocation(this.player), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 0, 0, 0, 16, 16, 16, 16);
-                pGuiGraphics.pose().popPose();
+                pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, node.getReward().getIconLocation(this.player), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 32, 32);
+                pGuiGraphics.pose().popMatrix();
                 
                 // Render the node amount string, if applicable
                 node.getReward().getAmountText().ifPresent(text -> {
-                    pGuiGraphics.pose().pushPose();
+                    pGuiGraphics.pose().pushMatrix();
                     Minecraft mc = Minecraft.getInstance();
                     int width = mc.font.width(text.getString());
-                    pGuiGraphics.pose().translate(this.getX() + 11 - width / 2, this.getY() + 7, 10);
-                    pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
+                    pGuiGraphics.pose().translate(this.getX() + 11 - width / 2, this.getY() + 7);
+                    pGuiGraphics.pose().scale(0.5F, 0.5F);  // Scale down to 50% size for rendering
                     pGuiGraphics.drawString(mc.font, text, 0, 0, Color.WHITE.getRGB());
-                    pGuiGraphics.pose().popPose();
+                    pGuiGraphics.pose().popMatrix();
                 });
             });
         }
 
         @Override
-        protected boolean clicked(double pMouseX, double pMouseY) {
-            boolean retVal = this.reachable && super.clicked(pMouseX, pMouseY);
+        public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
+            boolean retVal = this.reachable && super.mouseClicked(event, isDoubleClick);
             if (retVal && this.gridDef.isPresent()) {
                 Optional<GridNodeDefinition> nodeOpt = this.gridDef.get().getNode(this.xIndex, this.yIndex);
                 Holder.Reference<BookLanguage> lang = BookLanguagesPM.getLanguageOrDefault(this.gridDef.get().getLanguage(), this.registryAccess, BookLanguagesPM.DEFAULT);

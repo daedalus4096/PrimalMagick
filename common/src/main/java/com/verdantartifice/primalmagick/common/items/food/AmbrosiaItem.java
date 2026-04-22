@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.items.food;
 
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -36,7 +37,7 @@ public class AmbrosiaItem extends Item {
     protected final AmbrosiaItem.Type ambrosiaType;
     
     public AmbrosiaItem(Source source, AmbrosiaItem.Type ambrosiaType, Item.Properties properties) {
-        super(properties);
+        super(properties.component(DataComponentsPM.SOURCE_TINT.get(), source));
         this.source = source;
         this.ambrosiaType = ambrosiaType;
         AMBROSIAS.add(this);
@@ -44,7 +45,7 @@ public class AmbrosiaItem extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isClientSide && (entityLiving instanceof Player)) {
+        if (!worldIn.isClientSide() && (entityLiving instanceof Player)) {
             Player player = (Player)entityLiving;
 
             // Only modify attunements if the player has started mod progression
@@ -69,10 +70,6 @@ public class AmbrosiaItem extends Item {
             }
         }
         return super.finishUsingItem(stack, worldIn, entityLiving);
-    }
-    
-    public int getColor(int tintIndex) {
-        return tintIndex == 0 ? 0xFFFFFF : this.source.getColor();
     }
     
     public static Collection<AmbrosiaItem> getAllAmbrosias() {

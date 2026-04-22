@@ -10,7 +10,7 @@ import java.util.EnumSet;
  * AI goal for a companion to stay put at its owner's command.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.entity.ai.goal.SitGoal}
+ * @see net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal
  */
 public class CompanionStayGoal extends Goal {
     protected final AbstractCompanionEntity entity;
@@ -29,7 +29,7 @@ public class CompanionStayGoal extends Goal {
     public boolean canUse() {
         if (!this.entity.hasCompanionOwner()) {
             return false;
-        } else if (this.entity.isInWaterOrBubble()) {
+        } else if (this.entity.isInWater()) {
             return false;
         } else if (!this.entity.onGround()) {
             return false;
@@ -38,7 +38,7 @@ public class CompanionStayGoal extends Goal {
             if (owner == null) {
                 return true;
             } else {
-                return this.entity.distanceToSqr(owner) < 144.0D && owner.getLastHurtByMob() != null ? false : this.entity.isCompanionStaying();
+                return (!(this.entity.distanceToSqr(owner) < 144.0D) || owner.getLastHurtByMob() == null) && this.entity.isCompanionStaying();
             }
         }
     }

@@ -27,8 +27,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -47,7 +47,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
     
     public static final String TYPE = "drain_soul";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_DRAIN_SOUL));
-    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> List.of(SpellPropertiesPM.NON_ZERO_DURATION.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -68,12 +68,11 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() instanceof LivingEntity) {
+            if (entityTarget.getEntity() instanceof LivingEntity entity) {
                 // Grant the potion effect
-                LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 int ticks = 20 * this.getDurationSeconds(spell, spellSource, caster, world.registryAccess());
                 entity.addEffect(new MobEffectInstance(EffectsPM.DRAIN_SOUL.getHolder(), ticks));
             }
@@ -81,6 +80,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.INFERNAL;
     }
@@ -91,7 +91,7 @@ public class DrainSoulSpellPayload extends AbstractSpellPayload<DrainSoulSpellPa
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

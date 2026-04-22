@@ -7,10 +7,4 @@ public class WandChargerTileEntityNeoforge extends WandChargerTileEntity {
     public WandChargerTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(pos, state);
     }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        this.doInventorySync();
-    }
 }

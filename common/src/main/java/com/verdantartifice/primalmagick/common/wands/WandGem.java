@@ -5,8 +5,9 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Rarity;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,13 +40,13 @@ public class WandGem implements IWandComponent {
     protected final String tag;                 // Unique identifier for the wand gem
     protected final int capacity;               // The amount of mana the wand can hold
     protected final Rarity rarity;              // The gem's rarity, used to color its name and determine completed wand rarity
-    protected final ResourceLocation mrlNamespace;  // Resource location of the gem's model, stored in a blockstate file
+    protected final Identifier mrlNamespace;  // Resource location of the gem's model, stored in a blockstate file
     
     public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity) {
         this(tag, rarity, capacity, ResourceUtils.loc(tag + "_wand_gem"));
     }
     
-    public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity, @Nonnull ResourceLocation mrln) {
+    public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity, @Nonnull Identifier mrln) {
         if (REGISTRY.containsKey(tag)) {
             // Don't allow a given gem to be registered more than once
             throw new IllegalArgumentException("Wand gem " + tag + " already registered!");
@@ -58,11 +59,13 @@ public class WandGem implements IWandComponent {
     }
     
     @Override
+    @NotNull
     public String getTag() {
         return this.tag;
     }
     
     @Override
+    @NotNull
     public Type getComponentType() {
         return IWandComponent.Type.GEM;
     }
@@ -77,12 +80,13 @@ public class WandGem implements IWandComponent {
     }
     
     @Override
+    @NotNull
     public Rarity getRarity() {
         return this.rarity;
     }
     
     @Nonnull
-    public ResourceLocation getModelResourceLocationNamespace() {
+    public Identifier getModelResourceLocationNamespace() {
         return this.mrlNamespace;
     }
     

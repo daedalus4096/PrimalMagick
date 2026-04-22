@@ -5,8 +5,6 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.IEnchantedByDefault;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Map;
@@ -16,9 +14,9 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
-public class ForbiddenSwordItem extends SwordItem implements IEnchantedByDefault {
-    public ForbiddenSwordItem(Tier tier, Item.Properties builderIn) {
-        super(tier, builderIn);
+public class ForbiddenSwordItem extends Item implements IEnchantedByDefault {
+    public ForbiddenSwordItem(Item.Properties builderIn) {
+        super(builderIn);
     }
 
     @Override

@@ -14,12 +14,12 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
 
 public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
-    protected static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/end_crystal/end_crystal.png");
+    protected static final Identifier TEXTURE = Identifier.withDefaultNamespace("textures/entity/end_crystal/end_crystal.png");
     protected static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(TEXTURE);
     protected static final float ANGLE = (float)Math.sin((Math.PI / 4D));
     
@@ -35,7 +35,7 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
     }
     
     @Override
-    public ResourceLocation getTextureLocation(SinCrystalEntity entity) {
+    public Identifier getTextureLocation(SinCrystalEntity entity) {
         return TEXTURE;
     }
 
@@ -76,17 +76,16 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
         this.cube.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
         matrixStackIn.popPose();
         matrixStackIn.popPose();
-        BlockPos blockpos = entityIn.getBeamTarget();
-        if (blockpos != null) {
-            float targetX = (float)blockpos.getX() + 0.5F;
-            float targetY = (float)blockpos.getY() + 0.5F;
-            float targetZ = (float)blockpos.getZ() + 0.5F;
+        entityIn.getBeamTarget().ifPresent(pos -> {
+            float targetX = (float)pos.getX() + 0.5F;
+            float targetY = (float)pos.getY() + 0.5F;
+            float targetZ = (float)pos.getZ() + 0.5F;
             float dx = (float)((double)targetX - entityIn.getX());
             float dy = (float)((double)targetY - entityIn.getY());
             float dz = (float)((double)targetZ - entityIn.getZ());
             matrixStackIn.translate((double)dx, (double)dy, (double)dz);
             EnderDragonRenderer.renderCrystalBeams(-dx, -dy + deltaY, -dz, partialTicks, entityIn.innerRotation, matrixStackIn, bufferIn, packedLightIn);
-        }
+        });
 
         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
     }

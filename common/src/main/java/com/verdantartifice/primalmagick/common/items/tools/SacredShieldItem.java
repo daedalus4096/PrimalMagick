@@ -6,14 +6,17 @@ import com.verdantartifice.primalmagick.common.items.IEnchantedByDefault;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Definition of a shield that comes pre-enchanted with Bulwark.
@@ -21,20 +24,15 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public class SacredShieldItem extends AbstractTieredShieldItem implements IEnchantedByDefault {
-    public static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/shield/sacred_shield");
+    public static final Identifier TEXTURE = ResourceUtils.loc("entity/shield/sacred_shield");
     
     public SacredShieldItem(Item.Properties properties) {
-        super(ItemTierPM.HALLOWSTEEL, properties);
+        super(ToolMaterialsPM.HALLOWSTEEL, properties);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public String getDescriptionId(ItemStack stack) {
-        // Don't use the version defined in ShieldItem; we don't support coloring
-        return this.getDescriptionId();
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext level, @NotNull TooltipDisplay tooltipDisplay, @NotNull Consumer<Component> tooltip, @NotNull TooltipFlag flag) {
         // Do nothing; we don't support banner patterns
     }
 

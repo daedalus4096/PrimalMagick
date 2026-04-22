@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffect;
 
 import java.util.Objects;
@@ -26,7 +26,7 @@ public class MobEffectLanguageBuilder extends AbstractLanguageBuilder<MobEffect,
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(MobEffect effect) {
+    protected Identifier getBaseRegistryKey(MobEffect effect) {
         return Objects.requireNonNull(Services.MOB_EFFECTS_REGISTRY.getKey(effect));
     }
 }

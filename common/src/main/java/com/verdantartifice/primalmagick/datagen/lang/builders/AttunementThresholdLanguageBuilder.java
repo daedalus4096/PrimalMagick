@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -24,7 +24,7 @@ public class AttunementThresholdLanguageBuilder extends AbstractLanguageBuilder<
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(AttunementThreshold base) {
+    protected Identifier getBaseRegistryKey(AttunementThreshold base) {
         return ResourceUtils.loc(base.getSerializedName());
     }
     

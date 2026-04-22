@@ -1,21 +1,24 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
-import com.verdantartifice.primalmagick.client.renderers.entity.model.GuardianPixieModel;
+import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieModel;
+import com.verdantartifice.primalmagick.client.renderers.entity.state.PixieRenderState;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.pixies.guardians.AbstractGuardianPixieEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
-public class MajesticGuardianPixieRenderer extends AbstractGuardianPixieRenderer {
-    public static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/pixie/majestic_pixie.png");
+public class MajesticGuardianPixieRenderer extends AbstractPixieRenderer<AbstractGuardianPixieEntity> {
+    public static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/pixie/majestic_pixie.png");
 
     public MajesticGuardianPixieRenderer(EntityRendererProvider.Context context) {
-        super(context, new GuardianPixieModel(context.bakeLayer(ModelLayersPM.PIXIE_ROYAL)));
+        super(context, new PixieModel(context.bakeLayer(ModelLayersPM.PIXIE_ROYAL)));
     }
 
     @Override
-    public ResourceLocation getTextureLocation(AbstractGuardianPixieEntity entity) {
+    @NotNull
+    public Identifier getTextureLocation(PixieRenderState renderState) {
         return TEXTURE;
     }
 }

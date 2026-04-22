@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.registries.RegistryItemNeoforge;
 import com.verdantartifice.primalmagick.common.tags.ITagValue;
 import com.verdantartifice.primalmagick.common.tags.TagValueNeoforge;
 import com.verdantartifice.primalmagick.platform.services.registries.IRegistryService;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -15,7 +14,7 @@ import net.minecraft.network.Utf8String;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
@@ -48,8 +47,8 @@ abstract class AbstractRegistryServiceNeoforge<R> implements IRegistryService<R>
     }
 
     @Override
-    public @Nullable R get(ResourceLocation id) {
-        return this.getRegistry().get(id);
+    public @Nullable R get(Identifier id) {
+        return this.getRegistry().getValue(id);
     }
 
     @Override
@@ -58,7 +57,7 @@ abstract class AbstractRegistryServiceNeoforge<R> implements IRegistryService<R>
     }
 
     @Override
-    public Set<ResourceLocation> getAllKeys() {
+    public Set<Identifier> getAllKeys() {
         return this.getRegistry().keySet();
     }
 
@@ -68,28 +67,13 @@ abstract class AbstractRegistryServiceNeoforge<R> implements IRegistryService<R>
     }
 
     @Override
-    public boolean containsKey(ResourceLocation id) {
+    public boolean containsKey(Identifier id) {
         return this.getRegistry().containsKey(id);
     }
 
     @Override
     public Optional<ResourceKey<R>> getResourceKey(R value) {
         return this.getRegistry().getResourceKey(value);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(ResourceKey<R> key) {
-        return this.getRegistry().getHolder(key).flatMap(Optional::of);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(ResourceLocation loc) {
-        return this.getRegistry().getHolder(loc).flatMap(Optional::of);
-    }
-
-    @Override
-    public Optional<Holder<R>> getHolder(R value) {
-        return this.getRegistry().getResourceKey(value).flatMap(this::getHolder);
     }
 
     @Override
@@ -107,25 +91,20 @@ abstract class AbstractRegistryServiceNeoforge<R> implements IRegistryService<R>
         return new StreamCodec<>() {
             @Override
             public R decode(FriendlyByteBuf pBuffer) {
-                ResourceLocation id = ResourceLocation.parse(Utf8String.read(pBuffer, 32767));
-                return AbstractRegistryServiceNeoforge.this.getRegistry().get(id);
+                Identifier id = Identifier.parse(Utf8String.read(pBuffer, 32767));
+                return AbstractRegistryServiceNeoforge.this.getRegistry().getValue(id);
             }
 
             @Override
             public void encode(FriendlyByteBuf pBuffer, R pValue) {
-                ResourceLocation id = AbstractRegistryServiceNeoforge.this.getRegistry().getKey(pValue);
+                Identifier id = AbstractRegistryServiceNeoforge.this.getRegistry().getKey(pValue);
                 Utf8String.write(pBuffer, id.toString(), 32767);
             }
         };
     }
 
     @Override
-    public ITagValue<R> getTag(TagKey<R> key) {
-        return new TagValueNeoforge<>(this.getRegistry().getOrCreateTag(key));
-    }
-
-    @Override
-    public boolean tagExists(TagKey<R> key) {
-        return this.getRegistry().getTag(key).isPresent();
+    public Optional<ITagValue<R>> getTag(TagKey<R> key) {
+        return this.getRegistry().getTags().filter(n -> n.key().equals(key)).findFirst().map(TagValueNeoforge::new);
     }
 }

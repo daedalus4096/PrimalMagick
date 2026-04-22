@@ -7,10 +7,4 @@ public class ResearchTableTileEntityNeoforge extends ResearchTableTileEntity {
     public ResearchTableTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(pos, state);
     }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        this.doInventorySync();
-    }
 }

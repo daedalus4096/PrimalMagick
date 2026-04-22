@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.attunements;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -23,7 +23,7 @@ public class AttunementAttributeModifier {
     protected final Holder<Attribute> attribute;
     protected final AttributeModifier modifier;
     
-    public AttunementAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Holder<Attribute> attribute, @Nonnull ResourceLocation id, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
+    public AttunementAttributeModifier(@Nonnull Source source, AttunementThreshold threshold, @Nonnull Holder<Attribute> attribute, @Nonnull Identifier id, double modValue, @Nonnull AttributeModifier.Operation modOperation) {
         this.source = source;
         this.threshold = threshold;
         this.attribute = attribute;
@@ -50,7 +50,7 @@ public class AttunementAttributeModifier {
     }
     
     public void applyToEntity(@Nullable LivingEntity entity) {
-        if (entity != null && !entity.level().isClientSide) {
+        if (entity != null && !entity.level().isClientSide()) {
             AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
                 instance.removeModifier(this.getModifier());
@@ -60,7 +60,7 @@ public class AttunementAttributeModifier {
     }
     
     public void removeFromEntity(@Nullable LivingEntity entity) {
-        if (entity != null && !entity.level().isClientSide) {
+        if (entity != null && !entity.level().isClientSide()) {
             AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
                 instance.removeModifier(this.getModifier());

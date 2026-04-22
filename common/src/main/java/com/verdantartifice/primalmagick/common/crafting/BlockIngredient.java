@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -29,7 +29,7 @@ import java.util.stream.Stream;
  * satisfies the requirement for a specified prop.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.item.crafting.Ingredient}
+ * @see net.minecraft.world.item.crafting.Ingredient
  */
 public class BlockIngredient implements Predicate<Block> {
     public static final BlockIngredient EMPTY = new BlockIngredient(Stream.empty());
@@ -42,9 +42,7 @@ public class BlockIngredient implements Predicate<Block> {
     protected Block[] matchingBlocks = null;
     
     protected BlockIngredient(Stream<? extends BlockIngredient.Value> blockLists) {
-        this.acceptedBlocks = blockLists.toArray(count -> {
-            return new BlockIngredient.Value[count];
-        });
+        this.acceptedBlocks = blockLists.toArray(Value[]::new);
     }
     
     private BlockIngredient(BlockIngredient.Value[] values) {
@@ -58,34 +56,31 @@ public class BlockIngredient implements Predicate<Block> {
     
     protected void determineMatchingBlocks() {
         if (this.matchingBlocks == null) {
-            this.matchingBlocks = Arrays.stream(this.acceptedBlocks).flatMap(blockList -> {
-                return blockList.getBlocks().stream();
-            }).distinct().toArray(count -> {
-                return new Block[count];
-            });
+            this.matchingBlocks = Arrays.stream(this.acceptedBlocks).flatMap(blockList -> blockList.getBlocks().stream()).distinct().toArray(Block[]::new);
         }
     }
 
     @Override
     public boolean test(@Nullable Block testBlock) {
-        if (testBlock == null) {
-            return false;
-        } else {
+        if (testBlock != null) {
             this.determineMatchingBlocks();
             for (Block block : this.matchingBlocks) {
                 if (testBlock == block) {
                     return true;
                 }
             }
-            return false;
         }
+        return false;
     }
     
     private static void toNetwork(RegistryFriendlyByteBuf buf, BlockIngredient ing) {
         ing.determineMatchingBlocks();
         buf.writeVarInt(ing.matchingBlocks.length);
         for (int index = 0; index < ing.matchingBlocks.length; index++) {
-            buf.writeResourceLocation(Services.BLOCKS_REGISTRY.getKey(ing.matchingBlocks[index]));
+            Identifier identifier = Services.BLOCKS_REGISTRY.getKey(ing.matchingBlocks[index]);
+            if (identifier != null) {
+                buf.writeIdentifier(identifier);
+            }
         }
     }
     
@@ -107,9 +102,7 @@ public class BlockIngredient implements Predicate<Block> {
     }
     
     public static BlockIngredient fromBlocks(Block... blocks) {
-        return fromBlockListStream(Arrays.stream(blocks).map(b -> {
-            return new BlockIngredient.SingleBlockValue(b);
-        }));
+        return fromBlockListStream(Arrays.stream(blocks).map(SingleBlockValue::new));
     }
     
     public static BlockIngredient fromTag(TagKey<Block> tag) {
@@ -119,14 +112,14 @@ public class BlockIngredient implements Predicate<Block> {
     private static BlockIngredient fromNetwork(RegistryFriendlyByteBuf buf) {
         int size = buf.readVarInt();
         return fromBlockListStream(Stream.generate(() -> {
-            ResourceLocation loc = buf.readResourceLocation();
+            Identifier loc = buf.readIdentifier();
             return new BlockIngredient.SingleBlockValue(Services.BLOCKS_REGISTRY.get(loc));
         }).limit(size));
     }
     
     private static Codec<BlockIngredient> codec(boolean allowEmpty) {
         Codec<BlockIngredient.Value[]> innerCodec = Codec.list(BlockIngredient.Value.CODEC).comapFlatMap(valueList -> {
-            return !allowEmpty && valueList.size() < 1 ?
+            return !allowEmpty && valueList.isEmpty() ?
                     DataResult.error(() -> "Block array cannot be empty, at least one block must be defined") :
                     DataResult.success(valueList.toArray(BlockIngredient.Value[]::new));
         }, List::of);
@@ -159,10 +152,9 @@ public class BlockIngredient implements Predicate<Block> {
         Collection<Block> getBlocks();
     }
     
-    protected static record SingleBlockValue(Block block) implements BlockIngredient.Value {
-        protected static final Codec<BlockIngredient.SingleBlockValue> CODEC = RecordCodecBuilder.create(instance -> {
-            return instance.group(CodecUtils.BLOCK_NONAIR_CODEC.fieldOf("block").forGetter(sbl -> sbl.block)).apply(instance, BlockIngredient.SingleBlockValue::new);
-        });
+    protected record SingleBlockValue(Block block) implements BlockIngredient.Value {
+        protected static final Codec<BlockIngredient.SingleBlockValue> CODEC = RecordCodecBuilder.create(instance ->
+                instance.group(CodecUtils.BLOCK_NONAIR_CODEC.fieldOf("block").forGetter(sbl -> sbl.block)).apply(instance, SingleBlockValue::new));
         
         @Override
         public Collection<Block> getBlocks() {
@@ -170,15 +162,14 @@ public class BlockIngredient implements Predicate<Block> {
         }
     }
     
-    protected static record TagValue(TagKey<Block> tag) implements BlockIngredient.Value {
-        protected static final Codec<BlockIngredient.TagValue> CODEC = RecordCodecBuilder.create(instance -> {
-            return instance.group(TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(tl -> tl.tag)).apply(instance, BlockIngredient.TagValue::new);
-        });
+    protected record TagValue(TagKey<Block> tag) implements BlockIngredient.Value {
+        protected static final Codec<BlockIngredient.TagValue> CODEC = RecordCodecBuilder.create(instance ->
+                instance.group(TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(tl -> tl.tag)).apply(instance, TagValue::new));
         
         @Override
         public Collection<Block> getBlocks() {
             List<Block> retVal = new ArrayList<>();
-            Services.BLOCKS_REGISTRY.getTag(this.tag).forEach(retVal::add);
+            Services.BLOCKS_REGISTRY.getTag(this.tag).ifPresent(tag -> tag.forEach(retVal::add));
             return retVal;
         }
     }

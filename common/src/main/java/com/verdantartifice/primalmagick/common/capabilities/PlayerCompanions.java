@@ -1,18 +1,22 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -20,50 +24,48 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @author Daedalus4096
  */
-public class PlayerCompanions implements IPlayerCompanions {
-    private final Map<CompanionType, LinkedList<UUID>> companions = new ConcurrentHashMap<>();
-    private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
+public class PlayerCompanions extends AbstractCapability<PlayerCompanions> implements IPlayerCompanions {
+    public static final Codec<PlayerCompanions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Entry.CODEC.listOf().<Map<CompanionType, LinkedList<EntityReference<LivingEntity>>>>xmap(
+                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::companionType, Entry::idList)),
+                    entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
+            ).fieldOf("companions").forGetter(c -> c.companions),
+            Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(AbstractCapability::getSyncTimestamp)
+        ).apply(instance, PlayerCompanions::new));
 
-    @Override
-    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
-        CompoundTag rootTag = new CompoundTag();
-        for (CompanionType type : CompanionType.values()) {
-            ListTag list = new ListTag();
-            List<UUID> companions = this.get(type);
-            for (UUID id : companions) {
-                CompoundTag companionTag = new CompoundTag();
-                companionTag.putUUID("Id", id);
-                list.add(companionTag);
-            }
-            rootTag.put(type.getSerializedName(), list);
-        }
-        rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
-        return rootTag;
+    public static final StreamCodec<RegistryFriendlyByteBuf, PlayerCompanions> STREAM_CODEC = StreamCodec.composite(
+            Entry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
+                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::companionType, Entry::idList)),
+                    entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
+            ), c -> c.companions,
+            ByteBufCodecs.VAR_LONG, AbstractCapability::getSyncTimestamp,
+            PlayerCompanions::new);
+
+    private final Map<CompanionType, LinkedList<EntityReference<LivingEntity>>> companions = new ConcurrentHashMap<>();
+
+    public PlayerCompanions() {
+        this(Map.of(), 0L);
+    }
+
+    protected PlayerCompanions(Map<CompanionType, LinkedList<EntityReference<LivingEntity>>> companions, long syncTimestamp) {
+        super(syncTimestamp);
+        this.companions.putAll(companions);
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-        if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
-            return;
-        }
-        this.syncTimestamp = nbt.getLong("SyncTimestamp");
+    public Codec<PlayerCompanions> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void copyFromInner(@NotNull PlayerCompanions other) {
         this.clear();
-        for (CompanionType type : CompanionType.values()) {
-            if (nbt.contains(type.getSerializedName(), Tag.TAG_LIST)) {
-                ListTag list = nbt.getList(type.getSerializedName(), Tag.TAG_COMPOUND);
-                for (int index = 0; index < list.size(); index++) {
-                    CompoundTag companionTag = list.getCompound(index);
-                    if (companionTag.hasUUID("Id")) {
-                        this.companions.computeIfAbsent(type, (t) -> new LinkedList<>()).add(companionTag.getUUID("Id"));
-                    }
-                }
-            }
-        }
+        this.companions.putAll(other.companions);
     }
 
     @Override
-    public UUID add(CompanionType type, UUID id) {
-        LinkedList<UUID> list = this.companions.computeIfAbsent(type, (t) -> new LinkedList<>());
+    public EntityReference<LivingEntity> add(CompanionType type, EntityReference<LivingEntity> id) {
+        LinkedList<EntityReference<LivingEntity>> list = this.companions.computeIfAbsent(type, t -> new LinkedList<>());
         if (list.contains(id)) {
             return null;
         } else {
@@ -77,17 +79,17 @@ public class PlayerCompanions implements IPlayerCompanions {
     }
 
     @Override
-    public boolean contains(CompanionType type, UUID id) {
+    public boolean contains(CompanionType type, EntityReference<LivingEntity> id) {
         return this.companions.getOrDefault(type, new LinkedList<>()).contains(id);
     }
 
     @Override
-    public List<UUID> get(CompanionType type) {
+    public List<EntityReference<LivingEntity>> get(CompanionType type) {
         return Collections.unmodifiableList(this.companions.getOrDefault(type, new LinkedList<>()));
     }
 
     @Override
-    public boolean remove(CompanionType type, UUID id) {
+    public boolean remove(CompanionType type, EntityReference<LivingEntity> id) {
         return this.companions.getOrDefault(type, new LinkedList<>()).remove(id);
     }
 
@@ -97,9 +99,20 @@ public class PlayerCompanions implements IPlayerCompanions {
     }
 
     @Override
-    public void sync(ServerPlayer player) {
-        if (player != null) {
-            PacketHandler.sendToPlayer(new SyncCompanionsPacket(player), player);
-        }
+    public void sync(@NotNull ServerPlayer player) {
+        this.sync(player, SyncCompanionsPacket::new);
+    }
+
+    protected record Entry(CompanionType companionType, LinkedList<EntityReference<LivingEntity>> idList) {
+        public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                CompanionType.CODEC.fieldOf("companionType").forGetter(Entry::companionType),
+                EntityReference.<LivingEntity>codec().listOf().xmap(LinkedList::new, ImmutableList::copyOf).fieldOf("idList").forGetter(Entry::idList)
+            ).apply(instance, Entry::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, Entry> STREAM_CODEC = StreamCodec.composite(
+                CompanionType.STREAM_CODEC, Entry::companionType,
+                EntityReference.<LivingEntity>streamCodec().apply(ByteBufCodecs.list()).map(LinkedList::new, ImmutableList::copyOf), Entry::idList,
+                Entry::new
+        );
     }
 }

@@ -5,11 +5,11 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -133,7 +133,7 @@ public class ShapelessTagRecipeBuilder {
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(RecipeOutput output, ResourceLocation id) {
+    public void build(RecipeOutput output, Identifier id) {
         this.validate(id);
         Advancement.Builder advancementBuilder = output.advancement().addCriterion("has_the_recipe", 
                 RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
@@ -147,7 +147,7 @@ public class ShapelessTagRecipeBuilder {
      * 
      * @param id the ID of the recipe
      */
-    protected void validate(ResourceLocation id) {
+    protected void validate(Identifier id) {
         if (this.resultTag == null) {
             throw new IllegalStateException("No result tag defined for shapeless tag recipe " + id + "!");
         }

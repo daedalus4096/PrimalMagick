@@ -1,5 +1,0 @@
-{
-  "type": "item",
-  "base": "minecraft:furnace",
-  "target": "primalmagick:essence_furnace"
-}

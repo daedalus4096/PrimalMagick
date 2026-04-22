@@ -5,7 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +14,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Base definition of a concoction container.  Interacts with water sources to fill the container
@@ -29,23 +30,24 @@ public abstract class AbstractConcoctionContainerItem extends Item {
     protected abstract ItemStack getConcoctionContainerItem();
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    @NotNull
+    public InteractionResult use(@NotNull Level worldIn, @NotNull Player playerIn, @NotNull InteractionHand handIn) {
         ItemStack itemStack = playerIn.getItemInHand(handIn);
-        HitResult rayTraceResult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
+        BlockHitResult rayTraceResult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
         if (rayTraceResult.getType() == HitResult.Type.MISS) {
-            return InteractionResultHolder.pass(itemStack);
+            return InteractionResult.PASS;
         } else {
             if (rayTraceResult.getType() == HitResult.Type.BLOCK) {
-                BlockPos blockPos = ((BlockHitResult)rayTraceResult).getBlockPos();
+                BlockPos blockPos = rayTraceResult.getBlockPos();
                 if (!worldIn.mayInteract(playerIn, blockPos)) {
-                    return InteractionResultHolder.pass(itemStack);
+                    return InteractionResult.PASS;
                 }
                 if (worldIn.getFluidState(blockPos).is(FluidTags.WATER)) {
                     worldIn.playSound(playerIn, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
-                    return InteractionResultHolder.sidedSuccess(this.turnFlaskIntoItem(itemStack, playerIn, this.getConcoctionContainerItem()), worldIn.isClientSide());
+                    return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(this.turnFlaskIntoItem(itemStack, playerIn, this.getConcoctionContainerItem()));
                 }
             }
-            return InteractionResultHolder.pass(itemStack);
+            return InteractionResult.PASS;
         }
     }
 

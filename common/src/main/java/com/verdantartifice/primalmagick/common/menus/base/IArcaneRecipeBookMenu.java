@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.crafting.recipe_book.ServerPlaceA
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -37,7 +38,7 @@ public interface IArcaneRecipeBookMenu<T extends RecipeInput, R extends Recipe<T
     default void finishPlacingRecipe(RecipeHolder<R> pRecipe) {
     }
 
-    void fillCraftSlotsStackedContents(StackedContents contents);
+    void fillCraftSlotsStackedContents(StackedItemContents contents);
 
     void clearCraftingContent();
 

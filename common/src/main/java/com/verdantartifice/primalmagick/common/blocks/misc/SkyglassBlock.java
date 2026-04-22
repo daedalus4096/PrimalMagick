@@ -2,13 +2,16 @@ package com.verdantartifice.primalmagick.common.blocks.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.TransparentBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block definition for skyglass.  Skyglass is completely transparent except at the edge, connecting
@@ -39,14 +42,17 @@ public class SkyglassBlock extends TransparentBlock {
         // Determine the block's connections when it is placed into the world
         return this.getCurrentState(this.defaultBlockState(), context.getLevel(), context.getClickedPos());
     }
-    
+
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+    @NotNull
+    public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
         // Determine the block's connections when one of its neighbors is updated
-        return this.getCurrentState(stateIn, worldIn, currentPos);
+        return this.getCurrentState(state, level, pos);
     }
     
-    protected BlockState getCurrentState(BlockState state, LevelAccessor world, BlockPos pos) {
+    protected BlockState getCurrentState(BlockState state, LevelReader world, BlockPos pos) {
         return this.defaultBlockState()
                 .setValue(UP, this.isSideConnected(state, world, pos, Direction.UP))
                 .setValue(DOWN, this.isSideConnected(state, world, pos, Direction.DOWN))
@@ -56,8 +62,8 @@ public class SkyglassBlock extends TransparentBlock {
                 .setValue(EAST, this.isSideConnected(state, world, pos, Direction.EAST));
     }
     
-    protected boolean isSideConnected(BlockState state, LevelAccessor world, BlockPos pos, Direction dir) {
+    protected boolean isSideConnected(BlockState state, LevelReader world, BlockPos pos, Direction dir) {
         BlockState adjacent = world.getBlockState(pos.relative(dir));
-        return adjacent != null && state.getBlock() == adjacent.getBlock();
+        return adjacent.is(state.getBlock());
     }
 }

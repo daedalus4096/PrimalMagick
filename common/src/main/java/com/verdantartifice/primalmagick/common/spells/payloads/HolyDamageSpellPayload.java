@@ -21,6 +21,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition of a holy damage spell.  Deals standard damage to the target, or double standard damage
@@ -51,12 +52,13 @@ public class HolyDamageSpellPayload extends AbstractDamageSpellPayload<HolyDamag
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.HALLOWED;
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundsPM.ANGELS.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

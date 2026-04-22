@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -17,7 +17,7 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public class SpellBoltPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("spell_bolt");
+    public static final Identifier CHANNEL = ResourceUtils.loc("spell_bolt");
     public static final StreamCodec<RegistryFriendlyByteBuf, SpellBoltPacket> STREAM_CODEC = StreamCodec.ofMember(SpellBoltPacket::encode, SpellBoltPacket::decode);
 
     protected final double x1;

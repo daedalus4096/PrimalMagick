@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.spells;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -27,12 +27,12 @@ public class SpellPropertiesPM {
     public static final IRegistryItem<SpellProperty, SpellProperty> RANGE = register("range", id -> new SpellProperty(id, "spells.primalmagick.property.range", 1, 5));
     public static final IRegistryItem<SpellProperty, SpellProperty> SILK_TOUCH = register("silk_touch", id -> new SpellProperty(id, "spells.primalmagick.property.silk_touch", 0, 1));
     
-    protected static IRegistryItem<SpellProperty, SpellProperty> register(String id, Function<ResourceLocation, SpellProperty> propertySupplier) {
+    protected static IRegistryItem<SpellProperty, SpellProperty> register(String id, Function<Identifier, SpellProperty> propertySupplier) {
         return Services.SPELL_PROPERTIES_REGISTRY.register(id, () -> propertySupplier.apply(ResourceUtils.loc(id)));
     }
     
     @Nullable
-    public static SpellProperty get(ResourceLocation id) {
+    public static SpellProperty get(Identifier id) {
         return Services.SPELL_PROPERTIES_REGISTRY.get(id);
     }
     

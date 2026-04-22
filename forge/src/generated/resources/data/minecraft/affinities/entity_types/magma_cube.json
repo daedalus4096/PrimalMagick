@@ -1,7 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "minecraft:magma_cube",
-  "values": {
-    "primalmagick:infernal": 20
-  }
-}

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
 import com.verdantartifice.primalmagick.common.stats.Stat;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -22,7 +22,7 @@ public class StatLanguageBuilder extends AbstractLanguageBuilder<Stat, StatLangu
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(Stat base) {
+    protected Identifier getBaseRegistryKey(Stat base) {
         return base.key();
     }
 

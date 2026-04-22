@@ -9,6 +9,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -62,6 +63,6 @@ public class BiomeModifiersPMNeoforge {
         
         // Register mob spawn biome modifiers
         HolderSet.Named<Biome> treefolkBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTagsPM.HAS_TREEFOLK);
-        context.register(ADD_SPAWN_TREEFOLK, AddSpawnsBiomeModifier.singleSpawn(treefolkBiomes, new MobSpawnSettings.SpawnerData(EntityTypesPM.TREEFOLK.get(), 100, 1, 3)));
+        context.register(ADD_SPAWN_TREEFOLK, AddSpawnsBiomeModifier.singleSpawn(treefolkBiomes, new Weighted<>(new MobSpawnSettings.SpawnerData(EntityTypesPM.TREEFOLK.get(), 1, 3), 100)));
     }
 }

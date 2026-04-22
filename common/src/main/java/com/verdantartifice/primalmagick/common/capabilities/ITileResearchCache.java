@@ -1,8 +1,7 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
-import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
-import net.minecraft.nbt.CompoundTag;
+import com.verdantartifice.primalmagick.common.util.IValueIOSerializablePM;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nullable;
@@ -15,11 +14,11 @@ import java.util.function.Predicate;
  * 
  * @author Daedalus4096
  */
-public interface ITileResearchCache extends INBTSerializablePM<CompoundTag> {
+public interface ITileResearchCache extends IValueIOSerializablePM {
     /**
      * Remove all research from the cache.
      */
-    public void clear();
+    void clear();
     
     /**
      * Determine if the given research has been completed, as known by the cache.
@@ -27,7 +26,7 @@ public interface ITileResearchCache extends INBTSerializablePM<CompoundTag> {
      * @param key a key for the desired research entry
      * @return true if the given research is complete, false otherwise
      */
-    public boolean isResearchComplete(@Nullable AbstractResearchKey<?> key);
+    boolean isResearchComplete(@Nullable AbstractResearchKey<?> key);
     
     /**
      * Determine if the given research has been completed, as known by the cache.
@@ -35,7 +34,7 @@ public interface ITileResearchCache extends INBTSerializablePM<CompoundTag> {
      * @param keys a key for the desired research entry
      * @return true if the given research is complete, false otherwise
      */
-    public boolean isResearchComplete(List<AbstractResearchKey<?>> keys);
+    boolean isResearchComplete(List<AbstractResearchKey<?>> keys);
     
     /**
      * Updates the cache to contain a subset of the given player's research.  The subset to copy over
@@ -45,5 +44,5 @@ public interface ITileResearchCache extends INBTSerializablePM<CompoundTag> {
      * @param player the player whose research to cache
      * @param researchFilter the predicate defining which research keys to cache
      */
-    public void update(@Nullable Player player, @Nullable Predicate<AbstractResearchKey<?>> researchFilter);
+    void update(@Nullable Player player, @Nullable Predicate<AbstractResearchKey<?>> researchFilter);
 }

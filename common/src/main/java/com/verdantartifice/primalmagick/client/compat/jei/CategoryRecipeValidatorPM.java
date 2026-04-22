@@ -24,10 +24,6 @@ public class CategoryRecipeValidatorPM<T extends Recipe<?>> {
     private final int maxInputs;
     private final boolean checkSpecial;     // Check for valid inputs and outputs even for special recipes
     
-    public CategoryRecipeValidatorPM(IRecipeCategory<RecipeHolder<T>> recipeCategory, int maxInputs) {
-        this(recipeCategory, maxInputs, false);
-    }
-
     public CategoryRecipeValidatorPM(IRecipeCategory<RecipeHolder<T>> recipeCategory, int maxInputs, boolean checkSpecial) {
         this.recipeCategory = recipeCategory;
         this.maxInputs = maxInputs;
@@ -53,12 +49,7 @@ public class CategoryRecipeValidatorPM<T extends Recipe<?>> {
             return false;
         }
         
-        List<Ingredient> ingredients = recipe.value().getIngredients();
-        if (ingredients == null) {
-            LOGGER.error("Recipe has no input Ingredients. {}", recipe.id().toString());
-            return false;
-        }
-        
+        List<Ingredient> ingredients = recipe.value().placementInfo().ingredients();
         int inputCount = getInputCount(ingredients);
         if (inputCount == INVALID_COUNT) {
             return false;
@@ -75,8 +66,7 @@ public class CategoryRecipeValidatorPM<T extends Recipe<?>> {
     private static int getInputCount(List<Ingredient> ingredientList) {
         int inputCount = 0;
         for (Ingredient ingredient : ingredientList) {
-            ItemStack[] input = ingredient.getItems();
-            if (input == null) {
+            if (ingredient.isEmpty()) {
                 return INVALID_COUNT;
             } else {
                 inputCount++;

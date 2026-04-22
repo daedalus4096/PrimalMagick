@@ -28,7 +28,7 @@ public abstract class MundaneWandItem extends AbstractWandItem {
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public MundaneWandItem() {
-        super(new Item.Properties().stacksTo(1));
+        super(new Item.Properties().stacksTo(1).enchantable(1));
     }
 
     @Override
@@ -110,14 +110,9 @@ public abstract class MundaneWandItem extends AbstractWandItem {
     }
 
     @Override
-    public boolean isGlamoured(ItemStack stack) {
+    public boolean isGlamoured(@NotNull ItemStack stack) {
         // Mundane wands can't have glamours applied
         return false;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return 1;
     }
 
     @Override

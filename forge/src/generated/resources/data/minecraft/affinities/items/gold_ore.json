@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:earth": 10
-  },
-  "base": "minecraft:stone",
-  "target": "minecraft:gold_ore"
-}

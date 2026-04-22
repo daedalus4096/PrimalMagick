@@ -10,16 +10,16 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEn
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,12 +38,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.Comparator;
@@ -58,7 +59,7 @@ import java.util.Map;
 public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final MapCodec<RitualLecternBlock> CODEC = simpleCodec(RitualLecternBlock::new);
     
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty HAS_BOOK = BlockStateProperties.HAS_BOOK;
 
     protected static final VoxelShape BASE_AND_STAND_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), Block.box(4.0D, 2.0D, 4.0D, 12.0D, 14.0D, 12.0D));
@@ -77,12 +78,13 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     }
     
     @Override
-    public VoxelShape getOcclusionShape(BlockState state, BlockGetter worldIn, BlockPos pos) {
+    @NotNull
+    public VoxelShape getOcclusionShape(@NotNull BlockState state) {
         return BASE_AND_STAND_SHAPE;
     }
     
     @Override
-    public boolean useShapeForLightOcclusion(BlockState state) {
+    public boolean useShapeForLightOcclusion(@NotNull BlockState state) {
         return true;
     }
     
@@ -92,27 +94,31 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     }
     
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return COLLISION_SHAPE;
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return SHAPES.getOrDefault(state.getValue(FACING), BASE_AND_STAND_SHAPE);
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
+    @NotNull
     public BlockState rotate(BlockState state, Rotation direction) {
         return state.setValue(FACING, direction.rotate(state.getValue(FACING)));
     }
     
-    @SuppressWarnings("deprecation")
     @Override
+    @NotNull
     public BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
@@ -123,8 +129,11 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     }
     
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack handStack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+    @NotNull
+    protected InteractionResult useItemOn(@NotNull ItemStack handStack, @NotNull BlockState state, @NotNull Level worldIn,
+                                          @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn,
+                                          @NotNull BlockHitResult hit) {
+        if (!worldIn.isClientSide() && handIn == InteractionHand.MAIN_HAND) {
             if (worldIn.getBlockEntity(pos) instanceof RitualLecternTileEntity lecternTile) {
                 ItemStack bookStack = lecternTile.getItem();
                 if (bookStack.isEmpty() && handStack.is(Items.ENCHANTED_BOOK)) {
@@ -144,7 +153,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                         this.onPropActivated(state, worldIn, pos, this.getUsageStabilityBonus());
                     }
 
-                    return ItemInteractionResult.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 } else if (!bookStack.isEmpty()) {
                     if (player.isSecondaryUseActive()) {
                         // When activating a full lectern while sneaking, pick up the book
@@ -156,16 +165,15 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                         player.getInventory().setChanged();
                         worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                         worldIn.setBlock(pos, state.setValue(HAS_BOOK, Boolean.FALSE), Block.UPDATE_ALL);
-                        return ItemInteractionResult.SUCCESS;
                     } else {
                         // When activating a full lectern while not sneaking, read the book
                         if (player instanceof ServerPlayer serverPlayer) {
-                            EnchantmentHelper.getEnchantmentsForCrafting(bookStack).entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
+                            EnchantmentHelper.getEnchantmentsForCrafting(bookStack).entrySet().stream().min(Comparator.comparing(Object2IntMap.Entry::getIntValue)).ifPresent(entry -> {
                                 PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer);
                             });
                         }
-                        return ItemInteractionResult.SUCCESS;
                     }
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
@@ -173,8 +181,10 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     }
     
     @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos,
+                                               @NotNull Player pPlayer, @NotNull BlockHitResult pHitResult) {
+        if (!pLevel.isClientSide()) {
             if (pLevel.getBlockEntity(pPos) instanceof RitualLecternTileEntity lecternTile) {
                 ItemStack bookStack = lecternTile.getItem();
                 if (!bookStack.isEmpty()) {
@@ -188,16 +198,15 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                         pPlayer.getInventory().setChanged();
                         pLevel.playSound(null, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                         pLevel.setBlock(pPos, pState.setValue(HAS_BOOK, Boolean.FALSE), Block.UPDATE_ALL);
-                        return InteractionResult.SUCCESS;
                     } else {
                         // When activating a full lectern while not sneaking, read the book
                         if (pPlayer instanceof ServerPlayer serverPlayer) {
-                            EnchantmentHelper.getEnchantmentsForCrafting(bookStack).entrySet().stream().sorted(Comparator.comparing(Object2IntMap.Entry::getIntValue)).findFirst().ifPresent(entry -> {
+                            EnchantmentHelper.getEnchantmentsForCrafting(bookStack).entrySet().stream().min(Comparator.comparing(Object2IntMap.Entry::getIntValue)).ifPresent(entry -> {
                                 PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), pPlayer.registryAccess()), serverPlayer);
                             });
                         }
-                        return InteractionResult.SUCCESS;
                     }
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
@@ -205,28 +214,12 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     }
 
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
-            this.closeProp(state, worldIn, pos);
-        }
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RitualLecternTileEntity lecternTile) {
-                lecternTile.dropContents(worldIn, pos);
-                worldIn.updateNeighbourForOutputSignal(pos, this);
-            }
-        }
-        super.onRemove(state, worldIn, pos, newState, isMoving);
-    }
-    
-    @Override
-    public boolean isPathfindable(BlockState state, PathComputationType type) {
+    public boolean isPathfindable(@NotNull BlockState state, @NotNull PathComputationType type) {
         return false;
     }
     
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
+    public void animateTick(@NotNull BlockState stateIn, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         // Show spell sparkles if receiving salt power
         if (this.isBlockSaltPowered(worldIn, pos)) {
             FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
@@ -258,11 +251,18 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
     }
     
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return Services.BLOCK_ENTITY_PROTOTYPES.ritualLectern().create(pos, state);
     }
 
     @Override
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        level.updateNeighbourForOutputSignal(pos, state.getBlock());
+    }
+
+    @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }

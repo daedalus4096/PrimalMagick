@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.awt.Color;
@@ -34,7 +35,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(@NotNull GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw time-selected stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
         ItemStack toDisplay = this.getStackToDisplay();
@@ -43,11 +44,11 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
             if (this.material.getQuantity() > 1) {
                 Component amountText = Component.literal(Integer.toString(this.material.getQuantity()));
                 int width = mc.font.width(amountText);
-                guiGraphics.pose().pushPose();
-                guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
-                guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+                guiGraphics.pose().pushMatrix();
+                guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+                guiGraphics.pose().scale(0.5F, 0.5F);
                 guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
             }
         }
         
@@ -78,7 +79,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
     protected ItemStack getStackToDisplay() {
         TagKey<Item> itemTag = this.material.getTag();
         List<Item> tagContents = new ArrayList<>();
-        Services.ITEMS_REGISTRY.getTag(itemTag).forEach(tagContents::add);
+        Services.ITEMS_REGISTRY.getTag(itemTag).ifPresent(tag -> tag.forEach(tagContents::add));
         if (!tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());

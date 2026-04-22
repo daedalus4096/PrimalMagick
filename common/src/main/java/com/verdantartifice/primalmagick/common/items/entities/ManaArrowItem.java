@@ -1,11 +1,12 @@
 package com.verdantartifice.primalmagick.common.items.entities;
 
+import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.ManaArrowEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.Item;
@@ -30,19 +31,19 @@ public class ManaArrowItem extends ArrowItem {
     protected final Source source;
     
     public ManaArrowItem(Source source, Item.Properties properties) {
-        super(properties);
+        super(properties.component(DataComponentsPM.SOURCE_TINT.get(), source));
         this.source = source;
         SOURCE_MAPPING.put(this.source, this);
     }
 
     @Override
-    public @NotNull AbstractArrow createArrow(Level level, ItemStack ammo, LivingEntity shooter, ItemStack weapon) {
+    public @NotNull AbstractArrow createArrow(@NotNull Level level, @NotNull ItemStack ammo, @NotNull LivingEntity shooter, ItemStack weapon) {
         Item pickupItem = SOURCE_MAPPING.containsKey(this.source) ? SOURCE_MAPPING.get(this.source) : Items.ARROW;
         return new ManaArrowEntity(level, shooter, this.source, new ItemStack(pickupItem), weapon);
     }
 
     @Override
-    public @NotNull Projectile asProjectile(Level pLevel, Position pPos, ItemStack pStack, Direction pDirection) {
+    public @NotNull Projectile asProjectile(@NotNull Level pLevel, @NotNull Position pPos, @NotNull ItemStack pStack, @NotNull Direction pDirection) {
         ManaArrowEntity arrow = new ManaArrowEntity(pLevel, pPos.x(), pPos.y(), pPos.z(), this.source, pStack.copyWithCount(1), null);
         arrow.pickup = AbstractArrow.Pickup.ALLOWED;
         return arrow;
@@ -50,10 +51,6 @@ public class ManaArrowItem extends ArrowItem {
 
     public Source getSource() {
         return this.source;
-    }
-    
-    public int getColor(int tintIndex) {
-        return tintIndex == 0 ? this.source.getColor() : 0xFFFFFF;
     }
     
     public static Collection<ManaArrowItem> getManaArrows() {

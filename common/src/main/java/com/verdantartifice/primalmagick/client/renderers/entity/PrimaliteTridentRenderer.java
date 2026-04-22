@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.renderers.entity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Renderer definition for a thrown primalite trident.
@@ -11,14 +11,14 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class PrimaliteTridentRenderer extends AbstractTridentRenderer {
-    public static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/trident/primalite_trident.png");
+    public static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/trident/primalite_trident.png");
 
     public PrimaliteTridentRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(AbstractTridentEntity entity) {
+    public Identifier getTextureLocation(AbstractTridentEntity entity) {
         return TEXTURE;
     }
 }

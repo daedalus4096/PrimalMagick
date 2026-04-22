@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.client.gui.widgets.InactiveWidget;
+import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AbstractProjectMaterialWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidListWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidUnlockWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
@@ -24,13 +25,15 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.text.DecimalFormat;
@@ -44,8 +47,8 @@ import java.util.Set;
  * @author Daedalus4096
  */
 public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTableMenu> {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table.png");
-    private static final ResourceLocation OVERLAY = ResourceUtils.loc("textures/gui/research_table_overlay.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/research_table.png");
+    private static final Identifier BG_SPRITE = ResourceUtils.loc("research_table/parchment");
     private static final DecimalFormat FORMATTER = new DecimalFormat("###.#");
     
     protected long lastCheck = 0L;
@@ -74,7 +77,7 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
     }
     
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh, or writing tool availability
         long millis = System.currentTimeMillis();
         this.lastWritingReady = this.writingReady;
@@ -95,7 +98,7 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
     }
     
     @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    protected void renderLabels(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
         
         if (this.isProjectReady()) {
@@ -130,11 +133,11 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         // Render the GUI background
-        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         
         // If a research project is ready to go, render the page overlay
         if (this.isProjectReady()) {
-            guiGraphics.blit(OVERLAY, this.leftPos + 34, this.topPos + 7, 0, 0, 162, 128);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BG_SPRITE, this.leftPos + 34, this.topPos + 7, 162, 128);
         }
     }
     
@@ -221,7 +224,10 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
                     for (int index = 0, x = startX; index < materialCount; index++, x += 38) {
                         // Render material widget
                         AbstractProjectMaterial<?> material = this.project.activeMaterials().get(index).getMaterialDefinition();
-                        this.addRenderableWidget(ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93, surroundings));
+                        AbstractProjectMaterialWidget<?> widget = ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93, surroundings);
+                        if (widget != null) {
+                            this.addRenderableWidget(widget);
+                        }
                     }
                 });
             }

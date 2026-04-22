@@ -13,14 +13,17 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ArcaneShapelessRecipeBuilder {
+    protected final HolderGetter<Item> itemGetter;
     protected final ItemStack result;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected String group;
@@ -41,10 +45,11 @@ public class ArcaneShapelessRecipeBuilder {
     protected SourceList manaCosts;
     protected Optional<Integer> baseExpertiseOverride = Optional.empty();
     protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
-    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+    protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
-    protected ArcaneShapelessRecipeBuilder(ItemLike result, int count) {
+    protected ArcaneShapelessRecipeBuilder(HolderGetter<Item> itemGetter, ItemLike result, int count) {
+        this.itemGetter = itemGetter;
         this.result = new ItemStack(result, count);
     }
     
@@ -55,8 +60,8 @@ public class ArcaneShapelessRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a shapeless arcane recipe
      */
-    public static ArcaneShapelessRecipeBuilder arcaneShapelessRecipe(ItemLike result, int count) {
-        return new ArcaneShapelessRecipeBuilder(result, count);
+    public static ArcaneShapelessRecipeBuilder arcaneShapelessRecipe(HolderGetter<Item> itemGetter, ItemLike result, int count) {
+        return new ArcaneShapelessRecipeBuilder(itemGetter, result, count);
     }
     
     /**
@@ -65,8 +70,8 @@ public class ArcaneShapelessRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a shapeless arcane recipe
      */
-    public static ArcaneShapelessRecipeBuilder arcaneShapelessRecipe(ItemLike result) {
-        return arcaneShapelessRecipe(result, 1);
+    public static ArcaneShapelessRecipeBuilder arcaneShapelessRecipe(HolderGetter<Item> itemGetter, ItemLike result) {
+        return arcaneShapelessRecipe(itemGetter, result, 1);
     }
     
     /**
@@ -121,7 +126,7 @@ public class ArcaneShapelessRecipeBuilder {
      * @return the modified builder
      */
     public ArcaneShapelessRecipeBuilder addIngredient(TagKey<Item> tag) {
-        return this.addIngredient(Ingredient.of(tag));
+        return this.addIngredient(Ingredient.of(this.itemGetter.getOrThrow(tag)));
     }
     
     /**
@@ -177,7 +182,7 @@ public class ArcaneShapelessRecipeBuilder {
         return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
     }
     
-    public ArcaneShapelessRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+    public ArcaneShapelessRecipeBuilder expertiseGroup(Identifier groupLoc) {
         this.expertiseGroup = Optional.ofNullable(groupLoc);
         return this;
     }
@@ -195,7 +200,7 @@ public class ArcaneShapelessRecipeBuilder {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
         } else if (this.requirements.size() == 1) {
-            return Optional.of(this.requirements.get(0));
+            return Optional.of(this.requirements.getFirst());
         } else {
             return Optional.of(new AndRequirement(this.requirements));
         }
@@ -207,11 +212,15 @@ public class ArcaneShapelessRecipeBuilder {
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(RecipeOutput output, ResourceLocation id) {
+    public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
         ShapelessArcaneRecipe recipe = new ShapelessArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredients, this.getFinalRequirement(), 
                 Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
         output.accept(id, recipe, null);
+    }
+
+    protected void build(RecipeOutput output, Identifier id) {
+        this.build(output, ResourceKey.create(Registries.RECIPE, id));
     }
     
     /**
@@ -222,9 +231,9 @@ public class ArcaneShapelessRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        ResourceLocation id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
-        ResourceLocation saveLoc = ResourceLocation.parse(save);
-        if (saveLoc.equals(id)) {
+        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
+        ResourceKey<Recipe<?>> saveLoc = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc(save));
+        if (saveLoc.identifier().equals(id)) {
             throw new IllegalStateException("Arcane Shapeless Recipe " + save + " should remove its 'save' argument");
         } else {
             this.build(output, saveLoc);
@@ -245,7 +254,7 @@ public class ArcaneShapelessRecipeBuilder {
      * 
      * @param id the ID of the recipe
      */
-    protected void validate(ResourceLocation id) {
+    protected void validate(ResourceKey<Recipe<?>> id) {
         if (this.ingredients.isEmpty()) {
             throw new IllegalStateException("No ingredients defined for arcane shapeless recipe " + id + "!");
         }

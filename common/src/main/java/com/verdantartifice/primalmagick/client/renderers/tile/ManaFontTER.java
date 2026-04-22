@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import java.awt.Color;
@@ -25,7 +25,7 @@ import java.awt.Color;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock}
  */
 public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEntity> {
-    public static final ResourceLocation TEXTURE = ResourceUtils.loc("entity/mana_font_core");
+    public static final Identifier TEXTURE = ResourceUtils.loc("entity/mana_font_core");
     
     public ManaFontTER(BlockEntityRendererProvider.Context context) {
     }

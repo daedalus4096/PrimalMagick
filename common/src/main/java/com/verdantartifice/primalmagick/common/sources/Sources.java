@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class Sources {
-    private static final Map<ResourceLocation, Source> SOURCES = new HashMap<>();
+    private static final Map<Identifier, Source> SOURCES = new HashMap<>();
     
     public static final Source EARTH = new Source(ResourceUtils.loc("earth"), 0x20702B, ChatFormatting.DARK_GREEN, 0.5D, StatsPM.MANA_SPENT_EARTH, 100);
     public static final Source SEA = new Source(ResourceUtils.loc("sea"), 0x117899, ChatFormatting.BLUE, 1.0D, StatsPM.MANA_SPENT_SEA, 200);
@@ -32,7 +32,7 @@ public class Sources {
     private static Supplier<List<Source>> cachedGetAllSorted = Suppliers.memoize(Sources::getAllSortedInner);
     
     @Nullable
-    public static Source get(ResourceLocation id) {
+    public static Source get(Identifier id) {
         return SOURCES.get(id);
     }
 

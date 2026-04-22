@@ -9,7 +9,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
@@ -18,7 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
  * @author Daedalus4096
  */
 public class SetSpellComponentPropertyPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("set_spell_component_property");
+    public static final Identifier CHANNEL = ResourceUtils.loc("set_spell_component_property");
     public static final StreamCodec<RegistryFriendlyByteBuf, SetSpellComponentPropertyPacket> STREAM_CODEC = StreamCodec.ofMember(
             SetSpellComponentPropertyPacket::encode, SetSpellComponentPropertyPacket::decode);
 

@@ -16,7 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +29,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
-    private static final ResourceLocation ICON_LOC = ResourceUtils.loc("textures/gui/sprites/scribe_table/gain_comprehension.png");
+    private static final Identifier ICON_LOC = ResourceUtils.loc("scribe_table/gain_comprehension");
     
     public static final MapCodec<ComprehensionReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ResourceKey.codec(RegistryKeysPM.BOOK_LANGUAGES).fieldOf("language").forGetter(r -> r.language),
@@ -40,7 +40,7 @@ public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
             ByteBufCodecs.VAR_INT, r -> r.points,
             ComprehensionReward::new);
     
-    private ResourceKey<BookLanguage> language;
+    private final ResourceKey<BookLanguage> language;
     private int points;
     private Optional<Component> pointsText = Optional.empty();
     
@@ -66,9 +66,8 @@ public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
     
     @Override
     public void grant(ServerPlayer player, RegistryAccess registryAccess) {
-        BookLanguagesPM.getLanguage(this.language, registryAccess).ifPresent(langHolder -> {
-            LinguisticsManager.incrementComprehension(player, langHolder, this.points);
-        });
+        BookLanguagesPM.getLanguage(this.language, registryAccess).ifPresent(langHolder ->
+                LinguisticsManager.incrementComprehension(player, langHolder, this.points));
     }
 
     @Override
@@ -79,7 +78,7 @@ public class ComprehensionReward extends AbstractReward<ComprehensionReward> {
     }
 
     @Override
-    public ResourceLocation getIconLocation(Player player) {
+    public Identifier getIconLocation(Player player) {
         return ICON_LOC;
     }
 

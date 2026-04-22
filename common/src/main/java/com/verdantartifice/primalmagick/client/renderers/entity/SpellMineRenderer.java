@@ -12,8 +12,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
 /**
@@ -22,7 +22,7 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/entity/spell_projectile.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/spell_projectile.png");
     protected static final RenderType TRANSLUCENT_TYPE = RenderType.entityTranslucent(TEXTURE);
 
     protected final SpellMineModel model;
@@ -38,8 +38,8 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
         float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
         float ticks = (float)entity.tickCount + partialTicks;
         float alphaFactor = entity.isArmed() ? 0.25F : 1.0F;    // Fade out the mine if it's armed
-        int coreColor = FastColor.ARGB32.color(FastColor.as8BitChannel(1.0F * alphaFactor), entity.getColor());
-        int glowColor = FastColor.ARGB32.color(FastColor.as8BitChannel(0.5F * alphaFactor), entity.getColor());
+        int coreColor = ARGB.color(ARGB.as8BitChannel(1.0F * alphaFactor), entity.getColor());
+        int glowColor = ARGB.color(ARGB.as8BitChannel(0.5F * alphaFactor), entity.getColor());
         double bob = 0.25D * Mth.sin(ticks * 0.1F);      // Calculate a vertical bobbing displacement
         matrixStack.pushPose();
         matrixStack.translate(0.0D, 0.5D + bob, 0.0D);
@@ -58,7 +58,7 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SpellMineEntity entity) {
+    public Identifier getTextureLocation(SpellMineEntity entity) {
         return TEXTURE;
     }
 }

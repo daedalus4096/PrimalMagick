@@ -27,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -64,12 +65,13 @@ public class SolarDamageSpellPayload extends AbstractDamageSpellPayload<SolarDam
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.SUN;
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundsPM.SUNBEAM.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
@@ -79,13 +81,12 @@ public class SolarDamageSpellPayload extends AbstractDamageSpellPayload<SolarDam
     }
 
     @Override
-    protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+    protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource) {
         int duration = this.getDurationSeconds(spell, spellSource, caster, world.registryAccess());
         if (target != null && target.getType() == HitResult.Type.ENTITY && duration > 0) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity) {
+            if (entityTarget.getEntity() instanceof LivingEntity entity) {
                 // Make the entity glow and set it on fire if undead
-                LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 20 * duration, 0));
                 if (entity.isInvertedHealAndHarm()) {
                     entity.igniteForSeconds(duration);

@@ -6,10 +6,12 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.wolf.WolfSoundVariants;
 
 /**
  * Definition of a polymorph spell.  Temporarily replaces the target living, non-player, non-boss
@@ -18,7 +20,7 @@ import net.minecraft.world.entity.EntityType;
  * blocks.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.misc.EntitySwapper}
+ * @see com.verdantartifice.primalmagick.common.misc.EntitySwapper
  */
 public class PolymorphWolfSpellPayload extends AbstractPolymorphSpellPayload<PolymorphWolfSpellPayload> {
     public static final PolymorphWolfSpellPayload INSTANCE = new PolymorphWolfSpellPayload();
@@ -53,7 +55,7 @@ public class PolymorphWolfSpellPayload extends AbstractPolymorphSpellPayload<Pol
     }
 
     @Override
-    protected SoundEvent getCastSoundEvent() {
-        return SoundEvents.WOLF_AMBIENT;
+    protected SoundEvent getCastSoundEvent(HolderLookup.Provider lookupProvider) {
+        return lookupProvider.lookupOrThrow(Registries.WOLF_SOUND_VARIANT).getOrThrow(WolfSoundVariants.CLASSIC).value().ambientSound().value();
     }
 }

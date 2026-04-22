@@ -7,7 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
@@ -194,7 +194,7 @@ public class BooksPM {
     }
     
     private static Holder.Reference<BookDefinition> register(BootstrapContext<BookDefinition> context, ResourceKey<BookDefinition> key) {
-        return context.register(key, new BookDefinition(ResourceLocation.fromNamespaceAndPath(key.location().getNamespace(), key.location().getPath().replace('/', '.'))));
+        return context.register(key, new BookDefinition(Identifier.fromNamespaceAndPath(key.identifier().getNamespace(), key.identifier().getPath().replace('/', '.'))));
     }
     
     /**
@@ -204,7 +204,7 @@ public class BooksPM {
      * @return an optional reference holder for this view's book definition
      */
     public static Optional<Holder.Reference<BookDefinition>> getBookDefinition(ResourceKey<BookDefinition> bookKey, RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).getHolder(bookKey);
+        return registryAccess.lookupOrThrow(RegistryKeysPM.BOOKS).get(bookKey);
     }
     
     /**
@@ -216,8 +216,8 @@ public class BooksPM {
      * @return a reference holder for the given book definition, or the given default
      */
     public static Holder.Reference<BookDefinition> getBookDefinitionOrDefault(ResourceKey<BookDefinition> bookKey, RegistryAccess registryAccess, ResourceKey<BookDefinition> defaultBook) {
-        Registry<BookDefinition> registry = registryAccess.registryOrThrow(RegistryKeysPM.BOOKS);
-        return registry.getHolder(bookKey).orElse(registry.getHolderOrThrow(defaultBook));
+        Registry<BookDefinition> registry = registryAccess.lookupOrThrow(RegistryKeysPM.BOOKS);
+        return registry.get(bookKey).orElse(registry.getOrThrow(defaultBook));
     }
     
     /**
@@ -227,6 +227,6 @@ public class BooksPM {
      * @return a reference holder for the given book definition
      */
     public static Holder.Reference<BookDefinition> getBookDefinitionOrThrow(ResourceKey<BookDefinition> bookKey, RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).getHolderOrThrow(bookKey);
+        return registryAccess.lookupOrThrow(RegistryKeysPM.BOOKS).getOrThrow(bookKey);
     }
 }

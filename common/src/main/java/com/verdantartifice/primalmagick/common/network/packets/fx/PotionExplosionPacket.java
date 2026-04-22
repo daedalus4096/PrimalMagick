@@ -7,7 +7,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public class PotionExplosionPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("potion_explosion");
+    public static final Identifier CHANNEL = ResourceUtils.loc("potion_explosion");
     public static final StreamCodec<RegistryFriendlyByteBuf, PotionExplosionPacket> STREAM_CODEC = StreamCodec.ofMember(PotionExplosionPacket::encode, PotionExplosionPacket::decode);
 
     protected final double x;

@@ -10,9 +10,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.text.DecimalFormat;
@@ -27,7 +30,8 @@ import java.util.OptionalInt;
  * @author Daedalus4096
  */
 public class KnowledgeTotalWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/research_table_overlay.png");
+    protected static final Identifier FG_SPRITE = ResourceUtils.loc("research_table/progress_foreground");
+    protected static final Identifier BG_SPRITE = ResourceUtils.loc("research_table/progress_background");
     protected static final DecimalFormat FORMATTER = new DecimalFormat("###.##");
 
     protected final KnowledgeType type;
@@ -57,37 +61,37 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         lines.add(Component.translatable(this.type.getNameTranslationKey()));
         
         // Draw knowledge type icon
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
-        guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
-        guiGraphics.blit(this.type.getIconLocation(), 0, 0, 0, 0, 255, 255);        
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().translate(this.getX(), this.getY());
+        guiGraphics.pose().scale(0.0625F, 0.0625F);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.type.getIconLocation(), 0, 0, 16, 16);
+        guiGraphics.pose().popMatrix();
         
         // Draw progress bar background
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(this.getX(), this.getY() + 17, 0.0F);
-        guiGraphics.blit(TEXTURE, 0, 0, 182, 2, 16, 2);
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().translate(this.getX(), this.getY() + 17);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BG_SPRITE, 0, 0, 16, 2);
+        guiGraphics.pose().popMatrix();
         
         this.knowledgeOpt.ifPresent(knowledge -> {
             // Draw amount str
             int levels = knowledge.getKnowledge(this.type);
             Component amountText = Component.literal(Integer.toString(levels));
             int width = mc.font.width(amountText);
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
-            guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+            guiGraphics.pose().scale(0.5F, 0.5F);
             guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
             
             // Draw progress bar foreground
             int rawPoints = knowledge.getKnowledgeRaw(this.type);
             int levelPoints = rawPoints % this.type.getProgression();
             int px = (int)(16.0D * ((double)levelPoints / (double)this.type.getProgression()));
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX(), this.getY() + 17, 1.0F);
-            guiGraphics.blit(TEXTURE, 0, 0, 182, 0, px, 2);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(this.getX(), this.getY() + 17);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FG_SPRITE, 0, 0, px, 2);
+            guiGraphics.pose().popMatrix();
         });
         
         this.successDeltaOpt.ifPresent(points -> {
@@ -97,11 +101,11 @@ public class KnowledgeTotalWidget extends AbstractWidget {
                 // Draw theory gain preview str
                 Component previewText = Component.translatable("label.primalmagick.research_table.theory_gain_preview.positive", levelStr).withStyle(ChatFormatting.GREEN);
                 int width = mc.font.width(previewText);
-                guiGraphics.pose().pushPose();
-                guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY(), 5.0F);
-                guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+                guiGraphics.pose().pushMatrix();
+                guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY());
+                guiGraphics.pose().scale(0.5F, 0.5F);
                 guiGraphics.drawString(mc.font, previewText, 0, 0, Color.WHITE.getRGB());
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
                 
                 // Prepare tooltip addition
                 if (levels == 1D) {
@@ -119,14 +123,14 @@ public class KnowledgeTotalWidget extends AbstractWidget {
             this.setTooltip(Tooltip.create(this.tooltip));
         }
     }
-    
+
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent mouseButtonEvent, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput pNarrationElementOutput) {
     }
 }

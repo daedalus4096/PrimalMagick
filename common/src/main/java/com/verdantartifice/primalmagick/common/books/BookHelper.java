@@ -2,11 +2,11 @@ package com.verdantartifice.primalmagick.common.books;
 
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringDecomposer;
 
 import java.util.function.BiFunction;
@@ -35,7 +35,7 @@ public class BookHelper {
     
     public static String getTitleTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceLocation bookLoc = bookHolder.value().bookId();
+            Identifier bookLoc = bookHolder.value().bookId();
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "title");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
@@ -49,7 +49,7 @@ public class BookHelper {
     private static Component getTitleTextInner(BookView view) {
         MutableComponent retVal = Component.empty();
         String titleTranslationKey = getTitleTranslationKey(view);
-        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().location()).orElseThrow();
+        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().identifier()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
         
         // Add the encoded title text
@@ -77,7 +77,7 @@ public class BookHelper {
     
     private static Component getAuthorTextInner(BookView view, Component unencodedText) {
         MutableComponent retVal = Component.empty();
-        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().location()).orElseThrow();
+        final Lexicon langLex = LexiconManager.getLexicon(view.language().unwrapKey().get().identifier()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
         
         // Add the encoded title text

@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:infernal": 5,
-    "primalmagick:sun": 10
-  },
-  "target": "minecraft:glowstone_dust"
-}

@@ -13,11 +13,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +30,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ResearchWidget extends AbstractWidget {
-    protected static final ResourceLocation UNKNOWN_TEXTURE = ResourceUtils.loc("textures/research/research_unknown.png");
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = ResourceUtils.loc("textures/gui/grimoire.png");
+    private static final Identifier COMPLETE = ResourceUtils.loc("grimoire/complete");
     
     protected final AbstractResearchKey<?> key;
     protected final ResearchEntry researchEntry;
@@ -43,7 +44,7 @@ public class ResearchWidget extends AbstractWidget {
         this.isComplete = isComplete;
         
         Minecraft mc = Minecraft.getInstance();
-        if (this.key instanceof ResearchEntryKey entryKey) {
+        if (this.key instanceof ResearchEntryKey entryKey && mc.level != null) {
             this.researchEntry = ResearchEntries.getEntry(mc.level.registryAccess(), entryKey);
         } else {
             this.researchEntry = null;
@@ -51,8 +52,12 @@ public class ResearchWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(@NotNull GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) {
+            return;
+        }
+
         IconDefinition iconDef = this.key.getIcon(mc.level.registryAccess());
         long time = System.currentTimeMillis();
         
@@ -61,10 +66,10 @@ public class ResearchWidget extends AbstractWidget {
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 250.0F);
-            guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(this.getX() + 8, this.getY());
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE, 0, 0, 10, 10);
+            guiGraphics.pose().popMatrix();
         }
         
         // Prepare the tooltip
@@ -73,16 +78,14 @@ public class ResearchWidget extends AbstractWidget {
         if (this.researchEntry != null) {
             // If there's a research entry behind this key, use its info for the tooltip
             this.researchEntry.getHintTranslationKey().ifPresentOrElse(hintTranslationKey -> {
-                if (Screen.hasShiftDown()) {
+                if (mc.hasShiftDown()) {
                     this.tooltip.append(Component.translatable(hintTranslationKey));
                 } else {
                     this.tooltip.append(Component.translatable(this.researchEntry.getNameTranslationKey()));
                     this.tooltip.append(CommonComponents.NEW_LINE);
                     this.tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
                 }
-            }, () -> {
-                this.tooltip.append(Component.translatable(this.researchEntry.getNameTranslationKey()));
-            });
+            }, () -> this.tooltip.append(Component.translatable(this.researchEntry.getNameTranslationKey())));
         } else {
             // If there's no research entry behind this key, use the tooltip data baked into the icon definition, if any
             getIconTooltip(iconDef, time).ifPresent(this.tooltip::append);
@@ -102,12 +105,12 @@ public class ResearchWidget extends AbstractWidget {
     }
     
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
         // Disable click behavior
         return false;
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput output) {
     }
 }

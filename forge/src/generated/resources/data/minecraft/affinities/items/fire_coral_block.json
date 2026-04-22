@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:sun": 15
-  },
-  "base": "minecraft:dead_fire_coral_block",
-  "target": "minecraft:fire_coral_block"
-}

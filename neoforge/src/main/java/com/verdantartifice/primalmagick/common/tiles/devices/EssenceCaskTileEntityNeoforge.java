@@ -7,10 +7,4 @@ public class EssenceCaskTileEntityNeoforge extends EssenceCaskTileEntity {
     public EssenceCaskTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(pos, state);
     }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        this.doInventorySync();
-    }
 }

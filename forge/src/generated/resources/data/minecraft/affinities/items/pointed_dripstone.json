@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:earth": 2,
-    "primalmagick:sea": 2
-  },
-  "target": "minecraft:pointed_dripstone"
-}

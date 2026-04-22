@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.books;
 
 import com.google.common.base.Suppliers;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import net.minecraft.Util;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -22,6 +21,10 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class Lexicon {
+    public static final Codec<Lexicon> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Entry.CODEC.listOf().fieldOf("entries").forGetter(l -> List.copyOf(l.entries.values()))
+        ).apply(instance, Lexicon::new));
+
     protected static final Comparator<Entry> BY_HASH_CODE = Comparator.comparingInt(Entry::hashCode);
     protected static final Comparator<Entry> BY_MOST_FREQUENT = Comparator.comparingInt(Entry::getCount).reversed().thenComparing(BY_HASH_CODE);
     
@@ -42,9 +45,10 @@ public class Lexicon {
         this.addWords(words);
         this.invalidate();
     }
-    
-    public static Lexicon parse(@Nonnull JsonObject json) throws Exception {
-        return new Lexicon(json.get("words").getAsJsonArray().asList().stream().map(JsonElement::getAsString).toList());
+
+    private Lexicon(List<Entry> entries) {
+        entries.forEach(this::addEntry);
+        this.invalidate();
     }
     
     public void clear() {
@@ -77,6 +81,14 @@ public class Lexicon {
             this.entries.get(toAdd).incrementCount();
         } else {
             this.entries.put(toAdd, new Entry(toAdd));
+        }
+    }
+
+    private void addEntry(Entry entry) {
+        if (this.entries.containsKey(entry.getWord())) {
+            this.entries.get(entry.getWord()).incrementCount(entry.getCount());
+        } else {
+            this.entries.put(entry.getWord(), entry);
         }
     }
     
@@ -134,7 +146,7 @@ public class Lexicon {
      * @param word the word to test
      * @param comprehension the player's comprehension score for this lexicon's language
      * @param complexity the complexity of this lexicon's language
-     * @return
+     * @return true if the given word is comprehended by the client player, false otherwise
      */
     public boolean isWordTranslated(String word, int comprehension, int complexity) {
         if (complexity == 0) {
@@ -166,10 +178,19 @@ public class Lexicon {
     protected static class Entry {
         private final String word;
         private int count;
-        
+
+        public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.STRING.fieldOf("word").forGetter(Entry::getWord),
+                Codec.INT.optionalFieldOf("count", 1).forGetter(Entry::getCount)
+            ).apply(instance, Entry::new));
+
         public Entry(String word) {
-            this.word = word;
-            this.count = 1;
+            this(word, 1);
+        }
+        
+        private Entry(String word, int count) {
+            this.word = word.toLowerCase();
+            this.count = count;
         }
         
         public String getWord() {
@@ -185,7 +206,11 @@ public class Lexicon {
         }
         
         public void incrementCount() {
-            this.count++;
+            this.incrementCount(1);
+        }
+
+        public void incrementCount(int delta) {
+            this.count += delta;
         }
 
         @Override

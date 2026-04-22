@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.armortrim.TrimPattern;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.equipment.trim.TrimPattern;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  */
 public class TrimPatternLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<TrimPattern>, TrimPatternLanguageBuilder> {
     public TrimPatternLanguageBuilder(ResourceKey<TrimPattern> patternKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(patternKey, () -> String.join(".", "trim_pattern", Constants.MOD_ID, patternKey.location().getPath()), untracker, adder);
+        super(patternKey, () -> String.join(".", "trim_pattern", Constants.MOD_ID, patternKey.identifier().getPath()), untracker, adder);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TrimPatternLanguageBuilder extends AbstractLanguageBuilder<Resource
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(ResourceKey<TrimPattern> base) {
-        return base.location();
+    protected Identifier getBaseRegistryKey(ResourceKey<TrimPattern> base) {
+        return base.identifier();
     }
 }

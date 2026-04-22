@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.registries;
 
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -26,7 +26,7 @@ public interface IRegistryItem<R, T extends R> extends Supplier<T> {
      *
      * @return the identifier of the object in the registry
      */
-    ResourceLocation getId();
+    Identifier getId();
 
     /**
      * Get the fully-qualified resource key for this registry object.

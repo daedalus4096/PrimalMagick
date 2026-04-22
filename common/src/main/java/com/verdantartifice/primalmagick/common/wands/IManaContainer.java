@@ -13,10 +13,14 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -106,7 +110,7 @@ public interface IManaContainer {
      * Get the maximum amount of centimana that can be held by the given wand stack.
      *
      * @param stack  the wand stack whose maximum mana to return
-     * @param source
+     * @param source the source of mana to query
      * @return the maximum amount of centimana that can be held by the given wand stack
      */
     int getMaxMana(@Nullable ItemStack stack, @Nullable Source source);
@@ -322,9 +326,11 @@ public interface IManaContainer {
      * @return true if sufficient centimana is present, false otherwise
      */
     default boolean containsMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources, HolderLookup.Provider registries) {
-        for (Source source : sources.getSources()) {
-            if (!this.containsMana(stack, player, source, sources.getAmount(source), registries)) {
-                return false;
+        if (sources != null) {
+            for (Source source : sources.getSources()) {
+                if (!this.containsMana(stack, player, source, sources.getAmount(source), registries)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -370,7 +376,8 @@ public interface IManaContainer {
         if (player != null) {
             // Add discounts from equipped player gear and enchantments
             int gearDiscount = 0;
-            for (ItemStack gearStack : player.getAllSlots()) {
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                ItemStack gearStack = player.getItemBySlot(slot);
                 if (gearStack.getItem() instanceof IManaDiscountGear discountItem) {
                     gearDiscount += discountItem.getManaDiscount(gearStack, player, source);
                 }
@@ -386,15 +393,23 @@ public interface IManaContainer {
             }
 
             // Add discounts from temporary conditions
-            if (player.hasEffect(EffectsPM.MANAFRUIT.getHolder())) {
-                // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
-                modifier += ((2 * player.getEffect(EffectsPM.MANAFRUIT.getHolder()).getAmplifier()) + 1);
+            Holder<MobEffect> manafruitEffectHolder = EffectsPM.MANAFRUIT.getHolder();
+            if (manafruitEffectHolder != null && player.hasEffect(manafruitEffectHolder)) {
+                MobEffectInstance instance = player.getEffect(manafruitEffectHolder);
+                if (instance != null) {
+                    // 1% at amp 0, 3% at amp 1, 5% at amp 2, etc
+                    modifier += ((2 * instance.getAmplifier()) + 1);
+                }
             }
 
             // Subtract penalties from temporary conditions
-            if (player.hasEffect(EffectsPM.MANA_IMPEDANCE.getHolder())) {
-                // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
-                modifier -= (5 * (player.getEffect(EffectsPM.MANA_IMPEDANCE.getHolder()).getAmplifier() + 1));
+            Holder<MobEffect> impedanceEffectHolder = EffectsPM.MANA_IMPEDANCE.getHolder();
+            if (impedanceEffectHolder != null && player.hasEffect(impedanceEffectHolder)) {
+                MobEffectInstance instance = player.getEffect(impedanceEffectHolder);
+                if (instance != null) {
+                    // 5% at amp 0, 10% at amp 1, 15% at amp 2, etc
+                    modifier -= (5 * (instance.getAmplifier() + 1));
+                }
             }
         }
 

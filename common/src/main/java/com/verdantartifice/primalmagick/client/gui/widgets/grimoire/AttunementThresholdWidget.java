@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -18,7 +18,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -42,7 +42,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
     protected final Source source;
     protected final AttunementThreshold threshold;
     protected final boolean suppressed;
-    protected final ResourceLocation texture;
+    protected final Identifier texture;
     
     public AttunementThresholdWidget(@Nonnull Source source, @Nonnull AttunementThreshold threshold, int x, int y) {
         super(x, y, 18, 18, Component.empty());
@@ -66,17 +66,17 @@ public class AttunementThresholdWidget extends AbstractWidget {
             guiGraphics.renderItem(WAND_STACK, this.getX() + 1, this.getY() + 1);
         } else {
             // Render the icon appropriate for this widget's source and threshold
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
-            guiGraphics.pose().scale(0.0703125F, 0.0703125F, 0.0703125F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(this.getX(), this.getY());
+            guiGraphics.pose().scale(0.0703125F, 0.0703125F);
             guiGraphics.blit(this.texture, 0, 0, 0, 0, 255, 255);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
         if (this.suppressed) {
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + 1, this.getY() + 1, 1.0F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(this.getX() + 1, this.getY() + 1);
             guiGraphics.renderItem(SHACKLED_OVERLAY_STACK, 0, 0);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
     

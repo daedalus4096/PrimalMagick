@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:blood": 2,
-    "primalmagick:sea": 5
-  },
-  "target": "minecraft:slime_ball"
-}

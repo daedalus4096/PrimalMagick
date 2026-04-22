@@ -8,7 +8,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.awt.Color;
 import java.text.DecimalFormat;
@@ -20,7 +20,7 @@ import java.util.Collections;
  * @author Daedalus4096
  */
 public class ManaGaugeWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/mana_gauge.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/mana_gauge.png");
     protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
 
     protected final Source source;
@@ -55,8 +55,8 @@ public class ManaGaugeWidget extends AbstractWidget {
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().translate(this.getX(), this.getY());
 
         // Render gauge background texture
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -72,7 +72,7 @@ public class ManaGaugeWidget extends AbstractWidget {
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         guiGraphics.blit(TEXTURE, 0, 0, 24, 0, this.width, this.height);
 
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         if (this.isHoveredOrFocused()) {
             Component sourceText = this.source.getNameText();

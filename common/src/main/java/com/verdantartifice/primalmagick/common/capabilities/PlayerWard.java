@@ -1,12 +1,16 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -15,35 +19,50 @@ import java.util.List;
  * 
  * @author Daedalus4096
  */
-public class PlayerWard implements IPlayerWard {
+public class PlayerWard extends AbstractCapability<PlayerWard> implements IPlayerWard {
     protected static final List<EquipmentSlot> APPLICABLE_SLOTS = List.of(EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.HEAD, EquipmentSlot.FEET);
     protected static final int PAUSE_DURATION_MILLIS = 10000;
-    
-    private float current = 0;
-    private float max = 0;
-    private long lastPaused = 0;        // Last timestamp at which regeneration was paused
-    private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
-    @Override
-    public CompoundTag serializeNBT(HolderLookup.Provider registries) {
-        CompoundTag rootTag = new CompoundTag();
-        rootTag.putFloat("Current", this.current);
-        rootTag.putFloat("Max", this.max);
-        rootTag.putLong("LastPaused", this.lastPaused);
-        rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
-        return rootTag;
+    public static final Codec<PlayerWard> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.FLOAT.fieldOf("current").forGetter(w -> w.current),
+            Codec.FLOAT.fieldOf("max").forGetter(w -> w.max),
+            Codec.LONG.fieldOf("lastPaused").forGetter(w -> w.lastPaused),
+            Codec.LONG.fieldOf("syncTimestamp").forGetter(AbstractCapability::getSyncTimestamp)
+        ).apply(instance, PlayerWard::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, PlayerWard> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.FLOAT, w -> w.current,
+            ByteBufCodecs.FLOAT, w -> w.max,
+            ByteBufCodecs.VAR_LONG, w -> w.lastPaused,
+            ByteBufCodecs.VAR_LONG, AbstractCapability::getSyncTimestamp,
+            PlayerWard::new);
+    
+    private float current;
+    private float max;
+    private long lastPaused;    // Last timestamp at which regeneration was paused
+
+    public PlayerWard() {
+        this(0F, 0F, 0L, 0L);
+    }
+
+    protected PlayerWard(float current, float max, long lastPaused, long syncTimestamp) {
+        super(syncTimestamp);
+        this.current = current;
+        this.max = max;
+        this.lastPaused = lastPaused;
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-        if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
-            return;
-        }
-        this.syncTimestamp = nbt.getLong("SyncTimestamp");
+    public Codec<PlayerWard> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void copyFromInner(@NonNull PlayerWard other) {
         this.clear();
-        this.current = nbt.getFloat("Current");
-        this.max = nbt.getFloat("Max");
-        this.lastPaused = nbt.getLong("LastPaused");
+        this.current = other.current;
+        this.max = other.max;
+        this.lastPaused = other.lastPaused;
     }
 
     @Override
@@ -89,9 +108,7 @@ public class PlayerWard implements IPlayerWard {
     }
 
     @Override
-    public void sync(ServerPlayer player) {
-        if (player != null) {
-            PacketHandler.sendToPlayer(new SyncWardPacket(player), player);
-        }
+    public void sync(@NotNull ServerPlayer player) {
+        this.sync(player, SyncWardPacket::new);
     }
 }

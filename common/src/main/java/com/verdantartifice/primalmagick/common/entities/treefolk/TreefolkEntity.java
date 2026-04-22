@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.DebugPackets;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -21,15 +20,16 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.Brain.Provider;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -46,6 +46,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -80,12 +81,12 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.ARMOR, 4.0D).add(Attributes.MOVEMENT_SPEED, 0.35D).add(Attributes.ATTACK_DAMAGE, 5.0D);
     }
 
-    public static boolean canSpawnOn(EntityType<? extends Mob> typeIn, ServerLevelAccessor worldIn, MobSpawnType reason, BlockPos pos, RandomSource randomIn) {
+    public static boolean canSpawnOn(EntityType<? extends Mob> typeIn, ServerLevelAccessor worldIn, EntitySpawnReason reason, BlockPos pos, RandomSource randomIn) {
         return Mob.checkMobSpawnRules(typeIn, worldIn, reason, pos, randomIn);
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(DATA_IS_DANCING, false);
     }
@@ -99,23 +100,26 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     }
 
     @Override
+    @NotNull
     protected Provider<TreefolkEntity> brainProvider() {
         return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
     }
 
     @Override
-    protected Brain<?> makeBrain(Dynamic<?> pDynamic) {
+    @NotNull
+    protected Brain<?> makeBrain(@NotNull Dynamic<?> pDynamic) {
         return TreefolkAi.makeBrain(this, this.brainProvider().makeBrain(pDynamic));
     }
 
     @SuppressWarnings("unchecked")
     @Override
+    @NotNull
     public Brain<TreefolkEntity> getBrain() {
         return (Brain<TreefolkEntity>)super.getBrain();
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
         return SoundsPM.TREEFOLK_HURT.get();
     }
 
@@ -125,13 +129,13 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     }
 
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep(@NotNull ServerLevel serverLevel) {
         Level level = this.level();
-        level.getProfiler().push("treefolkBrain");
+        Profiler.get().push("treefolkBrain");
         this.getBrain().tick((ServerLevel)level, this);
-        level.getProfiler().pop();
+        Profiler.get().pop();
         TreefolkAi.updateActivity(this);
-        super.customServerAiStep();
+        super.customServerAiStep(serverLevel);
     }
 
     @Override
@@ -146,7 +150,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     public void setCustomName(Component name) {
         super.setCustomName(name);
         Level level = this.level();
-        if (!level.isClientSide && DREADED_NAME.equals(name.getString())) {
+        if (!level.isClientSide() && DREADED_NAME.equals(name.getString())) {
             List<Player> nearby = EntityUtils.getEntitiesInRange(level, this.position(), null, Player.class, 6.0D);
             for (Player player : nearby) {
                 StatsManager.incrementValue(player, StatsPM.TREANTS_NAMED);
@@ -175,19 +179,20 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     }
 
     @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+    @NotNull
+    protected InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         Level level = this.level();
         ItemStack stack = player.getItemInHand(hand);
         if (stack.is(Items.FLINT_AND_STEEL)) {
             level.playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 this.igniteForSeconds(10);
                 this.setLastHurtByMob(player);
-                stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+                stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        } else if (!level.isClientSide) {
-            return TreefolkAi.mobInteract(this, player, hand);
+            return InteractionResult.SUCCESS;
+        } else if (level instanceof ServerLevel serverLevel) {
+            return TreefolkAi.mobInteract(serverLevel, this, player, hand);
         } else {
             boolean flag = TreefolkAi.canAdmire(this, stack) && this.getArmPose() != TreefolkArmPose.ADMIRING_ITEM;
             return flag ? InteractionResult.SUCCESS : InteractionResult.PASS;
@@ -195,14 +200,14 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     }
 
     @Override
-    public boolean wantsToPickUp(ItemStack pStack) {
-        return Services.EVENTS.canEntityGrief(this.level(), this) && this.canPickUpLoot() && TreefolkAi.wantsToPickup(this, pStack);
+    public boolean wantsToPickUp(@NotNull ServerLevel pServerLevel, @NotNull ItemStack pStack) {
+        return Services.EVENTS.canEntityGrief(pServerLevel, this) && this.canPickUpLoot() && TreefolkAi.wantsToPickup(this, pStack);
     }
 
     @Override
-    protected void pickUpItem(ItemEntity pItemEntity) {
+    protected void pickUpItem(@NotNull ServerLevel pServerLevel, @NotNull ItemEntity pItemEntity) {
         this.onItemPickup(pItemEntity);
-        TreefolkAi.pickUpItem(this, pItemEntity);
+        TreefolkAi.pickUpItem(pServerLevel, this, pItemEntity);
     }
 
     public void holdInOffHand(ItemStack stack) {
@@ -233,23 +238,12 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     }
 
     @Override
-    public boolean hurt(DamageSource pSource, float pAmount) {
-        Level level = this.level();
-        boolean flag = super.hurt(pSource, pAmount);
-        if (level.isClientSide) {
-            return false;
-        } else {
-            if (flag && pSource.getEntity() instanceof LivingEntity livingSource) {
-                TreefolkAi.wasHurtBy(this, livingSource);
-            }
-            return flag;
+    public boolean hurtServer(@NotNull ServerLevel pServerLevel, @NotNull DamageSource pSource, float pAmount) {
+        boolean flag = super.hurtServer(pServerLevel, pSource, pAmount);
+        if (flag && pSource.getEntity() instanceof LivingEntity livingSource) {
+            TreefolkAi.wasHurtBy(pServerLevel, this, livingSource);
         }
-    }
-
-    @Override
-    protected void sendDebugPackets() {
-        super.sendDebugPackets();
-        DebugPackets.sendEntityBrain(this);
+        return flag;
     }
 
     @Override
@@ -258,7 +252,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     }
 
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return EntityTypesPM.TREEFOLK.get().create(pLevel);
+    public AgeableMob getBreedOffspring(@NotNull ServerLevel pLevel, @NotNull AgeableMob pOtherParent) {
+        return EntityTypesPM.TREEFOLK.get().create(pLevel, EntitySpawnReason.BREEDING);
     }
 }

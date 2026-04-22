@@ -27,8 +27,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -38,7 +38,7 @@ import java.util.function.Supplier;
  * payload.  Has no effect on blocks.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.effects.FlyingEffect}
+ * @see com.verdantartifice.primalmagick.common.effects.FlyingEffect
  */
 public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload> {
     public static final FlightSpellPayload INSTANCE = new FlightSpellPayload();
@@ -48,7 +48,7 @@ public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload>
     
     public static final String TYPE = "flight";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_FLIGHT));
-    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.NON_ZERO_DURATION.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> List.of(SpellPropertiesPM.NON_ZERO_DURATION.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -69,12 +69,11 @@ public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload>
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() instanceof LivingEntity) {
+            if (entityTarget.getEntity() instanceof LivingEntity entity) {
                 // Grant the potion effect
-                LivingEntity entity = (LivingEntity)entityTarget.getEntity();
                 int ticks = 20 * this.getDurationSeconds(spell, spellSource, caster, world.registryAccess());
                 entity.addEffect(new MobEffectInstance(EffectsPM.FLYING.getHolder(), ticks));
             }
@@ -82,6 +81,7 @@ public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload>
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.SKY;
     }
@@ -92,7 +92,7 @@ public class FlightSpellPayload extends AbstractSpellPayload<FlightSpellPayload>
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundsPM.WING_FLAP.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

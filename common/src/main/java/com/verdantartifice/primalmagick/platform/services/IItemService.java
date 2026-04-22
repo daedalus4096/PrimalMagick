@@ -6,7 +6,5 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 
 public interface IItemService {
-    boolean hasCraftingRemainingItem(ItemStack stack);
-    ItemStack getCraftingRemainingItem(ItemStack stack);
     InteractionResult onItemUseFirst(Item item, ItemStack stack, UseOnContext context);
 }

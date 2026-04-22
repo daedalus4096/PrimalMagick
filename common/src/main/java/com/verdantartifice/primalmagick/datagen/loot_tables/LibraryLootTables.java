@@ -237,7 +237,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         // FIXME Figure out why serialization can't find the mod's "enchantable" item tags
         LootPool.Builder enchPool = LootPool.lootPool();
 //        var enchLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
-//        enchLookup.listElements().filter(enchRef -> enchRef.key().location().getNamespace().equals(Constants.MOD_ID)).forEach(enchRef -> {
+//        enchLookup.listElements().filter(enchRef -> enchRef.key().identifier().getNamespace().equals(Constants.MOD_ID)).forEach(enchRef -> {
 //            enchPool.add(enchantedBook(enchRef));
 //        });
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(enchPool));

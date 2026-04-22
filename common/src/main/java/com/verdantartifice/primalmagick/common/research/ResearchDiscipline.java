@@ -17,7 +17,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
@@ -34,26 +34,26 @@ import java.util.stream.Stream;
  * 
  * @author Daedalus4096
  */
-public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractRequirement<?>> unlockRequirementOpt, ResourceLocation iconLocation, Optional<Stat> craftingStat, 
+public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractRequirement<?>> unlockRequirementOpt, Identifier iconLocation, Optional<Stat> craftingStat, 
         Optional<Stat> expertiseStat, OptionalInt indexSortOrder) {
     public static Codec<ResearchDiscipline> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResearchDisciplineKey.CODEC.fieldOf("key").forGetter(ResearchDiscipline::key),
                 AbstractRequirement.dispatchCodec().optionalFieldOf("unlockRequirementOpt").forGetter(ResearchDiscipline::unlockRequirementOpt),
-                ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(ResearchDiscipline::iconLocation),
-                ResourceLocation.CODEC.optionalFieldOf("craftingStat").xmap(locOpt -> locOpt.map(StatsManager::getStat), statOpt -> statOpt.map(Stat::key)).forGetter(ResearchDiscipline::craftingStat),
-                ResourceLocation.CODEC.optionalFieldOf("expertiseStat").xmap(locOpt -> locOpt.map(StatsManager::getStat), statOpt -> statOpt.map(Stat::key)).forGetter(ResearchDiscipline::expertiseStat),
+                Identifier.CODEC.fieldOf("iconLocation").forGetter(ResearchDiscipline::iconLocation),
+                Identifier.CODEC.optionalFieldOf("craftingStat").xmap(locOpt -> locOpt.map(StatsManager::getStat), statOpt -> statOpt.map(Stat::key)).forGetter(ResearchDiscipline::craftingStat),
+                Identifier.CODEC.optionalFieldOf("expertiseStat").xmap(locOpt -> locOpt.map(StatsManager::getStat), statOpt -> statOpt.map(Stat::key)).forGetter(ResearchDiscipline::expertiseStat),
                 CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("indexSortOrder")).forGetter(ResearchDiscipline::indexSortOrder)
             ).apply(instance, ResearchDiscipline::new));
     }
     
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "research_discipline", Constants.MOD_ID, this.key.getRootKey().location().getPath());
+        return String.join(".", "research_discipline", Constants.MOD_ID, this.key.getRootKey().identifier().getPath());
     }
     
     public Stream<ResearchEntry> getEntryStream(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isForDiscipline(this.key));
+        return registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isForDiscipline(this.key));
     }
 
     public boolean isUnlocked(Player player) {
@@ -88,7 +88,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
      */
     @Nonnull
     public List<ResearchEntry> getFinaleEntries(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isFinaleFor(this.key.getRootKey())).toList();
+        return registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isFinaleFor(this.key.getRootKey())).toList();
     }
     
     public static Builder builder(ResourceKey<ResearchDiscipline> key) {
@@ -98,7 +98,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
     public static class Builder {
         protected final ResearchDisciplineKey key;
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
-        protected ResourceLocation iconLocation = null;
+        protected Identifier iconLocation = null;
         protected Optional<Stat> craftingStat = Optional.empty();
         protected Optional<Stat> expertiseStat = Optional.empty();
         protected OptionalInt indexSortOrder = OptionalInt.empty();
@@ -116,7 +116,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
             return this.unlock(new ResearchRequirement(new ResearchEntryKey(requiredResearchEntry)));
         }
         
-        public Builder icon(ResourceLocation iconLocation) {
+        public Builder icon(Identifier iconLocation) {
             this.iconLocation = iconLocation;
             return this;
         }

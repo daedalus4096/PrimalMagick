@@ -4,16 +4,19 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block definition for a pillar of any type (e.g. marble).  Pillars are decorative blocks that change
@@ -34,17 +37,14 @@ public class PillarBlock extends Block {
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        // Determine the block's shape based on its "type" blockstate property
-        switch (state.getValue(PROPERTY_TYPE)) {
-        case BOTTOM:
-            return SHAPE_BOTTOM;
-        case TOP:
-            return SHAPE_TOP;
-        case BASE:
-        default:
-            return SHAPE_BASE;
-        }
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        // Determine the block's shape based on its "type" block state property
+        return switch (state.getValue(PROPERTY_TYPE)) {
+            case BOTTOM -> SHAPE_BOTTOM;
+            case TOP -> SHAPE_TOP;
+            default -> SHAPE_BASE;
+        };
     }
     
     @Override
@@ -57,14 +57,17 @@ public class PillarBlock extends Block {
         // Determine the appropriate pillar state when this block is placed in the world
         return this.getCurrentState(context.getLevel(), context.getClickedPos());
     }
-    
+
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+    @NotNull
+    public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
         // Determine the appropriate pillar state when one of this block's neighbors is updated
-        return this.getCurrentState(worldIn, currentPos);
+        return this.getCurrentState(level, pos);
     }
     
-    protected BlockState getCurrentState(LevelAccessor world, BlockPos pos) {
+    protected BlockState getCurrentState(LevelReader world, BlockPos pos) {
         boolean up = (world.getBlockState(pos.above()).getBlock() instanceof PillarBlock);
         boolean down = (world.getBlockState(pos.below()).getBlock() instanceof PillarBlock);
         
@@ -83,18 +86,19 @@ public class PillarBlock extends Block {
         }
     }
     
-    public static enum Type implements StringRepresentable {
+    public enum Type implements StringRepresentable {
         BASE("base"),
         BOTTOM("bottom"),
         TOP("top");
         
         private final String name;
         
-        private Type(String name) {
+        Type(String name) {
             this.name = name;
         }
 
         @Override
+        @NotNull
         public String getSerializedName() {
             return this.name;
         }

@@ -8,7 +8,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Packet sent from the server to trigger a spellcrafting rune particle effect on the client.
@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class SpellcraftingRunePacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("spellcrafting_rune");
+    public static final Identifier CHANNEL = ResourceUtils.loc("spellcrafting_rune");
     public static final StreamCodec<RegistryFriendlyByteBuf, SpellcraftingRunePacket> STREAM_CODEC = StreamCodec.ofMember(SpellcraftingRunePacket::encode, SpellcraftingRunePacket::decode);
 
     protected final SpellcraftingAltarTileEntity.Segment segment;

@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 
 import java.util.Objects;
@@ -26,7 +26,7 @@ public class EntityTypeLanguageBuilder extends AbstractLanguageBuilder<EntityTyp
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(EntityType<?> base) {
+    protected Identifier getBaseRegistryKey(EntityType<?> base) {
         return Objects.requireNonNull(Services.ENTITY_TYPES_REGISTRY.getKey(base));
     }
 }

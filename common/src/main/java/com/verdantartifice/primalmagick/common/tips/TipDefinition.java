@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Optional;
@@ -40,10 +40,10 @@ public record TipDefinition(String translationKey, Optional<AbstractRequirement<
     }
 
     public static Builder builder(ResourceKey<TipDefinition> key) {
-        return new Builder(key.location());
+        return new Builder(key.identifier());
     }
     
-    public static Builder builder(ResourceLocation id) {
+    public static Builder builder(Identifier id) {
         return new Builder(id);
     }
     
@@ -52,11 +52,11 @@ public record TipDefinition(String translationKey, Optional<AbstractRequirement<
     }
     
     public static class Builder {
-        protected final ResourceLocation id;
+        protected final Identifier id;
         protected String translationKey;
         protected Optional<AbstractRequirement<?>> requirement;
         
-        protected Builder(ResourceLocation id) {
+        protected Builder(Identifier id) {
             this.id = id;
             this.translationKey = String.join(".", "tip", id.getNamespace(), id.getPath());
             this.requirement = Optional.empty();
@@ -88,7 +88,7 @@ public record TipDefinition(String translationKey, Optional<AbstractRequirement<
             return new TipDefinition(this.translationKey, this.requirement);
         }
         
-        public void save(BiConsumer<ResourceLocation, TipDefinition> consumer) {
+        public void save(BiConsumer<Identifier, TipDefinition> consumer) {
             consumer.accept(this.id, this.build());
         }
     }

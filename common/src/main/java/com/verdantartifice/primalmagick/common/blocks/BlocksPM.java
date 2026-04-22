@@ -102,6 +102,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.level.block.TintedParticleLeavesBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -129,19 +130,19 @@ public class BlocksPM {
     }
 
     // Register raw marble blocks
-    public static final IRegistryItem<Block, Block> MARBLE_RAW = register("marble_raw", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
-    public static final IRegistryItem<Block, SlabBlock> MARBLE_SLAB = register("marble_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, StairBlock> MARBLE_STAIRS = register("marble_stairs", () -> new StairBlockPM(MARBLE_RAW.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, WallBlock> MARBLE_WALL = register("marble_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, Block> MARBLE_BRICKS = register("marble_bricks", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
+    public static final IRegistryItem<Block, Block> MARBLE = register("marble", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+    public static final IRegistryItem<Block, SlabBlock> MARBLE_SLAB = register("marble_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, StairBlock> MARBLE_STAIRS = register("marble_stairs", () -> new StairBlockPM(MARBLE.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, WallBlock> MARBLE_WALL = register("marble_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, Block> MARBLE_BRICKS = register("marble_bricks", () -> new Block(Block.Properties.ofFullCopy(MARBLE.get())));
     public static final IRegistryItem<Block, SlabBlock> MARBLE_BRICK_SLAB = register("marble_brick_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
     public static final IRegistryItem<Block, StairBlock> MARBLE_BRICK_STAIRS = register("marble_brick_stairs", () -> new StairBlockPM(MARBLE_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
     public static final IRegistryItem<Block, WallBlock> MARBLE_BRICK_WALL = register("marble_brick_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
-    public static final IRegistryItem<Block, PillarBlock> MARBLE_PILLAR = register("marble_pillar", () -> new PillarBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, Block> MARBLE_CHISELED = register("marble_chiseled", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, Block> MARBLE_RUNED = register("marble_runed", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, Block> MARBLE_TILES = register("marble_tiles", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final IRegistryItem<Block, CarvedBookshelfBlock> MARBLE_BOOKSHELF = register("marble_bookshelf", () -> new CarvedBookshelfBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
+    public static final IRegistryItem<Block, PillarBlock> MARBLE_PILLAR = register("marble_pillar", () -> new PillarBlock(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, Block> MARBLE_CHISELED = register("marble_chiseled", () -> new Block(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, Block> MARBLE_RUNED = register("marble_runed", () -> new Block(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, Block> MARBLE_TILES = register("marble_tiles", () -> new Block(Block.Properties.ofFullCopy(MARBLE.get())));
+    public static final IRegistryItem<Block, CarvedBookshelfBlock> MARBLE_BOOKSHELF = register("marble_bookshelf", () -> new CarvedBookshelfBlock(Block.Properties.ofFullCopy(MARBLE.get())));
 
     // Register enchanted marble blocks
     public static final IRegistryItem<Block, Block> MARBLE_ENCHANTED = register("marble_enchanted", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE)));
@@ -191,7 +192,7 @@ public class BlocksPM {
     public static final IRegistryItem<Block, SunwoodLogBlock> STRIPPED_SUNWOOD_WOOD = register("stripped_sunwood_wood", () -> new SunwoodLogBlock(null));
     public static final IRegistryItem<Block, SunwoodLogBlock> SUNWOOD_WOOD = register("sunwood_wood", () -> new SunwoodLogBlock(STRIPPED_SUNWOOD_WOOD.get()));
     public static final IRegistryItem<Block, SunwoodLeavesBlock> SUNWOOD_LEAVES = register("sunwood_leaves", SunwoodLeavesBlock::new);
-    public static final IRegistryItem<Block, SaplingBlockPM> SUNWOOD_SAPLING = register("sunwood_sapling", () -> new SaplingBlockPM(TreeGrowersPM.SUNWOOD, BlockTagsPM.MAY_PLACE_SUNWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public static final IRegistryItem<Block, SaplingBlockPM> SUNWOOD_SAPLING = register("sunwood_sapling", () -> new SaplingBlockPM(TreeGrowersPM.SUNWOOD, BlockTagsPM.MAY_PLACE_SUNWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollision().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final IRegistryItem<Block, SunwoodPlanksBlock> SUNWOOD_PLANKS = register("sunwood_planks", SunwoodPlanksBlock::new);
     public static final IRegistryItem<Block, SunwoodSlabBlock> SUNWOOD_SLAB = register("sunwood_slab", () -> new SunwoodSlabBlock(Block.Properties.ofFullCopy(SUNWOOD_PLANKS.get())));
     public static final IRegistryItem<Block, SunwoodStairsBlock> SUNWOOD_STAIRS = register("sunwood_stairs", () -> new SunwoodStairsBlock(SUNWOOD_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(SUNWOOD_PLANKS.get())));
@@ -204,7 +205,7 @@ public class BlocksPM {
     public static final IRegistryItem<Block, MoonwoodLogBlock> STRIPPED_MOONWOOD_WOOD = register("stripped_moonwood_wood", () -> new MoonwoodLogBlock(null));
     public static final IRegistryItem<Block, MoonwoodLogBlock> MOONWOOD_WOOD = register("moonwood_wood", () -> new MoonwoodLogBlock(STRIPPED_MOONWOOD_WOOD.get()));
     public static final IRegistryItem<Block, MoonwoodLeavesBlock> MOONWOOD_LEAVES = register("moonwood_leaves", MoonwoodLeavesBlock::new);
-    public static final IRegistryItem<Block, SaplingBlockPM> MOONWOOD_SAPLING = register("moonwood_sapling", () -> new SaplingBlockPM(TreeGrowersPM.MOONWOOD, BlockTagsPM.MAY_PLACE_MOONWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public static final IRegistryItem<Block, SaplingBlockPM> MOONWOOD_SAPLING = register("moonwood_sapling", () -> new SaplingBlockPM(TreeGrowersPM.MOONWOOD, BlockTagsPM.MAY_PLACE_MOONWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollision().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final IRegistryItem<Block, MoonwoodPlanksBlock> MOONWOOD_PLANKS = register("moonwood_planks", MoonwoodPlanksBlock::new);
     public static final IRegistryItem<Block, MoonwoodSlabBlock> MOONWOOD_SLAB = register("moonwood_slab", () -> new MoonwoodSlabBlock(Block.Properties.ofFullCopy(MOONWOOD_PLANKS.get())));
     public static final IRegistryItem<Block, MoonwoodStairsBlock> MOONWOOD_STAIRS = register("moonwood_stairs", () -> new MoonwoodStairsBlock(MOONWOOD_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(MOONWOOD_PLANKS.get())));
@@ -216,8 +217,8 @@ public class BlocksPM {
     public static final IRegistryItem<Block, StrippableLogBlock> HALLOWOOD_LOG = register("hallowood_log", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_LOG.get(), Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     public static final IRegistryItem<Block, RotatedPillarBlock> STRIPPED_HALLOWOOD_WOOD = register("stripped_hallowood_wood", () -> new RotatedPillarBlock(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     public static final IRegistryItem<Block, StrippableLogBlock> HALLOWOOD_WOOD = register("hallowood_wood", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_WOOD.get(), Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
-    public static final IRegistryItem<Block, LeavesBlock> HALLOWOOD_LEAVES = register("hallowood_leaves", () -> new LeavesBlock(Block.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).strength(0.2F).noOcclusion().sound(SoundType.GRASS).lightLevel(state -> 10).isSuffocating(BlocksPM::never).isViewBlocking(BlocksPM::never).isValidSpawn(BlocksPM::allowsSpawnOnLeaves)));
-    public static final IRegistryItem<Block, SaplingBlockPM> HALLOWOOD_SAPLING = register("hallowood_sapling", () -> new SaplingBlockPM(TreeGrowersPM.HALLOWOOD, BlockTagsPM.MAY_PLACE_HALLOWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public static final IRegistryItem<Block, LeavesBlock> HALLOWOOD_LEAVES = register("hallowood_leaves", () -> new TintedParticleLeavesBlock(0F, Block.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).strength(0.2F).noOcclusion().sound(SoundType.GRASS).lightLevel(state -> 10).isSuffocating(BlocksPM::never).isViewBlocking(BlocksPM::never).isValidSpawn(BlocksPM::allowsSpawnOnLeaves)));
+    public static final IRegistryItem<Block, SaplingBlockPM> HALLOWOOD_SAPLING = register("hallowood_sapling", () -> new SaplingBlockPM(TreeGrowersPM.HALLOWOOD, BlockTagsPM.MAY_PLACE_HALLOWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollision().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final IRegistryItem<Block, Block> HALLOWOOD_PLANKS = register("hallowood_planks", () -> new Block(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final IRegistryItem<Block, SlabBlock> HALLOWOOD_SLAB = register("hallowood_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(HALLOWOOD_PLANKS.get())));
     public static final IRegistryItem<Block, StairBlock> HALLOWOOD_STAIRS = register("hallowood_stairs", () -> new StairBlockPM(HALLOWOOD_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(HALLOWOOD_PLANKS.get())));
@@ -226,10 +227,10 @@ public class BlocksPM {
 
     // Register crop blocks
     public static final IRegistryItem<Block, HydromelonBlock> HYDROMELON = register("hydromelon", () -> new HydromelonBlock(Block.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
-    public static final IRegistryItem<Block, AttachedStemBlock> ATTACHED_HYDROMELON_STEM = register("attached_hydromelon_stem", () -> new AttachedStemBlockPM(BlockReferencesPM.HYDROMELON_STEM, BlockReferencesPM.HYDROMELON, ItemReferencesPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
-    public static final IRegistryItem<Block, StemBlock> HYDROMELON_STEM = register("hydromelon_stem", () -> new StemBlockPM(BlockReferencesPM.HYDROMELON, BlockReferencesPM.ATTACHED_HYDROMELON_STEM, ItemReferencesPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.HARD_CROP).pushReaction(PushReaction.DESTROY)));
-    public static final IRegistryItem<Block, BloodRoseBlock> BLOOD_ROSE = register("blood_rose", () -> new BloodRoseBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));
-    public static final IRegistryItem<Block, EmberflowerBlock> EMBERFLOWER = register("emberflower", () -> new EmberflowerBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY).lightLevel(state -> 10)));
+    public static final IRegistryItem<Block, AttachedStemBlock> ATTACHED_HYDROMELON_STEM = register("attached_hydromelon_stem", () -> new AttachedStemBlockPM(BlockReferencesPM.HYDROMELON_STEM, BlockReferencesPM.HYDROMELON, ItemReferencesPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
+    public static final IRegistryItem<Block, StemBlock> HYDROMELON_STEM = register("hydromelon_stem", () -> new StemBlockPM(BlockReferencesPM.HYDROMELON, BlockReferencesPM.ATTACHED_HYDROMELON_STEM, ItemReferencesPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollision().randomTicks().instabreak().sound(SoundType.HARD_CROP).pushReaction(PushReaction.DESTROY)));
+    public static final IRegistryItem<Block, BloodRoseBlock> BLOOD_ROSE = register("blood_rose", () -> new BloodRoseBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));
+    public static final IRegistryItem<Block, EmberflowerBlock> EMBERFLOWER = register("emberflower", () -> new EmberflowerBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY).lightLevel(state -> 10)));
 
     // Register infused stone
     public static final IRegistryItem<Block, Block> INFUSED_STONE_EARTH = register("infused_stone_earth", () -> new Block(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
@@ -431,7 +432,7 @@ public class BlocksPM {
     public static final IRegistryItem<Block, Block> HALLOWSTEEL_BLOCK = register("hallowsteel_block", () -> new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL)));
     public static final IRegistryItem<Block, Block> IGNYX_BLOCK = register("ignyx_block", () -> new Block(Block.Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM).strength(5.0F, 6.0F)));
     public static final IRegistryItem<Block, Block> SALT_BLOCK = register("salt_block", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 3.0F)));
-    public static final IRegistryItem<Block, TreefolkSproutBlock> TREEFOLK_SPROUT = register("treefolk_sprout", () -> new TreefolkSproutBlock(Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public static final IRegistryItem<Block, TreefolkSproutBlock> TREEFOLK_SPROUT = register("treefolk_sprout", () -> new TreefolkSproutBlock(Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollision().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final IRegistryItem<Block, EnderwardBlock> ENDERWARD = register("enderward", EnderwardBlock::new);
 
     // Helper functions for block properties

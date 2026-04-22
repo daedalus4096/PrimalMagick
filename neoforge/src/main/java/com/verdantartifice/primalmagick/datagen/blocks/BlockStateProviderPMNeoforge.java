@@ -35,7 +35,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.AttachedStemBlock;
@@ -74,10 +74,10 @@ import java.util.stream.Stream;
  * @author Daedalus4096
  */
 public class BlockStateProviderPMNeoforge extends BlockStateProvider {
-    protected static final ResourceLocation SOLID = ResourceLocation.withDefaultNamespace("solid");
-    protected static final ResourceLocation CUTOUT = ResourceLocation.withDefaultNamespace("cutout");
-    protected static final ResourceLocation CUTOUT_MIPPED = ResourceLocation.withDefaultNamespace("cutout_mipped");
-    protected static final ResourceLocation TRANSLUCENT = ResourceLocation.withDefaultNamespace("translucent");
+    protected static final Identifier SOLID = Identifier.withDefaultNamespace("solid");
+    protected static final Identifier CUTOUT = Identifier.withDefaultNamespace("cutout");
+    protected static final Identifier CUTOUT_MIPPED = Identifier.withDefaultNamespace("cutout_mipped");
+    protected static final Identifier TRANSLUCENT = Identifier.withDefaultNamespace("translucent");
 
     public BlockStateProviderPMNeoforge(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, Constants.MOD_ID, exFileHelper);
@@ -87,19 +87,19 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     protected void registerStatesAndModels() {
         // TODO Can this be extracted into a common super layer?
         // Generate marble blocks
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_RAW.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), this.blockTexture(BlocksPM.MARBLE.get()));
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_BRICKS.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_BRICK_SLAB.get(), BlocksPM.MARBLE_BRICKS.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
         this.pillarBlockWithItem(BlocksPM.MARBLE_PILLAR.get());
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
+        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE.get()));
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_TILES.get());
-        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_RAW.get());
+        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE.get());
         
         // Generate enchanted marble blocks
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED.get());
@@ -230,7 +230,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         RitualCandleBlock.getAllCandles().forEach(this::ritualCandleBlockWithItem);
         
         // Generate mana font blocks
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_RAW.get())));
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE.get())));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.ENCHANTED).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get())));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.FORBIDDEN).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_SMOKED.get())));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_HALLOWED.get())));
@@ -260,7 +260,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.bloodletterBlockWithItem();
         this.horizontalBlockWithItem(BlocksPM.SOUL_ANVIL.get(), state -> this.models()
                 .getExistingFile(this.defaultModel(BlocksPM.SOUL_ANVIL.get()).withSuffix(state.getValue(SoulAnvilBlock.DIRTY) ? "_dirty" : "")));
-        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
+        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), this.blockTexture(BlocksPM.MARBLE.get()));
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
@@ -318,11 +318,11 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Genreate arcanometer blockstates
     }
 
-    private ResourceLocation key(Block block) {
+    private Identifier key(Block block) {
         return Services.BLOCKS_REGISTRY.getKey(block);
     }
     
-    private ResourceLocation key(Item item) {
+    private Identifier key(Item item) {
         return Services.ITEMS_REGISTRY.getKey(item);
     }
 
@@ -330,7 +330,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         return key(block).getPath();
     }
     
-    private ResourceLocation defaultModel(Block block) {
+    private Identifier defaultModel(Block block) {
         return this.key(block).withPrefix(ModelProvider.BLOCK_FOLDER + "/");
     }
     
@@ -346,7 +346,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.simpleExistingBlockWithItem(block, this.defaultModel(block));
     }
     
-    private void simpleExistingBlockWithItem(Block block, ResourceLocation modelFile) {
+    private void simpleExistingBlockWithItem(Block block, Identifier modelFile) {
         this.simpleBlockWithItem(block, this.models().getExistingFile(modelFile));
     }
 
@@ -354,7 +354,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.slabBlockWithItem(block, doubleSlabBlock, this.blockTexture(doubleSlabBlock));
     }
     
-    private void slabBlockWithItem(SlabBlock block, Block doubleSlabBlock, ResourceLocation texture) {
+    private void slabBlockWithItem(SlabBlock block, Block doubleSlabBlock, Identifier texture) {
         String blockName = this.name(block);
         ModelFile bottomModel = this.models().slab(blockName, texture, texture, texture);
         ModelFile topModel = this.models().slabTop(blockName + "_top", texture, texture, texture);
@@ -362,7 +362,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.simpleBlockItem(block, bottomModel);
     }
     
-    private void stairsBlockWithItem(StairBlock block, ResourceLocation texture) {
+    private void stairsBlockWithItem(StairBlock block, Identifier texture) {
         String baseName = this.name(block);
         ModelFile stairs = this.models().stairs(baseName, texture, texture, texture);
         ModelFile stairsInner = this.models().stairsInner(baseName + "_inner", texture, texture, texture);
@@ -371,7 +371,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.simpleBlockItem(block, stairs);
     }
     
-    private void wallBlockWithItem(WallBlock block, ResourceLocation texture) {
+    private void wallBlockWithItem(WallBlock block, Identifier texture) {
         this.wallBlock(block, texture);
         ModelFile wallInv = this.models().wallInventory(this.name(block) + "_inventory", texture);
         this.simpleBlockItem(block, wallInv);
@@ -381,11 +381,11 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.cubeColumnBlockWithItem(block, this.blockTexture(block).withSuffix("_side"), this.blockTexture(block).withSuffix("_end"));
     }
     
-    private void cubeColumnBlockWithItem(Block block, ResourceLocation endTexture) {
+    private void cubeColumnBlockWithItem(Block block, Identifier endTexture) {
         this.cubeColumnBlockWithItem(block, this.blockTexture(block), endTexture);
     }
     
-    private void cubeColumnBlockWithItem(Block block, ResourceLocation sideTexture, ResourceLocation endTexture) {
+    private void cubeColumnBlockWithItem(Block block, Identifier sideTexture, Identifier endTexture) {
         this.simpleBlockWithItem(block, this.models().cubeColumn(this.name(block), sideTexture, endTexture));
     }
     
@@ -393,11 +393,11 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.pillarBlockWithItem(block, this.blockTexture(block));
     }
     
-    private void pillarBlockWithItem(PillarBlock block, ResourceLocation texture) {
+    private void pillarBlockWithItem(PillarBlock block, Identifier texture) {
         this.pillarBlockWithItem(block, texture, texture.withSuffix("_inner"), texture.withSuffix("_top"), texture.withSuffix("_bottom"), texture.withSuffix("_base"));
     }
     
-    private void pillarBlockWithItem(PillarBlock block, ResourceLocation sideTexture, ResourceLocation innerTexture, ResourceLocation topTexture, ResourceLocation bottomTexture, ResourceLocation baseTexture) {
+    private void pillarBlockWithItem(PillarBlock block, Identifier sideTexture, Identifier innerTexture, Identifier topTexture, Identifier bottomTexture, Identifier baseTexture) {
         ModelFile baseModel = this.models().withExistingParent(this.name(block), ResourceUtils.loc("block/pillar"))
                 .texture("side", sideTexture)
                 .texture("inner", innerTexture);
@@ -419,28 +419,28 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     private void phasingLogBlockWithItem(AbstractPhasingLogBlock block) {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
-            ResourceLocation sideTexture = this.blockTexture(block).withSuffix("_" + phaseName);
-            ResourceLocation endTexture = this.blockTexture(block).withSuffix("_top_" + phaseName);
+            Identifier sideTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+            Identifier endTexture = this.blockTexture(block).withSuffix("_top_" + phaseName);
             ModelFile model = this.models().cubeColumn(this.name(block) + "_" + phaseName, sideTexture, endTexture).renderType(TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT);
             this.axisBlockPhase(block, model, model, phase);
         });
 
         String phaseName = TimePhase.FULL.getSerializedName();
-        ResourceLocation sideTexture = this.blockTexture(block).withSuffix("_" + phaseName);
-        ResourceLocation endTexture = this.blockTexture(block).withSuffix("_top_" + phaseName);
+        Identifier sideTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+        Identifier endTexture = this.blockTexture(block).withSuffix("_top_" + phaseName);
         this.simpleBlockItem(block, this.models().cubeColumn(this.name(block) + "_" + phaseName, sideTexture, endTexture));
     }
     
-    private void phasingWoodBlockWithItem(AbstractPhasingLogBlock block, ResourceLocation texture) {
+    private void phasingWoodBlockWithItem(AbstractPhasingLogBlock block, Identifier texture) {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
-            ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+            Identifier phaseTexture = texture.withSuffix("_" + phaseName);
             ModelFile model = this.models().cubeColumn(this.name(block) + "_" + phaseName, phaseTexture, phaseTexture).renderType(TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT);
             this.axisBlockPhase(block, model, model, phase);
         });
 
         String phaseName = TimePhase.FULL.getSerializedName();
-        ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+        Identifier phaseTexture = texture.withSuffix("_" + phaseName);
         this.simpleBlockItem(block, this.models().cubeColumn(this.name(block) + "_" + phaseName, phaseTexture, phaseTexture));
     }
     
@@ -454,43 +454,43 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     private void phasingLeavesBlockWithItem(AbstractPhasingLeavesBlock block) {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
-            ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
-            ModelFile model = this.models().withExistingParent(this.name(block) + "_" + phaseName, ResourceLocation.withDefaultNamespace("block/leaves"))
+            Identifier phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+            ModelFile model = this.models().withExistingParent(this.name(block) + "_" + phaseName, Identifier.withDefaultNamespace("block/leaves"))
                     .texture("all", phaseTexture).renderType(TimePhase.FULL.equals(phase) ? CUTOUT : TRANSLUCENT);
             this.getVariantBuilder(block).partialState().with(AbstractPhasingLeavesBlock.PHASE, phase).modelForState().modelFile(model).addModel();
         });
 
         String phaseName = TimePhase.FULL.getSerializedName();
-        ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
-        this.simpleBlockItem(block, this.models().withExistingParent(this.name(block) + "_" + phaseName, ResourceLocation.withDefaultNamespace("block/leaves")).texture("all", phaseTexture));
+        Identifier phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+        this.simpleBlockItem(block, this.models().withExistingParent(this.name(block) + "_" + phaseName, Identifier.withDefaultNamespace("block/leaves")).texture("all", phaseTexture));
     }
     
     private void saplingBlockWithPotAndItem(Block block, FlowerPotBlock pottedBlock) {
         this.simpleBlock(block, this.models().cross(this.name(block), this.blockTexture(block)).renderType(CUTOUT));
-        this.simpleBlock(pottedBlock, this.models().withExistingParent(this.name(pottedBlock), ResourceLocation.withDefaultNamespace("block/flower_pot_cross")).texture("plant", this.blockTexture(pottedBlock.getPotted())).renderType(CUTOUT));
+        this.simpleBlock(pottedBlock, this.models().withExistingParent(this.name(pottedBlock), Identifier.withDefaultNamespace("block/flower_pot_cross")).texture("plant", this.blockTexture(pottedBlock.getPotted())).renderType(CUTOUT));
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", this.blockTexture(block));
     }
     
     private void phasingCubeBlockWithItem(AbstractPhasingBlock block) {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
-            ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+            Identifier phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
             ModelFile model = this.models().cubeAll(this.name(block) + "_" + phaseName, phaseTexture).renderType(TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT);
             this.getVariantBuilder(block).partialState().with(AbstractPhasingBlock.PHASE, phase).modelForState().modelFile(model).addModel();
         });
         
         String phaseName = TimePhase.FULL.getSerializedName();
-        ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+        Identifier phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
         this.simpleBlockItem(block, this.models().cubeAll(this.name(block) + "_" + phaseName, phaseTexture).renderType(SOLID));
     }
     
     private void phasingSlabBlockWithItem(AbstractPhasingSlabBlock block, AbstractPhasingBlock doubleSlabBlock) {
         String blockName = this.name(block);
-        ResourceLocation texture = this.blockTexture(doubleSlabBlock);
+        Identifier texture = this.blockTexture(doubleSlabBlock);
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
-            ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
-            ResourceLocation renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
+            Identifier phaseTexture = texture.withSuffix("_" + phaseName);
+            Identifier renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
             ModelFile bottomModel = this.models().slab(blockName + "_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType);
             ModelFile topModel = this.models().slabTop(blockName + "_top_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType);
             ModelFile doubleModel = this.models().getExistingFile(this.key(doubleSlabBlock).withSuffix("_" + phaseName));
@@ -501,20 +501,20 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         });
         
         String phaseName = TimePhase.FULL.getSerializedName();
-        ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+        Identifier phaseTexture = texture.withSuffix("_" + phaseName);
         ModelFile bottomModel = this.models().slab(blockName + "_" + phaseName, phaseTexture, phaseTexture, phaseTexture);
         this.simpleBlockItem(block, bottomModel);
     }
     
-    private void phasingStairsBlockWithItem(AbstractPhasingStairsBlock block, ResourceLocation texture) {
+    private void phasingStairsBlockWithItem(AbstractPhasingStairsBlock block, Identifier texture) {
         String baseName = this.name(block);
         Map<TimePhase, ModelFile> baseModels = new HashMap<>();
         Map<TimePhase, ModelFile> innerModels = new HashMap<>();
         Map<TimePhase, ModelFile> outerModels = new HashMap<>();
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
-            ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
-            ResourceLocation renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
+            Identifier phaseTexture = texture.withSuffix("_" + phaseName);
+            Identifier renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
             baseModels.put(phase, this.models().stairs(baseName + "_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType));
             innerModels.put(phase, this.models().stairsInner(baseName + "_inner_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType));
             outerModels.put(phase, this.models().stairsOuter(baseName + "_outer_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType));
@@ -547,17 +547,17 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.phasingPillarBlockWithItem(block, this.blockTexture(block));
     }
     
-    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, ResourceLocation texture) {
+    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, Identifier texture) {
         this.phasingPillarBlockWithItem(block, texture, texture.withSuffix("_inner"), texture.withSuffix("_top"), texture.withSuffix("_bottom"), texture.withSuffix("_base"));
     }
     
-    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, ResourceLocation sideTexture, ResourceLocation innerTexture, ResourceLocation topTexture, 
-            ResourceLocation bottomTexture, ResourceLocation baseTexture) {
+    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, Identifier sideTexture, Identifier innerTexture, Identifier topTexture,
+            Identifier bottomTexture, Identifier baseTexture) {
         String baseName = this.name(block);
         Table<PillarBlock.Type, TimePhase, ModelFile> models = HashBasedTable.create();
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
-            ResourceLocation renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
+            Identifier renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
             models.put(PillarBlock.Type.BASE, phase, this.models().withExistingParent(baseName + "_" + phaseName, ResourceUtils.loc("block/pillar"))
                     .texture("side", sideTexture.withSuffix("_" + phaseName))
                     .texture("inner", innerTexture.withSuffix("_" + phaseName))
@@ -582,7 +582,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     }
     
     private void logBlockWithItem(RotatedPillarBlock block) {
-        ResourceLocation texture = this.blockTexture(block);
+        Identifier texture = this.blockTexture(block);
         ModelFile model = this.models().cubeColumn(this.name(block), texture, texture.withSuffix("_top"));
         this.getVariantBuilder(block)
             .partialState().with(RotatedPillarBlock.AXIS, Axis.Y).modelForState().modelFile(model).addModel()
@@ -591,14 +591,14 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.simpleBlockItem(block, model);
     }
     
-    private void woodBlockWithItem(RotatedPillarBlock block, ResourceLocation texture) {
+    private void woodBlockWithItem(RotatedPillarBlock block, Identifier texture) {
         ModelFile model = this.models().cubeColumn(this.name(block), texture, texture);
         this.axisBlock(block, model, model);
         this.simpleBlockItem(block, model);
     }
     
     private void leavesBlockWithItem(LeavesBlock block) {
-        ModelFile model = this.models().withExistingParent(this.name(block), ResourceLocation.withDefaultNamespace("block/leaves")).texture("all", this.blockTexture(block));
+        ModelFile model = this.models().withExistingParent(this.name(block), Identifier.withDefaultNamespace("block/leaves")).texture("all", this.blockTexture(block));
         this.simpleBlockWithItem(block, model);
     }
     
@@ -606,7 +606,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.simpleExistingBlockWithItem(block, ResourceUtils.loc("block/ritual_candle"));
     }
     
-    private void manaFontBlockWithItem(AbstractManaFontBlock block, ResourceLocation baseTexture) {
+    private void manaFontBlockWithItem(AbstractManaFontBlock block, Identifier baseTexture) {
         this.simpleBlock(block, this.models().withExistingParent(this.name(block), ResourceUtils.loc("block/template_mana_font")).texture("base", baseTexture));
         this.itemModels().withExistingParent(this.name(block), ResourceUtils.loc("item/template_mana_font"));
     }
@@ -615,7 +615,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.horizontalExistingBlockWithItem(block, this.defaultModel(block));
     }
     
-    private void horizontalExistingBlockWithItem(Block block, ResourceLocation modelFile) {
+    private void horizontalExistingBlockWithItem(Block block, Identifier modelFile) {
         this.horizontalBlockWithItem(block, this.models().getExistingFile(modelFile));
     }
     
@@ -633,7 +633,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.horizontalExistingBlockWithBasicItem(block, this.defaultModel(block));
     }
     
-    private void horizontalExistingBlockWithBasicItem(Block block, ResourceLocation modelFile) {
+    private void horizontalExistingBlockWithBasicItem(Block block, Identifier modelFile) {
         this.horizontalBlockWithBasicItem(block, this.models().getExistingFile(modelFile));
     }
     
@@ -646,7 +646,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(block, this.defaultModel(block));
     }
     
-    private void horizontalExistingBlockWithRightHandAdjustmentsAndItem(Block block, ResourceLocation modelFile) {
+    private void horizontalExistingBlockWithRightHandAdjustmentsAndItem(Block block, Identifier modelFile) {
         this.horizontalBlockWithRightHandAdjustmentsAndItem(block, this.models().getExistingFile(modelFile));
     }
     
@@ -670,7 +670,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.directionalExistingBlockWithItem(block, this.defaultModel(block));
     }
     
-    private void directionalExistingBlockWithItem(Block block, ResourceLocation modelFile) {
+    private void directionalExistingBlockWithItem(Block block, Identifier modelFile) {
         this.directionalBlockWithItem(block, this.models().getExistingFile(modelFile));
     }
     
@@ -685,7 +685,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     }
 
     private void calcinatorBlockWithItem(AbstractCalcinatorBlock block) {
-        ResourceLocation texture = this.blockTexture(block);
+        Identifier texture = this.blockTexture(block);
         this.calcinatorBlockWithItem(block, state -> this.models().orientableWithBottom(
                 this.name(block) + (state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : ""), 
                 texture.withSuffix("_side"), 
@@ -701,7 +701,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     
     private void infernalFurnaceBlockWithItem() {
         Block block = BlocksPM.INFERNAL_FURNACE.get();
-        ResourceLocation texture = this.blockTexture(block);
+        Identifier texture = this.blockTexture(block);
         Function<BlockState, ModelFile> modelFunc = state -> this.models().orientableWithBottom(
                 this.name(block) + (state.getValue(BlockStateProperties.LIT) ? "_on" : ""), 
                 texture.withSuffix("_side"), 
@@ -726,7 +726,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     }
 
     private void manaRelayBlockWithItem(ManaRelayBlock block) {
-        this.simpleBlock(block, this.models().withExistingParent(this.name(block), ResourceLocation.withDefaultNamespace("block/copper_block")));
+        this.simpleBlock(block, this.models().withExistingParent(this.name(block), Identifier.withDefaultNamespace("block/copper_block")));
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("builtin/entity")).transforms()
             .transform(ItemDisplayContext.GUI).rotation(30, 225, 0).translation(0, 0, 0).scale(0.625F).end()
             .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(0, 3F, 0).scale(0.25F).end()
@@ -737,7 +737,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     }
 
     private void manaInjectorBlockWithItem(ManaInjectorBlock block) {
-        this.simpleBlock(block, this.models().withExistingParent(this.name(block), ResourceLocation.withDefaultNamespace("block/copper_block")));
+        this.simpleBlock(block, this.models().withExistingParent(this.name(block), Identifier.withDefaultNamespace("block/copper_block")));
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("builtin/entity")).transforms()
             .transform(ItemDisplayContext.GUI).rotation(30, 225, 0).translation(0, 0, 0).scale(0.625F).end()
             .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(0, 3F, 0).scale(0.25F).end()
@@ -748,7 +748,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     }
 
     private void sunlampBlockWithItem(SunlampBlock block) {
-        ResourceLocation modelLoc = this.defaultModel(block);
+        Identifier modelLoc = this.defaultModel(block);
         DirectionProperty prop = SunlampBlock.ATTACHMENT;
         this.getMultipartBuilder(block)
             .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_ground_base"))).addModel().condition(prop, Direction.DOWN).end()
@@ -765,7 +765,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     
     private void incenseBrazierBlockWithItem() {
         Block block = BlocksPM.INCENSE_BRAZIER.get();
-        ResourceLocation modelLoc = this.defaultModel(block);
+        Identifier modelLoc = this.defaultModel(block);
         this.getVariantBuilder(block)
             .partialState().with(IncenseBrazierBlock.LIT, false).modelForState().modelFile(this.models().getExistingFile(modelLoc)).addModel()
             .partialState().with(IncenseBrazierBlock.LIT, true).modelForState().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_lit"))).addModel();
@@ -802,28 +802,28 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     
     private void bloodletterBlockWithItem() {
         Block block = BlocksPM.BLOODLETTER.get();
-        ResourceLocation modelLoc = this.defaultModel(block);
+        Identifier modelLoc = this.defaultModel(block);
         this.getVariantBuilder(block)
             .partialState().with(BloodletterBlock.FILLED, false).modelForState().modelFile(this.models().getExistingFile(modelLoc)).addModel()
             .partialState().with(BloodletterBlock.FILLED, true).modelForState().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_full"))).addModel();
         this.simpleBlockItem(block, this.models().getExistingFile(modelLoc));
     }
     
-    private void runescribingAltarBlockWithItem(RunescribingAltarBlock block, ResourceLocation texture) {
+    private void runescribingAltarBlockWithItem(RunescribingAltarBlock block, Identifier texture) {
         ModelFile model = this.models().withExistingParent(this.name(block), ResourceUtils.loc("block/runescribing_altar"))
                 .texture("altar_bottom", texture)
                 .texture("altar_side", this.blockTexture(block).withSuffix("_side"));
         this.simpleBlockWithItem(block, model);
     }
     
-    private void golemControllerBlockWithItem(AbstractEnchantedGolemControllerBlock<?> block, ResourceLocation topTexture) {
-        ResourceLocation baseTexture = this.blockTexture(block);
+    private void golemControllerBlockWithItem(AbstractEnchantedGolemControllerBlock<?> block, Identifier topTexture) {
+        Identifier baseTexture = this.blockTexture(block);
         ModelFile model = this.models().orientable(this.name(block), baseTexture.withSuffix("_side"), baseTexture.withSuffix("_front"), topTexture);
         this.horizontalBlockWithItem(block, model);
     }
     
     private void essenceCaskBlockWithItem(EssenceCaskBlock block) {
-        ResourceLocation texture = this.blockTexture(block);
+        Identifier texture = this.blockTexture(block);
         this.essenceCaskBlockWithItem(block, state -> this.models().cubeBottomTop(
                 this.name(block) + (state.getValue(EssenceCaskBlock.OPEN) ? "_open" : ""), 
                 texture.withSuffix("_side"), 
@@ -840,7 +840,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         return this.models().cross(this.name(block), this.blockTexture(block)).renderType(CUTOUT);
     }
     
-    private void crossBlockWithItem(Block block, ResourceLocation itemTexture) {
+    private void crossBlockWithItem(Block block, Identifier itemTexture) {
         this.simpleBlock(block, this.getCrossModel(block));
         this.itemModels().basicItem(itemTexture);
     }
@@ -849,13 +849,13 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         VariantBlockStateBuilder builder = this.getVariantBuilder(block);
         StemBlock.AGE.getPossibleValues().forEach(stage -> {
             builder.partialState().with(StemBlock.AGE, stage).modelForState().modelFile(
-                    this.models().withExistingParent(this.name(block) + "_stage" + stage, ResourceLocation.withDefaultNamespace("block/stem_growth" + stage))
+                    this.models().withExistingParent(this.name(block) + "_stage" + stage, Identifier.withDefaultNamespace("block/stem_growth" + stage))
                         .texture("stem", this.blockTexture(block)).renderType(CUTOUT)).addModel();
         });
     }
     
-    private void attachedStemBlock(Block block, ResourceLocation lowerStemTexture) {
-        ModelFile model = this.models().withExistingParent(this.name(block), ResourceLocation.withDefaultNamespace("block/stem_fruit"))
+    private void attachedStemBlock(Block block, Identifier lowerStemTexture) {
+        ModelFile model = this.models().withExistingParent(this.name(block), Identifier.withDefaultNamespace("block/stem_fruit"))
                 .texture("stem", lowerStemTexture)
                 .texture("upperstem", this.blockTexture(block))
                 .renderType(CUTOUT);
@@ -870,7 +870,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.tallCrossBlockWithItem(block, this.blockTexture(block).withSuffix("_top"), this.blockTexture(block).withSuffix("_bottom"));
     }
     
-    private void tallCrossBlockWithItem(Block block, ResourceLocation topTexture, ResourceLocation bottomTexture) {
+    private void tallCrossBlockWithItem(Block block, Identifier topTexture, Identifier bottomTexture) {
         ModelFile topModel = this.models().cross(this.name(block) + "_top", topTexture).renderType(CUTOUT);
         ModelFile bottomModel = this.models().cross(this.name(block) + "_bottom", bottomTexture).renderType(CUTOUT);
         this.getVariantBuilder(block)
@@ -879,15 +879,15 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", this.blockTexture(block).withSuffix("_top"));
     }
     
-    private void tallExistingBlockWithItem(Block block, ResourceLocation itemTexture) {
+    private void tallExistingBlockWithItem(Block block, Identifier itemTexture) {
         this.tallExistingBlockWithItem(block, this.defaultModel(block).withSuffix("_top"), this.defaultModel(block).withSuffix("_bottom"), itemTexture);
     }
     
-    private void tallExistingBlockWithItem(Block block, ResourceLocation topModel, ResourceLocation bottomModel, ResourceLocation itemTexture) {
+    private void tallExistingBlockWithItem(Block block, Identifier topModel, Identifier bottomModel, Identifier itemTexture) {
         this.tallExistingBlockWithItem(block, this.models().getExistingFile(topModel), this.models().getExistingFile(bottomModel), itemTexture);
     }
     
-    private void tallExistingBlockWithItem(Block block, ModelFile topModel, ModelFile bottomModel, ResourceLocation itemTexture) {
+    private void tallExistingBlockWithItem(Block block, ModelFile topModel, ModelFile bottomModel, Identifier itemTexture) {
         this.getVariantBuilder(block)
             .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER).modelForState().modelFile(topModel).addModel()
             .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER).modelForState().modelFile(bottomModel).addModel();
@@ -898,7 +898,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.directionalCrossBlockWithItem(block, this.blockTexture(block));
     }
     
-    private void directionalCrossBlockWithItem(Block block, ResourceLocation itemTexture) {
+    private void directionalCrossBlockWithItem(Block block, Identifier itemTexture) {
         this.directionalBlock(block, this.getCrossModel(block));
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", itemTexture);
     }
@@ -907,9 +907,9 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         DirectionProperty facingProp = CarvedBookshelfBlock.FACING;
         ModelFile baseModel = this.getCarvedBookshelfBaseModel(block, sideTextureBlock);
         String baseName = this.name(block);
-        ResourceLocation sideTexture = this.blockTexture(sideTextureBlock);
-        ResourceLocation emptyTexture = this.blockTexture(block).withSuffix("_empty");
-        ResourceLocation occupiedTexture = this.blockTexture(block).withSuffix("_occupied");
+        Identifier sideTexture = this.blockTexture(sideTextureBlock);
+        Identifier emptyTexture = this.blockTexture(block).withSuffix("_empty");
+        Identifier occupiedTexture = this.blockTexture(block).withSuffix("_occupied");
         Map<BooleanProperty, String> slotNameMap = ImmutableMap.<BooleanProperty, String>builder()
                 .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_0_OCCUPIED, "top_left")
                 .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_1_OCCUPIED, "top_mid")
@@ -938,11 +938,11 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     }
     
     private ModelFile getCarvedBookshelfBaseModel(CarvedBookshelfBlock block, Block sideTextureBlock) {
-        ResourceLocation sideTexture = this.blockTexture(sideTextureBlock);
+        Identifier sideTexture = this.blockTexture(sideTextureBlock);
         return this.getCarvedBookshelfBaseModel(this.name(block), sideTexture, sideTexture);
     }
     
-    private ModelFile getCarvedBookshelfBaseModel(String name, ResourceLocation topTexture, ResourceLocation sideTexture) {
+    private ModelFile getCarvedBookshelfBaseModel(String name, Identifier topTexture, Identifier sideTexture) {
         return this.models().withExistingParent(name, ModelProvider.BLOCK_FOLDER + "/block")
                 .texture("top", topTexture)
                 .texture("side", sideTexture)
@@ -959,13 +959,13 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
                 .end();
     }
     
-    private ModelFile getCarvedBookshelfSlotModel(String baseName, String slotName, boolean occupied, ResourceLocation slotTexture) {
+    private ModelFile getCarvedBookshelfSlotModel(String baseName, String slotName, boolean occupied, Identifier slotTexture) {
         String name = baseName + "_" + (occupied ? "occupied" : "empty") + "_slot_" + slotName;
-        ResourceLocation parent = ResourceLocation.withDefaultNamespace(ModelProvider.BLOCK_FOLDER + "/template_chiseled_bookshelf_slot_" + slotName);
+        Identifier parent = Identifier.withDefaultNamespace(ModelProvider.BLOCK_FOLDER + "/template_chiseled_bookshelf_slot_" + slotName);
         return this.models().withExistingParent(name, parent).texture("texture", slotTexture);
     }
     
-    private ModelFile getCarvedBookshelfInventoryModel(String name, ResourceLocation frontTexture, ResourceLocation topTexture, ResourceLocation sideTexture) {
+    private ModelFile getCarvedBookshelfInventoryModel(String name, Identifier frontTexture, Identifier topTexture, Identifier sideTexture) {
         return this.models().withExistingParent(name, ModelProvider.BLOCK_FOLDER + "/block")
                 .texture("top", topTexture)
                 .texture("side", sideTexture)

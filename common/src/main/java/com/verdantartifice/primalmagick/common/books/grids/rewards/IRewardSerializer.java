@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Primary interface for the serializer of a data-defined linguistics grid node's reward.
@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 public interface IRewardSerializer<T extends IReward> {
     public static final IRewardSerializer<?> NULL = new IRewardSerializer<>() {
         @Override
-        public IReward read(ResourceLocation gridId, JsonObject json) {
+        public IReward read(Identifier gridId, JsonObject json) {
             return null;
         }
 
@@ -30,7 +30,7 @@ public interface IRewardSerializer<T extends IReward> {
     /**
      * Read a reward definition from JSON
      */
-    T read(ResourceLocation gridId, JsonObject json);
+    T read(Identifier gridId, JsonObject json);
     
     /**
      * Read a reward definition from the network

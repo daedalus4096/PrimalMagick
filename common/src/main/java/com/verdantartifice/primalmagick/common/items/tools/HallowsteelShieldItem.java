@@ -16,7 +16,7 @@ public class HallowsteelShieldItem extends AbstractTieredShieldItem implements I
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public HallowsteelShieldItem(Item.Properties properties) {
-        super(ItemTierPM.HALLOWSTEEL, properties);
+        super(ToolMaterialsPM.HALLOWSTEEL, properties);
     }
 
     @Override

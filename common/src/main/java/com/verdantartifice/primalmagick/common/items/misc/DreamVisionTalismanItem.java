@@ -8,14 +8,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Item definition for a dream vision talisman.  These items store experience picked up by the player,
@@ -121,7 +123,7 @@ public class DreamVisionTalismanItem extends Item {
      */
     public boolean doDrain(ItemStack stack, Player player) {
         Level level = player.level();
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel && this.isReadyToDrain(stack)) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel && this.isReadyToDrain(stack)) {
             if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
                 this.setStoredExp(stack, 0);
                 stack.hurtAndBreak(1, serverLevel, player instanceof ServerPlayer serverPlayer ? serverPlayer : null, item -> {
@@ -134,13 +136,12 @@ public class DreamVisionTalismanItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
-        tooltip.add(Component.translatable("tooltip.primalmagick.dream_vision_talisman.exp", this.getStoredExp(stack), this.getExpCapacity(stack)));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.accept(Component.translatable("tooltip.primalmagick.dream_vision_talisman.exp", this.getStoredExp(stack), this.getExpCapacity(stack)));
         if (this.isActive(stack)) {
-            tooltip.add(Component.translatable("tooltip.primalmagick.active").withStyle(ChatFormatting.GREEN));
+            tooltip.accept(Component.translatable("tooltip.primalmagick.active").withStyle(ChatFormatting.GREEN));
         } else {
-            tooltip.add(Component.translatable("tooltip.primalmagick.inactive").withStyle(ChatFormatting.RED));
+            tooltip.accept(Component.translatable("tooltip.primalmagick.inactive").withStyle(ChatFormatting.RED));
         }
     }
 
@@ -150,10 +151,10 @@ public class DreamVisionTalismanItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         boolean active = this.isActive(stack);
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             if (active) {
                 player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.set_inactive"), false);
             } else {
@@ -161,6 +162,6 @@ public class DreamVisionTalismanItem extends Item {
             }
         }
         this.setActive(stack, !active);
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+        return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
     }
 }

@@ -7,10 +7,4 @@ public class SanguineCrucibleTileEntityNeoforge extends SanguineCrucibleTileEnti
     public SanguineCrucibleTileEntityNeoforge(BlockPos pos, BlockState state) {
         super(pos, state);
     }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        this.doInventorySync();
-    }
 }

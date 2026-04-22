@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IFluidHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
@@ -9,24 +8,23 @@ import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.fluids.IFluidStackPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
-import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.util.FluidUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -40,8 +38,9 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 
 import java.util.Optional;
 
@@ -52,8 +51,6 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainingBlockEntity {
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     public static final int INPUT_INV_INDEX = 0;
     public static final int OUTPUT_INV_INDEX = 1;
     public static final int WAND_INV_INDEX = 2;
@@ -115,33 +112,30 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.boilTime = compound.getInt("BoilTime");
-        this.boilTimeTotal = compound.getInt("BoilTimeTotal");
-        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
-            LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
-        this.waterTank.readFromNBT(registries, compound.getCompound("WaterTank"));
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.boilTime = input.getIntOr("BoilTime", 0);
+        this.boilTimeTotal = input.getIntOr("BoilTimeTotal", 0);
+        input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
+        this.waterTank.deserialize(input);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("BoilTime", this.boilTime);
-        compound.putInt("BoilTimeTotal", this.boilTimeTotal);
-        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
-            LOGGER.error("Failed to encode mana storage: {}", msg);
-        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
-        compound.put("WaterTank", this.waterTank.writeToNBT(registries, new CompoundTag()));
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("BoilTime", this.boilTime);
+        output.putInt("BoilTimeTotal", this.boilTimeTotal);
+        output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
+        this.waterTank.serialize(output);
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new DesalinatorMenu(windowId, playerInv, this.getBlockPos(), this, this.containerData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -162,7 +156,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
         boolean shouldMarkDirty = false;
         entity.ticks++;
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
@@ -185,7 +179,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
             }
 
             // Fill the internal water tank from the environment if waterlogged and surrounded by water source
-            if (FluidUtils.isInfiniteSource(level, pos, Fluids.WATER)) {
+            if (level instanceof ServerLevel serverLevel && FluidUtils.isInfiniteSource(serverLevel, pos, Fluids.WATER)) {
                 entity.waterTank.fill(Services.FLUIDS.makeFluidStack(Fluids.WATER, PASSIVE_WATER_INPUT), false);
             }
 
@@ -227,8 +221,9 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     protected static ItemStack getContainerForInput(ItemStack stack) {
-        if (stack.is(Items.WATER_BUCKET) && stack.getItem().getCraftingRemainingItem() != null) {
-            return new ItemStack(stack.getItem().getCraftingRemainingItem());
+        ItemStack remainderStack = stack.getItem().getCraftingRemainder();
+        if (!remainderStack.isEmpty()) {
+            return remainderStack;
         } else if (stack.is(Items.POTION)) {
             return new ItemStack(Items.GLASS_BOTTLE);
         } else if (stack.is(ItemsPM.CONCOCTION.get())) {
@@ -311,11 +306,12 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public int getMana(Source source) {
+    public int getMana(@NotNull Source source) {
         return this.manaStorage.getManaStored(source);
     }
 
     @Override
+    @NotNull
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
         for (Source source : Sources.getAllSorted()) {
@@ -334,14 +330,14 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public void setMana(Source source, int amount) {
+    public void setMana(@NotNull Source source, int amount) {
         this.manaStorage.setMana(source, amount);
         this.setChanged();
         this.syncTile(true);
     }
 
     @Override
-    public void setMana(SourceList mana) {
+    public void setMana(@NotNull SourceList mana) {
         this.manaStorage.setMana(mana);
         this.setChanged();
         this.syncTile(true);
@@ -400,19 +396,28 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
-        super.applyImplicitComponents(pComponentInput);
-        pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
+    protected void applyImplicitComponents(@NotNull DataComponentGetter pComponentGetter) {
+        super.applyImplicitComponents(pComponentGetter);
+        pComponentGetter.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override
-    protected void collectImplicitComponents(DataComponentMap.Builder pComponents) {
+    protected void collectImplicitComponents(@NotNull DataComponentMap.Builder pComponents) {
         super.collectImplicitComponents(pComponents);
         pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag pTag) {
-        pTag.remove("ManaStorage");
+    public void removeComponentsFromTag(ValueOutput output) {
+        output.discard("ManaStorage");
+    }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        if (this.level != null) {
+            this.dropContents(this.level, pos);
+        }
+        super.preRemoveSideEffects(pos, state);
     }
 }

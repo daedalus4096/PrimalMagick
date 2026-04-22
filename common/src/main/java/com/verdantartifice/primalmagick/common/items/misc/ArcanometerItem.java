@@ -13,10 +13,10 @@ import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -37,7 +37,7 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public abstract class ArcanometerItem extends Item implements IHasCustomRenderer {
-    public static final ResourceLocation SCAN_STATE_PROPERTY = ResourceUtils.loc("scan_state");
+    public static final Identifier SCAN_STATE_PROPERTY = ResourceUtils.loc("scan_state");
 
     private BlockEntityWithoutLevelRenderer customRenderer;
 
@@ -68,8 +68,8 @@ public abstract class ArcanometerItem extends Item implements IHasCustomRenderer
     }
     
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        if (worldIn.isClientSide) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        if (worldIn.isClientSide()) {
             HitResult result = RayTraceUtils.getMouseOver(worldIn, playerIn);
             if (result != null && result.getType() != HitResult.Type.MISS) {
                 // If something is being moused over, play the sound effect for the player and send a scan packet to the server

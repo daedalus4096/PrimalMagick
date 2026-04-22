@@ -9,7 +9,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class SetResearchTopicHistoryPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("set_research_topic_history");
+    public static final Identifier CHANNEL = ResourceUtils.loc("set_research_topic_history");
     public static final StreamCodec<RegistryFriendlyByteBuf, SetResearchTopicHistoryPacket> STREAM_CODEC = StreamCodec.ofMember(SetResearchTopicHistoryPacket::encode, SetResearchTopicHistoryPacket::decode);
 
     protected final AbstractResearchTopic<?> current;

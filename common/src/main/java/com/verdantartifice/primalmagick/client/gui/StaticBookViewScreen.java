@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -17,6 +18,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
 
@@ -158,7 +160,7 @@ public class StaticBookViewScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
         this.renderedLines.clear();
@@ -199,12 +201,12 @@ public class StaticBookViewScreen extends Screen {
     }
     
     @Override
-    public void renderBackground(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderBackground(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.renderBackground(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         
         int xPos = (this.width - IMAGE_WIDTH) / 2;
         int yPos = 2;
-        pGuiGraphics.blit(ClientBookHelper.getSprites(this.bookType).background(), xPos, yPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+        pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, ClientBookHelper.getSprites(this.bookType).background(), xPos, yPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
     }
 
     protected Optional<Map.Entry<Vector2i, FormattedCharSequence>> getRenderedLineEntryAt(int x, int y) {
@@ -212,7 +214,7 @@ public class StaticBookViewScreen extends Screen {
             Vector2i pos = entry.getKey();
             int lineWidth = this.font.width(entry.getValue());
             if (x >= pos.x && x <= pos.x + lineWidth && y >= pos.y && y <= pos.y + LINE_HEIGHT) {
-                return Optional.ofNullable(entry);
+                return Optional.of(entry);
             }
         }
         return Optional.empty();

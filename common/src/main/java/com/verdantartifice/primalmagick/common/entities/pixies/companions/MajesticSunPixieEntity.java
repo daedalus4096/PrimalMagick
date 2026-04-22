@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition of a majestic sun pixie.  Greatest of the sun pixies.
@@ -17,7 +18,7 @@ public class MajesticSunPixieEntity extends AbstractSunPixieEntity implements IM
     }
 
     @Override
-    protected SpawnEggItem getSpawnItem() {
+    protected @NotNull SpawnEggItem getSpawnItem() {
         return ItemsPM.MAJESTIC_SUN_PIXIE.get();
     }
 }

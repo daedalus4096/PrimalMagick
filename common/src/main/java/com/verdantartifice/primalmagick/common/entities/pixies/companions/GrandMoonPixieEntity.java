@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition of a grand moon pixie.  Middle of the moon pixies.
@@ -17,7 +18,7 @@ public class GrandMoonPixieEntity extends AbstractMoonPixieEntity implements IGr
     }
 
     @Override
-    protected SpawnEggItem getSpawnItem() {
+    protected @NotNull SpawnEggItem getSpawnItem() {
         return ItemsPM.GRAND_MOON_PIXIE.get();
     }
 }

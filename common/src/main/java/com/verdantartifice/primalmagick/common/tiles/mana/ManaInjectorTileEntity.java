@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.mana.network.IManaConsumer;
 import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
@@ -14,22 +14,21 @@ import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEnti
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public abstract class ManaInjectorTileEntity extends AbstractTilePM implements ITieredDeviceBlockEntity, IManaConsumer, IOwnedTileEntity {
     protected static final int TICKS_PER_PHASE = 40;
@@ -38,30 +37,22 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     protected int ticks = 0;
     protected Source lastSource = Sources.SKY;
     protected Source nextSource = Sources.SKY;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
 
     public ManaInjectorTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.MANA_INJECTOR.get(), pos, state);
     }
 
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.ownerUUID = null;
-        if (compound.contains("OwnerUUID")) {
-            String ownerUUIDStr = compound.getString("OwnerUUID");
-            if (!ownerUUIDStr.isEmpty()) {
-                this.ownerUUID = UUID.fromString(ownerUUIDStr);
-            }
-        }
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.owner = EntityReference.read(input, "Owner");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        if (this.ownerUUID != null) {
-            compound.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        EntityReference.store(this.owner, output, "Owner");
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ManaInjectorTileEntity entity) {
@@ -70,7 +61,7 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
         }
 
         // Determine if the attached device needs mana and pull if so
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (entity.ticks % 5 == 0) {
                 entity.getConnectedStorage().ifPresent(storage -> {
                     final int throughput = entity.getManaThroughput();
@@ -90,16 +81,14 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
 
     @Override
     public void setTileOwner(@Nullable Player owner) {
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
     }
 
     @Override
-    public @Nullable Player getTileOwner() {
-        if (this.level instanceof ServerLevel serverLevel) {
-            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-        } else {
-            return null;
-        }
+    @Nullable
+    public Player getTileOwner() {
+        Level level = this.getLevel();
+        return level != null ? EntityReference.getPlayer(this.owner, level) : null;
     }
 
     protected void nextPhase() {
@@ -121,7 +110,7 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
             int lastColor = this.lastSource.getColor();
             int nextColor = this.nextSource.getColor();
             float blend = Mth.clamp(((this.ticks % TICKS_PER_PHASE) + partialTicks) / (TICKS_PER_PHASE / 2F), 0F, 1F);
-            return FastColor.ARGB32.lerp(blend, lastColor, nextColor);
+            return ARGB.linearLerp(blend, lastColor, nextColor);
         }
     }
 
@@ -158,5 +147,11 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
     @Override
     public @NotNull RouteTable getRouteTable() {
         return RouteManager.getRouteTable(this.getLevel());
+    }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        this.getRouteTable().invalidate();
+        super.preRemoveSideEffects(pos, state);
     }
 }

@@ -10,17 +10,16 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Item definition for a filled spell scroll.  These can be used to cast their held spell directly or
@@ -36,38 +35,40 @@ public class SpellScrollItem extends Item {
     }
     
     @Nullable
-    public SpellPackage getSpell(@Nonnull ItemStack stack) {
+    public SpellPackage getSpell(@NotNull ItemStack stack) {
         // Get the held spell from the given scroll stack's data
         return stack.get(DataComponentsPM.SPELL_PACKAGE.get());
     }
     
-    public void setSpell(@Nonnull ItemStack stack, @Nonnull SpellPackage spell) {
+    public void setSpell(@NotNull ItemStack stack, @NotNull SpellPackage spell) {
         // Save the given spell into the scroll stack's data
         stack.set(DataComponentsPM.SPELL_PACKAGE.get(), spell);
-        stack.set(DataComponents.RARITY, spell == null ? Rarity.COMMON : spell.getRarity());
+        stack.set(DataComponents.RARITY, spell.getRarity());
     }
 
     @Override
-    public Component getName(ItemStack stack) {
+    @NotNull
+    public Component getName(@NotNull ItemStack stack) {
         // A scroll's name is determined by that of the spell it holds (e.g. "Scroll of Lightning Bolt")
         SpellPackage spell = this.getSpell(stack);
         Component spellName = (spell == null) ? Component.translatable("tooltip.primalmagick.none") : spell.getDisplayName();
-        return Component.translatable(this.getDescriptionId(stack), spellName).withStyle(ChatFormatting.ITALIC);
+        return Component.translatable(this.getDescriptionId(), spellName).withStyle(ChatFormatting.ITALIC);
     }
-    
+
+    @SuppressWarnings("deprecation")
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(this.getSpell(stack), stack, null, false, context.registries()));
-        tooltip.add(TOOLTIP);
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, @NotNull TooltipDisplay tooltipDisplay, @NotNull Consumer<Component> tooltip, @NotNull TooltipFlag flag) {
+        SpellManager.getSpellPackageDetailTooltip(this.getSpell(stack), stack, null, false, context.registries()).forEach(tooltip);
+        tooltip.accept(TOOLTIP);
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    @NotNull
+    public InteractionResult use(@NotNull Level worldIn, @NotNull Player playerIn, @NotNull InteractionHand handIn) {
         // Cast the held spell, if any, and consume the scroll
         ItemStack stack = playerIn.getItemInHand(handIn);
         playerIn.startUsingItem(handIn);
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             SpellPackage spell = this.getSpell(stack);
             // Check to see if the player's spells are on cooldown
             if (spell != null && !SpellManager.isOnCooldown(playerIn)) {
@@ -76,19 +77,19 @@ public class SpellScrollItem extends Item {
                 if (!playerIn.hasInfiniteMaterials()) {
                     stack.shrink(1);
                 }
-                return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+                return InteractionResult.SUCCESS_SERVER.heldItemTransformedTo(stack);
             } else {
-                return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
+                return InteractionResult.FAIL;
             }
         } else {
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
         }
     }
     
     @Override
-    public void onCraftedBy(ItemStack stack, Level worldIn, Player playerIn) {
+    public void onCraftedBy(@NotNull ItemStack stack, @NotNull Player playerIn) {
         // Increment spell crafting statistics
-        super.onCraftedBy(stack, worldIn, playerIn);
+        super.onCraftedBy(stack, playerIn);
         SpellPackage spell = this.getSpell(stack);
         if (spell != null) {
             StatsManager.incrementValue(playerIn, StatsPM.SPELLS_CRAFTED, stack.getCount());

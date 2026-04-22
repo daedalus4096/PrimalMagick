@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.books;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringRepresentable;
 
 /**
@@ -10,13 +10,13 @@ import net.minecraft.util.StringRepresentable;
  * @author Daedalus4096
  */
 public enum BookType implements StringRepresentable {
-    BOOK("book", ResourceLocation.withDefaultNamespace("textures/gui/book.png")),
+    BOOK("book", Identifier.withDefaultNamespace("textures/gui/book.png")),
     TABLET("tablet", ResourceUtils.loc("textures/gui/tablet.png"));
     
     private final String tag;
-    private final ResourceLocation bgTexture;
+    private final Identifier bgTexture;
     
-    private BookType(String tag, ResourceLocation bgTexture) {
+    private BookType(String tag, Identifier bgTexture) {
         this.tag = tag;
         this.bgTexture = bgTexture;
     }
@@ -25,7 +25,7 @@ public enum BookType implements StringRepresentable {
         return this.tag;
     }
     
-    public ResourceLocation getBackgroundTexture() {
+    public Identifier getBackgroundTexture() {
         return this.bgTexture;
     }
 

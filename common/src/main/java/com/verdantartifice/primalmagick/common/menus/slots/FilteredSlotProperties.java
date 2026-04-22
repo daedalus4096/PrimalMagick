@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
@@ -16,12 +16,12 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class FilteredSlotProperties {
-    private final List<Pair<Predicate<Slot>, ResourceLocation>> backgrounds = new ArrayList<>();
+    private final List<Pair<Predicate<Slot>, Identifier>> backgrounds = new ArrayList<>();
     private Optional<Predicate<ItemStack>> filter = Optional.empty();
     private Optional<Component> tooltip = Optional.empty();
     private Optional<Integer> maxStackSize = Optional.empty();
 
-    List<Pair<Predicate<Slot>, ResourceLocation>> getBackgrounds() {
+    List<Pair<Predicate<Slot>, Identifier>> getBackgrounds() {
         return this.backgrounds;
     }
 
@@ -109,11 +109,11 @@ public class FilteredSlotProperties {
      * @param loc the location of the sprite to use
      * @return the modified properties object
      */
-    public FilteredSlotProperties background(ResourceLocation loc) {
+    public FilteredSlotProperties background(Identifier loc) {
         return this.background(loc, $ -> true);
     }
 
-    public FilteredSlotProperties background(ResourceLocation loc, Predicate<Slot> predicate) {
+    public FilteredSlotProperties background(Identifier loc, Predicate<Slot> predicate) {
         this.backgrounds.add(Pair.of(predicate, loc));
         return this;
     }

@@ -2,12 +2,12 @@ package com.verdantartifice.primalmagick.platform.services;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 
 public interface ITagService {
     default <T> TagKey<T> create(ResourceKey<? extends Registry<T>> registry, String namespace, String name) {
-        return TagKey.create(registry, ResourceLocation.fromNamespaceAndPath(namespace, name));
+        return TagKey.create(registry, Identifier.fromNamespaceAndPath(namespace, name));
     }
 
     default <T> TagKey<T> createCommon(ResourceKey<? extends Registry<T>> registry, String name) {

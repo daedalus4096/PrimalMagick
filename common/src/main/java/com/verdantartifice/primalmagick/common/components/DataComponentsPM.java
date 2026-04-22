@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.common.runes.Rune;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
@@ -48,10 +49,6 @@ public class DataComponentsPM {
     
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<Integer>> MANA_DISCOUNT = register("mana_discount", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
 
-    @Deprecated(forRemoval = true, since = "6.0.2-beta")
-    // FIXME Remove in next major revision
-    public static final IRegistryItem<DataComponentType<?>, DataComponentType<SourceList>> STORED_CENTIMANA = register("stored_centimana", builder -> builder.persistent(SourceList.CODEC).networkSynchronized(SourceList.STREAM_CODEC));
-    
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<List<Rune>>> INSCRIBED_RUNES = register("inscribed_runes", builder -> builder.persistent(Rune.CODEC.listOf()).networkSynchronized(Rune.STREAM_CODEC.apply(ByteBufCodecs.list())));
     
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<SpellPackage>> SPELL_PACKAGE = register("spell_package", builder -> builder.persistent(SpellPackage.codec()).networkSynchronized(SpellPackage.streamCodec()));
@@ -75,7 +72,11 @@ public class DataComponentsPM {
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<ManaStorage>> CAPABILITY_MANA_STORAGE = register("capability_mana_storage", builder -> builder.persistent(ManaStorage.CODEC).networkSynchronized(ManaStorage.STREAM_CODEC));
     
     public static final IRegistryItem<DataComponentType<?>, DataComponentType<Long>> LAST_UPDATED = register("last_updated", builder -> builder.persistent(Codec.LONG).networkSynchronized(ByteBufCodecs.VAR_LONG));
-    
+
+    public static final IRegistryItem<DataComponentType<?>, DataComponentType<Source>> SOURCE_TINT = register("source_tint", builder -> builder.persistent(Source.CODEC).networkSynchronized(Source.STREAM_CODEC));
+
+    public static final IRegistryItem<DataComponentType<?>, DataComponentType<Float>> ANTENNA_ANGLE = register("antenna_angle", builder -> builder.persistent(Codec.FLOAT));
+
     private static <T> IRegistryItem<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> operator) {
         return Services.DATA_COMPONENT_TYPES_REGISTRY.register(name, () -> operator.apply(DataComponentType.builder()).build());
     }

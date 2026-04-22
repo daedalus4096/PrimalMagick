@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
@@ -96,7 +97,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.add("itemGroup.primalmagick", "Primal Magick");
         
         // Generate block localizations
-        this.block(BlocksPM.MARBLE_RAW).name("Marble").build();
+        this.block(BlocksPM.MARBLE).name("Marble").build();
         this.block(BlocksPM.MARBLE_SLAB).name("Marble Slab").build();
         this.block(BlocksPM.MARBLE_STAIRS).name("Marble Stairs").build();
         this.block(BlocksPM.MARBLE_WALL).name("Marble Wall").build();
@@ -2211,7 +2212,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.concoction("fuse").sub("long").output("5s").end().build();
         
         // Generate keybind localizations
-        this.add(KeyBindings.KEY_CATEGORY, "Primal Magick");
+        this.add(KeyBindings.KEY_CATEGORY.id().toString(), Constants.MOD_NAME);
         this.keyMapping(KeyBindings.CHANGE_SPELL_KEY, "change_spell").name("Change Active Spell").build();
         this.keyMapping(KeyBindings.CARPET_FORWARD_KEY, "carpet_forward").name("Flying Carpet Forward").build();
         this.keyMapping(KeyBindings.CARPET_BACKWARD_KEY, "carpet_backward").name("Flying Carpet Backward").build();

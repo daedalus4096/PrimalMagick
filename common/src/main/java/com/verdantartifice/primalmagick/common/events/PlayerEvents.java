@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementAttributeModifiers;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
@@ -58,6 +59,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -81,10 +83,10 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.Vec3;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.VisibleForTesting;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -119,11 +121,11 @@ public class PlayerEvents {
     private static final ResearchStageKey SOURCE_SUN_END = new ResearchStageKey(ResearchEntries.SOURCE_SUN, 2);
     private static final ResearchStageKey SOURCE_MOON_START = new ResearchStageKey(ResearchEntries.SOURCE_MOON, 1);
     private static final ResearchStageKey SOURCE_MOON_END = new ResearchStageKey(ResearchEntries.SOURCE_MOON, 2);
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     public static void livingTick(Entity entity) {
         Level level = entity.level();
-        if (!level.isClientSide && (entity instanceof ServerPlayer player)) {
+        if (!level.isClientSide() && (entity instanceof ServerPlayer player)) {
             checkNearDeathExperience(player);
             if (player.tickCount % 5 == 0) {
                 // Apply any earned buffs for attunements
@@ -150,11 +152,11 @@ public class PlayerEvents {
                 AttunementManager.decayTemporaryAttunements(player);
             }
         }
-        if (level.isClientSide && (entity instanceof Player player)) {
+        if (level.isClientSide() && (entity instanceof Player player)) {
             // If this is a client-side player, handle any double jumps from attunement bonuses
             handleDoubleJump(player);
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // If on the server side, handle any entity swappers attached to the entity
             tickEntitySwappers(entity);
         }
@@ -256,15 +258,15 @@ public class PlayerEvents {
             
             // If the player is working on the Sun Source research, check if they're in the desert during the daytime
             if (SOURCE_SUN_START.isKnownBy(player) && !SOURCE_SUN_END.isKnownBy(player)) {
-                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SUN)) {
+                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level, player.blockPosition()) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SUN)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_SUN);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
-            // If the player is working on the Moon Source research, check if they're in the forest during the night-time
+            // If the player is working on the Moon Source research, check if they're in the forest during the nighttime
             if (SOURCE_MOON_START.isKnownBy(player) && !SOURCE_MOON_END.isKnownBy(player)) {
-                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_MOON)) {
+                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level, player.blockPosition()) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_MOON)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_MOON);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }
@@ -276,7 +278,7 @@ public class PlayerEvents {
     @VisibleForTesting
     public static void handlePhotosynthesis(ServerPlayer player) {
         Level level = player.level();
-        if (AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.LESSER) && level.isDay() &&
+        if (AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.LESSER) && level.isBrightOutside() &&
                 player.getLightLevelDependentMagicValue() > 0.5F && level.canSeeSky(player.blockPosition())) {
             // If an attuned player is outdoors during the daytime, restore some hunger
             player.getFoodData().eat(1, 0.3F);
@@ -318,8 +320,8 @@ public class PlayerEvents {
             double motionX = oldMotion.x;
             double motionY = 0.75D;
             double motionZ = oldMotion.z;
-            if (player.hasEffect(MobEffects.JUMP)) {
-                motionY += (0.1D * (1 + player.getEffect(MobEffects.JUMP).getAmplifier()));
+            if (player.hasEffect(MobEffects.JUMP_BOOST)) {
+                motionY += (0.1D * (1 + player.getEffect(MobEffects.JUMP_BOOST).getAmplifier()));
             }
             if (player.isSprinting()) {
                 float yawRadians = player.getYRot() * (float)(Math.PI / 180.0D);
@@ -343,8 +345,9 @@ public class PlayerEvents {
     
     protected static void handleRegrowth(Player player) {
         if (player.level() instanceof ServerLevel serverLevel) {
-            for (ItemStack stack : player.getAllSlots()) {
-                if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack, player.level().registryAccess())) {
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                ItemStack stack = player.getItemBySlot(slot);
+                if (stack.isDamaged() && EnchantmentHelperPM.hasRegrowth(stack, player.registryAccess())) {
                     stack.hurtAndBreak(-1, serverLevel, player instanceof ServerPlayer serverPlayer ? serverPlayer : null, item -> {});
                 }
             }
@@ -395,7 +398,7 @@ public class PlayerEvents {
     }
 
     public static void playerJoinEvent(Entity entity, Level level) {
-        if (!level.isClientSide && (entity instanceof ServerPlayer player)) {
+        if (!level.isClientSide() && (entity instanceof ServerPlayer player)) {
             // When a player first joins a world, sync that player's capabilities to their client
             doScheduledSyncs(player, true);
             
@@ -444,28 +447,28 @@ public class PlayerEvents {
         }
         
         try {
-            CompoundTag nbtCooldowns = Services.CAPABILITIES.cooldowns(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Tag nbtCooldowns = Services.CAPABILITIES.cooldowns(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
             Services.CAPABILITIES.cooldowns(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtCooldowns);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} cooldowns", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtStats = Services.CAPABILITIES.stats(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Tag nbtStats = Services.CAPABILITIES.stats(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
             Services.CAPABILITIES.stats(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtStats);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} stats", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtAttunements = Services.CAPABILITIES.attunements(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Tag nbtAttunements = Services.CAPABILITIES.attunements(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
             Services.CAPABILITIES.attunements(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtAttunements);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} attunements", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtCompanions = Services.CAPABILITIES.companions(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Tag nbtCompanions = Services.CAPABILITIES.companions(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
             Services.CAPABILITIES.companions(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtCompanions);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} companions", oldPlayer.getName().getString());
@@ -479,14 +482,14 @@ public class PlayerEvents {
         }
         
         try {
-            CompoundTag nbtWard = Services.CAPABILITIES.ward(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Tag nbtWard = Services.CAPABILITIES.ward(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
             Services.CAPABILITIES.ward(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtWard);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} ward", oldPlayer.getName().getString());
         }
         
         try {
-            CompoundTag nbtLinguistics = Services.CAPABILITIES.linguistics(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
+            Tag nbtLinguistics = Services.CAPABILITIES.linguistics(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
             Services.CAPABILITIES.linguistics(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtLinguistics);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} linguistics", oldPlayer.getName().getString());
@@ -499,7 +502,7 @@ public class PlayerEvents {
     }
     
     public static void registerItemCrafted(Player player, ItemStack stack) {
-        if (player != null && !player.level().isClientSide) {
+        if (player != null && !player.level().isClientSide()) {
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
             if (ResearchManager.getAllCraftingReferences().contains(ItemUtils.getHashCode(stack))) {
                 ResearchManager.completeResearch(player, new StackCraftedKey(stack));
@@ -516,7 +519,7 @@ public class PlayerEvents {
     }
     
     public static void onWakeUp(Player player) {
-        if (player != null && !player.level().isClientSide) {
+        if (player != null && !player.level().isClientSide()) {
             if ( ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE) &&
                  !ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM) ) {
                 // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
@@ -554,7 +557,7 @@ public class PlayerEvents {
         if (!player.addItem(journal)) {
             player.drop(journal, false);
         }
-        player.sendSystemMessage(Component.translatable("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN));
+        player.displayClientMessage(Component.translatable("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN), false);
     }
     
     public static void onJump(LivingEntity livingEntity) {
@@ -574,8 +577,7 @@ public class PlayerEvents {
     }
     
     public static void onPickupExperience(Player player, ExperienceOrb orb) {
-        Level level = player.level();
-        if (player != null && !level.isClientSide) {
+        if (player != null && !player.level().isClientSide()) {
             NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
             if (!foundTalismans.isEmpty()) {
                 int xpValue = orb.getValue();
@@ -584,14 +586,14 @@ public class PlayerEvents {
                         // Add as much experience as possible from the orb to each active talisman until the orb runs out
                         xpValue = talisman.addStoredExp(foundStack, xpValue);
                         if (xpValue <= 0) {
-                            orb.value = 0;
+                            orb.setValue(0);
                             return;
                         }
                     }
                 }
                 
                 // If we made it through every talisman with experience left over, update the orb to be the leftover value
-                orb.value = xpValue;
+                orb.setValue(xpValue);
             }
         }
     }
@@ -614,14 +616,14 @@ public class PlayerEvents {
                         final int baseDamage = 8;
                         int damage = (baseDamage >> (enchantLevel - 1));
                         if (damage > 0) {
-                            stack.hurtAndBreak(damage, player, LivingEntity.getSlotForHand(context.getHand()));
+                            stack.hurtAndBreak(damage, player, context.getHand().asEquipmentSlot());
                         }
                         
                         // Explicitly set the final block state in the event so that the hoe's useOn method does not return PASS and
                         // the appropriate client/server syncing is performed.
                         stateUpdater.accept(level.getBlockState(pos));
                     }
-                    if (!level.isClientSide) {
+                    if (!level.isClientSide()) {
                         level.levelEvent(1505, pos, 0);
                     }
                 }
@@ -634,16 +636,20 @@ public class PlayerEvents {
         Level level = target.level();
         
         // Befriend the targeted witch, if appropriate
-        if ( !level.isClientSide && 
+        if ( !level.isClientSide() && 
              target.getType() == EntityType.WITCH && 
              stack.getItem() instanceof NameTagItem && 
              stack.getHoverName().getString().equals(FriendlyWitchEntity.HONORED_NAME)) {
-            CompoundTag originalData = target.saveWithoutId(new CompoundTag());
-            EntitySwapper.enqueue(target, new EntitySwapper(EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
-            List<Player> nearby = EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D);
-            for (Player nearbyPlayer : nearby) {
-                nearbyPlayer.sendSystemMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME));
+            // Enqueue an entity swapper to perform the switch between mob types
+            try (ProblemReporter.ScopedCollector problems = new ProblemReporter.ScopedCollector(LOGGER)) {
+                TagValueOutput out = TagValueOutput.createWithContext(problems, target.registryAccess());
+                target.saveWithoutId(out);
+                EntitySwapper.enqueue(target, new EntitySwapper(EntityTypesPM.FRIENDLY_WITCH.get(), out.buildResult(), Optional.empty(), 0));
             }
+
+            // Alert nearby players
+            EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D).forEach(nearbyPlayer ->
+                    nearbyPlayer.displayClientMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME), false));
         }
     }
 }

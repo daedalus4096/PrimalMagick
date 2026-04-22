@@ -25,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -62,12 +63,13 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload<FlameDam
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.INFERNAL;
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
     
@@ -77,11 +79,11 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload<FlameDam
     }
 
     @Override
-    protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource) {
+    protected void applySecondaryEffects(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource) {
         int duration = this.getDurationSeconds(spell, spellSource, caster, world.registryAccess());
         if (target != null && target.getType() == HitResult.Type.ENTITY && duration > 0) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() != null && entityTarget.getEntity() instanceof LivingEntity entity) {
+            if (entityTarget.getEntity() instanceof LivingEntity entity) {
                 // Set the entity on fire
                 entity.igniteForSeconds(duration);
             }

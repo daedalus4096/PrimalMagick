@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementMeterWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementThresholdWidget;
@@ -9,8 +7,9 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class AttunementPage extends AbstractPage {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/attunement_meter.png");
+    private static final Identifier BACKGROUND = ResourceUtils.loc("grimoire/attunement_meter_background");
 
     protected Source source;
     protected List<IPageElement> contents = new ArrayList<>();
@@ -62,12 +61,8 @@ public class AttunementPage extends AbstractPage {
         }
         
         if (this.isFirstPage()) {
-            // Render attunement meter
-            RenderSystem.enableBlend();
-            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-            
             // Render meter background
-            guiGraphics.blit(TEXTURE, x + 51 + (side * 140), y, 12, 0, 16, 120);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BACKGROUND, x + 51 + (side * 140), y, 16, 120);
         }
 
         // Render page contents

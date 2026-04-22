@@ -1,3 +1,9 @@
+v7.0.0
+------
+* Updated to Minecraft 26.1.2
+* Earthshatter Hammers no longer have limited durability
+* Wands and staves now have a fixed enchantability, rather than scaling with their components
+
 v6.0.7
 ------
 * Add client-side config option to render affinities as text instead of with icons

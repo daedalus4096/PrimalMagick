@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ResultContainer;
@@ -22,8 +22,8 @@ import org.joml.Vector2i;
  * @author Daedalus4096
  */
 public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
-    public static final ResourceLocation BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
-    public static final ResourceLocation WRITABLE_BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_writable_book_slot");
+    public static final Identifier BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
+    public static final Identifier WRITABLE_BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_writable_book_slot");
     protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
     protected static final Component WRITABLE_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.writable_book");
 

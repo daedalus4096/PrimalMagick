@@ -7,32 +7,31 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Optional;
 
 public class WardingHudOverlay {
-    public static final ResourceLocation ID = ResourceUtils.loc("warding_hud_overlay");
-    protected static final ResourceLocation GUI_ICONS_LOCATION = ResourceUtils.loc("textures/gui/hud.png");
+    public static final Identifier ID = ResourceUtils.loc("warding_hud_overlay");
+    protected static final Identifier GUI_ICONS_LOCATION = ResourceUtils.loc("textures/gui/hud.png");
     
     public static boolean shouldRender() {
         Minecraft mc = Minecraft.getInstance();
-        return !mc.options.hideGui && mc.gameMode.canHurtPlayer() && (mc.getCameraEntity() instanceof Player);
+        return !mc.options.hideGui && mc.gameMode != null && mc.gameMode.canHurtPlayer();
     }
     
     public static void render(GuiGraphics pGuiGraphics, DeltaTracker pDeltaTracker) {
-        if (!shouldRender()) {
+        Minecraft mc = Minecraft.getInstance();
+        if (!shouldRender() || !(mc.getCameraEntity() instanceof Player player)) {
             return;
         }
 
-        Minecraft mc = Minecraft.getInstance();
-        
-        mc.getProfiler().push("warding");
-        RenderSystem.enableBlend();
-        
-        Player player = (Player)mc.getCameraEntity();
+        Profiler.get().push("warding");
+
         Optional<IPlayerWard> wardCapOpt = Services.CAPABILITIES.ward(player);
         
         int ward = Mth.ceil(wardCapOpt.map(IPlayerWard::getCurrentWard).orElse(0F));
@@ -57,8 +56,7 @@ public class WardingHudOverlay {
             renderPentacles(pGuiGraphics, player, left, top, rowHeight, regen, wardMax, ward, wardLast, absorb, highlight);
         }
 
-        RenderSystem.disableBlend();
-        mc.getProfiler().pop();
+        Profiler.get().pop();
     }
 
     private static void renderPentacles(GuiGraphics guiGraphics, Player player, int left, int top, int rowHeight,
@@ -88,6 +86,7 @@ public class WardingHudOverlay {
     }
 
     private static void renderPentacle(GuiGraphics guiGraphics, int xPos, int yPos, int textureX, int textureY, boolean highlight, boolean isHalf) {
-        guiGraphics.blit(GUI_ICONS_LOCATION, xPos, yPos, textureX + (isHalf ? 9 : 0), textureY, 9, 9);
+        // FIXME Split texture into sprites
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_ICONS_LOCATION, xPos, yPos, textureX + (isHalf ? 9 : 0), textureY, 9, 9, 256, 256);
     }
 }

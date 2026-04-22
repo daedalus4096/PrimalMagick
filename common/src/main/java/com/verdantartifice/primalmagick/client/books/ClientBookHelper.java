@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.books.Lexicon;
 import com.verdantartifice.primalmagick.common.books.LexiconManager;
-import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Holder;
@@ -17,11 +16,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringDecomposer;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -72,7 +72,7 @@ public class ClientBookHelper {
     
     private static String getForewordTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceLocation bookLoc = bookHolder.value().bookId();
+            Identifier bookLoc = bookHolder.value().bookId();
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "foreword");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
@@ -81,7 +81,7 @@ public class ClientBookHelper {
 
     private static String getAfterwordTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceLocation bookLoc = bookHolder.value().bookId();
+            Identifier bookLoc = bookHolder.value().bookId();
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "afterword");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
@@ -90,7 +90,7 @@ public class ClientBookHelper {
 
     private static String getAuthorTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceLocation bookLoc = bookHolder.value().bookId();
+            Identifier bookLoc = bookHolder.value().bookId();
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "author");
         }, enchHolder -> {
             return "tooltip.primalmagick.question_marks";
@@ -99,19 +99,19 @@ public class ClientBookHelper {
 
     private static String getTextTranslationKey(BookView view) {
         return view.bookDef().map(bookHolder -> {
-            ResourceLocation bookLoc = bookHolder.value().bookId();
+            Identifier bookLoc = bookHolder.value().bookId();
             return String.join(".", "written_book", bookLoc.getNamespace(), bookLoc.getPath(), "text");
         }, enchHolder -> {
             ResourceKey<Enchantment> enchKey = enchHolder.unwrapKey().get();
-            String key = String.join(".", "enchantment", enchKey.location().getNamespace(), enchKey.location().getPath(), "desc");
+            String key = String.join(".", "enchantment", enchKey.identifier().getNamespace(), enchKey.identifier().getPath(), "desc");
             if (I18n.exists(key)) {
                 return key;
             } else {
-                key = String.join(".", "enchantment", enchKey.location().getNamespace(), enchKey.location().getPath(), "rune_enchantment", "text");
+                key = String.join(".", "enchantment", enchKey.identifier().getNamespace(), enchKey.identifier().getPath(), "rune_enchantment", "text");
                 if (I18n.exists(key)) {
                     return key;
                 } else {
-                    return String.join(".", "enchantment", enchKey.location().getNamespace(), enchKey.location().getPath());
+                    return String.join(".", "enchantment", enchKey.identifier().getNamespace(), enchKey.identifier().getPath());
                 }
             }
         });
@@ -127,9 +127,9 @@ public class ClientBookHelper {
         String textTranslationKey = getTextTranslationKey(view);
         
         final Holder<BookLanguage> lang = view.language();
-        final Lexicon langLex = LexiconManager.getLexicon(lang.unwrapKey().get().location()).orElseThrow();
+        final Lexicon langLex = LexiconManager.getLexicon(lang.unwrapKey().get().identifier()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
-        final Optional<StyleGuide> langStyleGuideOpt = StyleGuideManager.getStyleGuide(lang.unwrapKey().get().location());
+        final Optional<StyleGuide> langStyleGuideOpt = StyleGuideManager.getStyleGuide(lang.unwrapKey().get().identifier());
 
         // Add the un-encoded foreword
         view.bookDef().ifLeft(bookHolder -> {
@@ -227,7 +227,7 @@ public class ClientBookHelper {
             return 1;
         } else {
             List<String> bookWords = getUnencodedWords(view);
-            final Lexicon langLex = LexiconManager.getLexicon(bookLang.unwrapKey().get().location()).orElseThrow();
+            final Lexicon langLex = LexiconManager.getLexicon(bookLang.unwrapKey().get().identifier()).orElseThrow();
             int totalCount = bookWords.size();
             int translatedCount = (int)bookWords.stream().filter(word -> langLex.isWordTranslated(word, view.comprehension(), bookLang.value().complexity())).count();
             return Mth.clamp((double)translatedCount / (double)totalCount, 0, 1);

@@ -19,10 +19,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -38,8 +40,9 @@ import java.util.function.Supplier;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<SpellcraftingAltarMenu> {
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/spellcrafting_altar.png");
-    
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/spellcrafting_altar.png");
+    private static final Identifier TEXT_FIELD = ResourceUtils.loc("spellcrafting_altar/text_field");
+
     private final Map<Vec3i, Component> texts = new HashMap<>();
     private final List<GuiEventListener> localWidgets = new ArrayList<>();
     
@@ -111,7 +114,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
         // Init mana cost indicator
         SourceList manaCost = this.menu.getSpellPackage().getManaCost();
         if (!manaCost.isEmpty()) {
-            Source source = manaCost.getSourcesSorted().get(0);
+            Source source = manaCost.getSourcesSorted().getFirst();
             this.localWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, manaCost.getAmount(source), this.leftPos + 28, this.topPos + 8, this.menu::getWand, this.menu.getPlayer())));
         }
         
@@ -190,7 +193,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.regenerateWidgets();
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
@@ -201,14 +204,14 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         // Render the GUI background
-        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         
         // Render the text entry widget's background
-        guiGraphics.blit(TEXTURE, this.leftPos + 46, this.topPos + 8, 0, this.imageHeight, 110, 16);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, TEXT_FIELD, this.leftPos + 46, this.topPos + 8, 110, 16);
     }
     
     @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    protected void renderLabels(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Render any text entries generated during initWidgets
         int color = 0x404040;
         String str;
@@ -295,6 +298,11 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
      * @author Daedalus4096
      */
     protected static class CyclicBoundedSpinnerButton extends Button {
+        private static final Identifier INCREMENT = ResourceUtils.loc("spellcrafting_altar/increment");
+        private static final Identifier DECREMENT = ResourceUtils.loc("spellcrafting_altar/decrement");
+        private static final Identifier INCREMENT_HOVERED = ResourceUtils.loc("spellcrafting_altar/increment_hovered");
+        private static final Identifier DECREMENT_HOVERED = ResourceUtils.loc("spellcrafting_altar/decrement_hovered");
+
         protected final boolean isIncrement;
         protected final int min;
         protected final int max;
@@ -311,8 +319,11 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
         }
         
         @Override
-        public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-            guiGraphics.blit(TEXTURE, this.getX(), this.getY(), this.isIncrement ? 230 : 237, this.isHoveredOrFocused() ? 11 : 0, this.width, this.height);
+        public void renderContents(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+            Identifier spriteLoc = this.isIncrement ?
+                    (this.isHoveredOrFocused() ? INCREMENT_HOVERED : INCREMENT) :
+                    (this.isHoveredOrFocused() ? DECREMENT_HOVERED : DECREMENT);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, spriteLoc, this.getX(), this.getY(), this.width, this.height);
         }
         
         public boolean isIncrement() {
@@ -337,12 +348,10 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
 
         private static class Handler implements OnPress {
             @Override
-            public void onPress(Button button) {
-                if (button instanceof CyclicBoundedSpinnerButton) {
-                    CyclicBoundedSpinnerButton spinner = (CyclicBoundedSpinnerButton)button;
-                    
-                    // Caluclate the new value
-                    int newVal = spinner.getGetter().get().intValue() + (spinner.isIncrement() ? 1 : -1);
+            public void onPress(@NotNull Button button) {
+                if (button instanceof CyclicBoundedSpinnerButton spinner) {
+                    // Calculate the new value
+                    int newVal = spinner.getGetter().get() + (spinner.isIncrement() ? 1 : -1);
                     
                     // Wrap the value around if beyond min or max
                     if (newVal < spinner.getMin()) {
@@ -352,7 +361,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
                     }
                     
                     // Update the owner with the new value
-                    spinner.getSetter().accept(Integer.valueOf(newVal));
+                    spinner.getSetter().accept(newVal);
                 }
             }
         }

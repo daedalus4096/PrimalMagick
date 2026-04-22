@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -18,13 +18,14 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -51,7 +52,7 @@ public class ManaArrowEntity extends AbstractArrow {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder pBuilder) {
         super.defineSynchedData(pBuilder);
         pBuilder.define(SOURCE_TAG, "");
     }
@@ -63,16 +64,17 @@ public class ManaArrowEntity extends AbstractArrow {
         } else if (source == Sources.INFERNAL) {
             this.igniteForSeconds(100);
         } else if (source == Sources.HALLOWED) {
-            this.setBaseDamage(this.getBaseDamage() + 1);
+            this.setBaseDamage(this.baseDamage + 1);
         }
     }
     
     @Nullable
     public Source getSource() {
-        return Sources.get(ResourceLocation.parse(this.entityData.get(SOURCE_TAG)));
+        return Sources.get(Identifier.parse(this.entityData.get(SOURCE_TAG)));
     }
     
     @Override
+    @NotNull
     protected ItemStack getPickupItem() {
         Item item = ManaArrowItem.SOURCE_MAPPING.get(this.getSource());
         return new ItemStack(item == null ? Items.ARROW : item);
@@ -85,8 +87,8 @@ public class ManaArrowEntity extends AbstractArrow {
             this.setNoGravity(false);
         }
         Level level = this.level();
-        if (level.isClientSide) {
-            if (this.inGround) {
+        if (level.isClientSide()) {
+            if (this.isInGround()) {
                 if (this.inGroundTime % 5 == 0) {
                     this.makeParticle(1);
                 }
@@ -113,11 +115,11 @@ public class ManaArrowEntity extends AbstractArrow {
     }
 
     @Override
-    protected void doPostHurtEffects(LivingEntity target) {
+    protected void doPostHurtEffects(@NotNull LivingEntity target) {
         super.doPostHurtEffects(target);
         Source source = this.getSource();
         if (source == Sources.SEA) {
-            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 50));
+            target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 50));
         } else if (source == Sources.SUN) {
             target.addEffect(new MobEffectInstance(MobEffects.GLOWING, 50));
             if (target.isInvertedHealAndHarm()) {
@@ -143,18 +145,17 @@ public class ManaArrowEntity extends AbstractArrow {
     }
 
     @Override
+    @NotNull
     protected ItemStack getDefaultPickupItem() {
         return DEFAULT_ARROW_STACK;
     }
 
     @Override
-    protected void doKnockback(LivingEntity pEntity, DamageSource pDamageSource) {
+    protected void doKnockback(@NotNull LivingEntity pEntity, @NotNull DamageSource pDamageSource) {
         float baseForce = this.getSource() == Sources.EARTH ? 2.0F : 0.0F;
-        double force = (double)(
-            this.getWeaponItem() != null && this.level() instanceof ServerLevel serverlevel
-                ? EnchantmentHelper.modifyKnockback(serverlevel, this.getWeaponItem(), pEntity, pDamageSource, baseForce)
-                : baseForce
-        );
+        double force = this.getWeaponItem() != null && this.level() instanceof ServerLevel serverlevel
+            ? EnchantmentHelper.modifyKnockback(serverlevel, this.getWeaponItem(), pEntity, pDamageSource, baseForce)
+            : baseForce;
         if (force > 0.0) {
             double inertia = Math.max(0.0, 1.0 - pEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
             Vec3 pushVec = this.getDeltaMovement().multiply(1.0, 0.0, 1.0).normalize().scale(force * 0.6 * inertia);

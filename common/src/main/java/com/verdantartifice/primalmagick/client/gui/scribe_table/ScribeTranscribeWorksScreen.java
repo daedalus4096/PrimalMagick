@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<ScribeTranscribeWorksMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/scribe_transcribe_works.png");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/scribe_transcribe_works.png");
     
     public ScribeTranscribeWorksScreen(ScribeTranscribeWorksMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -33,7 +33,7 @@ public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<Scrib
     }
 
     @Override
-    protected ResourceLocation getBgTexture() {
+    protected Identifier getBgTexture() {
         return TEXTURE;
     }
     
@@ -52,9 +52,7 @@ public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<Scrib
         protected static final Component TRANSCRIBE_BUTTON_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.button.transcribe");
 
         public TranscribeButton(ScribeTranscribeWorksMenu menu, int leftPos, int topPos) {
-            super(leftPos + 91, topPos + 62, 20, 18, BUTTON_SPRITES, button -> {
-                PacketHandler.sendToServer(new TranscribeActionPacket(menu.containerId));
-            });
+            super(leftPos + 91, topPos + 62, 20, 18, BUTTON_SPRITES, button -> PacketHandler.sendToServer(new TranscribeActionPacket(menu.containerId)));
             this.setTooltip(Tooltip.create(TRANSCRIBE_BUTTON_TOOLTIP));
         }
     }

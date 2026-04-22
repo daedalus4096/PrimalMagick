@@ -5,12 +5,13 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -20,10 +21,10 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/desalinator.png");
-    protected static final ResourceLocation WATER_TEXTURE = ResourceUtils.loc("textures/block/water_still.png");
-    protected static final ResourceLocation PROGRESS_SPRITE = ResourceUtils.loc("progress_arrow");
-    protected static final ResourceLocation GAUGE_SPRITE = ResourceUtils.loc("desalinator/gauge_markers");
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/desalinator.png");
+    protected static final Identifier WATER_TEXTURE = ResourceUtils.loc("textures/block/water_still.png");
+    protected static final Identifier PROGRESS_SPRITE = ResourceUtils.loc("progress_arrow");
+    protected static final Identifier GAUGE_SPRITE = ResourceUtils.loc("desalinator/gauge_markers");
     protected static final int TANK_HEIGHT = 71;
 
     protected ManaGaugeWidget manaGauge;
@@ -41,7 +42,7 @@ public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.manaGauge.setCurrentMana(this.menu.getCurrentMana());
         this.manaGauge.setMaxMana(this.menu.getMaxMana());
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
@@ -56,11 +57,11 @@ public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         // Render background texture
-        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
         // Animate boil progress indicator
         int cook = this.menu.getBoilProgressionScaled();
-        guiGraphics.blitSprite(PROGRESS_SPRITE, 24, 16, 0, 0, this.leftPos + 75, this.topPos + 44, cook, 16);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_SPRITE, 24, 16, 0, 0, this.leftPos + 75, this.topPos + 44, cook, 16);
 
         // Draw water tank contents
         int height = Mth.floor(this.menu.getCurrentWaterAmount() * (float)TANK_HEIGHT / this.menu.getWaterCapacity());
@@ -68,7 +69,7 @@ public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu
         int tick = this.menu.getTile().getTicks();
         int frameOffsetY = tick % 28;
         int vOffset = 16 * frameOffsetY;
-        guiGraphics.blit(WATER_TEXTURE, this.leftPos + 52, this.topPos + 17 + dy, 16, height, 0, vOffset, 16, height, 16, 512);
-        guiGraphics.blitSprite(GAUGE_SPRITE, this.leftPos + 52, this.topPos + 17, 16, 71);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, WATER_TEXTURE, this.leftPos + 52, this.topPos + 17 + dy, 16, height, 0, vOffset, 16, height, 16, 512);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, GAUGE_SPRITE, this.leftPos + 52, this.topPos + 17, 16, 71);
     }
 }

@@ -6,6 +6,7 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.FastColor;
 
 /**
@@ -54,9 +55,9 @@ public class DripParticlePM extends TextureSheetParticle {
     }
     
     public void setColor(int packedColor) {
-        float r = (float)FastColor.ARGB32.red(packedColor) / 255F;
-        float g = (float)FastColor.ARGB32.green(packedColor) / 255F;
-        float b = (float)FastColor.ARGB32.blue(packedColor) / 255F;
+        float r = (float)ARGB.red(packedColor) / 255F;
+        float g = (float)ARGB.green(packedColor) / 255F;
+        float b = (float)ARGB.blue(packedColor) / 255F;
         this.setColor(r, g, b);
     }
 

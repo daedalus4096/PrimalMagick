@@ -1,16 +1,16 @@
 package com.verdantartifice.primalmagick.datagen.advancements;
 
-import com.verdantartifice.primalmagick.common.advancements.critereon.AttunementThresholdTrigger;
-import com.verdantartifice.primalmagick.common.advancements.critereon.EntityHurtPlayerTriggerExt;
-import com.verdantartifice.primalmagick.common.advancements.critereon.LinguisticsComprehensionTrigger;
-import com.verdantartifice.primalmagick.common.advancements.critereon.ManaNetworkRouteLengthTrigger;
-import com.verdantartifice.primalmagick.common.advancements.critereon.ManaNetworkSiphonTrigger;
-import com.verdantartifice.primalmagick.common.advancements.critereon.RecallStoneTrigger;
-import com.verdantartifice.primalmagick.common.advancements.critereon.ResearchCompletedTrigger;
-import com.verdantartifice.primalmagick.common.advancements.critereon.RuneUseCountTrigger;
-import com.verdantartifice.primalmagick.common.advancements.critereon.RunescribingTrigger;
-import com.verdantartifice.primalmagick.common.advancements.critereon.ScanLocationTrigger;
-import com.verdantartifice.primalmagick.common.advancements.critereon.StatValueTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.AttunementThresholdTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.EntityHurtPlayerTriggerExt;
+import com.verdantartifice.primalmagick.common.advancements.criterion.LinguisticsComprehensionTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.ManaNetworkRouteLengthTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.ManaNetworkSiphonTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.RecallStoneTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.ResearchCompletedTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.RuneUseCountTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.RunescribingTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.ScanLocationTrigger;
+import com.verdantartifice.primalmagick.common.advancements.criterion.StatValueTrigger;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
@@ -28,36 +28,40 @@ import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
-import net.minecraft.Util;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.critereon.BlockPredicate;
-import net.minecraft.advancements.critereon.DamagePredicate;
-import net.minecraft.advancements.critereon.DamageSourcePredicate;
-import net.minecraft.advancements.critereon.EntityHurtPlayerTrigger;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPotionsPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.ItemSubPredicates;
-import net.minecraft.advancements.critereon.KilledTrigger;
-import net.minecraft.advancements.critereon.LocationPredicate;
-import net.minecraft.advancements.critereon.PlayerTrigger;
-import net.minecraft.advancements.critereon.StartRidingTrigger;
-import net.minecraft.advancements.critereon.TagPredicate;
+import net.minecraft.advancements.criterion.BlockPredicate;
+import net.minecraft.advancements.criterion.DamagePredicate;
+import net.minecraft.advancements.criterion.DamageSourcePredicate;
+import net.minecraft.advancements.criterion.DataComponentMatchers;
+import net.minecraft.advancements.criterion.EntityHurtPlayerTrigger;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.KilledTrigger;
+import net.minecraft.advancements.criterion.LocationPredicate;
+import net.minecraft.advancements.criterion.PlayerTrigger;
+import net.minecraft.advancements.criterion.StartRidingTrigger;
+import net.minecraft.advancements.criterion.TagPredicate;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.predicates.DataComponentPredicates;
+import net.minecraft.core.component.predicates.PotionsPredicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.Comparator;
@@ -71,8 +75,12 @@ import java.util.function.Consumer;
  */
 public abstract class StoryAdvancementsPM {
     protected void generateInner(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver) {
+        HolderGetter<Block> blockGetter = registries.lookupOrThrow(Registries.BLOCK);
+        HolderGetter<Item> itemGetter = registries.lookupOrThrow(Registries.ITEM);
+        HolderGetter<EntityType<?>> entityTypeGetter = registries.lookupOrThrow(Registries.ENTITY_TYPE);
+
         // Define advancements
-        AdvancementHolder root = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("root").icon(ItemsPM.GRIMOIRE.get()).background(ResourceUtils.loc("textures/block/marble_raw.png")).build())
+        AdvancementHolder root = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("root").icon(ItemsPM.GRIMOIRE.get()).background(ResourceUtils.loc("textures/block/marble.png")).build())
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .addCriterion("earth_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(registries.lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructuresPM.EARTH_SHRINE))))
                 .addCriterion("sea_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(registries.lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructuresPM.SEA_SHRINE))))
@@ -217,7 +225,7 @@ public abstract class StoryAdvancementsPM {
                 .addCriterion("blow_up_player", EntityHurtPlayerTrigger.TriggerInstance.entityHurtPlayer(DamagePredicate.Builder.damageInstance()
                         .type(DamageSourcePredicate.Builder.damageType()
                                 .tag(TagPredicate.is(DamageTypeTags.IS_EXPLOSION))
-                                .direct(EntityPredicate.Builder.entity().of(EntityTypesPM.IGNYX.get())))))
+                                .direct(EntityPredicate.Builder.entity().of(entityTypeGetter, EntityTypesPM.IGNYX.get())))))
                 .save(saver, ResourceUtils.loc("story/damage_with_ignyx").toString());
         AdvancementHolder discoverForbidden = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_forbidden").icon(ItemsPM.BLOOD_NOTES.get()).build())
                 .parent(firstTheorycraft)
@@ -235,7 +243,7 @@ public abstract class StoryAdvancementsPM {
                 .save(saver, ResourceUtils.loc("story/craft_sanguine_crucible").toString());
         AdvancementHolder killInnerDemon = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("kill_inner_demon").icon(ItemsPM.SANGUINE_CORE_INNER_DEMON.get()).type(AdvancementType.GOAL).build())
                 .parent(craftSanguineCrucible)
-                .addCriterion("kill_inner_demon", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(EntityTypesPM.INNER_DEMON.get())))
+                .addCriterion("kill_inner_demon", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(entityTypeGetter, EntityTypesPM.INNER_DEMON.get())))
                 .save(saver, ResourceUtils.loc("story/kill_inner_demon").toString());
         AdvancementHolder discoverHallowed = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("discover_hallowed").icon(ItemsPM.HALLOWED_ORB.get()).type(AdvancementType.GOAL).build())
                 .parent(killInnerDemon)
@@ -336,14 +344,14 @@ public abstract class StoryAdvancementsPM {
                 .save(saver, ResourceUtils.loc("story/suffer_many_ritual_mishaps").toString());
         AdvancementHolder rideFlyingCarpet = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("ride_flying_carpet").icon(ItemsPM.FLYING_CARPET.get()).build())
                 .parent(craftRitualAltar)
-                .addCriterion("ride_carpet", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(EntityTypesPM.FLYING_CARPET.get()))))
+                .addCriterion("ride_carpet", StartRidingTrigger.TriggerInstance.playerStartsRiding(EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity().of(entityTypeGetter, EntityTypesPM.FLYING_CARPET.get()))))
                 .save(saver, ResourceUtils.loc("story/ride_flying_carpet").toString());
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("get_shot_off_flying_carpet").icon(Items.FIRE_CHARGE).type(AdvancementType.CHALLENGE).build())
                 .parent(rideFlyingCarpet)
                 .rewards(AdvancementRewards.Builder.experience(100))
                 .addCriterion("shot_off_carpet", EntityHurtPlayerTriggerExt.TriggerInstance.playerHurtEntity(
-                        Optional.of(EntityPredicate.Builder.entity().of(EntityType.PLAYER).vehicle(EntityPredicate.Builder.entity().of(EntityTypesPM.FLYING_CARPET.get())).build()), 
-                        DamagePredicate.Builder.damageInstance().sourceEntity(EntityPredicate.Builder.entity().of(EntityType.GHAST).build()).type(DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTags.IS_PROJECTILE)).direct(EntityPredicate.Builder.entity().of(EntityType.FIREBALL)))))
+                        Optional.of(EntityPredicate.Builder.entity().of(entityTypeGetter, EntityType.PLAYER).vehicle(EntityPredicate.Builder.entity().of(entityTypeGetter, EntityTypesPM.FLYING_CARPET.get())).build()),
+                        DamagePredicate.Builder.damageInstance().sourceEntity(EntityPredicate.Builder.entity().of(entityTypeGetter, EntityType.GHAST).build()).type(DamageSourcePredicate.Builder.damageType().tag(TagPredicate.is(DamageTypeTags.IS_PROJECTILE)).direct(EntityPredicate.Builder.entity().of(entityTypeGetter, EntityType.FIREBALL)))))
                 .save(saver, ResourceUtils.loc("story/get_shot_off_flying_carpet").toString());
         AdvancementHolder craftAmbrosia = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_ambrosia").icon(ItemsPM.BASIC_EARTH_AMBROSIA.get()).build())
                 .parent(craftRitualAltar)
@@ -424,8 +432,8 @@ public abstract class StoryAdvancementsPM {
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("scan_chest").icon(Items.CHEST).build())
                 .parent(craftArcanometer)
                 .addCriterion("scan_chest", ScanLocationTrigger.TriggerInstance.itemUsedOnBlock(
-                        LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(CommonTags.Blocks.CHESTS)),
-                        ItemPredicate.Builder.item().of(ItemsPM.ARCANOMETER.get())))
+                        LocationPredicate.Builder.location().setBlock(BlockPredicate.Builder.block().of(blockGetter, CommonTags.Blocks.CHESTS)),
+                        ItemPredicate.Builder.item().of(itemGetter, ItemsPM.ARCANOMETER.get())))
                 .save(saver, ResourceUtils.loc("story/scan_chest").toString());
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_seascribe_pen").icon(ItemsPM.SEASCRIBE_PEN.get()).build())
                 .parent(craftMagitechParts)
@@ -505,12 +513,11 @@ public abstract class StoryAdvancementsPM {
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
         LogManager.getLogger().debug("Rune enchantment definitions found in advancement datagen: {}", registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().count());
-        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().map(defHolder -> defHolder.key().location()).forEach(LogManager.getLogger()::debug);
-        LogManager.getLogger().debug("Enchantment definitions found in advancement dataget: {}", registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().count());
-        registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().map(enchHolder -> enchHolder.key().location()).forEach(LogManager.getLogger()::debug);
-        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().sorted(Comparator.comparing(defHolder -> defHolder.key().location().toString())).forEach(defHolder -> {
-            builder.addCriterion(defHolder.key().location().toString(), RunescribingTrigger.TriggerInstance.enchantment(defHolder.value().result()));
-        });
+        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().map(defHolder -> defHolder.key().identifier()).forEach(LogManager.getLogger()::debug);
+        LogManager.getLogger().debug("Enchantment definitions found in advancement datagen: {}", registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().count());
+        registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().map(enchantHolder -> enchantHolder.key().identifier()).forEach(LogManager.getLogger()::debug);
+        registries.lookupOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).listElements().sorted(Comparator.comparing(defHolder -> defHolder.key().identifier().toString())).forEach(defHolder ->
+                builder.addCriterion(defHolder.key().identifier().toString(), RunescribingTrigger.TriggerInstance.enchantment(defHolder.value().result())));
         if (type == AdvancementType.CHALLENGE) {
             builder.rewards(AdvancementRewards.Builder.experience(100));
         }
@@ -518,12 +525,13 @@ public abstract class StoryAdvancementsPM {
     }
     
     private static AdvancementHolder makeBombAdvancement(HolderLookup.Provider registries, String id, ItemStack icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, Consumer<AdvancementHolder> saver) {
+        HolderGetter<Item> itemGetter = registries.lookupOrThrow(Registries.ITEM);
         Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
-        registries.lookupOrThrow(Registries.POTION).listElements().filter(potHolder -> !potHolder.value().getEffects().isEmpty()).sorted(Comparator.comparing(potHolder -> potHolder.key().location().toString())).forEach(potHolder -> {
-            builder.addCriterion(potHolder.key().location().toString(), InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ItemsPM.ALCHEMICAL_BOMB.get()).withSubPredicate(ItemSubPredicates.POTIONS, new ItemPotionsPredicate(HolderSet.direct(potHolder)))));
-        });
+        registries.lookupOrThrow(Registries.POTION).listElements().filter(potHolder -> !potHolder.value().getEffects().isEmpty()).sorted(Comparator.comparing(potHolder -> potHolder.key().identifier().toString())).forEach(potHolder ->
+                builder.addCriterion(potHolder.key().identifier().toString(), InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemGetter, ItemsPM.ALCHEMICAL_BOMB.get())
+                        .withComponents(DataComponentMatchers.Builder.components().partial(DataComponentPredicates.POTIONS, new PotionsPredicate(HolderSet.direct(potHolder))).build()).build())));
         if (type == AdvancementType.CHALLENGE) {
             builder.rewards(AdvancementRewards.Builder.experience(100));
         }

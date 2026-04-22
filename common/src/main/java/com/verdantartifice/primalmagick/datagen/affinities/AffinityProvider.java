@@ -11,7 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
@@ -20,6 +20,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -38,27 +39,24 @@ public class AffinityProvider implements DataProvider {
     }
 
     @Override
-    public CompletableFuture<?> run(CachedOutput cache) {
+    @NotNull
+    public CompletableFuture<?> run(@NotNull CachedOutput cache) {
         return this.lookupProviderFuture.thenCompose(p -> {
             ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
-            Map<AffinityType, Map<ResourceLocation, IFinishedAffinity>> map = new HashMap<>();
+            Map<AffinityType<?>, Map<Identifier, IFinishedAffinity>> map = new HashMap<>();
             this.registerAffinities(p, affinity -> {
-                if (map.computeIfAbsent(affinity.getType(), (type) -> { return new HashMap<>(); }).put(affinity.getId(), affinity) != null) {
-                    LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
+                if (map.computeIfAbsent(affinity.getType(), type -> new HashMap<>()).put(affinity.getId(), affinity) != null) {
+                    LOGGER.debug("Duplicate affinity in data generation: {}", affinity.getId().toString());
                 }
             });
-            map.entrySet().forEach(typeEntry -> {
-                typeEntry.getValue().entrySet().forEach(affinityEntry -> {
-                    IFinishedAffinity affinity = affinityEntry.getValue();
-                    futuresBuilder.add(DataProvider.saveStable(cache, affinity.getAffinityJson(), this.getPath(this.packOutput, affinity.getType(), affinityEntry.getKey())));
-                });
-            });
+            map.forEach((affinityType, affinityMap) -> affinityMap.forEach((affinityId, affinity) ->
+                    futuresBuilder.add(DataProvider.saveStable(cache, affinity.getAffinityJson(), this.getPath(this.packOutput, affinity.getType(), affinityId)))));
             return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
         });
     }
 
-    private Path getPath(PackOutput output, AffinityType affinityType, ResourceLocation entryLoc) {
-        return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("affinities").resolve(affinityType.getFolder()).resolve(entryLoc.getPath() + ".json");
+    private Path getPath(PackOutput output, AffinityType<?> affinityType, Identifier entryLoc) {
+        return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("affinities").resolve(affinityType.folder()).resolve(entryLoc.getPath() + ".json");
     }
     
     protected void registerAffinities(HolderLookup.Provider lookupProvider, Consumer<IFinishedAffinity> consumer) {
@@ -674,8 +672,8 @@ public class AffinityProvider implements DataProvider {
         // Define mod affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.GRIMOIRE.get()).base(Items.ENCHANTED_BOOK).build(consumer);
         ItemAffinityBuilder.emptyAffinity(ItemsPM.CREATIVE_GRIMOIRE.get()).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_RAW.get()).set(Sources.EARTH, 5).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED.get()).base(ItemsPM.MARBLE_RAW.get()).add(auraUnit).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE.get()).set(Sources.EARTH, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED.get()).base(ItemsPM.MARBLE.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_SLAB.get()).base(ItemsPM.MARBLE_SLAB.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_STAIRS.get()).base(ItemsPM.MARBLE_STAIRS.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_WALL.get()).base(ItemsPM.MARBLE_WALL.get()).add(auraUnit).build(consumer);
@@ -686,8 +684,8 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_PILLAR.get()).base(ItemsPM.MARBLE_PILLAR.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_CHISELED.get()).base(ItemsPM.MARBLE_CHISELED.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_RUNED.get()).base(ItemsPM.MARBLE_RUNED.get()).add(auraUnit).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_SMOKED.get()).base(ItemsPM.MARBLE_RAW.get()).add(Sources.MOON, 5).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_HALLOWED.get()).base(ItemsPM.MARBLE_RAW.get()).add(Sources.HALLOWED, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_SMOKED.get()).base(ItemsPM.MARBLE.get()).add(Sources.MOON, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_HALLOWED.get()).base(ItemsPM.MARBLE.get()).add(Sources.HALLOWED, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_LOG.get()).base(Items.OAK_LOG).add(Sources.MOON, 20).remove(Sources.SUN, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.STRIPPED_MOONWOOD_LOG.get()).base(ItemsPM.MOONWOOD_LOG.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MOONWOOD_WOOD.get()).base(ItemsPM.MOONWOOD_LOG.get()).build(consumer);
@@ -1156,6 +1154,7 @@ public class AffinityProvider implements DataProvider {
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Primal Magick Affinities";
     }

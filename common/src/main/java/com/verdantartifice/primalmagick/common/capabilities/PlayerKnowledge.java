@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -17,28 +16,17 @@ import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearch
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
-import org.apache.commons.lang3.mutable.Mutable;
-import org.apache.commons.lang3.mutable.MutableObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -49,16 +37,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * Default implementation of the player knowledge capability.
  * 
  * @author Daedalus4096
  */
-public class PlayerKnowledge implements IPlayerKnowledge {
-    private static final Logger LOGGER = LogManager.getLogger();
-
+public class PlayerKnowledge extends AbstractCapability<PlayerKnowledge> implements IPlayerKnowledge {
     public static final int LEGACY_VERSION = 0;
     public static final int UNREAD_FLAG_VERSION = 1;
     public static final int CURRENT_SCHEMA_VERSION = UNREAD_FLAG_VERSION;
@@ -77,12 +62,12 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 AbstractResearchTopic.dispatchCodec().listOf().fieldOf("topicHistory").forGetter(k -> k.topicHistory),
                 Project.codec().optionalFieldOf("project").forGetter(k -> k.project),
                 AbstractResearchTopic.dispatchCodec().optionalFieldOf("topic").forGetter(k -> k.topic),
-                Codec.INT.optionalFieldOf("schemaVersion", LEGACY_VERSION).forGetter(k -> k.schemaVersion),
-                Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(k -> k.syncTimestamp)
+                Codec.INT.optionalFieldOf("schemaVersion", UNREAD_FLAG_VERSION).forGetter(k -> k.schemaVersion),
+                Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(AbstractCapability::getSyncTimestamp)
             ).apply(instance, PlayerKnowledge::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerKnowledge> STREAM_CODEC = StreamCodecUtils.composite(
-            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).<Set<AbstractResearchKey<?>>>map(ImmutableSet::copyOf, ImmutableList::copyOf), k -> k.research,
+            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), k -> k.research,
             StageEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).<Map<AbstractResearchKey<?>, Integer>>map(
                 entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(StageEntry::key, StageEntry::stage)),
                 entryMap -> entryMap.entrySet().stream().map(e -> new StageEntry(e.getKey(), e.getValue())).toList()
@@ -96,7 +81,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             ByteBufCodecs.optional(Project.streamCodec()), k -> k.project,
             ByteBufCodecs.optional(AbstractResearchTopic.dispatchStreamCodec()), k -> k.topic,
             ByteBufCodecs.VAR_INT, k -> k.schemaVersion,
-            ByteBufCodecs.VAR_LONG, k -> k.syncTimestamp,
+            ByteBufCodecs.VAR_LONG, AbstractCapability::getSyncTimestamp,
             PlayerKnowledge::new);
     
     private final Set<AbstractResearchKey<?>> research = ConcurrentHashMap.newKeySet();                 // Set of known research
@@ -108,7 +93,6 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private Optional<Project> project;                  // Currently active research project
     private Optional<AbstractResearchTopic<?>> topic;   // Last active grimoire research topic
     private int schemaVersion;                          // Version of this object's schema, used to know when certain legacy updates should be done
-    private long syncTimestamp;                         // Last timestamp at which this capability received a sync from the server
 
     public PlayerKnowledge() {
         this(Set.of(), Map.of(), Map.of(), Map.of(), List.of(), Optional.empty(), Optional.empty(), CURRENT_SCHEMA_VERSION, 0L);
@@ -118,6 +102,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                               Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags, Map<KnowledgeType, Integer> knowledge,
                               List<AbstractResearchTopic<?>> topicHistory, Optional<Project> project,
                               Optional<AbstractResearchTopic<?>> topic, int schemaVersion, long syncTimestamp) {
+        super(syncTimestamp);
         this.research.addAll(research);
         this.stages.putAll(stages);
         this.flags.putAll(flags);
@@ -126,7 +111,6 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.project = project;
         this.topic = topic;
         this.schemaVersion = schemaVersion;
-        this.syncTimestamp = syncTimestamp;
     }
 
     @VisibleForTesting
@@ -134,61 +118,19 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         return this.schemaVersion;
     }
 
-    @Nullable
-    @Override
-    public Tag serializeNBT(@NotNull HolderLookup.Provider registryAccess) {
-        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
-        this.syncTimestamp = System.currentTimeMillis();
-        return CODEC.encodeStart(registryOps, this)
-                .resultOrPartial(msg -> LOGGER.error("Failed to serialize player knowledge: {}", msg))
-                .orElse(null);
-    }
-
-    @Override
-    public synchronized void deserializeNBT(@NotNull HolderLookup.Provider registryAccess, @NotNull Tag nbt) {
-        RegistryOps<Tag> registryOps = registryAccess.createSerializationContext(NbtOps.INSTANCE);
-        Mutable<PlayerKnowledge> parsedKnowledge = new MutableObject<>(null);
-        CODEC.parse(registryOps, nbt)
-                .ifSuccess(parsedKnowledge::setValue)
-                .ifError(err -> {
-                    // If the tag could not be parsed via codec, it might be in the legacy format
-                    LOGGER.warn("Failed to deserialize player knowledge using codec, trying fallback");
-                    if (nbt instanceof CompoundTag compoundTag) {
-                        PlayerKnowledge legacyKnowledge = new PlayerKnowledge();
-                        legacyKnowledge.deserializeLegacyNBT(registryAccess, compoundTag);
-                        parsedKnowledge.setValue(legacyKnowledge);
-                    }
-                });
-
-        // If parsing succeeds and the data is new, copy it into this object
-        this.copyFrom(parsedKnowledge.getValue());
-
-        // If the deserialized data is from before the read flag existed, set default flags on appropriate entries
-        if (this.schemaVersion < UNREAD_FLAG_VERSION) {
-            this.research.stream()
-                    .map(ark -> ark instanceof ResearchEntryKey rek ? rek : null)
-                    .filter(Objects::nonNull)
-                    .filter(this::isReadByDefault)
-                    .forEach(k -> this.addResearchFlag(k, ResearchFlag.READ));
-        }
-
-        // After post-processing, mark the new data as fully up-versioned
-        this.schemaVersion = CURRENT_SCHEMA_VERSION;
-    }
-
     protected boolean isReadByDefault(ResearchEntryKey key) {
         return this.research.contains(key) && !this.hasResearchFlag(key, ResearchFlag.NEW) && !this.hasResearchFlag(key, ResearchFlag.UPDATED);
     }
 
-    public void copyFrom(@Nullable PlayerKnowledge other) {
-        if (other == null || other.syncTimestamp <= this.syncTimestamp) {
-            return;
-        }
+    @Override
+    public Codec<PlayerKnowledge> codec() {
+        return CODEC;
+    }
 
-        this.syncTimestamp = other.syncTimestamp;
+    @Override
+    protected void copyFromInner(@NotNull PlayerKnowledge other) {
         this.clearResearch();
         this.clearKnowledge();
-
         this.research.addAll(other.research);
         this.stages.putAll(other.stages);
         this.flags.putAll(other.flags);
@@ -197,150 +139,6 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.project = other.project;
         this.topic = other.topic;
         this.schemaVersion = other.schemaVersion;
-    }
-
-    @Deprecated(forRemoval = true, since = "6.0.2-beta")
-    @VisibleForTesting
-    @Nonnull
-    public CompoundTag serializeLegacyNBT(HolderLookup.Provider registries) {
-        CompoundTag rootTag = new CompoundTag();
-        
-        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
-        
-        // Serialize known research, including stage number and attached flags
-        ListTag researchList = new ListTag();
-        for (AbstractResearchKey<?> key : this.research) {
-            CompoundTag tag = new CompoundTag();
-            AbstractResearchKey.dispatchCodec().encodeStart(registryOps, key)
-                .resultOrPartial(msg -> LOGGER.error("Failed to encode research entry in player knowledge capability: {}", msg))
-                .ifPresent(encodedTag -> tag.put("key", encodedTag));
-            if (this.stages.containsKey(key)) {
-                tag.putInt("stage", this.stages.get(key));
-            }
-            Set<ResearchFlag> researchFlags = this.flags.get(key);
-            if (researchFlags != null) {
-                String str = Arrays.stream(researchFlags.toArray(ResearchFlag[]::new))
-                                   .map(t -> t.name())
-                                   .collect(Collectors.joining(","));
-                if (str != null && !str.isEmpty()) {
-                    tag.putString("flags", str);
-                }
-            }
-            researchList.add(tag);
-        }
-        rootTag.put("research", researchList);
-        
-        // Serialize knowledge types, including accrued points
-        ListTag knowledgeList = new ListTag();
-        for (KnowledgeType knowledgeKey : this.knowledge.keySet()) {
-            if (knowledgeKey != null) {
-                Integer points = this.knowledge.get(knowledgeKey);
-                if (points != null && points.intValue() > 0) {
-                    CompoundTag tag = new CompoundTag();
-                    tag.putString("key", knowledgeKey.name());
-                    tag.putInt("value", points);
-                    knowledgeList.add(tag);
-                }
-            }
-        }
-        rootTag.put("knowledge", knowledgeList);
-        
-        // Serialize active research project, if any
-        this.project.ifPresent(value -> Project.codec().encodeStart(registryOps, value)
-                .resultOrPartial(msg -> LOGGER.error("Failed to encode active research project in player knowledge capability: {}", msg))
-                .ifPresent(encodedProject -> rootTag.put("project", encodedProject)));
-        
-        // Serialize last active grimoire topic, if any
-        this.topic.ifPresent(topic -> AbstractResearchTopic.dispatchCodec().encodeStart(registryOps, topic)
-                .resultOrPartial(msg -> LOGGER.error("Failed to encode current grimoire topic in player knowledge capability: {}", msg))
-                .ifPresent(encodedTopic -> rootTag.put("topic", encodedTopic)));
-        
-        // Serialize grimoire topic history
-        AbstractResearchTopic.dispatchCodec().listOf().encodeStart(registryOps, this.topicHistory)
-            .resultOrPartial(msg -> LOGGER.error("Failed to encode grimoire topic history entry in player knowledge capability: {}", msg))
-            .ifPresent(encodedHistory -> rootTag.put("topicHistory", encodedHistory));
-        
-        rootTag.putLong("syncTimestamp", System.currentTimeMillis());
-        
-        return rootTag;
-    }
-
-    @Deprecated(forRemoval = true, since = "6.0.2-beta")
-    @VisibleForTesting
-    public synchronized void deserializeLegacyNBT(HolderLookup.Provider registries, @Nullable CompoundTag nbt) {
-        if (nbt == null || nbt.getLong("syncTimestamp") <= this.syncTimestamp) {
-            return;
-        }
-        
-        this.syncTimestamp = nbt.getLong("syncTimestamp");
-        this.clearResearch();
-        this.clearKnowledge();
-
-        RegistryOps<Tag> registryOps = registries.createSerializationContext(NbtOps.INSTANCE);
-
-        // Deserialize schema version
-        this.schemaVersion = nbt.getInt("schemaVersion");
-        
-        // Deserialize known research, including stage number and attached flags
-        ListTag researchList = nbt.getList("research", Tag.TAG_COMPOUND);
-        for (int index = 0; index < researchList.size(); index++) {
-            CompoundTag tag = researchList.getCompound(index);
-            AbstractResearchKey.dispatchCodec().parse(registryOps, tag.get("key")).resultOrPartial(msg -> {
-                LOGGER.error("Failed to decode research entry in player knowledge capability: {}", msg);
-            }).ifPresent(parsedKey -> {
-                if (!this.isResearchKnown(parsedKey)) {
-                    this.research.add(parsedKey);
-                    int stage = tag.getInt("stage");
-                    if (stage > 0) {
-                        this.stages.put(parsedKey, stage);
-                    }
-                    String flagStr = tag.getString("flags");
-                    if (flagStr != null && !flagStr.isEmpty()) {
-                        for (String flagName : flagStr.split(",")) {
-                            try {
-                                this.addResearchFlag(parsedKey, ResearchFlag.valueOf(flagName));
-                            } catch (Exception e) {
-                                LOGGER.warn("Invalid research flag name: " + flagName, e);
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Deserialize knowledge types, including accrued points
-        ListTag knowledgeList = nbt.getList("knowledge", Tag.TAG_COMPOUND);
-        for (int index = 0; index < knowledgeList.size(); index++) {
-            CompoundTag tag = knowledgeList.getCompound(index);
-            String keyStr = tag.getString("key");
-            KnowledgeType key = null;
-            try {
-                key = KnowledgeType.valueOf(keyStr);
-            } catch (Exception e) {}
-            int points = tag.getInt("value");
-            if (key != null) {
-                this.knowledge.put(key, Integer.valueOf(points));
-            }
-        }
-        
-        // Deserialize active research project
-        if (nbt.contains("project")) {
-            Project.codec().parse(registryOps, nbt.getCompound("project"))
-                .resultOrPartial(msg -> LOGGER.error("Failed to decode active research project in player knowledge capability: {}", msg))
-                .ifPresent(project -> this.project = Optional.ofNullable(project));
-        }
-        
-        // Deserialize last active grimoire topic
-        if (nbt.contains("topic")) {
-            AbstractResearchTopic.dispatchCodec().parse(registryOps, nbt.get("topic"))
-                .resultOrPartial(msg -> LOGGER.error("Failed to decode current grimoire topic in player knowledge capability: {}", msg))
-                .ifPresent(decodedTopic -> this.topic = Optional.ofNullable(decodedTopic));
-        }
-        
-        // Deserialize grimoire topic history
-        AbstractResearchTopic.dispatchCodec().listOf().parse(registryOps, nbt.get("topicHistory"))
-            .resultOrPartial(msg -> LOGGER.error("Failed to decode grimoire topic history entry in player knowledge capability: {}", msg))
-            .ifPresent(decodedHistory -> this.topicHistory.addAll(decodedHistory));
     }
 
     @Override
@@ -497,7 +295,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (points < 0) {
             return false;
         } else {
-            this.knowledge.put(type, Integer.valueOf(points));
+            this.knowledge.put(type, points);
             return true;
         }
     }
@@ -517,7 +315,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (type == null) {
             return 0;
         } else {
-            return this.knowledge.getOrDefault(type, Integer.valueOf(0)).intValue();
+            return this.knowledge.getOrDefault(type, 0);
         }
     }
     
@@ -553,25 +351,11 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public void sync(@Nullable ServerPlayer player) {
-        if (player != null) {
-            this.syncTimestamp = System.currentTimeMillis();
+    public void sync(@NotNull ServerPlayer player) {
+        this.sync(player, SyncKnowledgePacket::new);
 
-            // Clone this data before passing it to the network
-            RegistryOps<Tag> registryOps = player.level().registryAccess().createSerializationContext(NbtOps.INSTANCE);
-            CODEC.encodeStart(registryOps, this)
-                    .resultOrPartial(err -> LOGGER.error("Failed to encode knowledge data for syncing"))
-                    .ifPresent(tag -> {
-                        CODEC.parse(registryOps, tag)
-                                .resultOrPartial(err -> LOGGER.error("Failed to parse knowledge data for syncing"))
-                                .ifPresent(knowledge -> {
-                                    PacketHandler.sendToPlayer(new SyncKnowledgePacket(knowledge), player);
-                                });
-                    });
-
-            // Remove all popup flags after syncing to prevent spam
-            this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
-        }
+        // Remove all popup flags after syncing to prevent spam
+        this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
     }
 
     @Override

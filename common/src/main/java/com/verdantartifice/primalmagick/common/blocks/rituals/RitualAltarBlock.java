@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEnti
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block definition for the ritual altar.  It is the central component of magickal rituals, providing
@@ -38,31 +40,16 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull BlockState oldState, boolean isMoving) {
         for (Direction dir : Direction.values()) {
             worldIn.updateNeighborsAt(pos.relative(dir), this);
         }
-    }
-    
-    @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!isMoving) {
-            for (Direction dir : Direction.values()) {
-                worldIn.updateNeighborsAt(pos.relative(dir), this);
-            }
-        }
-        if (state.getBlock() != newState.getBlock()) {
-            BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RitualAltarTileEntity altarTile) {
-                altarTile.dropContents(worldIn, pos);
-            }
-        }
-        super.onRemove(state, worldIn, pos, newState, isMoving);
     }
     
     public int getMaxSaltPower() {
@@ -74,23 +61,24 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
     }
     
     @Override
-    public int getStrongSaltPower(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+    public int getStrongSaltPower(@NotNull BlockState blockState, @NotNull BlockGetter blockAccess, @NotNull BlockPos pos, @NotNull Direction side) {
         return (side != Direction.UP) ? this.getMaxSaltPower() : 0;
     }
     
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return Services.BLOCK_ENTITY_PROTOTYPES.ritualAltar().create(pos, state);
     }
     
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return createTickerHelper(type, BlockEntityTypesPM.RITUAL_ALTAR.get(), Services.BLOCK_ENTITY_TICKERS.ritualAltar());
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
-        if (!worldIn.isClientSide) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
+        if (!worldIn.isClientSide()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RitualAltarTileEntity altarTile) {
                 if (!altarTile.getItem().isEmpty()) {
@@ -110,6 +98,15 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
     }
 
     @Override
+    protected void affectNeighborsAfterRemoval(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, boolean movedByPiston) {
+        super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+        for (Direction dir : Direction.values()) {
+            level.updateNeighborsAt(pos.relative(dir), state.getBlock());
+        }
+    }
+
+    @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }

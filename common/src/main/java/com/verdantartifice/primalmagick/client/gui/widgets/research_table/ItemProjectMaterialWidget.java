@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -31,18 +32,18 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget<Ite
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(@NotNull GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
         GuiUtils.renderItemStack(guiGraphics, this.material.getItemStack(), this.getX(), this.getY(), this.getMessage().getString(), false);
         if (this.material.getItemStack().getCount() > 1) {
             Component amountText = Component.literal(Integer.toString(this.material.getItemStack().getCount()));
             int width = mc.font.width(amountText);
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
-            guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+            guiGraphics.pose().scale(0.5F, 0.5F);
             guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
         
         // Draw base class stuff

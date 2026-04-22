@@ -25,11 +25,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -69,7 +70,7 @@ public class StaticBookItem extends Item {
     }
     
     protected static MutableComponent getStaticAttribute(ResourceKey<BookDefinition> bookId, String attrName) {
-        return Component.translatable(String.join(".", "written_book", bookId.location().getNamespace(), bookId.location().getPath().replace('/', '.'), attrName));
+        return Component.translatable(String.join(".", "written_book", bookId.identifier().getNamespace(), bookId.identifier().getPath().replace('/', '.'), attrName));
     }
     
     protected static Component getNameFromBookId(ResourceKey<BookDefinition> bookId) {
@@ -181,33 +182,32 @@ public class StaticBookItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pIsAdvanced);
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, TooltipDisplay pTooltipDisplay, Consumer<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         if (Services.PLATFORM.isClientDist() && hasAuthor(pStack)) {
             Component authorText = BookHelper.getAuthorText(makeBookView(pStack, pContext.registries()), getAuthor(pStack));
-            pTooltipComponents.add(Component.translatable("book.byAuthor", authorText).withStyle(ChatFormatting.GRAY));
+            pTooltipComponents.accept(Component.translatable("book.byAuthor", authorText).withStyle(ChatFormatting.GRAY));
         }
         getBookDefinition(pStack).ifPresent(defHolder -> {
             getBookLanguage(pStack).ifPresent(langHolder -> {
-                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", langHolder.value().getName()).withStyle(ChatFormatting.GRAY));
-                pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
+                pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.header", langHolder.value().getName()).withStyle(ChatFormatting.GRAY));
+                pTooltipComponents.accept(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
                 if (Services.PLATFORM.isClientDist() && hasBookDefinition(pStack) && hasBookLanguage(pStack) && langHolder.value().isComplex()) {
                     Player player = Services.PLATFORM.isClientDist() ? ClientUtils.getCurrentPlayer() : null;
                     Optional<Integer> translatedComprehension = getTranslatedComprehension(pStack);
                     int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, langHolder));
                     double percentage = BookHelper.getBookComprehension(new BookView(Either.left(defHolder), langHolder, comprehension));
-                    pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
+                    pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
                     if (translatedComprehension.isPresent()) {
                         if (translatedComprehension.get() >= langHolder.value().complexity()) {
-                            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.full").withStyle(ChatFormatting.DARK_AQUA));
+                            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.translated.full").withStyle(ChatFormatting.DARK_AQUA));
                         } else if (translatedComprehension.get() > 0) {
-                            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.partial").withStyle(ChatFormatting.DARK_AQUA));
+                            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.translated.partial").withStyle(ChatFormatting.DARK_AQUA));
                         }
                     }
                     
                     int timesStudied = LinguisticsManager.getTimesStudied(player, defHolder, langHolder);
                     if (timesStudied > 0) {
-                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.times_studied", timesStudied).withStyle(ChatFormatting.DARK_AQUA));
+                        pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.written_language.times_studied", timesStudied).withStyle(ChatFormatting.DARK_AQUA));
                     }
                 }
             });
@@ -215,9 +215,9 @@ public class StaticBookItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
-        if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
+        if (!pLevel.isClientSide() && pPlayer instanceof ServerPlayer serverPlayer) {
             getBookDefinition(stack).ifPresentOrElse(bookDefHolder -> {
                 getBookLanguage(stack).ifPresentOrElse(langHolder -> {
                     LinguisticsManager.markRead(pPlayer, bookDefHolder, langHolder);
@@ -229,7 +229,7 @@ public class StaticBookItem extends Item {
                 LOGGER.error("No book definition found when opening static book stack {}", stack.toString());
             });
         }
-        return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
+        return InteractionResult.CONSUME.heldItemTransformedTo(stack);
     }
     
     public static Builder builder(Supplier<StaticBookItem> baseBook, HolderLookup.Provider registries) {

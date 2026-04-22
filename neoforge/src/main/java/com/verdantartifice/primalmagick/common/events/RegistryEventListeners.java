@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.Constants;
+import com.verdantartifice.primalmagick.platform.registries.AffinityTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.GridRewardTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.ProjectMaterialTypeRegistryServiceNeoforge;
 import com.verdantartifice.primalmagick.platform.registries.RequirementTypeRegistryServiceNeoforge;
@@ -23,7 +24,7 @@ import net.neoforged.neoforge.registries.NewRegistryEvent;
  *
  * @author Daedalus4096
  */
-@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Constants.MOD_ID)
 public class RegistryEventListeners {
     @SubscribeEvent
     public static void onNewRegistry(NewRegistryEvent event) {
@@ -39,6 +40,7 @@ public class RegistryEventListeners {
         event.register(GridRewardTypeRegistryServiceNeoforge.TYPES);
         event.register(ResearchTopicTypeRegistryServiceNeoforge.TYPES);
         event.register(RitualStepTypeRegistryServiceNeoforge.TYPES);
+        event.register(AffinityTypeRegistryServiceNeoforge.TYPES);
     }
 
     @SubscribeEvent

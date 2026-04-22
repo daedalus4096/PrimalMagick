@@ -12,7 +12,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -34,11 +34,11 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingI
     protected final boolean isSimple;
     protected final Optional<Integer> baseExpertiseOverride;
     protected final Optional<Integer> bonusExpertiseOverride;
-    protected final Optional<ResourceLocation> expertiseGroup;
+    protected final Optional<Identifier> expertiseGroup;
     protected final Optional<ResearchDisciplineKey> disciplineOverride;
 
     public ShapelessArcaneRecipe(String group, ItemStack output, NonNullList<Ingredient> items, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts,
-            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
+            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
         super(group, output);
         this.requirement = requirement;
         this.manaCosts = manaCosts;
@@ -90,7 +90,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingI
     }
 
     @Override
-    public Optional<ResourceLocation> getExpertiseGroup() {
+    public Optional<Identifier> getExpertiseGroup() {
         return this.expertiseGroup;
     }
 
@@ -119,7 +119,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingI
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
-                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
+                    Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
                     ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
                 ).apply(instance, ShapelessArcaneRecipe::new)
             );
@@ -142,7 +142,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingI
             
             Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
             Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
-            Optional<ResourceLocation> expGroup = buffer.readOptional(b -> b.readResourceLocation());
+            Optional<Identifier> expGroup = buffer.readOptional(b -> b.readResourceLocation());
             Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey.STREAM_CODEC);
             
             ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);

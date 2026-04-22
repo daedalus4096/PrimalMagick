@@ -1,82 +1,49 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeManager;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class PotionBonusAffinity extends AbstractAffinity {
-    public static final Serializer SERIALIZER = new Serializer();
+public class PotionBonusAffinity extends AbstractAffinity<PotionBonusAffinity> {
+    public static final MapCodec<PotionBonusAffinity> CODEC = RecordCodecBuilder.<PotionBonusAffinity>mapCodec(instance -> instance.group(
+            Identifier.CODEC.fieldOf("target").forGetter(PotionBonusAffinity::getTarget),
+            SourceList.CODEC.fieldOf("bonus").forGetter(pba -> pba.bonusValues)
+        ).apply(instance, PotionBonusAffinity::new)).validate(pba -> BuiltInRegistries.POTION.containsKey(pba.targetId) ?
+            DataResult.success(pba) :
+            DataResult.error(() -> "Unknown target potion type " + pba.targetId
+        ));
+
+    public static final StreamCodec<FriendlyByteBuf, PotionBonusAffinity> STREAM_CODEC = StreamCodec.composite(
+            Identifier.STREAM_CODEC, PotionBonusAffinity::getTarget,
+            SourceList.STREAM_CODEC, pba -> pba.bonusValues,
+            PotionBonusAffinity::new);
+
+    protected final SourceList bonusValues;
     
-    protected SourceList bonusValues;
-    
-    protected PotionBonusAffinity(@Nonnull ResourceLocation target) {
+    protected PotionBonusAffinity(@NotNull Identifier target, @NotNull SourceList bonusValues) {
         super(target);
-    }
-    
-    @Override
-    public AffinityType getType() {
-        return AffinityType.POTION_BONUS;
+        this.bonusValues = bonusValues;
     }
 
     @Override
-    public IAffinitySerializer<?> getSerializer() {
-        return SERIALIZER;
+    public @NotNull AffinityType<PotionBonusAffinity> getType() {
+        return AffinityTypesPM.POTION_BONUS.get();
     }
 
     @Override
-    protected CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
-        if (this.bonusValues != null) {
-            return CompletableFuture.completedFuture(this.bonusValues);
-        } else {
-            throw new IllegalStateException("Potion bonus affinity has no values defined");
-        }
-    }
-
-    public static class Serializer implements IAffinitySerializer<PotionBonusAffinity> {
-        @Override
-        public PotionBonusAffinity read(ResourceLocation affinityId, JsonObject json) {
-            String target = json.getAsJsonPrimitive("target").getAsString();
-            if (target == null) {
-                throw new JsonSyntaxException("Illegal affinity target in affinity JSON for " + affinityId.toString());
-            }
-            
-            ResourceLocation targetId = ResourceLocation.parse(target);
-            if (!BuiltInRegistries.POTION.containsKey(targetId)) {
-                throw new JsonSyntaxException("Unknown target potion type " + target + " in affinity JSON for " + affinityId.toString());
-            }
-            
-            PotionBonusAffinity entry = new PotionBonusAffinity(targetId);
-            if (json.has("bonus"))  {
-                entry.bonusValues = JsonUtils.toSourceList(json.get("bonus").getAsJsonObject());
-            } else {
-                throw new JsonSyntaxException("Affinity entry must have bonus attribute");
-            }
-            
-            return entry;
-        }
-
-        @Override
-        public PotionBonusAffinity fromNetwork(FriendlyByteBuf buf) {
-            PotionBonusAffinity affinity = new PotionBonusAffinity(buf.readResourceLocation());
-            affinity.bonusValues = SourceList.fromNetwork(buf);
-            return affinity;
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, PotionBonusAffinity affinity) {
-            buf.writeResourceLocation(affinity.targetId);
-            SourceList.toNetwork(buf, affinity.bonusValues);
-        }
+    protected CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
+        return CompletableFuture.completedFuture(this.bonusValues);
     }
 }

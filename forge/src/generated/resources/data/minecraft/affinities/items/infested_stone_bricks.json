@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:blood": 2
-  },
-  "base": "minecraft:stone_bricks",
-  "target": "minecraft:infested_stone_bricks"
-}

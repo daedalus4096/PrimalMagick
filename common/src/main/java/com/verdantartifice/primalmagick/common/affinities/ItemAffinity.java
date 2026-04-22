@@ -1,159 +1,105 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSyntaxException;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-public class ItemAffinity extends AbstractAffinity {
-    public static final Serializer SERIALIZER = new Serializer();
+public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
+    public static final MapCodec<ItemAffinity> CODEC = RecordCodecBuilder.<ItemAffinity>mapCodec(instance -> instance.group(
+            Identifier.CODEC.fieldOf("target").forGetter(ItemAffinity::getTarget),
+            Codec.mapEither(FixedValues.CODEC, DerivedValues.CODEC).forGetter(ia -> ia.valuesEither),
+            ResourceKey.codec(Registries.RECIPE).optionalFieldOf("recipe").forGetter(ItemAffinity::getSourceRecipe)
+        ).apply(instance, ItemAffinity::new)).validate(ia -> ia.valuesEither.map(
+            fv -> DataResult.success(ia),
+            dv -> ia.targetId.equals(dv.base) ? DataResult.error(() -> "Affinity base must not match target " + ia.targetId) : DataResult.success(ia)
+        ));
 
-    protected ResourceLocation baseEntryId;
-    protected IAffinity baseEntry;
-    protected SourceList setValues;
-    protected SourceList addValues;
-    protected SourceList removeValues;
-    protected Optional<ResourceLocation> sourceRecipe = Optional.empty();
+    public static final StreamCodec<FriendlyByteBuf, ItemAffinity> STREAM_CODEC = StreamCodec.composite(
+            Identifier.STREAM_CODEC, ItemAffinity::getTarget,
+            ByteBufCodecs.either(FixedValues.STREAM_CODEC, DerivedValues.STREAM_CODEC), ia -> ia.valuesEither,
+            ByteBufCodecs.optional(ResourceKey.streamCodec(Registries.RECIPE)), ItemAffinity::getSourceRecipe,
+            ItemAffinity::new);
+
+    protected final Either<FixedValues, DerivedValues> valuesEither;
+    protected final Optional<ResourceKey<Recipe<?>>> sourceRecipe;
     
-    protected ItemAffinity(@Nonnull ResourceLocation target) {
+    protected ItemAffinity(@NotNull Identifier target, @NotNull Either<FixedValues, DerivedValues> valuesEither, @NotNull Optional<ResourceKey<Recipe<?>>> recipe) {
         super(target);
+        this.valuesEither = valuesEither;
+        this.sourceRecipe = recipe;
     }
     
-    public ItemAffinity(@Nonnull ResourceLocation target, @Nonnull SourceList values) {
-        super(target);
-        this.setValues = values;
+    public static ItemAffinity fixed(@NotNull Identifier target, @NotNull SourceList setValues, @NotNull Optional<ResourceKey<Recipe<?>>> recipe) {
+        return new ItemAffinity(target, Either.left(new FixedValues(setValues)), recipe);
     }
 
     @Override
-    public AffinityType getType() {
-        return AffinityType.ITEM;
+    public @NotNull AffinityType<ItemAffinity> getType() {
+        return AffinityTypesPM.ITEM.get();
     }
 
-    @Override
-    public IAffinitySerializer<?> getSerializer() {
-        return SERIALIZER;
-    }
-    
-    public Optional<ResourceLocation> getSourceRecipe() {
+    public Optional<ResourceKey<Recipe<?>>> getSourceRecipe() {
         return this.sourceRecipe;
     }
     
-    public void setSourceRecipe(Optional<ResourceLocation> sourceRecipe) {
-        this.sourceRecipe = sourceRecipe;
-    }
-
     @Override
-    protected CompletableFuture<SourceList> calculateTotalAsync(@Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
-        if (this.setValues != null) {
-            return CompletableFuture.completedFuture(this.setValues);
-        } else if (this.baseEntryId != null) {
-            return AffinityManager.getInstance().getOrGenerateItemAffinityAsync(this.baseEntryId, recipeManager, registryAccess, history).thenCompose(baseEntry -> {
-                return baseEntry == null ? CompletableFuture.completedFuture(SourceList.EMPTY) : baseEntry.getTotalAsync(recipeManager, registryAccess, history);
-            }).thenApply(baseSources -> {
-                if (this.addValues != null) {
-                    baseSources = baseSources.add(this.addValues);
-                }
-                if (this.removeValues != null) {
-                    baseSources = baseSources.remove(this.removeValues);
-                }
-                return baseSources;
-            });
-        } else {
-            throw new IllegalStateException("Item affinity has neither set values nor a base entry");
-        }
+    protected CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
+        return this.valuesEither.map(
+            fv -> CompletableFuture.completedFuture(fv.set),
+            dv -> recipeManager == null ?
+                    CompletableFuture.completedFuture(SourceList.EMPTY) :
+                    AffinityManager.getInstance().getOrGenerateItemAffinityAsync(dv.base, recipeManager, registryAccess, history)
+                            .thenCompose(baseEntry -> baseEntry == null ?
+                                    CompletableFuture.completedFuture(SourceList.EMPTY) :
+                                    baseEntry.getTotalAsync(recipeManager, registryAccess, history))
+                            .thenApply(baseSources -> baseSources.add(dv.add).remove(dv.remove))
+        );
     }
-    
-    public static class Serializer implements IAffinitySerializer<ItemAffinity> {
-        @Override
-        public ItemAffinity read(ResourceLocation affinityId, JsonObject json) {
-            String target = json.getAsJsonPrimitive("target").getAsString();
-            if (target == null) {
-                throw new JsonSyntaxException("Illegal affinity target in affinity JSON for " + affinityId.toString());
-            }
-            
-            ResourceLocation targetId = ResourceLocation.parse(target);
-            if (!Services.ITEMS_REGISTRY.containsKey(targetId)) {
-                throw new JsonSyntaxException("Unknown target item " + target + " in affinity JSON for " + affinityId.toString());
-            }
-            
-            ItemAffinity entry = new ItemAffinity(targetId);
-            if (json.has("set") && json.has("base")) {
-                throw new JsonParseException("Affinity entry may not have both set and base attributes");
-            } else if (json.has("set")) {
-                entry.setValues = JsonUtils.toSourceList(json.get("set").getAsJsonObject());
-            } else if (json.has("base")) {
-                String base = json.getAsJsonPrimitive("base").getAsString();
-                entry.baseEntryId = ResourceLocation.parse(base);
-                if (entry.baseEntryId.equals(targetId)) {
-                    throw new JsonSyntaxException("Base item cannot be the same as the target at " + affinityId.toString());
-                }
-                if (!Services.ITEMS_REGISTRY.containsKey(entry.baseEntryId)) {
-                    throw new JsonSyntaxException("Unknown base item " + base + " in affinity JSON for " + affinityId.toString());
-                }
-                if (json.has("add")) {
-                    entry.addValues = JsonUtils.toSourceList(json.get("add").getAsJsonObject());
-                }
-                if (json.has("remove")) {
-                    entry.removeValues = JsonUtils.toSourceList(json.get("remove").getAsJsonObject());
-                }
-            } else {
-                throw new JsonParseException("Affinity entry must have either set or base attributes");
-            }
 
-            return entry;
-        }
+    public record FixedValues(SourceList set) {
+        public static final MapCodec<FixedValues> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                SourceList.CODEC.fieldOf("set").forGetter(FixedValues::set)
+            ).apply(instance, FixedValues::new));
 
-        @Override
-        public ItemAffinity fromNetwork(FriendlyByteBuf buf) {
-            ItemAffinity affinity = new ItemAffinity(buf.readResourceLocation());
-            boolean isSet = buf.readBoolean();
-            if (isSet) {
-                affinity.setValues = SourceList.fromNetwork(buf);
-            } else {
-                affinity.baseEntryId = buf.readResourceLocation();
-                if (buf.readBoolean()) {
-                    affinity.addValues = SourceList.fromNetwork(buf);
-                }
-                if (buf.readBoolean()) {
-                    affinity.removeValues = SourceList.fromNetwork(buf);
-                }
-            }
-            return affinity;
-        }
+        public static final StreamCodec<FriendlyByteBuf, FixedValues> STREAM_CODEC = StreamCodec.composite(
+                SourceList.STREAM_CODEC, FixedValues::set,
+                FixedValues::new);
+    }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ItemAffinity affinity) {
-            buf.writeResourceLocation(affinity.targetId);
-            if (affinity.setValues != null) {
-                buf.writeBoolean(true);
-                SourceList.toNetwork(buf, affinity.setValues);
-            } else {
-                buf.writeBoolean(false);
-                buf.writeResourceLocation(affinity.baseEntryId);
-                if (affinity.addValues != null) {
-                    buf.writeBoolean(true);
-                    SourceList.toNetwork(buf, affinity.addValues);
-                } else {
-                    buf.writeBoolean(false);
-                }
-                if (affinity.removeValues != null) {
-                    buf.writeBoolean(true);
-                    SourceList.toNetwork(buf, affinity.removeValues);
-                } else {
-                    buf.writeBoolean(false);
-                }
-            }
-        }
+    public record DerivedValues(Identifier base, SourceList add, SourceList remove) {
+        public static final MapCodec<DerivedValues> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Identifier.CODEC.fieldOf("base").validate(
+                        rl -> Services.ITEMS_REGISTRY.containsKey(rl) ?
+                                DataResult.success(rl) :
+                                DataResult.error(() -> "Item " + rl + " not defined")
+                    ).forGetter(DerivedValues::base),
+                SourceList.CODEC.optionalFieldOf("add", SourceList.EMPTY).forGetter(DerivedValues::add),
+                SourceList.CODEC.optionalFieldOf("remove", SourceList.EMPTY).forGetter(DerivedValues::remove)
+            ).apply(instance, DerivedValues::new));
+
+        public static final StreamCodec<FriendlyByteBuf, DerivedValues> STREAM_CODEC = StreamCodec.composite(
+                Identifier.STREAM_CODEC, DerivedValues::base,
+                SourceList.STREAM_CODEC, DerivedValues::add,
+                SourceList.STREAM_CODEC, DerivedValues::remove,
+                DerivedValues::new);
     }
 }

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +35,11 @@ public abstract class AbstractLanguageBuilder<T, U extends AbstractLanguageBuild
         return (U)this;
     }
 
-    protected ResourceLocation getBaseRegistryKey() {
+    protected Identifier getBaseRegistryKey() {
         return this.getBaseRegistryKey(this.base);
     }
     
-    protected abstract ResourceLocation getBaseRegistryKey(T base);
+    protected abstract Identifier getBaseRegistryKey(T base);
     
     protected void add(String key, String value) {
         if (this.data.containsKey(key)) {

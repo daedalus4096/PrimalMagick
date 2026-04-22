@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition of a basic sky pixie.  Weakest of the sky pixies.
@@ -17,7 +18,7 @@ public class BasicSkyPixieEntity extends AbstractSkyPixieEntity implements IBasi
     }
 
     @Override
-    protected SpawnEggItem getSpawnItem() {
+    protected @NotNull SpawnEggItem getSpawnItem() {
         return ItemsPM.BASIC_SKY_PIXIE.get();
     }
 }

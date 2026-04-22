@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.menus.slots.IHasCyclingBackground
 import com.verdantartifice.primalmagick.common.menus.slots.IHasTooltip;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -40,6 +41,6 @@ public abstract class AbstractContainerScreenPM<T extends AbstractContainerMenu>
         if (this.hoveredSlot instanceof IHasTooltip tooltipSlot && tooltipSlot.shouldShowTooltip()) {
             tooltipOpt = Optional.ofNullable(tooltipSlot.getTooltip());
         }
-        tooltipOpt.ifPresent(tooltip -> pGuiGraphics.renderTooltip(this.font, tooltip, pX, pY));
+        tooltipOpt.ifPresent(tooltip -> pGuiGraphics.setTooltipForNextFrame(this.font, tooltip, pX, pY));
     }
 }

@@ -2,8 +2,7 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -22,7 +21,7 @@ import java.util.function.Predicate;
 public class FilteredSlotNeoforge extends SlotItemHandler implements IHasTooltip, IHasCyclingBackgrounds {
     private static final int BACKGROUND_CHANGE_TICK_RATE = 30;
 
-    private final List<Pair<Predicate<Slot>, ResourceLocation>> backgrounds;
+    private final List<Pair<Predicate<Slot>, Identifier>> backgrounds;
     private final Optional<Predicate<ItemStack>> filter;
     private final Optional<Component> tooltip;
     private final Optional<Integer> maxStackSize;
@@ -36,7 +35,7 @@ public class FilteredSlotNeoforge extends SlotItemHandler implements IHasTooltip
         this.backgrounds = properties.getBackgrounds();
         
         // Set the default background to the first active one, if any
-        this.getActiveBackgrounds().stream().findFirst().ifPresent(loc -> this.setBackground(InventoryMenu.BLOCK_ATLAS, loc));
+        this.getActiveBackgrounds().stream().findFirst().ifPresent(this::setBackground);
     }
 
     @Override
@@ -61,14 +60,14 @@ public class FilteredSlotNeoforge extends SlotItemHandler implements IHasTooltip
 
     @Override
     public void tickBackgrounds() {
-        List<ResourceLocation> active = this.getActiveBackgrounds();
+        List<Identifier> active = this.getActiveBackgrounds();
         if (!active.isEmpty()) {
             int backgroundIndex = (this.ticks++ / BACKGROUND_CHANGE_TICK_RATE) % active.size();
-            this.setBackground(InventoryMenu.BLOCK_ATLAS, active.get(backgroundIndex));
+            this.setBackground(active.get(backgroundIndex));
         }
     }
     
-    protected List<ResourceLocation> getActiveBackgrounds() {
+    protected List<Identifier> getActiveBackgrounds() {
         return this.backgrounds.stream().filter(p -> p.getFirst().test(this)).map(Pair::getSecond).toList();
     }
 }

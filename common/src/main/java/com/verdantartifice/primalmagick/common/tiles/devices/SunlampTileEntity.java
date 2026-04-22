@@ -19,6 +19,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
  */
 public class SunlampTileEntity extends AbstractTilePM {
     private static final int LIGHT_THRESHOLD = 11;
+    private static final int RANGE = 16;
     
     protected int ticksExisted = 0;
     
@@ -28,11 +29,11 @@ public class SunlampTileEntity extends AbstractTilePM {
 
     public static void tick(Level level, BlockPos pos, BlockState state, SunlampTileEntity entity) {
         entity.ticksExisted++;
-        if (!level.isClientSide && entity.ticksExisted % 5 == 0) {
+        if (!level.isClientSide() && entity.ticksExisted % 5 == 0) {
             // Pick a random location within 15 blocks
-            int x = level.random.nextInt(16) - level.random.nextInt(16);
-            int y = level.random.nextInt(16) - level.random.nextInt(16);
-            int z = level.random.nextInt(16) - level.random.nextInt(16);
+            int x = level.random.nextInt(RANGE) - level.random.nextInt(RANGE);
+            int y = level.random.nextInt(RANGE) - level.random.nextInt(RANGE);
+            int z = level.random.nextInt(RANGE) - level.random.nextInt(RANGE);
             BlockPos bp = pos.offset(x, y, z);
             
             // Constrain the selected block pos

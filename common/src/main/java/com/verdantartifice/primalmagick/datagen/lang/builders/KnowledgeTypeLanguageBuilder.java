@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -23,7 +23,7 @@ public class KnowledgeTypeLanguageBuilder extends AbstractLanguageBuilder<Knowle
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(KnowledgeType base) {
+    protected Identifier getBaseRegistryKey(KnowledgeType base) {
         return ResourceUtils.loc(base.getSerializedName());
     }
 }

@@ -20,21 +20,21 @@ import javax.annotation.Nullable;
  * @author Daedalus4096
  */
 public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
-    public boolean isPropActivated(BlockState state, Level world, BlockPos pos);
+    boolean isPropActivated(BlockState state, Level world, BlockPos pos);
     
-    public default void onPropActivated(BlockState state, Level world, BlockPos pos, float stabilityBonus) {
+    default void onPropActivated(BlockState state, Level world, BlockPos pos, float stabilityBonus) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IRitualPropTileEntity propTile) {
             propTile.notifyAltarOfPropActivation(stabilityBonus);
         }
     }
     
-    public default boolean isPropOpen(BlockState state, Level world, BlockPos pos) {
+    default boolean isPropOpen(BlockState state, Level world, BlockPos pos) {
         BlockEntity tile = world.getBlockEntity(pos);
         return (tile instanceof IRitualPropTileEntity propTile) && propTile.isPropOpen();
     }
     
-    public default void openProp(BlockState state, Level world, BlockPos pos, @Nullable Player player, BlockPos altarPos) {
+    default void openProp(BlockState state, Level world, BlockPos pos, @Nullable Player player, BlockPos altarPos) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IRitualPropTileEntity propTile) {
             propTile.setPropOpen(true);
@@ -47,7 +47,7 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
         }
     }
     
-    public default void closeProp(BlockState state, Level world, BlockPos pos) {
+    default void closeProp(BlockState state, Level world, BlockPos pos) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IRitualPropTileEntity propTile) {
             propTile.setPropOpen(false);
@@ -57,11 +57,11 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
         }
     }
     
-    public default void sendPropStatusMessage(@Nonnull Player player) {
+    default void sendPropStatusMessage(@Nonnull Player player) {
         player.displayClientMessage(Component.translatable(this.getPropTranslationKey()), false);
     }
     
-    public String getPropTranslationKey();
+    String getPropTranslationKey();
     
     /**
      * Indicated whether the block is a universal ritual prop that can and will be used by any
@@ -69,7 +69,7 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
      * 
      * @return whether the block is a universal ritual prop
      */
-    public default boolean isUniversal() {
+    default boolean isUniversal() {
         return false;
     }
 }

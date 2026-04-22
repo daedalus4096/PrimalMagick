@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,7 +19,7 @@ import net.minecraft.world.entity.EntityType;
  * blocks.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.misc.EntitySwapper}
+ * @see com.verdantartifice.primalmagick.common.misc.EntitySwapper
  */
 public class PolymorphSheepSpellPayload extends AbstractPolymorphSpellPayload<PolymorphSheepSpellPayload> {
     public static final PolymorphSheepSpellPayload INSTANCE = new PolymorphSheepSpellPayload();
@@ -53,7 +54,7 @@ public class PolymorphSheepSpellPayload extends AbstractPolymorphSpellPayload<Po
     }
 
     @Override
-    protected SoundEvent getCastSoundEvent() {
+    protected SoundEvent getCastSoundEvent(HolderLookup.Provider lookupProvider) {
         return SoundEvents.SHEEP_AMBIENT;
     }
 }

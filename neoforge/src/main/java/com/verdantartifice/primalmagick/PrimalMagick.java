@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.init.InitRegistriesNeoforge;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -22,13 +23,13 @@ import javax.annotation.Nullable;
 public class PrimalMagick {
     private static IEventBus eventBus;
 
-    public PrimalMagick(IEventBus eventBus, ModContainer container) {
+    public PrimalMagick(@NotNull IEventBus eventBus, @NotNull ModContainer container) {
         PrimalMagick.eventBus = eventBus;
         ConfigNeoforge.register(container);
         InitRegistriesNeoforge.initDeferredRegistries();
     }
 
-    @Nullable
+    @NotNull
     public static IEventBus getEventBus() {
         return PrimalMagick.eventBus;
     }

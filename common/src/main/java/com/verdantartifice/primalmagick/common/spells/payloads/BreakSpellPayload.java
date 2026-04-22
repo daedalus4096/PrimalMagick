@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +40,7 @@ import java.util.function.Supplier;
  * entities.  Has no effect when cast by non-players.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.misc.BlockBreaker}
+ * @see com.verdantartifice.primalmagick.common.misc.BlockBreaker
  */
 public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
     public static final BreakSpellPayload INSTANCE = new BreakSpellPayload();
@@ -70,7 +71,7 @@ public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.BLOCK && caster instanceof Player player) {
             // Create and enqueue a block breaker for the target block
             BlockHitResult blockTarget = (BlockHitResult)target;
@@ -86,6 +87,7 @@ public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.EARTH;
     }
@@ -96,7 +98,7 @@ public class BreakSpellPayload extends AbstractSpellPayload<BreakSpellPayload> {
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

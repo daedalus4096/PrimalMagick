@@ -12,14 +12,16 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ import java.util.List;
  */
 public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkbenchMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/arcane_workbench.png");
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/arcane_workbench.png");
     
     protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();
     protected List<ManaCostWidget> costWidgets = new ArrayList<>();
@@ -70,7 +72,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.adjustCostWidgets();
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
             this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
@@ -86,12 +88,11 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        guiGraphics.blit(TEXTURE, this.leftPos, (this.height - this.imageHeight) / 2, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, (this.height - this.imageHeight) / 2, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
     
     @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    protected void renderLabels(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
         RecipeHolder<IArcaneRecipe> activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
         if (activeArcaneRecipe == null || activeArcaneRecipe.value().getManaCosts().isEmpty()) {
@@ -158,7 +159,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
     }
 
     @Override
-    protected void slotClicked(Slot p_97778_, int p_97779_, int p_97780_, ClickType p_97781_) {
+    protected void slotClicked(@NotNull Slot p_97778_, int p_97779_, int p_97780_, @NotNull ClickType p_97781_) {
         super.slotClicked(p_97778_, p_97779_, p_97780_, p_97781_);
         this.recipeBookComponent.slotClicked(p_97778_);
     }

@@ -3,29 +3,43 @@ package com.verdantartifice.primalmagick.client.renderers.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.EnchantedGolemModel;
+import com.verdantartifice.primalmagick.client.renderers.entity.state.EnchantedGolemRenderState;
 import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchantedGolemEntity;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Base entity renderer for an enchanted golem.
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractEnchantedGolemRenderer<T extends AbstractEnchantedGolemEntity> extends MobRenderer<T, EnchantedGolemModel<T>> {
+public abstract class AbstractEnchantedGolemRenderer<T extends AbstractEnchantedGolemEntity> extends MobRenderer<T, EnchantedGolemRenderState, EnchantedGolemModel> {
     public AbstractEnchantedGolemRenderer(EntityRendererProvider.Context context) {
-        super(context, new EnchantedGolemModel<>(context.bakeLayer(ModelLayers.IRON_GOLEM)), 0.7F);
+        super(context, new EnchantedGolemModel(context.bakeLayer(ModelLayers.IRON_GOLEM)), 0.7F);
     }
 
     @Override
-    protected void setupRotations(T entityLiving, PoseStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks, float scale) {
-        super.setupRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw, partialTicks, scale);
-        if (!((double)entityLiving.walkAnimation.speed() < 0.01D)) {
+    public EnchantedGolemRenderState createRenderState() {
+        return new EnchantedGolemRenderState();
+    }
+
+    @Override
+    public void extractRenderState(T entity, EnchantedGolemRenderState renderState, float partialTicks) {
+        super.extractRenderState(entity, renderState, partialTicks);
+        renderState.attackTicksRemaining = (float)entity.getAttackAnimationTick() > 0.0F ? (float)entity.getAttackAnimationTick() - partialTicks : 0.0F;
+        renderState.crackiness = entity.getCrackLevel();
+    }
+
+    @Override
+    protected void setupRotations(EnchantedGolemRenderState renderState, @NotNull PoseStack poseStack, float bodyRot, float scale) {
+        super.setupRotations(renderState, poseStack, bodyRot, scale);
+        if (!((double)renderState.walkAnimationSpeed < 0.01D)) {
             float f = 13.0F;
-            float f1 = entityLiving.walkAnimation.position(partialTicks) + 6.0F;
+            float f1 = renderState.walkAnimationPos + 6.0F;
             float f2 = (Math.abs(f1 % f - 6.5F) - 3.25F) / 3.25F;
-            matrixStackIn.mulPose(Axis.ZP.rotationDegrees(6.5F * f2));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(6.5F * f2));
         }
     }
 }

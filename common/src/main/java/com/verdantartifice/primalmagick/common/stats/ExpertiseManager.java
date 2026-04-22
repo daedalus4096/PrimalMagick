@@ -15,7 +15,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -71,7 +71,7 @@ public class ExpertiseManager {
     }
     
     protected static int getThresholdByDisciplineRecipes(RegistryAccess registryAccess, RecipeManager recipeManager, ResearchDisciplineKey discKey, ResearchTier tier) {
-        Set<ResourceLocation> foundGroups = new HashSet<>();
+        Set<Identifier> foundGroups = new HashSet<>();
         MutableInt retVal = new MutableInt(0);
         for (RecipeHolder<?> recipeHolder : recipeManager.getRecipes()) {
             if (recipeHolder.value() instanceof IHasExpertise expRecipe) {
@@ -95,7 +95,7 @@ public class ExpertiseManager {
                 });
             }
         }
-        LOGGER.debug("Final expertise threshold value for {} tier {}: {}", discKey.getRootKey().location(), tier.getSerializedName(), retVal.intValue());
+        LOGGER.debug("Final expertise threshold value for {} tier {}: {}", discKey.getRootKey().identifier(), tier.getSerializedName(), retVal.intValue());
         return retVal.intValue();
     }
     
@@ -140,13 +140,14 @@ public class ExpertiseManager {
      */
     public static void awardExpertise(@Nullable Player player, @Nullable RecipeHolder<?> recipeHolder) {
         if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
-            expRecipe.getResearchDiscipline(player.level().registryAccess(), recipeHolder.id()).ifPresent(discKey -> {
+            Level level = player.level();
+            expRecipe.getResearchDiscipline(level.registryAccess(), recipeHolder.id()).ifPresent(discKey -> {
                 // Award base expertise for this recipe to the player's discipline score
-                incrementValue(player, discKey, expRecipe.getExpertiseReward(player.level().registryAccess()));
+                incrementValue(player, discKey, expRecipe.getExpertiseReward(level.registryAccess()));
                 
                 // Award bonus expertise for this recipe to the player's discipline score if eligible, then mark it as having been crafted
                 if (isBonusEligible(player, recipeHolder)) {
-                    incrementValue(player, discKey, expRecipe.getBonusExpertiseReward(player.level().registryAccess()));
+                    incrementValue(player, discKey, expRecipe.getBonusExpertiseReward(level.registryAccess()));
                     markCrafted(player, recipeHolder);
                 }
             });
@@ -185,8 +186,12 @@ public class ExpertiseManager {
     }
     
     public static boolean isBonusEligible(Player player, Holder<Enchantment> enchantment) {
-        ResourceLocation enchKey = player.registryAccess().registryOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
-        return player != null && enchKey != null && Services.CAPABILITIES.stats(player).map(stats -> !stats.isRuneEnchantmentCrafted(enchKey)).orElse(false);
+        if (player == null) {
+            return false;
+        } else {
+            Identifier enchKey = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getKey(enchantment.value());
+            return enchKey != null && Services.CAPABILITIES.stats(player).map(stats -> !stats.isRuneEnchantmentCrafted(enchKey)).orElse(false);
+        }
     }
     
     /**

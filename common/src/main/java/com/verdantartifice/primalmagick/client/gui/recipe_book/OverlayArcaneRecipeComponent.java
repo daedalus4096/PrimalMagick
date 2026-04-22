@@ -10,14 +10,17 @@ import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -25,9 +28,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListener {
-    private static final ResourceLocation OVERLAY_RECIPE_SPRITE = ResourceLocation.withDefaultNamespace("recipe_book/overlay_recipe");
-    protected static final WidgetSprites CRAFTING_OVERLAY_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay"), ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/crafting_overlay_disabled_highlighted"));
-    protected static final WidgetSprites FURNACE_OVERLAY_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay_disabled"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay_highlighted"), ResourceLocation.withDefaultNamespace("recipe_book/furnace_overlay_disabled_highlighted"));
+    private static final Identifier OVERLAY_RECIPE_SPRITE = Identifier.withDefaultNamespace("recipe_book/overlay_recipe");
+    protected static final WidgetSprites CRAFTING_OVERLAY_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/crafting_overlay"), Identifier.withDefaultNamespace("recipe_book/crafting_overlay_disabled"), Identifier.withDefaultNamespace("recipe_book/crafting_overlay_highlighted"), Identifier.withDefaultNamespace("recipe_book/crafting_overlay_disabled_highlighted"));
+    protected static final WidgetSprites FURNACE_OVERLAY_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/furnace_overlay"), Identifier.withDefaultNamespace("recipe_book/furnace_overlay_disabled"), Identifier.withDefaultNamespace("recipe_book/furnace_overlay_highlighted"), Identifier.withDefaultNamespace("recipe_book/furnace_overlay_disabled_highlighted"));
     protected static final int MAX_ROW = 4;
     protected static final int MAX_ROW_LARGE = 5;
     protected static final float ITEM_RENDER_SCALE = 0.375F;
@@ -47,7 +50,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
         this.mc = mc;
         this.collection = recipeCollection;
         boolean isFiltering = false;
-        if (mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?, ?> arcaneMenu) {
+        if (mc.player != null && mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?, ?> arcaneMenu) {
             this.useFurnaceStyle = arcaneMenu.isSingleIngredientMenu();
             isFiltering = book.isFiltering(arcaneMenu.getRecipeBookType());
         } else {
@@ -109,8 +112,8 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button != 0) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
+        if (event.button() != 0) {
             return false;
         } else {
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton recipeButton : this.recipeButtons) {
@@ -129,25 +132,21 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.isVisible) {
             this.time += partialTicks;
-            RenderSystem.enableBlend();
-            guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0.0D, 0.0D, 170.0D);
-            
+            guiGraphics.pose().pushMatrix();
+
             int maxRowSize = (this.recipeButtons.size() <= 16) ? MAX_ROW : MAX_ROW_LARGE;
             int colCount = Math.min(this.recipeButtons.size(), maxRowSize);
             int rowCount = Mth.ceil((float)this.recipeButtons.size() / (float)maxRowSize);
-            guiGraphics.blitSprite(OVERLAY_RECIPE_SPRITE, this.x, this.y, colCount * 25 + 8, rowCount * 25 + 8);
-            RenderSystem.disableBlend();
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, OVERLAY_RECIPE_SPRITE, this.x, this.y, colCount * 25 + 8, rowCount * 25 + 8);
 
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton recipeButton : this.recipeButtons) {
                 recipeButton.render(guiGraphics, mouseX, mouseY, partialTicks);
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 
@@ -196,32 +195,32 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
         public void addItemToSlot(Ingredient ingredient, int pSlot, int pMaxAmount, int pX, int pY) {
             ItemStack[] stackArray = ingredient.getItems();
             if (stackArray.length != 0) {
-                this.ingredientPos.add(new OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos(3 + pY * 7, 3 + pX * 7, stackArray));
+                this.ingredientPos.add(new Pos(3 + pY * 7, 3 + pX * 7, stackArray));
             }
         }
 
         @Override
         public void renderWidget(GuiGraphics guiGraphics, int p_93677_, int p_93678_, float p_93679_) {
             WidgetSprites sprites = OverlayArcaneRecipeComponent.this.useFurnaceStyle ? OverlayArcaneRecipeComponent.FURNACE_OVERLAY_SPRITES : OverlayArcaneRecipeComponent.CRAFTING_OVERLAY_SPRITES;
-            ResourceLocation spriteLoc = sprites.get(this.isCraftable, this.isHoveredOrFocused());
-            guiGraphics.blitSprite(spriteLoc, this.getX(), this.getY(), this.width, this.height);
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate((double)(this.getX() + 2), (double)(this.getY() + 2), 125.0D);
+            Identifier spriteLoc = sprites.get(this.isCraftable, this.isHoveredOrFocused());
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, spriteLoc, this.getX(), this.getY(), this.width, this.height);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate((this.getX() + 2), (this.getY() + 2));
 
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos pos : this.ingredientPos) {
-                guiGraphics.pose().pushPose();
-                guiGraphics.pose().translate(pos.x, pos.y, 0.0D);
-                guiGraphics.pose().scale(0.375F, 0.375F, 1.0F);
-                guiGraphics.pose().translate(-8.0D, -8.0D, 0.0D);
+                guiGraphics.pose().pushMatrix();
+                guiGraphics.pose().translate(pos.x, pos.y);
+                guiGraphics.pose().scale(0.375F, 0.375F);
+                guiGraphics.pose().translate(-8.0F, -8.0F);
                 RenderSystem.applyModelViewMatrix();
                 guiGraphics.renderItem(pos.ingredients[Mth.floor(OverlayArcaneRecipeComponent.this.time / 30.0F) % pos.ingredients.length], 0, 0);
-                guiGraphics.pose().popPose();
+                guiGraphics.pose().popMatrix();
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
 
-        protected class Pos {
+        protected static class Pos {
             public final ItemStack[] ingredients;
             public final int x;
             public final int y;
@@ -240,8 +239,8 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
         }
 
         protected void calculateIngredientsPositions(Recipe<?> recipe) {
-            ItemStack[] aitemstack = recipe.getIngredients().get(0).getItems();
-            this.ingredientPos.add(new OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos(10, 10, aitemstack));
+            ItemStack[] aitemstack = recipe.placementInfo().ingredients().getFirst().getItems();
+            this.ingredientPos.add(new Pos(10, 10, aitemstack));
         }
     }
 }

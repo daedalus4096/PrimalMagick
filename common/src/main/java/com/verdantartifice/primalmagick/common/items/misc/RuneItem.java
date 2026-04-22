@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Item definition for a rune.  May be used in combinations to enchant items.
@@ -47,13 +49,13 @@ public class RuneItem extends Item {
     }
     
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         if (stack != null && stack.getItem() instanceof RuneItem runeItem) {
             String key = String.join(".", "item", Constants.MOD_ID, Services.ITEMS_REGISTRY.getKey(this).getPath(), "tooltip");
-            tooltip.add(Component.translatable(key).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            tooltip.accept(Component.translatable(key).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
             
             if (runeItem.rune.hasLimit()) {
-                tooltip.add(Component.translatable("tooltip.primalmagick.rune_limit", runeItem.rune.getLimit()));
+                tooltip.accept(Component.translatable("tooltip.primalmagick.rune_limit", runeItem.rune.getLimit()));
             }
         }
     }

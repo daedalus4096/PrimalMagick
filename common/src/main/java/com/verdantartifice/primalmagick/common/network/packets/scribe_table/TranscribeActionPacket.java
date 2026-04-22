@@ -7,7 +7,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
@@ -17,7 +17,7 @@ import net.minecraft.server.level.ServerPlayer;
  * @author Daedalus4096
  */
 public class TranscribeActionPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("transcribe_action");
+    public static final Identifier CHANNEL = ResourceUtils.loc("transcribe_action");
     public static final StreamCodec<RegistryFriendlyByteBuf, TranscribeActionPacket> STREAM_CODEC = StreamCodec.ofMember(TranscribeActionPacket::encode, TranscribeActionPacket::decode);
 
     protected final int windowId;

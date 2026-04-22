@@ -7,13 +7,12 @@ import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 
@@ -35,9 +34,8 @@ import java.util.Set;
  */
 @Immutable
 public class SourceList {
-    public static final Codec<SourceList> CODEC = RecordCodecBuilder.create(instance -> {
-        return instance.group(Codec.simpleMap(Source.CODEC, Codec.INT, StringRepresentable.keys(Sources.getAllSorted().toArray(Source[]::new))).xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).fieldOf("sources").forGetter(sl -> sl.sources)).apply(instance, SourceList::new);
-    });
+    public static final Codec<SourceList> CODEC = RecordCodecBuilder.create(instance ->
+            instance.group(Codec.simpleMap(Source.CODEC, Codec.INT, StringRepresentable.keys(Sources.getAllSorted().toArray(Source[]::new))).xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).fieldOf("sources").forGetter(sl -> sl.sources)).apply(instance, SourceList::new));
     public static final StreamCodec<ByteBuf, SourceList> STREAM_CODEC = ByteBufCodecs.map(Object2IntOpenHashMap::new, Source.STREAM_CODEC, ByteBufCodecs.VAR_INT).map(SourceList::new, l -> l.sources);
     protected static final DecimalFormat FORMATTER = new DecimalFormat("#######.##");
 
@@ -55,9 +53,7 @@ public class SourceList {
     
     protected SourceList(Map<Source, Integer> values) {
         this();
-        values.entrySet().forEach(entry -> {
-            this.setInner(entry.getKey(), entry.getValue().intValue());
-        });
+        values.forEach(this::setInner);
     }
     
     public static Builder builder() {
@@ -193,7 +189,7 @@ public class SourceList {
         } else if (source != null && amount > 0) {
             int newAmount = this.getAmount(source) - amount;
             if (newAmount <= 0) {
-                // If the new amount is non-positive, just remove all of the given source
+                // If the new amount is non-positive, just remove all mana of the given source
                 return this.remove(source);
             } else {
                 // Otherwise save the new value
@@ -208,7 +204,7 @@ public class SourceList {
     
     /**
      * Returns a copy of this list with the given source list subtracted from it.  Clamps the new list's
-     * mininmum mana values to zero.
+     * minimum mana values to zero.
      * 
      * @param list the source list to be subtracted
      * @return a new source list with the updated values
@@ -400,11 +396,11 @@ public class SourceList {
      */
     public static SourceList deserializeNBT(CompoundTag nbt) {
         SourceList.Builder retVal = SourceList.builder();
-        ListTag tagList = nbt.getList("Sources", Tag.TAG_COMPOUND);
+        ListTag tagList = nbt.getListOrEmpty("Sources");
         for (int index = 0; index < tagList.size(); index++) {
-            CompoundTag singleTag = tagList.getCompound(index);
+            CompoundTag singleTag = tagList.getCompoundOrEmpty(index);
             if (singleTag.contains("key")) {
-                retVal.with(Sources.get(ResourceLocation.parse(singleTag.getString("key"))), singleTag.getInt("amount"));
+                retVal.with(Sources.get(Identifier.parse(singleTag.getStringOr("key", ""))), singleTag.getIntOr("amount", 0));
             }
         }
         return retVal.build();
@@ -432,9 +428,9 @@ public class SourceList {
         for (int index = 0; index < contents.size(); index++) {
             Source source = contents.get(index);
             if (index != 0) {
-                output = output.append(Component.literal(", "));
+                output.append(Component.literal(", "));
             }
-            output = output.append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost.piece", FORMATTER.format(this.getAmount(source) * multiplier), source.getNameText()));
+            output.append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost.piece", FORMATTER.format(this.getAmount(source) * multiplier), source.getNameText()));
         }
         return output;
     }
@@ -475,7 +471,7 @@ public class SourceList {
         }
         
         public Builder with(SourceList list) {
-            list.getSources().stream().forEach(source -> this.sources.put(source, list.getAmount(source)));
+            list.getSources().forEach(source -> this.sources.put(source, list.getAmount(source)));
             return this;
         }
         

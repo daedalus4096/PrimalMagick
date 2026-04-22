@@ -8,21 +8,20 @@ import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualBellTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -37,13 +36,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BellAttachType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.awt.Color;
@@ -59,7 +58,7 @@ import java.util.Map;
 public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final MapCodec<RitualBellBlock> CODEC = simpleCodec(RitualBellBlock::new);
     
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final EnumProperty<BellAttachType> ATTACHMENT = BlockStateProperties.BELL_ATTACHMENT;
     
     protected static final VoxelShape BELL_CORE_SHAPE = Shapes.or(Block.box(5.0D, 6.0D, 5.0D, 11.0D, 13.0D, 11.0D), Block.box(4.0D, 4.0D, 4.0D, 12.0D, 6.0D, 12.0D));
@@ -105,30 +104,29 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         BellAttachType attachment = state.getValue(ATTACHMENT);
         Direction facing = state.getValue(FACING);
         return SHAPES.getOrDefault(attachment, Collections.emptyMap()).getOrDefault(facing, BELL_CORE_SHAPE);
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
     protected static Direction getAttachmentDirection(BlockState state) {
-        switch (state.getValue(ATTACHMENT)) {
-        case FLOOR:
-            return Direction.DOWN;
-        case CEILING:
-            return Direction.UP;
-        default:
-            return state.getValue(FACING);
-        }
+        return switch (state.getValue(ATTACHMENT)) {
+            case FLOOR -> Direction.DOWN;
+            case CEILING -> Direction.UP;
+            default -> state.getValue(FACING);
+        };
     }
     
     @Override
-    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+    public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader worldIn, @NotNull BlockPos pos) {
         Direction direction = getAttachmentDirection(state);
         return direction == Direction.UP ? Block.canSupportCenter(worldIn, pos.above(), Direction.DOWN) : FaceAttachedHorizontalDirectionalBlock.canAttach(worldIn, pos, direction);
     }
@@ -141,74 +139,76 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
         Direction.Axis axis = direction.getAxis();
         
         if (axis == Direction.Axis.Y) {
-            BlockState blockstate = this.defaultBlockState().setValue(ATTACHMENT, direction == Direction.DOWN ? BellAttachType.CEILING : BellAttachType.FLOOR).setValue(FACING, context.getHorizontalDirection());
-            if (blockstate.canSurvive(context.getLevel(), blockpos)) {
-                return blockstate;
+            BlockState blockState = this.defaultBlockState().setValue(ATTACHMENT, direction == Direction.DOWN ? BellAttachType.CEILING : BellAttachType.FLOOR).setValue(FACING, context.getHorizontalDirection());
+            if (blockState.canSurvive(context.getLevel(), blockpos)) {
+                return blockState;
             }
         } else {
             boolean flag = axis == Direction.Axis.X && world.getBlockState(blockpos.west()).isFaceSturdy(world, blockpos.west(), Direction.EAST) && world.getBlockState(blockpos.east()).isFaceSturdy(world, blockpos.east(), Direction.WEST) || axis == Direction.Axis.Z && world.getBlockState(blockpos.north()).isFaceSturdy(world, blockpos.north(), Direction.SOUTH) && world.getBlockState(blockpos.south()).isFaceSturdy(world, blockpos.south(), Direction.NORTH);
-            BlockState blockstate1 = this.defaultBlockState().setValue(FACING, direction.getOpposite()).setValue(ATTACHMENT, flag ? BellAttachType.DOUBLE_WALL : BellAttachType.SINGLE_WALL);
-            if (blockstate1.canSurvive(context.getLevel(), context.getClickedPos())) {
-                return blockstate1;
+            BlockState blockState1 = this.defaultBlockState().setValue(FACING, direction.getOpposite()).setValue(ATTACHMENT, flag ? BellAttachType.DOUBLE_WALL : BellAttachType.SINGLE_WALL);
+            if (blockState1.canSurvive(context.getLevel(), context.getClickedPos())) {
+                return blockState1;
             }
 
             boolean flag1 = world.getBlockState(blockpos.below()).isFaceSturdy(world, blockpos.below(), Direction.UP);
-            blockstate1 = blockstate1.setValue(ATTACHMENT, flag1 ? BellAttachType.FLOOR : BellAttachType.CEILING);
-            if (blockstate1.canSurvive(context.getLevel(), context.getClickedPos())) {
-                return blockstate1;
+            blockState1 = blockState1.setValue(ATTACHMENT, flag1 ? BellAttachType.FLOOR : BellAttachType.CEILING);
+            if (blockState1.canSurvive(context.getLevel(), context.getClickedPos())) {
+                return blockState1;
             }
         }
         
         return null;
     }
-    
+
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-        BellAttachType attachment = stateIn.getValue(ATTACHMENT);
-        Direction direction = getAttachmentDirection(stateIn);
-        if (direction == facing && !stateIn.canSurvive(worldIn, currentPos) && attachment != BellAttachType.DOUBLE_WALL) {
+    @NotNull
+    public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
+        BellAttachType attachment = state.getValue(ATTACHMENT);
+        Direction facing = getAttachmentDirection(state);
+        if (direction == facing && !state.canSurvive(level, pos) && attachment != BellAttachType.DOUBLE_WALL) {
             return Blocks.AIR.defaultBlockState();
         } else {
-            if (facing.getAxis() == stateIn.getValue(FACING).getAxis()) {
-                if (attachment == BellAttachType.DOUBLE_WALL && !facingState.isFaceSturdy(worldIn, facingPos, facing)) {
-                    return stateIn.setValue(ATTACHMENT, BellAttachType.SINGLE_WALL).setValue(FACING, facing.getOpposite());
+            if (direction.getAxis() == state.getValue(FACING).getAxis()) {
+                if (attachment == BellAttachType.DOUBLE_WALL && !neighborState.isFaceSturdy(level, neighborPos, direction)) {
+                    return state.setValue(ATTACHMENT, BellAttachType.SINGLE_WALL).setValue(FACING, direction.getOpposite());
                 }
-                if (attachment == BellAttachType.SINGLE_WALL && direction.getOpposite() == facing && facingState.isFaceSturdy(worldIn, facingPos, stateIn.getValue(FACING))) {
-                    return stateIn.setValue(ATTACHMENT, BellAttachType.DOUBLE_WALL);
+                if (attachment == BellAttachType.SINGLE_WALL && direction.getOpposite() == direction && neighborState.isFaceSturdy(level, neighborPos, state.getValue(FACING))) {
+                    return state.setValue(ATTACHMENT, BellAttachType.DOUBLE_WALL);
                 }
             }
-            return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+            return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
         }
     }
     
     @Override
-    public boolean isPathfindable(BlockState state, PathComputationType type) {
+    public boolean isPathfindable(@NotNull BlockState state, @NotNull PathComputationType type) {
         return false;
     }
     
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new RitualBellTileEntity(pos, state);
     }
     
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return createTickerHelper(type, BlockEntityTypesPM.RITUAL_BELL.get(), RitualBellTileEntity::tick);
     }
 
     @Override
-    public void onProjectileHit(Level worldIn, BlockState state, BlockHitResult hit, Projectile projectile) {
-        Entity entity = projectile.getOwner();
-        Player playerentity = entity instanceof Player ? (Player)entity : null;
-        this.tryRing(worldIn, state, hit, playerentity);
+    public void onProjectileHit(@NotNull Level worldIn, @NotNull BlockState state, @NotNull BlockHitResult hit, @NotNull Projectile projectile) {
+        this.tryRing(worldIn, state, hit);
     }
     
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level worldIn, BlockPos pos, Player player, BlockHitResult hit) {
-        return this.tryRing(worldIn, state, hit, player) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
+        return this.tryRing(worldIn, state, hit) ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
     
-    protected boolean tryRing(Level world, BlockState state, BlockHitResult hit, @Nullable Player player) {
+    protected boolean tryRing(Level world, BlockState state, BlockHitResult hit) {
         Direction dir = hit.getDirection();
         BlockPos pos = hit.getBlockPos();
         if (this.canRingFrom(state, dir, hit.getLocation().y - (double)pos.getY())) {
@@ -221,7 +221,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
 
     protected void doRing(BlockState state, Level world, BlockPos pos, @Nullable Direction dir) {
         BlockEntity tile = world.getBlockEntity(pos);
-        if (!world.isClientSide && tile instanceof RitualBellTileEntity) {
+        if (!world.isClientSide() && tile instanceof RitualBellTileEntity) {
             if (dir == null) {
                 dir = world.getBlockState(pos).getValue(FACING);
             }
@@ -239,33 +239,18 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
         if (dir.getAxis() != Direction.Axis.Y && yPos <= 0.8124D) {
             Direction facing = state.getValue(FACING);
             BellAttachType attachment = state.getValue(ATTACHMENT);
-            switch (attachment) {
-            case FLOOR:
-                return facing.getAxis() == dir.getAxis();
-            case SINGLE_WALL:   // Fall through
-            case DOUBLE_WALL:
-                return facing.getAxis() != dir.getAxis();
-            case CEILING:
-                return true;
-            default:
-                return false;
-            }
+            return switch (attachment) {
+                case FLOOR -> facing.getAxis() == dir.getAxis();
+                case SINGLE_WALL, DOUBLE_WALL -> facing.getAxis() != dir.getAxis();
+                case CEILING -> true;
+            };
         } else {
             return false;
         }
     }
     
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
-            this.closeProp(state, worldIn, pos);
-        }
-        super.onRemove(state, worldIn, pos, newState, isMoving);
-    }
-    
-    @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
+    public void animateTick(@NotNull BlockState stateIn, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         // Show spell sparkles if receiving salt power
         if (this.isBlockSaltPowered(worldIn, pos)) {
             FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
@@ -297,6 +282,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     }
 
     @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }

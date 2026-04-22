@@ -13,7 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import javax.annotation.Nonnull;
@@ -27,7 +27,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class RuneEnchantmentPage extends AbstractPage {
-    protected static final ResourceLocation OVERLAY = ResourceUtils.loc("textures/gui/grimoire_overlay.png");
+    protected static final Identifier OVERLAY = ResourceUtils.loc("textures/gui/grimoire_overlay.png");
     protected static final ResearchEntryKey UNKNOWN_RUNE_KEY = new ResearchEntryKey(ResearchEntries.UNKNOWN_RUNE);
     
     protected Holder<Enchantment> enchant;
@@ -73,11 +73,11 @@ public class RuneEnchantmentPage extends AbstractPage {
             this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
             y += 77;
             
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49);
             guiGraphics.blit(OVERLAY, 6, 0, 0, 51, overlayWidth, overlayHeight);
             guiGraphics.blit(OVERLAY, 26, 0, 0, 51, overlayWidth, overlayHeight);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         } else {
             y += 25;
         }

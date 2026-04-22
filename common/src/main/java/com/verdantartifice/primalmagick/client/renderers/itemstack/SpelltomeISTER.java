@@ -11,16 +11,16 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class SpelltomeISTER extends BlockEntityWithoutLevelRenderer {
-    protected static final ResourceLocation TEXTURE_APPRENTICE = ResourceUtils.loc("textures/entity/spelltome/apprentice.png");
-    protected static final ResourceLocation TEXTURE_ADEPT = ResourceUtils.loc("textures/entity/spelltome/adept.png");
-    protected static final ResourceLocation TEXTURE_WIZARD = ResourceUtils.loc("textures/entity/spelltome/wizard.png");
-    protected static final ResourceLocation TEXTURE_ARCHMAGE = ResourceUtils.loc("textures/entity/spelltome/archmage.png");
+    protected static final Identifier TEXTURE_APPRENTICE = ResourceUtils.loc("textures/entity/spelltome/apprentice.png");
+    protected static final Identifier TEXTURE_ADEPT = ResourceUtils.loc("textures/entity/spelltome/adept.png");
+    protected static final Identifier TEXTURE_WIZARD = ResourceUtils.loc("textures/entity/spelltome/wizard.png");
+    protected static final Identifier TEXTURE_ARCHMAGE = ResourceUtils.loc("textures/entity/spelltome/archmage.png");
 
     protected BookModel model;
 
@@ -47,7 +47,7 @@ public class SpelltomeISTER extends BlockEntityWithoutLevelRenderer {
         }
     }
 
-    private static ResourceLocation getTextureLocation(DeviceTier tier) {
+    private static Identifier getTextureLocation(DeviceTier tier) {
         return switch (tier) {
             case BASIC -> TEXTURE_APPRENTICE;
             case ENCHANTED -> TEXTURE_ADEPT;

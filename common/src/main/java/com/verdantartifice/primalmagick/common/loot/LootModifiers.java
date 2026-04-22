@@ -33,7 +33,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class LootModifiers {
@@ -45,7 +44,7 @@ public class LootModifiers {
 
     public static ObjectArrayList<ItemStack> bloodNotes(ObjectArrayList<ItemStack> generatedLoot, LootContext context, TagKey<EntityType<?>> targetTag) {
         // Random chance is controlled by the RandomChanceWithLooting condition in the modifier JSON
-        Entity targetEntity = context.getParam(LootContextParams.THIS_ENTITY);
+        Entity targetEntity = context.getParameter(LootContextParams.THIS_ENTITY);
         if (targetEntity.getType().is(targetTag)) {
             generatedLoot.add(new ItemStack(ItemsPM.BLOOD_NOTES.get()));
         }
@@ -54,7 +53,7 @@ public class LootModifiers {
 
     public static ObjectArrayList<ItemStack> bloodyFlesh(ObjectArrayList<ItemStack> generatedLoot, LootContext context, TagKey<EntityType<?>> targetTag) {
         // Random chance is controlled by the RandomChanceWithLooting condition in the modifier JSON
-        Entity targetEntity = context.getParam(LootContextParams.THIS_ENTITY);
+        Entity targetEntity = context.getParameter(LootContextParams.THIS_ENTITY);
         if (targetEntity.getType().is(targetTag)) {
             generatedLoot.add(new ItemStack(ItemsPM.BLOODY_FLESH.get()));
         }
@@ -63,14 +62,13 @@ public class LootModifiers {
 
     public static ObjectArrayList<ItemStack> bonusNugget(ObjectArrayList<ItemStack> generatedLoot, LootContext context, float chance,
                                                          Map<TagKey<Block>, TagKey<Item>> nuggetMap) {
-        BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
-        ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
+        BlockState state = context.getOptionalParameter(LootContextParams.BLOCK_STATE);
+        ItemStack tool = context.getOptionalParameter(LootContextParams.TOOL);
         int enchantmentLevel = tool == null ? 0 : tool.getEnchantments().getLevel(context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.LUCKY_STRIKE));
         if (state != null && enchantmentLevel > 0) {
             nuggetMap.forEach((blockTag, itemTag) -> {
-                if (state.is(blockTag) && Services.ITEMS_REGISTRY.tagExists(itemTag)) {
-                    Optional<Item> nuggetOpt = Services.ITEMS_REGISTRY.getTag(itemTag).stream().findFirst();
-                    nuggetOpt.ifPresent(nugget -> {
+                if (state.is(blockTag)) {
+                    Services.ITEMS_REGISTRY.getTag(itemTag).flatMap(tag -> tag.stream().findFirst()).ifPresent(nugget -> {
                         int nuggetCount = IntStream.range(0, enchantmentLevel).map(i -> context.getRandom().nextFloat() < chance ? 1 : 0).sum();
                         generatedLoot.add(new ItemStack(nugget, nuggetCount));
                     });
@@ -81,8 +79,15 @@ public class LootModifiers {
     }
 
     public static ObjectArrayList<ItemStack> bountyFarming(ObjectArrayList<ItemStack> generatedLoot, LootContext context, float chance) {
-        LootTable table = context.getLevel().getServer().reloadableRegistries().getLootTable(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
-        return bountyInner(generatedLoot, context, chance, table);
+        BlockState blockState = context.getOptionalParameter(LootContextParams.BLOCK_STATE);
+        if (blockState != null) {
+            ResourceKey<LootTable> tableKey = blockState.getBlock().getLootTable().orElse(null);
+            if (tableKey != null) {
+                LootTable table = context.getLevel().getServer().reloadableRegistries().getLootTable(tableKey);
+                return bountyInner(generatedLoot, context, chance, table);
+            }
+        }
+        return generatedLoot;
     }
 
     public static ObjectArrayList<ItemStack> bountyFishing(ObjectArrayList<ItemStack> generatedLoot, LootContext context, float chance) {
@@ -91,7 +96,7 @@ public class LootModifiers {
     }
 
     private static ObjectArrayList<ItemStack> bountyInner(ObjectArrayList<ItemStack> generatedLoot, LootContext context, float chance, LootTable table) {
-        ItemStack tool = context.hasParam(LootContextParams.TOOL) ? context.getParam(LootContextParams.TOOL) : ItemStack.EMPTY;
+        ItemStack tool = context.hasParameter(LootContextParams.TOOL) ? context.getParameter(LootContextParams.TOOL) : ItemStack.EMPTY;
         int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentsPM.BOUNTY), tool);
         for (int index = 0; index < enchantmentLevel; index++) {
             if (context.getRandom().nextFloat() < chance) {
@@ -104,7 +109,7 @@ public class LootModifiers {
     }
 
     public static ObjectArrayList<ItemStack> essenceThief(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof LivingEntity victim) {
+        if (context.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof LivingEntity victim) {
             int enchantLevel = getEnchantLevel(context, EnchantmentsPM.ESSENCE_THIEF);
             if (enchantLevel > 0) {
                 // The affinity data is needed at the time of loot modification, so if it's not ready then we have no choice but to wait
@@ -131,10 +136,10 @@ public class LootModifiers {
     }
 
     private static int getEnchantLevel(LootContext context, ResourceKey<Enchantment> key) {
-        if (context.getParamOrNull(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity killer) {
+        if (context.getOptionalParameter(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity killer) {
             // Get the highest enchantment level among held items that could hold the Essence Thief enchantment
-            Holder<Enchantment> ench = context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(key);
-            return ench.value().getSlotItems(killer).values().stream().mapToInt(stack -> stack.getEnchantments().getLevel(ench)).max().orElse(0);
+            Holder<Enchantment> enchantHolder = context.getResolver().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(key);
+            return enchantHolder.value().getSlotItems(killer).values().stream().mapToInt(stack -> stack.getEnchantments().getLevel(enchantHolder)).max().orElse(0);
         } else {
             return 0;
         }
@@ -142,7 +147,7 @@ public class LootModifiers {
 
     public static ObjectArrayList<ItemStack> guillotine(ObjectArrayList<ItemStack> generatedLoot, LootContext context, TagKey<EntityType<?>> targetTag,
                                                         Item item, float chance) {
-        if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof LivingEntity livingTarget && generatedLoot.stream().noneMatch(stack -> stack.is(item))) {
+        if (context.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof LivingEntity livingTarget && generatedLoot.stream().noneMatch(stack -> stack.is(item))) {
             int enchantLevel = getEnchantLevel(context, EnchantmentsPM.GUILLOTINE);
             if (livingTarget.getType().is(targetTag) && enchantLevel > 0 && context.getRandom().nextFloat() < (chance * enchantLevel)) {
                 generatedLoot.add(new ItemStack(item));
@@ -153,7 +158,7 @@ public class LootModifiers {
 
     public static ObjectArrayList<ItemStack> relicFragments(ObjectArrayList<ItemStack> generatedLoot, LootContext context, TagKey<EntityType<?>> targetTag,
                                                             int minCount, int maxCount) {
-        Entity targetEntity = context.getParam(LootContextParams.THIS_ENTITY);
+        Entity targetEntity = context.getParameter(LootContextParams.THIS_ENTITY);
         int count = context.getRandom().nextInt(maxCount - minCount + 1) + minCount;
         if (targetEntity.getType().is(targetTag) && count > 0) {
             generatedLoot.add(new ItemStack(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), count));

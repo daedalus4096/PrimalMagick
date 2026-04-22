@@ -21,7 +21,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -39,7 +39,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
-    public static final ResourceLocation BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
+    public static final Identifier BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
     protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
     protected static final int[] COSTS_PER_SLOT = new int[] { 25, 100, 300 };
 
@@ -138,7 +138,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             this.costs[index] = 0;
             this.levelCostClues[index] = 0;
         }
-        this.languageClue.set(BookLanguagesPM.DEFAULT.location().toString().hashCode());
+        this.languageClue.set(BookLanguagesPM.DEFAULT.identifier().toString().hashCode());
         this.vocabularyCount.set(0);
     }
     
@@ -198,7 +198,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     
     public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
-        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().location().toString().hashCode() == hashCode).findFirst()
+        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().identifier().toString().hashCode() == hashCode).findFirst()
                 .orElse(BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, this.level.registryAccess()));
     }
 

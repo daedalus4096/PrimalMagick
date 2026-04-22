@@ -14,9 +14,9 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
-public abstract class ForbiddenBowItem extends TieredBowItem implements IEnchantedByDefault {
+public abstract class ForbiddenBowItem extends AbstractTieredBowItem implements IEnchantedByDefault {
     public ForbiddenBowItem(Item.Properties properties) {
-        super(ItemTierPM.HEXIUM, properties);
+        super(ToolMaterialsPM.HEXIUM, properties);
     }
 
     @Override

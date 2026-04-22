@@ -23,6 +23,6 @@ public class InfernalFurnaceResultSlotNeoforge extends GenericResultSlotNeoforge
         if (this.player instanceof ServerPlayer serverPlayer && this.container instanceof InfernalFurnaceTileEntity furnaceEntity) {
             furnaceEntity.awardUsedRecipesAndPopExperience(serverPlayer);
         }
-        Services.EVENTS.firePlayerSmeltedEvent(this.player, pStack);
+        Services.EVENTS.firePlayerSmeltedEvent(this.player, pStack, this.removeCount);
     }
 }

@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -36,7 +36,7 @@ public class VoxelShapeUtils {
      * @return a VoxelShape defined by the specified model file, empty if calculation failed
      */
     @Nonnull
-    public static VoxelShape fromModel(@Nullable ResourceLocation location) {
+    public static VoxelShape fromModel(@Nullable Identifier location) {
         return fromModel(location, new ArrayList<>());
     }
     
@@ -48,7 +48,7 @@ public class VoxelShapeUtils {
      * @return a VoxelShape defined by the specified model file, empty if calculation failed
      */
     @Nonnull
-    protected static VoxelShape fromModel(@Nullable ResourceLocation location, @Nonnull List<ResourceLocation> history) {
+    protected static VoxelShape fromModel(@Nullable Identifier location, @Nonnull List<Identifier> history) {
         if (location == null) {
             return Shapes.empty();
         }
@@ -92,7 +92,7 @@ public class VoxelShapeUtils {
                     }
                 } else if (obj.has("parent")) {
                     // Attempt to load and parse the parent model file
-                    return fromModel(ResourceLocation.parse(obj.getAsJsonPrimitive("parent").getAsString()), history);
+                    return fromModel(Identifier.parse(obj.getAsJsonPrimitive("parent").getAsString()), history);
                 } else {
                     LOGGER.warn("No elements or parent found in VoxelShape model file: {}", location.toString());
                     return Shapes.empty();
@@ -115,7 +115,7 @@ public class VoxelShapeUtils {
      * @return a VoxelShape defined by the specified model element, empty if calculation failed
      */
     @Nonnull
-    protected static VoxelShape fromModelElement(@Nonnull ResourceLocation location, @Nonnull JsonObject obj) {
+    protected static VoxelShape fromModelElement(@Nonnull Identifier location, @Nonnull JsonObject obj) {
         try {
             JsonArray fromArray = obj.getAsJsonArray("from");
             JsonArray toArray = obj.getAsJsonArray("to");

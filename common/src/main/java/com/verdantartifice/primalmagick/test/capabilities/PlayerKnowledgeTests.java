@@ -1,0 +1,242 @@
+package com.verdantartifice.primalmagick.test.capabilities;
+
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledge;
+import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.EntityScanKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
+import com.verdantartifice.primalmagick.common.theorycrafting.Project;
+import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplates;
+import com.verdantartifice.primalmagick.test.AbstractBaseTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+
+import java.util.List;
+import java.util.Set;
+
+public class PlayerKnowledgeTests extends AbstractBaseTest {
+    private static final ResearchEntryKey DEFAULT_RESEARCH_KEY = new ResearchEntryKey(ResearchEntries.FIRST_STEPS);
+    private static final int DEFAULT_MAX_STAGES = 4;
+
+    public static void player_knowledge_add_and_check_research(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known upon creation");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_cannot_add_duplicate_research(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
+        assertFalse(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Erroneously added research again");
+        assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after duplicate adding");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_remove_research(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        assertFalse(helper, knowledge.removeResearch(DEFAULT_RESEARCH_KEY), "Managed to remove research before adding");
+        assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known after dud removal");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
+        assertTrue(helper, knowledge.removeResearch(DEFAULT_RESEARCH_KEY), "Failed to remove research");
+        assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known after removal");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_get_research_set(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        var otherKey = new EntityScanKey(EntityTypesPM.TREEFOLK.get());
+        assertValueEqual(helper, knowledge.getResearchSet(), Set.of(), "Initial research set");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research 1");
+        assertValueEqual(helper, knowledge.getResearchSet(), Set.of(DEFAULT_RESEARCH_KEY), "Post-add 1 research set");
+        assertTrue(helper, knowledge.addResearch(otherKey), "Failed to add research 2");
+        assertValueEqual(helper, knowledge.getResearchSet(), Set.of(DEFAULT_RESEARCH_KEY, otherKey), "Post-add 2 research set");
+        assertTrue(helper, knowledge.removeResearch(DEFAULT_RESEARCH_KEY), "Failed to remove research");
+        assertValueEqual(helper, knowledge.getResearchSet(), Set.of(otherKey), "Post-remove research set");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_get_set_research_stage(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        assertValueEqual(helper, knowledge.getResearchStage(DEFAULT_RESEARCH_KEY), -1, "Initial research stage");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertValueEqual(helper, knowledge.getResearchStage(DEFAULT_RESEARCH_KEY), 0, "Post-add research stage");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1), "Failed to set research stage");
+        assertValueEqual(helper, knowledge.getResearchStage(DEFAULT_RESEARCH_KEY), 1, "Post-set research stage");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_get_set_research_flag(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        assertFalse(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag present before adding research");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertFalse(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag present after adding research but before setting flag");
+        assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to add research flag");
+        assertTrue(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag not present after setting flag");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_remove_research_flag(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        assertFalse(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Remove succeeded before adding research");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertFalse(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Remove succeeded before adding research flag");
+        assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to add research flag");
+        assertTrue(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag not present after setting flag");
+        assertTrue(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Remove failed");
+        assertFalse(helper, knowledge.hasResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Flag present after removing research");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_get_research_flags(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(), "Initial research flags without research");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(), "Initial research flags with research");
+        assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to add research flag 1");
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(IPlayerKnowledge.ResearchFlag.UPDATED), "Post-add 1 flags");
+        assertTrue(helper, knowledge.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.POPUP), "Failed to add research flag 2");
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(IPlayerKnowledge.ResearchFlag.UPDATED, IPlayerKnowledge.ResearchFlag.POPUP), "Post-add 2 flags");
+        assertTrue(helper, knowledge.removeResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED), "Failed to remove research flag");
+        assertValueEqual(helper, knowledge.getResearchFlags(DEFAULT_RESEARCH_KEY), Set.of(IPlayerKnowledge.ResearchFlag.POPUP), "Post-remove flags");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_get_research_status(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        var ra = helper.getLevel().registryAccess();
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.UNKNOWN, "Pre-add research status");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.IN_PROGRESS, "Post-add research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1), "Failed to set research stage 1");
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.IN_PROGRESS, "Post-stage 1 research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, DEFAULT_MAX_STAGES), "Failed to set research stage 2");
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.COMPLETE, "Post-stage 2 research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1000), "Failed to set research stage 3");
+        assertValueEqual(helper, knowledge.getResearchStatus(ra, DEFAULT_RESEARCH_KEY), IPlayerKnowledge.ResearchStatus.COMPLETE, "Post-stage 3 research status");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_is_research_complete(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        var ra = helper.getLevel().registryAccess();
+        assertFalse(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Pre-add research status");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertFalse(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-add research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1), "Failed to set research stage 1");
+        assertFalse(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-stage 1 research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, DEFAULT_MAX_STAGES), "Failed to set research stage 2");
+        assertTrue(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-stage 2 research status");
+        assertTrue(helper, knowledge.setResearchStage(DEFAULT_RESEARCH_KEY, 1000), "Failed to set research stage 3");
+        assertTrue(helper, knowledge.isResearchComplete(ra, DEFAULT_RESEARCH_KEY), "Post-stage 3 research status");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_get_set_knowledge_raw(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        assertValueEqual(helper, knowledge.getKnowledgeRaw(KnowledgeType.THEORY), 0, "Pre-set knowledge raw");
+        assertTrue(helper, knowledge.addKnowledge(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression()), "Failed to add knowledge");
+        assertValueEqual(helper, knowledge.getKnowledgeRaw(KnowledgeType.THEORY), KnowledgeType.THEORY.getProgression(), "Post-set knowledge raw");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_get_knowledge_levels(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        assertValueEqual(helper, knowledge.getKnowledge(KnowledgeType.THEORY), 0, "Pre-set knowledge");
+        assertTrue(helper, knowledge.addKnowledge(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression()), "Failed to add knowledge");
+        assertValueEqual(helper, knowledge.getKnowledge(KnowledgeType.THEORY), 1, "Post-set knowledge");
+        helper.succeed();
+    }
+
+    private static Project createTestProject(GameTestHelper helper) {
+        // Create a player to test with
+        var player = makeMockServerPlayer(helper);
+
+        // Create a research project to test with
+        var projectTemplateKey = ProjectTemplates.EXPEDITION;
+        var projectTemplate = helper.getLevel().registryAccess().lookupOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).getOrThrow(projectTemplateKey);
+        var project = projectTemplate.value().initialize(player, Set.of());
+        assertTrue(helper, project != null, "Failed to initialize project");
+
+        return project;
+    }
+
+    public static void player_knowledge_get_set_active_research_project(GameTestHelper helper) {
+        var project = createTestProject(helper);
+        var knowledge = new PlayerKnowledge();
+        assertTrue(helper, knowledge.getActiveResearchProject() == null, "Pre-set active research project");
+        knowledge.setActiveResearchProject(project);
+        assertValueEqual(helper, knowledge.getActiveResearchProject(), project, "Post-set active research project");
+
+        helper.succeed();
+    }
+
+    public static void player_knowledge_get_set_last_research_topic(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        var topic = new EntryResearchTopic(DEFAULT_RESEARCH_KEY, 0);
+        assertValueEqual(helper, knowledge.getLastResearchTopic(), MainIndexResearchTopic.INSTANCE, "Pre-set last research topic");
+        knowledge.setLastResearchTopic(topic);
+        assertValueEqual(helper, knowledge.getLastResearchTopic(), topic, "Post-set last research topic");
+        helper.succeed();
+    }
+
+    public static void player_knowledge_get_set_research_topic_history(GameTestHelper helper) {
+        var knowledge = new PlayerKnowledge();
+        var topic = new EntryResearchTopic(DEFAULT_RESEARCH_KEY, 0);
+        assertValueEqual(helper, knowledge.getResearchTopicHistory(), List.of(), "Pre-set research topic history");
+        knowledge.setResearchTopicHistory(List.of(MainIndexResearchTopic.INSTANCE));
+        assertValueEqual(helper, knowledge.getResearchTopicHistory(), List.of(MainIndexResearchTopic.INSTANCE), "Post-set 1 research topic history");
+        knowledge.setResearchTopicHistory(List.of(topic));
+        assertValueEqual(helper, knowledge.getResearchTopicHistory(), List.of(topic), "Post-set 2 research topic history");
+        helper.succeed();
+    }
+
+    private static PlayerKnowledge createTestPlayerKnowledge(GameTestHelper helper) {
+        var project = createTestProject(helper);
+        var topic = new EntryResearchTopic(DEFAULT_RESEARCH_KEY, 0);
+
+        // Populate knowledge capability
+        var retVal = new PlayerKnowledge();
+        retVal.addResearch(DEFAULT_RESEARCH_KEY);
+        retVal.setResearchStage(DEFAULT_RESEARCH_KEY, 1);
+        retVal.addResearchFlag(DEFAULT_RESEARCH_KEY, IPlayerKnowledge.ResearchFlag.UPDATED);
+        retVal.addKnowledge(KnowledgeType.THEORY, 1);
+        retVal.setActiveResearchProject(project);
+        retVal.setLastResearchTopic(topic);
+        retVal.setResearchTopicHistory(List.of(topic));
+
+        return retVal;
+    }
+
+    public static void player_knowledge_serialization(GameTestHelper helper) {
+        var before = createTestPlayerKnowledge(helper);
+
+        // Serialize the capability to a tag
+        var tag = before.serializeNBT(helper.getLevel().registryAccess());
+
+        // Deserialize a new capability and ensure it's the same
+        var after = new PlayerKnowledge();
+        after.deserializeNBT(helper.getLevel().registryAccess(), tag);
+        assertValueEqual(helper, after, before, "Knowledge capabilities");
+
+        helper.succeed();
+    }
+
+    public static void player_knowledge_add_and_check_research_post_serialization(GameTestHelper helper) {
+        var before = new PlayerKnowledge();
+        var tag = before.serializeNBT(helper.getLevel().registryAccess());
+        var knowledge = new PlayerKnowledge();
+        knowledge.deserializeNBT(helper.getLevel().registryAccess(), tag);
+        assertFalse(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key known upon creation");
+        assertTrue(helper, knowledge.addResearch(DEFAULT_RESEARCH_KEY), "Failed to add research");
+        assertTrue(helper, knowledge.isResearchKnown(DEFAULT_RESEARCH_KEY), "Research key not known after adding");
+        helper.succeed();
+    }
+}

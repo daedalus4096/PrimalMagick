@@ -10,7 +10,7 @@ import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -26,8 +26,8 @@ import java.util.function.Consumer;
  */
 public class ArcaneRecipeBookPage {
     public static final int ITEMS_PER_PAGE = 20;
-    private static final WidgetSprites PAGE_FORWARD_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/page_forward"), ResourceLocation.withDefaultNamespace("recipe_book/page_forward_highlighted"));
-    private static final WidgetSprites PAGE_BACKWARD_SPRITES = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/page_backward"), ResourceLocation.withDefaultNamespace("recipe_book/page_backward_highlighted"));
+    private static final WidgetSprites PAGE_FORWARD_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/page_forward"), Identifier.withDefaultNamespace("recipe_book/page_forward_highlighted"));
+    private static final WidgetSprites PAGE_BACKWARD_SPRITES = new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/page_backward"), Identifier.withDefaultNamespace("recipe_book/page_backward_highlighted"));
 
     protected final List<ArcaneRecipeButton> buttons = new ArrayList<>(ITEMS_PER_PAGE);
     protected final OverlayArcaneRecipeComponent overlay = new OverlayArcaneRecipeComponent();
@@ -135,7 +135,7 @@ public class ArcaneRecipeBookPage {
     
     public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.mc.screen != null && this.hoveredButton != null && !this.overlay.isVisible()) {
-            Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, this.mc.font, this.hoveredButton.getTooltipText(this.mc.screen),
+            Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, this.mc.font, this.hoveredButton.getTooltipText(),
                     mouseX, mouseY, this.hoveredButton.getRecipe().value().getResultItem(this.mc.level.registryAccess()));
         }
     }

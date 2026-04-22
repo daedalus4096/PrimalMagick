@@ -9,7 +9,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
  * @author Daedalus4096
  */
 public class ScanItemPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("scan_item");
+    public static final Identifier CHANNEL = ResourceUtils.loc("scan_item");
     public static final StreamCodec<RegistryFriendlyByteBuf, ScanItemPacket> STREAM_CODEC = StreamCodec.ofMember(ScanItemPacket::encode, ScanItemPacket::decode);
 
     protected static final Logger LOGGER = LogManager.getLogger();

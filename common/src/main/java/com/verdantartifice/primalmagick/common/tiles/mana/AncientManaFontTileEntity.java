@@ -37,24 +37,24 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, AncientManaFontTileEntity entity) {
         entity.ticksExisted++;
-        if (!level.isClientSide && entity.ticksExisted % 10 == 0) {
+        if (!level.isClientSide() && entity.ticksExisted % 10 == 0) {
             // Have players in range discover this font's shrine
             List<Player> players = EntityUtils.getEntitiesInRange(level, pos, null, Player.class, 5.0D);
             for (Player player : players) {
                 if (!ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE) && !ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS)) {
                     ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE);
-                    player.sendSystemMessage(Component.translatable("event.primalmagick.found_shrine").withStyle(ChatFormatting.GREEN));
+                    player.displayClientMessage(Component.translatable("event.primalmagick.found_shrine").withStyle(ChatFormatting.GREEN), false);
                 }
                 if (!ResearchManager.isResearchComplete(player, ResearchEntries.SIPHON_PROMPT) && InventoryUtils.isPlayerCarrying(player, new ItemStack(ItemsPM.MUNDANE_WAND.get()))) {
                     ResearchManager.completeResearch(player, ResearchEntries.SIPHON_PROMPT);
-                    player.sendSystemMessage(Component.translatable("event.primalmagick.siphon_prompt").withStyle(ChatFormatting.GREEN));
+                    player.displayClientMessage(Component.translatable("event.primalmagick.siphon_prompt").withStyle(ChatFormatting.GREEN), false);
                 }
                 if (state.getBlock() instanceof AncientManaFontBlock fontBlock) {
                     StatsManager.discoverShrine(player, fontBlock.getSource(), pos);
                 }
             }
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             entity.doRecharge();
         }
     }

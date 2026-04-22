@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
@@ -39,16 +37,14 @@ public class LinguisticsScorePage extends AbstractPage {
     
     @Override
     public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+        Minecraft mc = Minecraft.getInstance();
+
         // Render page title
         this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
         y += 53;
         
-        guiGraphics.pose().pushPose();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
-        Minecraft mc = Minecraft.getInstance();
-        
+        guiGraphics.pose().pushMatrix();
+
         // Render comprehension score and rating
         Component compHeader = Component.translatable("grimoire.primalmagick.linguistics_data.comprehension_score_header").withStyle(ChatFormatting.UNDERLINE);
         guiGraphics.drawString(mc.font, compHeader, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
@@ -78,6 +74,6 @@ public class LinguisticsScorePage extends AbstractPage {
         guiGraphics.drawString(mc.font, vocabText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
 
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
 }

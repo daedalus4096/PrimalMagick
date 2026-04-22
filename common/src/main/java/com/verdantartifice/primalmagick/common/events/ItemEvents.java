@@ -29,7 +29,7 @@ public class ItemEvents {
     
     private static InteractionResult handleEnchantedBookRightClick(ItemStack stack, Player player, Level level) {
         // Get the entry for the most powerful enchantment on the book, if any
-        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+        if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             EnchantmentHelper.getEnchantmentsForCrafting(stack).entrySet().stream().min(Comparator.comparing(Object2IntMap.Entry::getIntValue)).ifPresent(
                     entry -> PacketHandler.sendToPlayer(new OpenEnchantedBookScreenPacket(entry.getKey(), player.registryAccess()), serverPlayer));
         }

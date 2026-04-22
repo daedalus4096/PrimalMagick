@@ -11,23 +11,22 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.awt.Color;
 import java.util.Objects;
 import java.util.Optional;
@@ -58,23 +57,23 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
     @Override
     protected Set<Integer> getSyncedSlotIndices(int inventoryIndex) {
         // Sync the crucible's core stack for client-side use
-        return inventoryIndex == INPUT_INV_INDEX ? ImmutableSet.of(Integer.valueOf(0)) : ImmutableSet.of();
+        return inventoryIndex == INPUT_INV_INDEX ? ImmutableSet.of(0) : ImmutableSet.of();
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.souls = compound.getInt("Souls");
-        this.fluidAmount = compound.getInt("FluidAmount");
-        this.charge = compound.getInt("Charge");
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.souls = input.getIntOr("Souls", 0);
+        this.fluidAmount = input.getIntOr("FluidAmount", 0);
+        this.charge = input.getIntOr("Charge", 0);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("Souls", this.souls);
-        compound.putInt("FluidAmount", this.fluidAmount);
-        compound.putInt("Charge", this.charge);
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("Souls", this.souls);
+        output.putInt("FluidAmount", this.fluidAmount);
+        output.putInt("Charge", this.charge);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SanguineCrucibleTileEntity entity) {
@@ -123,8 +122,8 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
     }
     
     protected void updateLitState() {
-        if (this.hasLevel()) {
-            this.getLevel().setBlock(this.getBlockPos(), this.getBlockState().setValue(SanguineCrucibleBlock.LIT, !this.getItem().isEmpty()), Block.UPDATE_ALL_IMMEDIATE);
+        if (this.level != null) {
+            this.level.setBlock(this.getBlockPos(), this.getBlockState().setValue(SanguineCrucibleBlock.LIT, !this.getItem().isEmpty()), Block.UPDATE_ALL_IMMEDIATE);
         }
     }
     
@@ -139,15 +138,14 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
         BlockPos spawnPos = BlockPos.containing(x, y, z);
         
         if (this.level.noCollision(entityType.getSpawnAABB(x, y, z))) {
-            ServerLevel serverWorld = (ServerLevel)this.level;
-            Entity entity = entityType.spawn(serverWorld, (ItemStack)null, (Player)null, spawnPos, MobSpawnType.SPAWNER, true, !Objects.equals(this.worldPosition, spawnPos));
+            Entity entity = entityType.spawn(serverLevel, null, null, spawnPos, EntitySpawnReason.SPAWNER, true, !Objects.equals(this.worldPosition, spawnPos));
             if (entity == null) {
                 return false;
             }
-            entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), this.level.random.nextFloat() * 360.0F, 0.0F);
+            entity.snapTo(entity.getX(), entity.getY(), entity.getZ(), this.level.random.nextFloat() * 360.0F, 0.0F);
             
             if (entity instanceof Mob mobEntity) {
-                Services.EVENTS.finalizeMobSpawn(mobEntity, serverWorld, this.level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null);
+                Services.EVENTS.finalizeMobSpawn(mobEntity, serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.SPAWNER, null);
             }
             
             PacketHandler.sendToAllAround(new WandPoofPacket(x, y, z, Color.WHITE.getRGB(), true, Direction.UP), serverLevel, entity.blockPosition(), 32.0D);
@@ -204,7 +202,7 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
     
     @Nullable
     protected SanguineCoreItem getCoreItem() {
-        ItemStack stack = this.level.isClientSide ? this.getSyncedItem(INPUT_INV_INDEX, 0) : this.getItem(INPUT_INV_INDEX, 0);
+        ItemStack stack = this.level != null && this.level.isClientSide() ? this.getSyncedItem(INPUT_INV_INDEX, 0) : this.getItem(INPUT_INV_INDEX, 0);
         if (stack.getItem() instanceof SanguineCoreItem core) {
             return core;
         } else {

@@ -8,8 +8,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Block definition for a hydromelon crop.  Hydromelons are similar to melons and pumpkins in that
@@ -32,15 +33,19 @@ public class HydromelonBlock extends Block {
         super(properties);
     }
 
+    @NotNull
     public MapCodec<HydromelonBlock> codec() {
        return CODEC;
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pPlayer != null && Services.ITEM_ABILITIES.canAxeStrip(stack)) {
+    @NotNull
+    protected InteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState pState, @NotNull Level pLevel,
+                                          @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand,
+                                          @NotNull BlockHitResult pHit) {
+        if (Services.ITEM_ABILITIES.canAxeStrip(stack)) {
             // If the player right-clicks on the hydromelon with an axe, replace this block with water (or vapor if in the Nether)
-            boolean shouldVaporize = pLevel.dimensionType().ultraWarm();
+            boolean shouldVaporize = pLevel.environmentAttributes().getValue(EnvironmentAttributes.WATER_EVAPORATES, pPos);
             RandomSource rng = pPlayer.getRandom();
             pLevel.playSound(pPlayer, pPos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (shouldVaporize) {
@@ -49,17 +54,17 @@ public class HydromelonBlock extends Block {
                     pLevel.addParticle(ParticleTypes.LARGE_SMOKE, pPos.getX() + rng.nextDouble(), pPos.getY() + rng.nextDouble(), pPos.getZ() + rng.nextDouble(), 0.0D, 0.0D, 0.0D);
                 }
             }
-            if (!pLevel.isClientSide) {
+            if (!pLevel.isClientSide()) {
                 if (shouldVaporize) {
                     pLevel.removeBlock(pPos, false);
                 } else {
                     pLevel.setBlock(pPos, Blocks.WATER.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
                 }
-                stack.hurtAndBreak(1, pPlayer, LivingEntity.getSlotForHand(pHand));
+                stack.hurtAndBreak(1, pPlayer, pHand.asEquipmentSlot());
             }
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
         }
     }
 }

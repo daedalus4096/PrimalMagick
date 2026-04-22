@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ConcocterTileEntityNeoforge extends ConcocterTileEntity {
@@ -11,9 +12,8 @@ public class ConcocterTileEntityNeoforge extends ConcocterTileEntity {
     @Override
     public void onLoad() {
         super.onLoad();
-        this.doInventorySync();
-        if (!this.level.isClientSide) {
-            this.relevantResearch = assembleRelevantResearch(this.level.getRecipeManager());
+        if (this.level instanceof ServerLevel serverLevel) {
+            this.relevantResearch = assembleRelevantResearch(serverLevel.recipeAccess());
         }
         this.cookTimeTotal = this.getCookTimeTotal();
     }

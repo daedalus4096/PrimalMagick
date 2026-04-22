@@ -1,0 +1,185 @@
+package com.verdantartifice.primalmagick.test.ftux;
+
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
+import com.verdantartifice.primalmagick.platform.Services;
+import com.verdantartifice.primalmagick.test.AbstractBaseTest;
+import com.verdantartifice.primalmagick.test.TestUtils;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.mutable.MutableInt;
+
+import java.util.List;
+
+public class FtuxTests extends AbstractBaseTest {
+    public static void font_discovery(GameTestHelper helper, Block block) {
+        // Create a player in the level and confirm that they start out not having found a shrine
+        var player = makeMockServerPlayer(helper, true);
+        player.setPos(Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO)));
+        assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research already present on new player");
+
+        // Place an ancient font near the player
+        BlockPos fontPos = new BlockPos(1, 1, 1);
+        helper.setBlock(fontPos, block);
+        helper.assertBlockState(fontPos, state -> state.is(block), state -> Component.literal("Test font not found!"));
+
+        // Succeed once the player has been marked as having found a shrine
+        helper.succeedWhen(() -> {
+            assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE), "Found Shrine research not complete");
+            helper.getLevel().getServer().getPlayerList().remove(player);
+        });
+    }
+
+    public static void sleeping_after_shrine_grants_dream(GameTestHelper helper) {
+        // Create a player who's found a shrine and is primed for the dream, but hasn't had it yet
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE), "Failed to grant prerequisite research");
+        assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Created player already marked as having had the dream");
+        assertTrue(helper, player.getInventory().isEmpty(), "Fresh player inventory is not empty");
+        
+        // Place a bed and sleep in it
+        BlockPos bedPos = new BlockPos(2, 2, 2);
+        TestUtils.placeBed(helper, bedPos);
+        player.startSleepInBed(helper.absolutePos(bedPos));
+        player.stopSleeping();
+        
+        // Succeed once the player has been marked as having had the dream and received the dream journal
+        helper.succeedWhen(() -> {
+            assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM), "Got Dream research not complete");
+            NonNullList<ItemStack> stacks = InventoryUtils.find(player, ItemTagsPM.STATIC_BOOKS);
+            assertTrue(helper, stacks.size() == 1, "No potential Dream Journals found");
+            assertTrue(helper, stacks.stream().anyMatch(stack -> {
+                return StaticBookItem.getBookId(stack).filter(BooksPM.DREAM_JOURNAL::equals).isPresent() &&
+                        StaticBookItem.getBookLanguageId(stack).filter(BookLanguagesPM.DEFAULT::equals).isPresent() &&
+                        StaticBookItem.getAuthor(stack).equals(player.getName());
+            }), "Dream Journal components are not a match to expected");
+        });
+    }
+
+    public static void mundane_wand_crafting(GameTestHelper helper, Item dust) {
+        var container = CraftingInput.of(2, 1, List.of(new ItemStack(Items.STICK), new ItemStack(dust)));
+        var recipe = helper.getLevel().recipeAccess().getRecipeFor(RecipeType.CRAFTING, container, helper.getLevel());
+        assertTrue(helper, recipe.isPresent(), "Recipe not found when expected");
+        assertTrue(helper, recipe.get().value().assemble(container, helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
+        helper.succeed();
+    }
+
+    public static void transform_abort_gives_hint(GameTestHelper helper) {
+        // Create a player who has gotten the dream
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
+        assertFalse(helper, ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Newly created player already has sought research");
+        
+        // Put a mundane wand in that player's main hand
+        ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
+        Item wandItem = wandStack.getItem();
+        player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
+        
+        // Place a crafting table
+        BlockPos pos = new BlockPos(1, 1, 1);
+        helper.setBlock(pos, Blocks.BOOKSHELF);
+        helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
+        helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+        
+        // Start transforming the table
+        BlockPos posAbs = helper.absolutePos(pos);
+        BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
+        UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
+        assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        
+        // Immediately stop transforming and check for hint flag research
+        int remainingTicks = wandItem.getUseDuration(wandStack, player);
+        wandItem.releaseUsing(wandStack, helper.getLevel(), player, remainingTicks);
+        assertTrue(helper, ResearchManager.isResearchComplete(player, ResearchEntries.WAND_TRANSFORM_HINT), "Sought research not found");
+        helper.succeed();
+    }
+
+    public static void transform_without_dream_does_nothing(GameTestHelper helper) {
+        // Create a player who has gotten the dream
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+
+        // Put a mundane wand in that player's main hand
+        ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
+        Item wandItem = wandStack.getItem();
+        player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
+
+        // Place a crafting table
+        BlockPos pos = new BlockPos(1, 1, 1);
+        helper.setBlock(pos, Blocks.BOOKSHELF);
+        helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
+        helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+
+        // Start transforming the table
+        BlockPos posAbs = helper.absolutePos(pos);
+        BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
+        UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
+        assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.PASS), "Failed to start using wand on block");
+
+        // Continue channeling for the expected transform duration, then confirm that nothing has changed
+        MutableInt remainingTicks = new MutableInt(WandTransforms.CHANNEL_DURATION + 1);
+        helper.onEachTick(() -> {
+            wandItem.onUseTick(helper.getLevel(), player, wandStack, remainingTicks.decrementAndGet());
+        });
+        helper.succeedWhen(() -> {
+            helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
+            helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+        });
+    }
+
+    public static void transform_grimoire(GameTestHelper helper) {
+        // Create a player who has gotten the dream
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+        assertTrue(helper, ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM), "Failed to grant prerequisite research");
+        
+        // Put a mundane wand in that player's main hand
+        ItemStack wandStack = new ItemStack(ItemsPM.MUNDANE_WAND.get());
+        Item wandItem = wandStack.getItem();
+        player.setItemInHand(InteractionHand.MAIN_HAND, wandStack);
+        
+        // Place a crafting table
+        BlockPos pos = new BlockPos(1, 1, 1);
+        helper.setBlock(pos, Blocks.BOOKSHELF);
+        helper.assertBlockPresent(Blocks.BOOKSHELF, pos);
+        helper.assertItemEntityNotPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+        
+        // Start transforming the table
+        BlockPos posAbs = helper.absolutePos(pos);
+        BlockHitResult blockHitResult = new BlockHitResult(Vec3.atCenterOf(posAbs), Direction.UP, posAbs, false);
+        UseOnContext useContext = new UseOnContext(player, InteractionHand.MAIN_HAND, blockHitResult);
+        assertTrue(helper, Services.ITEMS.onItemUseFirst(wandItem, wandStack, useContext).equals(InteractionResult.SUCCESS), "Failed to start using wand on block");
+        
+        // Continue channeling the wand until the transformation succeeds or the test times out and fails
+        MutableInt remainingTicks = new MutableInt(wandItem.getUseDuration(wandStack, player));
+        helper.onEachTick(() -> {
+            wandItem.onUseTick(helper.getLevel(), player, wandStack, remainingTicks.decrementAndGet());
+        });
+        helper.succeedWhen(() -> {
+            helper.assertBlockNotPresent(Blocks.BOOKSHELF, pos);
+            helper.assertItemEntityPresent(ItemsPM.GRIMOIRE.get(), pos, 1D);
+        });
+    }
+}

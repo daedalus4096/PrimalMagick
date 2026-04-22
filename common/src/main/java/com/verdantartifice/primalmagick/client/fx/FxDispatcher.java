@@ -13,7 +13,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -38,9 +38,9 @@ public class FxDispatcher {
     }
     
     public void wandPoof(double x, double y, double z, int color, boolean sound, Direction side) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.wandPoof(x, y, z, r, g, b, sound, side);
     }
     
@@ -69,9 +69,9 @@ public class FxDispatcher {
     }
     
     public void manaSparkle(double x1, double y1, double z1, double x2, double y2, double z2, int maxAge, int color, double phase) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.manaSparkle(x1, y1, z1, x2, y2, z2, maxAge, r, g, b, phase);
     }
     
@@ -92,9 +92,9 @@ public class FxDispatcher {
     }
     
     public void spellTrail(double x, double y, double z, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.spellTrail(x, y, z, r, g, b);
     }
     
@@ -108,9 +108,9 @@ public class FxDispatcher {
     }
     
     public void spellImpact(double x, double y, double z, int radius, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.spellImpact(x, y, z, radius, r, g, b);
     }
     
@@ -136,9 +136,9 @@ public class FxDispatcher {
         Level world = this.getWorld();
         RandomSource rng = world.random;
 
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
 
         int count = (10 + rng.nextInt(6));
         for (int index = 0; index < count; index++) {
@@ -150,9 +150,9 @@ public class FxDispatcher {
     }
     
     public void spellcraftingGlow(BlockPos pos, double dy, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.spellcraftingGlow(pos, dy, r, g, b);
     }
     
@@ -182,9 +182,9 @@ public class FxDispatcher {
     }
     
     public void spellBolt(double sx, double sy, double sz, double tx, double ty, double tz, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.spellBolt(sx, sy, sz, tx, ty, tz, r, g, b);
     }
     
@@ -225,9 +225,9 @@ public class FxDispatcher {
     }
     
     public void pixieDust(double x, double y, double z, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.pixieDust(x, y, z, r, g, b);
     }
     
@@ -240,9 +240,9 @@ public class FxDispatcher {
     }
     
     public void crucibleBubble(double x, double y, double z, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.crucibleBubble(x, y, z, r, g, b);
     }
     
@@ -255,9 +255,9 @@ public class FxDispatcher {
     }
     
     public void potionExplosion(double x, double y, double z, int color, boolean isInstant) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.potionExplosion(x, y, z, r, g, b, isInstant);
     }
     
@@ -273,9 +273,9 @@ public class FxDispatcher {
     }
     
     public void manaArrowTrail(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.manaArrowTrail(x, y, z, dx, dy, dz, r, g, b);
     }
     
@@ -288,9 +288,9 @@ public class FxDispatcher {
     }
     
     public void spellcraftingRuneU(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.spellcraftingRuneU(x, y, z, dx, dy, dz, r, g, b);
     }
     
@@ -303,9 +303,9 @@ public class FxDispatcher {
     }
     
     public void spellcraftingRuneV(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.spellcraftingRuneV(x, y, z, dx, dy, dz, r, g, b);
     }
     
@@ -318,9 +318,9 @@ public class FxDispatcher {
     }
     
     public void spellcraftingRuneT(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.spellcraftingRuneT(x, y, z, dx, dy, dz, r, g, b);
     }
     
@@ -333,9 +333,9 @@ public class FxDispatcher {
     }
     
     public void spellcraftingRuneD(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = FastColor.ARGB32.red(color) / 255.0F;
-        float g = FastColor.ARGB32.green(color) / 255.0F;
-        float b = FastColor.ARGB32.blue(color) / 255.0F;
+        float r = ARGB.red(color) / 255.0F;
+        float g = ARGB.green(color) / 255.0F;
+        float b = ARGB.blue(color) / 255.0F;
         this.spellcraftingRuneD(x, y, z, dx, dy, dz, r, g, b);
     }
     

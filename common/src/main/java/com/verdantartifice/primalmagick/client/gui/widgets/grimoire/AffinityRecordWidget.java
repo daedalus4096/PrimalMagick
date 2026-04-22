@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
@@ -15,7 +14,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,17 +36,17 @@ public class AffinityRecordWidget extends AbstractTopicButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.renderWidget(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+    public void renderContents(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.renderContents(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 
         // Draw the relevant affinity rating where the stack count would normally be
         Minecraft mc = Minecraft.getInstance();
         int width = mc.font.width(this.amountText);
-        pGuiGraphics.pose().pushPose();
-        pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
-        pGuiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+        pGuiGraphics.pose().scale(0.5F, 0.5F);
         pGuiGraphics.drawString(mc.font, this.amountText, 0, 0, Color.WHITE.getRGB());
-        pGuiGraphics.pose().popPose();
+        pGuiGraphics.pose().popMatrix();
 
         // Draw the tooltip if applicable
         if (this.isHoveredOrFocused()) {

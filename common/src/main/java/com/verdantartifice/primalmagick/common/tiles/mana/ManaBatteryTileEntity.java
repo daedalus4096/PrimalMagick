@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
@@ -12,12 +12,12 @@ import com.verdantartifice.primalmagick.common.mana.network.IManaSupplier;
 import com.verdantartifice.primalmagick.common.mana.network.RouteManager;
 import com.verdantartifice.primalmagick.common.mana.network.RouteTable;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
-import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -26,16 +26,15 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.component.DataComponentMap.Builder;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -43,6 +42,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,7 +54,6 @@ import org.jetbrains.annotations.VisibleForTesting;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Definition of a mana battery tile entity.  Holds the charge for the corresponding block.
@@ -72,7 +72,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     protected int chargeTimeTotal;
     protected int fontSiphonTime;
     protected ManaStorage manaStorage;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chargerData = new ContainerData() {
@@ -143,7 +143,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
     @VisibleForTesting
     public int getBatteryTransferCap() {
-        // Return the max amount of centimana that can be transfered by the battery per tick
+        // Return the max amount of centimana that can be transferred by the battery per tick
         return switch (this.getDeviceTier()) {
             case FORBIDDEN -> WandCap.HEXIUM.getSiphonAmount();
             case HEAVENLY, CREATIVE -> WandCap.HALLOWSTEEL.getSiphonAmount();
@@ -153,16 +153,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public void setTileOwner(@Nullable Player owner) {
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
     }
 
     @Override
-    public @Nullable Player getTileOwner() {
-        if (this.level instanceof ServerLevel serverLevel) {
-            return serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
-        } else {
-            return null;
-        }
+    @Nullable
+    public Player getTileOwner() {
+        Level level = this.getLevel();
+        return level != null ? EntityReference.getPlayer(this.owner, level) : null;
     }
 
     @Override
@@ -178,7 +176,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     public static void tick(Level level, BlockPos pos, BlockState state, ManaBatteryTileEntity entity) {
         boolean shouldMarkDirty = false;
         
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             
@@ -292,8 +290,8 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
             if (outputStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 outputStack.update(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY, stackManaStorage -> {
                     int centimanaToTransfer = Math.min(this.getBatteryTransferCap(), this.manaStorage.getManaStored(source));
-                    int transferedCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
-                    this.manaStorage.extractMana(source, transferedCentimana, false);
+                    int transferredCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
+                    this.manaStorage.extractMana(source, transferredCentimana, false);
                     return stackManaStorage;
                 });
                 outputStack.set(DataComponentsPM.LAST_UPDATED.get(), System.currentTimeMillis());   // FIXME Is there a better way of marking this stack as dirty?
@@ -302,57 +300,43 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.chargeTime = compound.getInt("ChargeTime");
-        this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
-        this.fontSiphonTime = compound.getInt("FontSiphonTime");
-
-        ManaStorage.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), compound.get("ManaStorage")).resultOrPartial(msg -> {
-            LOGGER.error("Failed to decode mana storage: {}", msg);
-        }).ifPresent(mana -> mana.copyManaInto(this.manaStorage));
-
-        this.ownerUUID = null;
-        if (compound.contains("OwnerUUID")) {
-            String ownerUUIDStr = compound.getString("OwnerUUID");
-            if (!ownerUUIDStr.isEmpty()) {
-                this.ownerUUID = UUID.fromString(ownerUUIDStr);
-            }
-        }
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.chargeTime = input.getIntOr("ChargeTime", 0);
+        this.chargeTimeTotal = input.getIntOr("ChargeTimeTotal", 0);
+        this.fontSiphonTime = input.getIntOr("FontSiphonTime", 0);
+        input.read("ManaStorage", ManaStorage.CODEC).ifPresent(s -> s.copyManaInto(this.manaStorage));
+        this.owner = EntityReference.read(input, "Owner");
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("ChargeTime", this.chargeTime);
-        compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
-        compound.putInt("FontSiphonTime", this.fontSiphonTime);
-
-        ManaStorage.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), this.manaStorage).resultOrPartial(msg -> {
-            LOGGER.error("Failed to encode mana storage: {}", msg);
-        }).ifPresent(encoded -> compound.put("ManaStorage", encoded));
-
-        if (this.ownerUUID != null) {
-            compound.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("ChargeTime", this.chargeTime);
+        output.putInt("ChargeTimeTotal", this.chargeTimeTotal);
+        output.putInt("FontSiphonTime", this.fontSiphonTime);
+        output.store("ManaStorage", ManaStorage.CODEC, this.manaStorage);
+        EntityReference.store(this.owner, output, "Owner");
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+    public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
         return new ManaBatteryMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this, this.chargerData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
 
     @Override
-    public int getMana(Source source) {
+    public int getMana(@NotNull Source source) {
         return this.manaStorage.getManaStored(source);
     }
 
     @Override
+    @NotNull
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
         for (Source source : Sources.getAllSorted()) {
@@ -371,14 +355,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public void setMana(Source source, int amount) {
+    public void setMana(@NotNull Source source, int amount) {
         this.manaStorage.setMana(source, amount);
         this.setChanged();
         this.syncTile(true);
     }
 
     @Override
-    public void setMana(SourceList mana) {
+    public void setMana(@NotNull SourceList mana) {
         this.manaStorage.setMana(mana);
         this.setChanged();
         this.syncTile(true);
@@ -436,20 +420,21 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput pComponentInput) {
+    protected void applyImplicitComponents(@NotNull DataComponentGetter pComponentInput) {
         super.applyImplicitComponents(pComponentInput);
         pComponentInput.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY).copyManaInto(this.manaStorage);
     }
 
     @Override
-    protected void collectImplicitComponents(Builder pComponents) {
+    protected void collectImplicitComponents(DataComponentMap.@NotNull Builder pComponents) {
         super.collectImplicitComponents(pComponents);
         pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag pTag) {
-        pTag.remove("ManaStorage");
+    public void removeComponentsFromTag(@NotNull ValueOutput output) {
+        output.discard("ManaStorage");
     }
 
     @Override
@@ -485,14 +470,14 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         }
 
         // Combine supplier and consumer network loading
-        level.getProfiler().push("loadManaNetwork");
-        level.getProfiler().push("manaBattery");
+        Profiler.get().push("loadManaNetwork");
+        Profiler.get().push("manaBattery");
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 
         // Search for mana suppliers and consumers which are in range of this node
-        level.getProfiler().push("findNodes");
+        Profiler.get().push("findNodes");
         List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
                 .filter(pos -> pos.distSqr(this.getBlockPos()) <= rangeSqr)
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
@@ -500,21 +485,34 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
                 .toList();
 
         // Create direct routes from this supplier for terminus consumers
-        level.getProfiler().popPush("createDirectConsumerEdges");
+        Profiler.get().popPush("createDirectConsumerEdges");
         List<IManaConsumer> consumers = nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
                 .filter(Objects::nonNull)
                 .toList();
         consumers.forEach(consumer -> this.getRouteTable().add(this, consumer));
 
         // Create direct routes to this consumer for origin suppliers
-        level.getProfiler().popPush("createDirectSupplierEdges");
+        Profiler.get().popPush("createDirectSupplierEdges");
         List<IManaSupplier> suppliers = nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
                 .filter(Objects::nonNull)
                 .toList();
         suppliers.forEach(supplier -> this.getRouteTable().add(supplier, this));
-        level.getProfiler().pop();
+        Profiler.get().pop();
 
-        level.getProfiler().pop();
-        level.getProfiler().pop();
+        Profiler.get().pop();
+        Profiler.get().pop();
+    }
+
+    @Override
+    public void preRemoveSideEffects(@NotNull BlockPos pos, @NotNull BlockState state) {
+        // Before the block entity is removed, invalidate its route table
+        this.getRouteTable().invalidate();
+
+        // Drop the tile entity's inventory into the world when the block is replaced
+        if (this.level != null) {
+            this.dropContents(this.level, pos);
+        }
+
+        super.preRemoveSideEffects(pos, state);
     }
 }

@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import javax.annotation.Nullable;
 
@@ -16,4 +17,6 @@ public interface IItemHandlerService {
     IItemHandlerPM.Builder builder(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile);
 
     IItemHandlerPM wrap(Container container, @Nullable Direction side);
+
+    boolean touch(BlockEntity blockEntity, Direction direction);
 }

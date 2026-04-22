@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.base;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
@@ -9,13 +10,16 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -25,6 +29,8 @@ import javax.annotation.Nullable;
  * @author Daedalus4096
  */
 public abstract class AbstractTilePM extends BlockEntity {
+    private static final Logger LOGGER = LogUtils.getLogger();
+    
     public AbstractTilePM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
@@ -35,7 +41,7 @@ public abstract class AbstractTilePM extends BlockEntity {
      * @param rerender whether to re-render the tile's block
      */
     public void syncTile(boolean rerender) {
-        if (this.hasLevel()) {
+        if (this.level != null) {
             BlockState state = this.level.getBlockState(this.worldPosition);
             int flags = Block.UPDATE_CLIENTS;
             if (!rerender) {
@@ -46,10 +52,13 @@ public abstract class AbstractTilePM extends BlockEntity {
     }
     
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag retVal = new CompoundTag();
-        this.saveAdditional(retVal, registries);
-        return retVal;
+    @NotNull
+    public CompoundTag getUpdateTag(@NotNull HolderLookup.Provider registries) {
+        try (ProblemReporter.ScopedCollector problems = new ProblemReporter.ScopedCollector(LOGGER)) {
+            TagValueOutput out = TagValueOutput.createWithContext(problems, registries);
+            this.saveAdditional(out);
+            return out.buildResult();
+        }
     }
     
     @Override
@@ -80,7 +89,7 @@ public abstract class AbstractTilePM extends BlockEntity {
      * @param nbt the data to be synced
      */
     public void sendMessageToServer(CompoundTag nbt) {
-        if (this.hasLevel() && this.getLevel().isClientSide) {
+        if (this.level != null && this.level.isClientSide()) {
             PacketHandler.sendToServer(new TileToServerPacket(this.worldPosition, nbt));
         }
     }
@@ -92,7 +101,7 @@ public abstract class AbstractTilePM extends BlockEntity {
      * @param player the player whose client sent the given data
      * @see AbstractTilePM#sendMessageToServer(CompoundTag)
      */
-    public void onMessageFromClient(CompoundTag nbt, @Nonnull ServerPlayer player) {
+    public void onMessageFromClient(@NotNull CompoundTag nbt, @NotNull ServerPlayer player) {
         // Do nothing by default
     }
     
@@ -102,12 +111,12 @@ public abstract class AbstractTilePM extends BlockEntity {
      * @param nbt the received data
      * @see AbstractTilePM#sendMessageToClient(CompoundTag, ServerPlayer)
      */
-    public void onMessageFromServer(CompoundTag nbt) {
+    public void onMessageFromServer(@NotNull CompoundTag nbt) {
         // Do nothing by default
     }
 
     public boolean stillValid(Player player) {
-        if (this.level.getBlockEntity(this.worldPosition) != this) {
+        if (this.level != null && this.level.getBlockEntity(this.worldPosition) != this) {
             return false;
         } else {
             return player.distanceToSqr((double)this.worldPosition.getX() + 0.5D, (double)this.worldPosition.getY() + 0.5D, (double)this.worldPosition.getZ() + 0.5D) <= 64.0D;

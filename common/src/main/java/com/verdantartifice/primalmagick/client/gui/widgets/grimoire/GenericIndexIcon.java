@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Icon to show a generic texture on a grimoire topic button.
@@ -9,14 +9,14 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class GenericIndexIcon extends AbstractIndexIcon {
-    protected final ResourceLocation iconLocation;
+    protected final Identifier iconLocation;
     
-    protected GenericIndexIcon(ResourceLocation loc, boolean large) {
+    protected GenericIndexIcon(Identifier loc, boolean large) {
         super(large);
         this.iconLocation = loc;
     }
     
-    public static GenericIndexIcon of(ResourceLocation loc, boolean large) {
+    public static GenericIndexIcon of(Identifier loc, boolean large) {
         return new GenericIndexIcon(loc, large);
     }
 
@@ -25,12 +25,12 @@ public class GenericIndexIcon extends AbstractIndexIcon {
         if (this.iconLocation != null) {
             float s = this.large ? 0.06F : 0.04F;
             int d = this.large ? 8 : 5;
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(x + d, y + d, 0D);
-            guiGraphics.pose().scale(s, s, 1F);
-            guiGraphics.pose().scale(scale, scale, 1F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(x + d, y + d);
+            guiGraphics.pose().scale(s, s);
+            guiGraphics.pose().scale(scale, scale);
             guiGraphics.blit(this.iconLocation, (int)(-d / s), (int)(-d / s), 0, 0, 255, 255);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 }

@@ -6,9 +6,10 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
@@ -37,18 +38,18 @@ public class BookLanguagesPM {
     }
     
     public static void bootstrap(BootstrapContext<BookLanguage> context) {
-        context.register(BookLanguagesPM.DEFAULT, new BookLanguage(ResourceUtils.loc("default"), Style.EMPTY.withFont(ResourceLocation.withDefaultNamespace("default")), 0, false));
-        context.register(BookLanguagesPM.GALACTIC, new BookLanguage(ResourceUtils.loc("galactic"), Style.EMPTY.withFont(ResourceLocation.withDefaultNamespace("alt")), -1, false));
-        context.register(BookLanguagesPM.ILLAGER, new BookLanguage(ResourceUtils.loc("illager"), Style.EMPTY.withFont(ResourceLocation.withDefaultNamespace("illageralt")), -1, false));
+        context.register(BookLanguagesPM.DEFAULT, new BookLanguage(ResourceUtils.loc("default"), Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("default"))), 0, false));
+        context.register(BookLanguagesPM.GALACTIC, new BookLanguage(ResourceUtils.loc("galactic"), Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("alt"))), -1, false));
+        context.register(BookLanguagesPM.ILLAGER, new BookLanguage(ResourceUtils.loc("illager"), Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("illageralt"))), -1, false));
         context.register(BookLanguagesPM.BABELTONGUE, new BookLanguage(ResourceUtils.loc("babeltongue"), Style.EMPTY.withObfuscated(true), 60, true));
-        context.register(BookLanguagesPM.EARTH, new BookLanguage(ResourceUtils.loc("earth"), Style.EMPTY.withFont(ResourceUtils.loc("earth")), 60, false));
-        context.register(BookLanguagesPM.SEA, new BookLanguage(ResourceUtils.loc("sea"), Style.EMPTY.withFont(ResourceUtils.loc("sea")), 60, false));
-        context.register(BookLanguagesPM.SKY, new BookLanguage(ResourceUtils.loc("sky"), Style.EMPTY.withFont(ResourceUtils.loc("sky")), 60, false));
-        context.register(BookLanguagesPM.SUN, new BookLanguage(ResourceUtils.loc("sun"), Style.EMPTY.withFont(ResourceUtils.loc("sun")), 60, false));
-        context.register(BookLanguagesPM.MOON, new BookLanguage(ResourceUtils.loc("moon"), Style.EMPTY.withFont(ResourceUtils.loc("moon")), 60, false));
-        context.register(BookLanguagesPM.TRADE, new BookLanguage(ResourceUtils.loc("trade"), Style.EMPTY.withFont(ResourceUtils.loc("trade")), 60, false));
-        context.register(BookLanguagesPM.FORBIDDEN, new BookLanguage(ResourceUtils.loc("forbidden"), Style.EMPTY.withFont(ResourceUtils.loc("forbidden")), 60, false));
-        context.register(BookLanguagesPM.HALLOWED, new BookLanguage(ResourceUtils.loc("hallowed"), Style.EMPTY.withFont(ResourceUtils.loc("hallowed")), 60, false));
+        context.register(BookLanguagesPM.EARTH, new BookLanguage(ResourceUtils.loc("earth"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("earth"))), 60, false));
+        context.register(BookLanguagesPM.SEA, new BookLanguage(ResourceUtils.loc("sea"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("sea"))), 60, false));
+        context.register(BookLanguagesPM.SKY, new BookLanguage(ResourceUtils.loc("sky"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("sky"))), 60, false));
+        context.register(BookLanguagesPM.SUN, new BookLanguage(ResourceUtils.loc("sun"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("sun"))), 60, false));
+        context.register(BookLanguagesPM.MOON, new BookLanguage(ResourceUtils.loc("moon"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("moon"))), 60, false));
+        context.register(BookLanguagesPM.TRADE, new BookLanguage(ResourceUtils.loc("trade"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("trade"))), 60, false));
+        context.register(BookLanguagesPM.FORBIDDEN, new BookLanguage(ResourceUtils.loc("forbidden"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("forbidden"))), 60, false));
+        context.register(BookLanguagesPM.HALLOWED, new BookLanguage(ResourceUtils.loc("hallowed"), Style.EMPTY.withFont(new FontDescription.Resource(ResourceUtils.loc("hallowed"))), 60, false));
     }
     
     /**
@@ -58,7 +59,7 @@ public class BookLanguagesPM {
      * @return an optional reference holder for this view's book language
      */
     public static Optional<Holder.Reference<BookLanguage>> getLanguage(ResourceKey<BookLanguage> langKey, RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(langKey);
+        return registryAccess.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).get(langKey);
     }
     
     /**
@@ -70,8 +71,8 @@ public class BookLanguagesPM {
      * @return a reference holder for the given book language, or the given default
      */
     public static Holder.Reference<BookLanguage> getLanguageOrDefault(ResourceKey<BookLanguage> langKey, RegistryAccess registryAccess, ResourceKey<BookLanguage> defaultLang) {
-        Registry<BookLanguage> registry = registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES);
-        return registry.getHolder(langKey).orElse(registry.getHolderOrThrow(defaultLang));
+        Registry<BookLanguage> registry = registryAccess.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES);
+        return registry.get(langKey).orElse(registry.getOrThrow(defaultLang));
     }
     
     /**
@@ -81,6 +82,6 @@ public class BookLanguagesPM {
      * @return a reference holder for this view's book language
      */
     public static Holder.Reference<BookLanguage> getLanguageOrThrow(ResourceKey<BookLanguage> langKey, RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(langKey);
+        return registryAccess.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getOrThrow(langKey);
     }
 }

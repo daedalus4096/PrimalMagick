@@ -13,11 +13,6 @@ public class ItemAbilityServiceNeoforge implements IItemAbilityService {
     }
 
     @Override
-    public boolean canShieldBlock(ItemStack stack) {
-        return stack.canPerformAction(ItemAbilities.SHIELD_BLOCK);
-    }
-
-    @Override
     public LootItemCondition.Builder makeShearsDigLootCondition() {
         return CanItemPerformAbility.canItemPerformAbility(ItemAbilities.SHEARS_DIG);
     }

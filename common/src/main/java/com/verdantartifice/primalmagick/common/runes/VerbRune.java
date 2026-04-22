@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Rarity;
 
 import javax.annotation.Nonnull;
@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * @author Daedalus4096
  */
 public class VerbRune extends Rune {
-    public static final Codec<VerbRune> CODEC = ResourceLocation.CODEC.<VerbRune>xmap(loc -> {
+    public static final Codec<VerbRune> CODEC = Identifier.CODEC.<VerbRune>xmap(loc -> {
         if (Rune.getRune(loc) instanceof VerbRune verb) {
             return verb;
         } else {

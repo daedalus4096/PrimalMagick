@@ -17,7 +17,7 @@ import commonnetwork.networking.data.PacketContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -28,7 +28,7 @@ import net.minecraft.util.RandomSource;
  * @author Daedalus4096
  */
 public class CompleteProjectPacket implements IMessageToServer {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("complete_project");
+    public static final Identifier CHANNEL = ResourceUtils.loc("complete_project");
     public static final StreamCodec<RegistryFriendlyByteBuf, CompleteProjectPacket> STREAM_CODEC = StreamCodec.ofMember(CompleteProjectPacket::encode, CompleteProjectPacket::decode);
 
     protected final int windowId;

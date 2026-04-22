@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.misc;
 
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.capabilities.IEntitySwappers;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -12,18 +13,23 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.Color;
 import java.util.Collection;
@@ -39,16 +45,17 @@ import java.util.Queue;
  * @author Daedalus4096
  * @see IEntitySwappers
  */
-@SuppressWarnings("deprecation")
 public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
+    protected static final Logger LOGGER = LogUtils.getLogger();
+
     protected EntityType<?> entityType = null;
-    protected CompoundTag originalData = null;
+    protected CompoundTag originalData = new CompoundTag();
     protected Optional<Integer> polymorphDuration = Optional.empty();
     protected int delay = 0;
     
     protected EntitySwapper() {}
     
-    public EntitySwapper(@Nonnull EntityType<?> entityType, @Nullable CompoundTag originalData, @Nonnull Optional<Integer> polymorphDuration, int delay) {
+    public EntitySwapper(@NotNull EntityType<?> entityType, @Nullable CompoundTag originalData, @NotNull Optional<Integer> polymorphDuration, int delay) {
         this.entityType = entityType;
         this.originalData = originalData;
         this.polymorphDuration = polymorphDuration;
@@ -61,33 +68,36 @@ public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
         this.deserializeNBT(registries, tag);
     }
     
-    public static boolean enqueue(@Nonnull Entity entity, @Nullable EntitySwapper swapper) {
-        if (swapper == null) {
-            // Don't allow empty swappers in the queue
-            return false;
-        } else {
+    public static void enqueue(@NotNull Entity entity, @Nullable EntitySwapper swapper) {
+        // Don't allow empty swappers in the queue
+        if (swapper != null) {
             // Store the new swapper in the entity capability
-            return Services.CAPABILITIES.swappers(entity).map(swappers -> swappers.enqueue(swapper)).orElse(false);
+            Services.CAPABILITIES.swappers(entity).map(swappers -> swappers.enqueue(swapper));
         }
     }
     
     @Nullable
-    public static Queue<EntitySwapper> getSwapperQueue(@Nonnull Entity entity) {
+    public static Queue<EntitySwapper> getSwapperQueue(@NotNull Entity entity) {
         return Services.CAPABILITIES.swappers(entity).map(IEntitySwappers::getQueue).orElse(null);
     }
     
-    public static boolean setSwapperQueue(@Nonnull Entity entity, @Nonnull Queue<EntitySwapper> swapperQueue) {
-        return Services.CAPABILITIES.swappers(entity).map(swappers -> swappers.setQueue(swapperQueue)).orElse(false);
+    public static void setSwapperQueue(@NotNull Entity entity, @NotNull Queue<EntitySwapper> swapperQueue) {
+        Services.CAPABILITIES.swappers(entity).map(swappers -> swappers.setQueue(swapperQueue));
     }
     
-    public void execute(@Nonnull Entity entity) {
+    public void execute(@NotNull Entity entity) {
         Level world = entity.level();
-        if (!world.isClientSide && world instanceof ServerLevel serverWorld) {
+        if (!world.isClientSide() && world instanceof ServerLevel serverWorld) {
             // Only proceed if this is a valid swapper and the target is allowed to be swapped
             if (this.isValid() && this.isValidTarget(entity)) {
                 LivingEntity livingTarget = (LivingEntity)entity;
-                CompoundTag currentData = livingTarget.saveWithoutId(new CompoundTag());
-                
+                CompoundTag currentData;
+                try (ProblemReporter.ScopedCollector problems = new ProblemReporter.ScopedCollector(LOGGER)) {
+                    TagValueOutput out = TagValueOutput.createWithContext(problems, world.registryAccess());
+                    livingTarget.saveWithoutId(out);
+                    currentData = out.buildResult();
+                }
+
                 // Dismount the target from any mounts and dismount any other entities riding the target
                 if (livingTarget.isPassenger()) {
                     livingTarget.stopRiding();
@@ -117,13 +127,16 @@ public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
                 livingTarget.discard();
                 Entity newEntity = this.entityType.spawn(serverWorld, e -> {
                     if (!data.isEmpty()) {
-                        e.load(data);
+                        try (ProblemReporter.ScopedCollector problems = new ProblemReporter.ScopedCollector(LOGGER)) {
+                            ValueInput in = TagValueInput.create(problems, serverWorld.registryAccess(), data);
+                            e.load(in);
+                        }
                     }
-                }, BlockPos.containing(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
+                }, BlockPos.containing(targetPos), EntitySpawnReason.MOB_SUMMONED, false, false);
                 if (newEntity != null) {
                     newEntity.setCustomName(customName);
                     newEntity.setCustomNameVisible(customNameVisible);
-                    newEntity.absMoveTo(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
+                    newEntity.absSnapTo(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
                     serverWorld.gameEvent(null, GameEvent.ENTITY_PLACE, targetPos);
                 }
                 
@@ -134,15 +147,14 @@ public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
                         newLivingEntity.addEffect(activeEffect);
                     }
                 }
-                
-                if (this.polymorphDuration.isPresent()) {
+
+                this.polymorphDuration.ifPresent(ticks -> {
                     // If this is a temporary swap, create a new entity swapper to swap back
-                    int ticks = this.polymorphDuration.get();
                     if (newEntity instanceof LivingEntity newLivingEntity) {
                         newLivingEntity.addEffect(new MobEffectInstance(EffectsPM.POLYMORPH.getHolder(), ticks));
                         enqueue(newLivingEntity, new EntitySwapper(oldType, this.originalData, Optional.empty(), ticks));
                     }
-                }
+                });
             }
         }
     }
@@ -163,47 +175,36 @@ public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
     @Override
     public CompoundTag serializeNBT(HolderLookup.Provider registries) {
         CompoundTag nbt = new CompoundTag();
-        if (this.entityType != null) {
-            nbt.putString("EntityType", EntityType.getKey(this.entityType).toString());
-        }
+        nbt.store("EntityType", EntityType.CODEC, this.entityType);
         if (this.originalData != null) {
             nbt.put("OriginalData", this.originalData);
         }
-        if (this.polymorphDuration != null && this.polymorphDuration.isPresent()) {
-            nbt.putInt("PolymorphDuration", this.polymorphDuration.get().intValue());
-        }
+        this.polymorphDuration.ifPresent(duration -> nbt.putInt("PolymorphDuration", duration));
         nbt.putInt("Delay", this.delay);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(HolderLookup.Provider registries, CompoundTag nbt) {
-        if (nbt.contains("EntityType")) {
-            this.entityType = EntityType.byString(nbt.getString("EntityType")).orElse(null);
-        }
-        if (nbt.contains("OriginalData")) {
-            this.originalData = nbt.getCompound("OriginalData");
-        }
-        this.polymorphDuration = nbt.contains("PolymorphDuration") ? 
-                Optional.of(Integer.valueOf(nbt.getInt("PolymorphDuration"))) : 
-                Optional.empty();
-        this.delay = nbt.getInt("Delay");
+        this.entityType = nbt.read("EntityType", EntityType.CODEC).orElse(null);
+        this.originalData = nbt.getCompoundOrEmpty("OriginalData");
+        this.polymorphDuration = nbt.getInt("PolymorphDuration");
+        this.delay = nbt.getIntOr("Delay", 0);
     }
     
     public boolean isValid() {
         return this.entityType != null;
     }
     
-    @Nonnull
+    @NotNull
     protected CompoundTag pruneData(CompoundTag data, boolean initialSwap) {
         CompoundTag prunedData = new CompoundTag();
         prunedData.merge(data);
         
         // Always remove the entity's ID so there are no spawning conflicts
         prunedData.remove("id");
-        prunedData.remove("UUIDMost");
-        prunedData.remove("UUIDLeast");
-        
+        prunedData.remove("UUID");
+
         if (initialSwap) {
             // A freshly swapped entity should have the attributes of its new form, not its old one
             prunedData.remove("Health");

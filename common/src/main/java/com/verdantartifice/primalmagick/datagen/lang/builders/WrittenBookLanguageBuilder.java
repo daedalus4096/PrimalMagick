@@ -2,9 +2,9 @@ package com.verdantartifice.primalmagick.datagen.lang.builders;
 
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  */
 public class WrittenBookLanguageBuilder extends AbstractLanguageBuilder<ResourceKey<BookDefinition>, WrittenBookLanguageBuilder> {
     public WrittenBookLanguageBuilder(ResourceKey<BookDefinition> bookDefKey, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(bookDefKey, () -> Util.makeDescriptionId("written_book", bookDefKey.location()), untracker, adder);
+        super(bookDefKey, () -> Util.makeDescriptionId("written_book", bookDefKey.identifier()), untracker, adder);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class WrittenBookLanguageBuilder extends AbstractLanguageBuilder<Resource
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(ResourceKey<BookDefinition> base) {
-        return Objects.requireNonNull(base).location();
+    protected Identifier getBaseRegistryKey(ResourceKey<BookDefinition> base) {
+        return Objects.requireNonNull(base).identifier();
     }
 
     @Override

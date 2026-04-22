@@ -8,12 +8,12 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.BloodletterTileEnti
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 
@@ -55,43 +56,49 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+    @NotNull
+    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return SHAPE;
     }
     
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    @NotNull
+    public RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (player != null && stack.is(Items.WATER_BUCKET) && state.getValue(FILLED)) {
+    @NotNull
+    protected InteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level worldIn,
+                                          @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand handIn,
+                                          @NotNull BlockHitResult hit) {
+        if (stack.is(Items.WATER_BUCKET) && state.getValue(FILLED)) {
             // If using a water bucket on a filled bloodletter, clean it out
             worldIn.playSound(player, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (!worldIn.isClientSide) {
+            if (!worldIn.isClientSide()) {
                 if (!player.hasInfiniteMaterials()) {
                     player.setItemInHand(handIn, new ItemStack(Items.BUCKET));
                 }
                 worldIn.setBlock(pos, state.setValue(FILLED, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
         }
     }
     
     @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (pPlayer != null && !pState.getValue(FILLED)) {
+    @NotNull
+    protected InteractionResult useWithoutItem(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull BlockHitResult pHitResult) {
+        if (!pState.getValue(FILLED)) {
             // If using an empty hand on an unfilled bloodletter, cut the player
-            if (!pLevel.isClientSide) {
-                pPlayer.hurt(DamageSourcesPM.bleeding(pLevel.registryAccess()), 2.0F);
-                pLevel.setBlock(pPos, pState.setValue(FILLED, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
+            if (pLevel instanceof ServerLevel serverLevel) {
+                pPlayer.hurtServer(serverLevel, DamageSourcesPM.bleeding(serverLevel.registryAccess()), 2.0F);
+                serverLevel.setBlock(pPos, pState.setValue(FILLED, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 
                 // If this block is awaiting activation for an altar, notify it
-                if (this.isPropOpen(pState, pLevel, pPos)) {
-                    this.onPropActivated(pState, pLevel, pPos, this.getUsageStabilityBonus());
+                if (this.isPropOpen(pState, serverLevel, pPos)) {
+                    this.onPropActivated(pState, serverLevel, pPos, this.getUsageStabilityBonus());
                 }
             }
             return InteractionResult.SUCCESS;
@@ -101,16 +108,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
     }
 
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        // Close out any pending ritual activity if replaced
-        if (!worldIn.isClientSide && state.getBlock() != newState.getBlock()) {
-            this.closeProp(state, worldIn, pos);
-        }
-        super.onRemove(state, worldIn, pos, newState, isMoving);
-    }
-    
-    @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
+    public void animateTick(@NotNull BlockState stateIn, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull RandomSource rand) {
         // Show spell sparkles if receiving salt power
         if (this.isBlockSaltPowered(worldIn, pos)) {
             FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());
@@ -142,11 +140,12 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
     }
     
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new BloodletterTileEntity(pos, state);
     }
 
     @Override
+    @NotNull
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }

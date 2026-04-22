@@ -12,10 +12,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
@@ -30,7 +31,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
  * @author Daedalus4096
  */
 public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<SingleRecipeInput, AbstractCookingRecipe> {
-    public static final ResourceLocation IGNYX_SLOT_TEXTURE = ResourceUtils.loc("item/empty_ignyx_slot");
+    public static final Identifier IGNYX_SLOT_TEXTURE = ResourceUtils.loc("item/empty_ignyx_slot");
     protected static final Component IGNYX_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.infernal_furnace.slot.ignyx");
 
     protected final ContainerData furnaceData;
@@ -54,11 +55,11 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
         this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(InfernalFurnaceTileEntity.INPUT_INV_INDEX), 0, 44, 17));
         
         // Slot 2: ignyx input
-        this.ignyxSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(InfernalFurnaceTileEntity.WAND_INV_INDEX), 0, 44, 53,
+        this.ignyxSlot = this.addSlot(Services.MENU.makeFilteredSlot(this.getTileInventory(InfernalFurnaceTileEntity.FUEL_INV_INDEX), 0, 44, 53,
                 new FilteredSlotProperties().background(IGNYX_SLOT_TEXTURE).tooltip(IGNYX_SLOT_TOOLTIP).tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL)));
         
         // Slot 3: wand input
-        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(InfernalFurnaceTileEntity.WAND_INV_INDEX), 1, 8, 62, false));
+        this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(this.getTileInventory(InfernalFurnaceTileEntity.WAND_INV_INDEX), 0, 8, 62, false));
         
         // Slots 4-30: player backpack
         for (int i = 0; i < 3; i++) {
@@ -102,7 +103,7 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedContents contents) {
+    public void fillCraftSlotsStackedContents(StackedItemContents contents) {
         this.tile.fillStackedContents(contents);
     }
 

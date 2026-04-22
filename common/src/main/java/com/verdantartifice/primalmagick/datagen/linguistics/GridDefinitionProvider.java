@@ -14,7 +14,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,7 +38,7 @@ public class GridDefinitionProvider implements DataProvider {
     public CompletableFuture<?> run(CachedOutput pOutput) {
         return this.lookupProviderFuture.thenCompose(p -> {
             ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
-            Map<ResourceLocation, GridDefinition> map = new HashMap<>();
+            Map<Identifier, GridDefinition> map = new HashMap<>();
             this.registerGrids(p, gridDef -> {
                 if (map.put(gridDef.getKey(), gridDef) != null) {
                     LOGGER.debug("Duplicate linguistics grid definition in data generation: {}", gridDef.getKey().toString());
@@ -55,7 +55,7 @@ public class GridDefinitionProvider implements DataProvider {
         });
     }
 
-    private Path getPath(PackOutput output, ResourceLocation entryLoc) {
+    private Path getPath(PackOutput output, Identifier entryLoc) {
         return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("linguistics_grids").resolve(entryLoc.getPath() + ".json");
     }
     

@@ -10,6 +10,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Definition of a loot condition that matches when the block is in the given tag.
@@ -17,9 +18,8 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
  * @author Daedalus4096
  */
 public class MatchBlockTag implements LootItemCondition {
-    public static final MapCodec<MatchBlockTag> CODEC = RecordCodecBuilder.mapCodec(instance -> {
-        return instance.group(TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(mbt -> mbt.tag)).apply(instance, MatchBlockTag::new);
-    });
+    public static final MapCodec<MatchBlockTag> CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(mbt -> mbt.tag)).apply(instance, MatchBlockTag::new));
     
     protected final TagKey<Block> tag;
     
@@ -33,11 +33,12 @@ public class MatchBlockTag implements LootItemCondition {
     
     @Override
     public boolean test(LootContext context) {
-        BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+        BlockState state = context.getOptionalParameter(LootContextParams.BLOCK_STATE);
         return state != null && state.is(this.tag);
     }
 
     @Override
+    @NotNull
     public LootItemConditionType getType() {
         return LootConditionTypesPM.MATCH_BLOCK_TAG.get();
     }

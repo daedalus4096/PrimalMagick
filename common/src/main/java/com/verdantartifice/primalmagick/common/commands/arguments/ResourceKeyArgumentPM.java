@@ -22,7 +22,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -35,13 +36,12 @@ import java.util.function.Function;
  * ResourceKeyArgument in vanilla Minecraft, but extended to work with additional registry types.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.commands.arguments.ResourceKeyArgument}
+ * @see net.minecraft.commands.arguments.ResourceKeyArgument
  */
 public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
     private static final Collection<String> EXAMPLES = Arrays.asList("foo", "foo:bar", "012");
-    private static final Function<String, DynamicCommandExceptionType> ERROR_MESSAGE = messageKey -> new DynamicCommandExceptionType(err -> {
-        return Component.translatable(messageKey, err);
-    });
+    private static final Function<String, DynamicCommandExceptionType> ERROR_MESSAGE = messageKey ->
+            new DynamicCommandExceptionType(err -> Component.translatable(messageKey, err));
 
     protected final ResourceKey<? extends Registry<T>> registryKey;
 
@@ -76,26 +76,22 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
 
     private static <T> Holder.Reference<T> resolveKey(CommandContext<CommandSourceStack> pContext, String pArgument, ResourceKey<Registry<T>> pRegistryKey, DynamicCommandExceptionType pException) throws CommandSyntaxException {
         ResourceKey<T> resourcekey = getRegistryKey(pContext, pArgument, pRegistryKey, pException);
-        return getRegistry(pContext, pRegistryKey).getHolder(resourcekey).orElseThrow(() -> {
-            return pException.create(resourcekey.location());
-        });
+        return getRegistry(pContext, pRegistryKey).get(resourcekey).orElseThrow(() -> pException.create(resourcekey.identifier()));
     }
 
     private static <T> ResourceKey<T> getRegistryKey(CommandContext<CommandSourceStack> pContext, String pArgument, ResourceKey<Registry<T>> pRegistryKey, DynamicCommandExceptionType pException) throws CommandSyntaxException {
         ResourceKey<?> resourcekey = pContext.getArgument(pArgument, ResourceKey.class);
         Optional<ResourceKey<T>> optional = resourcekey.cast(pRegistryKey);
-        return optional.orElseThrow(() -> {
-            return pException.create(resourcekey);
-        });
+        return optional.orElseThrow(() -> pException.create(resourcekey));
     }
 
     private static <T> Registry<T> getRegistry(CommandContext<CommandSourceStack> pContext, ResourceKey<? extends Registry<T>> pRegistryKey) {
-        return pContext.getSource().getServer().registryAccess().registryOrThrow(pRegistryKey);
+        return pContext.getSource().getServer().registryAccess().lookupOrThrow(pRegistryKey);
     }
 
     @Override
     public ResourceKey<T> parse(StringReader pReader) throws CommandSyntaxException {
-        return ResourceKey.create(this.registryKey, ResourceLocation.read(pReader));
+        return ResourceKey.create(this.registryKey, Identifier.read(pReader));
     }
 
     @Override
@@ -125,7 +121,7 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
 
         @Override
         public void serializeToJson(Info<T>.Template pTemplate, JsonObject pJson) {
-            pJson.addProperty("registry", pTemplate.registryKey.location().toString());
+            pJson.addProperty("registry", pTemplate.registryKey.identifier().toString());
         }
 
         @Override
@@ -141,11 +137,12 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
             }
 
             @Override
-            public ResourceKeyArgumentPM<T> instantiate(CommandBuildContext pContext) {
+            public ResourceKeyArgumentPM<T> instantiate(@NotNull CommandBuildContext pContext) {
                 return new ResourceKeyArgumentPM<>(this.registryKey);
             }
 
             @Override
+            @NotNull
             public ArgumentTypeInfo<ResourceKeyArgumentPM<T>, ?> type() {
                 return Info.this;
             }

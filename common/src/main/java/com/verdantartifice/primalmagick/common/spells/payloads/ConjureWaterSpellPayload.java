@@ -17,6 +17,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class ConjureWaterSpellPayload extends AbstractConjureFluidSpellPayload<C
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.SEA;
     }
@@ -69,7 +71,7 @@ public class ConjureWaterSpellPayload extends AbstractConjureFluidSpellPayload<C
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

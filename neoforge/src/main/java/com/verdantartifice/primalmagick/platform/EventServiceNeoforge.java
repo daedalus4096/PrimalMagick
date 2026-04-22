@@ -4,13 +4,14 @@ import com.verdantartifice.primalmagick.common.misc.GrindstoneChangeRecord;
 import com.verdantartifice.primalmagick.platform.services.IEventService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.CommonHooks;
@@ -38,12 +40,12 @@ public class EventServiceNeoforge implements IEventService {
     }
 
     @Override
-    public void firePlayerSmeltedEvent(Player player, ItemStack smelted) {
-        EventHooks.firePlayerSmeltedEvent(player, smelted);
+    public void firePlayerSmeltedEvent(Player player, ItemStack smelted, int amountRemoved) {
+        EventHooks.firePlayerSmeltedEvent(player, smelted, amountRemoved);
     }
 
     @Override
-    public boolean canEntityGrief(Level level, @Nullable Entity entity) {
+    public boolean canEntityGrief(ServerLevel level, @Nullable Entity entity) {
         return EventHooks.canEntityGrief(level, entity);
     }
 
@@ -53,7 +55,7 @@ public class EventServiceNeoforge implements IEventService {
     }
 
     @Override
-    public SpawnGroupData finalizeMobSpawn(Mob mob, ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData) {
+    public SpawnGroupData finalizeMobSpawn(Mob mob, ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnType, @Nullable SpawnGroupData spawnData) {
         return EventHooks.finalizeMobSpawn(mob, level, difficulty, spawnType, spawnData);
     }
 
@@ -79,8 +81,8 @@ public class EventServiceNeoforge implements IEventService {
     }
 
     @Override
-    public int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType) {
-        return stack.getBurnTime(recipeType);
+    public int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType, FuelValues fuelValues) {
+        return stack.getBurnTime(recipeType, fuelValues);
     }
 
     @Override

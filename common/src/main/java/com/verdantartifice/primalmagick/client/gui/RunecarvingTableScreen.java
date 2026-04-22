@@ -6,14 +6,16 @@ import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -23,8 +25,13 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class RunecarvingTableScreen extends AbstractContainerScreenPM<RunecarvingTableMenu> {
-    protected static final ResourceLocation TEXTURE = ResourceUtils.loc("textures/gui/runecarving_table.png");
-    
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/runecarving_table.png");
+    protected static final Identifier SCROLL_HANDLE = ResourceUtils.loc("runecarving_table/scroll_handle");
+    protected static final Identifier SCROLL_HANDLE_DISABLED = ResourceUtils.loc("runecarving_table/scroll_handle_disabled");
+    protected static final Identifier RECIPE_NORMAL = ResourceUtils.loc("runecarving_table/recipe_normal");
+    protected static final Identifier RECIPE_SELECTED = ResourceUtils.loc("runecarving_table/recipe_selected");
+    protected static final Identifier RECIPE_HOVERED = ResourceUtils.loc("runecarving_table/recipe_hovered");
+
     protected float sliderProgress;
     protected boolean clickedOnSroll;
     
@@ -42,7 +49,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
     }
     
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
@@ -51,9 +58,10 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         int i = this.leftPos;
         int j = this.topPos;
-        guiGraphics.blit(TEXTURE, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         int k = (int)(41.0F * this.sliderProgress);
-        guiGraphics.blit(TEXTURE, i + 119, j + 15 + k, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
+        Identifier scrollHandleTexture = this.canScroll() ? SCROLL_HANDLE : SCROLL_HANDLE_DISABLED;
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, scrollHandleTexture, i + 119, j + 15 + k, 12, 15);
         int l = this.leftPos + 52;
         int i1 = this.topPos + 14;
         int j1 = this.recipeIndexOffset + 12;
@@ -67,13 +75,17 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
             int k = left + j % 4 * 16;
             int l = j / 4;
             int i1 = top + l * 18 + 2;
-            int j1 = this.imageHeight;
+
+            Identifier recipeBgTexture;
             if (i == this.menu.getSelectedRecipe()) {
-                j1 += 18;
+                recipeBgTexture = RECIPE_SELECTED;
             } else if (mouseX >= k && mouseY >= i1 && mouseX < k + 16 && mouseY < i1 + 18) {
-                j1 += 36;
+                recipeBgTexture = RECIPE_HOVERED;
+            } else {
+                recipeBgTexture = RECIPE_NORMAL;
             }
-            guiGraphics.blit(TEXTURE, k, i1 - 1, 0, j1, 16, 18);
+
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, recipeBgTexture, k, i1 - 1, 16, 18);
         }
     }
     

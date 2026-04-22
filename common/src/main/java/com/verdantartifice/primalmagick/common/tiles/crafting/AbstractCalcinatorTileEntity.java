@@ -19,13 +19,11 @@ import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -34,8 +32,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockState;
-import org.apache.commons.lang3.mutable.MutableBoolean;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -67,7 +66,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     protected int burnTimeTotal;
     protected int cookTime;
     protected int cookTimeTotal;
-    protected UUID ownerUUID;
+    protected EntityReference<Player> owner;
     protected ITileResearchCache researchCache;
     
     protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
@@ -77,18 +76,13 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     protected final ContainerData calcinatorData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-            case 0:
-                return AbstractCalcinatorTileEntity.this.burnTime;
-            case 1:
-                return AbstractCalcinatorTileEntity.this.burnTimeTotal;
-            case 2:
-                return AbstractCalcinatorTileEntity.this.cookTime;
-            case 3:
-                return AbstractCalcinatorTileEntity.this.cookTimeTotal;
-            default:
-                return 0;
-            }
+            return switch (index) {
+                case 0 -> AbstractCalcinatorTileEntity.this.burnTime;
+                case 1 -> AbstractCalcinatorTileEntity.this.burnTimeTotal;
+                case 2 -> AbstractCalcinatorTileEntity.this.cookTime;
+                case 3 -> AbstractCalcinatorTileEntity.this.cookTimeTotal;
+                default -> 0;
+            };
         }
 
         @Override
@@ -132,8 +126,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     @Override
     protected int getInventorySize(int inventoryIndex) {
         return switch (inventoryIndex) {
-            case INPUT_INV_INDEX -> 1;
-            case FUEL_INV_INDEX -> 1;
+            case INPUT_INV_INDEX, FUEL_INV_INDEX -> 1;
             case OUTPUT_INV_INDEX -> OUTPUT_CAPACITY;
             default -> 0;
         };
@@ -157,7 +150,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         
         // Create fuel handler
         retVal.set(FUEL_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(FUEL_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> isFuel(stack))
+                .itemValidFunction((slot, stack) -> this.level != null && isFuel(stack, this.level.fuelValues()))
                 .build());
 
         // Create output handler
@@ -172,43 +165,39 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         return this.burnTime > 0;
     }
     
-    @SuppressWarnings("deprecation")
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
         
-        this.burnTime = compound.getInt("BurnTime");
-        this.burnTimeTotal = compound.getInt("BurnTimeTotal");
-        this.cookTime = compound.getInt("CookTime");
-        this.cookTimeTotal = compound.getInt("CookTimeTotal");
-        this.researchCache.deserializeNBT(registries, compound.getCompound("ResearchCache"));
-        
-        this.ownerUUID = null;
-        if (compound.contains("OwnerUUID")) {
-            String ownerUUIDStr = compound.getString("OwnerUUID");
-            if (!ownerUUIDStr.isEmpty()) {
-                this.ownerUUID = UUID.fromString(ownerUUIDStr);
-            }
-        }
+        this.burnTime = input.getIntOr("BurnTime", 0);
+        this.burnTimeTotal = input.getIntOr("BurnTimeTotal", 0);
+        this.cookTime = input.getIntOr("CookTime", 0);
+        this.cookTimeTotal = input.getIntOr("CookTimeTotal", 0);
+        this.researchCache.deserialize(input.childOrEmpty("ResearchCache"));
+        this.owner = EntityReference.read(input, "Owner");
     }
     
-    @SuppressWarnings("deprecation")
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("BurnTime", this.burnTime);
-        compound.putInt("BurnTimeTotal", this.burnTimeTotal);
-        compound.putInt("CookTime", this.cookTime);
-        compound.putInt("CookTimeTotal", this.cookTimeTotal);
-        compound.put("ResearchCache", this.researchCache.serializeNBT(registries));
-        if (this.ownerUUID != null) {
-            compound.putString("OwnerUUID", this.ownerUUID.toString());
-        }
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("BurnTime", this.burnTime);
+        output.putInt("BurnTimeTotal", this.burnTimeTotal);
+        output.putInt("CookTime", this.cookTime);
+        output.putInt("CookTimeTotal", this.cookTimeTotal);
+
+        ValueOutput cacheChild = output.child("ResearchCache");
+        this.researchCache.serialize(cacheChild);
+
+        EntityReference.store(this.owner, output, "Owner");
     }
 
-    protected abstract boolean hasFuelRemainingItem(ItemStack fuelStack);
+    protected boolean hasFuelRemainingItem(ItemStack fuelStack) {
+        return !fuelStack.getItem().getCraftingRemainder().isEmpty();
+    }
 
-    protected abstract ItemStack getFuelRemainingItem(ItemStack fuelStack);
+    protected ItemStack getFuelRemainingItem(ItemStack fuelStack) {
+        return fuelStack.getItem().getCraftingRemainder();
+    }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AbstractCalcinatorTileEntity entity) {
         boolean burningAtStart = entity.isBurning();
@@ -217,13 +206,13 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         if (burningAtStart) {
             entity.burnTime--;
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack fuelStack = entity.getItem(FUEL_INV_INDEX, 0);
             if (entity.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
                 // If the calcinator isn't burning, but has meltable input in place, light it up
                 if (!entity.isBurning() && entity.canCalcinate(inputStack)) {
-                    entity.burnTime = Services.EVENTS.getBurnTime(fuelStack, null);
+                    entity.burnTime = Services.EVENTS.getBurnTime(fuelStack, null, level.fuelValues());
                     entity.burnTimeTotal = entity.burnTime;
                     if (entity.isBurning()) {
                         shouldMarkDirty = true;
@@ -260,7 +249,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
             if (burningAtStart != entity.isBurning()) {
                 // Update the tile's block state if the calcinator was lit up or went out this tick
                 shouldMarkDirty = true;
-                level.setBlock(pos, state.setValue(AbstractCalcinatorBlock.LIT, Boolean.valueOf(entity.isBurning())), Block.UPDATE_ALL);
+                level.setBlock(pos, state.setValue(AbstractCalcinatorBlock.LIT, entity.isBurning()), Block.UPDATE_ALL);
             }
         }
         if (shouldMarkDirty) {
@@ -289,25 +278,27 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
 
     protected abstract int getCookTimeTotal();
 
-    public static boolean isFuel(ItemStack stack) {
-        return Services.EVENTS.getBurnTime(stack, null) > 0;
+    public static boolean isFuel(ItemStack stack, FuelValues fuelValues) {
+        return Services.EVENTS.getBurnTime(stack, null, fuelValues) > 0;
     }
 
     protected boolean canCalcinate(ItemStack inputStack) {
-        MutableBoolean retVal = new MutableBoolean(false);
-        if (inputStack != null && !inputStack.isEmpty()) {
+        Level level = this.getLevel();
+        if (level != null && inputStack != null && !inputStack.isEmpty()) {
             // An item without affinities cannot be melted
-            AffinityManager.getInstance().getAffinityValues(inputStack, this.level).ifPresent(sources -> {
+            return AffinityManager.getInstance().getAffinityValues(inputStack, level).map(sources -> {
                 if (!sources.isEmpty()) {
                     // Merge the items already in the output inventory with the new output items from the melting
                     List<ItemStack> currentOutputs = this.inventories.get(OUTPUT_INV_INDEX);
                     List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, true);   // Force dreg generation to prevent random overflow
                     List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
-                    retVal.setValue(mergedOutputs.size() <= OUTPUT_CAPACITY);
+                    return mergedOutputs.size() <= OUTPUT_CAPACITY;
+                } else {
+                    return false;
                 }
-            });
+            }).orElse(false);
         }
-        return retVal.booleanValue();
+        return false;
     }
     
     @Nonnull
@@ -324,11 +315,12 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new CalcinatorMenu(windowId, playerInv, this.getBlockPos(), this, this.calcinatorData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -347,14 +339,15 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
 
     @Override
     public void setTileOwner(Player owner) {
-        this.ownerUUID = owner == null ? null : owner.getUUID();
+        this.owner = EntityReference.of(owner);
         this.researchCache.update(owner, this.relevantFilter);
     }
 
     @Override
     public Player getTileOwner() {
-        if (this.ownerUUID != null && this.hasLevel() && this.level instanceof ServerLevel serverLevel) {
-            Player livePlayer = serverLevel.getServer().getPlayerList().getPlayer(this.ownerUUID);
+        Level level = this.getLevel();
+        if (level != null) {
+            Player livePlayer = EntityReference.getPlayer(this.owner, level);
             if (livePlayer != null && livePlayer.tickCount % 20 == 0) {
                 // Update research cache with current player research
                 this.researchCache.update(livePlayer, this.relevantFilter);

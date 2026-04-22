@@ -12,7 +12,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.Stats;
@@ -27,12 +27,12 @@ import java.util.stream.Stream;
  */
 public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCustomStatRequirement> implements IVanillaStatRequirement {
     public static final MapCodec<VanillaCustomStatRequirement> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("statValue").forGetter(VanillaCustomStatRequirement::getStatValueLoc),
+            Identifier.CODEC.fieldOf("statValue").forGetter(VanillaCustomStatRequirement::getStatValueLoc),
             Codec.INT.fieldOf("threshold").forGetter(VanillaCustomStatRequirement::getThreshold),
             IconDefinition.CODEC.fieldOf("iconDefinition").forGetter(VanillaCustomStatRequirement::getIconDefinition)
         ).apply(instance, VanillaCustomStatRequirement::new));
     public static final StreamCodec<ByteBuf, VanillaCustomStatRequirement> STREAM_CODEC = StreamCodec.composite(
-            ResourceLocation.STREAM_CODEC,
+            Identifier.STREAM_CODEC,
             VanillaCustomStatRequirement::getStatValueLoc,
             ByteBufCodecs.VAR_INT,
             VanillaCustomStatRequirement::getThreshold,
@@ -40,12 +40,12 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
             VanillaCustomStatRequirement::getIconDefinition,
             VanillaCustomStatRequirement::new);
     
-    protected final ResourceLocation statValueLocation;
+    protected final Identifier statValueLocation;
     protected final int threshold;
     protected final IconDefinition iconDefinition;
-    protected Stat<ResourceLocation> statCache = null;
+    protected Stat<Identifier> statCache = null;
     
-    public VanillaCustomStatRequirement(ResourceLocation loc, int threshold, IconDefinition iconDefinition) {
+    public VanillaCustomStatRequirement(Identifier loc, int threshold, IconDefinition iconDefinition) {
         this.statValueLocation = loc;
         this.threshold = threshold;
         this.iconDefinition = iconDefinition;
@@ -57,19 +57,19 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
             // This is stupid.  This should be as simple as a call to Stats.CUSTOM.get(this.statValueLocation), but apparently
             // on the client side that results in a crash because it thinks the stat isn't registered?  Anyway, this is how the
             // vanilla statistics screen reads all the statistics on the client side, and it works.  Revisit someday and fix.
-            ObjectArrayList<Stat<ResourceLocation>> statsList = new ObjectArrayList<>(Stats.CUSTOM.iterator());
+            ObjectArrayList<Stat<Identifier>> statsList = new ObjectArrayList<>(Stats.CUSTOM.iterator());
             this.statCache = statsList.stream().filter(s -> s.getValue().equals(this.statValueLocation)).findFirst().orElse(null);
         }
         return this.statCache;
     }
 
     @Override
-    public ResourceLocation getStatTypeLoc() {
+    public Identifier getStatTypeLoc() {
         return BuiltInRegistries.STAT_TYPE.getKey(Stats.CUSTOM);
     }
     
     @Override
-    public ResourceLocation getStatValueLoc() {
+    public Identifier getStatValueLoc() {
         return this.statValueLocation;
     }
 

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
-import com.verdantartifice.primalmagick.common.advancements.critereon.CriteriaTriggersPM;
+import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTriggersPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.GridRewardTypesPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
@@ -34,13 +34,13 @@ import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunc
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureTypesPM;
+import com.verdantartifice.primalmagick.test.TestFunctionsPM;
 
 public class InitRegistries {
     public static void initDeferredRegistries() {
         BlocksPM.init();
         ItemsPM.init();
         CreativeModeTabsPM.init();
-        ArmorMaterialsPM.init();
         DataComponentsPM.init();
         EntityTypesPM.init();
         BlockEntityTypesPM.init();
@@ -71,5 +71,6 @@ public class InitRegistries {
         GridRewardTypesPM.init();
         ResearchTopicTypesPM.init();
         RitualStepTypesPM.init();
+        TestFunctionsPM.init();
     }
 }

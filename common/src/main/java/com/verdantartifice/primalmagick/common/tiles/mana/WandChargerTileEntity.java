@@ -8,13 +8,10 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.WandChargerMenu;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
-import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -25,6 +22,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.VisibleForTesting;
 
@@ -88,17 +87,17 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
     }
     
     @Override
-    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.loadAdditional(compound, registries);
-        this.chargeTime = compound.getInt("ChargeTime");
-        this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
+    protected void loadAdditional(@NotNull ValueInput input) {
+        super.loadAdditional(input);
+        this.chargeTime = input.getIntOr("ChargeTime", 0);
+        this.chargeTimeTotal = input.getIntOr("ChargeTimeTotal", 0);
     }
     
     @Override
-    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
-        compound.putInt("ChargeTime", this.chargeTime);
-        compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
+    protected void saveAdditional(@NotNull ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt("ChargeTime", this.chargeTime);
+        output.putInt("ChargeTimeTotal", this.chargeTimeTotal);
     }
 
     @Override
@@ -114,7 +113,7 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
     public static void tick(Level level, BlockPos pos, BlockState state, WandChargerTileEntity entity) {
         boolean shouldMarkDirty = false;
         
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             if (!inputStack.isEmpty() && !chargeStack.isEmpty()) {

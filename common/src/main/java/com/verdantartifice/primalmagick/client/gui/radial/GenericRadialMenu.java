@@ -178,7 +178,7 @@ public class GenericRadialMenu {
     {
         //Screen owner = host.getScreen();
         state = State.CLOSING;
-        startAnimation = minecraft.level.getGameTime() + (double) minecraft.getTimer().getGameTimeDeltaPartialTick(false);
+        startAnimation = minecraft.level.getGameTime() + (double) minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(false);
         animProgress = 1.0f;
         setHovered(-1);
     }
@@ -187,7 +187,7 @@ public class GenericRadialMenu {
     {
         if (state == State.INITIALIZING)
         {
-            startAnimation = minecraft.level.getGameTime() + (double) minecraft.getTimer().getGameTimeDeltaPartialTick(false);
+            startAnimation = minecraft.level.getGameTime() + (double) minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(false);
             state = State.OPENING;
             animProgress = 0;
         }
@@ -216,18 +216,18 @@ public class GenericRadialMenu {
         int y = owner.height / 2;
         float z = 0;
 
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, animTop, 0);
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().translate(0, animTop);
 
         drawBackground(guiGraphics, x, y, z, radiusIn, radiusOut);
 
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
 
         if (isReady())
         {
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             drawItems(guiGraphics, x, y, z, owner.width, owner.height, fontRenderer);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
 
             Component currentCentralText = centralText;
             for (int i = 0; i < visibleItems.size(); i++)
@@ -249,9 +249,9 @@ public class GenericRadialMenu {
                 guiGraphics.drawString(fontRenderer, text, textX, textY, 0xFFFFFFFF);
             }
 
-            guiGraphics.pose().pushPose();
+            guiGraphics.pose().pushMatrix();
             drawTooltips(guiGraphics, mouseX, mouseY);
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
     }
 
@@ -423,7 +423,7 @@ public class GenericRadialMenu {
     {
         Screen owner = host.getScreen();
         Window mainWindow = minecraft.getWindow();
-        GLFW.glfwSetCursorPos(mainWindow.getWindow(), (int) (x * mainWindow.getScreenWidth() / owner.width), (int) (y * mainWindow.getScreenHeight() / owner.height));
+        GLFW.glfwSetCursorPos(mainWindow.handle(), (int) (x * mainWindow.getScreenWidth() / owner.width), (int) (y * mainWindow.getScreenHeight() / owner.height));
     }
 
     private static final double TWO_PI = 2.0 * Math.PI;
@@ -478,7 +478,7 @@ public class GenericRadialMenu {
 
             double[] xPos = new double[1];
             double[] yPos = new double[1];
-            GLFW.glfwGetCursorPos(mainWindow.getWindow(), xPos, yPos);
+            GLFW.glfwGetCursorPos(mainWindow.handle(), xPos, yPos);
 
             double scaledX = xPos[0] - (windowWidth / 2.0f);
             double scaledY = yPos[0] - (windowHeight / 2.0f);
@@ -491,7 +491,7 @@ public class GenericRadialMenu {
                 double fixedX = scaledX * radius / distance;
                 double fixedY = scaledY * radius / distance;
 
-                GLFW.glfwSetCursorPos(mainWindow.getWindow(), (int) (windowWidth / 2 + fixedX), (int) (windowHeight / 2 + fixedY));
+                GLFW.glfwSetCursorPos(mainWindow.handle(), (int) (windowWidth / 2 + fixedX), (int) (windowHeight / 2 + fixedY));
             }
         }
     }

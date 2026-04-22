@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.DisciplineButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.EntryButton;
@@ -50,13 +48,11 @@ public class RecipeMetadataPage extends AbstractPage {
 
     @Override
     public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+        Minecraft mc = Minecraft.getInstance();
+
         // Draw title
         this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
         y += 53;
-        
-        Minecraft mc = Minecraft.getInstance();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         
         boolean isEntryMissing = ResearchManager.getEntryForRecipe(this.registryAccess, this.recipeHolder.id()).isEmpty();
         Component noneComponent = Component.translatable("tooltip.primalmagick.none");
@@ -90,6 +86,10 @@ public class RecipeMetadataPage extends AbstractPage {
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) {
+            return;
+        }
+
         if (!this.isFirstPage()) {
             y += 24;
         }

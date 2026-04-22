@@ -13,7 +13,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -33,11 +33,11 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<RunecarvingRe
     protected final Ingredient ingredient2;
     protected final Optional<Integer> baseExpertiseOverride;
     protected final Optional<Integer> bonusExpertiseOverride;
-    protected final Optional<ResourceLocation> expertiseGroup;
+    protected final Optional<Identifier> expertiseGroup;
     protected final Optional<ResearchDisciplineKey> disciplineOverride;
 
     public RunecarvingRecipe(String group, ItemStack result, Ingredient ingredient1, Ingredient ingredient2, Optional<AbstractRequirement<?>> requirement, Optional<Integer> baseExpertiseOverride,
-            Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
+            Optional<Integer> bonusExpertiseOverride, Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
         super(group, result);
         this.requirement = requirement;
         this.ingredient1 = ingredient1;
@@ -93,7 +93,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<RunecarvingRe
     }
 
     @Override
-    public Optional<ResourceLocation> getExpertiseGroup() {
+    public Optional<Identifier> getExpertiseGroup() {
         return this.expertiseGroup;
     }
 
@@ -113,7 +113,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<RunecarvingRe
                     AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rr -> rr.requirement),
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
-                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
+                    Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
                     ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
                 ).apply(instance, RunecarvingRecipe::new)
             );
@@ -129,7 +129,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<RunecarvingRe
                     ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), r -> r.requirement,
                     ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.baseExpertiseOverride,
                     ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.bonusExpertiseOverride,
-                    ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC), r -> r.expertiseGroup,
+                    ByteBufCodecs.optional(Identifier.STREAM_CODEC), r -> r.expertiseGroup,
                     ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC), r -> r.disciplineOverride,
                     RunecarvingRecipe::new);
         }

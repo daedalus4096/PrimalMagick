@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.items.IEnchantedByDefault;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Map;
@@ -17,8 +17,8 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public class PrimalAxeItem extends AxeItem implements IEnchantedByDefault {
-    public PrimalAxeItem(Tier tier, Item.Properties builder) {
-        super(tier, builder);
+    public PrimalAxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Item.Properties builder) {
+        super(material, attackDamage, attackSpeed, builder);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.stats;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.stats.StatFormatter;
 
 import javax.annotation.Nonnull;
@@ -14,7 +14,7 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public record Stat(ResourceLocation key, StatFormatter formatter, Optional<ResourceLocation> iconLocationOpt, boolean hidden, boolean internal, boolean hasHint) {
+public record Stat(Identifier key, StatFormatter formatter, Optional<Identifier> iconLocationOpt, boolean hidden, boolean internal, boolean hasHint) {
     @Nonnull
     public String getTranslationKey() {
         return String.join(".", "stat", this.key.getNamespace(), this.key.getPath());
@@ -29,7 +29,7 @@ public record Stat(ResourceLocation key, StatFormatter formatter, Optional<Resou
         }
     }
     
-    public static Builder builder(ResourceLocation loc) {
+    public static Builder builder(Identifier loc) {
         return new Builder(loc);
     }
     
@@ -38,14 +38,14 @@ public record Stat(ResourceLocation key, StatFormatter formatter, Optional<Resou
     }
     
     public static class Builder {
-        protected final ResourceLocation key;
+        protected final Identifier key;
         protected StatFormatter formatter = StatFormatter.DEFAULT;
-        protected Optional<ResourceLocation> iconLocationOpt = Optional.empty();
+        protected Optional<Identifier> iconLocationOpt = Optional.empty();
         protected boolean hidden = false;
         protected boolean internal = false;
         protected boolean hasHint = false;
         
-        public Builder(ResourceLocation key) {
+        public Builder(Identifier key) {
             this.key = key;
         }
         
@@ -54,7 +54,7 @@ public record Stat(ResourceLocation key, StatFormatter formatter, Optional<Resou
             return this;
         }
         
-        public Builder icon(ResourceLocation iconLoc) {
+        public Builder icon(Identifier iconLoc) {
             this.iconLocationOpt = Optional.ofNullable(iconLoc);
             return this;
         }

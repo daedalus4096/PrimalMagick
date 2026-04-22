@@ -25,7 +25,6 @@ public class ConfiguredSpellPayload<T extends AbstractSpellPayload<?>> extends A
         super(payload, configuredProperties);
     }
     
-    @SuppressWarnings("unchecked")
     public static Codec<ConfiguredSpellPayload<?>> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 AbstractSpellPayload.dispatchCodec().fieldOf("payload").forGetter(ConfiguredSpellPayload::getComponent),
@@ -33,7 +32,6 @@ public class ConfiguredSpellPayload<T extends AbstractSpellPayload<?>> extends A
             ).apply(instance, ConfiguredSpellPayload::new));
     }
     
-    @SuppressWarnings("unchecked")
     public static StreamCodec<RegistryFriendlyByteBuf, ConfiguredSpellPayload<?>> streamCodec() {
         return StreamCodec.composite(
                 AbstractSpellPayload.dispatchStreamCodec(),

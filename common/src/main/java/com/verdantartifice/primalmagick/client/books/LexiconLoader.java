@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.client.books;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.common.books.BookHelper;
 import com.verdantartifice.primalmagick.common.books.BookView;
@@ -10,13 +7,14 @@ import com.verdantartifice.primalmagick.common.books.Lexicon;
 import com.verdantartifice.primalmagick.common.books.LexiconManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.FileToIdConverter;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -26,14 +24,13 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
-public class LexiconLoader extends SimpleJsonResourceReloadListener {
-    protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
+public class LexiconLoader extends SimpleJsonResourceReloadListener<Lexicon> {
     private static final Logger LOGGER = LogManager.getLogger();
     
     private static LexiconLoader INSTANCE;
     
     protected LexiconLoader() {
-        super(GSON, "lexicons");
+        super(Lexicon.CODEC, FileToIdConverter.json("lexicons"));
     }
     
     public static LexiconLoader getInstance() {
@@ -52,17 +49,13 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+    protected void apply(@NotNull Map<Identifier, Lexicon> pObject, @NotNull ResourceManager pResourceManager, @NotNull ProfilerFiller pProfiler) {
         // Load lexicons explicitly defined in resource packs
-        pObject.entrySet().forEach(entry -> {
-            ResourceLocation location = entry.getKey();
-            // Filter anything beginning with "_" as it's used for metadata.
-            if (!location.getPath().startsWith("_")) {
-                try {
-                    LexiconManager.setLexicon(location, Lexicon.parse(GsonHelper.convertToJsonObject(entry.getValue(), "top member")));
-                } catch (Exception e) {
-                    LOGGER.error("Parsing error loading lexicon {}", location, e);
-                }
+        pObject.forEach((location, lexicon) -> {
+            if (lexicon == null) {
+                LOGGER.error("Failed to load lexicon {}", location);
+            } else {
+                LexiconManager.setLexicon(location, lexicon);
             }
         });
 
@@ -75,12 +68,12 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
 
     public void updateWithTagData(RegistryAccess registryAccess) {
         LOGGER.info("Updating lexicons with tagged data");
-        registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().forEach(langHolder -> {
+        registryAccess.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).listElements().forEach(langHolder -> {
             Lexicon lexicon = new Lexicon();
-            registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).holders().map(bookHolder -> new BookView(Either.left(bookHolder), langHolder, 0)).forEach(view -> {
-                lexicon.addWords(ClientBookHelper.getUnencodedWords(view));
-            });
-            LexiconManager.setLexicon(langHolder.key().location(), lexicon);
+            registryAccess.lookupOrThrow(RegistryKeysPM.BOOKS).listElements()
+                    .map(bookHolder -> new BookView(Either.left(bookHolder), langHolder, 0))
+                    .forEach(view -> lexicon.addWords(ClientBookHelper.getUnencodedWords(view)));
+            LexiconManager.setLexicon(langHolder.key().identifier(), lexicon);
         });
     }
 }

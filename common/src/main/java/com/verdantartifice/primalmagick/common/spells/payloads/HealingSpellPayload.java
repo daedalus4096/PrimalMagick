@@ -18,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -29,8 +30,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -49,7 +50,7 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
     
     public static final String TYPE = "healing";
     protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_HEALING));
-    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> Arrays.asList(SpellPropertiesPM.POWER.get());
+    protected static final Supplier<List<SpellProperty>> PROPERTIES = () -> List.of(SpellPropertiesPM.POWER.get());
 
     public static AbstractRequirement<?> getRequirement() {
         return REQUIREMENT;
@@ -84,13 +85,13 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
     }
 
     @Override
-    public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
+    public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
             if (entityTarget.getEntity() instanceof LivingEntity entity) {
-                if (entity.isInvertedHealAndHarm()) {
+                if (entity.isInvertedHealAndHarm() && world instanceof ServerLevel serverLevel) {
                     // Undead entities get dealt damage
-                    entity.hurt(this.getDamageSource(caster, spell, projectileEntity), 1.5F * this.getBaseAmount(spell, spellSource, caster, world.registryAccess()));
+                    entity.hurtServer(serverLevel, this.getDamageSource(caster, spell, projectileEntity), 1.5F * this.getBaseAmount(spell, spellSource, caster, world.registryAccess()));
                 } else {
                     // All other entities are healed
                     float curHealth = entity.getHealth();
@@ -111,6 +112,7 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.SUN;
     }
@@ -122,7 +124,7 @@ public class HealingSpellPayload extends AbstractSpellPayload<HealingSpellPayloa
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundsPM.HEAL.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

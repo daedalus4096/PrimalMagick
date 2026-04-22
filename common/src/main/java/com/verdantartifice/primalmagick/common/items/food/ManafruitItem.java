@@ -24,7 +24,7 @@ public class ManafruitItem extends Item {
     
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isClientSide) {
+        if (!worldIn.isClientSide()) {
             entityLiving.addEffect(new MobEffectInstance(EffectsPM.MANAFRUIT.getHolder(), 6000, this.amplifier));
         }
         return super.finishUsingItem(stack, worldIn, entityLiving);

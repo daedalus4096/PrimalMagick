@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -18,11 +19,11 @@ import java.util.Optional;
  * Definition of an ancient library structure.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.world.level.levelgen.structure.structures.DesertPyramidStructure}
- * @see {@link net.minecraft.world.level.levelgen.structure.structures.IglooStructure}
+ * @see net.minecraft.world.level.levelgen.structure.structures.DesertPyramidStructure
+ * @see net.minecraft.world.level.levelgen.structure.structures.IglooStructure
  */
 public class LibraryStructure extends Structure {
-    public static final MapCodec<LibraryStructure> CODEC = RecordCodecBuilder.<LibraryStructure>mapCodec(instance -> instance.group(
+    public static final MapCodec<LibraryStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             LibraryStructure.settingsCodec(instance),
             ResourceKey.codec(RegistryKeysPM.CULTURES).fieldOf("culture_key").forGetter(library -> library.cultureKey)
         ).apply(instance, LibraryStructure::new));
@@ -35,13 +36,13 @@ public class LibraryStructure extends Structure {
     }
 
     @Override
-    protected Optional<GenerationStub> findGenerationPoint(GenerationContext pContext) {
-        return onTopOfChunkCenter(pContext, Heightmap.Types.WORLD_SURFACE_WG, builder -> {
-            this.generatePieces(builder, pContext);
-        });
+    @NotNull
+    protected Optional<GenerationStub> findGenerationPoint(@NotNull GenerationContext pContext) {
+        return onTopOfChunkCenter(pContext, Heightmap.Types.WORLD_SURFACE_WG, builder -> this.generatePieces(builder, pContext));
     }
 
     @Override
+    @NotNull
     public StructureType<?> type() {
         return StructureTypesPM.LIBRARY.get();
     }

@@ -12,7 +12,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -36,11 +36,11 @@ public class ShapedArcaneRecipe extends ShapedRecipe implements IShapedArcaneRec
     protected final SourceList manaCosts;
     protected final Optional<Integer> baseExpertiseOverride;
     protected final Optional<Integer> bonusExpertiseOverride;
-    protected final Optional<ResourceLocation> expertiseGroup;
+    protected final Optional<Identifier> expertiseGroup;
     protected final Optional<ResearchDisciplineKey> disciplineOverride;
     
     public ShapedArcaneRecipe(String group, ItemStack output, ShapedRecipePattern pattern, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts, Optional<Integer> baseExpertiseOverride,
-            Optional<Integer> bonusExpertiseOverride, Optional<ResourceLocation> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
+            Optional<Integer> bonusExpertiseOverride, Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
         super(group, CraftingBookCategory.MISC, pattern, output, false);
         this.pattern = pattern;
         this.requirement = requirement;
@@ -77,7 +77,7 @@ public class ShapedArcaneRecipe extends ShapedRecipe implements IShapedArcaneRec
     }
 
     @Override
-    public Optional<ResourceLocation> getExpertiseGroup() {
+    public Optional<Identifier> getExpertiseGroup() {
         return this.expertiseGroup;
     }
 
@@ -97,7 +97,7 @@ public class ShapedArcaneRecipe extends ShapedRecipe implements IShapedArcaneRec
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(r -> r.manaCosts),
                     Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
                     Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
-                    ResourceLocation.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
+                    Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
                     ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
             ).apply(instance, ShapedArcaneRecipe::new));
         }
@@ -112,7 +112,7 @@ public class ShapedArcaneRecipe extends ShapedRecipe implements IShapedArcaneRec
                     SourceList.STREAM_CODEC, r -> r.manaCosts,
                     ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.baseExpertiseOverride,
                     ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.bonusExpertiseOverride,
-                    ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC), r -> r.expertiseGroup,
+                    ByteBufCodecs.optional(Identifier.STREAM_CODEC), r -> r.expertiseGroup,
                     ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC), r -> r.disciplineOverride,
                     ShapedArcaneRecipe::new);
         }

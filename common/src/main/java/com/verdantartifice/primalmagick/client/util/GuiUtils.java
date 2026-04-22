@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.client.util;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Either;
@@ -18,6 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -26,7 +25,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -37,7 +36,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -57,16 +55,15 @@ public class GuiUtils {
         if (stack != null && !stack.isEmpty()) {
             Minecraft mc = Minecraft.getInstance();
             
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0.0F, 0.0F, 32.0F);   // Bring the item stack up in the Z-order
-            
+            guiGraphics.pose().pushMatrix();
+
             // Render the item stack into the GUI and, if applicable, its stack size and/or damage bar
             guiGraphics.renderItem(stack, x, y);
             if (!hideStackOverlay) {
                 guiGraphics.renderItemDecorations(mc.font, stack, x, y, text);
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
             
             retVal = true;
         }
@@ -80,17 +77,16 @@ public class GuiUtils {
             ItemRenderer itemRenderer = mc.getItemRenderer();
             BakedModel bakedModel = itemRenderer.getModel(stack, mc.level, mc.player, 0);
             
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0.0F, 0.0F, 32.0F);
-            
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(x + 8, y + 8, 150);
+            guiGraphics.pose().pushMatrix();
+
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(x + 8, y + 8);
             
             try {
                 guiGraphics.pose().mulPose((new Matrix4f()).scaling(1.0F, -1.0F, 1.0F));
-                guiGraphics.pose().scale(16.0F, 16.0F, 16.0F);
+                guiGraphics.pose().scale(16.0F, 16.0F);
                 scaleOpt.ifPresent(scale -> {
-                    guiGraphics.pose().scale((float)scale.x, (float)scale.y, (float)scale.z);
+                    guiGraphics.pose().scale((float)scale.x, (float)scale.y);
                 });
                 
                 boolean flag = !bakedModel.usesBlockLight();
@@ -121,13 +117,13 @@ public class GuiUtils {
                 throw new ReportedException(crashreport);
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
 
             if (!hideStackOverlay) {
                 guiGraphics.renderItemDecorations(mc.font, stack, x, y, text);
             }
             
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
             
             retVal = true;
         }
@@ -154,7 +150,7 @@ public class GuiUtils {
         if (sources == null || sources.isEmpty()) {
             return;
         }
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
         int x = 0;
         int index = 0;
         
@@ -172,30 +168,25 @@ public class GuiUtils {
                 index++;
             }
         }
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
     
     public static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nullable Source source, int amount, double z) {
         if (source != null) {
-            renderSourceIcon(guiGraphics, x, y, source.getAtlasLocation(), amount, z);
+            renderSourceIcon(guiGraphics, x, y, source.getImage(), amount, z);
         }
     }
     
     public static void renderUnknownSourceIcon(GuiGraphics guiGraphics, int x, int y, int amount, double z) {
-        renderSourceIcon(guiGraphics, x, y, Source.getUnknownAtlasLocation(), amount, z);
+        renderSourceIcon(guiGraphics, x, y, Source.getUnknownImage(), amount, z);
     }
     
-    protected static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nonnull ResourceLocation imageLoc, int amount, double z) {
-        // Preserve previous value for blend GL attribute
-        boolean isBlendOn = GL11.glIsEnabled(GL11.GL_BLEND);
-        
+    protected static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nonnull Identifier imageLoc, int amount, double z) {
         Minecraft mc = Minecraft.getInstance();
         
-        guiGraphics.pose().pushPose();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        
-        guiGraphics.pose().pushPose();
+        guiGraphics.pose().pushMatrix();
+
+        guiGraphics.pose().pushMatrix();
         
         // Render the source's icon
         @SuppressWarnings("deprecation")
@@ -208,24 +199,19 @@ public class GuiUtils {
         builder.addVertex(x + 0.0F, y + 0.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
         buffer.endBatch();
 
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
         
         // Render an amount string for the source, if an amount has been given
         if (amount > 0) {
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0.0D, 0.0D, z + 1.0D);
-            guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().scale(0.5F, 0.5F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.font.width(amountStr);
             guiGraphics.drawString(mc.font, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.font.lineHeight + (y * 2)), Color.WHITE.getRGB());
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
         }
         
-        // Restore changed GL attributes
-        if (!isBlendOn) {
-            RenderSystem.disableBlend();
-        }
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
     
     public static void renderSourcesBillboard(PoseStack poseStack, MultiBufferSource buffers, double x, double y, double z, SourceList sources, float partialTicks) {
@@ -251,7 +237,7 @@ public class GuiUtils {
                 poseStack.translate(shiftX - startDeltaX, 0.0D, 0.0D);
                 poseStack.scale(scale, scale, scale);
 
-                ResourceLocation texLoc = source.isDiscovered(mc.player) ? source.getAtlasLocation() : Source.getUnknownAtlasLocation();
+                Identifier texLoc = source.isDiscovered(mc.player) ? source.getImage() : Source.getUnknownImage();
                 @SuppressWarnings("deprecation")
                 TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(texLoc);
                 VertexConsumer builder = buffers.getBuffer(RenderType.cutout());
@@ -276,19 +262,17 @@ public class GuiUtils {
     }
     
     public static void renderIconFromDefinition(GuiGraphics guiGraphics, IconDefinition iconDef, int x, int y) {
-        guiGraphics.pose().pushPose();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().translate(x, y, 0.0F);
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.pose().translate(x, y);
         if (iconDef.isItem()) {
             GuiUtils.renderItemStack(guiGraphics, new ItemStack(iconDef.asItem()), 0, 0, null, true);
         } else if (iconDef.isTag()) {
             GuiUtils.renderItemStack(guiGraphics, getTagDisplayStack(iconDef.asTagKey()), 0, 0, null, true);
         } else {
-            guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
-            guiGraphics.blit(iconDef.getLocation(), 0, 0, 0, 0, 255, 255);
+            guiGraphics.pose().scale(0.0625F, 0.0625F);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, iconDef.getLocation(), 0, 0, 0, 0, 255, 255, 256, 256);
         }
-        guiGraphics.pose().popPose();
+        guiGraphics.pose().popMatrix();
     }
     
     protected static ItemStack getTagDisplayStack(TagKey<Item> key) {
@@ -297,7 +281,7 @@ public class GuiUtils {
     
     protected static ItemStack getTagDisplayStack(TagKey<Item> key, long time, long millisPerItem) {
         List<Item> tagContents = new ArrayList<>();
-        Services.ITEMS_REGISTRY.getTag(key).forEach(tagContents::add);
+        Services.ITEMS_REGISTRY.getTag(key).ifPresent(tag -> tag.forEach(tagContents::add));
         if (!tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((time / millisPerItem) % tagContents.size());

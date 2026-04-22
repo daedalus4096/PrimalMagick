@@ -65,7 +65,7 @@ public class CalcinatorMenu extends AbstractTileSidedInventoryMenu<AbstractCalci
     }
 
     public boolean isFuel(ItemStack stack) {
-        return AbstractCalcinatorTileEntity.isFuel(stack);
+        return AbstractCalcinatorTileEntity.isFuel(stack, this.level.fuelValues());
     }
 
     @Override

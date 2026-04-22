@@ -7,10 +7,12 @@ import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -57,7 +59,7 @@ public class ClientUtils {
     @Nullable
     public static StatsCounter getStatsCounter() {
         Minecraft mc = Minecraft.getInstance();
-        return mc.player.getStats();
+        return mc.player != null ? mc.player.getStats() : null;
     }
     
     /**
@@ -68,7 +70,7 @@ public class ClientUtils {
      * @return whether the shift key is down
      */
     public static boolean hasShiftDown() {
-        return Screen.hasShiftDown();
+        return Minecraft.getInstance().hasShiftDown();
     }
     
     /**
@@ -79,7 +81,7 @@ public class ClientUtils {
      * @param containerId the ID of the menu whose screen to update
      * @param recipeId the ID of the recipe to be placed
      */
-    public static void handlePlaceGhostRecipe(int containerId, ResourceLocation recipeId) {
+    public static void handlePlaceGhostRecipe(int containerId, ResourceKey<Recipe<?>> recipeId) {
         // TODO Find a better home for this method
         Minecraft mc = Minecraft.getInstance();
         AbstractContainerMenu menu = mc.player.containerMenu;
@@ -107,7 +109,8 @@ public class ClientUtils {
      * 
      * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
      * 
-     * @param bookId the ID of the static book whose resources to load
+     * @param view the view of the static book whose resources to load
+     * @param bookType the type of book to be opened (e.g. book, tablet).
      */
     public static void openStaticBookScreen(BookView view, BookType bookType) {
         Minecraft mc = Minecraft.getInstance();

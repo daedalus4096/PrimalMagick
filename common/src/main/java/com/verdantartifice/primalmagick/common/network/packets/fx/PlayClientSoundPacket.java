@@ -9,7 +9,7 @@ import commonnetwork.networking.data.Side;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 
@@ -19,10 +19,10 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class PlayClientSoundPacket implements IMessageToClient {
-    public static final ResourceLocation CHANNEL = ResourceUtils.loc("play_client_sound");
+    public static final Identifier CHANNEL = ResourceUtils.loc("play_client_sound");
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayClientSoundPacket> STREAM_CODEC = StreamCodec.ofMember(PlayClientSoundPacket::encode, PlayClientSoundPacket::decode);
 
-    protected final ResourceLocation eventLoc;
+    protected final Identifier eventLoc;
     protected final float volume;
     protected final float pitch;
     
@@ -30,7 +30,7 @@ public class PlayClientSoundPacket implements IMessageToClient {
         this(Services.SOUND_EVENTS_REGISTRY.getKey(event), volume, pitch);
     }
     
-    protected PlayClientSoundPacket(ResourceLocation eventLoc, float volume, float pitch) {
+    protected PlayClientSoundPacket(Identifier eventLoc, float volume, float pitch) {
         this.eventLoc = eventLoc;
         this.volume = volume;
         this.pitch = pitch;
@@ -41,19 +41,19 @@ public class PlayClientSoundPacket implements IMessageToClient {
     }
 
     public static void encode(PlayClientSoundPacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeResourceLocation(message.eventLoc);
+        buf.writeIdentifier(message.eventLoc);
         buf.writeFloat(message.volume);
         buf.writeFloat(message.pitch);
     }
     
     public static PlayClientSoundPacket decode(RegistryFriendlyByteBuf buf) {
-        return new PlayClientSoundPacket(buf.readResourceLocation(), buf.readFloat(), buf.readFloat());
+        return new PlayClientSoundPacket(buf.readIdentifier(), buf.readFloat(), buf.readFloat());
     }
     
     public static void onMessage(PacketContext<PlayClientSoundPacket> ctx) {
         PlayClientSoundPacket message = ctx.message();
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
-        if (message.eventLoc != null) {
+        if (player != null && message.eventLoc != null) {
             SoundEvent soundEvent = Services.SOUND_EVENTS_REGISTRY.get(message.eventLoc);
             if (soundEvent != null) {
                 player.playSound(soundEvent, message.volume, message.pitch);

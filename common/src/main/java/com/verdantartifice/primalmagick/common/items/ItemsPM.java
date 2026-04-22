@@ -32,7 +32,6 @@ import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.DowsingRodItem;
 import com.verdantartifice.primalmagick.common.items.misc.DrainedPixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.DreamVisionTalismanItem;
-import com.verdantartifice.primalmagick.common.items.misc.EarthshatterHammerItem;
 import com.verdantartifice.primalmagick.common.items.misc.EnchantedInkAndQuillItem;
 import com.verdantartifice.primalmagick.common.items.misc.ForbiddenSourceGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.GrimoireItem;
@@ -43,6 +42,7 @@ import com.verdantartifice.primalmagick.common.items.misc.KnowledgeGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaInjectorBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaRelayBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.RecallStoneItem;
 import com.verdantartifice.primalmagick.common.items.misc.ResearchGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
@@ -50,6 +50,7 @@ import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.items.misc.SeascribePenItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.TickStickItem;
+import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenSwordItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
@@ -57,7 +58,6 @@ import com.verdantartifice.primalmagick.common.items.tools.HallowsteelShieldItem
 import com.verdantartifice.primalmagick.common.items.tools.HallowsteelTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.HexiumTridentItem;
-import com.verdantartifice.primalmagick.common.items.tools.ItemTierPM;
 import com.verdantartifice.primalmagick.common.items.tools.ManaOrbItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimalAxeItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimalFishingRodItem;
@@ -68,8 +68,8 @@ import com.verdantartifice.primalmagick.common.items.tools.PrimaliteShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.PrimaliteTridentItem;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
 import com.verdantartifice.primalmagick.common.items.tools.SpelltomeItem;
-import com.verdantartifice.primalmagick.common.items.tools.TieredBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.TieredFishingRodItem;
+import com.verdantartifice.primalmagick.common.items.tools.ToolMaterialsPM;
 import com.verdantartifice.primalmagick.common.items.wands.ModularStaffItem;
 import com.verdantartifice.primalmagick.common.items.wands.ModularWandItem;
 import com.verdantartifice.primalmagick.common.items.wands.MundaneWandItem;
@@ -93,21 +93,18 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.HoneycombItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.equipment.ArmorType;
 
 import java.util.function.Supplier;
 
@@ -149,7 +146,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, GrimoireItem> CREATIVE_GRIMOIRE = registerSupplier("grimoire_creative", () -> new GrimoireItem(true, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
     // Register raw marble block items
-    public static final IRegistryItem<Item, BlockItem> MARBLE_RAW = registerSupplier("marble_raw", () -> new BlockItem(BlocksPM.MARBLE_RAW.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> MARBLE = registerSupplier("marble", () -> new BlockItem(BlocksPM.MARBLE.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> MARBLE_SLAB = registerSupplier("marble_slab", () -> new BlockItem(BlocksPM.MARBLE_SLAB.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> MARBLE_STAIRS = registerSupplier("marble_stairs", () -> new BlockItem(BlocksPM.MARBLE_STAIRS.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> MARBLE_WALL = registerSupplier("marble_wall", () -> new BlockItem(BlocksPM.MARBLE_WALL.get(), new Item.Properties()));
@@ -242,7 +239,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BurnableBlockItem> HALLOWOOD_PILLAR = registerSupplier("hallowood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.HALLOWOOD_PILLAR, 300, new Item.Properties()));
 
     // Register crop items
-    public static final IRegistryItem<Item, Item> HYDROMELON_SEEDS = registerSupplier("hydromelon_seeds", () -> new ItemNameBlockItem(BlocksPM.HYDROMELON_STEM.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> HYDROMELON_SEEDS = registerSupplier("hydromelon_seeds", () -> new BlockItem(BlocksPM.HYDROMELON_STEM.get(), new Item.Properties().useItemDescriptionPrefix()));
     public static final IRegistryItem<Item, Item> HYDROMELON = registerSupplier("hydromelon", () -> new BlockItem(BlocksPM.HYDROMELON.get(), new Item.Properties()));
     public static final IRegistryItem<Item, Item> HYDROMELON_SLICE = registerSupplier("hydromelon_slice", () -> new Item(new Item.Properties().food(FoodsPM.HYDROMELON_SLICE)));
     public static final IRegistryItem<Item, DoubleHighBlockItem> BLOOD_ROSE = registerSupplier("blood_rose", () -> new DoubleHighBlockItem(BlocksPM.BLOOD_ROSE.get(), new Item.Properties()));
@@ -440,7 +437,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, PixieHouseItem> PIXIE_HOUSE = registerSupplier("pixie_house", Services.ITEM_PROTOTYPES.pixieHouse(new Item.Properties().stacksTo(16)));
 
     // Register miscellaneous block items
-    public static final IRegistryItem<Item, ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new BlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().useItemDescriptionPrefix()));
     public static final IRegistryItem<Item, BlockItem> ROCK_SALT_ORE = registerSupplier("rock_salt_ore", () -> new BlockItem(BlocksPM.ROCK_SALT_ORE.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> QUARTZ_ORE = registerSupplier("quartz_ore", () -> new BlockItem(BlocksPM.QUARTZ_ORE.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> PRIMALITE_BLOCK = registerSupplier("primalite_block", () -> new BlockItem(BlocksPM.PRIMALITE_BLOCK.get(), new Item.Properties()));
@@ -448,7 +445,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> HALLOWSTEEL_BLOCK = registerSupplier("hallowsteel_block", () -> new BlockItem(BlocksPM.HALLOWSTEEL_BLOCK.get(), new Item.Properties()));
     public static final IRegistryItem<Item, BurnableBlockItem> IGNYX_BLOCK = registerSupplier("ignyx_block", Services.ITEM_PROTOTYPES.burnable(BlocksPM.IGNYX_BLOCK, 128000, new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> SALT_BLOCK = registerSupplier("salt_block", () -> new BlockItem(BlocksPM.SALT_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, ItemNameBlockItem> TREEFOLK_SEED = registerSupplier("treefolk_seed", () -> new ItemNameBlockItem(BlocksPM.TREEFOLK_SPROUT.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> TREEFOLK_SEED = registerSupplier("treefolk_seed", () -> new BlockItem(BlocksPM.TREEFOLK_SPROUT.get(), new Item.Properties().useItemDescriptionPrefix()));
     public static final IRegistryItem<Item, BlockItem> ENDERWARD = registerSupplier("enderward", () -> new BlockItem(BlocksPM.ENDERWARD.get(), new Item.Properties().stacksTo(16)));
 
     // Register salted food items
@@ -460,9 +457,9 @@ public class ItemsPM {
     public static final IRegistryItem<Item, Item> SALTED_COOKED_PORKCHOP = registerSupplier("salted_cooked_porkchop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(10).saturationModifier(0.96F).build())));
     public static final IRegistryItem<Item, Item> SALTED_COOKED_RABBIT = registerSupplier("salted_cooked_rabbit", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.72F).build())));
     public static final IRegistryItem<Item, Item> SALTED_COOKED_SALMON = registerSupplier("salted_cooked_salmon", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.96F).build())));
-    public static final IRegistryItem<Item, Item> SALTED_BEETROOT_SOUP = registerSupplier("salted_beetroot_soup", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).usingConvertsTo(Items.BOWL).build())));
-    public static final IRegistryItem<Item, Item> SALTED_MUSHROOM_STEW = registerSupplier("salted_mushroom_stew", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).usingConvertsTo(Items.BOWL).build())));
-    public static final IRegistryItem<Item, Item> SALTED_RABBIT_STEW = registerSupplier("salted_rabbit_stew", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(12).saturationModifier(0.72F).usingConvertsTo(Items.BOWL).build())));
+    public static final IRegistryItem<Item, Item> SALTED_BEETROOT_SOUP = registerSupplier("salted_beetroot_soup", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).build()).usingConvertsTo(Items.BOWL)));
+    public static final IRegistryItem<Item, Item> SALTED_MUSHROOM_STEW = registerSupplier("salted_mushroom_stew", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(7).saturationModifier(0.72F).build()).usingConvertsTo(Items.BOWL)));
+    public static final IRegistryItem<Item, Item> SALTED_RABBIT_STEW = registerSupplier("salted_rabbit_stew", () -> new Item(new Item.Properties().stacksTo(1).food(new FoodProperties.Builder().nutrition(12).saturationModifier(0.72F).build()).usingConvertsTo(Items.BOWL)));
 
     // Register mineral items
     public static final IRegistryItem<Item, Item> IRON_GRIT = registerSupplier("iron_grit", () -> new Item(new Item.Properties()));
@@ -482,50 +479,50 @@ public class ItemsPM {
     public static final IRegistryItem<Item, EnergizedGemItem> ENERGIZED_QUARTZ = registerSupplier("energized_quartz", () -> new EnergizedGemItem(new Item.Properties()));
 
     // Register tool items
-    public static final IRegistryItem<Item, SwordItem> PRIMALITE_SWORD = registerSupplier("primalite_sword", () -> new SwordItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(SwordItem.createAttributes(ItemTierPM.PRIMALITE, 3, -2.4F))));
+    public static final IRegistryItem<Item, Item> PRIMALITE_SWORD = registerSupplier("primalite_sword", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).sword(ToolMaterialsPM.PRIMALITE, 3, -2.4F)));
     public static final IRegistryItem<Item, PrimaliteTridentItem> PRIMALITE_TRIDENT = registerSupplier("primalite_trident", Services.ITEM_PROTOTYPES.primaliteTrident(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, TieredBowItem> PRIMALITE_BOW = registerSupplier("primalite_bow", Services.ITEM_PROTOTYPES.tieredBow(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, ShovelItem> PRIMALITE_SHOVEL = registerSupplier("primalite_shovel", () -> new ShovelItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(ShovelItem.createAttributes(ItemTierPM.PRIMALITE, 1.5F, -3.0F))));
-    public static final IRegistryItem<Item, PickaxeItem> PRIMALITE_PICKAXE = registerSupplier("primalite_pickaxe", () -> new PickaxeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(PickaxeItem.createAttributes(ItemTierPM.PRIMALITE, 1.0F, -2.8F))));
-    public static final IRegistryItem<Item, AxeItem> PRIMALITE_AXE = registerSupplier("primalite_axe", () -> new AxeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(AxeItem.createAttributes(ItemTierPM.PRIMALITE, 5.5F, -3.0F))));
-    public static final IRegistryItem<Item, HoeItem> PRIMALITE_HOE = registerSupplier("primalite_hoe", () -> new HoeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(HoeItem.createAttributes(ItemTierPM.PRIMALITE, -2.0F, 0.0F))));
-    public static final IRegistryItem<Item, TieredFishingRodItem> PRIMALITE_FISHING_ROD = registerSupplier("primalite_fishing_rod", () -> new TieredFishingRodItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, AbstractTieredBowItem> PRIMALITE_BOW = registerSupplier("primalite_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, ShovelItem> PRIMALITE_SHOVEL = registerSupplier("primalite_shovel", () -> new ShovelItem(ToolMaterialsPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, Item> PRIMALITE_PICKAXE = registerSupplier("primalite_pickaxe", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).pickaxe(ToolMaterialsPM.PRIMALITE, 1.0F, -2.8F)));
+    public static final IRegistryItem<Item, AxeItem> PRIMALITE_AXE = registerSupplier("primalite_axe", () -> new AxeItem(ToolMaterialsPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, HoeItem> PRIMALITE_HOE = registerSupplier("primalite_hoe", () -> new HoeItem(ToolMaterialsPM.PRIMALITE, -2.0F, 0.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, TieredFishingRodItem> PRIMALITE_FISHING_ROD = registerSupplier("primalite_fishing_rod", () -> new TieredFishingRodItem(ToolMaterialsPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, PrimaliteShieldItem> PRIMALITE_SHIELD = registerSupplier("primalite_shield", Services.ITEM_PROTOTYPES.primaliteShield(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SwordItem> HEXIUM_SWORD = registerSupplier("hexium_sword", () -> new SwordItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(SwordItem.createAttributes(ItemTierPM.HEXIUM, 3, -2.4F))));
+    public static final IRegistryItem<Item, Item> HEXIUM_SWORD = registerSupplier("hexium_sword", () -> new Item(new Item.Properties().rarity(Rarity.RARE).sword(ToolMaterialsPM.HEXIUM, 3, -2.4F)));
     public static final IRegistryItem<Item, HexiumTridentItem> HEXIUM_TRIDENT = registerSupplier("hexium_trident", Services.ITEM_PROTOTYPES.hexiumTrident(new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, TieredBowItem> HEXIUM_BOW = registerSupplier("hexium_bow", Services.ITEM_PROTOTYPES.tieredBow(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, ShovelItem> HEXIUM_SHOVEL = registerSupplier("hexium_shovel", () -> new ShovelItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(ShovelItem.createAttributes(ItemTierPM.HEXIUM, 1.5F, -3.0F))));
-    public static final IRegistryItem<Item, PickaxeItem> HEXIUM_PICKAXE = registerSupplier("hexium_pickaxe", () -> new PickaxeItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(PickaxeItem.createAttributes(ItemTierPM.HEXIUM, 1.0F, -2.8F))));
-    public static final IRegistryItem<Item, AxeItem> HEXIUM_AXE = registerSupplier("hexium_axe", () -> new AxeItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(AxeItem.createAttributes(ItemTierPM.HEXIUM, 4.0F, -3.0F))));
-    public static final IRegistryItem<Item, HoeItem> HEXIUM_HOE = registerSupplier("hexium_hoe", () -> new HoeItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(HoeItem.createAttributes(ItemTierPM.HEXIUM, -4.0F, 0.0F))));
-    public static final IRegistryItem<Item, TieredFishingRodItem> HEXIUM_FISHING_ROD = registerSupplier("hexium_fishing_rod", () -> new TieredFishingRodItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, AbstractTieredBowItem> HEXIUM_BOW = registerSupplier("hexium_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, ShovelItem> HEXIUM_SHOVEL = registerSupplier("hexium_shovel", () -> new ShovelItem(ToolMaterialsPM.HEXIUM, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, Item> HEXIUM_PICKAXE = registerSupplier("hexium_pickaxe", () -> new Item(new Item.Properties().rarity(Rarity.RARE).pickaxe(ToolMaterialsPM.HEXIUM, 1.0F, -2.8F)));
+    public static final IRegistryItem<Item, AxeItem> HEXIUM_AXE = registerSupplier("hexium_axe", () -> new AxeItem(ToolMaterialsPM.HEXIUM, 4.0F, -3.0F, new Item.Properties().rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, HoeItem> HEXIUM_HOE = registerSupplier("hexium_hoe", () -> new HoeItem(ToolMaterialsPM.HEXIUM, -4.0F, 0.0F, new Item.Properties().rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, TieredFishingRodItem> HEXIUM_FISHING_ROD = registerSupplier("hexium_fishing_rod", () -> new TieredFishingRodItem(ToolMaterialsPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, HexiumShieldItem> HEXIUM_SHIELD = registerSupplier("hexium_shield", Services.ITEM_PROTOTYPES.hexiumShield(new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, SwordItem> HALLOWSTEEL_SWORD = registerSupplier("hallowsteel_sword", () -> new SwordItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(SwordItem.createAttributes(ItemTierPM.HALLOWSTEEL, 3, -2.4F))));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_SWORD = registerSupplier("hallowsteel_sword", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).sword(ToolMaterialsPM.HALLOWSTEEL, 3, -2.4F)));
     public static final IRegistryItem<Item, HallowsteelTridentItem> HALLOWSTEEL_TRIDENT = registerSupplier("hallowsteel_trident", Services.ITEM_PROTOTYPES.hallowsteelTrident(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, TieredBowItem> HALLOWSTEEL_BOW = registerSupplier("hallowsteel_bow", Services.ITEM_PROTOTYPES.tieredBow(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, ShovelItem> HALLOWSTEEL_SHOVEL = registerSupplier("hallowsteel_shovel", () -> new ShovelItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(ShovelItem.createAttributes(ItemTierPM.HALLOWSTEEL, 1.5F, -3.0F))));
-    public static final IRegistryItem<Item, PickaxeItem> HALLOWSTEEL_PICKAXE = registerSupplier("hallowsteel_pickaxe", () -> new PickaxeItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(PickaxeItem.createAttributes(ItemTierPM.HALLOWSTEEL, 1.0F, -2.8F))));
-    public static final IRegistryItem<Item, AxeItem> HALLOWSTEEL_AXE = registerSupplier("hallowsteel_axe", () -> new AxeItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(AxeItem.createAttributes(ItemTierPM.HALLOWSTEEL, 3.5F, -3.0F))));
-    public static final IRegistryItem<Item, HoeItem> HALLOWSTEEL_HOE = registerSupplier("hallowsteel_hoe", () -> new HoeItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC).attributes(HoeItem.createAttributes(ItemTierPM.HALLOWSTEEL, -5.0F, 0.0F))));
-    public static final IRegistryItem<Item, TieredFishingRodItem> HALLOWSTEEL_FISHING_ROD = registerSupplier("hallowsteel_fishing_rod", () -> new TieredFishingRodItem(ItemTierPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, AbstractTieredBowItem> HALLOWSTEEL_BOW = registerSupplier("hallowsteel_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, ShovelItem> HALLOWSTEEL_SHOVEL = registerSupplier("hallowsteel_shovel", () -> new ShovelItem(ToolMaterialsPM.HALLOWSTEEL, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_PICKAXE = registerSupplier("hallowsteel_pickaxe", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).pickaxe(ToolMaterialsPM.HALLOWSTEEL, 1.0F, -2.8F)));
+    public static final IRegistryItem<Item, AxeItem> HALLOWSTEEL_AXE = registerSupplier("hallowsteel_axe", () -> new AxeItem(ToolMaterialsPM.HALLOWSTEEL, 3.5F, -3.0F, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, HoeItem> HALLOWSTEEL_HOE = registerSupplier("hallowsteel_hoe", () -> new HoeItem(ToolMaterialsPM.HALLOWSTEEL, -5.0F, 0.0F, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, TieredFishingRodItem> HALLOWSTEEL_FISHING_ROD = registerSupplier("hallowsteel_fishing_rod", () -> new TieredFishingRodItem(ToolMaterialsPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, HallowsteelShieldItem> HALLOWSTEEL_SHIELD = registerSupplier("hallowsteel_shield", Services.ITEM_PROTOTYPES.hallowsteelShield(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, PrimalShovelItem> PRIMAL_SHOVEL = registerDefaultInstance("primal_shovel", () -> new PrimalShovelItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(ShovelItem.createAttributes(ItemTierPM.PRIMALITE, 1.5F, -3.0F))));
-    public static final IRegistryItem<Item, PrimalFishingRodItem> PRIMAL_FISHING_ROD = registerDefaultInstance("primal_fishing_rod", () -> new PrimalFishingRodItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, PrimalAxeItem> PRIMAL_AXE = registerDefaultInstance("primal_axe", () -> new PrimalAxeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(AxeItem.createAttributes(ItemTierPM.PRIMALITE, 5.5F, -3.0F))));
-    public static final IRegistryItem<Item, PrimalHoeItem> PRIMAL_HOE = registerDefaultInstance("primal_hoe", () -> new PrimalHoeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(HoeItem.createAttributes(ItemTierPM.PRIMALITE, -2.0F, 0.0F))));
-    public static final IRegistryItem<Item, PrimalPickaxeItem> PRIMAL_PICKAXE = registerDefaultInstance("primal_pickaxe", () -> new PrimalPickaxeItem(ItemTierPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON).attributes(PickaxeItem.createAttributes(ItemTierPM.PRIMALITE, 1.0F, -2.8F))));
+    public static final IRegistryItem<Item, PrimalShovelItem> PRIMAL_SHOVEL = registerDefaultInstance("primal_shovel", () -> new PrimalShovelItem(ToolMaterialsPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, PrimalFishingRodItem> PRIMAL_FISHING_ROD = registerDefaultInstance("primal_fishing_rod", () -> new PrimalFishingRodItem(ToolMaterialsPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, PrimalAxeItem> PRIMAL_AXE = registerDefaultInstance("primal_axe", () -> new PrimalAxeItem(ToolMaterialsPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, PrimalHoeItem> PRIMAL_HOE = registerDefaultInstance("primal_hoe", () -> new PrimalHoeItem(ToolMaterialsPM.PRIMALITE, -2.0F, 0.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, PrimalPickaxeItem> PRIMAL_PICKAXE = registerDefaultInstance("primal_pickaxe", () -> new PrimalPickaxeItem(new Item.Properties().rarity(Rarity.UNCOMMON).pickaxe(ToolMaterialsPM.PRIMALITE, 1.0F, -2.8F)));
     public static final IRegistryItem<Item, ForbiddenTridentItem> FORBIDDEN_TRIDENT = registerDefaultInstance("forbidden_trident", Services.ITEM_PROTOTYPES.forbiddenTrident(new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, ForbiddenBowItem> FORBIDDEN_BOW = registerDefaultInstance("forbidden_bow", Services.ITEM_PROTOTYPES.forbiddenBow(new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, ForbiddenSwordItem> FORBIDDEN_SWORD = registerDefaultInstance("forbidden_sword", () -> new ForbiddenSwordItem(ItemTierPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE).attributes(SwordItem.createAttributes(ItemTierPM.HEXIUM, 3, -2.4F))));
+    public static final IRegistryItem<Item, ForbiddenSwordItem> FORBIDDEN_SWORD = registerDefaultInstance("forbidden_sword", () -> new ForbiddenSwordItem(new Item.Properties().rarity(Rarity.RARE).sword(ToolMaterialsPM.HEXIUM, 3, -2.4F)));
     public static final IRegistryItem<Item, SacredShieldItem> SACRED_SHIELD = registerDefaultInstance("sacred_shield", () -> new SacredShieldItem(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_APPRENTICE = registerSupplier("spelltome_apprentice", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.BASIC, new Item.Properties().rarity(Rarity.COMMON).stacksTo(1)));
-    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ADEPT = registerSupplier("spelltome_adept", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1)));
-    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_WIZARD = registerSupplier("spelltome_wizard", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
-    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ARCHMAGE = registerSupplier("spelltome_archmage", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
-    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_APPRENTICE = registerSupplier("mana_orb_apprentice", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.BASIC, new Item.Properties().rarity(Rarity.COMMON).stacksTo(1)));
-    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_ADEPT = registerSupplier("mana_orb_adept", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1)));
-    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_WIZARD = registerSupplier("mana_orb_wizard", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
-    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_ARCHMAGE = registerSupplier("mana_orb_archmage", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_APPRENTICE = registerSupplier("spelltome_apprentice", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.BASIC, new Item.Properties().rarity(Rarity.COMMON).enchantable(13).stacksTo(1)));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ADEPT = registerSupplier("spelltome_adept", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON).enchantable(18).stacksTo(1)));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_WIZARD = registerSupplier("spelltome_wizard", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE).enchantable(23).stacksTo(1)));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ARCHMAGE = registerSupplier("spelltome_archmage", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC).enchantable(28).stacksTo(1)));
+    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_APPRENTICE = registerSupplier("mana_orb_apprentice", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.BASIC, new Item.Properties().rarity(Rarity.COMMON).enchantable(13).stacksTo(1)));
+    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_ADEPT = registerSupplier("mana_orb_adept", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON).enchantable(18).stacksTo(1)));
+    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_WIZARD = registerSupplier("mana_orb_wizard", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE).enchantable(23).stacksTo(1)));
+    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_ARCHMAGE = registerSupplier("mana_orb_archmage", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC).enchantable(28).stacksTo(1)));
 
     // Register mana arrow items
     public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_EARTH = registerSupplier("mana_arrow_earth", () -> new ManaArrowItem(Sources.EARTH, new Item.Properties()));
@@ -539,34 +536,34 @@ public class ItemsPM {
     public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_HALLOWED = registerSupplier("mana_arrow_hallowed", () -> new ManaArrowItem(Sources.HALLOWED, new Item.Properties()));
 
     // Register armor items
-    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_HEAD = registerSupplier("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialsPM.IMBUED_WOOL.getHolder(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.COMMON).durability(ArmorItem.Type.HELMET.getDurability(8)).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
-    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_CHEST = registerSupplier("imbued_wool_chest", () -> new RobeArmorItem(ArmorMaterialsPM.IMBUED_WOOL.getHolder(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.COMMON).durability(ArmorItem.Type.CHESTPLATE.getDurability(8)).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
-    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_LEGS = registerSupplier("imbued_wool_legs", () -> new RobeArmorItem(ArmorMaterialsPM.IMBUED_WOOL.getHolder(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.COMMON).durability(ArmorItem.Type.LEGGINGS.getDurability(8)).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
-    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_FEET = registerSupplier("imbued_wool_feet", () -> new RobeArmorItem(ArmorMaterialsPM.IMBUED_WOOL.getHolder(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.COMMON).durability(ArmorItem.Type.BOOTS.getDurability(8)).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
-    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_HEAD = registerSupplier("spellcloth_head", () -> new RobeArmorItem(ArmorMaterialsPM.SPELLCLOTH.getHolder(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.HELMET.getDurability(20)).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
-    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_CHEST = registerSupplier("spellcloth_chest", () -> new RobeArmorItem(ArmorMaterialsPM.SPELLCLOTH.getHolder(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.CHESTPLATE.getDurability(20)).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
-    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_LEGS = registerSupplier("spellcloth_legs", () -> new RobeArmorItem(ArmorMaterialsPM.SPELLCLOTH.getHolder(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.LEGGINGS.getDurability(20)).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
-    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_FEET = registerSupplier("spellcloth_feet", () -> new RobeArmorItem(ArmorMaterialsPM.SPELLCLOTH.getHolder(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.BOOTS.getDurability(20)).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
-    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_HEAD = registerSupplier("hexweave_head", () -> new RobeArmorItem(ArmorMaterialsPM.HEXWEAVE.getHolder(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.HELMET.getDurability(35)).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
-    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_CHEST = registerSupplier("hexweave_chest", () -> new RobeArmorItem(ArmorMaterialsPM.HEXWEAVE.getHolder(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.CHESTPLATE.getDurability(35)).component(DataComponentsPM.MANA_DISCOUNT.get(), 5)));
-    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_LEGS = registerSupplier("hexweave_legs", () -> new RobeArmorItem(ArmorMaterialsPM.HEXWEAVE.getHolder(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.LEGGINGS.getDurability(35)).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
-    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_FEET = registerSupplier("hexweave_feet", () -> new RobeArmorItem(ArmorMaterialsPM.HEXWEAVE.getHolder(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.BOOTS.getDurability(35)).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
-    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_HEAD = registerSupplier("saintswool_head", () -> new RobeArmorItem(ArmorMaterialsPM.SAINTSWOOL.getHolder(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.HELMET.getDurability(50)).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
-    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_CHEST = registerSupplier("saintswool_chest", () -> new RobeArmorItem(ArmorMaterialsPM.SAINTSWOOL.getHolder(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.CHESTPLATE.getDurability(50)).component(DataComponentsPM.MANA_DISCOUNT.get(), 6)));
-    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_LEGS = registerSupplier("saintswool_legs", () -> new RobeArmorItem(ArmorMaterialsPM.SAINTSWOOL.getHolder(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.LEGGINGS.getDurability(50)).component(DataComponentsPM.MANA_DISCOUNT.get(), 6)));
-    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_FEET = registerSupplier("saintswool_feet", () -> new RobeArmorItem(ArmorMaterialsPM.SAINTSWOOL.getHolder(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.BOOTS.getDurability(50)).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
-    public static final IRegistryItem<Item, ArmorItem> PRIMALITE_HEAD = registerSupplier("primalite_head", () -> new ArmorItem(ArmorMaterialsPM.PRIMALITE.getHolder(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.HELMET.getDurability(30))));
-    public static final IRegistryItem<Item, ArmorItem> PRIMALITE_CHEST = registerSupplier("primalite_chest", () -> new ArmorItem(ArmorMaterialsPM.PRIMALITE.getHolder(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.CHESTPLATE.getDurability(30))));
-    public static final IRegistryItem<Item, ArmorItem> PRIMALITE_LEGS = registerSupplier("primalite_legs", () -> new ArmorItem(ArmorMaterialsPM.PRIMALITE.getHolder(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.LEGGINGS.getDurability(30))));
-    public static final IRegistryItem<Item, ArmorItem> PRIMALITE_FEET = registerSupplier("primalite_feet", () -> new ArmorItem(ArmorMaterialsPM.PRIMALITE.getHolder(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.UNCOMMON).durability(ArmorItem.Type.BOOTS.getDurability(30))));
-    public static final IRegistryItem<Item, ArmorItem> HEXIUM_HEAD = registerSupplier("hexium_head", () -> new ArmorItem(ArmorMaterialsPM.HEXIUM.getHolder(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.HELMET.getDurability(45))));
-    public static final IRegistryItem<Item, ArmorItem> HEXIUM_CHEST = registerSupplier("hexium_chest", () -> new ArmorItem(ArmorMaterialsPM.HEXIUM.getHolder(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.CHESTPLATE.getDurability(45))));
-    public static final IRegistryItem<Item, ArmorItem> HEXIUM_LEGS = registerSupplier("hexium_legs", () -> new ArmorItem(ArmorMaterialsPM.HEXIUM.getHolder(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.LEGGINGS.getDurability(45))));
-    public static final IRegistryItem<Item, ArmorItem> HEXIUM_FEET = registerSupplier("hexium_feet", () -> new ArmorItem(ArmorMaterialsPM.HEXIUM.getHolder(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.RARE).durability(ArmorItem.Type.BOOTS.getDurability(45))));
-    public static final IRegistryItem<Item, ArmorItem> HALLOWSTEEL_HEAD = registerSupplier("hallowsteel_head", () -> new ArmorItem(ArmorMaterialsPM.HALLOWSTEEL.getHolder(), ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.HELMET.getDurability(60))));
-    public static final IRegistryItem<Item, ArmorItem> HALLOWSTEEL_CHEST = registerSupplier("hallowsteel_chest", () -> new ArmorItem(ArmorMaterialsPM.HALLOWSTEEL.getHolder(), ArmorItem.Type.CHESTPLATE, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.CHESTPLATE.getDurability(60))));
-    public static final IRegistryItem<Item, ArmorItem> HALLOWSTEEL_LEGS = registerSupplier("hallowsteel_legs", () -> new ArmorItem(ArmorMaterialsPM.HALLOWSTEEL.getHolder(), ArmorItem.Type.LEGGINGS, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.LEGGINGS.getDurability(60))));
-    public static final IRegistryItem<Item, ArmorItem> HALLOWSTEEL_FEET = registerSupplier("hallowsteel_feet", () -> new ArmorItem(ArmorMaterialsPM.HALLOWSTEEL.getHolder(), ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.EPIC).durability(ArmorItem.Type.BOOTS.getDurability(60))));
+    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_HEAD = registerSupplier("imbued_wool_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
+    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_CHEST = registerSupplier("imbued_wool_chest", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
+    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_LEGS = registerSupplier("imbued_wool_legs", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
+    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_FEET = registerSupplier("imbued_wool_feet", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
+    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_HEAD = registerSupplier("spellcloth_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
+    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_CHEST = registerSupplier("spellcloth_chest", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
+    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_LEGS = registerSupplier("spellcloth_legs", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
+    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_FEET = registerSupplier("spellcloth_feet", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
+    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_HEAD = registerSupplier("hexweave_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
+    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_CHEST = registerSupplier("hexweave_chest", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 5)));
+    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_LEGS = registerSupplier("hexweave_legs", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
+    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_FEET = registerSupplier("hexweave_feet", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
+    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_HEAD = registerSupplier("saintswool_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
+    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_CHEST = registerSupplier("saintswool_chest", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 6)));
+    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_LEGS = registerSupplier("saintswool_legs", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 6)));
+    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_FEET = registerSupplier("saintswool_feet", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
+    public static final IRegistryItem<Item, Item> PRIMALITE_HEAD = registerSupplier("primalite_head", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.HELMET)));
+    public static final IRegistryItem<Item, Item> PRIMALITE_CHEST = registerSupplier("primalite_chest", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.CHESTPLATE)));
+    public static final IRegistryItem<Item, Item> PRIMALITE_LEGS = registerSupplier("primalite_legs", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.LEGGINGS)));
+    public static final IRegistryItem<Item, Item> PRIMALITE_FEET = registerSupplier("primalite_feet", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.BOOTS)));
+    public static final IRegistryItem<Item, Item> HEXIUM_HEAD = registerSupplier("hexium_head", () -> new Item(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.HELMET)));
+    public static final IRegistryItem<Item, Item> HEXIUM_CHEST = registerSupplier("hexium_chest", () -> new Item(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.CHESTPLATE)));
+    public static final IRegistryItem<Item, Item> HEXIUM_LEGS = registerSupplier("hexium_legs", () -> new Item(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.LEGGINGS)));
+    public static final IRegistryItem<Item, Item> HEXIUM_FEET = registerSupplier("hexium_feet", () -> new Item(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.BOOTS)));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_HEAD = registerSupplier("hallowsteel_head", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.HELMET)));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_CHEST = registerSupplier("hallowsteel_chest", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.CHESTPLATE)));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_LEGS = registerSupplier("hallowsteel_legs", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.LEGGINGS)));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_FEET = registerSupplier("hallowsteel_feet", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.BOOTS)));
 
     // Register miscellaneous items
     public static final IRegistryItem<Item, ArcanometerItem> ARCANOMETER = registerSupplier("arcanometer", Services.ITEM_PROTOTYPES.arcanometer());
@@ -579,7 +576,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, Item> ENCHANTED_INK_AND_QUILL = registerSupplier("enchanted_ink_and_quill", EnchantedInkAndQuillItem::new);
     public static final IRegistryItem<Item, SeascribePenItem> SEASCRIBE_PEN = registerSupplier("seascribe_pen", () -> new SeascribePenItem(new Item.Properties()));
     public static final IRegistryItem<Item, Item> ROCK_SALT = registerSupplier("rock_salt", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, EarthshatterHammerItem> EARTHSHATTER_HAMMER = registerSupplier("earthshatter_hammer", Services.ITEM_PROTOTYPES.earthshatterHammer());
+    public static final IRegistryItem<Item, Item> EARTHSHATTER_HAMMER = registerSupplier("earthshatter_hammer", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, Item> MANA_PRISM = registerSupplier("mana_prism", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> TALLOW = registerSupplier("tallow", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, Item> BEESWAX = registerSupplier("beeswax", () -> new HoneycombItem(new Item.Properties()));
@@ -601,7 +598,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, DowsingRodItem> DOWSING_ROD = registerSupplier("dowsing_rod", () -> new DowsingRodItem(new Item.Properties().stacksTo(1).durability(63)));
     public static final IRegistryItem<Item, Item> FOUR_LEAF_CLOVER = registerSupplier("four_leaf_clover", () -> new Item(new Item.Properties()));
     public static final IRegistryItem<Item, RecallStoneItem> RECALL_STONE = registerSupplier("recall_stone", () -> new RecallStoneItem(new Item.Properties()));
-    public static final IRegistryItem<Item, SmithingTemplateItem> RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE = registerSupplier("runic_armor_trim_smithing_template", () -> TrimPatternsPM.createRunicArmorTrimTemplate(TrimPatternsPM.RUNIC));
+    public static final IRegistryItem<Item, SmithingTemplateItem> RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE = registerSupplier("runic_armor_trim_smithing_template", () -> TrimPatternsPM.createRunicArmorTrimTemplate(new Item.Properties()));
     public static final IRegistryItem<Item, WardingModuleItem> BASIC_WARDING_MODULE = registerSupplier("warding_module_basic", () -> new WardingModuleItem(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, WardingModuleItem> GREATER_WARDING_MODULE = registerSupplier("warding_module_greater", () -> new WardingModuleItem(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, WardingModuleItem> SUPREME_WARDING_MODULE = registerSupplier("warding_module_supreme", () -> new WardingModuleItem(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
@@ -812,7 +809,7 @@ public class ItemsPM {
 
     // Register concoction items
     public static final IRegistryItem<Item, SkyglassFlaskItem> SKYGLASS_FLASK = registerSupplier("skyglass_flask", () -> new SkyglassFlaskItem(new Item.Properties()));
-    public static final IRegistryItem<Item, ConcoctionItem> CONCOCTION = registerCustom("concoction", ConcoctionItem::registerCreativeTabItems, () -> new ConcoctionItem(new Item.Properties().craftRemainder(SKYGLASS_FLASK.get()).stacksTo(1)));
+    public static final IRegistryItem<Item, ConcoctionItem> CONCOCTION = registerCustom("concoction", ConcoctionItem::registerCreativeTabItems, () -> new ConcoctionItem(new Item.Properties().craftRemainder(SKYGLASS_FLASK.get()).usingConvertsTo(SKYGLASS_FLASK.get()).stacksTo(1)));
     public static final IRegistryItem<Item, BombCasingItem> BOMB_CASING = registerSupplier("bomb_casing", () -> new BombCasingItem(new Item.Properties()));
     public static final IRegistryItem<Item, AlchemicalBombItem> ALCHEMICAL_BOMB = registerCustom("alchemical_bomb", AlchemicalBombItem::registerCreativeTabItems, () -> new AlchemicalBombItem(new Item.Properties().stacksTo(1)));
 
@@ -858,37 +855,37 @@ public class ItemsPM {
     public static final IRegistryItem<Item, StaffCoreItem> PURE_PRIMAL_STAFF_CORE_ITEM = registerSupplier("pure_primal_staff_core_item", () -> new StaffCoreItem(WandCore.PURE_PRIMAL, new Item.Properties()));
 
     // Register spawn egg items
-    public static final IRegistryItem<Item, SpawnEggItem> TREEFOLK_SPAWN_EGG = registerSupplier("treefolk_spawn_egg", Services.ITEM_PROTOTYPES.deferredSpawnEgg(EntityTypesPM.TREEFOLK, 0x76440F, 0x007302, new Item.Properties()));
-    public static final IRegistryItem<Item, SpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = registerSupplier("primalite_golem_spawn_egg", Services.ITEM_PROTOTYPES.deferredSpawnEgg(EntityTypesPM.PRIMALITE_GOLEM, 0x27E1C7, 0x026278, new Item.Properties()));
-    public static final IRegistryItem<Item, SpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = registerSupplier("hexium_golem_spawn_egg", Services.ITEM_PROTOTYPES.deferredSpawnEgg(EntityTypesPM.HEXIUM_GOLEM, 0x791E29, 0x100736, new Item.Properties()));
-    public static final IRegistryItem<Item, SpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = registerSupplier("hallowsteel_golem_spawn_egg", Services.ITEM_PROTOTYPES.deferredSpawnEgg(EntityTypesPM.HALLOWSTEEL_GOLEM, 0xFDFFE0, 0xEDE1A2, new Item.Properties()));
-    public static final IRegistryItem<Item, SpawnEggItem> BASIC_EARTH_PIXIE = registerSupplier("pixie_basic_earth", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.BASIC_EARTH_PIXIE::get, PixieRank.BASIC, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> GRAND_EARTH_PIXIE = registerSupplier("pixie_grand_earth", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.GRAND_EARTH_PIXIE::get, PixieRank.GRAND, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_EARTH_PIXIE = registerSupplier("pixie_majestic_earth", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.MAJESTIC_EARTH_PIXIE::get, PixieRank.MAJESTIC, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, SpawnEggItem> BASIC_SEA_PIXIE = registerSupplier("pixie_basic_sea", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.BASIC_SEA_PIXIE::get, PixieRank.BASIC, Sources.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> GRAND_SEA_PIXIE = registerSupplier("pixie_grand_sea", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.GRAND_SEA_PIXIE::get, PixieRank.GRAND, Sources.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_SEA_PIXIE = registerSupplier("pixie_majestic_sea", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.MAJESTIC_SEA_PIXIE::get, PixieRank.MAJESTIC, Sources.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, SpawnEggItem> BASIC_SKY_PIXIE = registerSupplier("pixie_basic_sky", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.BASIC_SKY_PIXIE::get, PixieRank.BASIC, Sources.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> GRAND_SKY_PIXIE = registerSupplier("pixie_grand_sky", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.GRAND_SKY_PIXIE::get, PixieRank.GRAND, Sources.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_SKY_PIXIE = registerSupplier("pixie_majestic_sky", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.MAJESTIC_SKY_PIXIE::get, PixieRank.MAJESTIC, Sources.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, SpawnEggItem> BASIC_SUN_PIXIE = registerSupplier("pixie_basic_sun", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.BASIC_SUN_PIXIE::get, PixieRank.BASIC, Sources.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> GRAND_SUN_PIXIE = registerSupplier("pixie_grand_sun", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.GRAND_SUN_PIXIE::get, PixieRank.GRAND, Sources.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_SUN_PIXIE = registerSupplier("pixie_majestic_sun", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.MAJESTIC_SUN_PIXIE::get, PixieRank.MAJESTIC, Sources.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, SpawnEggItem> BASIC_MOON_PIXIE = registerSupplier("pixie_basic_moon", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.BASIC_MOON_PIXIE::get, PixieRank.BASIC, Sources.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> GRAND_MOON_PIXIE = registerSupplier("pixie_grand_moon", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.GRAND_MOON_PIXIE::get, PixieRank.GRAND, Sources.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_MOON_PIXIE = registerSupplier("pixie_majestic_moon", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.MAJESTIC_MOON_PIXIE::get, PixieRank.MAJESTIC, Sources.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, SpawnEggItem> BASIC_BLOOD_PIXIE = registerSupplier("pixie_basic_blood", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.BASIC_BLOOD_PIXIE::get, PixieRank.BASIC, Sources.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> GRAND_BLOOD_PIXIE = registerSupplier("pixie_grand_blood", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.GRAND_BLOOD_PIXIE::get, PixieRank.GRAND, Sources.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_BLOOD_PIXIE = registerSupplier("pixie_majestic_blood", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.MAJESTIC_BLOOD_PIXIE::get, PixieRank.MAJESTIC, Sources.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, SpawnEggItem> BASIC_INFERNAL_PIXIE = registerSupplier("pixie_basic_infernal", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.BASIC_INFERNAL_PIXIE::get, PixieRank.BASIC, Sources.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> GRAND_INFERNAL_PIXIE = registerSupplier("pixie_grand_infernal", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.GRAND_INFERNAL_PIXIE::get, PixieRank.GRAND, Sources.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_INFERNAL_PIXIE = registerSupplier("pixie_majestic_infernal", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.MAJESTIC_INFERNAL_PIXIE::get, PixieRank.MAJESTIC, Sources.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, SpawnEggItem> BASIC_VOID_PIXIE = registerSupplier("pixie_basic_void", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.BASIC_VOID_PIXIE::get, PixieRank.BASIC, Sources.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> GRAND_VOID_PIXIE = registerSupplier("pixie_grand_void", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.GRAND_VOID_PIXIE::get, PixieRank.GRAND, Sources.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_VOID_PIXIE = registerSupplier("pixie_majestic_void", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.MAJESTIC_VOID_PIXIE::get, PixieRank.MAJESTIC, Sources.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, SpawnEggItem> BASIC_HALLOWED_PIXIE = registerSupplier("pixie_basic_hallowed", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.BASIC_HALLOWED_PIXIE::get, PixieRank.BASIC, Sources.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> GRAND_HALLOWED_PIXIE = registerSupplier("pixie_grand_hallowed", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.GRAND_HALLOWED_PIXIE::get, PixieRank.GRAND, Sources.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_HALLOWED_PIXIE = registerSupplier("pixie_majestic_hallowed", Services.ITEM_PROTOTYPES.pixie(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE::get, PixieRank.MAJESTIC, Sources.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpawnEggItem> TREEFOLK_SPAWN_EGG = registerSupplier("treefolk_spawn_egg", () -> new SpawnEggItem(new Item.Properties().spawnEgg(EntityTypesPM.TREEFOLK.get())));
+    public static final IRegistryItem<Item, SpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = registerSupplier("primalite_golem_spawn_egg", () -> new SpawnEggItem(new Item.Properties().spawnEgg(EntityTypesPM.PRIMALITE_GOLEM.get())));
+    public static final IRegistryItem<Item, SpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = registerSupplier("hexium_golem_spawn_egg", () -> new SpawnEggItem(new Item.Properties().spawnEgg(EntityTypesPM.HEXIUM_GOLEM.get())));
+    public static final IRegistryItem<Item, SpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = registerSupplier("hallowsteel_golem_spawn_egg", () -> new SpawnEggItem(new Item.Properties().spawnEgg(EntityTypesPM.HALLOWSTEEL_GOLEM.get())));
+    public static final IRegistryItem<Item, SpawnEggItem> BASIC_EARTH_PIXIE = registerSupplier("pixie_basic_earth", () -> new PixieItem(EntityTypesPM.BASIC_EARTH_PIXIE.get(), PixieRank.BASIC, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> GRAND_EARTH_PIXIE = registerSupplier("pixie_grand_earth", () -> new PixieItem(EntityTypesPM.GRAND_EARTH_PIXIE.get(), PixieRank.GRAND, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_EARTH_PIXIE = registerSupplier("pixie_majestic_earth", () -> new PixieItem(EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), PixieRank.MAJESTIC, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpawnEggItem> BASIC_SEA_PIXIE = registerSupplier("pixie_basic_sea", () -> new PixieItem(EntityTypesPM.BASIC_SEA_PIXIE.get(), PixieRank.BASIC, Sources.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> GRAND_SEA_PIXIE = registerSupplier("pixie_grand_sea", () -> new PixieItem(EntityTypesPM.GRAND_SEA_PIXIE.get(), PixieRank.GRAND, Sources.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_SEA_PIXIE = registerSupplier("pixie_majestic_sea", () -> new PixieItem(EntityTypesPM.MAJESTIC_SEA_PIXIE.get(), PixieRank.MAJESTIC, Sources.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpawnEggItem> BASIC_SKY_PIXIE = registerSupplier("pixie_basic_sky", () -> new PixieItem(EntityTypesPM.BASIC_SKY_PIXIE.get(), PixieRank.BASIC, Sources.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> GRAND_SKY_PIXIE = registerSupplier("pixie_grand_sky", () -> new PixieItem(EntityTypesPM.GRAND_SKY_PIXIE.get(), PixieRank.GRAND, Sources.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_SKY_PIXIE = registerSupplier("pixie_majestic_sky", () -> new PixieItem(EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), PixieRank.MAJESTIC, Sources.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpawnEggItem> BASIC_SUN_PIXIE = registerSupplier("pixie_basic_sun", () -> new PixieItem(EntityTypesPM.BASIC_SUN_PIXIE.get(), PixieRank.BASIC, Sources.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> GRAND_SUN_PIXIE = registerSupplier("pixie_grand_sun", () -> new PixieItem(EntityTypesPM.GRAND_SUN_PIXIE.get(), PixieRank.GRAND, Sources.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_SUN_PIXIE = registerSupplier("pixie_majestic_sun", () -> new PixieItem(EntityTypesPM.MAJESTIC_SUN_PIXIE.get(), PixieRank.MAJESTIC, Sources.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpawnEggItem> BASIC_MOON_PIXIE = registerSupplier("pixie_basic_moon", () -> new PixieItem(EntityTypesPM.BASIC_MOON_PIXIE.get(), PixieRank.BASIC, Sources.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> GRAND_MOON_PIXIE = registerSupplier("pixie_grand_moon", () -> new PixieItem(EntityTypesPM.GRAND_MOON_PIXIE.get(), PixieRank.GRAND, Sources.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_MOON_PIXIE = registerSupplier("pixie_majestic_moon", () -> new PixieItem(EntityTypesPM.MAJESTIC_MOON_PIXIE.get(), PixieRank.MAJESTIC, Sources.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpawnEggItem> BASIC_BLOOD_PIXIE = registerSupplier("pixie_basic_blood", () -> new PixieItem(EntityTypesPM.BASIC_BLOOD_PIXIE.get(), PixieRank.BASIC, Sources.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> GRAND_BLOOD_PIXIE = registerSupplier("pixie_grand_blood", () -> new PixieItem(EntityTypesPM.GRAND_BLOOD_PIXIE.get(), PixieRank.GRAND, Sources.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_BLOOD_PIXIE = registerSupplier("pixie_majestic_blood", () -> new PixieItem(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), PixieRank.MAJESTIC, Sources.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpawnEggItem> BASIC_INFERNAL_PIXIE = registerSupplier("pixie_basic_infernal", () -> new PixieItem(EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), PixieRank.BASIC, Sources.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> GRAND_INFERNAL_PIXIE = registerSupplier("pixie_grand_infernal", () -> new PixieItem(EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), PixieRank.GRAND, Sources.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_INFERNAL_PIXIE = registerSupplier("pixie_majestic_infernal", () -> new PixieItem(EntityTypesPM.MAJESTIC_INFERNAL_PIXIE.get(), PixieRank.MAJESTIC, Sources.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpawnEggItem> BASIC_VOID_PIXIE = registerSupplier("pixie_basic_void", () -> new PixieItem(EntityTypesPM.BASIC_VOID_PIXIE.get(), PixieRank.BASIC, Sources.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> GRAND_VOID_PIXIE = registerSupplier("pixie_grand_void", () -> new PixieItem(EntityTypesPM.GRAND_VOID_PIXIE.get(), PixieRank.GRAND, Sources.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_VOID_PIXIE = registerSupplier("pixie_majestic_void", () -> new PixieItem(EntityTypesPM.MAJESTIC_VOID_PIXIE.get(), PixieRank.MAJESTIC, Sources.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final IRegistryItem<Item, SpawnEggItem> BASIC_HALLOWED_PIXIE = registerSupplier("pixie_basic_hallowed", () -> new PixieItem(EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), PixieRank.BASIC, Sources.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> GRAND_HALLOWED_PIXIE = registerSupplier("pixie_grand_hallowed", () -> new PixieItem(EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), PixieRank.GRAND, Sources.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, SpawnEggItem> MAJESTIC_HALLOWED_PIXIE = registerSupplier("pixie_majestic_hallowed", () -> new PixieItem(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), PixieRank.MAJESTIC, Sources.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
 
     // Register drained pixie items
     public static final IRegistryItem<Item, DrainedPixieItem> DRAINED_BASIC_EARTH_PIXIE = registerWithoutTab("drained_pixie_basic_earth", () -> new DrainedPixieItem(PixieRank.BASIC, Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));

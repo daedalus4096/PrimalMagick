@@ -20,7 +20,7 @@ public class HexiumTridentItem extends AbstractTieredTridentItem {
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public HexiumTridentItem(Item.Properties properties) {
-        super(ItemTierPM.HEXIUM, properties);
+        super(ToolMaterialsPM.HEXIUM, properties);
     }
 
     @Override

@@ -8,7 +8,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -27,11 +27,12 @@ public class DualRegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesPro
         super(output, provider, BUILDER, Set.of("minecraft", Constants.MOD_ID));
     }
     
-    public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
+    public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
         return generator.addProvider(isServer, new DualRegistryDataGeneratorNeoforge(output, provider)).getRegistryProvider();
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Dual-use Datapack Registries";
     }

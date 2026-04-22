@@ -1,7 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "minecraft:slime",
-  "values": {
-    "primalmagick:sea": 20
-  }
-}

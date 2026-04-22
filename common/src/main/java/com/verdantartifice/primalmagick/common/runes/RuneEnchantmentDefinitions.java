@@ -83,7 +83,7 @@ public class RuneEnchantmentDefinitions {
     public static final ResourceKey<RuneEnchantmentDefinition> PONDERING = createKey(EnchantmentsPM.PONDERING);
 
     public static ResourceKey<RuneEnchantmentDefinition> createKey(ResourceKey<Enchantment> ench) {
-        return ResourceKey.create(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, ench.location());
+        return ResourceKey.create(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, ench.identifier());
     }
     
     public static void bootstrap(BootstrapContext<RuneEnchantmentDefinition> context) {
@@ -174,7 +174,7 @@ public class RuneEnchantmentDefinitions {
     
     private static Holder.Reference<RuneEnchantmentDefinition> register(BootstrapContext<RuneEnchantmentDefinition> context, ResourceKey<RuneEnchantmentDefinition> key, 
             Function<Holder<Enchantment>, RuneEnchantmentDefinition> supplier) {
-        ResourceKey<Enchantment> enchKey = ResourceKey.create(Registries.ENCHANTMENT, key.location());
+        ResourceKey<Enchantment> enchKey = ResourceKey.create(Registries.ENCHANTMENT, key.identifier());
         Holder.Reference<Enchantment> enchHolder = context.lookup(Registries.ENCHANTMENT).get(enchKey).orElseThrow(
                 () -> new IllegalArgumentException("Unknown enchantment while registering rune definition: " + key.toString()));
         return context.register(key, supplier.apply(enchHolder));

@@ -16,6 +16,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Base definition for a hallowed pixie.  In addition to following the player as a companion, attacks with
@@ -29,12 +30,12 @@ public abstract class AbstractHallowedPixieEntity extends AbstractPixieEntity im
     }
 
     @Override
-    public Source getPixieSource() {
+    public @NotNull Source getPixieSource() {
         return Sources.HALLOWED;
     }
 
     @Override
-    protected AbstractSpellPayload<?> getSpellPayload() {
+    protected @NotNull AbstractSpellPayload<?> getSpellPayload() {
         return HolyDamageSpellPayload.INSTANCE;
     }
 

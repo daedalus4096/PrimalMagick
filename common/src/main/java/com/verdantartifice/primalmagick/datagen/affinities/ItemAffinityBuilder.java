@@ -2,11 +2,12 @@ package com.verdantartifice.primalmagick.datagen.affinities;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
+import com.verdantartifice.primalmagick.common.affinities.AffinityTypesPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.ItemLike;
 
 import javax.annotation.Nonnull;
@@ -14,8 +15,8 @@ import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class ItemAffinityBuilder {
-    protected final ResourceLocation targetId;
-    protected ResourceLocation baseId;
+    protected final Identifier targetId;
+    protected Identifier baseId;
     protected boolean hasSetValues = false;
     protected SourceList.Builder setValues = SourceList.builder();
     protected SourceList.Builder addValues = SourceList.builder();
@@ -74,22 +75,22 @@ public class ItemAffinityBuilder {
         return this;
     }
     
-    private void validate(ResourceLocation id) {
+    private void validate(Identifier id) {
         if (this.targetId == null) {
-            throw new IllegalStateException("No target item for affinity " + id.toString());
+            throw new IllegalStateException("No target item for affinity " + id);
         }
         if (!Services.ITEMS_REGISTRY.containsKey(this.targetId)) {
-            throw new IllegalStateException("Unknown target item " + this.targetId.toString() + " for affinity " + id.toString());
+            throw new IllegalStateException("Unknown target item " + this.targetId + " for affinity " + id);
         }
         
         if (this.baseId != null && this.hasSetValues) {
-            throw new IllegalStateException("Both base and set-values defined for affinity " + id.toString());
+            throw new IllegalStateException("Both base and set-values defined for affinity " + id);
         } else if (this.baseId != null && !Services.ITEMS_REGISTRY.containsKey(this.baseId)) {
-            throw new IllegalStateException("Unknown base item " + this.baseId.toString() + " for affinity " + id.toString());
-        } else if (this.baseId != null && this.targetId.equals(this.baseId)) {
-            throw new IllegalStateException("Target defines itself as a base for affinity " + id.toString());
+            throw new IllegalStateException("Unknown base item " + this.baseId + " for affinity " + id);
+        } else if (this.targetId.equals(this.baseId)) {
+            throw new IllegalStateException("Target defines itself as a base for affinity " + id);
         } else if (this.baseId == null && !this.hasSetValues) {
-            throw new IllegalStateException("Neither base nor set-values defined for affinity " + id.toString());
+            throw new IllegalStateException("Neither base nor set-values defined for affinity " + id);
         }
     }
     
@@ -98,23 +99,23 @@ public class ItemAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {
-        this.build(consumer, ResourceLocation.parse(name));
+        this.build(consumer, Identifier.parse(name));
     }
     
-    public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {
+    public void build(Consumer<IFinishedAffinity> consumer, Identifier id) {
         this.validate(id);
         consumer.accept(new ItemAffinityBuilder.Result(id, this.targetId, this.baseId, this.setValues.build(), this.addValues.build(), this.removeValues.build()));
     }
     
     public static class Result implements IFinishedAffinity {
-        protected final ResourceLocation id;
-        protected final ResourceLocation targetId;
-        protected final ResourceLocation baseId;
+        protected final Identifier id;
+        protected final Identifier targetId;
+        protected final Identifier baseId;
         protected final SourceList setValues;
         protected final SourceList addValues;
         protected final SourceList removeValues;
         
-        public Result(@Nonnull ResourceLocation id, @Nonnull ResourceLocation targetId, @Nullable ResourceLocation baseId, @Nullable SourceList setValues, @Nullable SourceList addValues, @Nullable SourceList removeValues) {
+        public Result(@Nonnull Identifier id, @Nonnull Identifier targetId, @Nullable Identifier baseId, @Nullable SourceList setValues, @Nullable SourceList addValues, @Nullable SourceList removeValues) {
             this.id = id;
             this.targetId = targetId;
             this.baseId = baseId;
@@ -124,12 +125,12 @@ public class ItemAffinityBuilder {
         }
         
         @Override
-        public AffinityType getType() {
-            return AffinityType.ITEM;
+        public AffinityType<?> getType() {
+            return AffinityTypesPM.ITEM.get();
         }
 
         @Override
-        public ResourceLocation getId() {
+        public Identifier getId() {
             return this.id;
         }
 

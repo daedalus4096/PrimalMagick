@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
@@ -65,14 +66,14 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
             return;
         }
 
-        level.getProfiler().push("loadManaNetwork");
-        level.getProfiler().push("defaultManaRelay");
+        Profiler.get().push("loadManaNetwork");
+        Profiler.get().push("defaultManaRelay");
 
         int range = this.getNetworkRange();
         int rangeSqr = range * range;
 
         // Search for mana network nodes in range of this one
-        level.getProfiler().push("findNodes");
+        Profiler.get().push("findNodes");
         List<IManaNetworkNode> nodes = BlockPos.betweenClosedStream(new AABB(this.getBlockPos()).inflate(range))
                 .filter(pos -> !this.getBlockPos().equals(pos) && pos.distSqr(this.getBlockPos()) <= rangeSqr)
                 .map(pos -> level.getBlockEntity(pos) instanceof IManaNetworkNode node ? node : null)
@@ -80,19 +81,19 @@ public interface IManaRelay extends IManaSupplier, IManaConsumer {
                 .toList();
 
         // Create direct routes to this relay for origin suppliers
-        level.getProfiler().popPush("createDirectSupplierEdges");
+        Profiler.get().popPush("createDirectSupplierEdges");
         nodes.stream().map(node -> node instanceof IManaSupplier supplier ? supplier : null)
                 .filter(Objects::nonNull)
                 .forEach(supplier -> this.getRouteTable().add(supplier, this));
 
         // Create direct routes to this relay for terminus consumers
-        level.getProfiler().popPush("createDirectConsumerEdges");
+        Profiler.get().popPush("createDirectConsumerEdges");
         nodes.stream().map(node -> node instanceof IManaConsumer consumer ? consumer : null)
                 .filter(Objects::nonNull)
                 .forEach(consumer -> this.getRouteTable().add(this, consumer));
-        level.getProfiler().pop();
+        Profiler.get().pop();
 
-        level.getProfiler().pop();
-        level.getProfiler().pop();
+        Profiler.get().pop();
+        Profiler.get().pop();
     }
 }

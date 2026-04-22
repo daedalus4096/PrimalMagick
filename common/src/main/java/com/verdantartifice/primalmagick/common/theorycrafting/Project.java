@@ -9,15 +9,15 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import org.apache.commons.lang3.mutable.MutableDouble;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -30,7 +30,7 @@ import java.util.Set;
  * @author Daedalus4096
  */
 public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialInstance> activeMaterials, List<AbstractReward<?>> otherRewards, double baseSuccessChance, double baseRewardMultiplier,
-        Optional<ResourceLocation> aidBlock) {
+        Optional<Identifier> aidBlock) {
     public static Codec<Project> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResourceKey.codec(RegistryKeysPM.PROJECT_TEMPLATES).fieldOf("templateKey").forGetter(Project::templateKey),
@@ -38,7 +38,7 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
                 AbstractReward.dispatchCodec().listOf().fieldOf("otherRewards").forGetter(Project::otherRewards),
                 Codec.DOUBLE.fieldOf("baseSuccessChance").forGetter(Project::baseSuccessChance),
                 Codec.DOUBLE.fieldOf("baseRewardMultiplier").forGetter(Project::baseRewardMultiplier),
-                ResourceLocation.CODEC.optionalFieldOf("aidBlock").forGetter(Project::aidBlock)
+                Identifier.CODEC.optionalFieldOf("aidBlock").forGetter(Project::aidBlock)
             ).apply(instance, Project::new));
     }
     
@@ -54,49 +54,48 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
                 Project::baseSuccessChance,
                 ByteBufCodecs.DOUBLE,
                 Project::baseRewardMultiplier,
-                ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC),
+                ByteBufCodecs.optional(Identifier.STREAM_CODEC),
                 Project::aidBlock,
                 Project::new);
     }
     
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "research_project", this.templateKey.location().getNamespace(), this.templateKey.location().getPath(), "name");
+        return String.join(".", "research_project", this.templateKey.identifier().getNamespace(), this.templateKey.identifier().getPath(), "name");
     }
     
     @Nonnull
     public String getTextTranslationKey() {
-        return String.join(".", "research_project", this.templateKey.location().getNamespace(), this.templateKey.location().getPath(), "text");
+        return String.join(".", "research_project", this.templateKey.identifier().getNamespace(), this.templateKey.identifier().getPath(), "text");
     }
 
-    protected double getSuccessChancePerMaterial() {
+    private double getSuccessChancePerMaterial() {
         // A full complement of materials should always be enough to get the player to 100% success chance
-        int materialCount = this.activeMaterials.size();
-        if (materialCount <= 0) {
+        if (this.activeMaterials.isEmpty()) {
             return 0.0D;
         } else {
-            return (1.0D - this.baseSuccessChance) / materialCount;
+            return (1.0D - this.baseSuccessChance) / this.activeMaterials.size();
         }
     }
     
     public double getSuccessChance() {
         MutableDouble chance = new MutableDouble(this.baseSuccessChance);
         final double per = this.getSuccessChancePerMaterial();
-        this.activeMaterials().stream().filter(m -> m.isSelected()).forEach($ -> chance.add(per));
+        this.activeMaterials().stream().filter(MaterialInstance::isSelected).forEach($ -> chance.add(per));
         return Mth.clamp(chance.doubleValue(), 0.0D, 1.0D);
     }
     
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
         // Determine satisfaction from selected materials
-        return !this.activeMaterials.stream().anyMatch(m -> m.isSelected() && !m.getMaterialDefinition().isSatisfied(player, surroundings));
+        return this.activeMaterials.stream().noneMatch(m -> m.isSelected() && !m.getMaterialDefinition().isSatisfied(player, surroundings));
     }
     
     public boolean consumeSelectedMaterials(Player player) {
-        return this.activeMaterials.stream().filter(m -> m.isSelected()).allMatch(m -> m.getMaterialDefinition().consume(player));
+        return this.activeMaterials.stream().filter(MaterialInstance::isSelected).allMatch(m -> m.getMaterialDefinition().consume(player));
     }
     
     public int getTheoryPointReward() {
-        int value = (int)(KnowledgeType.THEORY.getProgression() * (this.baseRewardMultiplier + this.activeMaterials().stream().filter(m -> m.isSelected()).mapToDouble(m -> m.getMaterialDefinition().getBonusReward()).sum()));
+        int value = (int)(KnowledgeType.THEORY.getProgression() * (this.baseRewardMultiplier + this.activeMaterials().stream().filter(MaterialInstance::isSelected).mapToDouble(m -> m.getMaterialDefinition().getBonusReward()).sum()));
         return switch (Services.CONFIG.theorycraftSpeed()) {
             case SLOW -> value / 2;
             case FAST -> value * 2;
@@ -104,7 +103,7 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
         };
     }
     
-    @Nullable
+    @NotNull
     public Optional<Block> getAidBlock() {
         return this.aidBlock.map(Services.BLOCKS_REGISTRY::get);
     }

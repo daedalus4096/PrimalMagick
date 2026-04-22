@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -59,7 +60,8 @@ public class LootTableReward extends AbstractReward<LootTableReward> {
 
     @Override
     public void grant(ServerPlayer player) {
-        LootParams params = new LootParams.Builder(player.serverLevel())
+        ServerLevel level = player.level();
+        LootParams params = new LootParams.Builder(level)
                 .withParameter(LootContextParams.THIS_ENTITY, player)
                 .withParameter(LootContextParams.ORIGIN, player.position())
                 .withLuck(player.getLuck())
@@ -67,7 +69,7 @@ public class LootTableReward extends AbstractReward<LootTableReward> {
         boolean playSound = false;
         
         for (int index = 0; index < this.pullCount; index++) {
-            for (ItemStack stack : player.getServer().reloadableRegistries().getLootTable(this.lootTable).getRandomItems(params)) {
+            for (ItemStack stack : level.getServer().reloadableRegistries().getLootTable(this.lootTable).getRandomItems(params)) {
                 if (!player.addItem(stack)) {
                     ItemEntity entity = player.drop(stack, false);
                     if (entity != null) {
@@ -80,7 +82,7 @@ public class LootTableReward extends AbstractReward<LootTableReward> {
             }
         }
         if (playSound) {
-            player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
         }
     }
 

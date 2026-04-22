@@ -14,14 +14,17 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
@@ -36,6 +39,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class RitualRecipeBuilder {
+    protected final HolderGetter<Item> itemGetter;
     protected final ItemStack result;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected final NonNullList<BlockIngredient> props = NonNullList.create();
@@ -45,10 +49,11 @@ public class RitualRecipeBuilder {
     protected int instability = 0;
     protected Optional<Integer> baseExpertiseOverride = Optional.empty();
     protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
-    protected Optional<ResourceLocation> expertiseGroup = Optional.empty();
+    protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
-    protected RitualRecipeBuilder(ItemStack result) {
+    protected RitualRecipeBuilder(HolderGetter<Item> itemGetter, ItemStack result) {
+        this.itemGetter = itemGetter;
         this.result = result.copy();
     }
     
@@ -59,8 +64,8 @@ public class RitualRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(ItemLike result, int count) {
-        return new RitualRecipeBuilder(new ItemStack(result, count));
+    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, ItemLike result, int count) {
+        return new RitualRecipeBuilder(itemGetter, new ItemStack(result, count));
     }
     
     /**
@@ -69,8 +74,8 @@ public class RitualRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(ItemLike result) {
-        return ritualRecipe(result, 1);
+    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, ItemLike result) {
+        return ritualRecipe(itemGetter, result, 1);
     }
     
     /**
@@ -79,8 +84,8 @@ public class RitualRecipeBuilder {
      * @param result the output item stack
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(ItemStack result) {
-        return new RitualRecipeBuilder(result);
+    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, ItemStack result) {
+        return new RitualRecipeBuilder(itemGetter, result);
     }
     
     /**
@@ -136,7 +141,7 @@ public class RitualRecipeBuilder {
      * @return the modified builder
      */
     public RitualRecipeBuilder addIngredient(TagKey<Item> tag, int quantity) {
-        return this.addIngredient(Ingredient.of(tag), quantity);
+        return this.addIngredient(Ingredient.of(this.itemGetter.getOrThrow(tag)), quantity);
     }
     
     /**
@@ -279,7 +284,7 @@ public class RitualRecipeBuilder {
         return this.expertise(tier.getDefaultExpertise(), tier.getDefaultBonusExpertise());
     }
     
-    public RitualRecipeBuilder expertiseGroup(ResourceLocation groupLoc) {
+    public RitualRecipeBuilder expertiseGroup(Identifier groupLoc) {
         this.expertiseGroup = Optional.ofNullable(groupLoc);
         return this;
     }
@@ -297,7 +302,7 @@ public class RitualRecipeBuilder {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
         } else if (this.requirements.size() == 1) {
-            return Optional.of(this.requirements.get(0));
+            return Optional.of(this.requirements.getFirst());
         } else {
             return Optional.of(new AndRequirement(this.requirements));
         }
@@ -309,11 +314,15 @@ public class RitualRecipeBuilder {
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(RecipeOutput output, ResourceLocation id) {
+    public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
         RitualRecipe recipe = new RitualRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredients, this.props, this.getFinalRequirement(), this.manaCosts, this.instability,
                 this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
         output.accept(id, recipe, null);
+    }
+
+    protected void build(RecipeOutput output, Identifier id) {
+        this.build(output, ResourceKey.create(Registries.RECIPE, id));
     }
     
     /**
@@ -324,9 +333,9 @@ public class RitualRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        ResourceLocation id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
-        ResourceLocation saveLoc = ResourceLocation.parse(save);
-        if (saveLoc.equals(id)) {
+        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
+        ResourceKey<Recipe<?>> saveLoc = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc(save));
+        if (saveLoc.identifier().equals(id)) {
             throw new IllegalStateException("Ritual Recipe " + save + " should remove its 'save' argument");
         } else {
             this.build(output, saveLoc);
@@ -347,7 +356,7 @@ public class RitualRecipeBuilder {
      * 
      * @param id the ID of the recipe
      */
-    protected void validate(ResourceLocation id) {
+    protected void validate(ResourceKey<Recipe<?>> id) {
         if (this.ingredients.isEmpty()) {
             throw new IllegalStateException("No ingredients defined for ritual recipe " + id + "!");
         }

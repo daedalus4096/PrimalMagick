@@ -26,7 +26,7 @@ public class ForbiddenTridentItem extends AbstractTieredTridentItem implements I
     private BlockEntityWithoutLevelRenderer customRenderer;
 
     public ForbiddenTridentItem(Item.Properties properties) {
-        super(ItemTierPM.HEXIUM, properties);
+        super(ToolMaterialsPM.HEXIUM, properties);
     }
 
     @Override

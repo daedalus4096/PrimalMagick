@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -13,7 +13,7 @@ import java.util.List;
  * 
  * @author Daedalus4096
  */
-public interface IPlayerWard extends INBTSerializablePM<CompoundTag> {
+public interface IPlayerWard extends INBTSerializablePM<Tag> {
     /**
      * Gets the list of equipment slots which count toward player maximum ward.
      * 
@@ -99,9 +99,9 @@ public interface IPlayerWard extends INBTSerializablePM<CompoundTag> {
     void clear();
     
     /**
-     * Sync the given player's ward data to the their client.
+     * Sync the given player's ward data to their client.
      * 
      * @param player the player whose client should receive the data
      */
-    void sync(@Nullable ServerPlayer player);
+    void sync(@NotNull ServerPlayer player);
 }

@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +34,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author Daedalus4096
  */
 public class BlockSwapper {
-    protected static final Map<ResourceLocation, Queue<BlockSwapper>> REGISTRY = new HashMap<>();
+    protected static final Map<Identifier, Queue<BlockSwapper>> REGISTRY = new HashMap<>();
     
     protected final BlockPos pos;
     protected final BlockState source;
@@ -59,7 +59,7 @@ public class BlockSwapper {
     
     @Nonnull
     public static Queue<BlockSwapper> getWorldSwappers(@Nonnull Level world) {
-        return REGISTRY.computeIfAbsent(world.dimension().location(), (key) -> {
+        return REGISTRY.computeIfAbsent(world.dimension().identifier(), (key) -> {
             return new LinkedBlockingQueue<>();
         });
     }

@@ -1,12 +1,12 @@
 package com.verdantartifice.primalmagick.common.spells;
 
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.function.Supplier;
 
 public interface ISpellComponentType {
-    ResourceLocation id();
+    Identifier id();
     int sortOrder();
     Supplier<AbstractRequirement<?>> requirementSupplier();
 }

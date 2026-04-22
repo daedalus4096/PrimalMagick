@@ -17,8 +17,8 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -84,7 +84,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
             // Only allow satisfaction from surroundings if not consuming the material and only one item is required
             TagKey<Block> blockTagKey = TagKey.create(Registries.BLOCK, this.tag.location());
             List<Block> tagContents = new ArrayList<>();
-            Services.BLOCKS_REGISTRY.getTag(blockTagKey).forEach(tagContents::add);
+            Services.BLOCKS_REGISTRY.getTag(blockTagKey).ifPresent(t -> t.forEach(tagContents::add));
             Set<Block> intersection = new HashSet<>(surroundings);
             intersection.retainAll(tagContents);
             return !intersection.isEmpty();
@@ -102,7 +102,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
         }
     }
     
-    @Nullable
+    @NotNull
     public TagKey<Item> getTag() {
         return this.tag;
     }
@@ -147,7 +147,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
         return true;
     }
 
-    public static Builder builder(TagKey<Item> tag) {
+    public static Builder builder(@NotNull TagKey<Item> tag) {
         return new Builder(tag);
     }
     

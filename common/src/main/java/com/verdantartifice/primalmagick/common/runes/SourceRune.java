@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.ResearchReq
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Rarity;
 
 import javax.annotation.Nonnull;
@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * @author Daedalus4096
  */
 public class SourceRune extends Rune {
-    public static final Codec<SourceRune> CODEC = ResourceLocation.CODEC.<SourceRune>xmap(loc -> {
+    public static final Codec<SourceRune> CODEC = Identifier.CODEC.<SourceRune>xmap(loc -> {
         if (Rune.getRune(loc) instanceof SourceRune source) {
             return source;
         } else {

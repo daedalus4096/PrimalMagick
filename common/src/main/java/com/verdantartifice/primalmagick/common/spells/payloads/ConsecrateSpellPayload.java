@@ -17,6 +17,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -60,6 +61,7 @@ public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload<Con
     }
 
     @Override
+    @NotNull
     public Source getSource() {
         return Sources.HALLOWED;
     }
@@ -70,7 +72,7 @@ public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload<Con
     }
 
     @Override
-    public void playSounds(Level world, BlockPos origin) {
+    public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
         world.playSound(null, origin, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 

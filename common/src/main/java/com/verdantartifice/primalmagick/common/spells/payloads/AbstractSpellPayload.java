@@ -13,10 +13,11 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -51,6 +52,7 @@ public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> im
     protected abstract String getPayloadType();
     
     @Override
+    @NotNull
     public List<SpellProperty> getProperties() {
         // Sort properties by their display names
         return this.getPropertiesInner().stream().sorted(Comparator.comparing(SpellProperty::id)).collect(Collectors.toList());
@@ -59,7 +61,7 @@ public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> im
     protected abstract List<SpellProperty> getPropertiesInner();
 
     @Override
-    public SpellProperty getProperty(ResourceLocation id) {
+    public SpellProperty getProperty(Identifier id) {
         return this.getPropertiesInner().stream().filter(prop -> prop.id().equals(id)).findFirst().orElse(null);
     }
     
@@ -68,15 +70,13 @@ public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> im
         if (retVal.intValue() > 0 && !SpellPropertiesPM.AMPLIFY_POWER.get().equals(property) && property.is(SpellPropertyTagsPM.AMPLIFIABLE)) {
             // For power or duration properties greater than zero, increase the total result by
             // the power of any attached Amplify spell mod or Spell Power enchantments
-            spell.getMod(SpellModsPM.AMPLIFY.get()).ifPresent(ampMod -> {
-                retVal.add(ampMod.getPropertyValue(SpellPropertiesPM.AMPLIFY_POWER.get()));
-            });
+            spell.getMod(SpellModsPM.AMPLIFY.get()).ifPresent(ampMod -> retVal.add(ampMod.getPropertyValue(SpellPropertiesPM.AMPLIFY_POWER.get())));
             if (caster != null) {
-                int enchLevel =
+                int enchantLevel =
                         EnchantmentHelperPM.getEnchantmentLevel(caster.getMainHandItem(), EnchantmentsPM.SPELL_POWER, registries) +
                         EnchantmentHelperPM.getEnchantmentLevel(caster.getOffhandItem(), EnchantmentsPM.SPELL_POWER, registries);
-                if (enchLevel > 0) {
-                    retVal.add(enchLevel);
+                if (enchantLevel > 0) {
+                    retVal.add(enchantLevel);
                 }
             }
         }
@@ -84,11 +84,13 @@ public abstract class AbstractSpellPayload<T extends AbstractSpellPayload<T>> im
     }
     
     @Override
+    @NotNull
     public Component getTypeName() {
         return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".type");
     }
     
     @Override
+    @NotNull
     public Component getDefaultNamePiece() {
         return Component.translatable("spells.primalmagick.payload." + this.getPayloadType() + ".default_name");
     }

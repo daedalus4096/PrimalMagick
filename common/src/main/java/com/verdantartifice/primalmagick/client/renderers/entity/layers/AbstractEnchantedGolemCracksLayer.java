@@ -2,12 +2,13 @@ package com.verdantartifice.primalmagick.client.renderers.entity.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.EnchantedGolemModel;
-import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchantedGolemEntity;
-import com.verdantartifice.primalmagick.common.entities.golems.AbstractEnchantedGolemEntity.Cracks;
-import net.minecraft.client.renderer.MultiBufferSource;
+import com.verdantartifice.primalmagick.client.renderers.entity.state.EnchantedGolemRenderState;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.Crackiness;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -16,21 +17,21 @@ import java.util.Map;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractEnchantedGolemCracksLayer<T extends AbstractEnchantedGolemEntity> extends RenderLayer<T, EnchantedGolemModel<T>> {
-    public AbstractEnchantedGolemCracksLayer(RenderLayerParent<T, EnchantedGolemModel<T>> entityRendererIn) {
+public abstract class AbstractEnchantedGolemCracksLayer extends RenderLayer<EnchantedGolemRenderState, EnchantedGolemModel> {
+    public AbstractEnchantedGolemCracksLayer(RenderLayerParent<EnchantedGolemRenderState, EnchantedGolemModel> entityRendererIn) {
         super(entityRendererIn);
     }
 
     @Override
-    public void render(PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn, T entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!entitylivingbaseIn.isInvisible()) {
-            Cracks cracks = entitylivingbaseIn.getCrackLevel();
-            if (cracks != Cracks.NONE) {
-                ResourceLocation tex = this.getTextureMap().get(cracks);
-                renderColoredCutoutModel(this.getParentModel(), tex, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, -1);
+    public void submit(@NotNull PoseStack matrixStackIn, @NotNull SubmitNodeCollector collector, int packedLight, @NotNull EnchantedGolemRenderState renderState, float yRot, float xRot) {
+        if (!renderState.isInvisible) {
+            Crackiness.Level crackLevel = renderState.crackiness;
+            if (crackLevel != Crackiness.Level.NONE) {
+                Identifier tex = this.getTextureMap().get(crackLevel);
+                renderColoredCutoutModel(this.getParentModel(), tex, matrixStackIn, collector, packedLight, renderState, -1, 1);
             }
         }
     }
     
-    protected abstract Map<Cracks, ResourceLocation> getTextureMap();
+    protected abstract Map<Crackiness.Level, Identifier> getTextureMap();
 }

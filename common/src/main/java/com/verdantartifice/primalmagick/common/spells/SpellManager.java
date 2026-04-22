@@ -49,6 +49,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Primary access point for spell-related methods.  Also stores defined spell component data in static registries.
@@ -99,41 +100,42 @@ public class SpellManager {
             });
 
             // Show the shared cooldown visually
-            player.getCooldowns().addCooldown(ItemsPM.SPELL_SCROLL_FILLED.get(), durationTicks);
-            player.getCooldowns().addCooldown(ItemsPM.MUNDANE_WAND.get(), durationTicks);
-            player.getCooldowns().addCooldown(ItemsPM.MODULAR_WAND.get(), durationTicks);
-            player.getCooldowns().addCooldown(ItemsPM.MODULAR_STAFF.get(), durationTicks);
+            // FIXME Should these use the USE_COOLDOWN data component for a cooldown group?
+            player.getCooldowns().addCooldown(ItemsPM.SPELL_SCROLL_FILLED.getId(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MUNDANE_WAND.getId(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MODULAR_WAND.getId(), durationTicks);
+            player.getCooldowns().addCooldown(ItemsPM.MODULAR_STAFF.getId(), durationTicks);
         }
     }
 
-    public static void appendSpellListingText(@Nullable Player pPlayer, ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents) {
+    public static void appendSpellListingText(@Nullable Player pPlayer, ItemStack pStack, Item.TooltipContext pContext, Consumer<Component> pTooltipComponents) {
         if (pStack.getItem() instanceof ISpellContainer spellContainer) {
             List<SpellPackage> spells = spellContainer.getSpells(pStack);
             int activeIndex = spellContainer.getActiveSpellIndex(pStack);
-            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.wand_header", spellContainer.getSpellCapacityText(pStack)));
+            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.wand_header", spellContainer.getSpellCapacityText(pStack)));
             if (spells.isEmpty()) {
-                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.none"));
+                pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.none"));
             } else {
                 for (int index = 0; index < spells.size(); index++) {
                     SpellPackage spell = spells.get(index);
                     if (index == activeIndex) {
-                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getDisplayName()));
-                        pTooltipComponents.addAll(SpellManager.getSpellPackageDetailTooltip(spell, pStack, pPlayer, true, pContext.registries()));
+                        pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getDisplayName()));
+                        SpellManager.getSpellPackageDetailTooltip(spell, pStack, pPlayer, true, pContext.registries()).forEach(pTooltipComponents);
                     } else {
-                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getDisplayName()));
+                        pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getDisplayName()));
                     }
                 }
             }
         }
     }
 
-    public static void appendActiveSpellText(ItemStack pStack, List<Component> pTooltipComponents) {
+    public static void appendActiveSpellText(ItemStack pStack, Consumer<Component> pTooltipComponents) {
         if (pStack.getItem() instanceof ISpellContainer spellContainer) {
             SpellPackage activeSpell = spellContainer.getActiveSpell(pStack);
             Component activeSpellName = (activeSpell == null) ?
                     Component.translatable("tooltip.primalmagick.none") :
                     activeSpell.getDisplayName();
-            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.spells.short_wand_header", activeSpellName));
+            pTooltipComponents.accept(Component.translatable("tooltip.primalmagick.spells.short_wand_header", activeSpellName));
         }
     }
 
@@ -218,9 +220,9 @@ public class SpellManager {
         if (retVal && player != null) {
             SpellPackage spell = getActiveSpell(mainHandStack, offHandStack);
             if (spell == null) {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell.none"));
+                player.displayClientMessage(Component.translatable("event.primalmagick.cycle_spell.none"), false);
             } else {
-                player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getDisplayName()));
+                player.displayClientMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getDisplayName()), false);
             }
         } else if (!retVal) {
             LOGGER.warn("Failed to set active spell to invalid index {}", index);
@@ -252,7 +254,7 @@ public class SpellManager {
                 world.addFreshEntity(mineEntity);
             } else if (burstMod != null) {
                 // If the spell package has the burst mod, calculate the set of affected blocks/entities and execute the payload on each
-                Set<HitResult> targetSet = burstMod.getComponent().getBurstTargets(result, spell, spellSource, caster, world);
+                Set<HitResult> targetSet = burstMod.getComponent().getBurstTargets(result, spell, spellSource, caster, serverLevel);
                 for (HitResult target : targetSet) {
                     spell.payload().getComponent().execute(target, hitVec, spell, world, caster, spellSource, null);
                 }
