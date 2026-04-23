@@ -127,7 +127,7 @@ public class DreamVisionTalismanItem extends Item {
             if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
                 this.setStoredExp(stack, 0);
                 stack.hurtAndBreak(1, serverLevel, player instanceof ServerPlayer serverPlayer ? serverPlayer : null, item -> {
-                    player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.break").withStyle(ChatFormatting.RED), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.dream_vision_talisman.break").withStyle(ChatFormatting.RED));
                 });
                 return true;
             }
@@ -156,9 +156,9 @@ public class DreamVisionTalismanItem extends Item {
         boolean active = this.isActive(stack);
         if (level.isClientSide()) {
             if (active) {
-                player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.set_inactive"), false);
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dream_vision_talisman.set_inactive"));
             } else {
-                player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.set_active"), false);
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dream_vision_talisman.set_active"));
             }
         }
         this.setActive(stack, !active);

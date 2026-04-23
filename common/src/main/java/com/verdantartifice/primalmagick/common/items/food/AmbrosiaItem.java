@@ -61,12 +61,12 @@ public class AmbrosiaItem extends Item {
                             AttunementManager.incrementAttunement(player, source, AttunementType.INDUCED, PENALTY);
                         }
                     }
-                    player.displayClientMessage(Component.translatable("event.primalmagick.ambrosia.success").withStyle(ChatFormatting.GREEN), true);
+                    player.sendOverlayMessage(Component.translatable("event.primalmagick.ambrosia.success").withStyle(ChatFormatting.GREEN));
                 } else {
-                    player.displayClientMessage(Component.translatable("event.primalmagick.ambrosia.failure").withStyle(ChatFormatting.RED), true);
+                    player.sendOverlayMessage(Component.translatable("event.primalmagick.ambrosia.failure").withStyle(ChatFormatting.RED));
                 }
             } else {
-                player.displayClientMessage(Component.translatable("event.primalmagick.ambrosia.not_wizard").withStyle(ChatFormatting.RED), true);
+                player.sendOverlayMessage(Component.translatable("event.primalmagick.ambrosia.not_wizard").withStyle(ChatFormatting.RED));
             }
         }
         return super.finishUsingItem(stack, worldIn, entityLiving);

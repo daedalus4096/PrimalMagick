@@ -58,11 +58,11 @@ public class ScanEntityPacket implements IMessageToServer {
             ServerPlayer player = ctx.sender();
             ResearchManager.isScannedAsync(message.type, player).thenAccept(isScanned -> {
                 if (isScanned) {
-                    player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
+                    player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED));
                 } else if (ResearchManager.setScanned(message.type, player)) {
-                    player.displayClientMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
+                    player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN));
                 } else {
-                    player.displayClientMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED), true);
+                    player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED));
                 }
             }).exceptionally(e -> {
                 LOGGER.error("Failed to scan entity type {}", message.type, e);

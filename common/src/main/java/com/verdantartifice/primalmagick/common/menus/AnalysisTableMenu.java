@@ -121,7 +121,7 @@ public class AnalysisTableMenu extends AbstractContainerMenu {
             ItemStack stack = this.analysisInventory.getItem(0).copy();
             if (stack.is(ItemTagsPM.ANALYSIS_TABLE_FORBIDDEN)) {
                 // Send a message to the player explaining that they can't destroy this item on the table
-                this.player.displayClientMessage(Component.translatable("event.primalmagick.analysis_table.forbidden").withStyle(ChatFormatting.RED), false);
+                this.player.sendSystemMessage(Component.translatable("event.primalmagick.analysis_table.forbidden").withStyle(ChatFormatting.RED));
             } else if (!stack.isEmpty()) {
                 this.analysisInventory.setItem(0, ItemStack.EMPTY);
                 this.analysisInventory.setItem(1, stack);

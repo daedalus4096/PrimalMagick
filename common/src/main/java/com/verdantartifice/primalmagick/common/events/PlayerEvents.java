@@ -224,19 +224,19 @@ public class PlayerEvents {
             if (!ResearchManager.isResearchStarted(player, ResearchEntries.DISCOVER_INFERNAL) && biomeHolder.is(BiomeTags.IS_NETHER)) {
                 // If the player is in a Nether-based biome, discover the Infernal source
                 ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_INFERNAL);
-                player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
+                player.sendSystemMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN));
             }
             if (!ResearchManager.isResearchStarted(player, ResearchEntries.DISCOVER_VOID) && biomeHolder.is(BiomeTags.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
                 ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_VOID);
-                player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
+                player.sendSystemMessage(Component.translatable("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN));
             }
             
             // If the player is working on the Earth Source research, check if they're far enough down
             if (SOURCE_EARTH_START.isKnownBy(player) && !SOURCE_EARTH_END.isKnownBy(player)) {
                 if (player.position().y < -16.0D && inOverworld && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_EARTH)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_EARTH);
-                    player.displayClientMessage(Component.translatable("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN));
                 }
             }
             
@@ -244,7 +244,7 @@ public class PlayerEvents {
             if (SOURCE_SEA_START.isKnownBy(player) && !SOURCE_SEA_END.isKnownBy(player)) {
                 if (biomeHolder.is(BiomeTags.IS_OCEAN) && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SEA)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_SEA);
-                    player.displayClientMessage(Component.translatable("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN));
                 }
             }
             
@@ -252,7 +252,7 @@ public class PlayerEvents {
             if (SOURCE_SKY_START.isKnownBy(player) && !SOURCE_SKY_END.isKnownBy(player)) {
                 if (player.position().y > 128.0D && inOverworld && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SKY)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_SKY);
-                    player.displayClientMessage(Component.translatable("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN));
                 }
             }
             
@@ -260,7 +260,7 @@ public class PlayerEvents {
             if (SOURCE_SUN_START.isKnownBy(player) && !SOURCE_SUN_END.isKnownBy(player)) {
                 if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level, player.blockPosition()) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SUN)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_SUN);
-                    player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN));
                 }
             }
             
@@ -268,7 +268,7 @@ public class PlayerEvents {
             if (SOURCE_MOON_START.isKnownBy(player) && !SOURCE_MOON_END.isKnownBy(player)) {
                 if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level, player.blockPosition()) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_MOON)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_MOON);
-                    player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN));
                 }
             }
         });
@@ -537,7 +537,7 @@ public class PlayerEvents {
                 }
                 if (success) {
                     // Only show success effects once, regardless of how many talismans were triggered
-                    player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN));
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                     }
@@ -557,7 +557,7 @@ public class PlayerEvents {
         if (!player.addItem(journal)) {
             player.drop(journal, false);
         }
-        player.displayClientMessage(Component.translatable("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN), false);
+        player.sendSystemMessage(Component.translatable("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN));
     }
     
     public static void onJump(LivingEntity livingEntity) {

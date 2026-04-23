@@ -39,7 +39,7 @@ public class RecallStoneItem extends Item {
                 }
                 CriteriaTriggersPM.RECALL_STONE.get().trigger(serverPlayer, serverLevel.dimension());
             } else {
-                player.displayClientMessage(Component.translatable("event.primalmagick.recall_stone.cannot_cross_dimensions").withStyle(ChatFormatting.RED), true);
+                player.sendOverlayMessage(Component.translatable("event.primalmagick.recall_stone.cannot_cross_dimensions").withStyle(ChatFormatting.RED));
             }
         }
         return super.use(level, player, hand);

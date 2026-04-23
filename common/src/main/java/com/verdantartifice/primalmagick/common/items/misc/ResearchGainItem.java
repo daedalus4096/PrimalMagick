@@ -41,7 +41,7 @@ public class ResearchGainItem extends Item {
             if (ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS)) {
                 if (!this.keySupplier.get().isKnownBy(player)) {
                     ResearchManager.completeResearch(player, this.keySupplier.get());
-                    player.displayClientMessage(Component.translatable("event.primalmagick.research.gain").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.research.gain").withStyle(ChatFormatting.GREEN));
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                     }
@@ -49,11 +49,11 @@ public class ResearchGainItem extends Item {
                         player.getItemInHand(hand).shrink(1);
                     }
                 } else {
-                    player.displayClientMessage(Component.translatable("event.primalmagick.knowledge_item.already_known").withStyle(ChatFormatting.RED), true);
+                    player.sendOverlayMessage(Component.translatable("event.primalmagick.knowledge_item.already_known").withStyle(ChatFormatting.RED));
                 }
             } else {
                 // Players who haven't started mod progression get no benefit
-                player.displayClientMessage(Component.translatable("event.primalmagick.knowledge_item.failure").withStyle(ChatFormatting.RED), true);
+                player.sendOverlayMessage(Component.translatable("event.primalmagick.knowledge_item.failure").withStyle(ChatFormatting.RED));
             }
         }
         return super.use(level, player, hand);

@@ -43,11 +43,11 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
             for (Player player : players) {
                 if (!ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE) && !ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS)) {
                     ResearchManager.completeResearch(player, ResearchEntries.FOUND_SHRINE);
-                    player.displayClientMessage(Component.translatable("event.primalmagick.found_shrine").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.found_shrine").withStyle(ChatFormatting.GREEN));
                 }
                 if (!ResearchManager.isResearchComplete(player, ResearchEntries.SIPHON_PROMPT) && InventoryUtils.isPlayerCarrying(player, new ItemStack(ItemsPM.MUNDANE_WAND.get()))) {
                     ResearchManager.completeResearch(player, ResearchEntries.SIPHON_PROMPT);
-                    player.displayClientMessage(Component.translatable("event.primalmagick.siphon_prompt").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.siphon_prompt").withStyle(ChatFormatting.GREEN));
                 }
                 if (state.getBlock() instanceof AncientManaFontBlock fontBlock) {
                     StatsManager.discoverShrine(player, fontBlock.getSource(), pos);

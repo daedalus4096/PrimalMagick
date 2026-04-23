@@ -87,7 +87,7 @@ public class ScanPositionPacket implements IMessageToServer {
                         if (chestStack != null && !chestStack.isEmpty()) {
                             // Limit how much of an inventory can be scanned
                             if (scanCount >= AffinityManager.MAX_SCAN_COUNT) {
-                                player.displayClientMessage(Component.translatable("event.primalmagick.scan.toobig").withStyle(ChatFormatting.RED), true);
+                                player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.toobig").withStyle(ChatFormatting.RED));
                                 break;
                             } else {
                                 foundFutures.add(CompletableFuture.completedFuture(chestStack)
@@ -112,10 +112,10 @@ public class ScanPositionPacket implements IMessageToServer {
                 // If at least one unscanned item was processed, send a success message
                 Util.sequence(foundFutures).thenAccept(foundList -> {
                     if (foundList.stream().mapToInt(found -> found ? 1 : 0).sum() > 0) {
-                        player.displayClientMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
+                        player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN));
                         knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
                     } else {
-                        player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
+                        player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED));
                     }
                 }).exceptionally(e -> {
                     LOGGER.error("Failed to scan block at position {}", message.pos, e);

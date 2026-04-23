@@ -51,11 +51,11 @@ public class ScanItemPacket implements IMessageToServer {
             ServerPlayer player = ctx.sender();
             ResearchManager.isScannedAsync(message.stack, player).thenAccept(isScanned -> {
                 if (isScanned) {
-                    player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
+                    player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED));
                 } else if (ResearchManager.setScanned(message.stack, player)) {
-                    player.displayClientMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
+                    player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN));
                 } else {
-                    player.displayClientMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED), true);
+                    player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED));
                 }
             }).exceptionally(e -> {
                 LOGGER.error("Failed to scan item stack " + message.stack.toString(), e);

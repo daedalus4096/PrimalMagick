@@ -58,7 +58,7 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
     }
     
     default void sendPropStatusMessage(@Nonnull Player player) {
-        player.displayClientMessage(Component.translatable(this.getPropTranslationKey()), false);
+        player.sendSystemMessage(Component.translatable(this.getPropTranslationKey()));
     }
     
     String getPropTranslationKey();

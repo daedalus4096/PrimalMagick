@@ -46,7 +46,7 @@ public abstract class AbstractAttunementGainItem extends Item {
         if (!level.isClientSide()) {
             if (ResearchManager.hasStartedProgression(player)) {
                 AttunementManager.incrementAttunement(player, this.source, this.attunementType, this.amount);
-                player.displayClientMessage(Component.translatable("event.primalmagick.attunement_item.success").withStyle(ChatFormatting.GREEN), true);
+                player.sendOverlayMessage(Component.translatable("event.primalmagick.attunement_item.success").withStyle(ChatFormatting.GREEN));
                 if (player instanceof ServerPlayer serverPlayer) {
                     PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.SHIMMER.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                 }
@@ -55,7 +55,7 @@ public abstract class AbstractAttunementGainItem extends Item {
                 }
             } else {
                 // Players who haven't started mod progression get no benefit
-                player.displayClientMessage(Component.translatable("event.primalmagick.attunement_item.failure").withStyle(ChatFormatting.RED), true);
+                player.sendOverlayMessage(Component.translatable("event.primalmagick.attunement_item.failure").withStyle(ChatFormatting.RED));
             }
         }
         return super.use(level, player, hand);

@@ -149,13 +149,13 @@ public class AttunementManager {
                 int total = getTotalAttunement(player, source);
                 if (!before && value) {
                     // Suppression newly active, so remove any active modifiers
-                    player.displayClientMessage(Component.translatable("event.primalmagick.attunement.suppression_gain", sourceText), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.attunement.suppression_gain", sourceText));
                     Stream.of(AttunementThreshold.values()).filter(threshold -> total >= threshold.getValue()).forEach(threshold -> {
                         MODIFIERS.stream().filter(mod -> source.equals(mod.getSource()) && threshold == mod.getThreshold()).forEach(mod -> mod.removeFromEntity(player));
                     });
                 } else if (before && !value) {
                     // Suppression newly inactive, so add any appropriate modifiers
-                    player.displayClientMessage(Component.translatable("event.primalmagick.attunement.suppression_loss", sourceText), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.attunement.suppression_loss", sourceText));
                     Stream.of(AttunementThreshold.values()).filter(threshold -> total >= threshold.getValue()).forEach(threshold -> {
                         MODIFIERS.stream().filter(mod -> source.equals(mod.getSource()) && threshold == mod.getThreshold()).forEach(mod -> mod.applyToEntity(player));
                     });
@@ -191,7 +191,7 @@ public class AttunementManager {
                     if (oldTotal < thresholdValue && newTotal >= thresholdValue && !isSuppressed(player, source)) {
                         // If gaining a threshold and not suppressed, send a message to the player
                         if (source.isDiscovered(player)) {
-                            player.displayClientMessage(Component.translatable("event.primalmagick.attunement.threshold_gain", sourceText, thresholdText), false);
+                            player.sendSystemMessage(Component.translatable("event.primalmagick.attunement.threshold_gain", sourceText, thresholdText));
                         }
 
                         // Apply any new attribute modifiers from the threshold gain for non-suppressed sources
@@ -204,7 +204,7 @@ public class AttunementManager {
                     if (oldTotal >= thresholdValue && newTotal < thresholdValue) {
                         // If losing a threshold and the source isn't suppressed, send a message to the player
                         if (source.isDiscovered(player) && !isSuppressed(player, source)) {
-                            player.displayClientMessage(Component.translatable("event.primalmagick.attunement.threshold_loss", sourceText, thresholdText), false);
+                            player.sendSystemMessage(Component.translatable("event.primalmagick.attunement.threshold_loss", sourceText, thresholdText));
                         }
 
                         // Remove any lost attribute modifiers from the threshold loss

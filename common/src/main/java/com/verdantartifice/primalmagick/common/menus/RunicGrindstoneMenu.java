@@ -283,7 +283,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
             }
             if (hintCount.intValue() > 0) {
                 // If at least one hint was granted to the player, notify them
-                this.player.displayClientMessage(Component.translatable("event.primalmagick.runic_grindstone.hints_granted").withStyle(ChatFormatting.GREEN), false);
+                this.player.sendSystemMessage(Component.translatable("event.primalmagick.runic_grindstone.hints_granted").withStyle(ChatFormatting.GREEN));
             }
         });
     }

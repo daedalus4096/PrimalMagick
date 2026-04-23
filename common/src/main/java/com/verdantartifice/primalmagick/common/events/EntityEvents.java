@@ -53,7 +53,7 @@ public class EntityEvents {
                 .setMinY(level.getMinY()).setMaxY(level.getMaxY());
         if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> level.getBlockState(pos).is(BlocksPM.ENDERWARD.get()))) {
             if (entity instanceof Player player) {
-                player.displayClientMessage(Component.translatable("event.primalmagick.enderward.block").withStyle(ChatFormatting.RED), true);
+                player.sendOverlayMessage(Component.translatable("event.primalmagick.enderward.block").withStyle(ChatFormatting.RED));
             }
             return true;
         }

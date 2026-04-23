@@ -65,7 +65,7 @@ public abstract class AbstractWandTransform implements IWandTransform {
                     .orElse(null);
         }
         if (toShow != null) {
-            player.displayClientMessage(toShow.withStyle(ChatFormatting.RED), false);
+            player.sendSystemMessage(toShow.withStyle(ChatFormatting.RED));
         }
     }
 

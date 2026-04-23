@@ -223,7 +223,7 @@ public abstract class AbstractWandItem extends Item implements IWand, IHasCustom
             for (IWandTransform transform : WandTransforms.getAll()) {
                 if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack, entityLiving) - timeLeft < WandTransforms.CHANNEL_DURATION) {
                     ResearchManager.completeResearch(player, WAND_TRANSFORM_HINT_KEY);
-                    player.displayClientMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN), false);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN));
                     break;
                 }
             }

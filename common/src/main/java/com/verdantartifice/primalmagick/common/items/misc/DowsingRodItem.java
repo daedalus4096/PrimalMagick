@@ -150,7 +150,7 @@ public class DowsingRodItem extends Item {
             stack.remove(DataComponentsPM.DOWSING_PRIMARY_POSITION.get());
             stack.remove(DataComponentsPM.DOWSING_SECONDARY_POSITION.get());
             if (sendStatusMessage) {
-                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.position.clear"), false);
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.position.clear"));
             }
         } else if (targetPos != null) {
             if (stack.has(DataComponentsPM.DOWSING_PRIMARY_POSITION.get())) {
@@ -160,7 +160,7 @@ public class DowsingRodItem extends Item {
             stack.set(DataComponentsPM.DOWSING_PRIMARY_POSITION.get(), targetPos);
             if (sendStatusMessage) {
                 Component posText = ComponentUtils.wrapInSquareBrackets(Component.literal(targetPos.toShortString()));
-                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.position.record", posText), false);
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.position.record", posText));
             }
         }
     }
@@ -199,27 +199,27 @@ public class DowsingRodItem extends Item {
         } else {
             msg = Component.translatable("event.primalmagick.dowsing_rod.altar_stability.neutral");
         }
-        player.displayClientMessage(msg, false);
+        player.sendSystemMessage(msg);
     }
     
     protected void doPropSaltCheck(Level level, ISaltPowered block, BlockPos blockPos, Player player) {
         if (block.isBlockSaltPowered(level, blockPos)) {
-            player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.active"), false);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.active"));
         } else {
-            player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.inactive"), false);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.inactive"));
         }
     }
     
     protected void doPropSymmetryCheck(Level level, IRitualStabilizer block, BlockPos blockPos, BlockPos altarPos, Player player) {
         BlockPos symPos = RitualAltarTileEntity.getSymmetricPosition(altarPos, blockPos);
         if (symPos == null || block.hasSymmetryPenalty(level, blockPos, symPos)) {
-            player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.not_found"), false);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.not_found"));
             if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.marking_pos"), false);
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.marking_pos"));
                 PacketHandler.sendToPlayer(new PropMarkerPacket(symPos, 200), serverPlayer);
             }
         } else {
-            player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.found"), false);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.found"));
         }
     }
     
