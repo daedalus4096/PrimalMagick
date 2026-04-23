@@ -83,7 +83,7 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
 
     @Override
     public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
-        world.playSound(null, origin, this.getCastSoundEvent(world.registryAccess()), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
+        world.playSound(null, origin, this.getCastSoundEvent(world.registryAccess()), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.getRandom().nextGaussian() * 0.05D));
     }
 
     protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource, LivingEntity caster, HolderLookup.Provider registries) {

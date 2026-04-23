@@ -45,7 +45,7 @@ public abstract class AbstractRaycastSpellVehicle<T extends AbstractRaycastSpell
             MutableObject<List<Vec3>> lookVectors = new MutableObject<>();
             spell.getMod(SpellModsPM.FORK.get()).ifPresentOrElse(forkMod -> {
                 // If a Fork mod is in the spell package, calculate a direction vector for each fork, based on the caster's line of sight
-                lookVectors.setValue(forkMod.getComponent().getDirectionUnitVectors(baseLookVector, world.random, spell, spellSource));
+                lookVectors.setValue(forkMod.getComponent().getDirectionUnitVectors(baseLookVector, world.getRandom(), spell, spellSource));
             }, () -> {
                 // If no Fork mod is in the spell package, use the caster's line of sight for the direction vector
                 lookVectors.setValue(Arrays.asList(baseLookVector.normalize()));
