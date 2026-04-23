@@ -4,10 +4,10 @@ import com.verdantartifice.primalmagick.common.menus.slots.IHasCyclingBackground
 import com.verdantartifice.primalmagick.common.menus.slots.IHasTooltip;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public abstract class AbstractContainerScreenPM<T extends AbstractContainerMenu>
     @Override
     protected void containerTick() {
         super.containerTick();
-        this.menu.slots.stream().forEach(slot -> {
+        this.menu.slots.forEach(slot -> {
             if (slot instanceof IHasCyclingBackgrounds bgSlot) {
                 bgSlot.tickBackgrounds();
             }
@@ -33,8 +33,8 @@ public abstract class AbstractContainerScreenPM<T extends AbstractContainerMenu>
     }
 
     @Override
-    protected void renderTooltip(GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
-        super.renderTooltip(pGuiGraphics, pX, pY);
+    protected void extractTooltip(@NonNull GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
+        super.extractTooltip(pGuiGraphics, pX, pY);
         
         // Render filtered slot tooltips if appropriate
         Optional<Component> tooltipOpt = Optional.empty();
