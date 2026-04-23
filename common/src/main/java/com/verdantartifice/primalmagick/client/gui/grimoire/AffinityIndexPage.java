@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopi
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 
 public class AffinityIndexPage extends AbstractPage {
@@ -27,7 +27,7 @@ public class AffinityIndexPage extends AbstractPage {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
             this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);

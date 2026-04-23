@@ -18,7 +18,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.util.Util;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.StateSwitchingButton;
@@ -308,7 +308,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.isVisible()) {
             guiGraphics.pose().pushMatrix();
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -333,7 +333,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         }
     }
     
-    public void renderTooltip(GuiGraphics guiGraphics, int parentLeft, int parentTop, int mouseX, int mouseY) {
+    public void renderTooltip(GuiGraphicsExtractor guiGraphics, int parentLeft, int parentTop, int mouseX, int mouseY) {
         if (this.isVisible()) {
             this.recipeBookPage.renderTooltip(guiGraphics, mouseX, mouseY);
             if (this.filterButton.isHoveredOrFocused() && this.mc.screen != null) {
@@ -351,7 +351,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         return ONLY_CRAFTABLES_TOOLTIP;
     }
     
-    protected void renderGhostRecipeTooltip(GuiGraphics guiGraphics, int parentLeft, int parentTop, int mouseX, int mouseY) {
+    protected void renderGhostRecipeTooltip(GuiGraphicsExtractor guiGraphics, int parentLeft, int parentTop, int mouseX, int mouseY) {
         ItemStack stack = null;
         for (int index = 0; index < this.ghostRecipe.size(); index++) {
             GhostRecipe.GhostIngredient ghostIngredient = this.ghostRecipe.get(index);
@@ -366,7 +366,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         }
     }
     
-    public void renderGhostRecipe(GuiGraphics guiGraphics, int parentLeft, int parentTop, boolean largeSlot, float partialTicks) {
+    public void renderGhostRecipe(GuiGraphicsExtractor guiGraphics, int parentLeft, int parentTop, boolean largeSlot, float partialTicks) {
         this.ghostRecipe.render(guiGraphics, this.mc, parentLeft, parentTop, largeSlot, partialTicks);
     }
 

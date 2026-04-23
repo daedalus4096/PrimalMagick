@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 /**
  * Rendering interface for an element of a grimoire page
@@ -15,7 +15,7 @@ public interface IPageElement {
      * @param x the page-relative X-coordinate at which to render this element
      * @param y the page-relative Y-coordinate at which to render this element
      */
-    public void render(GuiGraphics guiGraphics, int side, int x, int y);
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y);
     
     /**
      * Get the Y-coordinate at which to render the next page element

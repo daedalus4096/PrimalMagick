@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -47,7 +47,7 @@ public class RecipeMetadataPage extends AbstractPage {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
 
         // Draw title

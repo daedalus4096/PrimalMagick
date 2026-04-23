@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.phys.Vec3;
@@ -30,7 +30,7 @@ public class ItemIndexIcon extends AbstractIndexIcon {
     }
     
     @Override
-    public void render(GuiGraphics guiGraphics, double x, double y, float scale) {
+    public void render(GuiGraphicsExtractor guiGraphics, double x, double y, float scale) {
         if (this.stack == null || this.stack.isEmpty()) {
             return;
         }

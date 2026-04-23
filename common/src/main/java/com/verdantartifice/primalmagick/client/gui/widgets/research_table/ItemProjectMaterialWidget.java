@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -32,7 +32,7 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget<Ite
     }
     
     @Override
-    public void renderWidget(@NotNull GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(@NotNull GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
         GuiUtils.renderItemStack(guiGraphics, this.material.getItemStack(), this.getX(), this.getY(), this.getMessage().getString(), false);

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -47,7 +47,7 @@ public class LinguisticsDescriptionPage extends AbstractPage {
     }
     
     @Override
-    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         y += 25;
         
         // Render page contents

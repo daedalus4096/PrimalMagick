@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -29,7 +29,7 @@ public abstract class AbstractPage implements GuiEventListener {
      * @param mouseX
      * @param mouseY
      */
-    public abstract void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY);
+    public abstract void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY);
     
     /**
      * Get the text for this page's title
@@ -51,7 +51,7 @@ public abstract class AbstractPage implements GuiEventListener {
         return true;
     }
     
-    protected void renderTitle(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY, @Nullable Identifier icon) {
+    protected void renderTitle(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY, @Nullable Identifier icon) {
         Minecraft mc = Minecraft.getInstance();
         if (this.renderTopTitleBar()) {
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SEPARATOR_SPRITE, x + 10 + (side * 140), y + 18, 96, 5);   // Render the separator bar above the title text

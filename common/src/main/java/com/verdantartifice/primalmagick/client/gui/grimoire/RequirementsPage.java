@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
 
@@ -95,7 +95,7 @@ public class RequirementsPage extends AbstractPage {
         }
     }
     
-    public int renderRequirementsLabel(GuiGraphics guiGraphics, RequirementCategory category, String textTranslationKey, int x, int y, int widgetHeight) {
+    public int renderRequirementsLabel(GuiGraphicsExtractor guiGraphics, RequirementCategory category, String textTranslationKey, int x, int y, int widgetHeight) {
         Minecraft mc = Minecraft.getInstance();
         List<AbstractRequirement<?>> reqs = this.stage.getRequirementsByCategory(category);
         if (!reqs.isEmpty()) {
@@ -108,7 +108,7 @@ public class RequirementsPage extends AbstractPage {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Render page title
         this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
         y += 53;

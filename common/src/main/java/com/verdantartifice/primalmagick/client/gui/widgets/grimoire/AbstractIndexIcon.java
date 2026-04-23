@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 /**
  * Base class for an icon to show on a grimoire topic button.
@@ -18,9 +18,9 @@ public abstract class AbstractIndexIcon {
         return this.large;
     }
 
-    public void render(GuiGraphics guiGraphics, double x, double y) {
+    public void render(GuiGraphicsExtractor guiGraphics, double x, double y) {
         this.render(guiGraphics, x, y, 1F);
     }
     
-    public abstract void render(GuiGraphics guiGraphics, double x, double y, float scale);
+    public abstract void render(GuiGraphicsExtractor guiGraphics, double x, double y, float scale);
 }

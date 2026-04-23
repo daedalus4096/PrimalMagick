@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets;
 
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
 import com.verdantartifice.primalmagick.common.books.BookType;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -24,7 +24,7 @@ public class StaticBookPageButton extends PageButton {
     }
 
     @Override
-    public void renderContents(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         Identifier id = ClientBookHelper.getSprites(this.bookType).getPageButton(this.isForward, this.isHoveredOrFocused());
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, id, this.getX(), this.getY(), 23, 13);
     }

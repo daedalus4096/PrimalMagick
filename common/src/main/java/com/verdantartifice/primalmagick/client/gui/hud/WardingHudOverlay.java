@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -24,7 +24,7 @@ public class WardingHudOverlay {
         return !mc.options.hideGui && mc.gameMode != null && mc.gameMode.canHurtPlayer();
     }
     
-    public static void render(GuiGraphics pGuiGraphics, DeltaTracker pDeltaTracker) {
+    public static void render(GuiGraphicsExtractor pGuiGraphics, DeltaTracker pDeltaTracker) {
         Minecraft mc = Minecraft.getInstance();
         if (!shouldRender() || !(mc.getCameraEntity() instanceof Player player)) {
             return;
@@ -59,7 +59,7 @@ public class WardingHudOverlay {
         Profiler.get().pop();
     }
 
-    private static void renderPentacles(GuiGraphics guiGraphics, Player player, int left, int top, int rowHeight,
+    private static void renderPentacles(GuiGraphicsExtractor guiGraphics, Player player, int left, int top, int rowHeight,
             int regen, float wardMax, int ward, int wardLast, int absorb, boolean highlight) {
         int maxHealthHearts = Mth.ceil((double)wardMax / 2.0D);
         int maxAbsorbHearts = Mth.ceil((double)absorb / 2.0D);
@@ -85,7 +85,7 @@ public class WardingHudOverlay {
         }
     }
 
-    private static void renderPentacle(GuiGraphics guiGraphics, int xPos, int yPos, int textureX, int textureY, boolean highlight, boolean isHalf) {
+    private static void renderPentacle(GuiGraphicsExtractor guiGraphics, int xPos, int yPos, int textureX, int textureY, boolean highlight, boolean isHalf) {
         // FIXME Split texture into sprites
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_ICONS_LOCATION, xPos, yPos, textureX + (isHalf ? 9 : 0), textureY, 9, 9, 256, 256);
     }

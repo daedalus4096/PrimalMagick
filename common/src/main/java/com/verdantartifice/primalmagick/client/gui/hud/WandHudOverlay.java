@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -34,14 +34,14 @@ public class WandHudOverlay {
                 (mc.player.getMainHandItem().getItem() instanceof IWand || mc.player.getOffhandItem().getItem() instanceof IWand);
     }
     
-    public static void render(GuiGraphics pGuiGraphics, DeltaTracker pDeltaTracker) {
+    public static void render(GuiGraphicsExtractor pGuiGraphics, DeltaTracker pDeltaTracker) {
         Minecraft mc = Minecraft.getInstance();
         if (shouldRender() && mc.player != null) {
             renderHud(mc, pGuiGraphics, mc.player.getMainHandItem(), mc.player.getOffhandItem(), pDeltaTracker.getGameTimeDeltaPartialTick(true));
         }
     }
     
-    private static void renderHud(Minecraft mc, GuiGraphics guiGraphics, ItemStack mainHandStack, ItemStack offHandStack, float partialTick) {
+    private static void renderHud(Minecraft mc, GuiGraphicsExtractor guiGraphics, ItemStack mainHandStack, ItemStack offHandStack, float partialTick) {
         guiGraphics.pose().pushMatrix();
         
         int posY = 0;
@@ -67,7 +67,7 @@ public class WandHudOverlay {
         guiGraphics.pose().popMatrix();
     }
 
-    private static int renderSpellDisplay(GuiGraphics guiGraphics, int x, int y, Identifier spellIcon, float partialTick) {
+    private static int renderSpellDisplay(GuiGraphicsExtractor guiGraphics, int x, int y, Identifier spellIcon, float partialTick) {
         // Render the spell display background
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, HUD_TEXTURE, x, y, 60, 0, 26, 26, 256, 256);
         
@@ -82,7 +82,7 @@ public class WandHudOverlay {
         return 26;
     }
 
-    private static int renderManaGauge(GuiGraphics guiGraphics, int x, int y, Component text, double ratio, int color, boolean isLast, float partialTick, Font font) {
+    private static int renderManaGauge(GuiGraphicsExtractor guiGraphics, int x, int y, Component text, double ratio, int color, boolean isLast, float partialTick, Font font) {
         // Render the gauge background
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, HUD_TEXTURE, x, y, 0, 0, 59, 12, 256, 256);
         

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 
 /**
@@ -21,7 +21,7 @@ public class GenericIndexIcon extends AbstractIndexIcon {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, double x, double y, float scale) {
+    public void render(GuiGraphicsExtractor guiGraphics, double x, double y, float scale) {
         if (this.iconLocation != null) {
             float s = this.large ? 0.06F : 0.04F;
             int d = this.large ? 8 : 5;

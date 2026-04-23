@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -62,7 +62,7 @@ public abstract class AbstractShapedRecipePage<T extends ShapedRecipe> extends A
     }
     
     @Override
-    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         super.render(guiGraphics, side, x, y, mouseX, mouseY);
         y += 53;
         

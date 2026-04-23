@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.common.menus.slots.IHasCyclingBackgrounds;
 import com.verdantartifice.primalmagick.common.menus.slots.IHasTooltip;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.network.chat.Component;
@@ -33,7 +33,7 @@ public abstract class AbstractContainerScreenPM<T extends AbstractContainerMenu>
     }
 
     @Override
-    protected void renderTooltip(GuiGraphics pGuiGraphics, int pX, int pY) {
+    protected void renderTooltip(GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
         super.renderTooltip(pGuiGraphics, pX, pY);
         
         // Render filtered slot tooltips if appropriate

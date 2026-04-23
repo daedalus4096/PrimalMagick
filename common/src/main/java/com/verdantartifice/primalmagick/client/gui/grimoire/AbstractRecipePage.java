@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.Identifier;
 
@@ -20,7 +20,7 @@ public abstract class AbstractRecipePage extends AbstractPage {
     }
     
     @Override
-    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
     }
 

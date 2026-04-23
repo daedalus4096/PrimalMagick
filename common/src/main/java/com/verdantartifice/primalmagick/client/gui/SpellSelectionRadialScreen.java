@@ -16,7 +16,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -43,13 +43,13 @@ public class SpellSelectionRadialScreen extends Screen {
         this.offHandStack = (mc.player.getOffhandItem().getItem() instanceof ISpellContainer) ? mc.player.getOffhandItem() : ItemStack.EMPTY;
         this.menu = new GenericRadialMenu(mc, new IRadialMenuHost() {
             @Override
-            public void renderTooltip(GuiGraphics guiGraphics, ItemStack stack, int mouseX, int mouseY)
+            public void renderTooltip(GuiGraphicsExtractor guiGraphics, ItemStack stack, int mouseX, int mouseY)
             {
                 guiGraphics.renderTooltip(font, stack, mouseX, mouseY);
             }
 
             @Override
-            public void renderTooltip(GuiGraphics guiGraphics, List<Component> textComponents, int mouseX, int mouseY)
+            public void renderTooltip(GuiGraphicsExtractor guiGraphics, List<Component> textComponents, int mouseX, int mouseY)
             {
                 guiGraphics.renderTooltip(font, textComponents, Optional.empty(), mouseX, mouseY);
             }
@@ -138,7 +138,7 @@ public class SpellSelectionRadialScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         guiGraphics.pose().pushMatrix();
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.pose().popMatrix();

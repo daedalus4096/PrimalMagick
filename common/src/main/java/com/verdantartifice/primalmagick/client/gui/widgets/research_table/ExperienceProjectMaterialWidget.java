@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ExperienceProjectMaterial;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -27,7 +27,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
 
         // Draw experience orb

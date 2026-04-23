@@ -14,7 +14,7 @@ import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
@@ -50,7 +50,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class GuiUtils {
-    public static boolean renderItemStack(GuiGraphics guiGraphics, ItemStack stack, int x, int y, String text, boolean hideStackOverlay) {
+    public static boolean renderItemStack(GuiGraphicsExtractor guiGraphics, ItemStack stack, int x, int y, String text, boolean hideStackOverlay) {
         boolean retVal = false;
         if (stack != null && !stack.isEmpty()) {
             Minecraft mc = Minecraft.getInstance();
@@ -70,7 +70,7 @@ public class GuiUtils {
         return retVal;
     }
     
-    public static boolean renderItemStack(GuiGraphics guiGraphics, ItemStack stack, int x, int y, String text, boolean hideStackOverlay, Optional<Vec3> scaleOpt) {
+    public static boolean renderItemStack(GuiGraphicsExtractor guiGraphics, ItemStack stack, int x, int y, String text, boolean hideStackOverlay, Optional<Vec3> scaleOpt) {
         boolean retVal = false;
         if (stack != null && !stack.isEmpty()) {
             Minecraft mc = Minecraft.getInstance();
@@ -130,23 +130,23 @@ public class GuiUtils {
         return retVal;
     }
     
-    public static void renderItemTooltip(GuiGraphics guiGraphics, ItemStack stack, int x, int y) {
+    public static void renderItemTooltip(GuiGraphicsExtractor guiGraphics, ItemStack stack, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
         List<Component> lines = stack.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
         Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, mc.font, lines, x, y, stack);
     }
     
-    public static void renderCustomTooltip(GuiGraphics guiGraphics, List<Component> textList, int x, int y) {
+    public static void renderCustomTooltip(GuiGraphicsExtractor guiGraphics, List<Component> textList, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
         Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, mc.font, textList, x, y, ItemStack.EMPTY);
     }
 
-    public static void renderComponentTooltipFromElements(GuiGraphics guiGraphics, List<Either<FormattedText, TooltipComponent>> elements, int x, int y) {
+    public static void renderComponentTooltipFromElements(GuiGraphicsExtractor guiGraphics, List<Either<FormattedText, TooltipComponent>> elements, int x, int y) {
         Minecraft mc = Minecraft.getInstance();
         Services.GUI_GRAPHICS.renderComponentTooltipFromElements(guiGraphics, mc.font, elements, x, y, ItemStack.EMPTY);
     }
     
-    public static void renderSourcesForPlayer(GuiGraphics guiGraphics, @Nullable SourceList sources, @Nullable Player player, int startX, int startY) {
+    public static void renderSourcesForPlayer(GuiGraphicsExtractor guiGraphics, @Nullable SourceList sources, @Nullable Player player, int startX, int startY) {
         if (sources == null || sources.isEmpty()) {
             return;
         }
@@ -171,17 +171,17 @@ public class GuiUtils {
         guiGraphics.pose().popMatrix();
     }
     
-    public static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nullable Source source, int amount, double z) {
+    public static void renderSourceIcon(GuiGraphicsExtractor guiGraphics, int x, int y, @Nullable Source source, int amount, double z) {
         if (source != null) {
             renderSourceIcon(guiGraphics, x, y, source.getImage(), amount, z);
         }
     }
     
-    public static void renderUnknownSourceIcon(GuiGraphics guiGraphics, int x, int y, int amount, double z) {
+    public static void renderUnknownSourceIcon(GuiGraphicsExtractor guiGraphics, int x, int y, int amount, double z) {
         renderSourceIcon(guiGraphics, x, y, Source.getUnknownImage(), amount, z);
     }
     
-    protected static void renderSourceIcon(GuiGraphics guiGraphics, int x, int y, @Nonnull Identifier imageLoc, int amount, double z) {
+    protected static void renderSourceIcon(GuiGraphicsExtractor guiGraphics, int x, int y, @Nonnull Identifier imageLoc, int amount, double z) {
         Minecraft mc = Minecraft.getInstance();
         
         guiGraphics.pose().pushMatrix();
@@ -261,7 +261,7 @@ public class GuiUtils {
         }
     }
     
-    public static void renderIconFromDefinition(GuiGraphics guiGraphics, IconDefinition iconDef, int x, int y) {
+    public static void renderIconFromDefinition(GuiGraphicsExtractor guiGraphics, IconDefinition iconDef, int x, int y) {
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(x, y);
         if (iconDef.isItem()) {

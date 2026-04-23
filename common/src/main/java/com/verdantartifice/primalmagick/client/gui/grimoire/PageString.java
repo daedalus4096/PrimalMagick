@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.awt.Color;
 
@@ -14,7 +14,7 @@ import java.awt.Color;
  */
 public record PageString(String str) implements IPageElement {
     @Override
-    public void render(GuiGraphics guiGraphics, int side, int x, int y) {
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y) {
         // Render this element's string to the screen
         Minecraft mc = Minecraft.getInstance();
         guiGraphics.drawString(mc.font, this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB(), false);

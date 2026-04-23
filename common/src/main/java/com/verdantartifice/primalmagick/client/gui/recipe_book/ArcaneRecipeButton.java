@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.recipe_book;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.narration.NarratedElementType;
@@ -70,7 +70,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(@NotNull GuiGraphics guiGraphics, int p_93677_, int p_93678_, float p_93679_) {
+    public void renderWidget(@NotNull GuiGraphicsExtractor guiGraphics, int p_93677_, int p_93678_, float p_93679_) {
         Minecraft mc = Minecraft.getInstance();
         if (!mc.hasControlDown()) {
             this.time += p_93679_;

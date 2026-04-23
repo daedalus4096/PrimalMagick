@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -36,7 +36,7 @@ public class AidListWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Draw padlock icon
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(this.getX(), this.getY());

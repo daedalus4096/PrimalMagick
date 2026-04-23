@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.util.PlayerUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -109,7 +109,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     }
 
     @Override
-    protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
+    protected void renderBg(GuiGraphicsExtractor pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
         this.renderBook(pGuiGraphics, this.leftPos, this.topPos);
         EnchantmentNames.getInstance().initSeed(this.menu.getNameSeed());
@@ -187,7 +187,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     }
 
     @Override
-    public void render(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int cost = this.menu.costs[slotIndex];
@@ -240,7 +240,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         }
     }
 
-    private void renderBook(GuiGraphics pGuiGraphics, int pX, int pY) {
+    private void renderBook(GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
         float pPartialTick = this.minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(false);
         float f = Mth.lerp(pPartialTick, this.oOpen, this.open);
         float f1 = Mth.lerp(pPartialTick, this.oFlip, this.flip);

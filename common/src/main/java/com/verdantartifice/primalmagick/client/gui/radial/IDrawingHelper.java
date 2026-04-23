@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
 public interface IDrawingHelper {
-    void renderTooltip(GuiGraphics guiGraphics, ItemStack stack, int mouseX, int mouseY);
-    void renderTooltip(GuiGraphics guiGraphics, List<Component> textComponents, int mouseX, int mouseY);
+    void renderTooltip(GuiGraphicsExtractor guiGraphics, ItemStack stack, int mouseX, int mouseY);
+    void renderTooltip(GuiGraphicsExtractor guiGraphics, List<Component> textComponents, int mouseX, int mouseY);
 }
 
 /*

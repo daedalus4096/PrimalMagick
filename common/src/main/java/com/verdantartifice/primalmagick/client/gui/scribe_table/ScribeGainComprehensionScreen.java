@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
@@ -96,7 +96,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     }
 
     @Override
-    protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
+    protected void renderBg(GuiGraphicsExtractor pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
 
         // Update the vocabulary widget based on the current language in the menu
@@ -205,7 +205,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         }
 
         @Override
-        public void renderContents(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        public void renderContents(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
             // Configure tooltip
             this.lastTooltip = this.tooltip;
             MutableObject<Component> mutableTooltip = new MutableObject<>(Component.empty());

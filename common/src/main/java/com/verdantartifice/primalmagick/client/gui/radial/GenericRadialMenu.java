@@ -10,7 +10,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -193,7 +193,7 @@ public class GenericRadialMenu {
         }
     }
 
-    public void draw(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
+    public void draw(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY)
     {
         updateAnimationState(partialTicks);
 
@@ -282,7 +282,7 @@ public class GenericRadialMenu {
         animProgress = openAnimation; // MathHelper.clamp(openAnimation, 0, 1);
     }
 
-    private void drawTooltips(GuiGraphics guiGraphics, int mouseX, int mouseY)
+    private void drawTooltips(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY)
     {
         Screen owner = host.getScreen();
         Font fontRenderer = host.getFontRenderer();
@@ -297,7 +297,7 @@ public class GenericRadialMenu {
         }
     }
 
-    private void drawItems(GuiGraphics guiGraphics, int x, int y, float z, int width, int height, Font font)
+    private void drawItems(GuiGraphicsExtractor guiGraphics, int x, int y, float z, int width, int height, Font font)
     {
         iterateVisible((item, s, e) -> {
             float middle = (s + e) * 0.5f;
@@ -322,7 +322,7 @@ public class GenericRadialMenu {
         }
     }
 
-    private void drawBackground(GuiGraphics guiGraphics, float x, float y, float z, float radiusIn, float radiusOut)
+    private void drawBackground(GuiGraphicsExtractor guiGraphics, float x, float y, float z, float radiusIn, float radiusOut)
     {
         if (visibleItems.size() > 0)
         {

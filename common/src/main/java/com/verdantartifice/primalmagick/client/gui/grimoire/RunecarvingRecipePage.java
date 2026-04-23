@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWid
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeExpertiseWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -59,7 +59,7 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         super.render(guiGraphics, side, x, y, mouseX, mouseY);
         y += 53;
         

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class DrawingContext {
     public final int width;
@@ -10,10 +10,10 @@ public class DrawingContext {
     public final float y;
     public final float z;
     public final Font fontRenderer;
-    public final GuiGraphics guiGraphics;
+    public final GuiGraphicsExtractor guiGraphics;
     public final IDrawingHelper drawingHelper;
 
-    public DrawingContext(GuiGraphics guiGraphics, int width, int height, float x, float y, float z, Font fontRenderer, IDrawingHelper drawingHelper)
+    public DrawingContext(GuiGraphicsExtractor guiGraphics, int width, int height, float x, float y, float z, Font fontRenderer, IDrawingHelper drawingHelper)
     {
         this.guiGraphics = guiGraphics;
         this.width = width;

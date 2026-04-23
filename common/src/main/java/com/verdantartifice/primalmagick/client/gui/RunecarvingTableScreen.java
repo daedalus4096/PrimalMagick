@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -49,13 +49,13 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
     }
     
     @Override
-    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
         int i = this.leftPos;
         int j = this.topPos;
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
@@ -69,7 +69,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
         this.drawRecipesItems(guiGraphics, mouseX, mouseY, l, i1, j1);
     }
     
-    protected void drawRecipesBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
+    protected void drawRecipesBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
         for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.menu.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
             int k = left + j % 4 * 16;
@@ -89,7 +89,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
         }
     }
     
-    protected void drawRecipesItems(GuiGraphics guiGraphics, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
+    protected void drawRecipesItems(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
         List<RecipeHolder<IRunecarvingRecipe>> list = this.menu.getRecipeList();
         for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.menu.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
@@ -102,7 +102,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
     }
     
     @Override
-    protected void renderTooltip(GuiGraphics pGuiGraphics, int pX, int pY) {
+    protected void renderTooltip(GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
         super.renderTooltip(pGuiGraphics, pX, pY);
         List<RecipeHolder<IRunecarvingRecipe>> list = this.menu.getRecipeList();
         for (int i = this.recipeIndexOffset; i < this.recipeIndexOffset + 12 && i < this.menu.getRecipeListSize(); ++i) {

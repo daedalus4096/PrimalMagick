@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.components.WidgetSprites;
@@ -106,7 +106,7 @@ public class ArcaneRecipeBookPage {
         this.backButton.visible = this.totalPages > 1 && this.currentPage > 0;
     }
     
-    public void render(GuiGraphics guiGraphics, int parentX, int parentY, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphicsExtractor guiGraphics, int parentX, int parentY, int mouseX, int mouseY, float partialTicks) {
         if (this.totalPages > 1) {
             String str = (this.currentPage + 1) + "/" + this.totalPages;
             int width = this.mc.font.width(str);
@@ -133,7 +133,7 @@ public class ArcaneRecipeBookPage {
         this.overlay.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
     
-    public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    public void renderTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         if (this.mc.screen != null && this.hoveredButton != null && !this.overlay.isVisible()) {
             Services.GUI_GRAPHICS.renderComponentTooltip(guiGraphics, this.mc.font, this.hoveredButton.getTooltipText(),
                     mouseX, mouseY, this.hoveredButton.getRecipe().value().getResultItem(this.mc.level.registryAccess()));

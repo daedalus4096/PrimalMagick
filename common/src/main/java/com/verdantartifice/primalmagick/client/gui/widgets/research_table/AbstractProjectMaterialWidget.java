@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.Abstract
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -48,7 +48,7 @@ public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMat
     }
     
     @Override
-    public void renderWidget(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.complete) {
             // Render completion checkmark if appropriate
             guiGraphics.pose().pushMatrix();

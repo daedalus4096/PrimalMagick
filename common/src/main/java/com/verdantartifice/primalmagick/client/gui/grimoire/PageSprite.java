@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +51,7 @@ public record PageSprite(Identifier location, int width, int height, float scale
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int side, int x, int y) {
+    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y) {
         // Render the image at this element's resource location to the screen
         guiGraphics.pose().pushMatrix();
         guiGraphics.pose().translate(x - 15 + (side * 152) + ((124 - this.adjustedWidth()) / 2), y - 5);

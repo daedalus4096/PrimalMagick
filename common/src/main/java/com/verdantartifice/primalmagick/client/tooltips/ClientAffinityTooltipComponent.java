@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipCompone
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +32,7 @@ public class ClientAffinityTooltipComponent implements ClientTooltipComponent {
     }
 
     @Override
-    public void renderImage(@NotNull Font font, int x, int y, int width, int height, @NotNull GuiGraphics guiGraphics) {
+    public void renderImage(@NotNull Font font, int x, int y, int width, int height, @NotNull GuiGraphicsExtractor guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
         GuiUtils.renderSourcesForPlayer(guiGraphics, this.affinities, mc.player, x, y);
     }

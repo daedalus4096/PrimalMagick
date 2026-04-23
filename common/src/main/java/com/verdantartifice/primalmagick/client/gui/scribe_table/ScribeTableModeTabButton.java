@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.ChangeScribeTableModePacket;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -34,7 +34,7 @@ public class ScribeTableModeTabButton extends ImageButton {
     }
 
     @Override
-    public void renderContents(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderContents(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Identifier spriteLoc = this.sprites.get(true, this.selected);
         int x = this.getX();
         if (this.selected) {
@@ -45,7 +45,7 @@ public class ScribeTableModeTabButton extends ImageButton {
         this.renderIcon(pGuiGraphics);
     }
 
-    protected void renderIcon(GuiGraphics pGuiGraphics) {
+    protected void renderIcon(GuiGraphicsExtractor pGuiGraphics) {
         Identifier spriteLoc = this.mode.getIconSprite();
         int dx = this.selected ? -2 : 0;
         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, spriteLoc, this.getX() + 9 + dx, this.getY() + 5, 16, 16);

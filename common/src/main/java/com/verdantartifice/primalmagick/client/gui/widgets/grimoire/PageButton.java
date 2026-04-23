@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -41,7 +41,7 @@ public class PageButton extends Button {
     }
     
     @Override
-    public void renderContents(@NotNull GuiGraphics guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
+    public void renderContents(@NotNull GuiGraphicsExtractor guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player != null) {
             guiGraphics.pose().pushMatrix();

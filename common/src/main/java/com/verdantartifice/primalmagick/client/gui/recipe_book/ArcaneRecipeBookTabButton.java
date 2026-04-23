@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBoo
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -55,7 +55,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderWidget(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         if (this.sprites != null) {
             if (this.animationTime > 0.0F) {
                 float f = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / ANIMATION_TIME_TOTAL * (float)Math.PI));
@@ -83,7 +83,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
         }
     }
     
-    protected void renderIcon(GuiGraphics guiGraphics, ItemRenderer pItemRenderer) {
+    protected void renderIcon(GuiGraphicsExtractor guiGraphics, ItemRenderer pItemRenderer) {
         List<ItemStack> list = this.category.getIconItems();
         int dx = this.isStateTriggered ? -2 : 0;
         if (list.size() == 1) {

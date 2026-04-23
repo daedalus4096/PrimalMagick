@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +24,7 @@ public abstract class AbstractManaStorageItemDecorator {
         this.source = source;
     }
     
-    public boolean render(GuiGraphics guiGraphics, Font font, ItemStack stack, int xOffset, int yOffset) {
+    public boolean render(GuiGraphicsExtractor guiGraphics, Font font, ItemStack stack, int xOffset, int yOffset) {
         ManaStorage manaCap = stack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
         if (manaCap != null && manaCap.canStore(this.source)) {
             int width = this.getBarWidth(stack, this.source);

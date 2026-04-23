@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.toast;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -50,7 +50,7 @@ public abstract class AbstractToastPM implements Toast {
     }
 
     @Override
-    public void render(@NotNull GuiGraphics pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible) {
+    public void render(@NotNull GuiGraphicsExtractor pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible) {
         final int x = this.getIcon().isPresent() ? 30 : 6;
         final int lineMax = this.getIcon().isPresent() ? 125 : 148;
 
@@ -78,7 +78,7 @@ public abstract class AbstractToastPM implements Toast {
         });
     }
 
-    private void renderToastBodyWithFade(@NotNull GuiGraphics pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible, int xPos, List<FormattedCharSequence> bodyLines) {
+    private void renderToastBodyWithFade(@NotNull GuiGraphicsExtractor pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible, int xPos, List<FormattedCharSequence> bodyLines) {
         if (pTimeSinceLastVisible < TITLE_TIME) {
             this.renderTitle(pGuiGraphics, font, pTimeSinceLastVisible, xPos);
         } else {
@@ -91,7 +91,7 @@ public abstract class AbstractToastPM implements Toast {
         }
     }
 
-    private void renderTitle(@NotNull GuiGraphics pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible, int xPos) {
+    private void renderTitle(@NotNull GuiGraphicsExtractor pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible, int xPos) {
         int titleFade = Mth.floor(Mth.clamp((float)(TITLE_TIME - pTimeSinceLastVisible) / FADE_DURATION, 0.0F, 1.0F) * 255.0F) << 24 | 67108864;
         this.getSubtitleText().ifPresentOrElse(subtitle -> {
             pGuiGraphics.drawString(font, this.getTitleText(), xPos, 7, this.getTitleColor() | titleFade, false);
