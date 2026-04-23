@@ -29,6 +29,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -192,11 +193,12 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     }
 
     protected boolean hasFuelRemainingItem(ItemStack fuelStack) {
-        return !fuelStack.getItem().getCraftingRemainder().isEmpty();
+        return fuelStack.getItem().getCraftingRemainder() != null;
     }
 
     protected ItemStack getFuelRemainingItem(ItemStack fuelStack) {
-        return fuelStack.getItem().getCraftingRemainder();
+        ItemStackTemplate template = fuelStack.getItem().getCraftingRemainder();
+        return template == null ? ItemStack.EMPTY : template.create();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AbstractCalcinatorTileEntity entity) {
@@ -309,7 +311,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         if (this.isSourceKnown(source)) {
             return EssenceItem.getEssence(type, source, count);
         } else {
-            // If the calcinator's owner hasn't discovered the given source, only produce alchemical waste
+            // If the calcinator owner hasn't discovered the given source, only produce alchemical waste
             return new ItemStack(ItemsPM.ALCHEMICAL_WASTE.get(), count);
         }
     }
