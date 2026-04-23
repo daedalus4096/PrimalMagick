@@ -1,6 +1,7 @@
 v7.0.0
 ------
 * Updated to Minecraft 26.1.2
+* Dropped Forge support due to dependency constraints
 * Earthshatter Hammers no longer have limited durability
 * Wands and staves now have a fixed enchantability, rather than scaling with their components
 
