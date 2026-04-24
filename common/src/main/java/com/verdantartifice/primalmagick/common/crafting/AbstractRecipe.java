@@ -11,7 +11,7 @@ public abstract class AbstractRecipe<T extends RecipeInput> implements Recipe<T>
     }
 
     @Override
-    public String getGroup() {
+    public String group() {
         return this.group;
     }
 }
