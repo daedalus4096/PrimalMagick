@@ -38,11 +38,12 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
-import net.minecraft.client.renderer.block.model.VariantMutator;
-import net.minecraft.client.renderer.block.model.multipart.CombinedCondition;
-import net.minecraft.client.renderer.block.model.multipart.Condition;
-import net.minecraft.client.renderer.item.BlockModelWrapper;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.multipart.CombinedCondition;
+import net.minecraft.client.renderer.block.dispatch.multipart.Condition;
+import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
 import net.minecraft.client.renderer.item.SelectItemModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
@@ -362,37 +363,38 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     private void generateSourceTintedLayeredItem(ItemModelGenerators itemModels, Item item, Identifier overlayModel, Identifier baseModel) {
-        Identifier modelLoc = itemModels.generateLayeredItem(item, overlayModel, baseModel);
+        Identifier modelLoc = itemModels.generateLayeredItem(item, new Material(overlayModel), new Material(baseModel));
         itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new SourceTint()));
     }
 
     private void generateConcoctionItem(ItemModelGenerators itemModels, Item item) {
-        Identifier modelLoc = itemModels.generateLayeredItem(item, ModelLocationUtils.getModelLocation(item, "_overlay"), ModelLocationUtils.getModelLocation(item));
+        Identifier modelLoc = itemModels.generateLayeredItem(item, new Material(ModelLocationUtils.getModelLocation(item, "_overlay")), new Material(ModelLocationUtils.getModelLocation(item)));
         itemModels.addPotionTint(item, modelLoc);
     }
 
     private void generateSpawnItem(ItemModelGenerators itemModels, Item item, int baseColor, int overlayColor) {
         Identifier spawnEggLoc = ResourceUtils.loc("spawn_egg").withPrefix("item/");
-        Identifier modelLoc = itemModels.generateLayeredItem(item, spawnEggLoc, spawnEggLoc.withSuffix("_overlay"));
+        Identifier modelLoc = itemModels.generateLayeredItem(item, new Material(spawnEggLoc), new Material(spawnEggLoc.withSuffix("_overlay")));
         itemModels.itemModelOutput.accept(item, ItemModelUtils.tintedModel(modelLoc, new Constant(baseColor), new Constant(overlayColor)));
     }
 
     private void generateDrainedPixieItem(ItemModelGenerators itemModels, Item item) {
-        Identifier modelLoc = ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(ResourceUtils.loc("drained_pixie").withPrefix("item/")), itemModels.modelOutput);
+        Identifier modelLoc = ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(new Material(ResourceUtils.loc("drained_pixie").withPrefix("item/"))), itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 
     private void generateColorSelectItem(ItemModelGenerators itemModels, Item item, DyeColor defaultColor) {
-        BlockModelWrapper.Unbaked defaultModel = null;
+        CuboidItemModelWrapper.Unbaked defaultModel = null;
         Map<DyeColor, SelectItemModel.SwitchCase<DyeColor>> cases = new HashMap<>();
         for (DyeColor color : DyeColor.values()) {
-            var wrapper = new BlockModelWrapper.Unbaked(ModelLocationUtils.getModelLocation(item, "_" + color.getName()), List.of());
+            var wrapper = new CuboidItemModelWrapper.Unbaked(ModelLocationUtils.getModelLocation(item, "_" + color.getName()), Optional.empty(), List.of());
             cases.put(color, new SelectItemModel.SwitchCase<>(List.of(color), wrapper));
             if (color.equals(defaultColor)) {
                 defaultModel = wrapper;
             }
         }
         itemModels.itemModelOutput.accept(item, new SelectItemModel.Unbaked(
+                Optional.empty(),
                 new SelectItemModel.UnbakedSwitch<>(new StackDyeColor(), cases.values().stream().toList()),
                 Optional.ofNullable(defaultModel)));
     }
