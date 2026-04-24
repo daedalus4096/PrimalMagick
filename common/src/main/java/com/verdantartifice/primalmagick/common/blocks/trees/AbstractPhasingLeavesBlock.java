@@ -81,11 +81,6 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IPhasi
     }
     
     @Override
-    public int getLightBlock(@NotNull BlockState state) {
-        return 1;
-    }
-    
-    @Override
     @NotNull
     public BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess scheduledTickAccess,
                                   @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState,
