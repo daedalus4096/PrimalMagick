@@ -50,7 +50,7 @@ public abstract class AbstractToastPM implements Toast {
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible) {
+    public void extractRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible) {
         final int x = this.getIcon().isPresent() ? 30 : 6;
         final int lineMax = this.getIcon().isPresent() ? 125 : 148;
 
@@ -61,11 +61,11 @@ public abstract class AbstractToastPM implements Toast {
         List<FormattedCharSequence> bodyLines = font.split(this.getBodyText(), lineMax);
         if (this.getSubtitleText().isEmpty() && bodyLines.size() == 1) {
             // If only one body line is needed and there's no subtitle, render the title and body together without a fade
-            pGuiGraphics.drawString(font, this.getTitleText(), x, 7, this.getTitleColor() | 0xFF000000, false);
-            pGuiGraphics.drawString(font, bodyLines.getFirst(), x, 18, this.getBodyColor(), false);
+            pGuiGraphics.text(font, this.getTitleText(), x, 7, this.getTitleColor() | 0xFF000000, false);
+            pGuiGraphics.text(font, bodyLines.getFirst(), x, 18, this.getBodyColor(), false);
         } else {
             // Otherwise, render toast body with a fade
-            this.renderToastBodyWithFade(pGuiGraphics, font, pTimeSinceLastVisible, x, bodyLines);
+            this.extractToastBodyWithFade(pGuiGraphics, font, pTimeSinceLastVisible, x, bodyLines);
         }
 
         // Render the toast icon if present
@@ -78,24 +78,24 @@ public abstract class AbstractToastPM implements Toast {
         });
     }
 
-    private void renderToastBodyWithFade(@NotNull GuiGraphicsExtractor pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible, int xPos, List<FormattedCharSequence> bodyLines) {
+    private void extractToastBodyWithFade(@NotNull GuiGraphicsExtractor pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible, int xPos, List<FormattedCharSequence> bodyLines) {
         if (pTimeSinceLastVisible < TITLE_TIME) {
-            this.renderTitle(pGuiGraphics, font, pTimeSinceLastVisible, xPos);
+            this.extractTitle(pGuiGraphics, font, pTimeSinceLastVisible, xPos);
         } else {
             int bodyFade = Mth.floor(Mth.clamp((float)(pTimeSinceLastVisible - TITLE_TIME) / FADE_DURATION, 0.0F, 1.0F) * 252.0F) << 24 | 67108864;
             int y = this.height() / 2 - bodyLines.size() * 9 / 2;
             for (FormattedCharSequence formattedcharsequence : bodyLines) {
-                pGuiGraphics.drawString(font, formattedcharsequence, xPos, y, this.getBodyColor() | bodyFade, false);
+                pGuiGraphics.text(font, formattedcharsequence, xPos, y, this.getBodyColor() | bodyFade, false);
                 y += 9;
             }
         }
     }
 
-    private void renderTitle(@NotNull GuiGraphicsExtractor pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible, int xPos) {
+    private void extractTitle(@NotNull GuiGraphicsExtractor pGuiGraphics, @NotNull Font font, long pTimeSinceLastVisible, int xPos) {
         int titleFade = Mth.floor(Mth.clamp((float)(TITLE_TIME - pTimeSinceLastVisible) / FADE_DURATION, 0.0F, 1.0F) * 255.0F) << 24 | 67108864;
         this.getSubtitleText().ifPresentOrElse(subtitle -> {
-            pGuiGraphics.drawString(font, this.getTitleText(), xPos, 7, this.getTitleColor() | titleFade, false);
-            pGuiGraphics.drawString(font, subtitle, xPos, 18, this.getSubtitleColor() | titleFade, false);
-        }, () -> pGuiGraphics.drawString(font, this.getTitleText(), xPos, 11, this.getTitleColor() | titleFade, false));
+            pGuiGraphics.text(font, this.getTitleText(), xPos, 7, this.getTitleColor() | titleFade, false);
+            pGuiGraphics.text(font, subtitle, xPos, 18, this.getSubtitleColor() | titleFade, false);
+        }, () -> pGuiGraphics.text(font, this.getTitleText(), xPos, 11, this.getTitleColor() | titleFade, false));
     }
 }
