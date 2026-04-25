@@ -25,7 +25,11 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     public AbstractScribeTableScreen(T menu, Inventory inv, Component title) {
         super(menu, inv, title);
     }
-    
+
+    public AbstractScribeTableScreen(T menu, Inventory inv, Component title, int width, int height) {
+        super(menu, inv, title, width, height);
+    }
+
     protected abstract ScribeTableMode getMode();
     
     protected abstract Identifier getBgTexture();
@@ -46,15 +50,10 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
-        this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
-    }
-
-    @Override
-    protected void renderBg(GuiGraphicsExtractor pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
+    public void extractBackground(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render background texture
         pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.getBgTexture(), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        // FIXME
         this.tabButtons.forEach(tab -> tab.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick));
     }
 

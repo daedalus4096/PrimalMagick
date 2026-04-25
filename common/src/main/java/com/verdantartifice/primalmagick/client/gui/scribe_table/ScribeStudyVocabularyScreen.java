@@ -63,9 +63,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     protected VocabularyWidget vocabularyWidget;
 
     public ScribeStudyVocabularyScreen(ScribeStudyVocabularyMenu menu, Inventory inv, Component title) {
-        super(menu, inv, title);
-        this.imageWidth = 176;
-        this.imageHeight = 222;
+        super(menu, inv, title, 176, 222);
         this.inventoryLabelY = this.imageHeight - 94;
     }
 
@@ -109,9 +107,9 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
-        this.renderBook(pGuiGraphics, this.leftPos, this.topPos);
+    public void extractBackground(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.extractBackground(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+        this.extractBook(pGuiGraphics, this.leftPos, this.topPos);
         EnchantmentNames.getInstance().initSeed(this.menu.getNameSeed());
         Holder.Reference<BookLanguage> activeLanguage = this.menu.getBookLanguage();
         
@@ -147,7 +145,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                 if (cost < 0) {
                     // The drawCenteredString method doesn't have an option to omit the drop shadow, alas, so we do it manually
                     Component text = Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.already_studied");
-                    pGuiGraphics.drawString(this.font, text, slotLeft + 54 - this.font.width(text) / 2, slotTop + 5, (textColor & 16711422) >> 1, false);
+                    pGuiGraphics.text(this.font, text, slotLeft + 54 - this.font.width(text) / 2, slotTop + 5, (textColor & 16711422) >> 1, false);
                 }
             } else if (this.minecraft.player != null) {
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
@@ -158,7 +156,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     if (levelCount > 0 && levelCount <= DISABLED_LEVEL_SPRITES.length) {
                         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, DISABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
                     }
-                    pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, (textColor & 16711422) >> 1);
+                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, (textColor & 16711422) >> 1);
                 } else {
                     // Highlight all non-disabled slots up to and including the hovered slot
                     if (slotIndex <= hoveredSlotIndex) {
@@ -173,22 +171,22 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
                     }
 
-                    pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, textColor);
+                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, textColor);
                     textColor = 8453920;
                 }
 
                 // Draw the total number of levels required to choose the option
                 if (minLevels > 0) {
                     String costStr = "" + minLevels;
-                    pGuiGraphics.drawString(this.font, costStr, slotTextStart + 86 - this.font.width(costStr), slotTop + 9, textColor);
+                    pGuiGraphics.text(this.font, costStr, slotTextStart + 86 - this.font.width(costStr), slotTop + 9, textColor);
                 }
             }
         }
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+    public void extractContents(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.extractContents(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int cost = this.menu.costs[slotIndex];
             int minLevels = this.menu.minLevels[slotIndex];
@@ -240,11 +238,11 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         }
     }
 
-    private void renderBook(GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
+    private void extractBook(GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
         float pPartialTick = this.minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(false);
         float f = Mth.lerp(pPartialTick, this.oOpen, this.open);
         float f1 = Mth.lerp(pPartialTick, this.oFlip, this.flip);
-        pGuiGraphics.submitBookModelRenderState(this.bookModel, ENCHANTING_BOOK_LOCATION, 40.0F, f, f1, pX + 14, pY + 14, pX + 52, pY + 45);
+        pGuiGraphics.book(this.bookModel, ENCHANTING_BOOK_LOCATION, 40.0F, f, f1, pX + 14, pY + 14, pX + 52, pY + 45);
     }
     
     public void tickBook() {

@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import org.jetbrains.annotations.NotNull;
 
 public class RunicGrindstoneScreen extends AbstractContainerScreenPM<RunicGrindstoneMenu> {
     private static final Identifier ERROR_SPRITE = Identifier.withDefaultNamespace("container/grindstone/error");
@@ -17,13 +16,7 @@ public class RunicGrindstoneScreen extends AbstractContainerScreenPM<RunicGrinds
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
-    }
-
-    @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GRINDSTONE_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight, 256, 256);

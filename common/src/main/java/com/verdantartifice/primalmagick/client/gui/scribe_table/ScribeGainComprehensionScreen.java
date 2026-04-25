@@ -60,9 +60,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     protected long nextCheckTime = 0L;
 
     public ScribeGainComprehensionScreen(ScribeGainComprehensionMenu menu, Inventory inv, Component title) {
-        super(menu, inv, title);
-        this.imageWidth = 176;
-        this.imageHeight = 222;
+        super(menu, inv, title, 176, 222);
         this.inventoryLabelY = this.imageHeight - 94;
     }
 
@@ -96,8 +94,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
+    public void extractBackground(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.extractBackground(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 
         // Update the vocabulary widget based on the current language in the menu
         Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
@@ -145,7 +143,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Render missing writing materials text
             Component text = Component.translatable("label.primalmagick.scribe_table.missing_book");
             int width = this.minecraft.font.width(text.getString());
-            pGuiGraphics.drawString(this.minecraft.font, text, this.leftPos + 7 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
+            pGuiGraphics.text(this.minecraft.font, text, this.leftPos + 7 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
 
             // If no grid is currently active, hide all node buttons
             this.nodeButtons.values().forEach(b -> b.visible = false);
@@ -181,7 +179,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 // Unlock node via screen's player grid
                 ClientLevel level = screen.minecraft.level;
                 screen.grid.unlock(xIndex, yIndex, level.registryAccess());
-                level.playSound(screen.minecraft.player, screen.menu.getTilePos(), SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
+                level.playSound(screen.minecraft.player, screen.menu.getTilePos(), SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
             });
             this.player = screen.minecraft.player;
             this.registryAccess = screen.minecraft.level.registryAccess();
@@ -205,7 +203,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         }
 
         @Override
-        public void renderContents(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        public void extractContents(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
             // Configure tooltip
             this.lastTooltip = this.tooltip;
             MutableObject<Component> mutableTooltip = new MutableObject<>(Component.empty());
@@ -270,7 +268,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                     int width = mc.font.width(text.getString());
                     pGuiGraphics.pose().translate(this.getX() + 11 - width / 2, this.getY() + 7);
                     pGuiGraphics.pose().scale(0.5F, 0.5F);  // Scale down to 50% size for rendering
-                    pGuiGraphics.drawString(mc.font, text, 0, 0, Color.WHITE.getRGB());
+                    pGuiGraphics.text(mc.font, text, 0, 0, Color.WHITE.getRGB());
                     pGuiGraphics.pose().popMatrix();
                 });
             });

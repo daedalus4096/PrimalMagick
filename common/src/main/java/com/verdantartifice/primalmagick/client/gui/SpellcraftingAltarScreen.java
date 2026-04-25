@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
 import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -14,18 +13,17 @@ import com.verdantartifice.primalmagick.common.spells.SpellComponent;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,9 +47,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
     private EditBox nameField;
 
     public SpellcraftingAltarScreen(SpellcraftingAltarMenu screenMenu, Inventory inv, Component titleIn) {
-        super(screenMenu, inv, titleIn);
-        this.imageWidth = 230;
-        this.imageHeight = 222;
+        super(screenMenu, inv, titleIn, 230, 222);
     }
     
     @Override
@@ -68,27 +64,32 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
         this.nameField.setMaxLength(50);
         this.nameField.setResponder(this::updateName);
         this.nameField.setValue(this.menu.getDefaultSpellName().getString());
-        this.addWidget(this.nameField);
+        this.addRenderableWidget(this.nameField);
+    }
+
+    @Override
+    protected void setInitialFocus() {
         this.setInitialFocus(this.nameField);
     }
-    
+
     @Override
-    public void resize(Minecraft p_resize_1_, int p_resize_2_, int p_resize_3_) {
+    public void resize(int width, int height) {
         // Preserve spell name text upon GUI re-initialization
         String str = this.nameField.getValue();
-        this.init(p_resize_1_, p_resize_2_, p_resize_3_);
+        this.init(width, height);
         this.nameField.setValue(str);
     }
     
     @Override
-    public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+    public boolean keyPressed(KeyEvent event) {
         // Close the screen if Escape was pressed
-        if (p_keyPressed_1_ == GLFW.GLFW_KEY_ESCAPE) {
+        if (event.isEscape()) {
             this.minecraft.player.closeContainer();
+            return true;
         }
         
         // Otherwise, process the text entry
-        return !this.nameField.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) && !this.nameField.canConsumeInput() ? super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) : true;
+        return this.nameField.keyPressed(event) || this.nameField.canConsumeInput() || super.keyPressed(event);
     }
     
     protected void regenerateWidgets() {
@@ -193,16 +194,13 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractContents(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.regenerateWidgets();
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
-        RenderSystem.disableBlend();
-        this.nameField.render(guiGraphics, mouseX, mouseY, partialTicks);
+        super.extractContents(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Render the GUI background
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         
@@ -211,7 +209,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
     }
     
     @Override
-    protected void renderLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+    protected void extractLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         // Render any text entries generated during initWidgets
         int color = 0x404040;
         String str;
@@ -219,7 +217,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
         for (Map.Entry<Vec3i, Component> entry : this.texts.entrySet()) {
             str = this.font.plainSubstrByWidth(entry.getValue().getString(), entry.getKey().getZ());
             strWidth = this.font.width(str);
-            guiGraphics.drawString(this.minecraft.font, str, entry.getKey().getX() - this.leftPos + ((entry.getKey().getZ() - strWidth) / 2), entry.getKey().getY() - this.topPos, color, false);
+            guiGraphics.text(this.minecraft.font, str, entry.getKey().getX() - this.leftPos + ((entry.getKey().getZ() - strWidth) / 2), entry.getKey().getY() - this.topPos, color, false);
         }
     }
     
@@ -317,9 +315,9 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<Spellcra
             this.getter = getter;
             this.setter = setter;
         }
-        
+
         @Override
-        public void renderContents(GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        protected void extractContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
             Identifier spriteLoc = this.isIncrement ?
                     (this.isHoveredOrFocused() ? INCREMENT_HOVERED : INCREMENT) :
                     (this.isHoveredOrFocused() ? DECREMENT_HOVERED : DECREMENT);
