@@ -51,19 +51,18 @@ public class AnalysisTableScreen extends AbstractContainerScreenPM<AnalysisTable
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractContents(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.initAffinityWidgets();
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        super.extractContents(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
     
     @Override
-    protected void renderLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+    protected void extractLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         MutableObject<Component> text = new MutableObject<>(null);
         ItemStack lastScannedStack = this.menu.getLastScannedStack();
         
@@ -83,7 +82,7 @@ public class AnalysisTableScreen extends AbstractContainerScreenPM<AnalysisTable
             int width = this.font.width(text.get().getString());
             int x = 1 + (this.imageWidth - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
-            guiGraphics.drawString(this.font, text.get(), x, y, Color.BLACK.getRGB(), false);
+            guiGraphics.text(this.font, text.get(), x, y, Color.BLACK.getRGB(), false);
         }
     }
 

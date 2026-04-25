@@ -18,17 +18,11 @@ public abstract class AbstractRunescribingAltarScreen<T extends AbstractRunescri
         super(screenMenu, inv, titleIn);
     }
     
-    @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
-    }
-    
     @NotNull
     protected abstract Identifier getTextureLocation();
 
     @Override
-    protected void renderBg(@NotNull GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    public void extractBackground(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Render background texture
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.getTextureLocation(), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
