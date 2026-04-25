@@ -32,9 +32,7 @@ public class ManaBatteryScreen extends AbstractContainerScreenPM<ManaBatteryMenu
     protected final Map<Source, ManaGaugeWidget> manaGauges = new HashMap<>();
 
     public ManaBatteryScreen(ManaBatteryMenu screenMenu, Inventory inv, Component titleIn) {
-        super(screenMenu, inv, titleIn);
-        this.imageWidth = 230;
-        this.imageHeight = 164;
+        super(screenMenu, inv, titleIn, 230, 164);
         this.inventoryLabelX = 34;
     }
 
@@ -53,17 +51,16 @@ public class ManaBatteryScreen extends AbstractContainerScreenPM<ManaBatteryMenu
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractContents(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.manaGauges.forEach((source, gauge) -> {
             gauge.setCurrentMana(this.menu.getCurrentMana(source));
             gauge.setMaxMana(this.menu.getMaxMana(source));
         });
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        super.extractContents(guiGraphics, mouseX, mouseY, partialTicks);
     }
     
     @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Render background texture
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         

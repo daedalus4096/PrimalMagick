@@ -61,9 +61,7 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
     protected Button completeProjectButton = null;
 
     public ResearchTableScreen(ResearchTableMenu screenMenu, Inventory inv, Component titleIn) {
-        super(screenMenu, inv, titleIn);
-        this.imageWidth = 230;
-        this.imageHeight = 222;
+        super(screenMenu, inv, titleIn, 230, 222);
     }
     
     @Override
@@ -77,7 +75,7 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
     }
     
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractContents(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh, or writing tool availability
         long millis = System.currentTimeMillis();
         this.lastWritingReady = this.writingReady;
@@ -93,12 +91,11 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
             this.initButtons();
         }
 
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        super.extractContents(guiGraphics, mouseX, mouseY, partialTicks);
     }
     
     @Override
-    protected void renderLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+    protected void extractLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
         
         if (this.isProjectReady()) {
@@ -107,31 +104,31 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
             // Render title text
             Component titleText = Component.translatable(this.project.getNameTranslationKey()).withStyle(ChatFormatting.BOLD);
             int titleWidth = mc.font.width(titleText);
-            guiGraphics.drawString(mc.font, titleText, 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, titleText, 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB(), false);
             y += (int)(mc.font.lineHeight * 1.66D);
             
             // Render description text
             Component descText = Component.translatable(this.project.getTextTranslationKey());
             List<FormattedText> descLines = mc.font.getSplitter().splitLines(descText, 154, Style.EMPTY); // list formatted string to width
             for (FormattedText line : descLines) {
-                guiGraphics.drawString(mc.font, line.getString(), 38, y, Color.BLACK.getRGB(), false);
+                guiGraphics.text(mc.font, line.getString(), 38, y, Color.BLACK.getRGB(), false);
                 y += mc.font.lineHeight;
             }
         } else if (!this.menu.isWritingReady()) {
             // Render missing writing materials text
             Component text = Component.translatable("label.primalmagick.research_table.missing_writing_supplies");
             int width = mc.font.width(text.getString());
-            guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
         } else {
             // Render ready to start text
             Component text = Component.translatable("label.primalmagick.research_table.ready");
             int width = mc.font.width(text.getString());
-            guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
         }
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Render the GUI background
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         
@@ -257,9 +254,8 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
         private static class Handler implements OnPress {
             @Override
             public void onPress(Button button) {
-                if (button instanceof StartProjectButton) {
+                if (button instanceof StartProjectButton spb) {
                     // Send a packet to the server and tell the screen to update more frequently until resolved
-                    StartProjectButton spb = (StartProjectButton)button;
                     PacketHandler.sendToServer(new StartProjectPacket(spb.getScreen().menu.containerId));
                     spb.getScreen().setProgressing();
                 }
@@ -287,9 +283,8 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
         private static class Handler implements OnPress {
             @Override
             public void onPress(Button button) {
-                if (button instanceof CompleteProjectButton) {
+                if (button instanceof CompleteProjectButton cpb) {
                     // Send a packet to the server and tell the screen to update more frequently until resolved
-                    CompleteProjectButton cpb = (CompleteProjectButton)button;
                     PacketHandler.sendToServer(new CompleteProjectPacket(cpb.getScreen().menu.containerId));
                     cpb.getScreen().setProgressing();
                 }

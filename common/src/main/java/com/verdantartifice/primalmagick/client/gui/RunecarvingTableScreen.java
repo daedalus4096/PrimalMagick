@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -12,12 +11,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SelectableRecipe;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  * GUI screen for runecarving table block.
@@ -49,13 +48,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
     }
     
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
-    }
-
-    @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         int i = this.leftPos;
         int j = this.topPos;
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, i, j, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
@@ -90,29 +83,31 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
     }
     
     protected void drawRecipesItems(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
-        List<RecipeHolder<IRunecarvingRecipe>> list = this.menu.getRecipeList();
+        SelectableRecipe.SingleInputSet<IRunecarvingRecipe> visibleRecipes = this.menu.getRecipeList();
+        ContextMap context = SlotDisplayContext.fromLevel(this.minecraft.level);
         for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.menu.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
             int k = left + j % 4 * 16;
             int l = j / 4;
             int i1 = top + l * 18 + 2;
-            ItemStack output = list.get(i).value().getResultItem(this.minecraft.level.registryAccess());
-            guiGraphics.renderItem(output, k, i1);
+            SlotDisplay buttonIcon = visibleRecipes.entries().get(i).recipe().optionDisplay();
+            guiGraphics.setTooltipForNextFrame(this.font, buttonIcon.resolveForFirstStack(context), k, i1);
         }
     }
     
     @Override
-    protected void renderTooltip(GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
-        super.renderTooltip(pGuiGraphics, pX, pY);
-        List<RecipeHolder<IRunecarvingRecipe>> list = this.menu.getRecipeList();
+    protected void extractTooltip(@NotNull GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
+        super.extractTooltip(pGuiGraphics, pX, pY);
+        SelectableRecipe.SingleInputSet<IRunecarvingRecipe> visibleRecipes = this.menu.getRecipeList();
         for (int i = this.recipeIndexOffset; i < this.recipeIndexOffset + 12 && i < this.menu.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
             int k = this.leftPos + 52 + j % 4 * 16;
             int l = j / 4;
             int i1 = this.topPos + 14 + l * 18 + 2;
-            ItemStack output = list.get(i).value().getResultItem(this.minecraft.level.registryAccess());
             if (pX >= k && pX < k + 16 && pY >= i1 && pY < i1 + 18) {
-                GuiUtils.renderItemTooltip(pGuiGraphics, output, pX, pY);
+                ContextMap context = SlotDisplayContext.fromLevel(this.minecraft.level);
+                SlotDisplay buttonIcon = visibleRecipes.entries().get(i).recipe().optionDisplay();
+                pGuiGraphics.setTooltipForNextFrame(this.font, buttonIcon.resolveForFirstStack(context), pX, pY);
             }
         }
     }
