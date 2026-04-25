@@ -40,19 +40,22 @@ public class DissolutionChamberScreen extends AbstractContainerScreenPM<Dissolut
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractRenderState(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.manaGauge.setCurrentMana(this.menu.getCurrentMana());
         this.manaGauge.setMaxMana(this.menu.getMaxMana());
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
-            this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
-            this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
+            this.extractBackground(guiGraphics, mouseX, mouseY, partialTicks);
         } else {
-            super.render(guiGraphics, mouseX, mouseY, partialTicks);
-            this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
-            this.recipeBookComponent.renderGhostRecipe(guiGraphics, this.leftPos, this.topPos, true, partialTicks);
+            super.extractContents(guiGraphics, mouseX, mouseY, partialTicks);
         }
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
-        this.recipeBookComponent.renderTooltip(guiGraphics, this.leftPos, this.topPos, mouseX, mouseY);
+        guiGraphics.nextStratum();
+        this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.recipeBookComponent.renderGhostRecipe(guiGraphics, this.leftPos, this.topPos, true, partialTicks); // FIXME Is this still a thing?
+        guiGraphics.nextStratum();
+        this.extractCarriedItem(guiGraphics, mouseX, mouseY);
+        this.extractSnapbackItem(guiGraphics);
+        this.extractTooltip(guiGraphics, mouseX, mouseY);
+        this.recipeBookComponent.renderTooltip(guiGraphics, this.leftPos, this.topPos, mouseX, mouseY); // FIXME Conform to new naming scheme
     }
     
     @Override
@@ -81,7 +84,7 @@ public class DissolutionChamberScreen extends AbstractContainerScreenPM<Dissolut
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int x, int y) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int x, int y, float partialTicks) {
         // Render background texture
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         

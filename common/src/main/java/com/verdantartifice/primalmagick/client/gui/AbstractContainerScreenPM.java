@@ -22,6 +22,10 @@ public abstract class AbstractContainerScreenPM<T extends AbstractContainerMenu>
         super(pMenu, pPlayerInventory, pTitle);
     }
 
+    public AbstractContainerScreenPM(T pMenu, Inventory pPlayerInventory, Component pTitle, int imageWidth, int imageHeight) {
+        super(pMenu, pPlayerInventory, pTitle, imageWidth, imageHeight);
+    }
+
     @Override
     protected void containerTick() {
         super.containerTick();

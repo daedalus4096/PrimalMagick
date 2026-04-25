@@ -41,8 +41,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
     protected boolean widthTooNarrow;
 
     public ArcaneWorkbenchScreen(ArcaneWorkbenchMenu screenMenu, Inventory inv, Component titleIn) {
-        super(screenMenu, inv, titleIn);
-        this.imageHeight = 183;
+        super(screenMenu, inv, titleIn, 176, 183);
     }
     
     @Override
@@ -72,27 +71,30 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractRenderState(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.adjustCostWidgets();
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
-            this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
-            this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
+            this.extractBackground(guiGraphics, mouseX, mouseY, partialTicks);
         } else {
-            super.render(guiGraphics, mouseX, mouseY, partialTicks);
-            this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
-            this.recipeBookComponent.renderGhostRecipe(guiGraphics, this.leftPos, this.topPos, true, partialTicks);
+            super.extractContents(guiGraphics, mouseX, mouseY, partialTicks);
         }
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
-        this.recipeBookComponent.renderTooltip(guiGraphics, this.leftPos, this.topPos, mouseX, mouseY);
+        guiGraphics.nextStratum();
+        this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.recipeBookComponent.renderGhostRecipe(guiGraphics, this.leftPos, this.topPos, true, partialTicks); // FIXME Is this still a thing?
+        guiGraphics.nextStratum();
+        this.extractCarriedItem(guiGraphics, mouseX, mouseY);
+        this.extractSnapbackItem(guiGraphics);
+        this.extractTooltip(guiGraphics, mouseX, mouseY);
+        this.recipeBookComponent.renderTooltip(guiGraphics, this.leftPos, this.topPos, mouseX, mouseY); // FIXME Conform to new naming scheme
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, (this.height - this.imageHeight) / 2, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
     
     @Override
-    protected void renderLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+    protected void extractLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
         RecipeHolder<IArcaneRecipe> activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
         if (activeArcaneRecipe == null || activeArcaneRecipe.value().getManaCosts().isEmpty()) {
@@ -100,7 +102,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
             int width = this.font.width(text.getString());
             int x = 1 + (this.imageWidth - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
-            guiGraphics.drawString(this.font, text, x, y, Color.BLACK.getRGB(), false);
+            guiGraphics.text(this.font, text, x, y, Color.BLACK.getRGB(), false);
         }
     }
     

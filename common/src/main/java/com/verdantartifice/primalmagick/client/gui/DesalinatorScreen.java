@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -12,8 +11,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
+import org.jspecify.annotations.NonNull;
 
 /**
  * GUI screen for desalinator block.
@@ -30,8 +28,7 @@ public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu
     protected ManaGaugeWidget manaGauge;
 
     public DesalinatorScreen(DesalinatorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle);
-        this.imageHeight = 185;
+        super(pMenu, pPlayerInventory, pTitle, 176, 185);
         this.inventoryLabelY = this.imageHeight - 94;
     }
 
@@ -42,20 +39,23 @@ public class DesalinatorScreen extends AbstractContainerScreenPM<DesalinatorMenu
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractContents(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.manaGauge.setCurrentMana(this.menu.getCurrentMana());
         this.manaGauge.setMaxMana(this.menu.getMaxMana());
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        super.extractContents(guiGraphics, mouseX, mouseY, partialTicks);
+    }
 
-        if (mouseX >= this.leftPos + 52 && mouseX <= this.leftPos + 68 && mouseY >= this.topPos + 17 && mouseY <= this.topPos + 88) {
+    @Override
+    protected void extractTooltip(@NonNull GuiGraphicsExtractor pGuiGraphics, int pX, int pY) {
+        super.extractTooltip(pGuiGraphics, pX, pY);
+        if (pX >= this.leftPos + 52 && pX <= this.leftPos + 68 && pY >= this.topPos + 17 && pY <= this.topPos + 88) {
             Component tankTooltip = Component.translatable("tooltip.primalmagick.desalinator.tank.water", this.menu.getCurrentWaterAmount(), this.menu.getWaterCapacity());
-            GuiUtils.renderCustomTooltip(guiGraphics, List.of(tankTooltip), mouseX, mouseY);
+            pGuiGraphics.setTooltipForNextFrame(this.font, tankTooltip, pX, pY);
         }
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor guiGraphics, float partialTicks, int x, int y) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int x, int y, float partialTicks) {
         // Render background texture
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
