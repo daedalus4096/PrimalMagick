@@ -36,8 +36,8 @@ public class AffinityRecordWidget extends AbstractTopicButton {
     }
 
     @Override
-    public void renderContents(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.renderContents(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+    public void extractContents(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.extractContents(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 
         // Draw the relevant affinity rating where the stack count would normally be
         Minecraft mc = Minecraft.getInstance();
@@ -45,7 +45,7 @@ public class AffinityRecordWidget extends AbstractTopicButton {
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
         pGuiGraphics.pose().scale(0.5F, 0.5F);
-        pGuiGraphics.drawString(mc.font, this.amountText, 0, 0, Color.WHITE.getRGB());
+        pGuiGraphics.text(mc.font, this.amountText, 0, 0, Color.WHITE.getRGB());
         pGuiGraphics.pose().popMatrix();
 
         // Draw the tooltip if applicable

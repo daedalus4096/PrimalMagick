@@ -40,7 +40,7 @@ public class BackButton extends Button {
     }
     
     @Override
-    public void renderContents(@NotNull GuiGraphicsExtractor guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
+    public void extractContents(@NotNull GuiGraphicsExtractor guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player != null) {
             // When hovered, scale the button up and down to create a pulsing effect

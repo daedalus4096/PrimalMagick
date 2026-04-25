@@ -47,7 +47,7 @@ public abstract class AbstractTopicButton extends Button {
     }
     
     @Override
-    public void renderContents(GuiGraphicsExtractor guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
+    public void extractContents(GuiGraphicsExtractor guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
         Minecraft mc = Minecraft.getInstance();
         guiGraphics.pose().pushMatrix();
         if (this.isHoveredOrFocused()) {
@@ -60,14 +60,14 @@ public abstract class AbstractTopicButton extends Button {
         int dx = this.icon == null ? 0 : (this.icon.isLarge() ? 16 : 11);
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= (this.width - dx)) {
-            guiGraphics.drawString(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.BLACK.getRGB(), false);
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)(this.width - dx) / (float)strWidth;
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + scale);
             guiGraphics.pose().scale(scale, scale);
-            guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
             guiGraphics.pose().popMatrix();
         }
         if (this.icon != null) {

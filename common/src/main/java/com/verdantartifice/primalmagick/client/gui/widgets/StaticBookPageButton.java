@@ -24,7 +24,7 @@ public class StaticBookPageButton extends PageButton {
     }
 
     @Override
-    public void renderContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         Identifier id = ClientBookHelper.getSprites(this.bookType).getPageButton(this.isForward, this.isHoveredOrFocused());
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, id, this.getX(), this.getY(), 23, 13);
     }

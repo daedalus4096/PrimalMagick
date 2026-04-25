@@ -34,7 +34,7 @@ public class ScribeTableModeTabButton extends ImageButton {
     }
 
     @Override
-    public void renderContents(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void extractContents(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Identifier spriteLoc = this.sprites.get(true, this.selected);
         int x = this.getX();
         if (this.selected) {

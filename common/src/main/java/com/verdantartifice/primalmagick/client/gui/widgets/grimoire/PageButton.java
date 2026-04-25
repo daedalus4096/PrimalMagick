@@ -41,7 +41,7 @@ public class PageButton extends Button {
     }
     
     @Override
-    public void renderContents(@NotNull GuiGraphicsExtractor guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
+    public void extractContents(@NotNull GuiGraphicsExtractor guiGraphics, int pRenderButton1, int pRenderButton2, float pRenderButton3) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player != null) {
             guiGraphics.pose().pushMatrix();
