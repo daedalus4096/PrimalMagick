@@ -51,7 +51,7 @@ public class VocabularyWidget extends AbstractWidget {
     }
     
     @Override
-    protected void renderWidget(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
 
         pGuiGraphics.pose().pushMatrix();
@@ -72,7 +72,7 @@ public class VocabularyWidget extends AbstractWidget {
         int width = mc.font.width(amountText.getString());
         pGuiGraphics.pose().translate(16 - width / 2, 12);
         pGuiGraphics.pose().scale(0.5F, 0.5F);
-        pGuiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+        pGuiGraphics.text(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
         pGuiGraphics.pose().popMatrix();
 
         pGuiGraphics.pose().popMatrix();

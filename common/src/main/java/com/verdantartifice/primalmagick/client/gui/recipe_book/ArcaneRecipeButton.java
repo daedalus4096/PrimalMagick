@@ -70,36 +70,36 @@ public class ArcaneRecipeButton extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(@NotNull GuiGraphicsExtractor guiGraphics, int p_93677_, int p_93678_, float p_93679_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
         if (!mc.hasControlDown()) {
-            this.time += p_93679_;
+            this.time += pPartialTick;
         }
         
         boolean animating = this.animationTime > 0.0F;
         if (animating) {
             float scale = 1.0F + 0.1F * (float)Math.sin(this.animationTime / 15.0F * (float)Math.PI);
-            guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate((this.getX() + 8), (this.getY() + 12));
-            guiGraphics.pose().scale(scale, scale);
-            guiGraphics.pose().translate(-(this.getX() + 8), -(this.getY() + 12));
-            this.animationTime -= p_93679_;
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate((this.getX() + 8), (this.getY() + 12));
+            pGuiGraphics.pose().scale(scale, scale);
+            pGuiGraphics.pose().translate(-(this.getX() + 8), -(this.getY() + 12));
+            this.animationTime -= pPartialTick;
         }
         
         Identifier spriteLoc = SLOT_SPRITES.get(this.collection.hasCraftable(), this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1);
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, spriteLoc, this.getX(), this.getY(), this.width, this.height);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, spriteLoc, this.getX(), this.getY(), this.width, this.height);
         List<RecipeHolder<?>> recipeList = this.getOrderedRecipes();
         this.currentIndex = Mth.floor(this.time / (float)TICKS_TO_SWAP) % recipeList.size();
         ItemStack stack = recipeList.get(this.currentIndex).value().getResultItem(mc.level.registryAccess());
         int k = 4;
         if (this.collection.hasSingleResultItem() && this.getOrderedRecipes().size() > 1) {
-            guiGraphics.renderFakeItem(stack, this.getX() + k + 1, this.getY() + k + 1, 10);
+            pGuiGraphics.renderFakeItem(stack, this.getX() + k + 1, this.getY() + k + 1, 10);
             k--;
         }
-        guiGraphics.renderFakeItem(stack, this.getX() + k, this.getY() + k);
+        pGuiGraphics.renderFakeItem(stack, this.getX() + k, this.getY() + k);
         
         if (animating) {
-            guiGraphics.pose().popMatrix();
+            pGuiGraphics.pose().popMatrix();
         }
     }
     

@@ -42,28 +42,28 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
         boolean discovered = this.source.isDiscovered(mc.player);
         
         // Draw the colored source icon
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, discovered ? this.source.getImage() : Source.getUnknownImage(), 0, 0, 32, 32);
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX(), this.getY());
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, discovered ? this.source.getImage() : Source.getUnknownImage(), 0, 0, 32, 32);
+        pGuiGraphics.pose().popMatrix();
         
         // Draw the amount string
-        guiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().pushMatrix();
         Component amountText = Component.literal(this.getAmountString());
         int width = mc.font.width(amountText.getString());
-        guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
-        guiGraphics.pose().scale(0.5F, 0.5F);
-        guiGraphics.drawString(mc.font, amountText, 0, 0, this.getAmountStringColor());
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+        pGuiGraphics.pose().scale(0.5F, 0.5F);
+        pGuiGraphics.text(mc.font, amountText, 0, 0, this.getAmountStringColor());
+        pGuiGraphics.pose().popMatrix();
         
         // Draw the tooltip if applicable
         if (this.isHoveredOrFocused()) {
-            GuiUtils.renderCustomTooltip(guiGraphics, this.getTooltipLines(), p_renderButton_1_, p_renderButton_2_);
+            GuiUtils.renderCustomTooltip(pGuiGraphics, this.getTooltipLines(), pMouseX, pMouseY);
         }
     }
     

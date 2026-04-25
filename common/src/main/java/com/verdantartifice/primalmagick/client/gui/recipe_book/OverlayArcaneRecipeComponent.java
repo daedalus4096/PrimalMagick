@@ -200,24 +200,24 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
         }
 
         @Override
-        public void renderWidget(GuiGraphicsExtractor guiGraphics, int p_93677_, int p_93678_, float p_93679_) {
+        public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
             WidgetSprites sprites = OverlayArcaneRecipeComponent.this.useFurnaceStyle ? OverlayArcaneRecipeComponent.FURNACE_OVERLAY_SPRITES : OverlayArcaneRecipeComponent.CRAFTING_OVERLAY_SPRITES;
             Identifier spriteLoc = sprites.get(this.isCraftable, this.isHoveredOrFocused());
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, spriteLoc, this.getX(), this.getY(), this.width, this.height);
-            guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate((this.getX() + 2), (this.getY() + 2));
+            pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, spriteLoc, this.getX(), this.getY(), this.width, this.height);
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate((this.getX() + 2), (this.getY() + 2));
 
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos pos : this.ingredientPos) {
-                guiGraphics.pose().pushMatrix();
-                guiGraphics.pose().translate(pos.x, pos.y);
-                guiGraphics.pose().scale(0.375F, 0.375F);
-                guiGraphics.pose().translate(-8.0F, -8.0F);
+                pGuiGraphics.pose().pushMatrix();
+                pGuiGraphics.pose().translate(pos.x, pos.y);
+                pGuiGraphics.pose().scale(0.375F, 0.375F);
+                pGuiGraphics.pose().translate(-8.0F, -8.0F);
                 RenderSystem.applyModelViewMatrix();
-                guiGraphics.renderItem(pos.ingredients[Mth.floor(OverlayArcaneRecipeComponent.this.time / 30.0F) % pos.ingredients.length], 0, 0);
-                guiGraphics.pose().popMatrix();
+                pGuiGraphics.renderItem(pos.ingredients[Mth.floor(OverlayArcaneRecipeComponent.this.time / 30.0F) % pos.ingredients.length], 0, 0);
+                pGuiGraphics.pose().popMatrix();
             }
             
-            guiGraphics.pose().popMatrix();
+            pGuiGraphics.pose().popMatrix();
         }
 
         protected static class Pos {

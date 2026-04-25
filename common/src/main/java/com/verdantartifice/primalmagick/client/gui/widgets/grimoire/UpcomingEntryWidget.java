@@ -62,27 +62,27 @@ public class UpcomingEntryWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().pushMatrix();
         int strWidth = mc.font.width(this.getMessage().getString());
         int dx = this.icon == null ? 0 : (this.icon.isLarge() ? 16 : 11);
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= (this.width - dx)) {
-            guiGraphics.drawString(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.GRAY.getRGB(), false);
+            pGuiGraphics.text(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.GRAY.getRGB(), false);
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)(this.width - dx) / (float)strWidth;
-            guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + scale);
-            guiGraphics.pose().scale(scale, scale);
-            guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.GRAY.getRGB(), false);
-            guiGraphics.pose().popMatrix();
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + scale);
+            pGuiGraphics.pose().scale(scale, scale);
+            pGuiGraphics.text(mc.font, this.getMessage(), 0, 0, Color.GRAY.getRGB(), false);
+            pGuiGraphics.pose().popMatrix();
         }
         if (this.icon != null) {
-            this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
+            this.icon.render(pGuiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
         }
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().popMatrix();
     }
 
     @Override

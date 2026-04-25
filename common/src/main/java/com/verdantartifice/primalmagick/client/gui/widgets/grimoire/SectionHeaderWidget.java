@@ -21,23 +21,23 @@ public class SectionHeaderWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().pushMatrix();
         int strWidth = mc.font.width(this.getMessage().getString());
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= this.width) {
-            guiGraphics.drawString(mc.font, this.getMessage(), this.getX() + this.width / 2 - strWidth / 2, this.getY() + (this.height - 8) / 2, Color.BLACK.getRGB(), false);
+            pGuiGraphics.text(mc.font, this.getMessage(), this.getX() + this.width / 2 - strWidth / 2, this.getY() + (this.height - 8) / 2, Color.BLACK.getRGB(), false);
         } else {
             // Scale the string down to fit on one line, if need be
             float scale = (float)this.width / (float)strWidth;
-            guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX(), this.getY() + dy + scale);
-            guiGraphics.pose().scale(scale, scale);
-            guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
-            guiGraphics.pose().popMatrix();
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate(this.getX(), this.getY() + dy + scale);
+            pGuiGraphics.pose().scale(scale, scale);
+            pGuiGraphics.text(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
+            pGuiGraphics.pose().popMatrix();
         }
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().popMatrix();
     }
     
     @Override

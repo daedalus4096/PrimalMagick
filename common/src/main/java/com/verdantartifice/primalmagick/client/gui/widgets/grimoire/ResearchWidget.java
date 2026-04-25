@@ -52,7 +52,7 @@ public class ResearchWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderWidget(@NotNull GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) {
             return;
@@ -62,14 +62,14 @@ public class ResearchWidget extends AbstractWidget {
         long time = System.currentTimeMillis();
         
         // Render the icon
-        GuiUtils.renderIconFromDefinition(guiGraphics, iconDef, this.getX(), this.getY());
+        GuiUtils.renderIconFromDefinition(pGuiGraphics, iconDef, this.getX(), this.getY());
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() + 8, this.getY());
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE, 0, 0, 10, 10);
-            guiGraphics.pose().popMatrix();
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate(this.getX() + 8, this.getY());
+            pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE, 0, 0, 10, 10);
+            pGuiGraphics.pose().popMatrix();
         }
         
         // Prepare the tooltip

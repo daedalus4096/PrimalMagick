@@ -31,12 +31,12 @@ public class AidUnlockWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Draw padlock icon
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, UNLOCK_SPRITE, 0, 0, 8, 8);
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX(), this.getY());
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, UNLOCK_SPRITE, 0, 0, 8, 8);
+        pGuiGraphics.pose().popMatrix();
     }
 
     @Override

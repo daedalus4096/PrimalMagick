@@ -32,22 +32,22 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget<Ite
     }
     
     @Override
-    public void renderWidget(@NotNull GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Draw stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
-        GuiUtils.renderItemStack(guiGraphics, this.material.getItemStack(), this.getX(), this.getY(), this.getMessage().getString(), false);
+        GuiUtils.renderItemStack(pGuiGraphics, this.material.getItemStack(), this.getX(), this.getY(), this.getMessage().getString(), false);
         if (this.material.getItemStack().getCount() > 1) {
             Component amountText = Component.literal(Integer.toString(this.material.getItemStack().getCount()));
             int width = mc.font.width(amountText);
-            guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
-            guiGraphics.pose().scale(0.5F, 0.5F);
-            guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-            guiGraphics.pose().popMatrix();
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+            pGuiGraphics.pose().scale(0.5F, 0.5F);
+            pGuiGraphics.text(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+            pGuiGraphics.pose().popMatrix();
         }
         
         // Draw base class stuff
-        super.renderWidget(guiGraphics, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.extractWidgetRenderState(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
     
     @Override

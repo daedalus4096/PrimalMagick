@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +56,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         if (this.sprites != null) {
             if (this.animationTime > 0.0F) {
                 float f = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / ANIMATION_TIME_TOTAL * (float)Math.PI));

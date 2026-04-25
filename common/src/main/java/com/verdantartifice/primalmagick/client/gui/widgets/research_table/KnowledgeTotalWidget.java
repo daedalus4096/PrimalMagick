@@ -53,7 +53,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
         
         // Prepare tooltip
@@ -61,37 +61,37 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         lines.add(Component.translatable(this.type.getNameTranslationKey()));
         
         // Draw knowledge type icon
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.pose().scale(0.0625F, 0.0625F);
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.type.getIconLocation(), 0, 0, 16, 16);
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX(), this.getY());
+        pGuiGraphics.pose().scale(0.0625F, 0.0625F);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.type.getIconLocation(), 0, 0, 16, 16);
+        pGuiGraphics.pose().popMatrix();
         
         // Draw progress bar background
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX(), this.getY() + 17);
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BG_SPRITE, 0, 0, 16, 2);
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BG_SPRITE, 0, 0, 16, 2);
+        pGuiGraphics.pose().popMatrix();
         
         this.knowledgeOpt.ifPresent(knowledge -> {
             // Draw amount str
             int levels = knowledge.getKnowledge(this.type);
             Component amountText = Component.literal(Integer.toString(levels));
             int width = mc.font.width(amountText);
-            guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
-            guiGraphics.pose().scale(0.5F, 0.5F);
-            guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-            guiGraphics.pose().popMatrix();
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+            pGuiGraphics.pose().scale(0.5F, 0.5F);
+            pGuiGraphics.text(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+            pGuiGraphics.pose().popMatrix();
             
             // Draw progress bar foreground
             int rawPoints = knowledge.getKnowledgeRaw(this.type);
             int levelPoints = rawPoints % this.type.getProgression();
             int px = (int)(16.0D * ((double)levelPoints / (double)this.type.getProgression()));
-            guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX(), this.getY() + 17);
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FG_SPRITE, 0, 0, px, 2);
-            guiGraphics.pose().popMatrix();
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate(this.getX(), this.getY() + 17);
+            pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FG_SPRITE, 0, 0, px, 2);
+            pGuiGraphics.pose().popMatrix();
         });
         
         this.successDeltaOpt.ifPresent(points -> {
@@ -101,11 +101,11 @@ public class KnowledgeTotalWidget extends AbstractWidget {
                 // Draw theory gain preview str
                 Component previewText = Component.translatable("label.primalmagick.research_table.theory_gain_preview.positive", levelStr).withStyle(ChatFormatting.GREEN);
                 int width = mc.font.width(previewText);
-                guiGraphics.pose().pushMatrix();
-                guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY());
-                guiGraphics.pose().scale(0.5F, 0.5F);
-                guiGraphics.drawString(mc.font, previewText, 0, 0, Color.WHITE.getRGB());
-                guiGraphics.pose().popMatrix();
+                pGuiGraphics.pose().pushMatrix();
+                pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY());
+                pGuiGraphics.pose().scale(0.5F, 0.5F);
+                pGuiGraphics.text(mc.font, previewText, 0, 0, Color.WHITE.getRGB());
+                pGuiGraphics.pose().popMatrix();
                 
                 // Prepare tooltip addition
                 if (levels == 1D) {

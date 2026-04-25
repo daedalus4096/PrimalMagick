@@ -9,6 +9,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.text.DecimalFormat;
@@ -54,30 +55,30 @@ public class ManaGaugeWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX(), this.getY());
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX(), this.getY());
 
         // Render gauge background texture
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        guiGraphics.blit(TEXTURE, 0, 0, 12, 0, this.width, this.height);
+        pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        pGuiGraphics.blit(TEXTURE, 0, 0, 12, 0, this.width, this.height);
         
         // Render colored gauge
         int mana = this.getScaledMana();
         Color manaColor = new Color(this.source.getColor());
-        guiGraphics.setColor(manaColor.getRed() / 255.0F, manaColor.getGreen() / 255.0F, manaColor.getBlue() / 255.0F, 1.0F);
-        guiGraphics.blit(TEXTURE, 1, 51 - mana, 1, 1, 10, mana);
+        pGuiGraphics.setColor(manaColor.getRed() / 255.0F, manaColor.getGreen() / 255.0F, manaColor.getBlue() / 255.0F, 1.0F);
+        pGuiGraphics.blit(TEXTURE, 1, 51 - mana, 1, 1, 10, mana);
 
         // Render gauge foreground texture
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        guiGraphics.blit(TEXTURE, 0, 0, 24, 0, this.width, this.height);
+        pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        pGuiGraphics.blit(TEXTURE, 0, 0, 24, 0, this.width, this.height);
 
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().popMatrix();
         
         if (this.isHoveredOrFocused()) {
             Component sourceText = this.source.getNameText();
             Component labelText = Component.translatable("tooltip.primalmagick.source.mana_gauge", sourceText, this.getManaText(), this.getMaxManaText());
-            GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(labelText), this.getX(), this.getY());
+            GuiUtils.renderCustomTooltip(pGuiGraphics, Collections.singletonList(labelText), this.getX(), this.getY());
         }
     }
     

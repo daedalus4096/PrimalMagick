@@ -51,30 +51,30 @@ public class ItemTagWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderWidget(@NotNull GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
         this.lastStack = this.currentStack;
         this.currentStack = this.getDisplayStack();
         if (!this.currentStack.isEmpty()) {
-            GuiUtils.renderItemStack(guiGraphics, this.currentStack, this.getX(), this.getY(), this.getMessage().getString(), false);
+            GuiUtils.renderItemStack(pGuiGraphics, this.currentStack, this.getX(), this.getY(), this.getMessage().getString(), false);
             
             // Draw amount string if applicable
             if (this.amount > 1) {
                 Component amountText = Component.literal(Integer.toString(this.amount));
                 int width = mc.font.width(amountText.getString());
-                guiGraphics.pose().pushMatrix();
-                guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
-                guiGraphics.pose().scale(0.5F, 0.5F);
-                guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-                guiGraphics.pose().popMatrix();
+                pGuiGraphics.pose().pushMatrix();
+                pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+                pGuiGraphics.pose().scale(0.5F, 0.5F);
+                pGuiGraphics.text(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+                pGuiGraphics.pose().popMatrix();
             }
             
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
-                guiGraphics.pose().pushMatrix();
-                guiGraphics.pose().translate(this.getX() + 8, this.getY());
-                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE, 0, 0, 10, 10);
-                guiGraphics.pose().popMatrix();
+                pGuiGraphics.pose().pushMatrix();
+                pGuiGraphics.pose().translate(this.getX() + 8, this.getY());
+                pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, COMPLETE, 0, 0, 10, 10);
+                pGuiGraphics.pose().popMatrix();
             }
             
             // Update the widget tooltip if necessary

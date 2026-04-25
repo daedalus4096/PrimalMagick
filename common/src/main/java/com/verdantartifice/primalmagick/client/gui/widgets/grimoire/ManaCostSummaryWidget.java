@@ -52,12 +52,12 @@ public class ManaCostSummaryWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render the base widget
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, TEXTURE, 0, 0, 16, 16);
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX(), this.getY());
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, TEXTURE, 0, 0, 16, 16);
+        pGuiGraphics.pose().popMatrix();
     }
     
     @Override

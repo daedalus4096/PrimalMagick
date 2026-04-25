@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
@@ -18,11 +17,5 @@ public class InactiveWidget extends Button {
             }
         }, Button.DEFAULT_NARRATION);
         this.active = false;
-    }
-
-    @Override
-    protected void renderWidget(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        // FIXME Does this need to mimic the renderWidget method of Forge's ExtendedButton?
-        super.renderWidget(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 }

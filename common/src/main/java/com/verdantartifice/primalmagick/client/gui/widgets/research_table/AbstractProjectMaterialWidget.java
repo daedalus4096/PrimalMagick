@@ -48,7 +48,7 @@ public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMat
     }
     
     @Override
-    public void renderWidget(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.complete) {
             // Render completion checkmark if appropriate
             guiGraphics.pose().pushMatrix();

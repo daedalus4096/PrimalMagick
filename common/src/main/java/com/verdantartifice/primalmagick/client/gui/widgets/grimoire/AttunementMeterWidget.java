@@ -53,7 +53,7 @@ public class AttunementMeterWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render attunement meter
         Minecraft mc = Minecraft.getInstance();
 
@@ -62,16 +62,16 @@ public class AttunementMeterWidget extends AbstractWidget {
         int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
 
         // Render permanent meter bar
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p, 0, 100)), 10, Mth.clamp(p, 0, 100), this.permanentColor.getRGB());
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p, 0, 100)), 10, Mth.clamp(p, 0, 100), this.permanentColor.getRGB());
         
         // Render induced meter bar
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i, 0, 100)), 10, Mth.clamp(i, 0, 100 - p), this.inducedColor.getRGB());
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i, 0, 100)), 10, Mth.clamp(i, 0, 100 - p), this.inducedColor.getRGB());
         
         // Render temporary meter bar
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 10, Mth.clamp(t, 0, 100 - p - i), this.temporaryColor.getRGB());
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 10, Mth.clamp(t, 0, 100 - p - i), this.temporaryColor.getRGB());
 
         // Render meter foreground
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FOREGROUND, this.getX(), this.getY(), 12, 102);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FOREGROUND, this.getX(), this.getY(), 12, 102);
     }
 
     @Override

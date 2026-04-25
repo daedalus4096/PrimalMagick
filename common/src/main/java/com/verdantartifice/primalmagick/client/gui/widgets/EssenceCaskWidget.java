@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.List;
@@ -70,21 +71,21 @@ public class EssenceCaskWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
 
         // Draw the essence item
         ItemStack tempStack = EssenceItem.getEssence(this.essenceType, this.source);
-        GuiUtils.renderItemStack(guiGraphics, tempStack, this.getX(), this.getY(), this.getMessage().getString(), true);
+        GuiUtils.renderItemStack(pGuiGraphics, tempStack, this.getX(), this.getY(), this.getMessage().getString(), true);
 
         // Draw the amount string
         Component amountText = Component.literal(Integer.toString(this.amount));
         int width = mc.font.width(amountText);
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
-        guiGraphics.pose().scale(0.5F, 0.5F);
-        guiGraphics.drawString(mc.font, amountText, 0, 0, this.amount > 0 ? Color.WHITE.getRGB() : Color.RED.getRGB());
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+        pGuiGraphics.pose().scale(0.5F, 0.5F);
+        pGuiGraphics.text(mc.font, amountText, 0, 0, this.amount > 0 ? Color.WHITE.getRGB() : Color.RED.getRGB());
+        pGuiGraphics.pose().popMatrix();
     }
 
     @Override

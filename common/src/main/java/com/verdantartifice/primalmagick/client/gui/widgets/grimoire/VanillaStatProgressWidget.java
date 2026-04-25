@@ -35,7 +35,7 @@ public class VanillaStatProgressWidget extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render the icon
         GuiUtils.renderIconFromDefinition(pGuiGraphics, this.iconDef, this.getX(), this.getY());
         

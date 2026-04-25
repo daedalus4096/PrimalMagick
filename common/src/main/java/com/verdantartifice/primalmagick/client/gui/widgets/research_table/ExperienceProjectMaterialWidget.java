@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.Collections;
@@ -27,7 +28,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
     }
     
     @Override
-    public void renderWidget(GuiGraphicsExtractor guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft mc = Minecraft.getInstance();
 
         // Draw experience orb
@@ -35,26 +36,26 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         int uMin = (textureIndex % 4 * 16) * 4;
         int vMin = (textureIndex / 4 * 16) * 4;
         double approxTicks = (System.currentTimeMillis() / 50.0D);
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(this.getX(), this.getY());
-        guiGraphics.pose().scale(0.25F, 0.25F);
+        pGuiGraphics.pose().pushMatrix();
+        pGuiGraphics.pose().translate(this.getX(), this.getY());
+        pGuiGraphics.pose().scale(0.25F, 0.25F);
         int color = ARGB.colorFromFloat(0.5F, (float)(Math.sin(approxTicks) + 1.0F) * 0.5F, 1F, (float)(Math.sin(approxTicks + 4.1887903F) + 1.0F) * 0.1F);
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, EXPERIENCE_ORB_TEXTURES, 0, 0, uMin, vMin, 63, 63, 64, 64, color);
-        guiGraphics.pose().popMatrix();
+        pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, EXPERIENCE_ORB_TEXTURES, 0, 0, uMin, vMin, 63, 63, 64, 64, color);
+        pGuiGraphics.pose().popMatrix();
 
         // If applicable, draw level count string
         if (this.material.getLevels() > 1) {
             Component amountText = Component.literal(Integer.toString(this.material.getLevels()));
             int width = mc.font.width(amountText);
-            guiGraphics.pose().pushMatrix();
-            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
-            guiGraphics.pose().scale(0.5F, 0.5F);
-            guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
-            guiGraphics.pose().popMatrix();
+            pGuiGraphics.pose().pushMatrix();
+            pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
+            pGuiGraphics.pose().scale(0.5F, 0.5F);
+            pGuiGraphics.text(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+            pGuiGraphics.pose().popMatrix();
         }
 
         // Draw base class stuff
-        super.renderWidget(guiGraphics, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.extractWidgetRenderState(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
     
     protected int getTextureIndexByXP(int xpValue) {
