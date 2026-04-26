@@ -84,7 +84,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
     @Override
     public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         ItemStack fakeShears = new ItemStack(Items.SHEARS);
-        RandomSource rand = world.random;
+        RandomSource rand = world.getRandom();
         int treasureLevel = EnchantmentHelperPM.getEnchantmentLevel(spellSource, EnchantmentsPM.TREASURE, world.registryAccess());
         if (caster instanceof Player player && world instanceof ServerLevel serverLevel) {
             if (target.getType() == HitResult.Type.ENTITY) {
@@ -161,7 +161,7 @@ public class ShearSpellPayload extends AbstractSpellPayload<ShearSpellPayload> {
 
     @Override
     public void playSounds(@NotNull Level world, @NotNull BlockPos origin) {
-        world.playSound(null, origin, SoundEvents.SHEEP_SHEAR, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
+        world.playSound(null, origin, SoundEvents.SHEEP_SHEAR, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.getRandom().nextGaussian() * 0.05D));
     }
 
     @Override

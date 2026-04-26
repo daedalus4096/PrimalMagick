@@ -30,7 +30,7 @@ public class TickStickItem extends Item {
             BlockState state = level.getBlockState(pos);
             Player player = pContext.getPlayer();
             if (player != null && player.canUseGameMasterBlocks() && state.isRandomlyTicking()) {
-                state.randomTick(serverLevel, pos, serverLevel.random);
+                state.randomTick(serverLevel, pos, serverLevel.getRandom());
                 return InteractionResult.SUCCESS;
             } else {
                 return InteractionResult.FAIL;

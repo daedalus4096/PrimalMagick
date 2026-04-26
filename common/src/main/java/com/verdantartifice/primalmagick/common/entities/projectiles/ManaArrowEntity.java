@@ -102,7 +102,7 @@ public class ManaArrowEntity extends AbstractArrow {
         Source source = this.getSource();
         if (source != null && count > 0) {
             Level level = this.level();
-            RandomSource rng = level.random;
+            RandomSource rng = level.getRandom();
             int color = source.getColor();
             for (int index = 0; index < count; index++) {
                 // Generate mana sparkle particle in a random direction

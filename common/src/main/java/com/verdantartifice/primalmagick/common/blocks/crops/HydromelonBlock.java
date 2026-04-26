@@ -49,7 +49,7 @@ public class HydromelonBlock extends Block {
             RandomSource rng = pPlayer.getRandom();
             pLevel.playSound(pPlayer, pPos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (shouldVaporize) {
-                pLevel.playSound(pPlayer, pPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
+                pLevel.playSound(pPlayer, pPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (pLevel.getRandom().nextFloat() - pLevel.getRandom().nextFloat()) * 0.8F);
                 for (int index = 0; index < 8; index++) {
                     pLevel.addParticle(ParticleTypes.LARGE_SMOKE, pPos.getX() + rng.nextDouble(), pPos.getY() + rng.nextDouble(), pPos.getZ() + rng.nextDouble(), 0.0D, 0.0D, 0.0D);
                 }

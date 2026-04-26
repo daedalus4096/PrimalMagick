@@ -78,7 +78,7 @@ public class DripParticlePM extends TextureSheetParticle {
     
     public static TextureSheetParticle createBloodDropLandParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
         DripParticlePM.Land particle = new DripParticlePM.Land(pLevel, pX, pY, pZ);
-        particle.lifetime = (int)(28.0D / (Math.random() * 0.8D + 0.2D));
+        particle.lifetime = (int)(28.0D / (pLevel.getRandom().nextDouble() * 0.8D + 0.2D));
         particle.setColor(Sources.BLOOD.getColor());
         return particle;
     }
@@ -114,7 +114,7 @@ public class DripParticlePM extends TextureSheetParticle {
         public Fall(ClientLevel pLevel, double pX, double pY, double pZ, ParticleOptions pFallParticle) {
             super(pLevel, pX, pY, pZ);
             this.landParticle = pFallParticle;
-            this.lifetime = (int)(64.0D / (Math.random() * 0.8D + 0.2D));
+            this.lifetime = (int)(64.0D / (pLevel.getRandom().nextDouble() * 0.8D + 0.2D));
         }
 
         @Override
@@ -130,7 +130,7 @@ public class DripParticlePM extends TextureSheetParticle {
     public static class Land extends DripParticlePM {
         public Land(ClientLevel pLevel, double pX, double pY, double pZ) {
             super(pLevel, pX, pY, pZ);
-            this.lifetime = (int)(16.0D / (Math.random() * 0.8D + 0.2D));
+            this.lifetime = (int)(16.0D / (pLevel.getRandom().nextDouble() * 0.8D + 0.2D));
         }
     }
 }

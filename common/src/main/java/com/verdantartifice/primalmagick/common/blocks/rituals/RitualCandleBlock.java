@@ -131,7 +131,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
                                           @NotNull BlockHitResult pHitResult) {
         if (pStack.is(Items.FLINT_AND_STEEL) && !pState.getValue(LIT)) {
             // If using a flint-and-steel on an unlit candle, light it
-            pLevel.playSound(pPlayer, pPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 0.8F + (pLevel.random.nextFloat() * 0.4F));
+            pLevel.playSound(pPlayer, pPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 0.8F + (pLevel.getRandom().nextFloat() * 0.4F));
             if (!pLevel.isClientSide()) {
                 pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 pPlayer.getItemInHand(pHand).hurtAndBreak(1, pPlayer, pHand.asEquipmentSlot());

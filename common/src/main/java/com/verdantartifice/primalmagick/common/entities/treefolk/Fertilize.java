@@ -36,15 +36,15 @@ public class Fertilize<E extends TreefolkEntity> extends Behavior<E> {
         
         BlockState state = pLevel.getBlockState(targetPos);
         if (state.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, targetPos, state)) {
-            if (bonemealable.isBonemealSuccess(pLevel, pLevel.random, targetPos, state)) {
+            if (bonemealable.isBonemealSuccess(pLevel, pLevel.getRandom(), targetPos, state)) {
                 try {
-                    bonemealable.performBonemeal(pLevel, pLevel.random, targetPos, state);
+                    bonemealable.performBonemeal(pLevel, pLevel.getRandom(), targetPos, state);
                 } catch (Exception e) {
                     LOGGER.warn("Unexpected failure during treefolk plant fertilization", e);
                 }
                 pLevel.levelEvent(1505, targetPos, 0);
             }
-            brain.setMemoryWithExpiry(MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(), true, this.cooldownRange.sample(pLevel.random));
+            brain.setMemoryWithExpiry(MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(), true, this.cooldownRange.sample(pLevel.getRandom()));
             brain.eraseMemory(MemoryModuleTypesPM.FERTILIZE_LOCATION.get());
         }
     }

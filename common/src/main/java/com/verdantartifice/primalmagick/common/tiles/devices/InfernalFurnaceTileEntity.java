@@ -444,7 +444,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     private static void createExperience(ServerLevel pLevel, Vec3 pPopVec, int pRecipeIndex, float pExperience) {
         int i = Mth.floor((float)pRecipeIndex * pExperience);
         float f = Mth.frac((float)pRecipeIndex * pExperience);
-        if (f != 0.0F && Math.random() < (double)f) {
+        if (f != 0.0F && pLevel.getRandom().nextDouble() < (double)f) {
             i++;
         }
         ExperienceOrb.award(pLevel, pPopVec, i);

@@ -29,7 +29,7 @@ public class CasterEnchantingTests extends AbstractBaseTest {
         }
 
         // Confirm that enchantments are possible for the given caster item
-        var enchList = EnchantmentHelper.selectEnchantment(helper.getLevel().random, casterStack, 30, possibleEnchantsStream);
+        var enchList = EnchantmentHelper.selectEnchantment(helper.getLevel().getRandom(), casterStack, 30, possibleEnchantsStream);
         assertFalse(helper, enchList.isEmpty(), "No enchantments found for caster stack");
 
         helper.succeed();

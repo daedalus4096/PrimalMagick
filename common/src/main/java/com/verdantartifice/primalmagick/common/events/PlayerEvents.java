@@ -138,7 +138,7 @@ public class PlayerEvents {
             }
             if (player.tickCount % 20 == 0) {
                 // Periodically check to see if attuned players should drop a light source or if regrowing equipment should mend
-                handleLightDrop(player, level.random);
+                handleLightDrop(player, level.getRandom());
                 handleRegrowth(player);
                 handleWardRegeneration(player);
             }
@@ -312,7 +312,7 @@ public class PlayerEvents {
                 AttunementManager.meetsThreshold(player, Sources.SKY, AttunementThreshold.GREATER)) {
             // If the conditions are right, execute the second jump
             level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, 
-                    SoundSource.PLAYERS, 0.1F, 1.0F + (0.05F * (float)level.random.nextGaussian()), false);
+                    SoundSource.PLAYERS, 0.1F, 1.0F + (0.05F * (float) level.getRandom().nextGaussian()), false);
             DOUBLE_JUMP_ALLOWED.put(player.getUUID(), Boolean.FALSE);
             
             // Update motion
@@ -608,8 +608,8 @@ public class PlayerEvents {
             if (!player.isShiftKeyDown() && state.getBlock() instanceof BonemealableBlock mealBlock) {
                 if (mealBlock.isValidBonemealTarget(level, pos, state)) {
                     if (level instanceof ServerLevel serverLevel) {
-                        if (mealBlock.isBonemealSuccess(level, level.random, pos, state)) {
-                            mealBlock.performBonemeal(serverLevel, level.random, pos, state);
+                        if (mealBlock.isBonemealSuccess(level, level.getRandom(), pos, state)) {
+                            mealBlock.performBonemeal(serverLevel, level.getRandom(), pos, state);
                         }
                         
                         // Damage the stack and cancel the rest of the hoe functionality.

@@ -81,13 +81,13 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
     protected final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         @Override
         protected void onOpen(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state) {
-            level.playSound(null, pos, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+            level.playSound(null, pos, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
             level.setBlock(pos, state.setValue(EssenceCaskBlock.OPEN, true), Block.UPDATE_ALL);
         }
 
         @Override
         protected void onClose(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state) {
-            level.playSound(null, pos, SoundEvents.BARREL_CLOSE, SoundSource.BLOCKS, 0.5F, level.random.nextFloat() * 0.1F + 0.9F);
+            level.playSound(null, pos, SoundEvents.BARREL_CLOSE, SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
             level.setBlock(pos, state.setValue(EssenceCaskBlock.OPEN, false), Block.UPDATE_ALL);
         }
 

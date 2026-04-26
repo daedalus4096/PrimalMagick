@@ -58,7 +58,7 @@ public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucible
         matrixStackIn.popPose();
         
         Level world = tileEntityIn.getLevel();
-        RandomSource rand = world.random;
+        RandomSource rand = world.getRandom();
         BlockPos pos = tileEntityIn.getBlockPos();
         if (tileEntityIn.showBubble(rand)) {
             double x = (double)pos.getX() + 0.2D + (rand.nextDouble() * 0.6D);

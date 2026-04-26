@@ -63,7 +63,7 @@ public class CalcinatorTileEntityNeoforge extends AbstractCalcinatorTileEntityNe
                             currentEssenceType = currentEssenceType.getDowngrade().orElse(null);
                         }
                     }
-                    if (currentEssenceType == null && amount > 0 && (alwaysGenerateDregs || this.level.random.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
+                    if (currentEssenceType == null && amount > 0 && (alwaysGenerateDregs || this.level.getRandom().nextInt(EssenceType.DUST.getAffinity()) < amount)) {
                         // If the item's affinity is too low for guaranteed essence, give a random chance of generating a dust anyway
                         ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, 1);
                         if (!stack.isEmpty()) {

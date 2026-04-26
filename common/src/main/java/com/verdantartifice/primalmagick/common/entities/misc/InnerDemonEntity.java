@@ -214,9 +214,9 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob {
             Difficulty difficulty = level.getDifficulty();
             int crashCount = difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 3 : 2);
             for (int index = 0; index < crashCount; index++) {
-                double dx = level.random.nextGaussian() * SIN_CRASH_RANGE * (level.random.nextBoolean() ? 1.0D : -1.0D);
+                double dx = this.random.nextGaussian() * SIN_CRASH_RANGE * (this.random.nextBoolean() ? 1.0D : -1.0D);
                 double dy = -1.0D * (double)this.getEyeHeight();
-                double dz = level.random.nextGaussian() * SIN_CRASH_RANGE * (level.random.nextBoolean() ? 1.0D : -1.0D);
+                double dz = this.random.nextGaussian() * SIN_CRASH_RANGE * (this.random.nextBoolean() ? 1.0D : -1.0D);
                 SinCrashEntity crash = new SinCrashEntity(level, this, new Vec3(dx, dy, dz));
                 crash.absSnapTo(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);
                 level.addFreshEntity(crash);

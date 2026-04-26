@@ -185,7 +185,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                     StatsManager.incrementValue(player, StatsPM.VOCABULARY_STUDIED, studyDelta);
                     
                     this.nameSeed.set(player.getEnchantmentSeed());
-                    level.playSound(null, blockPos, SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
+                    level.playSound(null, blockPos, SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
                     this.refreshBookData();
                 }
             });

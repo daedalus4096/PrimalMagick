@@ -31,9 +31,9 @@ public class SunlampTileEntity extends AbstractTilePM {
         entity.ticksExisted++;
         if (!level.isClientSide() && entity.ticksExisted % 5 == 0) {
             // Pick a random location within 15 blocks
-            int x = level.random.nextInt(RANGE) - level.random.nextInt(RANGE);
-            int y = level.random.nextInt(RANGE) - level.random.nextInt(RANGE);
-            int z = level.random.nextInt(RANGE) - level.random.nextInt(RANGE);
+            int x = level.getRandom().nextInt(RANGE) - level.getRandom().nextInt(RANGE);
+            int y = level.getRandom().nextInt(RANGE) - level.getRandom().nextInt(RANGE);
+            int z = level.getRandom().nextInt(RANGE) - level.getRandom().nextInt(RANGE);
             BlockPos bp = pos.offset(x, y, z);
             
             // Constrain the selected block pos

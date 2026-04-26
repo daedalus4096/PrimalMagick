@@ -374,7 +374,7 @@ public class TreefolkAi {
 
     private static void setAngerTarget(ServerLevel level, TreefolkEntity entity, LivingEntity target) {
         if (Sensor.isEntityAttackableIgnoringLineOfSight(level, entity, target)) {
-            int angerDuration = ANGER_DURATION.sample(level.random);
+            int angerDuration = ANGER_DURATION.sample(level.getRandom());
             entity.getBrain().eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
             entity.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, target.getUUID(), angerDuration);
             if (target.getType() == EntityType.PLAYER && level.getGameRules().get(GameRules.UNIVERSAL_ANGER)) {

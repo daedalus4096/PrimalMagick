@@ -70,7 +70,7 @@ public class CombatEvents {
 
             // Attuned players have a chance to turn invisible upon taking damage, if they aren't already
             Level targetLevel = target.level();
-            grantInvisibilityOnHurt(target, targetLevel, targetLevel.random);
+            grantInvisibilityOnHurt(target, targetLevel, targetLevel.getRandom());
         }
         
         // Handle effects caused by damage source
@@ -88,7 +88,7 @@ public class CombatEvents {
                     target.hurtServer(serverLevel, DamageSourcesPM.hellishChain(attackerLevel.registryAccess(), attacker), amount / 2.0F);
                     PacketHandler.sendToAllAround(new SpellBoltPacket(targetEntity.getEyePosition(1.0F), target.getEyePosition(1.0F), Sources.INFERNAL.getColor()),
                             serverLevel, targetEntity.blockPosition(), 64.0D);
-                    attackerLevel.playSound(null, targetEntity.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attackerLevel.random.nextGaussian() * 0.05D));
+                    attackerLevel.playSound(null, targetEntity.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attackerLevel.getRandom().nextGaussian() * 0.05D));
                 }
             }
         }
@@ -172,7 +172,7 @@ public class CombatEvents {
             }
             
             // Players with greater blood attunement can steal health, with a chance based on damage done
-            if (level.random.nextFloat() < (damageGetter.get() / 12.0F) && AttunementManager.meetsThreshold(attacker, Sources.BLOOD, AttunementThreshold.GREATER)) {
+            if (level.getRandom().nextFloat() < (damageGetter.get() / 12.0F) && AttunementManager.meetsThreshold(attacker, Sources.BLOOD, AttunementThreshold.GREATER)) {
                 attacker.heal(1.0F);
             }
         }
@@ -198,7 +198,7 @@ public class CombatEvents {
                 player.addEffect(new MobEffectInstance(EffectsPM.WEAKENED_SOUL.getHolder(), 6000, 0, true, false, true));
                 Services.CAPABILITIES.cooldowns(player).ifPresent(c -> c.setCooldown(CooldownType.DEATH_SAVE, 6000));
                 level.playSound(null, player.blockPosition(), SoundsPM.ANGELS.get(),
-                        SoundSource.PLAYERS, 1.0F, 1.0F + (0.05F * (float)level.random.nextGaussian()));
+                        SoundSource.PLAYERS, 1.0F, 1.0F + (0.05F * (float) level.getRandom().nextGaussian()));
 
                 // Cancel the event
                 return true;

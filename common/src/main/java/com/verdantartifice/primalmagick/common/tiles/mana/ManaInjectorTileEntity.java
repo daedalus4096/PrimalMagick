@@ -96,7 +96,7 @@ public abstract class ManaInjectorTileEntity extends AbstractTilePM implements I
         if (this.level != null) {
             this.lastSource = this.nextSource;
             Source[] nextPossibleSources = ALLOWED_SOURCES.stream().filter(s -> !s.equals(this.lastSource)).toArray(Source[]::new);
-            this.nextSource = nextPossibleSources[this.level.random.nextInt(nextPossibleSources.length)];
+            this.nextSource = nextPossibleSources[this.level.getRandom().nextInt(nextPossibleSources.length)];
         }
 
         this.setChanged();

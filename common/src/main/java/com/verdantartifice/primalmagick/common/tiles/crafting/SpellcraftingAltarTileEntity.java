@@ -102,11 +102,11 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
             if (!this.currentRotation.isPause()) {
                 this.lastSegment = this.nextSegment;
                 Segment[] nextPossibleSegments = Arrays.stream(Segment.values()).filter(s -> !s.equals(this.lastSegment)).toArray(Segment[]::new);
-                this.nextSegment = nextPossibleSegments[this.level.random.nextInt(nextPossibleSegments.length)];
+                this.nextSegment = nextPossibleSegments[this.level.getRandom().nextInt(nextPossibleSegments.length)];
 
                 this.lastSource = this.nextSource;
                 Source[] nextPossibleSources = ALLOWED_SOURCES.stream().filter(s -> !s.equals(this.lastSource)).toArray(Source[]::new);
-                this.nextSource = nextPossibleSources[this.level.random.nextInt(nextPossibleSources.length)];
+                this.nextSource = nextPossibleSources[this.level.getRandom().nextInt(nextPossibleSources.length)];
             }
             this.nextUpdate = this.currentRotation.getDuration(this.lastSegment, this.nextSegment);
             this.phaseTicks = 0;

@@ -110,7 +110,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
                 l += this.getExperienceFromItem(RunicGrindstoneMenu.this.repairSlots.getItem(1));
                 if (l > 0) {
                     int i1 = (int)Math.ceil((double)l / 2.0D);
-                    return i1 + level.random.nextInt(i1);
+                    return i1 + level.getRandom().nextInt(i1);
                 } else {
                     return 0;
                 }

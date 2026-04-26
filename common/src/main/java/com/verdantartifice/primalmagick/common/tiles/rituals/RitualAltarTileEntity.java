@@ -307,7 +307,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
                     entity.addStability(Math.min(0.0F, delta));
                 }
             }
-            if (entity.activeCount % 10 == 0 && entity.stability < 0.0F && level.random.nextInt(1500) < Math.abs(entity.stability)) {
+            if (entity.activeCount % 10 == 0 && entity.stability < 0.0F && level.getRandom().nextInt(1500) < Math.abs(entity.stability)) {
                 entity.doMishap();
             }
             entity.setChanged();
@@ -877,9 +877,9 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     
     protected void spawnOfferingParticles(BlockPos startPos, ItemStack stack) {
         if (this.level instanceof ServerLevel serverLevel) {
-            double sx = startPos.getX() + 0.4D + (this.level.random.nextDouble() * 0.2D);
-            double sy = startPos.getY() + 1.4D + (this.level.random.nextDouble() * 0.2D);
-            double sz = startPos.getZ() + 0.4D + (this.level.random.nextDouble() * 0.2D);
+            double sx = startPos.getX() + 0.4D + (this.level.getRandom().nextDouble() * 0.2D);
+            double sy = startPos.getY() + 1.4D + (this.level.getRandom().nextDouble() * 0.2D);
+            double sz = startPos.getZ() + 0.4D + (this.level.getRandom().nextDouble() * 0.2D);
             PacketHandler.sendToAllAround(new OfferingChannelPacket(sx, sy, sz, this.worldPosition.above(2), stack), serverLevel, startPos, 32.0D);
         }
     }
@@ -903,9 +903,9 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         if (this.level != null) {
             int attempts = 0;
             while (attempts++ < 25) {
-                Mishap mishap = this.mishaps.getRandom(this.level.random);
+                Mishap mishap = this.mishaps.getRandom(this.level.getRandom());
                 if (mishap != null && mishap.execute(this.stability)) {
-                    this.addStability(5.0F + (5.0F * this.level.random.nextFloat()));
+                    this.addStability(5.0F + (5.0F * this.level.getRandom().nextFloat()));
                     StatsManager.incrementValue(this.getActivePlayer(), StatsPM.RITUAL_MISHAPS);
                     break;
                 }
@@ -918,7 +918,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             BlockPos source = this.worldPosition.above(2);
             PacketHandler.sendToAllAround(new SpellBoltPacket(source, target, this.getOrbColor().getRGB()), serverLevel, source, 32.0D);
             if (playSound) {
-                this.level.playSound(null, source, SoundsPM.ELECTRIC.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(level.random.nextGaussian() * 0.05D));
+                this.level.playSound(null, source, SoundsPM.ELECTRIC.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(level.getRandom().nextGaussian() * 0.05D));
             }
         }
     }
@@ -928,7 +928,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             int attempts = 0;
             while (attempts++ < 25 && !this.pedestalPositions.isEmpty()) {
                 // Search for a populated offering pedestal
-                BlockPos pedestalPos = this.pedestalPositions.get(this.level.random.nextInt(this.pedestalPositions.size()));
+                BlockPos pedestalPos = this.pedestalPositions.get(this.level.getRandom().nextInt(this.pedestalPositions.size()));
                 BlockEntity tile = this.level.getBlockEntity(pedestalPos);
                 if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
                     if (!pedestalTile.getItem().isEmpty()) {
@@ -949,12 +949,12 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     
     protected void mishapSalt(boolean multiple) {
         if (this.level != null) {
-            int breakCount = multiple ? 2 + this.level.random.nextInt(4) : 1;
+            int breakCount = multiple ? 2 + this.level.getRandom().nextInt(4) : 1;
             for (int breakIndex = 0; breakIndex < breakCount; breakIndex++) {
                 int attempts = 0;
                 while (attempts++ < 25 && !this.saltPositions.isEmpty()) {
                     // Search for one or more salt trails in range
-                    BlockPos saltPos = this.saltPositions.get(this.level.random.nextInt(this.saltPositions.size()));
+                    BlockPos saltPos = this.saltPositions.get(this.level.getRandom().nextInt(this.saltPositions.size()));
                     Block block = this.level.getBlockState(saltPos).getBlock();
                     if (block == BlocksPM.SALT_TRAIL.get()) {
                         Containers.dropItemStack(this.level, saltPos.getX() + 0.5D, saltPos.getY() + 0.5D, saltPos.getZ() + 0.5D, new ItemStack(ItemsPM.REFINED_SALT.get()));
@@ -1000,7 +1000,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             // If not targeting the central altar, try to find a populated pedestal
             int attempts = 0;
             while (attempts++ < 25 && !this.pedestalPositions.isEmpty()) {
-                BlockPos pedestalPos = this.pedestalPositions.get(this.level.random.nextInt(this.pedestalPositions.size()));
+                BlockPos pedestalPos = this.pedestalPositions.get(this.level.getRandom().nextInt(this.pedestalPositions.size()));
                 BlockEntity tile = this.level.getBlockEntity(pedestalPos);
                 if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
                     if (!pedestalTile.getItem().isEmpty()) {
@@ -1011,7 +1011,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             }
             if (target == null && !this.pedestalPositions.isEmpty()) {
                 // If we can't find a populated pedestal, just pick one at random
-                target = this.pedestalPositions.get(this.level.random.nextInt(this.pedestalPositions.size()));
+                target = this.pedestalPositions.get(this.level.getRandom().nextInt(this.pedestalPositions.size()));
             }
         }
         if (target != null) {
@@ -1027,7 +1027,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
                 this.doMishapEffects(target, true);
                 this.scanDirty = true;
             }
-            float force = central ? 3.0F + this.level.random.nextFloat() : 2.0F;
+            float force = central ? 3.0F + this.level.getRandom().nextFloat() : 2.0F;
             this.level.explode(null, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, force, Level.ExplosionInteraction.TNT);
         }
     }

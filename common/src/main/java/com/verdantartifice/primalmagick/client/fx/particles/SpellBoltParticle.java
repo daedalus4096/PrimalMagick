@@ -58,7 +58,7 @@ public class SpellBoltParticle extends Particle {
             List<LineSegment> tempList = new ArrayList<>();
             for (LineSegment segment : retVal) {
                 Vec3 midpoint = segment.getMiddle();
-                midpoint = midpoint.add(VectorUtils.getRandomOrthogonalUnitVector(segment.getDelta(), this.level.random).scale(curDisplacement));
+                midpoint = midpoint.add(VectorUtils.getRandomOrthogonalUnitVector(segment.getDelta(), this.level.getRandom()).scale(curDisplacement));
                 tempList.add(new LineSegment(segment.getStart(), midpoint));
                 tempList.add(new LineSegment(midpoint, segment.getEnd()));
             }
@@ -74,7 +74,7 @@ public class SpellBoltParticle extends Particle {
         List<Vec3> retVal = new ArrayList<>();
         retVal.add(Vec3.ZERO);
         for (LineSegment segment : this.segmentList) {
-            retVal.add(segment.getEnd().equals(this.delta) ? Vec3.ZERO : VectorUtils.getRandomUnitVector(this.level.random).scale(PERTURB_DISTANCE * this.level.random.nextDouble()));
+            retVal.add(segment.getEnd().equals(this.delta) ? Vec3.ZERO : VectorUtils.getRandomUnitVector(this.level.getRandom()).scale(PERTURB_DISTANCE * this.level.getRandom().nextDouble()));
         }
         return retVal;
     }

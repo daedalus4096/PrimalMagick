@@ -90,7 +90,7 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
             Level level = this.level();
             if (!level.isClientSide()) {
                 float volume = Mth.clamp((float)this.getDeltaMovement().length(), 0.0F, 1.0F);
-                this.playSound(SoundsPM.CLANK.get(), volume, 0.8F + (0.4F * level.random.nextFloat()));
+                this.playSound(SoundsPM.CLANK.get(), volume, 0.8F + (0.4F * level.getRandom().nextFloat()));
             }
         }
     }

@@ -132,9 +132,9 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
             return false;
         }
         
-        double x = (double)this.worldPosition.getX() + (SPAWN_RANGE * (this.level.random.nextDouble() - this.level.random.nextDouble())) + 0.5D;
-        double y = (double)this.worldPosition.getY() + this.level.random.nextInt(3) - 1;
-        double z = (double)this.worldPosition.getZ() + (SPAWN_RANGE * (this.level.random.nextDouble() - this.level.random.nextDouble())) + 0.5D;
+        double x = (double)this.worldPosition.getX() + (SPAWN_RANGE * (this.level.getRandom().nextDouble() - this.level.getRandom().nextDouble())) + 0.5D;
+        double y = (double)this.worldPosition.getY() + this.level.getRandom().nextInt(3) - 1;
+        double z = (double)this.worldPosition.getZ() + (SPAWN_RANGE * (this.level.getRandom().nextDouble() - this.level.getRandom().nextDouble())) + 0.5D;
         BlockPos spawnPos = BlockPos.containing(x, y, z);
         
         if (this.level.noCollision(entityType.getSpawnAABB(x, y, z))) {
@@ -142,7 +142,7 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
             if (entity == null) {
                 return false;
             }
-            entity.snapTo(entity.getX(), entity.getY(), entity.getZ(), this.level.random.nextFloat() * 360.0F, 0.0F);
+            entity.snapTo(entity.getX(), entity.getY(), entity.getZ(), this.level.getRandom().nextFloat() * 360.0F, 0.0F);
             
             if (entity instanceof Mob mobEntity) {
                 Services.EVENTS.finalizeMobSpawn(mobEntity, serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.SPAWNER, null);

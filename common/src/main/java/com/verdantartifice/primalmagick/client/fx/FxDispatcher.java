@@ -48,7 +48,7 @@ public class FxDispatcher {
         // Release a cluster of poof clouds when transforming a block with a wand
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
-        RandomSource rng = world.random;
+        RandomSource rng = world.getRandom();
         if (sound) {
             this.getWorld().playLocalSound(x, y, z, SoundsPM.POOF.get(), SoundSource.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
         }
@@ -118,7 +118,7 @@ public class FxDispatcher {
         // Show a cluster of particles at the impact point of a spell
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
-        RandomSource rng = world.random;
+        RandomSource rng = world.getRandom();
         int count = (15 + rng.nextInt(11)) * radius;
         for (int index = 0; index < count; index++) {
             double dx = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
@@ -134,7 +134,7 @@ public class FxDispatcher {
     public void ritualGlow(BlockPos pos, int color) {
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
-        RandomSource rng = world.random;
+        RandomSource rng = world.getRandom();
 
         float r = ARGB.red(color) / 255.0F;
         float g = ARGB.green(color) / 255.0F;
@@ -159,7 +159,7 @@ public class FxDispatcher {
     public void spellcraftingGlow(BlockPos pos, double dy, float r, float g, float b) {
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
-        RandomSource rng = world.random;
+        RandomSource rng = world.getRandom();
 
         int count = (3 + rng.nextInt(3));
         for (int index = 0; index < count; index++) {
@@ -176,8 +176,9 @@ public class FxDispatcher {
     public void teleportArrival(double x, double y, double z) {
         // Show a cluster of particles at the point where a player arrives from a teleport spell; similar to Ender Pearl effect
         Level world = getWorld();
+        RandomSource random = world.getRandom();
         for (int i = 0; i < 32; i++) {
-            world.addParticle(ParticleTypes.PORTAL, x, y + world.random.nextDouble() * 2.0D, z, world.random.nextGaussian(), 0.0D, world.random.nextGaussian());
+            world.addParticle(ParticleTypes.PORTAL, x, y + random.nextDouble() * 2.0D, z, random.nextGaussian(), 0.0D, random.nextGaussian());
         }
     }
     
@@ -264,7 +265,7 @@ public class FxDispatcher {
     public void potionExplosion(double x, double y, double z, float r, float g, float b, boolean isInstant) {
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
-        world.playLocalSound(x, y, z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.NEUTRAL, 4.0F, (1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.2F) * 0.7F, false);
+        world.playLocalSound(x, y, z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.NEUTRAL, 4.0F, (1.0F + (world.getRandom().nextFloat() - world.getRandom().nextFloat()) * 0.2F) * 0.7F, false);
         world.addParticle(ParticleTypes.EXPLOSION_EMITTER, x, y, z, 1.0D, 0.0D, 0.0D);
         Particle p = mc.particleEngine.createParticle(new PotionExplosionParticleData(isInstant), x, y, z, 1.0D, 0.0D, 0.0D);
         if (p != null) {

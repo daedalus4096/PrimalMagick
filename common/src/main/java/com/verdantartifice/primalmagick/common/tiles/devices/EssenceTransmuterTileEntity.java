@@ -247,7 +247,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
         if (level != null && inputStack != null && !inputStack.isEmpty() && inputStack.getCount() >= ESSENCE_PER_TRANSMUTE && inputStack.getItem() instanceof EssenceItem essence) {
             EssenceType inputType = essence.getEssenceType();
             Source inputSource = essence.getSource();
-            Source outputSource = this.getNextSource(inputSource, level.random);
+            Source outputSource = this.getNextSource(inputSource, level.getRandom());
             ItemStack outputItem = EssenceItem.getEssence(inputType, outputSource, 1);
             List<ItemStack> currentOutputs = this.inventories.get(OUTPUT_INV_INDEX);
             return ItemUtils.mergeItemStackIntoList(currentOutputs, outputItem);

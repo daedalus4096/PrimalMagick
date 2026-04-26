@@ -15,7 +15,7 @@ public class StartDancingSometimes {
             return treefolkInstance.group(treefolkInstance.absent(MemoryModuleType.CELEBRATE_LOCATION), treefolkInstance.absent(MemoryModuleType.DANCING), treefolkInstance.absent(MemoryModuleTypesPM.DANCED_RECENTLY.get()), treefolkInstance.registered(MemoryModuleTypesPM.NEARBY_TREEFOLK.get()))
                     .apply(treefolkInstance, (celebrateLocationAccessor, dancingAccessor, dancedRecentlyAccessor, nearbyTreefolkAccessor) -> {
                         return (level, entity, gameTime) -> {
-                            if (!ticker.tickDownAndCheck(level.random)) {
+                            if (!ticker.tickDownAndCheck(level.getRandom())) {
                                 return false;
                             } else {
                                 TreefolkAi.startDanceParty(entity, danceDuration, recentlyCooldown);
