@@ -36,7 +36,7 @@ public class AppleEntity extends ThrowableItemProjectile {
     }
 
     private ParticleOptions makeParticle() {
-        return new ItemParticleOption(ParticleTypes.ITEM, this.getItem());
+        return new ItemParticleOption(ParticleTypes.ITEM, this.getItem().getItem());
     }
 
     @Override
