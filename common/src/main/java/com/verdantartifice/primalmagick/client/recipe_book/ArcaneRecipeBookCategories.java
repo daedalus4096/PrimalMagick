@@ -6,10 +6,11 @@ import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import net.minecraft.client.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nonnull;
@@ -22,6 +23,7 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public enum ArcaneRecipeBookCategories {
+    // FIXME Convert this to a datapacked registry, a la RegistryBookCategory?
     CRAFTING_SEARCH(RecipeBookCategories.CRAFTING_SEARCH, new ItemStack(Items.COMPASS)),
     CRAFTING_BUILDING_BLOCKS(RecipeBookCategories.CRAFTING_BUILDING_BLOCKS, new ItemStack(Blocks.BRICKS)),
     CRAFTING_REDSTONE(RecipeBookCategories.CRAFTING_REDSTONE, new ItemStack(Items.REDSTONE)),
@@ -50,10 +52,10 @@ public enum ArcaneRecipeBookCategories {
             DISSOLUTION_SEARCH, ImmutableList.of(DISSOLUTION_ORES, DISSOLUTION_MISC),
             FURNACE_SEARCH, ImmutableList.of(FURNACE_FOOD, FURNACE_BLOCKS, FURNACE_MISC));
 
-    private final RecipeBookCategories vanillaCategory;
+    private final RecipeBookCategory vanillaCategory;
     private final List<ItemStack> itemIcons;
     
-    private ArcaneRecipeBookCategories(RecipeBookCategories vanillaCategory, ItemStack... icons) {
+    ArcaneRecipeBookCategories(RecipeBookCategory vanillaCategory, ItemStack... icons) {
         this.vanillaCategory = vanillaCategory;
         this.itemIcons = ImmutableList.copyOf(icons);
     }
@@ -72,7 +74,7 @@ public enum ArcaneRecipeBookCategories {
         return this.itemIcons;
     }
     
-    public RecipeBookCategories getVanillaCategory() {
+    public RecipeBookCategory getVanillaCategory() {
         return this.vanillaCategory;
     }
 }
