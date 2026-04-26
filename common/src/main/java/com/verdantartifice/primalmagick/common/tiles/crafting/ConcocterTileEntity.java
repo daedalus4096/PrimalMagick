@@ -282,7 +282,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     
     protected void doConcoction(CraftingInput inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
         if (recipe != null && this.canConcoct(inputInv, registryAccess, recipe)) {
-            ItemStack recipeOutput = recipe.assemble(inputInv, registryAccess);
+            ItemStack recipeOutput = recipe.assemble(inputInv);
             ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
             if (currentOutput.isEmpty()) {
                 this.setItem(OUTPUT_INV_INDEX, 0, recipeOutput);

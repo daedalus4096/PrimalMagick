@@ -287,7 +287,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
     private static boolean canBurn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipeHolder, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
         if (!entity.getItem(INPUT_INV_INDEX, 0).isEmpty() && recipeHolder != null) {
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), registryAccess);
+            ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)));
             if (recipeOutput.isEmpty()) {
                 return false;
             } else {
@@ -311,7 +311,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
         if (entity.getLevel() instanceof ServerLevel serverLevel && recipeHolder != null && canBurn(registryAccess, recipeHolder, entity, maxFurnaceStackSize)) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)), registryAccess);
+            ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)));
             ItemStack existingOutput = entity.getItem(OUTPUT_INV_INDEX, 0);
             if (existingOutput.isEmpty()) {
                 entity.setItem(OUTPUT_INV_INDEX, 0, recipeOutput.copy());

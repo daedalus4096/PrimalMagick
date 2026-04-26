@@ -54,7 +54,7 @@ public class BeeswaxTests extends AbstractBaseTest {
 
         helper.succeedIf(() -> {
             assertTrue(helper, outputOpt.isPresent(), "No recipe found");
-            assertTrue(helper, outputOpt.get().value().assemble(craftingInput, helper.getLevel().registryAccess()).is(waxOn.asItem()), "Recipe output not as expected");
+            assertTrue(helper, outputOpt.get().value().assemble(craftingInput).is(waxOn.asItem()), "Recipe output not as expected");
         });
     }
 }

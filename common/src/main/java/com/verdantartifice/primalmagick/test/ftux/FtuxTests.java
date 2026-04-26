@@ -84,7 +84,7 @@ public class FtuxTests extends AbstractBaseTest {
         var container = CraftingInput.of(2, 1, List.of(new ItemStack(Items.STICK), new ItemStack(dust)));
         var recipe = helper.getLevel().recipeAccess().getRecipeFor(RecipeType.CRAFTING, container, helper.getLevel());
         assertTrue(helper, recipe.isPresent(), "Recipe not found when expected");
-        assertTrue(helper, recipe.get().value().assemble(container, helper.getLevel().registryAccess()).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
+        assertTrue(helper, recipe.get().value().assemble(container).is(ItemsPM.MUNDANE_WAND.get()), "Recipe result does not match expectations");
         helper.succeed();
     }
 

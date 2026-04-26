@@ -199,7 +199,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     
     protected void doDissolve(SingleRecipeInput inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
         if (recipe != null && this.canDissolve(inputInv, registryAccess, recipe)) {
-            ItemStack recipeOutput = recipe.value().assemble(inputInv, registryAccess);
+            ItemStack recipeOutput = recipe.value().assemble(inputInv);
             ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
             if (currentOutput.isEmpty()) {
                 this.setItem(OUTPUT_INV_INDEX, 0, recipeOutput);

@@ -165,7 +165,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     public void updateRecipeResultSlot(RegistryAccess registryAccess) {
         if (!this.recipes.isEmpty() && this.getTileInventory(Direction.UP) != null) {
             IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get()).value();
-            this.outputSlot.set(recipe.assemble(createRecipeInput(this.getTileInventory(Direction.UP)), registryAccess));
+            this.outputSlot.set(recipe.assemble(createRecipeInput(this.getTileInventory(Direction.UP))));
         } else {
             this.outputSlot.set(ItemStack.EMPTY);
         }
