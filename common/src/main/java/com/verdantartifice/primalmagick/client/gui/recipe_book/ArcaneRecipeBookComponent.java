@@ -432,7 +432,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         return newValue;
     }
     
-    public boolean hasClickedOutside(double mouseX, double mouseY, int parentLeft, int parentTop, int parentWidth, int parentHeight, int buttonIndex) {
+    public boolean hasClickedOutside(double mouseX, double mouseY, int parentLeft, int parentTop, int parentWidth, int parentHeight) {
         if (!this.isVisible()) {
             return true;
         } else {
