@@ -20,6 +20,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -43,6 +44,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
@@ -382,7 +384,8 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
                 return NonNullList.of(ItemStack.EMPTY, ingStackList.stream()
                         .map(ItemStack::getItem)
                         .map(Item::getCraftingRemainder)
-                        .filter(Predicate.not(ItemStack::isEmpty))
+                        .filter(Objects::nonNull)
+                        .map(ItemStackTemplate::create)
                         .toArray(ItemStack[]::new));
             });
         } else {
