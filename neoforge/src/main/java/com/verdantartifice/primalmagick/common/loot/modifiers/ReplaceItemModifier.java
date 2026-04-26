@@ -27,8 +27,8 @@ public class ReplaceItemModifier extends LootModifier {
     
     protected final Item item;
 
-    public ReplaceItemModifier(LootItemCondition[] conditionsIn, Item item) {
-        super(conditionsIn);
+    public ReplaceItemModifier(LootItemCondition[] conditionsIn, int priority, Item item) {
+        super(conditionsIn, priority);
         this.item = item;
     }
 

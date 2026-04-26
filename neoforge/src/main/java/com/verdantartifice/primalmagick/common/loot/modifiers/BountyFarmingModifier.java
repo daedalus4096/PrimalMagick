@@ -24,8 +24,8 @@ public class BountyFarmingModifier extends LootModifier {
 
     protected final float chance;
 
-    public BountyFarmingModifier(LootItemCondition[] conditionsIn, float chance) {
-        super(conditionsIn);
+    public BountyFarmingModifier(LootItemCondition[] conditionsIn, int priority, float chance) {
+        super(conditionsIn, priority);
         this.chance = chance;
     }
     

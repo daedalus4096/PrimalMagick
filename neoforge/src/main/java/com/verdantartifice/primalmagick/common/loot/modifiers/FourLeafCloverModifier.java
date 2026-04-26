@@ -22,8 +22,8 @@ public class FourLeafCloverModifier extends LootModifier {
     protected static final UniformInt DEFAULT_ROLLS = UniformInt.of(1, 1);
     public static final MapCodec<FourLeafCloverModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, FourLeafCloverModifier::new));
 
-    public FourLeafCloverModifier(LootItemCondition[] conditions) {
-        super(conditions);
+    public FourLeafCloverModifier(LootItemCondition[] conditions, int priority) {
+        super(conditions, priority);
     }
 
     @Override

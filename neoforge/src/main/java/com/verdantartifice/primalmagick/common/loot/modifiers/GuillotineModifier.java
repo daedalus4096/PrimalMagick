@@ -34,8 +34,8 @@ public class GuillotineModifier extends LootModifier {
     protected final Item item;
     protected final float chance;
 
-    public GuillotineModifier(LootItemCondition[] conditionsIn, TagKey<EntityType<?>> targetTag, Item item, float chance) {
-        super(conditionsIn);
+    public GuillotineModifier(LootItemCondition[] conditionsIn, int priority, TagKey<EntityType<?>> targetTag, Item item, float chance) {
+        super(conditionsIn, priority);
         this.targetTag = targetTag;
         this.item = item;
         this.chance = chance;

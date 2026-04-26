@@ -31,8 +31,8 @@ public class RelicFragmentsModifier extends LootModifier {
     protected final int minCount;
     protected final int maxCount;
 
-    public RelicFragmentsModifier(LootItemCondition[] conditionsIn, TagKey<EntityType<?>> targetTag, int minCount, int maxCount) {
-        super(conditionsIn);
+    public RelicFragmentsModifier(LootItemCondition[] conditionsIn, int priority, TagKey<EntityType<?>> targetTag, int minCount, int maxCount) {
+        super(conditionsIn, priority);
         this.targetTag = targetTag;
         this.minCount = minCount;
         this.maxCount = maxCount;

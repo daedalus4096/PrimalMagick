@@ -26,8 +26,8 @@ public class BloodyFleshModifier extends LootModifier {
 
     protected final TagKey<EntityType<?>> targetTag;
 
-    public BloodyFleshModifier(LootItemCondition[] conditionsIn, TagKey<EntityType<?>> targetTag) {
-        super(conditionsIn);
+    public BloodyFleshModifier(LootItemCondition[] conditionsIn, int priority, TagKey<EntityType<?>> targetTag) {
+        super(conditionsIn, priority);
         this.targetTag = targetTag;
     }
 

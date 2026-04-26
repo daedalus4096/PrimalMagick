@@ -32,8 +32,8 @@ public class BonusNuggetModifier extends LootModifier {
     protected final float chance;
     protected final Map<TagKey<Block>, TagKey<Item>> nuggetMap;
     
-    public BonusNuggetModifier(LootItemCondition[] conditions, Map<TagKey<Block>, TagKey<Item>> nuggetMap, float chance) {
-        super(conditions);
+    public BonusNuggetModifier(LootItemCondition[] conditions, int priority, Map<TagKey<Block>, TagKey<Item>> nuggetMap, float chance) {
+        super(conditions, priority);
         this.nuggetMap = nuggetMap;
         this.chance = chance;
     }

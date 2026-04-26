@@ -49,6 +49,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCon
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
+import net.neoforged.neoforge.common.loot.LootModifier;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 
 import java.util.List;
@@ -72,24 +73,24 @@ public class LootModifierProviderNeoforge extends GlobalLootModifierProvider {
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.5F, 0.1F).build()
-                }, EntityTypeTagsPM.DROPS_BLOODY_FLESH));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.DROPS_BLOODY_FLESH));
         this.add("bounty_farming", new BountyFarmingModifier(
                 new LootItemCondition[] {
                         MatchBlockTag.builder(BlockTagsPM.BOUNTY_CROPS).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().withComponents(DataComponentMatchers.Builder.components()
                                 .partial(DataComponentPredicates.ENCHANTMENTS, EnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchantLookup.getOrThrow(EnchantmentsPM.BOUNTY), MinMaxBounds.Ints.atLeast(1))))).build())).build()
-                }, 0.25F));
+                }, LootModifier.DEFAULT_PRIORITY, 0.25F));
         this.add("bounty_fishing", new BountyFishingModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(FishingHookPredicate.inOpenWater(true))).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().withComponents(DataComponentMatchers.Builder.components()
                                 .partial(DataComponentPredicates.ENCHANTMENTS, EnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchantLookup.getOrThrow(EnchantmentsPM.BOUNTY), MinMaxBounds.Ints.atLeast(1))))).build())).build()
-                }, 0.25F));
+                }, LootModifier.DEFAULT_PRIORITY, 0.25F));
         this.add("lucky_strike", new BonusNuggetModifier(
                 new LootItemCondition[] {
                         MatchTool.toolMatches(ItemPredicate.Builder.item().withComponents(DataComponentMatchers.Builder.components()
                                 .partial(DataComponentPredicates.ENCHANTMENTS, EnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(enchantLookup.getOrThrow(EnchantmentsPM.LUCKY_STRIKE), MinMaxBounds.Ints.atLeast(1))))).build())).build()
-                }, ImmutableMap.<TagKey<Block>, TagKey<Item>>builder()
+                }, LootModifier.DEFAULT_PRIORITY, ImmutableMap.<TagKey<Block>, TagKey<Item>>builder()
                     .put(CommonTags.Blocks.ORES_IRON, CommonTags.Items.NUGGETS_IRON)
                     .put(CommonTags.Blocks.ORES_GOLD, CommonTags.Items.NUGGETS_GOLD)
                     .put(CommonTags.Blocks.ORES_QUARTZ, ItemExtensionTags.NUGGETS_QUARTZ)
@@ -104,203 +105,203 @@ public class LootModifierProviderNeoforge extends GlobalLootModifierProvider {
                 new LootItemCondition[] {
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH));
         this.add("blood_notes_low", new BloodNotesModifier(
                 new LootItemCondition[] {
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.25F, 0.25F).build()
-                }, EntityTypeTagsPM.DROPS_BLOOD_NOTES_LOW));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.DROPS_BLOOD_NOTES_LOW));
         this.add("relic_fragments_high", new RelicFragmentsModifier(
                 new LootItemCondition[] {
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_HIGH, 3, 5));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_HIGH, 3, 5));
         this.add("relic_fragments_low", new RelicFragmentsModifier(
                 new LootItemCondition[] {
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.1F, 0.05F).build()
-                }, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW, 1, 1));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW, 1, 1));
         this.add("four_leaf_clover_short_grass", new FourLeafCloverModifier(
                 new LootItemCondition[] {
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.SHORT_GRASS).build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.004F, 0.003F).build()
-                }));
+                }, LootModifier.DEFAULT_PRIORITY));
         this.add("four_leaf_clover_tall_grass", new FourLeafCloverModifier(
                 new LootItemCondition[] {
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS).build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.004F, 0.003F).build()
-                }));
+                }, LootModifier.DEFAULT_PRIORITY));
         this.add("humming_artifact_abandoned_mineshaft", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.ABANDONED_MINESHAFT.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_ancient_city", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.ANCIENT_CITY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_bastion_treasure", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.BASTION_TREASURE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_buried_treasure", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.BURIED_TREASURE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_desert_pyramid", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_end_city_treasure", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.END_CITY_TREASURE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_igloo_chest", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.IGLOO_CHEST.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_jungle_temple", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_nether_fortress", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.NETHER_BRIDGE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_pillager_outpost", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.PILLAGER_OUTPOST.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_shipwreck_treasure", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.SHIPWRECK_TREASURE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_simple_dungeon", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.4F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_stronghold_library", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.STRONGHOLD_LIBRARY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_underwater_ruin_big", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("humming_artifact_woodland_mansion", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.WOODLAND_MANSION.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
-                }, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()));
         this.add("essence_thief", new EssenceThiefModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.1F, 0.05F).build()
-                }));
+                }, LootModifier.DEFAULT_PRIORITY));
         this.add("guillotine_zombie_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.GUILLOTINE_ZOMBIE_HEAD, Items.ZOMBIE_HEAD, 0.1F));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.GUILLOTINE_ZOMBIE_HEAD, Items.ZOMBIE_HEAD, 0.1F));
         this.add("guillotine_skeleton_skull", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.GUILLOTINE_SKELETON_SKULL, Items.SKELETON_SKULL, 0.1F));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.GUILLOTINE_SKELETON_SKULL, Items.SKELETON_SKULL, 0.1F));
         this.add("guillotine_creeper_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.GUILLOTINE_CREEPER_HEAD, Items.CREEPER_HEAD, 0.1F));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.GUILLOTINE_CREEPER_HEAD, Items.CREEPER_HEAD, 0.1F));
         this.add("guillotine_dragon_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.GUILLOTINE_DRAGON_HEAD, Items.DRAGON_HEAD, 0.1F));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.GUILLOTINE_DRAGON_HEAD, Items.DRAGON_HEAD, 0.1F));
         this.add("guillotine_wither_skeleton_skull", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.GUILLOTINE_WITHER_SKELETON_SKULL, Items.WITHER_SKELETON_SKULL, 0.1F));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.GUILLOTINE_WITHER_SKELETON_SKULL, Items.WITHER_SKELETON_SKULL, 0.1F));
         this.add("guillotine_piglin_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.GUILLOTINE_PIGLIN_HEAD, Items.PIGLIN_HEAD, 0.1F));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.GUILLOTINE_PIGLIN_HEAD, Items.PIGLIN_HEAD, 0.1F));
         this.add("guillotine_player_head", new GuillotineModifier(
                 new LootItemCondition[] {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         // TODO Match target entity tag in loot condition if/when vanilla entity type tags are resolved before loot conditions
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
-                }, EntityTypeTagsPM.GUILLOTINE_PLAYER_HEAD, Items.PLAYER_HEAD, 0.1F));
+                }, LootModifier.DEFAULT_PRIORITY, EntityTypeTagsPM.GUILLOTINE_PLAYER_HEAD, Items.PLAYER_HEAD, 0.1F));
 
         this.add("lore_fragment_desert_well_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_desert_pyramid_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID_ARCHAEOLOGY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_trail_ruins_archaeology_common", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.02F).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_trail_ruins_archaeology_rare", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_ocean_ruin_warm_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_ocean_ruin_cold_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY.identifier()).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get()));
         this.add("lore_fragment_underwater_ruin_small_chest", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_SMALL.identifier()).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(1, 3)));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(1, 3)));
         this.add("lore_fragment_underwater_ruin_big_chest", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG.identifier()).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
         this.add("lore_fragment_desert_pyramid_chest", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID.identifier()).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
         this.add("lore_fragment_jungle_temple_chest", new AddItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE.identifier()).build()
-                }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
+                }, LootModifier.DEFAULT_PRIORITY, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
     }
 }

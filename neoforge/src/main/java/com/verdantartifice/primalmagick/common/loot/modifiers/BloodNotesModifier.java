@@ -26,8 +26,8 @@ public class BloodNotesModifier extends LootModifier {
     
     protected final TagKey<EntityType<?>> targetTag;
 
-    public BloodNotesModifier(LootItemCondition[] conditionsIn, TagKey<EntityType<?>> targetTag) {
-        super(conditionsIn);
+    public BloodNotesModifier(LootItemCondition[] conditionsIn, int priority, TagKey<EntityType<?>> targetTag) {
+        super(conditionsIn, priority);
         this.targetTag = targetTag;
     }
 
