@@ -87,6 +87,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
@@ -227,7 +228,7 @@ public class BlocksPM {
 
     // Register crop blocks
     public static final IRegistryItem<Block, HydromelonBlock> HYDROMELON = register("hydromelon", () -> new HydromelonBlock(Block.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
-    public static final IRegistryItem<Block, AttachedStemBlock> ATTACHED_HYDROMELON_STEM = register("attached_hydromelon_stem", () -> new AttachedStemBlockPM(BlockReferencesPM.HYDROMELON_STEM, BlockReferencesPM.HYDROMELON, ItemReferencesPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
+    public static final IRegistryItem<Block, AttachedStemBlock> ATTACHED_HYDROMELON_STEM = register("attached_hydromelon_stem", () -> new AttachedStemBlockPM(BlockReferencesPM.HYDROMELON_STEM, BlockReferencesPM.HYDROMELON, ItemReferencesPM.HYDROMELON_SEEDS, BlockTags.SUPPORTS_MELON_STEM, Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
     public static final IRegistryItem<Block, StemBlock> HYDROMELON_STEM = register("hydromelon_stem", () -> new StemBlockPM(BlockReferencesPM.HYDROMELON, BlockReferencesPM.ATTACHED_HYDROMELON_STEM, ItemReferencesPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollision().randomTicks().instabreak().sound(SoundType.HARD_CROP).pushReaction(PushReaction.DESTROY)));
     public static final IRegistryItem<Block, BloodRoseBlock> BLOOD_ROSE = register("blood_rose", () -> new BloodRoseBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));
     public static final IRegistryItem<Block, EmberflowerBlock> EMBERFLOWER = register("emberflower", () -> new EmberflowerBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY).lightLevel(state -> 10)));
