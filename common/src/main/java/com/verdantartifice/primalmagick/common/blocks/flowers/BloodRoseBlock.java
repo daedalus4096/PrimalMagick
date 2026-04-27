@@ -43,7 +43,7 @@ public class BloodRoseBlock extends TallFlowerBlock {
         // Don't destroy items and don't harm anything in the immunity tag
         if ( pLevel instanceof ServerLevel serverLevel &&
              pEntity.getType() != EntityType.ITEM &&
-             !pEntity.getType().is(EntityTypeTagsPM.BLOOD_ROSE_IMMUNE) ) {
+             !pEntity.is(EntityTypeTagsPM.BLOOD_ROSE_IMMUNE) ) {
             pEntity.hurtServer(serverLevel, DamageSourcesPM.bloodRose(serverLevel.registryAccess()), 1F);
         }
     }
