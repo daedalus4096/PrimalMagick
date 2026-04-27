@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -113,7 +114,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
     }
 
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
         this.clickedOnSroll = false;
         if (this.hasItemsInInputSlot) {
             int i = this.leftPos + 52;
@@ -122,8 +123,8 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
 
             for(int l = this.recipeIndexOffset; l < k; ++l) {
                 int i1 = l - this.recipeIndexOffset;
-                double d0 = p_mouseClicked_1_ - (double)(i + i1 % 4 * 16);
-                double d1 = p_mouseClicked_3_ - (double)(j + i1 / 4 * 18);
+                double d0 = event.x() - (double)(i + i1 % 4 * 16);
+                double d1 = event.y() - (double)(j + i1 / 4 * 18);
                 if (d0 >= 0.0D && d1 >= 0.0D && d0 < 16.0D && d1 < 18.0D && this.menu.clickMenuButton(this.minecraft.player, l)) {
                     Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
                     this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, l);
@@ -133,15 +134,15 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
 
             i = this.leftPos + 119;
             j = this.topPos + 9;
-            if (p_mouseClicked_1_ >= (double)i && p_mouseClicked_1_ < (double)(i + 12) && p_mouseClicked_3_ >= (double)j && p_mouseClicked_3_ < (double)(j + 54)) {
+            if (event.x() >= (double)i && event.x() < (double)(i + 12) && event.y() >= (double)j && event.y() < (double)(j + 54)) {
                 this.clickedOnSroll = true;
             }
         }
-        return super.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_);
+        return super.mouseClicked(event, doubleClick);
     }
     
     @Override
-    public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
+    public boolean mouseDragged(@NotNull MouseButtonEvent event, double pMouseX, double pMouseY) {
         if (this.clickedOnSroll && this.canScroll()) {
             int i = this.topPos + 14;
             int j = i + 54;
@@ -150,7 +151,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
             this.recipeIndexOffset = (int)((double)(this.sliderProgress * (float)this.getHiddenRows()) + 0.5D) * 4;
             return true;
         } else {
-            return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
+            return super.mouseDragged(event, pMouseX, pMouseY);
         }
     }
     

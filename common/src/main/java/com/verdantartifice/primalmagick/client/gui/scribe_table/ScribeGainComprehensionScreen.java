@@ -275,8 +275,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         }
 
         @Override
-        public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
-            boolean retVal = this.reachable && super.mouseClicked(event, isDoubleClick);
+        public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+            boolean retVal = this.reachable && super.mouseClicked(event, doubleClick);
             if (retVal && this.gridDef.isPresent()) {
                 Optional<GridNodeDefinition> nodeOpt = this.gridDef.get().getNode(this.xIndex, this.yIndex);
                 Holder.Reference<BookLanguage> lang = BookLanguagesPM.getLanguageOrDefault(this.gridDef.get().getLanguage(), this.registryAccess, BookLanguagesPM.DEFAULT);

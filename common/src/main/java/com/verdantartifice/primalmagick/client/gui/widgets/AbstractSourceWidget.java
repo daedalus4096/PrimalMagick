@@ -68,7 +68,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
     }
     
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
         // Disable click behavior
         return false;
     }

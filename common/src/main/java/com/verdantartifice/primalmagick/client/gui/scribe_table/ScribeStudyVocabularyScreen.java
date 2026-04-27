@@ -92,7 +92,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
         int slotLeft = this.leftPos + 60;
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int slotTop = this.topPos + 42 + (19 * slotIndex);
@@ -103,7 +103,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                 return true;
             }
         }
-        return super.mouseClicked(event, isDoubleClick);
+        return super.mouseClicked(event, doubleClick);
     }
 
     @Override

@@ -58,12 +58,12 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
         for (ScribeTableModeTabButton tab : this.tabButtons) {
-            if (tab.mouseClicked(event, isDoubleClick)) {
+            if (tab.mouseClicked(event, doubleClick)) {
                 return true;
             }
         }
-        return super.mouseClicked(event, isDoubleClick);
+        return super.mouseClicked(event, doubleClick);
     }
 }

@@ -112,7 +112,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
     }
 
     @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean isDoubleClick) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
         if (event.button() != 0) {
             return false;
         } else {

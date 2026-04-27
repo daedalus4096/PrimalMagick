@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -82,7 +83,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
     }
     
     @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
         // Disable click behavior
         return false;
     }

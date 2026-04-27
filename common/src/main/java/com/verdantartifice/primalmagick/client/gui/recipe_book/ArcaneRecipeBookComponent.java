@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.util.Util;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
@@ -39,6 +40,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -371,7 +373,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int buttonIndex) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
         if (this.isVisible() && !this.mc.player.isSpectator()) {
             if (this.recipeBookPage.mouseClicked(mouseX, mouseY, buttonIndex, (this.width - IMAGE_WIDTH) / 2 - this.xOffset, (this.height - IMAGE_HEIGHT) / 2, IMAGE_WIDTH, IMAGE_HEIGHT)) {
                 RecipeHolder<?> recipe = this.recipeBookPage.getLastClickedRecipe();
@@ -387,7 +389,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                     }
                 }
                 return true;
-            } else if (this.searchBox.mouseClicked(mouseX, mouseY, buttonIndex)) {
+            } else if (this.searchBox.mouseClicked(event, doubleClick)) {
                 this.searchBox.setFocused(true);
                 return true;
             } else {

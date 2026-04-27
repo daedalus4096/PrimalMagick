@@ -7,10 +7,12 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -108,14 +110,14 @@ public class RecipeIndexPage extends AbstractPage {
     }
 
     @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        if (this.searchBox != null && this.searchBox.mouseClicked(pMouseX, pMouseY, pButton)) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+        if (this.searchBox != null && this.searchBox.mouseClicked(event, doubleClick)) {
             this.searchBox.setFocused(true);
             return true;
         } else if (this.searchBox != null) {
             this.searchBox.setFocused(false);
         }
-        return super.mouseClicked(pMouseX, pMouseY, pButton);
+        return super.mouseClicked(event, doubleClick);
     }
 
     @Override

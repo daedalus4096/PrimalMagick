@@ -78,6 +78,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Holder;
@@ -96,6 +97,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -1354,9 +1356,9 @@ public class GrimoireScreen extends Screen {
     }
     
     @Override
-    public boolean mouseClicked(double xPos, double yPos, int keyCode) {
-        boolean retVal = super.mouseClicked(xPos, yPos, keyCode);
-        if (keyCode == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
+    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
+        boolean retVal = super.mouseClicked(event, doubleClick);
+        if (event.isRight()) {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
@@ -1370,7 +1372,7 @@ public class GrimoireScreen extends Screen {
             }
         } else {
             for (AbstractPage page : this.pages) {
-                if (page.mouseClicked(xPos, yPos, keyCode)) {
+                if (page.mouseClicked(event, doubleClick)) {
                     this.setFocused(page);
                     return true;
                 }
