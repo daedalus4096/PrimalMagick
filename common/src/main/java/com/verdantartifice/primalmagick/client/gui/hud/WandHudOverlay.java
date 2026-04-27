@@ -98,7 +98,7 @@ public class WandHudOverlay {
         if (Minecraft.getInstance().hasShiftDown()) {
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(61, 2);
-            guiGraphics.drawString(font, text, x, y, -1);
+            guiGraphics.text(font, text, x, y, -1);
             guiGraphics.pose().popMatrix();
         }
         

@@ -36,7 +36,7 @@ public class AttunementGainPage extends AbstractPage {
         Minecraft mc = Minecraft.getInstance();
         for (AttunementReward reward : this.rewards) {
             Component fullText = reward.getDescription(mc.player);
-            guiGraphics.drawString(mc.font, fullText, x - 3 + (side * 140), y - 6, 0, false);
+            guiGraphics.text(mc.font, fullText, x - 3 + (side * 140), y - 6, 0, false);
             y += mc.font.lineHeight;
         }
     }

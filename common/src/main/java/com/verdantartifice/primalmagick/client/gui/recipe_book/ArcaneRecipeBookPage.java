@@ -110,13 +110,13 @@ public class ArcaneRecipeBookPage {
         if (this.totalPages > 1) {
             String str = (this.currentPage + 1) + "/" + this.totalPages;
             int width = this.mc.font.width(str);
-            guiGraphics.drawString(this.mc.font, str, parentX - width / 2 + 73, parentY + 141, -1);
+            guiGraphics.text(this.mc.font, str, parentX - width / 2 + 73, parentY + 141, -1);
         }
         
         if (this.isLoading) {
             Component loadingComponent = Component.translatable("label.primalmagick.recipe_book.loading");
             int loadingWidth = this.mc.font.width(loadingComponent);
-            guiGraphics.drawString(this.mc.font, loadingComponent, parentX - loadingWidth / 2 + 73, parentY + 77, -1);
+            guiGraphics.text(this.mc.font, loadingComponent, parentX - loadingWidth / 2 + 73, parentY + 77, -1);
         }
         
         this.hoveredButton = null;

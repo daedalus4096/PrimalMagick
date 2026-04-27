@@ -177,7 +177,7 @@ public class StaticBookViewScreen extends Screen {
         
         // Draw the page indicator text
         int pageMsgWidth = this.font.width(this.pageMsg);
-        guiGraphics.drawString(this.font, this.pageMsg, xPos - pageMsgWidth + IMAGE_WIDTH - 44, PAGE_INDICATOR_TEXT_Y_OFFSET + 2, 0, false);
+        guiGraphics.text(this.font, this.pageMsg, xPos - pageMsgWidth + IMAGE_WIDTH - 44, PAGE_INDICATOR_TEXT_Y_OFFSET + 2, 0, false);
 
         // Draw the text lines for the current page
         BookView currentView = this.isAutoTranslating ? this.actualBookView.withComprehension(Mth.clamp(this.ticksOpen - AUTO_TRANSLATE_DELAY_TICKS, 0, this.complexity)) : this.actualBookView;
@@ -186,7 +186,7 @@ public class StaticBookViewScreen extends Screen {
             int finalX = xPos + PAGE_TEXT_X_OFFSET;
             int finalY = yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT);
             this.renderedLines.put(new Vector2i(finalX, finalY), page.get(index));
-            guiGraphics.drawString(this.font, page.get(index), finalX, finalY, 0, false);
+            guiGraphics.text(this.font, page.get(index), finalX, finalY, 0, false);
         }
         
         // Draw any hover effects dictated by text style

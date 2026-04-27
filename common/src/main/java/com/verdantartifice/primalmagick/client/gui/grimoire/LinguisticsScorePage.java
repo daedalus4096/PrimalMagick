@@ -47,7 +47,7 @@ public class LinguisticsScorePage extends AbstractPage {
 
         // Render comprehension score and rating
         Component compHeader = Component.translatable("grimoire.primalmagick.linguistics_data.comprehension_score_header").withStyle(ChatFormatting.UNDERLINE);
-        guiGraphics.drawString(mc.font, compHeader, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, compHeader, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
         Component scoreText;
         if (this.language.value().complexity() > 0 && !this.language.value().autoTranslate()) {
@@ -58,7 +58,7 @@ public class LinguisticsScorePage extends AbstractPage {
         } else {
             scoreText = Component.translatable("grimoire.primalmagick.linguistics_data.comprehension_score.unreadable");
         }
-        guiGraphics.drawString(mc.font, scoreText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, scoreText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
 
         // Leave a blank line between comprehension and vocabulary
@@ -66,12 +66,12 @@ public class LinguisticsScorePage extends AbstractPage {
 
         // Render vocabulary rating
         Component vocabHeader = Component.translatable("grimoire.primalmagick.linguistics_data.vocabulary_score_header").withStyle(ChatFormatting.UNDERLINE);
-        guiGraphics.drawString(mc.font, vocabHeader, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, vocabHeader, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
         Component vocabText = (this.language.value().complexity() > 0 && !this.language.value().autoTranslate()) ?
                 Component.literal(Integer.toString(LinguisticsManager.getVocabulary(mc.player, this.language))) :
                 Component.translatable("grimoire.primalmagick.linguistics_data.comprehension_score.unreadable");
-        guiGraphics.drawString(mc.font, vocabText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, vocabText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
 
         guiGraphics.pose().popMatrix();

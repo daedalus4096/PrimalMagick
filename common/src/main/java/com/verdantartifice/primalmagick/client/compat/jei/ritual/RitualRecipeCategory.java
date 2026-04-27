@@ -89,8 +89,8 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
         this.background.draw(guiGraphics);
 
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.drawString(mc.font, Component.translatable("jei.primalmagick.ritual.offerings.header"), 0, 2, Color.BLACK.getRGB(), false);
-        guiGraphics.drawString(mc.font, Component.translatable("jei.primalmagick.ritual.props.header"), 0, 51, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, Component.translatable("jei.primalmagick.ritual.offerings.header"), 0, 2, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, Component.translatable("jei.primalmagick.ritual.props.header"), 0, 51, Color.BLACK.getRGB(), false);
         
         IRitualRecipe recipe = recipeHolder.value();
         if (!recipe.getManaCosts().isEmpty()) {

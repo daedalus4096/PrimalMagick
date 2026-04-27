@@ -100,7 +100,7 @@ public class RequirementsPage extends AbstractPage {
         List<AbstractRequirement<?>> reqs = this.stage.getRequirementsByCategory(category);
         if (!reqs.isEmpty()) {
             Component leadComponent = Component.translatable(textTranslationKey).withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x, y - 6, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, leadComponent, x, y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += ((widgetHeight + 2) * (1 + (reqs.size() / ITEMS_PER_ROW)));  // Make room for widgets
         }

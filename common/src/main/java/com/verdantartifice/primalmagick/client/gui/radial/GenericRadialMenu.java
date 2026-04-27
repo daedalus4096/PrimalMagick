@@ -246,7 +246,7 @@ public class GenericRadialMenu {
                 String text = currentCentralText.getString();
                 int textX = (int)((owner.width - fontRenderer.width(text)) / 2.0f);
                 int textY = (int)((owner.height - fontRenderer.lineHeight) / 2.0f);
-                guiGraphics.drawString(fontRenderer, text, textX, textY, 0xFFFFFFFF);
+                guiGraphics.text(fontRenderer, text, textX, textY, 0xFFFFFFFF);
             }
 
             guiGraphics.pose().pushMatrix();

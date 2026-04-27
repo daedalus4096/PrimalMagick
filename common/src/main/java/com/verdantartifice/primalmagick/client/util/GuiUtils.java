@@ -207,7 +207,7 @@ public class GuiUtils {
             guiGraphics.pose().scale(0.5F, 0.5F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.font.width(amountStr);
-            guiGraphics.drawString(mc.font, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.font.lineHeight + (y * 2)), Color.WHITE.getRGB());
+            guiGraphics.text(mc.font, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.font.lineHeight + (y * 2)), Color.WHITE.getRGB());
             guiGraphics.pose().popMatrix();
         }
         
