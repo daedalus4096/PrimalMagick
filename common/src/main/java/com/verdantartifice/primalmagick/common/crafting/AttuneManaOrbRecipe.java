@@ -25,10 +25,6 @@ import org.jetbrains.annotations.NotNull;
 public class AttuneManaOrbRecipe extends CustomRecipe {
     public static final ResourceKey<Recipe<?>> RECIPE_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("attune_mana_orb"));
 
-    public AttuneManaOrbRecipe(CraftingBookCategory pCategory) {
-        super(pCategory);
-    }
-
     @Override
     public boolean matches(@NotNull CraftingInput craftingInput, @NotNull Level level) {
         ItemStack orbStack = ItemStack.EMPTY;
@@ -61,7 +57,7 @@ public class AttuneManaOrbRecipe extends CustomRecipe {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull CraftingInput craftingInput, @NotNull HolderLookup.Provider provider) {
+    public @NotNull ItemStack assemble(@NotNull CraftingInput craftingInput) {
         ItemStack orbStack = ItemStack.EMPTY;
         ItemStack dustStack = ItemStack.EMPTY;
 

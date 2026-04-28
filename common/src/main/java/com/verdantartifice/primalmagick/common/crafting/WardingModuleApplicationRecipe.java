@@ -1,16 +1,11 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
-import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
-import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -25,10 +20,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class WardingModuleApplicationRecipe extends CustomRecipe {
     public static final ResourceKey<Recipe<?>> RECIPE_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("warding_module_application"));
-
-    public WardingModuleApplicationRecipe(CraftingBookCategory category) {
-        super(category);
-    }
 
     @Override
     public boolean matches(@NotNull CraftingInput pContainer, @NotNull Level pLevel) {
@@ -63,7 +54,7 @@ public class WardingModuleApplicationRecipe extends CustomRecipe {
 
     @Override
     @NotNull
-    public ItemStack assemble(@NotNull CraftingInput pContainer, @NotNull HolderLookup.Provider pRegistries) {
+    public ItemStack assemble(@NotNull CraftingInput pContainer) {
         ItemStack moduleStack = ItemStack.EMPTY;
         ItemStack armorStack = ItemStack.EMPTY;
         

@@ -2,13 +2,11 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredShieldItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -24,10 +22,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TieredShieldDecorationRecipe extends CustomRecipe {
     public static final ResourceKey<Recipe<?>> RECIPE_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("tiered_shield_decoration"));
-
-    public TieredShieldDecorationRecipe(CraftingBookCategory category) {
-        super(category);
-    }
 
     @Override
     public boolean matches(@NotNull CraftingInput inv, @NotNull Level worldIn) {
@@ -64,7 +58,7 @@ public class TieredShieldDecorationRecipe extends CustomRecipe {
 
     @Override
     @NotNull
-    public ItemStack assemble(@NotNull CraftingInput inv, @NotNull HolderLookup.Provider registries) {
+    public ItemStack assemble(@NotNull CraftingInput inv) {
         ItemStack shieldStack = ItemStack.EMPTY;
         ItemStack bannerStack = ItemStack.EMPTY;
         

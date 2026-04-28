@@ -2,12 +2,10 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -23,12 +21,8 @@ import org.jetbrains.annotations.NotNull;
 public class FlyingCarpetDyeRecipe extends CustomRecipe {
     public static final ResourceKey<Recipe<?>> RECIPE_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("flying_carpet_dye"));
 
-    public FlyingCarpetDyeRecipe(CraftingBookCategory category) {
-        super(category);
-    }
-
     @Override
-    public boolean matches(CraftingInput inv, Level worldIn) {
+    public boolean matches(@NotNull CraftingInput inv, @NotNull Level worldIn) {
         ItemStack carpetStack = ItemStack.EMPTY;
         ItemStack dyeStack = ItemStack.EMPTY;
 
@@ -58,7 +52,8 @@ public class FlyingCarpetDyeRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registryAccess) {
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput inv) {
         ItemStack carpetStack = ItemStack.EMPTY;
         ItemStack dyeStack = ItemStack.EMPTY;
         

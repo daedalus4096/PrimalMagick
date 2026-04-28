@@ -2,13 +2,11 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -23,10 +21,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class WritableBookCraftingRecipe extends CustomRecipe {
     public static final ResourceKey<Recipe<?>> RECIPE_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("writable_book_crafting"));
-
-    public WritableBookCraftingRecipe(CraftingBookCategory pCategory) {
-        super(pCategory);
-    }
 
     @Override
     public boolean matches(@NotNull CraftingInput pContainer, @NotNull Level pLevel) {
@@ -61,7 +55,7 @@ public class WritableBookCraftingRecipe extends CustomRecipe {
 
     @Override
     @NotNull
-    public ItemStack assemble(@NotNull CraftingInput pContainer, @NotNull HolderLookup.Provider pRegistries) {
+    public ItemStack assemble(@NotNull CraftingInput pContainer) {
         ItemStack penStack = ItemStack.EMPTY;
         ItemStack bookStack = ItemStack.EMPTY;
         
