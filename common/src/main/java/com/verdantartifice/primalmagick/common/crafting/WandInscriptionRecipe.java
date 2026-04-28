@@ -3,11 +3,9 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.ISpellContainer;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -22,10 +20,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class WandInscriptionRecipe extends CustomRecipe {
     public static final ResourceKey<Recipe<?>> RECIPE_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("wand_inscription"));
-
-    public WandInscriptionRecipe(CraftingBookCategory category) {
-        super(category);
-    }
 
     private static ItemStack getItem(@NotNull CraftingInput inv, int index) {
         return (index >= 0 && index < inv.size()) ? inv.getItem(index) : ItemStack.EMPTY;
@@ -56,7 +50,7 @@ public class WandInscriptionRecipe extends CustomRecipe {
 
     @Override
     @NotNull
-    public ItemStack assemble(@NotNull CraftingInput inv, @NotNull HolderLookup.Provider registries) {
+    public ItemStack assemble(@NotNull CraftingInput inv) {
         ItemStack wandStack = getItem(inv, 0);
         ItemStack scrollStack = getItem(inv, 1);
         
