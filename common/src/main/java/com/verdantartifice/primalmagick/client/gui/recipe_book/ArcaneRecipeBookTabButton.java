@@ -88,10 +88,10 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
         List<ItemStack> list = this.category.getIconItems();
         int dx = this.isStateTriggered ? -2 : 0;
         if (list.size() == 1) {
-            guiGraphics.renderFakeItem(list.get(0), this.getX() + 9 + dx, this.getY() + 5);
+            guiGraphics.fakeItem(list.get(0), this.getX() + 9 + dx, this.getY() + 5);
         } else if (list.size() == 2) {
-            guiGraphics.renderFakeItem(list.get(0), this.getX() + 3 + dx, this.getY() + 5);
-            guiGraphics.renderFakeItem(list.get(1), this.getX() + 14 + dx, this.getY() + 5);
+            guiGraphics.fakeItem(list.get(0), this.getX() + 3 + dx, this.getY() + 5);
+            guiGraphics.fakeItem(list.get(1), this.getX() + 14 + dx, this.getY() + 5);
         }
     }
     

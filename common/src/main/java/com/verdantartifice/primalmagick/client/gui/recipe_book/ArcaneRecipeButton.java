@@ -93,10 +93,10 @@ public class ArcaneRecipeButton extends AbstractWidget {
         ItemStack stack = recipeList.get(this.currentIndex).value().getResultItem(mc.level.registryAccess());
         int k = 4;
         if (this.collection.hasSingleResultItem() && this.getOrderedRecipes().size() > 1) {
-            pGuiGraphics.renderFakeItem(stack, this.getX() + k + 1, this.getY() + k + 1, 10);
+            pGuiGraphics.fakeItem(stack, this.getX() + k + 1, this.getY() + k + 1, 10);
             k--;
         }
-        pGuiGraphics.renderFakeItem(stack, this.getX() + k, this.getY() + k);
+        pGuiGraphics.fakeItem(stack, this.getX() + k, this.getY() + k);
         
         if (animating) {
             pGuiGraphics.pose().popMatrix();
