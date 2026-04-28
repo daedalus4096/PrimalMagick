@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -25,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -665,7 +667,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.emptyAffinity(Items.COMMAND_BLOCK_MINECART).build(consumer);    // Creative only
         ItemAffinityBuilder.emptyAffinity(Items.KNOWLEDGE_BOOK).build(consumer);    // Creative only
         ItemAffinityBuilder.emptyAffinity(Items.DEBUG_STICK).build(consumer);   // Creative only
-        SpawnEggItem.eggs().forEach(egg -> {
+        BuiltInRegistries.ENTITY_TYPE.stream().map(SpawnEggItem::byId).filter(Optional::isPresent).map(opt -> opt.get().value()).forEach(egg -> {
             ItemAffinityBuilder.emptyAffinity(egg).build(consumer); // Creative only
         });
         
