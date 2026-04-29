@@ -32,7 +32,7 @@ public class ClientAffinityTooltipComponent implements ClientTooltipComponent {
     }
 
     @Override
-    public void renderImage(@NotNull Font font, int x, int y, int width, int height, @NotNull GuiGraphicsExtractor guiGraphics) {
+    public void extractImage(@NotNull Font font, int x, int y, int width, int height, @NotNull GuiGraphicsExtractor guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
         GuiUtils.renderSourcesForPlayer(guiGraphics, this.affinities, mc.player, x, y);
     }
