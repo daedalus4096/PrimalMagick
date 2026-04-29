@@ -6,11 +6,16 @@ import com.verdantartifice.primalmagick.common.tags.BlockExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -25,12 +30,13 @@ public class BlockTagsProviderPMNeoforge extends BlockTagsProvider {
     }
 
     @Override
+    @NotNull
     public String getName() {
         return "Primal Magick Block Tags";
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider lookupProvider) {
+    protected void addTags(@NotNull HolderLookup.Provider lookupProvider) {
         // Add entries to vanilla tags
         this.tag(BlockTags.BEACON_BASE_BLOCKS).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         this.tag(BlockTags.CROPS).add(BlocksPM.HYDROMELON_STEM.get());
@@ -41,7 +47,6 @@ public class BlockTagsProviderPMNeoforge extends BlockTagsProvider {
         this.tag(BlockTags.PIGLIN_REPELLENTS).add(BlocksPM.SPIRIT_LANTERN.get(), BlocksPM.SOUL_GLOW_FIELD.get());
         this.tag(BlockTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.get(), BlocksPM.SUNWOOD_PLANKS.get(), BlocksPM.HALLOWOOD_PLANKS.get());
         this.tag(BlockTags.SAPLINGS).add(BlocksPM.MOONWOOD_SAPLING.get(), BlocksPM.SUNWOOD_SAPLING.get(), BlocksPM.HALLOWOOD_SAPLING.get());
-        this.tag(BlockTags.TALL_FLOWERS).add(BlocksPM.BLOOD_ROSE.get(), BlocksPM.EMBERFLOWER.get());
         this.tag(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL.get(), BlocksPM.MARBLE_BRICK_WALL.get(), BlocksPM.MARBLE_ENCHANTED_WALL.get(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), BlocksPM.MARBLE_SMOKED_WALL.get(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), BlocksPM.MARBLE_HALLOWED_WALL.get(), BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get());
         this.tag(BlockTags.WOODEN_SLABS).add(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.HALLOWOOD_SLAB.get());
         this.tag(BlockTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.get(), BlocksPM.SUNWOOD_STAIRS.get(), BlocksPM.HALLOWOOD_STAIRS.get());
@@ -55,6 +60,7 @@ public class BlockTagsProviderPMNeoforge extends BlockTagsProvider {
         
         // Add entries to Forge tags
         this.tag(CommonTags.Blocks.BUDDING_BLOCKS).add(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
+        this.tag(CommonTags.Blocks.FLOWERS_TALL).add(BlocksPM.BLOOD_ROSE.get(), BlocksPM.EMBERFLOWER.get());
         this.tag(CommonTags.Blocks.ORE_RATES_DENSE).add(BlocksPM.ROCK_SALT_ORE.get());
         this.tag(CommonTags.Blocks.ORE_RATES_SINGULAR).add(BlocksPM.QUARTZ_ORE.get());
         this.tag(CommonTags.Blocks.ORES).addTag(BlockExtensionTags.ORES_ROCK_SALT);
@@ -80,7 +86,7 @@ public class BlockTagsProviderPMNeoforge extends BlockTagsProvider {
         this.tag(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL, Blocks.DEAD_BUBBLE_CORAL, Blocks.DEAD_FIRE_CORAL, Blocks.DEAD_HORN_CORAL, Blocks.DEAD_TUBE_CORAL);
         this.tag(BlockTagsPM.DEAD_CORALS).addTag(BlockTagsPM.DEAD_CORAL_PLANTS).add(Blocks.DEAD_BRAIN_CORAL_FAN, Blocks.DEAD_BUBBLE_CORAL_FAN, Blocks.DEAD_FIRE_CORAL_FAN, Blocks.DEAD_HORN_CORAL_FAN, Blocks.DEAD_TUBE_CORAL_FAN);
         this.tag(BlockTagsPM.EMPTY_BOOKSHELVES).add(Blocks.CHISELED_BOOKSHELF, BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get());
-        this.tag(BlockTagsPM.ENCHANTING_TABLES).add(Blocks.ENCHANTING_TABLE).addOptional(Identifier.fromNamespaceAndPath("quark", "matrix_enchanter"));
+        TagAppender.<Block>forBuilder(this.getOrCreateRawBuilder(BlockTagsPM.ENCHANTING_TABLES)).addOptional(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("quark", "matrix_enchanter"))).<Block>map(block -> block.builtInRegistryHolder().key());
         this.tag(BlockTagsPM.HALLOWOOD_LOGS).add(BlocksPM.HALLOWOOD_LOG.get(), BlocksPM.STRIPPED_HALLOWOOD_LOG.get(), BlocksPM.HALLOWOOD_WOOD.get(), BlocksPM.STRIPPED_HALLOWOOD_WOOD.get());
         this.tag(BlockTagsPM.LINGUISTICS_POWER_PROVIDERS).add(Blocks.CHISELED_BOOKSHELF, BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get());
         this.tag(BlockTagsPM.LINGUISTICS_POWER_TRANSMITTERS).addTag(BlockTags.REPLACEABLE);
@@ -95,8 +101,9 @@ public class BlockTagsProviderPMNeoforge extends BlockTagsProvider {
         this.tag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).add(BlocksPM.HEXIUM_BLOCK.get());
         this.tag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).add(BlocksPM.PRIMALITE_BLOCK.get());
         this.tag(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.get(), BlocksPM.STRIPPED_SUNWOOD_LOG.get(), BlocksPM.SUNWOOD_WOOD.get(), BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
-        this.tag(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT).add(Blocks.GRASS_BLOCK, Blocks.ROOTED_DIRT, Blocks.SHORT_GRASS, Blocks.FERN).addOptional(Identifier.fromNamespaceAndPath("regions_unexplored", "alpha_grass_block"));
-        
+        this.tag(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT).add(Blocks.GRASS_BLOCK, Blocks.ROOTED_DIRT, Blocks.SHORT_GRASS, Blocks.FERN);
+        TagAppender.<Block>forBuilder(this.getOrCreateRawBuilder(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT)).addOptional(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("regions_unexplored", "alpha_grass_block"))).<Block>map(block -> block.builtInRegistryHolder().key());
+
         this.tag(BlockTagsPM.MAY_PLACE_SUNWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);
         this.tag(BlockTagsPM.MAY_PLACE_MOONWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);
         this.tag(BlockTagsPM.MAY_PLACE_HALLOWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);

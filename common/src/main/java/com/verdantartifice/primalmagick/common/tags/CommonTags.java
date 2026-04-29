@@ -54,6 +54,9 @@ public class CommonTags {
         public static final TagKey<Block> FENCES = splitTag("fences");
         public static final TagKey<Block> FENCES_NETHER_BRICK = splitTag("fences/nether_brick");
         public static final TagKey<Block> FENCES_WOODEN = splitTag("fences/wooden");
+        public static final TagKey<Block> FLOWERS_SMALL = commonTag("flowers/small");
+        public static final TagKey<Block> FLOWERS_TALL = commonTag("flowers/tall");
+        public static final TagKey<Block> FLOWERS = commonTag("flowers");
         public static final TagKey<Block> GLASS_BLOCKS = commonTag("glass_blocks");
         public static final TagKey<Block> GLASS_BLOCKS_COLORLESS = commonTag("glass_blocks/colorless");
         public static final TagKey<Block> GLASS_BLOCKS_CHEAP = commonTag("glass_blocks/cheap");
