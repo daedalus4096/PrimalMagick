@@ -156,8 +156,8 @@ public class ClientModLifecycleEvents {
             
             ItemProperties.register(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
                 DyeColor color = null;
-                if (stack != null && stack.getItem() instanceof FlyingCarpetItem) {
-                    color = ((FlyingCarpetItem)stack.getItem()).getDyeColor(stack);
+                if (stack != null && stack.getItem() instanceof FlyingCarpetItem carpetItem) {
+                    color = carpetItem.getDyeColor(stack);
                 }
                 if (color == null) {
                     // Default to white if no dye color is applied
