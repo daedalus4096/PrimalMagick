@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagick.client.compat.jei.dissolution;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
-import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
+import com.verdantartifice.primalmagick.common.crafting.display.DissolutionRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -14,12 +14,13 @@ import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Recipe category for a dissolution recipe.
@@ -55,13 +56,16 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IDissolutionRecipe> recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 19).addIngredients(recipe.value().getIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(RecipeUtils.getResultItem(recipe.value()));
+    public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<IDissolutionRecipe> recipe, @NotNull IFocusGroup focuses) {
+        RecipeDisplay display = recipe.value().display().getFirst();
+        if (display instanceof DissolutionRecipeDisplay drd) {
+            builder.addInputSlot(1, 19).add(drd.ingredient());
+            builder.addOutputSlot(61, 19).add(drd.result());
+        }
     }
 
     @Override
-    public void draw(RecipeHolder<IDissolutionRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
+    public void draw(@NotNull RecipeHolder<IDissolutionRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
         if (!recipe.value().getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
@@ -69,7 +73,7 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder builder, RecipeHolder<IDissolutionRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public void getTooltip(@NotNull ITooltipBuilder builder, @NotNull RecipeHolder<IDissolutionRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         SourceList manaCosts = recipe.value().getManaCosts();
         if ( !manaCosts.isEmpty() &&
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
@@ -81,7 +85,8 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
     }
 
     @Override
-    public RecipeType<RecipeHolder<IDissolutionRecipe>> getRecipeType() {
+    @NotNull
+    public IRecipeType<RecipeHolder<IDissolutionRecipe>> getRecipeType() {
         return JeiRecipeTypesPM.DISSOLUTION;
     }
 }
