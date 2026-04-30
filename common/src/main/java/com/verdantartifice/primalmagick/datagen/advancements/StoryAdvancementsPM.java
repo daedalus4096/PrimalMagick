@@ -53,10 +53,10 @@ import net.minecraft.core.component.predicates.DataComponentPredicates;
 import net.minecraft.core.component.predicates.PotionsPredicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.util.Util;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ItemLike;
@@ -113,12 +113,7 @@ public abstract class StoryAdvancementsPM {
                 .rewards(AdvancementRewards.Builder.experience(100))
                 .addCriterion("completed_many_projects", StatValueTrigger.TriggerInstance.atLeast(StatsPM.RESEARCH_PROJECTS_COMPLETED, 250))
                 .save(saver, ResourceUtils.loc("story/many_theorycrafts").toString());
-        ItemStack apprenticeWand = Util.make(new ItemStack(ItemsPM.MODULAR_WAND.get()), stack -> {
-            IHasWandComponents wandItem = (IHasWandComponents)stack.getItem();
-            wandItem.setWandCore(stack, WandCore.HEARTWOOD);
-            wandItem.setWandCap(stack, WandCap.IRON);
-            wandItem.setWandGem(stack, WandGem.APPRENTICE);
-        });
+        ItemStackTemplate apprenticeWand = ItemStackTemplate.fromNonEmptyStack(IHasWandComponents.setWandComponents(new ItemStack(ItemsPM.MODULAR_WAND.get()), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE));
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_modular_wand").icon(apprenticeWand).build())
                 .parent(craftArcaneWorkbench)
                 .addCriterion("has_wand", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MODULAR_WAND.get()))
@@ -526,7 +521,7 @@ public abstract class StoryAdvancementsPM {
     
     private static AdvancementHolder makeBombAdvancement(HolderLookup.Provider registries, String id, ItemStack icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, Consumer<AdvancementHolder> saver) {
         HolderGetter<Item> itemGetter = registries.lookupOrThrow(Registries.ITEM);
-        Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
+        Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(ItemStackTemplate.fromNonEmptyStack(icon)).type(type).build())
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
         registries.lookupOrThrow(Registries.POTION).listElements().filter(potHolder -> !potHolder.value().getEffects().isEmpty()).sorted(Comparator.comparing(potHolder -> potHolder.key().identifier().toString())).forEach(potHolder ->

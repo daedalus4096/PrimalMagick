@@ -3,18 +3,20 @@ package com.verdantartifice.primalmagick.datagen.advancements;
 import com.verdantartifice.primalmagick.Constants;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
+import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.phys.Vec2;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 public class DisplayInfoBuilder {
     protected final String id;
-    protected ItemStack iconStack = ItemStack.EMPTY;
-    protected Optional<Identifier> background = Optional.empty();
+    @Nullable protected ItemStackTemplate iconStack = null;
+    protected Optional<ClientAsset.ResourceTexture> background = Optional.empty();
     protected AdvancementType type = AdvancementType.TASK;
     protected boolean showToast = true;
     protected boolean announceChat = true;
@@ -29,17 +31,17 @@ public class DisplayInfoBuilder {
         return new DisplayInfoBuilder(id);
     }
     
-    public DisplayInfoBuilder icon(ItemStack iconStack) {
-        this.iconStack = iconStack.copyWithCount(1);
+    public DisplayInfoBuilder icon(ItemStackTemplate iconStack) {
+        this.iconStack = iconStack.withCount(1);
         return this;
     }
     
     public DisplayInfoBuilder icon(ItemLike iconItem) {
-        return this.icon(new ItemStack(iconItem.asItem()));
+        return this.icon(new ItemStackTemplate(iconItem.asItem()));
     }
     
     public DisplayInfoBuilder background(Identifier background) {
-        this.background = Optional.ofNullable(background);
+        this.background = Optional.ofNullable(background).map(ClientAsset.ResourceTexture::new);
         return this;
     }
     
@@ -69,7 +71,7 @@ public class DisplayInfoBuilder {
     }
     
     private void validate() {
-        if (this.iconStack == null || this.iconStack.isEmpty()) {
+        if (this.iconStack == null) {
             throw new IllegalStateException("No icon specified for advancement display info");
         }
     }
