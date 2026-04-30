@@ -38,6 +38,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -239,9 +240,9 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
                 entity.superchargeTime = entity.superchargeTimeTotal;
                 if (entity.isSupercharged()) {
                     shouldMarkDirty = true;
-                    ItemStack remainderStack = fuelStack.getItem().getCraftingRemainder();
-                    if (!remainderStack.isEmpty()) {
-                        entity.setItem(FUEL_INV_INDEX, 0, remainderStack);
+                    ItemStackTemplate remainderStack = fuelStack.getItem().getCraftingRemainder();
+                    if (remainderStack != null) {
+                        entity.setItem(FUEL_INV_INDEX, 0, remainderStack.create());
                     } else {
                         fuelStack.shrink(1);
                         if (fuelStack.isEmpty()) {

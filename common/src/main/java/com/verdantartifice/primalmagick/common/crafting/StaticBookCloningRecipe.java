@@ -7,6 +7,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
@@ -85,9 +86,9 @@ public class StaticBookCloningRecipe extends CustomRecipe {
         
         for (int index = 0; index < retVal.size(); index++) {
             ItemStack inputStack = pContainer.getItem(index);
-            ItemStack remainderStack = inputStack.getItem().getCraftingRemainder();
-            if (!remainderStack.isEmpty()) {
-                retVal.set(index, remainderStack);
+            ItemStackTemplate remainderStack = inputStack.getItem().getCraftingRemainder();
+            if (remainderStack != null) {
+                retVal.set(index, remainderStack.create());
             } else if (inputStack.getItem() instanceof StaticBookItem) {
                 retVal.set(index, inputStack.copyWithCount(1));
                 break;

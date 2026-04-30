@@ -9,6 +9,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 
 import javax.annotation.Nonnull;
@@ -241,9 +242,9 @@ public class InventoryUtils {
     
     private static void addRefundItem(ItemStack stack, int refundCount, Player player) {
         ItemStack refundStack = ItemStack.EMPTY;
-        ItemStack remainderStack = stack.getItem().getCraftingRemainder();
-        if (!remainderStack.isEmpty()) {
-            refundStack = remainderStack.copyWithCount(refundCount);
+        ItemStackTemplate remainderStack = stack.getItem().getCraftingRemainder();
+        if (remainderStack != null) {
+            refundStack = remainderStack.withCount(refundCount).create();
         } else if (stack.is(Items.POTION)) {
             // Potions don't use the standard container mechanism, so test for them directly
             refundStack = new ItemStack(Items.GLASS_BOTTLE, refundCount);

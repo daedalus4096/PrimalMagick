@@ -32,6 +32,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
@@ -221,9 +222,9 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     }
 
     protected static ItemStack getContainerForInput(ItemStack stack) {
-        ItemStack remainderStack = stack.getItem().getCraftingRemainder();
-        if (!remainderStack.isEmpty()) {
-            return remainderStack;
+        ItemStackTemplate remainderStack = stack.getItem().getCraftingRemainder();
+        if (remainderStack != null) {
+            return remainderStack.create();
         } else if (stack.is(Items.POTION)) {
             return new ItemStack(Items.GLASS_BOTTLE);
         } else if (stack.is(ItemsPM.CONCOCTION.get())) {
