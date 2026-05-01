@@ -3,13 +3,13 @@ package com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
-import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.display.ShapedArcaneCraftingRecipeDisplay;
+import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneCraftingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
@@ -17,15 +17,15 @@ import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -69,19 +69,23 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IArcaneRecipe> recipe, IFocusGroup focuses) {
+    public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<IArcaneRecipe> recipe, @NotNull IFocusGroup focuses) {
+        RecipeDisplay display = recipe.value().display().getFirst();
+
         // Initialize recipe output
-        this.craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, List.of(RecipeUtils.getResultItem(recipe.value())));
-        
+        this.craftingGridHelper.createAndSetOutputs(builder, display.result());
+
         // Initialize recipe inputs
-        int width = (recipe.value() instanceof ShapedRecipe shapedRecipe) ? shapedRecipe.getWidth() : 0;
-        int height = (recipe.value() instanceof ShapedRecipe shapedRecipe) ? shapedRecipe.getHeight() : 0;
-        List<List<ItemStack>> inputs = recipe.value().getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
-        this.craftingGridHelper.createAndSetInputs(builder, VanillaTypes.ITEM_STACK, inputs, width, height);
+        if (display instanceof ShapedArcaneCraftingRecipeDisplay shapedDisplay) {
+            this.craftingGridHelper.createAndSetIngredientsFromDisplays(builder, shapedDisplay.ingredients(), shapedDisplay.width(), shapedDisplay.height());
+        } else if (display instanceof ShapelessArcaneCraftingRecipeDisplay shapelessDisplay) {
+            this.craftingGridHelper.createAndSetIngredientsFromDisplays(builder, shapelessDisplay.ingredients(), 0, 0);
+            builder.setShapeless();
+        }
     }
 
     @Override
-    public void draw(RecipeHolder<IArcaneRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
+    public void draw(@NotNull RecipeHolder<IArcaneRecipe> recipeHolder, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         IArcaneRecipe recipe = recipeHolder.value();
         this.background.draw(guiGraphics);
         if (!recipe.getManaCosts().isEmpty()) {
@@ -96,7 +100,7 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder builder, RecipeHolder<IArcaneRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public void getTooltip(@NotNull ITooltipBuilder builder, @NotNull RecipeHolder<IArcaneRecipe> recipeHolder, @NotNull IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
         IArcaneRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
@@ -115,7 +119,8 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
     }
 
     @Override
-    public RecipeType<RecipeHolder<IArcaneRecipe>> getRecipeType() {
+    @NotNull
+    public IRecipeType<RecipeHolder<IArcaneRecipe>> getRecipeType() {
         return JeiRecipeTypesPM.ARCANE_CRAFTING;
     }
 }
