@@ -17,7 +17,7 @@ import java.util.Optional;
 public record ShapelessArcaneCraftingRecipeDisplay(List<SlotDisplay> ingredients, SlotDisplay result, SourceList manaCosts,
                                                    Optional<AbstractRequirement<?>> requirement, SlotDisplay craftingStation) implements RecipeDisplay {
     public static final MapCodec<ShapelessArcaneCraftingRecipeDisplay> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            SlotDisplay.CODEC.listOf().fieldOf("ingredient").forGetter(ShapelessArcaneCraftingRecipeDisplay::ingredients),
+            SlotDisplay.CODEC.listOf().fieldOf("ingredients").forGetter(ShapelessArcaneCraftingRecipeDisplay::ingredients),
             SlotDisplay.CODEC.fieldOf("result").forGetter(ShapelessArcaneCraftingRecipeDisplay::result),
             SourceList.CODEC.fieldOf("manaCosts").forGetter(ShapelessArcaneCraftingRecipeDisplay::manaCosts),
             AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ShapelessArcaneCraftingRecipeDisplay::requirement),

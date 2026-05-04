@@ -21,7 +21,7 @@ public record ShapedArcaneCraftingRecipeDisplay(int width, int height, List<Slot
     public static final MapCodec<ShapedArcaneCraftingRecipeDisplay> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("width").forGetter(ShapedArcaneCraftingRecipeDisplay::width),
             Codec.INT.fieldOf("height").forGetter(ShapedArcaneCraftingRecipeDisplay::height),
-            SlotDisplay.CODEC.listOf().fieldOf("ingredient").forGetter(ShapedArcaneCraftingRecipeDisplay::ingredients),
+            SlotDisplay.CODEC.listOf().fieldOf("ingredients").forGetter(ShapedArcaneCraftingRecipeDisplay::ingredients),
             SlotDisplay.CODEC.fieldOf("result").forGetter(ShapedArcaneCraftingRecipeDisplay::result),
             SourceList.CODEC.fieldOf("manaCosts").forGetter(ShapedArcaneCraftingRecipeDisplay::manaCosts),
             AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ShapedArcaneCraftingRecipeDisplay::requirement),
