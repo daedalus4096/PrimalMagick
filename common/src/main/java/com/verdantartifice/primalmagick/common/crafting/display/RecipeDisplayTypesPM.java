@@ -20,6 +20,7 @@ public class RecipeDisplayTypesPM {
     public static final IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<ShapedArcaneCraftingRecipeDisplay>> SHAPED_ARCANE = register("shaped_arcane", () -> ShapedArcaneCraftingRecipeDisplay.TYPE);
     public static final IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<ShapelessArcaneCraftingRecipeDisplay>> SHAPELESS_ARCANE = register("shapeless_arcane", () -> ShapelessArcaneCraftingRecipeDisplay.TYPE);
     public static final IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<DissolutionRecipeDisplay>> DISSOLUTION = register("dissolution", () -> DissolutionRecipeDisplay.TYPE);
+    public static final IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<ConcoctingRecipeDisplay>> CONCOCTING = register("concocting", () -> ConcoctingRecipeDisplay.TYPE);
 
     private static <T extends RecipeDisplay> IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<T>> register(String name, Supplier<RecipeDisplay.Type<T>> supplier) {
         return Services.RECIPE_DISPLAY_TYPES_REGISTRY.register(name, supplier);
