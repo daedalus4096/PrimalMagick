@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagick.client.compat.jei.runecarving;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
-import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.display.RunecarvingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -14,13 +14,14 @@ import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -59,15 +60,17 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IRunecarvingRecipe> recipeHolder, IFocusGroup focuses) {
-        IRunecarvingRecipe recipe = recipeHolder.value();
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipe.getIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.INPUT, 50, 1).addIngredients(recipe.getIngredients().get(1));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 108, 1).addItemStack(RecipeUtils.getResultItem(recipe));
+    public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<IRunecarvingRecipe> recipeHolder, @NotNull IFocusGroup focuses) {
+        RecipeDisplay display = recipeHolder.value().display().getFirst();
+        if (display instanceof RunecarvingRecipeDisplay runecarvingDisplay) {
+            builder.addInputSlot(1, 1).add(runecarvingDisplay.baseIngredient());
+            builder.addInputSlot(50, 1).add(runecarvingDisplay.etchingIngredient());
+            builder.addOutputSlot(108, 1).add(runecarvingDisplay.result());
+        }
     }
 
     @Override
-    public void draw(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
+    public void draw(@NotNull RecipeHolder<IRunecarvingRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
         if (recipe.value().getRequirement().isPresent()) {
             guiGraphics.pose().pushMatrix();
@@ -78,7 +81,7 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder builder, RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public void getTooltip(@NotNull ITooltipBuilder builder, @NotNull RecipeHolder<IRunecarvingRecipe> recipe, @NotNull IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
         Optional<AbstractRequirement<?>> requirementOpt = recipe.value().getRequirement();
         if ( requirementOpt.isPresent() &&
@@ -91,7 +94,8 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
     }
 
     @Override
-    public RecipeType<RecipeHolder<IRunecarvingRecipe>> getRecipeType() {
+    @NotNull
+    public IRecipeType<RecipeHolder<IRunecarvingRecipe>> getRecipeType() {
         return JeiRecipeTypesPM.RUNECARVING;
     }
 }
