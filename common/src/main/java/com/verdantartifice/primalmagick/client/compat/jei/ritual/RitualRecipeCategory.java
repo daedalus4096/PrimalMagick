@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagick.client.compat.jei.ritual;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
-import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
+import com.verdantartifice.primalmagick.common.crafting.display.RitualRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -15,15 +15,16 @@ import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.List;
@@ -68,24 +69,23 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IRitualRecipe> recipeHolder, IFocusGroup focuses) {
-        IRitualRecipe recipe = recipeHolder.value();
-        List<Ingredient> offerings = recipe.getIngredients();
-        List<Ingredient> props = recipe.getProps().stream().map(b -> b.asIngredient()).toList();
-        int ingredientCount = recipe.getIngredients().size();
-        int propCount = recipe.getProps().size();
-        
-        for (int index = 0; index < ingredientCount; index++) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 1 + (index % 6) * 18, 14 + ((index / 6) * 18)).addIngredients(offerings.get(index));
+    public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<IRitualRecipe> recipeHolder, @NotNull IFocusGroup focuses) {
+        RecipeDisplay display = recipeHolder.value().display().getFirst();
+        if (display instanceof RitualRecipeDisplay ritualDisplay) {
+            List<SlotDisplay> ingredients = ritualDisplay.ingredients();
+            List<SlotDisplay> props = ritualDisplay.props();
+            for (int index = 0; index < ingredients.size(); index++) {
+                builder.addInputSlot(1 + (index % 6) * 18, 14 + ((index / 6) * 18)).add(ingredients.get(index));
+            }
+            for (int index = 0; index < props.size(); index++) {
+                builder.addInputSlot(1 + (index % 6) * 18, 63 + ((index / 6) * 18)).add(props.get(index));
+            }
+            builder.addOutputSlot(149, 32).add(ritualDisplay.result());
         }
-        for (int index = 0; index < propCount; index++) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 1 + (index % 6) * 18, 63 + ((index / 6) * 18)).addIngredients(props.get(index));
-        }
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 149, 32).addItemStack(RecipeUtils.getResultItem(recipe));
     }
 
     @Override
-    public void draw(RecipeHolder<IRitualRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
+    public void draw(@NotNull RecipeHolder<IRitualRecipe> recipeHolder, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
 
         Minecraft mc = Minecraft.getInstance();
@@ -105,7 +105,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
     }
 
     @Override
-    public void getTooltip(ITooltipBuilder builder, RecipeHolder<IRitualRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public void getTooltip(@NotNull ITooltipBuilder builder, @NotNull RecipeHolder<IRitualRecipe> recipeHolder, @NotNull IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
         IRitualRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
@@ -124,7 +124,8 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
     }
 
     @Override
-    public RecipeType<RecipeHolder<IRitualRecipe>> getRecipeType() {
+    @NotNull
+    public IRecipeType<RecipeHolder<IRitualRecipe>> getRecipeType() {
         return JeiRecipeTypesPM.RITUAL;
     }
 }

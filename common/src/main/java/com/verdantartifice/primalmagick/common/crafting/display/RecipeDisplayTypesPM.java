@@ -22,6 +22,7 @@ public class RecipeDisplayTypesPM {
     public static final IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<DissolutionRecipeDisplay>> DISSOLUTION = register("dissolution", () -> DissolutionRecipeDisplay.TYPE);
     public static final IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<ConcoctingRecipeDisplay>> CONCOCTING = register("concocting", () -> ConcoctingRecipeDisplay.TYPE);
     public static final IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<RunecarvingRecipeDisplay>> RUNECARVING = register("runecarving", () -> RunecarvingRecipeDisplay.TYPE);
+    public static final IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<RitualRecipeDisplay>> RITUAL = register("ritual", () -> RitualRecipeDisplay.TYPE);
 
     private static <T extends RecipeDisplay> IRegistryItem<RecipeDisplay.Type<?>, RecipeDisplay.Type<T>> register(String name, Supplier<RecipeDisplay.Type<T>> supplier) {
         return Services.RECIPE_DISPLAY_TYPES_REGISTRY.register(name, supplier);
