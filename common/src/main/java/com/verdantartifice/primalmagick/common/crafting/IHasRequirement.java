@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -15,5 +16,5 @@ public interface IHasRequirement {
      * 
      * @return the requirement for the recipe
      */
-    public Optional<AbstractRequirement<?>> getRequirement();
+    @NotNull Optional<AbstractRequirement<?>> getRequirement();
 }

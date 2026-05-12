@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Recipe;
 import org.apache.logging.log4j.LogManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -58,7 +59,7 @@ public interface IHasExpertise extends IHasRequirement {
      * 
      * @return the recipe's expertise group, if any
      */
-    Optional<Identifier> getExpertiseGroup();
+    @NotNull Optional<Identifier> getExpertiseGroup();
     
     /**
      * Get the localized text describing this recipe's expertise group for tooltip rendering.
@@ -84,7 +85,7 @@ public interface IHasExpertise extends IHasRequirement {
      * 
      * @return the recipe's discipline override, if any
      */
-    Optional<ResearchDisciplineKey> getResearchDisciplineOverride();
+    @NotNull Optional<ResearchDisciplineKey> getResearchDisciplineOverride();
     
     /**
      * Get the research discipline for which expertise should be credited for this recipe, if any.

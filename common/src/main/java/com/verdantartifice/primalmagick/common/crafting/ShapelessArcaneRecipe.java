@@ -1,174 +1,116 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneCraftingRecipeDisplay;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
  * Definition for a shapeless arcane recipe.  Like a vanilla shapeless recipe, but has research and optional mana requirements.
  * 
  * @author Daedalus4096
  */
-public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IShapelessArcaneRecipePM {
-    protected final Optional<AbstractRequirement<?>> requirement;
-    protected final SourceList manaCosts;
-    protected final NonNullList<Ingredient> recipeItems;
-    protected final boolean isSimple;
-    protected final Optional<Integer> baseExpertiseOverride;
-    protected final Optional<Integer> bonusExpertiseOverride;
-    protected final Optional<Identifier> expertiseGroup;
-    protected final Optional<ResearchDisciplineKey> disciplineOverride;
+public class ShapelessArcaneRecipe extends NormalArcaneCraftingRecipe {
+    public static final MapCodec<ShapelessArcaneRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Recipe.CommonInfo.MAP_CODEC.forGetter(o -> o.commonInfo),
+            IArcaneRecipe.ArcaneCraftingBookInfo.MAP_CODEC.forGetter(o -> o.bookInfo),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(o -> o.result),
+            Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients),
+            AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
+            SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
+            Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
+            Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
+            Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
+            ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
+        ).apply(instance, ShapelessArcaneRecipe::new));
 
-    public ShapelessArcaneRecipe(String group, ItemStack output, NonNullList<Ingredient> items, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts,
-            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
-        super(group, output);
-        this.requirement = requirement;
-        this.manaCosts = manaCosts;
-        this.recipeItems = items;
-        this.isSimple = items.stream().allMatch(Services.INGREDIENTS::isSimple);
-        this.baseExpertiseOverride = baseExpertiseOverride;
-        this.bonusExpertiseOverride = bonusExpertiseOverride;
-        this.expertiseGroup = expertiseGroup;
-        this.disciplineOverride = disciplineOverride;
+    public static final StreamCodec<RegistryFriendlyByteBuf, ShapelessArcaneRecipe> STREAM_CODEC = StreamCodecUtils.composite(
+            Recipe.CommonInfo.STREAM_CODEC, o -> o.commonInfo,
+            IArcaneRecipe.ArcaneCraftingBookInfo.STREAM_CODEC, o -> o.bookInfo,
+            ItemStackTemplate.STREAM_CODEC, o -> o.result,
+            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), o -> o.ingredients,
+            ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), sar -> sar.requirement,
+            SourceList.STREAM_CODEC, sar -> sar.manaCosts,
+            ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), sar -> sar.baseExpertiseOverride,
+            ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), sar -> sar.bonusExpertiseOverride,
+            ByteBufCodecs.optional(Identifier.STREAM_CODEC), sar -> sar.expertiseGroup,
+            ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC), sar -> sar.disciplineOverride,
+            ShapelessArcaneRecipe::new);
+
+    public static final RecipeSerializer<ShapelessArcaneRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
+    protected final ItemStackTemplate result;
+    protected final List<Ingredient> ingredients;
+
+    public ShapelessArcaneRecipe(Recipe.CommonInfo commonInfo, IArcaneRecipe.ArcaneCraftingBookInfo bookInfo,
+                                 ItemStackTemplate result, List<Ingredient> ingredients, Optional<AbstractRequirement<?>> requirement,
+                                 SourceList manaCosts, Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride,
+                                 Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
+        super(commonInfo, bookInfo, requirement, manaCosts, baseExpertiseOverride, bonusExpertiseOverride, expertiseGroup, disciplineOverride);
+        this.result = result;
+        this.ingredients = ingredients;
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return this.recipeItems;
+    @NotNull
+    public RecipeSerializer<ShapelessArcaneRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return RecipeSerializersPM.ARCANE_CRAFTING_SHAPELESS.get();
+    @NotNull
+    protected PlacementInfo createPlacementInfo() {
+        return PlacementInfo.create(this.ingredients);
     }
 
-    @Override
-    public Optional<AbstractRequirement<?>> getRequirement() {
-        return this.requirement;
-    }
-    
-    @Override
-    public @NotNull SourceList getManaCosts() {
-        return this.manaCosts;
-    }
-
-    @Override
-    public boolean isSimple() {
-        return this.isSimple;
-    }
-
-    @Override
-    public int getExpertiseReward(RegistryAccess registryAccess) {
-        return this.baseExpertiseOverride.orElseGet(() -> {
-            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultExpertise()).orElse(0);
-        });
-    }
-
-    @Override
-    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
-        return this.bonusExpertiseOverride.orElseGet(() -> {
-            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultBonusExpertise()).orElse(0);
-        });
-    }
-
-    @Override
-    public Optional<Identifier> getExpertiseGroup() {
-        return this.expertiseGroup;
-    }
-
-    @Override
-    public Optional<ResearchDisciplineKey> getResearchDisciplineOverride() {
-        return this.disciplineOverride;
-    }
-
-    public static class Serializer implements RecipeSerializer<ShapelessArcaneRecipe> {
-        @Override
-        public MapCodec<ShapelessArcaneRecipe> codec() {
-            return RecordCodecBuilder.mapCodec(instance -> instance.group(
-                    Codec.STRING.optionalFieldOf("group", "").forGetter(sar -> sar.group),
-                    ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.output),
-                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
-                        Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
-                        if (ingArray.length == 0) {
-                            return DataResult.error(() -> "No ingredients for shapeless arcane recipe");
-                        } else if (ingArray.length > ShapedArcaneRecipe.MAX_WIDTH * ShapedArcaneRecipe.MAX_HEIGHT) {
-                            return DataResult.error(() -> "Too many ingredients for shapeless arcane recipe");
-                        } else {
-                            return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
-                        }
-                    }, DataResult::success).forGetter(sar -> sar.recipeItems),
-                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
-                    Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
-                    Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
-                    Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
-                    ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
-                ).apply(instance, ShapelessArcaneRecipe::new)
-            );
+    public boolean matches(@NotNull CraftingInput input, @NotNull Level level) {
+        if (input.ingredientCount() != this.ingredients.size()) {
+            return false;
+        } else {
+            return input.size() == 1 && this.ingredients.size() == 1
+                    ? this.ingredients.getFirst().test(input.getItem(0))
+                    : input.stackedContents().canCraft(this, null);
         }
+    }
 
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, ShapelessArcaneRecipe> streamCodec() {
-            return StreamCodec.of(ShapelessArcaneRecipe.Serializer::toNetwork, ShapelessArcaneRecipe.Serializer::fromNetwork);
-        }
-        
-        private static ShapelessArcaneRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            String group = buffer.readUtf();
-            Optional<AbstractRequirement<?>> requirement = buffer.readBoolean() ? Optional.ofNullable(AbstractRequirement.dispatchStreamCodec().decode(buffer)) : Optional.empty();
-            
-            SourceList manaCosts = SourceList.fromNetwork(buffer);
-            
-            int count = buffer.readVarInt();
-            NonNullList<Ingredient> ingredients = NonNullList.withSize(count, Ingredient.EMPTY);
-            ingredients.replaceAll(ing -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
-            
-            Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
-            Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
-            Optional<Identifier> expGroup = buffer.readOptional(b -> b.readResourceLocation());
-            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey.STREAM_CODEC);
-            
-            ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
-            return new ShapelessArcaneRecipe(group, result, ingredients, requirement, manaCosts, baseExpOverride, bonusExpOverride, expGroup, discOverride);
-        }
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput input) {
+        return this.result.create();
+    }
 
-        private static void toNetwork(RegistryFriendlyByteBuf buffer, ShapelessArcaneRecipe recipe) {
-            buffer.writeUtf(recipe.group);
-            recipe.requirement.ifPresentOrElse(req -> {
-                buffer.writeBoolean(true);
-                AbstractRequirement.dispatchStreamCodec().encode(buffer, req);
-            }, () -> {
-                buffer.writeBoolean(false);
-            });
-            SourceList.toNetwork(buffer, recipe.manaCosts);
-            
-            buffer.writeVarInt(recipe.recipeItems.size());
-            for (Ingredient ingredient : recipe.recipeItems) {
-                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
-            }
-            
-            buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
-            buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
-            buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
-            buffer.writeOptional(recipe.disciplineOverride, ResearchDisciplineKey.STREAM_CODEC);
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
-        }
+    @NotNull
+    public List<RecipeDisplay> display() {
+        return List.of(
+                new ShapelessArcaneCraftingRecipeDisplay(
+                        this.ingredients.stream().map(Ingredient::display).toList(),
+                        new SlotDisplay.ItemStackSlotDisplay(this.result),
+                        this.manaCosts,
+                        this.requirement,
+                        new SlotDisplay.ItemSlotDisplay(ItemsPM.ARCANE_WORKBENCH.get())
+                )
+        );
     }
 }
