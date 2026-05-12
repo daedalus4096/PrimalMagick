@@ -33,7 +33,6 @@ public class RecipeSerializersPM {
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<StaticBookCloningRecipe>> STATIC_BOOK_CLONING = register("static_book_cloning", () -> new CustomRecipe.Serializer<>(StaticBookCloningRecipe::new));
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WritableBookCraftingRecipe>> WRITABLE_BOOK_CRAFTING = register("writable_book_crafting", () -> new CustomRecipe.Serializer<>(WritableBookCraftingRecipe::new));
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapelessTagRecipe>> CRAFTING_SHAPELESS_TAG = register("crafting_shapeless_tag", ShapelessTagRecipe.Serializer::new);
-    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapelessArcaneTagRecipe>> ARCANE_CRAFTING_SHAPELESS_TAG = register("arcane_crafting_shapeless_tag", ShapelessArcaneTagRecipe.Serializer::new);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<DissolutionTagRecipe>> DISSOLUTION_TAG = register("dissolution_tag", DissolutionTagRecipe.Serializer::new);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<AttuneManaOrbRecipe>> ATTUNE_MANA_ORB = register("attune_mana_orb_special", () -> new CustomRecipe.Serializer<>(AttuneManaOrbRecipe::new));
 

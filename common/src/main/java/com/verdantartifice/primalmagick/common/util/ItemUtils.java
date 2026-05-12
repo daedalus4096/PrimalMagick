@@ -1,6 +1,13 @@
 package com.verdantartifice.primalmagick.common.util;
 
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +17,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Collection of utility methods pertaining to items.
@@ -107,5 +115,24 @@ public class ItemUtils {
             output = mergeItemStackIntoList(output, stack);
         }
         return output;
+    }
+
+    /**
+     * Retrieve the first item in this recipe's tag that was defined in Primal Magick or, failing that, the first item in the tag.
+     *
+     * @param pRegistries registry lookup
+     * @param tagKey the tag key to be queried
+     * @return the first item in the tag, preferring mod items
+     */
+    public static ItemStack getFirstItemFromTag(HolderLookup.Provider pRegistries, TagKey<Item> tagKey) {
+        // TODO Memoize this function
+        Optional<HolderSet.Named<Item>> tagOpt = pRegistries.lookupOrThrow(Registries.ITEM).get(tagKey);
+        Optional<Holder<Item>> modItemOpt = tagOpt.flatMap(tag -> tag.stream().filter(h -> h.is(key -> key.identifier().getNamespace().equals(Constants.MOD_ID))).findFirst());
+        if (modItemOpt.isPresent()) {
+            return new ItemStack(modItemOpt.get().value());
+        } else {
+            Optional<Holder<Item>> fallbackItemOpt = tagOpt.flatMap(tag -> tag.stream().findFirst());
+            return fallbackItemOpt.map(itemHolder -> new ItemStack(itemHolder.value())).orElse(ItemStack.EMPTY);
+        }
     }
 }
