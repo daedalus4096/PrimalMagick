@@ -19,7 +19,6 @@ public class RecipeSerializersPM {
         Services.RECIPE_SERIALIZERS_REGISTRY.init();
     }
 
-    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapedArcaneRecipe>> ARCANE_CRAFTING_SHAPED = register("arcane_crafting_shaped", ShapedArcaneRecipe.Serializer::new);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<FlyingCarpetDyeRecipe>> FLYING_CARPET_DYE = register("flying_carpet_dye_special", () -> new CustomRecipe.Serializer<>(FlyingCarpetDyeRecipe::new));
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<RitualRecipe>> RITUAL = register("ritual", RitualRecipe.Serializer::new);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WandAssemblyRecipe>> WAND_ASSEMBLY_SPECIAL = register("wand_assembly_special", () -> new CustomRecipe.Serializer<>(WandAssemblyRecipe::new));

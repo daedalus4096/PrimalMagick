@@ -3,23 +3,30 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.crafting.display.ShapedArcaneCraftingRecipeDisplay;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -27,94 +34,93 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public class ShapedArcaneRecipe extends ShapedRecipe implements IShapedArcaneRecipePM {
+public class ShapedArcaneRecipe extends NormalArcaneCraftingRecipe {
     public static final int MAX_WIDTH = 3;
     public static final int MAX_HEIGHT = 3;
 
+    public static final MapCodec<ShapedArcaneRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Recipe.CommonInfo.MAP_CODEC.forGetter(o -> o.commonInfo),
+            IArcaneRecipe.ArcaneCraftingBookInfo.MAP_CODEC.forGetter(o -> o.bookInfo),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(o -> o.result),
+            ShapedRecipePattern.MAP_CODEC.forGetter((o) -> o.pattern),
+            AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
+            SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
+            Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
+            Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
+            Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
+            ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
+        ).apply(instance, ShapedArcaneRecipe::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, ShapedArcaneRecipe> STREAM_CODEC = StreamCodecUtils.composite(
+            Recipe.CommonInfo.STREAM_CODEC, o -> o.commonInfo,
+            IArcaneRecipe.ArcaneCraftingBookInfo.STREAM_CODEC, o -> o.bookInfo,
+            ItemStackTemplate.STREAM_CODEC, o -> o.result,
+            ShapedRecipePattern.STREAM_CODEC, o -> o.pattern,
+            ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), sar -> sar.requirement,
+            SourceList.STREAM_CODEC, sar -> sar.manaCosts,
+            ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), sar -> sar.baseExpertiseOverride,
+            ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), sar -> sar.bonusExpertiseOverride,
+            ByteBufCodecs.optional(Identifier.STREAM_CODEC), sar -> sar.expertiseGroup,
+            ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC), sar -> sar.disciplineOverride,
+            ShapedArcaneRecipe::new);
+
+    public static final RecipeSerializer<ShapedArcaneRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
     protected final ShapedRecipePattern pattern;
-    protected final Optional<AbstractRequirement<?>> requirement;
-    protected final SourceList manaCosts;
-    protected final Optional<Integer> baseExpertiseOverride;
-    protected final Optional<Integer> bonusExpertiseOverride;
-    protected final Optional<Identifier> expertiseGroup;
-    protected final Optional<ResearchDisciplineKey> disciplineOverride;
+    protected final ItemStackTemplate result;
     
-    public ShapedArcaneRecipe(String group, ItemStack output, ShapedRecipePattern pattern, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts, Optional<Integer> baseExpertiseOverride,
-            Optional<Integer> bonusExpertiseOverride, Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
-        super(group, CraftingBookCategory.MISC, pattern, output, false);
+    public ShapedArcaneRecipe(Recipe.CommonInfo commonInfo, IArcaneRecipe.ArcaneCraftingBookInfo bookInfo,
+                              ItemStackTemplate result, ShapedRecipePattern pattern, Optional<AbstractRequirement<?>> requirement,
+                              SourceList manaCosts, Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride,
+                              Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
+        super(commonInfo, bookInfo, requirement, manaCosts, baseExpertiseOverride, bonusExpertiseOverride, expertiseGroup, disciplineOverride);
+        this.result = result;
         this.pattern = pattern;
-        this.requirement = requirement;
-        this.manaCosts = manaCosts;
-        this.baseExpertiseOverride = baseExpertiseOverride;
-        this.bonusExpertiseOverride = bonusExpertiseOverride;
-        this.expertiseGroup = expertiseGroup;
-        this.disciplineOverride = disciplineOverride;
     }
     
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return RecipeSerializersPM.ARCANE_CRAFTING_SHAPED.get();
+    @NotNull
+    public RecipeSerializer<ShapedArcaneRecipe> getSerializer() {
+        return SERIALIZER;
     }
 
     @Override
-    public Optional<AbstractRequirement<?>> getRequirement() {
-        return this.requirement;
+    @NotNull
+    protected PlacementInfo createPlacementInfo() {
+        return PlacementInfo.createFromOptionals(this.pattern.ingredients());
     }
-    
+
+    @NotNull
+    public boolean matches(@NotNull CraftingInput input, @NotNull Level level) {
+        return this.pattern.matches(input);
+    }
+
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput input) {
+        return this.result.create();
+    }
+
+    public int getWidth() {
+        return this.pattern.width();
+    }
+
+    public int getHeight() {
+        return this.pattern.height();
+    }
+
     @Override
-    public @NotNull SourceList getManaCosts() {
-        return this.manaCosts;
-    }
-
-    @Override
-    public int getExpertiseReward(RegistryAccess registryAccess) {
-        return this.baseExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultExpertise).orElse(0));
-    }
-
-    @Override
-    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
-        return this.bonusExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultBonusExpertise).orElse(0));
-    }
-
-    @Override
-    public Optional<Identifier> getExpertiseGroup() {
-        return this.expertiseGroup;
-    }
-
-    @Override
-    public Optional<ResearchDisciplineKey> getResearchDisciplineOverride() {
-        return this.disciplineOverride;
-    }
-
-    public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
-        @Override
-        public MapCodec<ShapedArcaneRecipe> codec() {
-            return RecordCodecBuilder.mapCodec(instance -> instance.group(
-                    Codec.STRING.optionalFieldOf("group", "").forGetter(ShapedRecipe::getGroup),
-                    ItemStack.CODEC.fieldOf("result").forGetter(r -> r.getResultItem(null)),
-                    ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
-                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(r -> r.requirement),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(r -> r.manaCosts),
-                    Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
-                    Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
-                    Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
-                    ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
-            ).apply(instance, ShapedArcaneRecipe::new));
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, ShapedArcaneRecipe> streamCodec() {
-            return StreamCodecUtils.composite(
-                    ByteBufCodecs.STRING_UTF8, ShapedRecipe::getGroup,
-                    ItemStack.STREAM_CODEC, r -> r.getResultItem(null),
-                    ShapedRecipePattern.STREAM_CODEC, r -> r.pattern,
-                    ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), r -> r.requirement,
-                    SourceList.STREAM_CODEC, r -> r.manaCosts,
-                    ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.baseExpertiseOverride,
-                    ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), r -> r.bonusExpertiseOverride,
-                    ByteBufCodecs.optional(Identifier.STREAM_CODEC), r -> r.expertiseGroup,
-                    ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC), r -> r.disciplineOverride,
-                    ShapedArcaneRecipe::new);
-        }
+    @NotNull
+    public List<RecipeDisplay> display() {
+        return List.of(
+                new ShapedArcaneCraftingRecipeDisplay(
+                        this.getWidth(),
+                        this.getHeight(),
+                        this.pattern.ingredients().stream().map((e) -> (SlotDisplay)e.map(Ingredient::display).orElse(SlotDisplay.Empty.INSTANCE)).toList(),
+                        new SlotDisplay.ItemStackSlotDisplay(this.result),
+                        this.manaCosts,
+                        this.requirement,
+                        new SlotDisplay.ItemSlotDisplay(ItemsPM.ARCANE_WORKBENCH.get())
+                )
+        );
     }
 }
