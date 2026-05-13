@@ -19,6 +19,11 @@ public class RecipeSerializersPM {
         Services.RECIPE_SERIALIZERS_REGISTRY.init();
     }
 
+    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapedArcaneRecipe>> SHAPED_ARCANE = register("shaped_arcane", () -> ShapedArcaneRecipe.SERIALIZER);
+    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapelessArcaneRecipe>> SHAPELESS_ARCANE = register("shapeless_arcane", () -> ShapelessArcaneRecipe.SERIALIZER);
+    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapelessArcaneTagRecipe>> SHAPELESS_ARCANE_TAG = register("shapeless_arcane_tag", () -> ShapelessArcaneTagRecipe.SERIALIZER);
+    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<ShapelessTagRecipe>> SHAPELESS_TAG = register("shapeless_tag", () -> ShapelessTagRecipe.SERIALIZER);
+
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<FlyingCarpetDyeRecipe>> FLYING_CARPET_DYE = register("flying_carpet_dye_special", () -> new CustomRecipe.Serializer<>(FlyingCarpetDyeRecipe::new));
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<RitualRecipe>> RITUAL = register("ritual", RitualRecipe.Serializer::new);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WandAssemblyRecipe>> WAND_ASSEMBLY_SPECIAL = register("wand_assembly_special", () -> new CustomRecipe.Serializer<>(WandAssemblyRecipe::new));
