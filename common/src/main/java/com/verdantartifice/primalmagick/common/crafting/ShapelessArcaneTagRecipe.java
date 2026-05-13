@@ -125,7 +125,7 @@ public class ShapelessArcaneTagRecipe extends NormalArcaneCraftingRecipe {
         return List.of(
                 new ShapelessArcaneCraftingRecipeDisplay(
                         this.ingredients.stream().map(Ingredient::display).toList(),
-                        new SlotDisplay.TagSlotDisplay(this.resultTag),
+                        new SlotDisplay.TagSlotDisplay(this.resultTag), // FIXME Does this need a custom display to show count?
                         this.manaCosts,
                         this.requirement,
                         new SlotDisplay.ItemSlotDisplay(ItemsPM.ARCANE_WORKBENCH.get())

@@ -1,24 +1,35 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.core.NonNullList;
+import com.verdantartifice.primalmagick.common.util.ItemUtils;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.NormalCraftingRecipe;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
-import java.util.function.Predicate;
+import java.util.List;
 
 /**
  * Definition for a shapeless arcane tag recipe.  Like a normal shapeless arcane recipe, except that
@@ -26,91 +37,84 @@ import java.util.function.Predicate;
  * 
  * @author Daedalus4096
  */
-public class ShapelessTagRecipe extends AbstractTagCraftingRecipe<CraftingInput> implements IShapelessRecipePM<CraftingInput>, CraftingRecipe {
-    protected final CraftingBookCategory category;
-    protected final NonNullList<Ingredient> recipeItems;
-    protected final boolean isSimple;
+public class ShapelessTagRecipe extends NormalCraftingRecipe {
+    public static final MapCodec<ShapelessTagRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Recipe.CommonInfo.MAP_CODEC.forGetter(o -> o.commonInfo),
+            CraftingRecipe.CraftingBookInfo.MAP_CODEC.forGetter(o -> o.bookInfo),
+            TagKey.codec(Registries.ITEM).fieldOf("resultTag").forGetter(o -> o.resultTag),
+            Codec.INT.optionalFieldOf("resultAmount", 1).forGetter(o -> o.resultAmount),
+            Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients)
+        ).apply(instance, ShapelessTagRecipe::new));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, ShapelessTagRecipe> STREAM_CODEC = StreamCodec.composite(
+            Recipe.CommonInfo.STREAM_CODEC, o -> o.commonInfo,
+            CraftingRecipe.CraftingBookInfo.STREAM_CODEC, o -> o.bookInfo,
+            TagKey.streamCodec(Registries.ITEM), o -> o.resultTag,
+            ByteBufCodecs.VAR_INT, o -> o.resultAmount,
+            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), o -> o.ingredients,
+            ShapelessTagRecipe::new);
+
+    public static final RecipeSerializer<ShapelessTagRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+    protected static final Logger LOGGER = LogUtils.getLogger();
+
+    protected final TagKey<Item> resultTag;
+    protected final int resultAmount;
+    protected final List<Ingredient> ingredients;
+    @Nullable protected HolderLookup.Provider registries;
     
-    public ShapelessTagRecipe(String group, CraftingBookCategory category, TagKey<Item> outputTag, int outputAmount, NonNullList<Ingredient> items) {
-        super(group, outputTag, outputAmount);
-        this.category = category;
-        this.recipeItems = items;
-        this.isSimple = items.stream().allMatch(Services.INGREDIENTS::isSimple);
+    public ShapelessTagRecipe(Recipe.CommonInfo commonInfo, CraftingRecipe.CraftingBookInfo bookInfo, TagKey<Item> resultTag, int resultAmount, List<Ingredient> ingredients) {
+        super(commonInfo, bookInfo);
+        this.resultTag = resultTag;
+        this.resultAmount = resultAmount;
+        this.ingredients = ingredients;
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return this.recipeItems;
+    public boolean matches(@NotNull CraftingInput input, @NotNull Level level) {
+        // Save a copy of the registry access for later
+        this.registries = level.registryAccess();
+
+        if (input.ingredientCount() != this.ingredients.size()) {
+            return false;
+        } else {
+            return input.size() == 1 && this.ingredients.size() == 1
+                    ? this.ingredients.getFirst().test(input.getItem(0))
+                    : input.stackedContents().canCraft(this, null);
+        }
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return RecipeSerializersPM.CRAFTING_SHAPELESS_TAG.get();
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput craftingInput) {
+        if (this.registries == null) {
+            LOGGER.error("ShapelessTagRecipe#matches must be called at least once before calling assemble to get output!");
+            return ItemStack.EMPTY;
+        } else {
+            return ItemUtils.getFirstItemFromTag(this.registries, this.resultTag).copyWithCount(this.resultAmount);
+        }
     }
 
     @Override
-    public CraftingBookCategory category() {
-        return this.category;
+    @NotNull
+    public RecipeSerializer<ShapelessTagRecipe> getSerializer() {
+        return SERIALIZER;
     }
-    
+
     @Override
-    public boolean isSimple() {
-        return this.isSimple;
+    @NotNull
+    public List<RecipeDisplay> display() {
+        return List.of(
+                new ShapelessCraftingRecipeDisplay(
+                        this.ingredients.stream().map(Ingredient::display).toList(),
+                        new SlotDisplay.TagSlotDisplay(this.resultTag), // FIXME Does this need a custom display to show count?
+                        new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)
+                )
+        );
     }
 
-    public static class Serializer implements RecipeSerializer<ShapelessTagRecipe> {
-        protected static final MapCodec<ShapelessTagRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> {
-            return instance.group(
-                    Codec.STRING.optionalFieldOf("group", "").forGetter(sar -> sar.group),
-                    CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(sar -> sar.category),
-                    TagKey.codec(Registries.ITEM).fieldOf("outputTag").forGetter(sar -> sar.outputTag),
-                    Codec.INT.fieldOf("outputAmount").forGetter(sar -> sar.outputAmount),
-                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
-                        Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
-                        if (ingArray.length == 0) {
-                            return DataResult.error(() -> "No ingredients for shapeless arcane recipe");
-                        } else if (ingArray.length > ShapedArcaneRecipe.MAX_WIDTH * ShapedArcaneRecipe.MAX_HEIGHT) {
-                            return DataResult.error(() -> "Too many ingredients for shapeless arcane recipe");
-                        } else {
-                            return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
-                        }
-                    }, DataResult::success).forGetter(sar -> sar.recipeItems)
-                ).apply(instance, ShapelessTagRecipe::new);
-        });
-        
-        @Override
-        public MapCodec<ShapelessTagRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, ShapelessTagRecipe> streamCodec() {
-            return StreamCodec.of(ShapelessTagRecipe.Serializer::toNetwork, ShapelessTagRecipe.Serializer::fromNetwork);
-        }
-
-        private static ShapelessTagRecipe fromNetwork(RegistryFriendlyByteBuf pBuffer) {
-            String group = pBuffer.readUtf();
-            CraftingBookCategory category = pBuffer.readEnum(CraftingBookCategory.class);
-            
-            int count = pBuffer.readVarInt();
-            NonNullList<Ingredient> ingredients = NonNullList.withSize(count, Ingredient.EMPTY);
-            ingredients.replaceAll(ing -> Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer));
-            
-            TagKey<Item> resultTag = StreamCodecUtils.tagKey(Registries.ITEM).decode(pBuffer);
-            int resultAmount = pBuffer.readVarInt();
-            
-            return new ShapelessTagRecipe(group, category, resultTag, resultAmount, ingredients);
-        }
-
-        private static void toNetwork(RegistryFriendlyByteBuf pBuffer, ShapelessTagRecipe pRecipe) {
-            pBuffer.writeUtf(pRecipe.group);
-            pBuffer.writeEnum(pRecipe.category);
-            pBuffer.writeVarInt(pRecipe.recipeItems.size());
-            for (Ingredient ingredient : pRecipe.recipeItems) {
-                Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, ingredient);
-            }
-            StreamCodecUtils.tagKey(Registries.ITEM).encode(pBuffer, pRecipe.outputTag);
-            pBuffer.writeVarInt(pRecipe.outputAmount);
-        }
+    @Override
+    @NotNull
+    protected PlacementInfo createPlacementInfo() {
+        return PlacementInfo.create(this.ingredients);
     }
 }
