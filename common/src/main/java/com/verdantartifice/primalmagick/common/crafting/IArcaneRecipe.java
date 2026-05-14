@@ -2,12 +2,11 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneCraftingBookCategory;
+import com.verdantartifice.primalmagick.common.util.CraftingUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
@@ -42,19 +41,7 @@ public interface IArcaneRecipe extends Recipe<CraftingInput>, IHasManaCost, IHas
     }
 
     default NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
-        return defaultCraftingReminder(input);
-    }
-
-    static NonNullList<ItemStack> defaultCraftingReminder(CraftingInput input) {
-        NonNullList<ItemStack> result = NonNullList.withSize(input.size(), ItemStack.EMPTY);
-
-        for (int slot = 0; slot < result.size(); slot++) {
-            Item item = input.getItem(slot).getItem();
-            ItemStackTemplate remainder = item.getCraftingRemainder();
-            result.set(slot, remainder != null ? remainder.create() : ItemStack.EMPTY);
-        }
-
-        return result;
+        return CraftingUtils.defaultCraftingReminder(input);
     }
 
     default RecipeBookCategory recipeBookCategory() {
