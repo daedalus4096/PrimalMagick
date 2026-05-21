@@ -1,10 +1,11 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Crafting recipe interface for a runecarving recipe.  A runecarving recipe is like a stonecutting
@@ -14,18 +15,22 @@ import net.minecraft.world.item.crafting.RecipeType;
  */
 public interface IRunecarvingRecipe extends Recipe<RunecarvingRecipeInput>, IHasRequirement, IHasExpertise {
     @Override
-    default RecipeType<?> getType() {
+    @NotNull
+    default RecipeType<IRunecarvingRecipe> getType() {
         return RecipeTypesPM.RUNECARVING.get();
     }
-    
+
+    @NotNull
+    RecipeSerializer<? extends IRunecarvingRecipe> getSerializer();
+
     @Override
     default boolean isSpecial() {
         // Return true to keep runecarving recipes from showing up in the vanilla recipe book
         return true;
     }
-    
+
     @Override
-    default ItemStack getToastSymbol() {
-        return new ItemStack(BlocksPM.RUNECARVING_TABLE.get());
+    default RecipeBookCategory recipeBookCategory() {
+        // FIXME Tie into datapacked recipe book category system
     }
 }
