@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.crafting.AttuneManaOrbRecipe;
 import com.verdantartifice.primalmagick.common.crafting.FlyingCarpetDyeRecipe;
 import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.StaticBookCloningRecipe;
-import com.verdantartifice.primalmagick.common.crafting.TieredShieldDecorationRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandAssemblyRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandGlamourRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandInscriptionRecipe;
@@ -46,9 +45,11 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.HoneycombItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.ShieldDecorationRecipe;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 import net.minecraft.world.level.ItemLike;
 
@@ -717,7 +718,15 @@ public abstract class Recipes extends RecipeProvider {
         SpecialRecipeBuilder.special(WandInscriptionRecipe::new).save(this.output, WandInscriptionRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(this.output, SpellcraftingRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(FlyingCarpetDyeRecipe::new).save(this.output, FlyingCarpetDyeRecipe.RECIPE_KEY);
-        SpecialRecipeBuilder.special(TieredShieldDecorationRecipe::new).save(this.output, TieredShieldDecorationRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(
+                () -> new ShieldDecorationRecipe(this.tag(ItemTags.BANNERS), Ingredient.of(ItemsPM.PRIMALITE_SHIELD.get()), new ItemStackTemplate(ItemsPM.PRIMALITE_SHIELD.get()))
+        ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("primalite_shield_decoration")));
+        SpecialRecipeBuilder.special(
+                () -> new ShieldDecorationRecipe(this.tag(ItemTags.BANNERS), Ingredient.of(ItemsPM.HEXIUM_SHIELD.get()), new ItemStackTemplate(ItemsPM.HEXIUM_SHIELD.get()))
+        ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("hexium_shield_decoration")));
+        SpecialRecipeBuilder.special(
+                () -> new ShieldDecorationRecipe(this.tag(ItemTags.BANNERS), Ingredient.of(ItemsPM.HALLOWSTEEL_SHIELD.get()), new ItemStackTemplate(ItemsPM.HALLOWSTEEL_SHIELD.get()))
+        ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("hallowsteel_shield_decoration")));
         SpecialRecipeBuilder.special(WandGlamourRecipe::new).save(this.output, WandGlamourRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(WardingModuleApplicationRecipe::new).save(this.output, WardingModuleApplicationRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(this.output, StaticBookCloningRecipe.RECIPE_KEY);
