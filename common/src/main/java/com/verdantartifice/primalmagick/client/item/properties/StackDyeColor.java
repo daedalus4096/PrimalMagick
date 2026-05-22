@@ -2,13 +2,14 @@ package com.verdantartifice.primalmagick.client.item.properties;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.items.IHasDyeColor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,8 +27,8 @@ public record StackDyeColor() implements SelectItemModelProperty<DyeColor> {
 
     @Override
     public @Nullable DyeColor get(@NotNull ItemStack itemStack, @Nullable ClientLevel clientLevel, @Nullable LivingEntity livingEntity, int seed, @NotNull ItemDisplayContext itemDisplayContext) {
-        if (itemStack.getItem() instanceof IHasDyeColor hasDyeColor) {
-            return hasDyeColor.getDyeColor(itemStack);
+        if (itemStack.has(DataComponents.DYED_COLOR)) {
+            return DyeColor.byFireworkColor(itemStack.getOrDefault(DataComponents.DYED_COLOR, new DyedItemColor(-1)).rgb());
         }
         return null;
     }

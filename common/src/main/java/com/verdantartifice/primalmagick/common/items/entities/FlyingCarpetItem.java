@@ -1,25 +1,27 @@
 package com.verdantartifice.primalmagick.common.items.entities;
 
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
-import com.verdantartifice.primalmagick.common.items.IHasDyeColor;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Item definition for a flying carpet.  Spawns a flying carpet entity when used for the player to
@@ -27,37 +29,35 @@ import org.jetbrains.annotations.NotNull;
  * 
  * @author Daedalus4096
  */
-public class FlyingCarpetItem extends Item implements IHasDyeColor {
+public class FlyingCarpetItem extends Item {
     public static final Identifier COLOR_PROPERTY = ResourceUtils.loc("color");
     
     public static final CauldronInteraction DYED_CARPET = (BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) -> {
-        Item item = stack.getItem();
-        if (!(item instanceof FlyingCarpetItem carpet)) {
-            return InteractionResult.TRY_WITH_EMPTY_HAND;
-        } else {
-            if (carpet.getDyeColor(stack) == null) {
+        if (stack.getItem() instanceof FlyingCarpetItem) {
+            if (!stack.has(DataComponents.DYED_COLOR)) {
                 return InteractionResult.TRY_WITH_EMPTY_HAND;
             } else {
                 if (!level.isClientSide()) {
-                    carpet.removeDyeColor(stack);
+                    stack.remove(DataComponents.DYED_COLOR);
                     LayeredCauldronBlock.lowerFillLevel(state, level, pos);
                 }
                 return InteractionResult.SUCCESS;
             }
+        } else {
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         }
     };
 
     public FlyingCarpetItem(Item.Properties properties) {
         super(properties);
     }
-    
-    public static ItemStack dyeCarpet(ItemStack carpetStack, DyeItem dye) {
-        if (carpetStack.getItem() instanceof FlyingCarpetItem carpet) {
-            ItemStack retVal = carpetStack.copy();
-            carpet.setDyeColor(retVal, dye.getDyeColor());
-            return retVal;
+
+    @Nullable
+    private DyeColor getDyeColor(@NotNull ItemStack stack) {
+        if (stack.has(DataComponents.DYED_COLOR)) {
+            return DyeColor.byFireworkColor(stack.getOrDefault(DataComponents.DYED_COLOR, new DyedItemColor(-1)).rgb());
         } else {
-            return ItemStack.EMPTY;
+            return null;
         }
     }
 

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -229,7 +231,7 @@ public class FlyingCarpetEntity extends Entity {
         ItemStack stack = new ItemStack(ItemsPM.FLYING_CARPET.get());
         DyeColor color = this.getDyeColor();
         if (color != null) {
-            ((FlyingCarpetItem)stack.getItem()).setDyeColor(stack, color);
+            stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getFireworkColor()));
         }
         return stack;
     }
