@@ -714,7 +714,20 @@ public abstract class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 40).add(Sources.SEA, 40).add(Sources.SKY, 40).add(Sources.SUN, 40).add(Sources.MOON, 40))
             .build(this.output);
 
-        SpecialRecipeBuilder.special(WandAssemblyRecipe::new).save(this.output, WandAssemblyRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(
+                () -> new WandAssemblyRecipe(
+                        this.tag(ItemTagsPM.CASTER_CORES_WAND),
+                        this.tag(ItemTagsPM.CASTER_CORES),
+                        this.tag(ItemTagsPM.CASTER_GEMS),
+                        new ItemStackTemplate(ItemsPM.MODULAR_WAND.get()))
+        ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("caster_assembly_wand")));
+        SpecialRecipeBuilder.special(
+                () -> new WandAssemblyRecipe(
+                        this.tag(ItemTagsPM.CASTER_CORES_STAFF),
+                        this.tag(ItemTagsPM.CASTER_CORES),
+                        this.tag(ItemTagsPM.CASTER_GEMS),
+                        new ItemStackTemplate(ItemsPM.MODULAR_STAFF.get()))
+        ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("caster_assembly_staff")));
         SpecialRecipeBuilder.special(WandInscriptionRecipe::new).save(this.output, WandInscriptionRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(this.output, SpellcraftingRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(FlyingCarpetDyeRecipe::new).save(this.output, FlyingCarpetDyeRecipe.RECIPE_KEY);

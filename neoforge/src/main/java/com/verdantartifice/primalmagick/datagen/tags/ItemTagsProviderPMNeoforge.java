@@ -138,7 +138,13 @@ public class ItemTagsProviderPMNeoforge extends IntrinsicHolderTagsProvider<Item
         this.tag(ItemTagsPM.SUNWOOD_LOGS).add(ItemsPM.SUNWOOD_LOG.get(), ItemsPM.STRIPPED_SUNWOOD_LOG.get(), ItemsPM.SUNWOOD_WOOD.get(), ItemsPM.STRIPPED_SUNWOOD_WOOD.get());
         this.tag(ItemTagsPM.SURFACE_STONE).add(Items.ANDESITE, Items.DIORITE, Items.GRANITE, Items.INFESTED_STONE, Items.STONE, Items.POLISHED_ANDESITE, Items.POLISHED_DIORITE, Items.POLISHED_GRANITE);
         this.tag(ItemTagsPM.TREEFOLK_LOVED).add(Items.BONE_MEAL);
-        
+
+        this.tag(ItemTagsPM.CASTER_CORES).addTag(ItemTagsPM.CASTER_CORES_WAND).addTag(ItemTagsPM.CASTER_CORES_STAFF);
+        this.tag(ItemTagsPM.CASTER_CORES_WAND).add(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get(), ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get(), ItemsPM.CORAL_WAND_CORE_ITEM.get(), ItemsPM.BAMBOO_WAND_CORE_ITEM.get(), ItemsPM.SUNWOOD_WAND_CORE_ITEM.get(), ItemsPM.MOONWOOD_WAND_CORE_ITEM.get(), ItemsPM.BONE_WAND_CORE_ITEM.get(), ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get(), ItemsPM.PURPUR_WAND_CORE_ITEM.get(), ItemsPM.PRIMAL_WAND_CORE_ITEM.get(), ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get(), ItemsPM.PURE_PRIMAL_WAND_CORE_ITEM.get());
+        this.tag(ItemTagsPM.CASTER_CORES_STAFF).add(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get(), ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get(), ItemsPM.CORAL_STAFF_CORE_ITEM.get(), ItemsPM.BAMBOO_STAFF_CORE_ITEM.get(), ItemsPM.SUNWOOD_STAFF_CORE_ITEM.get(), ItemsPM.MOONWOOD_STAFF_CORE_ITEM.get(), ItemsPM.BONE_STAFF_CORE_ITEM.get(), ItemsPM.BLAZE_ROD_STAFF_CORE_ITEM.get(), ItemsPM.PURPUR_STAFF_CORE_ITEM.get(), ItemsPM.PRIMAL_STAFF_CORE_ITEM.get(), ItemsPM.DARK_PRIMAL_STAFF_CORE_ITEM.get(), ItemsPM.PURE_PRIMAL_STAFF_CORE_ITEM.get());
+        this.tag(ItemTagsPM.CASTER_CAPS).add(ItemsPM.IRON_WAND_CAP_ITEM.get(), ItemsPM.GOLD_WAND_CAP_ITEM.get(), ItemsPM.PRIMALITE_WAND_CAP_ITEM.get(), ItemsPM.HEXIUM_WAND_CAP_ITEM.get(), ItemsPM.HALLOWSTEEL_WAND_CAP_ITEM.get());
+        this.tag(ItemTagsPM.CASTER_GEMS).add(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get(), ItemsPM.ADEPT_WAND_GEM_ITEM.get(), ItemsPM.WIZARD_WAND_GEM_ITEM.get(), ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get(), ItemsPM.CREATIVE_WAND_GEM_ITEM.get());
+
         // FIXME Use the WARDABLE_ARMOR tag as the source of truth if/when the RegisterItemDecorationsEvent is made to fire *after* tag data loads
         var wardableArmorTag = this.tag(ItemTagsPM.WARDABLE_ARMOR);
         WardingModuleItem.getApplicableItems().forEach(itemSupplier -> wardableArmorTag.add(itemSupplier.get()));
