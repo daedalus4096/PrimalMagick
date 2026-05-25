@@ -27,11 +27,13 @@ public class RecipeSerializerTagsProviderPMNeoforge extends IntrinsicHolderTagsP
     @Override
     protected void addTags(@NotNull HolderLookup.Provider pProvider) {
         this.tag(RecipeSerializerTagsExt.CREATE_AUTOMATION_IGNORE)
-                .addOptional(RecipeSerializersPM.ARCANE_CRAFTING_SHAPED.get())
-                .addOptional(RecipeSerializersPM.ARCANE_CRAFTING_SHAPELESS.get())
+                .addOptional(RecipeSerializersPM.SHAPED_ARCANE.get())
+                .addOptional(RecipeSerializersPM.SHAPELESS_ARCANE.get())
+                .addOptional(RecipeSerializersPM.SHAPELESS_ARCANE_TAG.get())
                 .addOptional(RecipeSerializersPM.RITUAL.get())
                 .addOptional(RecipeSerializersPM.RUNECARVING.get())
                 .addOptional(RecipeSerializersPM.CONCOCTING.get())
-                .addOptional(RecipeSerializersPM.DISSOLUTION.get());
+                .addOptional(RecipeSerializersPM.DISSOLUTION.get())
+                .addOptional(RecipeSerializersPM.DISSOLUTION_TAG.get());
     }
 }
