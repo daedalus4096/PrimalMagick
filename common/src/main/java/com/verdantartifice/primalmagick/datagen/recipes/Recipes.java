@@ -728,7 +728,18 @@ public abstract class Recipes extends RecipeProvider {
                         this.tag(ItemTagsPM.CASTER_GEMS),
                         new ItemStackTemplate(ItemsPM.MODULAR_STAFF.get()))
         ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("caster_assembly_staff")));
-        SpecialRecipeBuilder.special(WandInscriptionRecipe::new).save(this.output, WandInscriptionRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(
+                () -> new WandInscriptionRecipe(
+                        Ingredient.of(ItemsPM.MODULAR_WAND.get()),
+                        Ingredient.of(ItemsPM.SPELL_SCROLL_FILLED.get()),
+                        new ItemStackTemplate(ItemsPM.MODULAR_WAND.get()))
+        ).save(this.output, WandInscriptionRecipe.WAND_KEY);
+        SpecialRecipeBuilder.special(
+                () -> new WandInscriptionRecipe(
+                        Ingredient.of(ItemsPM.MODULAR_STAFF.get()),
+                        Ingredient.of(ItemsPM.SPELL_SCROLL_FILLED.get()),
+                        new ItemStackTemplate(ItemsPM.MODULAR_STAFF.get()))
+        ).save(this.output, WandInscriptionRecipe.STAFF_KEY);
         SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(this.output, SpellcraftingRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(
                 () -> new FlyingCarpetDyeRecipe(Ingredient.of(ItemsPM.FLYING_CARPET.get()), this.tag(ItemTags.DYES), new ItemStackTemplate(ItemsPM.FLYING_CARPET.get()))

@@ -30,9 +30,9 @@ public class RecipeSerializersPM {
 
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<FlyingCarpetDyeRecipe>> FLYING_CARPET_DYE = register("flying_carpet_dye_special", () -> FlyingCarpetDyeRecipe.SERIALIZER);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WandAssemblyRecipe>> WAND_ASSEMBLY_SPECIAL = register("wand_assembly_special", () -> WandAssemblyRecipe.SERIALIZER);
+    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WandInscriptionRecipe>> WAND_INSCRIPTION_SPECIAL = register("wand_inscription_special", () -> WandInscriptionRecipe.SERIALIZER);
 
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<RitualRecipe>> RITUAL = register("ritual", RitualRecipe.Serializer::new);
-    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WandInscriptionRecipe>> WAND_INSCRIPTION_SPECIAL = register("wand_inscription_special", () -> new CustomRecipe.Serializer<>(WandInscriptionRecipe::new));
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<SpellcraftingRecipe>> SPELLCRAFTING_SPECIAL = register("spellcrafting_special", () -> new CustomRecipe.Serializer<>(SpellcraftingRecipe::new));
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WandGlamourRecipe>> WAND_GLAMOUR_SPECIAL = register("wand_glamour_special", () -> new CustomRecipe.Serializer<>(WandGlamourRecipe::new));
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WardingModuleApplicationRecipe>> WARDING_MODULE_APPLICATION = register("warding_module_application", () -> new CustomRecipe.Serializer<>(WardingModuleApplicationRecipe::new));

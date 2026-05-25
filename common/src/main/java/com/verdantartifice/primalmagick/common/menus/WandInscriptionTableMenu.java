@@ -171,11 +171,14 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
     protected void slotChangedCraftingGrid(Level world) {
         if (!world.isClientSide() && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = spe.level().recipeAccess().byKey(WandInscriptionRecipe.RECIPE_KEY);
+            Optional<RecipeHolder<?>> opt = spe.level().recipeAccess().byKey(WandInscriptionRecipe.WAND_KEY);
+            if (opt.isEmpty()) {
+                opt = spe.level().recipeAccess().byKey(WandInscriptionRecipe.STAFF_KEY);
+            }
             if (opt.isPresent() && opt.get().value() instanceof WandInscriptionRecipe recipe) {
-                // If the inputs are valid for inscribing a spell onto a wand, show the output
+                // If the inputs are valid for inscribing a spell onto a wand or staff, show the output
                 if (recipe.matches(this.componentInv.asCraftInput(), world)) {
-                    stack = recipe.assemble(this.componentInv.asCraftInput(), world.registryAccess());
+                    stack = recipe.assemble(this.componentInv.asCraftInput());
                 }
             }
             
