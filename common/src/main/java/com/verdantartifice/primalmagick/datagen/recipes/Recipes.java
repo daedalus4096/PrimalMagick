@@ -740,7 +740,11 @@ public abstract class Recipes extends RecipeProvider {
                         Ingredient.of(ItemsPM.SPELL_SCROLL_FILLED.get()),
                         new ItemStackTemplate(ItemsPM.MODULAR_STAFF.get()))
         ).save(this.output, WandInscriptionRecipe.STAFF_KEY);
-        SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(this.output, SpellcraftingRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(
+                () -> new SpellcraftingRecipe(
+                        Ingredient.of(ItemsPM.SPELL_SCROLL_BLANK.get()),
+                        new ItemStackTemplate(ItemsPM.SPELL_SCROLL_FILLED.get()))
+        ).save(this.output, SpellcraftingRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(
                 () -> new FlyingCarpetDyeRecipe(Ingredient.of(ItemsPM.FLYING_CARPET.get()), this.tag(ItemTags.DYES), new ItemStackTemplate(ItemsPM.FLYING_CARPET.get()))
         ).save(this.output, FlyingCarpetDyeRecipe.RECIPE_KEY);
