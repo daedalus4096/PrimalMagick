@@ -45,6 +45,8 @@ public class WandAssemblyRecipe extends CustomRecipe {
             WandAssemblyRecipe::new);
 
     public static final RecipeSerializer<WandAssemblyRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+    public static final ResourceKey<Recipe<?>> WAND_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("caster_assembly_wand"));
+    public static final ResourceKey<Recipe<?>> STAFF_KEY = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("caster_assembly_staff"));
 
     private final Ingredient core;
     private final Ingredient cap;
