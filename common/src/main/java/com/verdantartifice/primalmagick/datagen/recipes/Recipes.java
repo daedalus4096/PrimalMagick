@@ -757,7 +757,22 @@ public abstract class Recipes extends RecipeProvider {
         SpecialRecipeBuilder.special(
                 () -> new ShieldDecorationRecipe(this.tag(ItemTags.BANNERS), Ingredient.of(ItemsPM.HALLOWSTEEL_SHIELD.get()), new ItemStackTemplate(ItemsPM.HALLOWSTEEL_SHIELD.get()))
         ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("hallowsteel_shield_decoration")));
-        SpecialRecipeBuilder.special(WandGlamourRecipe::new).save(this.output, WandGlamourRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(
+                () -> new WandGlamourRecipe(
+                        Ingredient.of(ItemsPM.MODULAR_WAND.get()),
+                        this.tag(ItemTagsPM.CASTER_CORES_WAND),
+                        this.tag(ItemTagsPM.CASTER_CAPS),
+                        this.tag(ItemTagsPM.CASTER_GEMS),
+                        new ItemStackTemplate(ItemsPM.MODULAR_WAND.get()))
+        ).save(this.output, WandGlamourRecipe.WAND_KEY);
+        SpecialRecipeBuilder.special(
+                () -> new WandGlamourRecipe(
+                        Ingredient.of(ItemsPM.MODULAR_STAFF.get()),
+                        this.tag(ItemTagsPM.CASTER_CORES_STAFF),
+                        this.tag(ItemTagsPM.CASTER_CAPS),
+                        this.tag(ItemTagsPM.CASTER_GEMS),
+                        new ItemStackTemplate(ItemsPM.MODULAR_STAFF.get()))
+        ).save(this.output, WandGlamourRecipe.STAFF_KEY);
         SpecialRecipeBuilder.special(WardingModuleApplicationRecipe::new).save(this.output, WardingModuleApplicationRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(this.output, StaticBookCloningRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(WritableBookCraftingRecipe::new).save(this.output, WritableBookCraftingRecipe.RECIPE_KEY);

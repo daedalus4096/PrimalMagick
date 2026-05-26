@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -193,13 +194,17 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
 
     protected void slotChangedCraftingGrid(Level world) {
         if (!world.isClientSide() && this.player instanceof ServerPlayer spe) {
+            ServerLevel level = spe.level();
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = spe.level().recipeAccess().byKey(WandGlamourRecipe.RECIPE_KEY);
+            Optional<RecipeHolder<?>> opt = level.recipeAccess().byKey(WandGlamourRecipe.WAND_KEY);
+            if (opt.isEmpty()) {
+                opt = level.recipeAccess().byKey(WandGlamourRecipe.STAFF_KEY);
+            }
             if (opt.isPresent() && opt.get().value() instanceof WandGlamourRecipe recipe) {
                 // If the inputs are valid, show the output
                 CraftingInput craftInput = this.componentInv.asCraftInput();
                 if (recipe.matches(craftInput, world)) {
-                    stack = recipe.assemble(craftInput, world.registryAccess());
+                    stack = recipe.assemble(craftInput);
                 }
             }
             
