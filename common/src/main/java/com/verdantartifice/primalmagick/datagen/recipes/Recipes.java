@@ -773,7 +773,7 @@ public abstract class Recipes extends RecipeProvider {
                         this.tag(ItemTagsPM.CASTER_GEMS),
                         new ItemStackTemplate(ItemsPM.MODULAR_STAFF.get()))
         ).save(this.output, WandGlamourRecipe.STAFF_KEY);
-        SpecialRecipeBuilder.special(WardingModuleApplicationRecipe::new).save(this.output, WardingModuleApplicationRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(() -> WardingModuleApplicationRecipe.INSTANCE).save(this.output, WardingModuleApplicationRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(this.output, StaticBookCloningRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(WritableBookCraftingRecipe::new).save(this.output, WritableBookCraftingRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(AttuneManaOrbRecipe::new).save(this.output, AttuneManaOrbRecipe.RECIPE_KEY);
