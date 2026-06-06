@@ -773,8 +773,35 @@ public abstract class Recipes extends RecipeProvider {
                         this.tag(ItemTagsPM.CASTER_GEMS),
                         new ItemStackTemplate(ItemsPM.MODULAR_STAFF.get()))
         ).save(this.output, WandGlamourRecipe.STAFF_KEY);
+        SpecialRecipeBuilder.special(
+                () -> new StaticBookCloningRecipe(
+                        Ingredient.of(ItemsPM.STATIC_BOOK.get()),
+                        this.tag(ItemTags.BOOK_CLONING_TARGET),
+                        StaticBookCloningRecipe.DEFAULT_BOOK_GENERATION_RANGES,
+                        new ItemStackTemplate(ItemsPM.STATIC_BOOK.get()))
+        ).save(this.output, StaticBookCloningRecipe.RECIPE_KEY_COMMON);
+        SpecialRecipeBuilder.special(
+                () -> new StaticBookCloningRecipe(
+                        Ingredient.of(ItemsPM.STATIC_BOOK_UNCOMMON.get()),
+                        this.tag(ItemTags.BOOK_CLONING_TARGET),
+                        StaticBookCloningRecipe.DEFAULT_BOOK_GENERATION_RANGES,
+                        new ItemStackTemplate(ItemsPM.STATIC_BOOK_UNCOMMON.get()))
+        ).save(this.output, StaticBookCloningRecipe.RECIPE_KEY_UNCOMMON);
+        SpecialRecipeBuilder.special(
+                () -> new StaticBookCloningRecipe(
+                        Ingredient.of(ItemsPM.STATIC_BOOK_RARE.get()),
+                        this.tag(ItemTags.BOOK_CLONING_TARGET),
+                        StaticBookCloningRecipe.DEFAULT_BOOK_GENERATION_RANGES,
+                        new ItemStackTemplate(ItemsPM.STATIC_BOOK_RARE.get()))
+        ).save(this.output, StaticBookCloningRecipe.RECIPE_KEY_RARE);
+        SpecialRecipeBuilder.special(
+                () -> new StaticBookCloningRecipe(
+                        Ingredient.of(ItemsPM.STATIC_TABLET.get()),
+                        this.tag(ItemTags.BOOK_CLONING_TARGET),
+                        StaticBookCloningRecipe.DEFAULT_BOOK_GENERATION_RANGES,
+                        new ItemStackTemplate(ItemsPM.STATIC_TABLET.get()))
+        ).save(this.output, StaticBookCloningRecipe.RECIPE_KEY_TABLET);
         SpecialRecipeBuilder.special(() -> WardingModuleApplicationRecipe.INSTANCE).save(this.output, WardingModuleApplicationRecipe.RECIPE_KEY);
-        SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(this.output, StaticBookCloningRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(WritableBookCraftingRecipe::new).save(this.output, WritableBookCraftingRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(AttuneManaOrbRecipe::new).save(this.output, AttuneManaOrbRecipe.RECIPE_KEY);
     }
