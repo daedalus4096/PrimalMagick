@@ -193,11 +193,14 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
     protected void slotChangedCraftingGrid(Level world) {
         if (!world.isClientSide() && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = spe.level().recipeAccess().byKey(WandAssemblyRecipe.RECIPE_KEY);
+            Optional<RecipeHolder<?>> opt = spe.level().recipeAccess().byKey(WandAssemblyRecipe.WAND_KEY);
+            if (opt.isEmpty()) {
+                opt = spe.level().recipeAccess().byKey(WandAssemblyRecipe.STAFF_KEY);
+            }
             if (opt.isPresent() && opt.get().value() instanceof WandAssemblyRecipe recipe) {
-                // If the inputs make a valid wand, show the output
+                // If the inputs make a valid wand or staff, show the output
                 if (recipe.matches(this.componentInv.asCraftInput(), world)) {
-                    stack = recipe.assemble(this.componentInv.asCraftInput(), world.registryAccess());
+                    stack = recipe.assemble(this.componentInv.asCraftInput());
                 }
             }
             
