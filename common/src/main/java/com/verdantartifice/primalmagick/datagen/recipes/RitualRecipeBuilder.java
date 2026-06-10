@@ -18,8 +18,8 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -40,6 +40,7 @@ import java.util.Optional;
  */
 public class RitualRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
+    protected final HolderGetter<Block> blockGetter;
     protected final ItemStack result;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected final NonNullList<BlockIngredient> props = NonNullList.create();
@@ -52,8 +53,9 @@ public class RitualRecipeBuilder {
     protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
-    protected RitualRecipeBuilder(HolderGetter<Item> itemGetter, ItemStack result) {
+    protected RitualRecipeBuilder(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, ItemStack result) {
         this.itemGetter = itemGetter;
+        this.blockGetter = blockGetter;
         this.result = result.copy();
     }
     
@@ -64,8 +66,8 @@ public class RitualRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, ItemLike result, int count) {
-        return new RitualRecipeBuilder(itemGetter, new ItemStack(result, count));
+    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, ItemLike result, int count) {
+        return new RitualRecipeBuilder(itemGetter, blockGetter, new ItemStack(result, count));
     }
     
     /**
@@ -74,8 +76,8 @@ public class RitualRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, ItemLike result) {
-        return ritualRecipe(itemGetter, result, 1);
+    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, ItemLike result) {
+        return ritualRecipe(itemGetter, blockGetter, result, 1);
     }
     
     /**
@@ -84,8 +86,8 @@ public class RitualRecipeBuilder {
      * @param result the output item stack
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, ItemStack result) {
-        return new RitualRecipeBuilder(itemGetter, result);
+    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, ItemStack result) {
+        return new RitualRecipeBuilder(itemGetter, blockGetter, result);
     }
     
     /**
@@ -186,7 +188,7 @@ public class RitualRecipeBuilder {
      * @return the modified builder
      */
     public RitualRecipeBuilder addProp(Block block, int quantity) {
-        return this.addProp(BlockIngredient.fromBlocks(block), quantity);
+        return this.addProp(BlockIngredient.of(block), quantity);
     }
     
     /**
@@ -207,7 +209,7 @@ public class RitualRecipeBuilder {
      * @return the modified builder
      */
     public RitualRecipeBuilder addProp(TagKey<Block> tag, int quantity) {
-        return this.addProp(BlockIngredient.fromTag(tag), quantity);
+        return this.addProp(BlockIngredient.of(this.blockGetter.getOrThrow(tag)), quantity);
     }
     
     /**

@@ -52,6 +52,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShieldDecorationRecipe;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
 
@@ -61,10 +62,12 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public abstract class Recipes extends RecipeProvider {
+    protected final HolderGetter<Block> blocks;
     protected final HolderGetter<TrimPattern> trimPatterns;
 
     public Recipes(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);
+        this.blocks = registries.lookupOrThrow(Registries.BLOCK);
         this.trimPatterns = registries.lookupOrThrow(Registries.TRIM_PATTERN);
     }
 
@@ -89,15 +92,15 @@ public abstract class Recipes extends RecipeProvider {
     }
     
     protected RitualRecipeBuilder ritual(ItemLike result) {
-        return RitualRecipeBuilder.ritualRecipe(this.items, result);
+        return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, result);
     }
     
     protected RitualRecipeBuilder ritual(ItemLike result, int count) {
-        return RitualRecipeBuilder.ritualRecipe(this.items, result, count);
+        return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, result, count);
     }
     
     protected RitualRecipeBuilder ritual(ItemStack result) {
-        return RitualRecipeBuilder.ritualRecipe(this.items, result);
+        return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, result);
     }
     
     @Override

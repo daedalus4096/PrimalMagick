@@ -1,26 +1,24 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.util.CodecUtils;
-import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.Identifier;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.HolderSetCodec;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -31,146 +29,73 @@ import java.util.stream.Stream;
  * @author Daedalus4096
  * @see net.minecraft.world.item.crafting.Ingredient
  */
-public class BlockIngredient implements Predicate<Block> {
-    public static final BlockIngredient EMPTY = new BlockIngredient(Stream.empty());
-    
-    public static final Codec<BlockIngredient> CODEC = codec(true);
-    public static final Codec<BlockIngredient> CODEC_NONEMPTY = codec(false);
-    public static final StreamCodec<RegistryFriendlyByteBuf, BlockIngredient> CONTENTS_STREAM_CODEC = StreamCodec.of(BlockIngredient::toNetwork, BlockIngredient::fromNetwork);
-    
-    protected final BlockIngredient.Value[] acceptedBlocks;
-    protected Block[] matchingBlocks = null;
-    
-    protected BlockIngredient(Stream<? extends BlockIngredient.Value> blockLists) {
-        this.acceptedBlocks = blockLists.toArray(Value[]::new);
+public class BlockIngredient implements Predicate<BlockState>, StackedContents.IngredientInfo<Holder<Block>> {
+    public static final BlockIngredient EMPTY = BlockIngredient.of(Stream.empty());
+
+    public static final Codec<HolderSet<Block>> NON_AIR_HOLDER_SET_CODEC = HolderSetCodec.create(
+            Registries.BLOCK,
+            BuiltInRegistries.BLOCK.holderByNameCodec().validate(block -> block.is(Blocks.AIR.builtInRegistryHolder()) ? DataResult.error(() -> "Block must not be minecraft:air") : DataResult.success(block)),
+            false);
+    public static final Codec<BlockIngredient> CODE = ExtraCodecs.nonEmptyHolderSet(NON_AIR_HOLDER_SET_CODEC).xmap(BlockIngredient::new, i -> i.values);
+    public static final StreamCodec<RegistryFriendlyByteBuf, BlockIngredient> CONTENTS_STREAM_CODEC =
+            ByteBufCodecs.holderSet(Registries.BLOCK).map(BlockIngredient::new, i -> i.values);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Optional<BlockIngredient>> OPTIONAL_CONTENTS_STREAM_CODEC =
+            ByteBufCodecs.holderSet(Registries.BLOCK).map(
+                    holderSet -> holderSet.size() == 0 ? Optional.empty() : Optional.of(new BlockIngredient(holderSet)),
+                    ingredientOpt -> ingredientOpt.map(i -> i.values).orElse(HolderSet.empty()));
+
+    private final HolderSet<Block> values;
+
+    private BlockIngredient(HolderSet<Block> values) {
+        values.unwrap().ifRight(directValues -> {
+            if (directValues.isEmpty()) {
+                throw new UnsupportedOperationException("Block ingredients can't be empty");
+            } else if (directValues.contains(Blocks.AIR.builtInRegistryHolder())) {
+                throw new UnsupportedOperationException("Block ingredient can't contain air");
+            }
+        });
+        this.values = values;
     }
-    
-    private BlockIngredient(BlockIngredient.Value[] values) {
-        this.acceptedBlocks = values;
+
+    public static boolean testOptionalIngredient(Optional<BlockIngredient> ingredient, BlockState blockState) {
+        Objects.requireNonNull(blockState);
+        return ingredient.map(val -> val.test(blockState)).orElse(false);
     }
-    
-    public Block[] getMatchingBlocks() {
-        this.determineMatchingBlocks();
-        return this.matchingBlocks;
+
+    public Stream<Holder<Block>> blocks() {
+        return this.values.stream();
     }
-    
-    protected void determineMatchingBlocks() {
-        if (this.matchingBlocks == null) {
-            this.matchingBlocks = Arrays.stream(this.acceptedBlocks).flatMap(blockList -> blockList.getBlocks().stream()).distinct().toArray(Block[]::new);
-        }
+
+    public boolean isEmpty() {
+        return this.values.size() == 0;
+    }
+
+    public boolean test(BlockState blockState) {
+        return this.values.contains(blockState.typeHolder());
     }
 
     @Override
-    public boolean test(@Nullable Block testBlock) {
-        if (testBlock != null) {
-            this.determineMatchingBlocks();
-            for (Block block : this.matchingBlocks) {
-                if (testBlock == block) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    public boolean acceptsItem(Holder<Block> blockHolder) {
+        return this.values.contains(blockHolder);
     }
-    
-    private static void toNetwork(RegistryFriendlyByteBuf buf, BlockIngredient ing) {
-        ing.determineMatchingBlocks();
-        buf.writeVarInt(ing.matchingBlocks.length);
-        for (int index = 0; index < ing.matchingBlocks.length; index++) {
-            Identifier identifier = Services.BLOCKS_REGISTRY.getKey(ing.matchingBlocks[index]);
-            if (identifier != null) {
-                buf.writeIdentifier(identifier);
-            }
-        }
-    }
-    
-    public boolean isEmpty() {
-        return this.acceptedBlocks.length == 0;
-     }
 
-    public boolean hasNoMatchingBlocks() {
-        return this.acceptedBlocks.length == 0 && (this.matchingBlocks == null || this.matchingBlocks.length == 0);
+    public boolean equals(Object other) {
+        return other instanceof BlockIngredient otherIngredient && Objects.equals(this.values, otherIngredient.values);
     }
-    
-    public Ingredient asIngredient() {
-        return Ingredient.of(Arrays.stream(this.acceptedBlocks).flatMap(ibl -> ibl.getBlocks().stream()).toArray(ItemLike[]::new));
+
+    public static BlockIngredient of(Block block) {
+        return new BlockIngredient(HolderSet.direct(block.builtInRegistryHolder()));
     }
-    
-    protected static BlockIngredient fromBlockListStream(Stream<? extends BlockIngredient.Value> stream) {
-        BlockIngredient ing = new BlockIngredient(stream);
-        return ing.acceptedBlocks.length == 0 ? EMPTY : ing;
+
+    public static BlockIngredient of(Block... blocks) {
+        return of(Arrays.stream(blocks));
     }
-    
-    public static BlockIngredient fromBlocks(Block... blocks) {
-        return fromBlockListStream(Arrays.stream(blocks).map(SingleBlockValue::new));
+
+    public static BlockIngredient of(Stream<? extends Block> stream) {
+        return new BlockIngredient(HolderSet.direct(stream.map(e -> e.builtInRegistryHolder()).toList()));
     }
-    
-    public static BlockIngredient fromTag(TagKey<Block> tag) {
-        return fromBlockListStream(Stream.of(new BlockIngredient.TagValue(tag)));
-    }
-    
-    private static BlockIngredient fromNetwork(RegistryFriendlyByteBuf buf) {
-        int size = buf.readVarInt();
-        return fromBlockListStream(Stream.generate(() -> {
-            Identifier loc = buf.readIdentifier();
-            return new BlockIngredient.SingleBlockValue(Services.BLOCKS_REGISTRY.get(loc));
-        }).limit(size));
-    }
-    
-    private static Codec<BlockIngredient> codec(boolean allowEmpty) {
-        Codec<BlockIngredient.Value[]> innerCodec = Codec.list(BlockIngredient.Value.CODEC).comapFlatMap(valueList -> {
-            return !allowEmpty && valueList.isEmpty() ?
-                    DataResult.error(() -> "Block array cannot be empty, at least one block must be defined") :
-                    DataResult.success(valueList.toArray(BlockIngredient.Value[]::new));
-        }, List::of);
-        return Codec.either(innerCodec, BlockIngredient.Value.CODEC).flatComapMap(either -> {
-            return either.map(BlockIngredient::new, val -> new BlockIngredient(new BlockIngredient.Value[] {val}));
-        }, ing -> {
-            if (ing.acceptedBlocks.length == 1) {
-                return DataResult.success(Either.right(ing.acceptedBlocks[0]));
-            } else {
-                return ing.acceptedBlocks.length == 0 && !allowEmpty ?
-                        DataResult.error(() -> "Block array cannot be empty, at least one block must be defined") :
-                        DataResult.success(Either.left(ing.acceptedBlocks));
-            }
-        });
-    }
-    
-    protected interface Value {
-        Codec<BlockIngredient.Value> CODEC = Codec.xor(BlockIngredient.SingleBlockValue.CODEC, BlockIngredient.TagValue.CODEC).xmap(either -> {
-            return either.map(l -> l, r -> r);
-        }, val -> {
-            if (val instanceof BlockIngredient.SingleBlockValue sbv) {
-                return Either.left(sbv);
-            } else if (val instanceof BlockIngredient.TagValue tv) {
-                return Either.right(tv);
-            } else {
-                throw new UnsupportedOperationException("This is neither a single block value nor a tag value");
-            }
-        });
-        
-        Collection<Block> getBlocks();
-    }
-    
-    protected record SingleBlockValue(Block block) implements BlockIngredient.Value {
-        protected static final Codec<BlockIngredient.SingleBlockValue> CODEC = RecordCodecBuilder.create(instance ->
-                instance.group(CodecUtils.BLOCK_NONAIR_CODEC.fieldOf("block").forGetter(sbl -> sbl.block)).apply(instance, SingleBlockValue::new));
-        
-        @Override
-        public Collection<Block> getBlocks() {
-            return Collections.singleton(this.block);
-        }
-    }
-    
-    protected record TagValue(TagKey<Block> tag) implements BlockIngredient.Value {
-        protected static final Codec<BlockIngredient.TagValue> CODEC = RecordCodecBuilder.create(instance ->
-                instance.group(TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(tl -> tl.tag)).apply(instance, TagValue::new));
-        
-        @Override
-        public Collection<Block> getBlocks() {
-            List<Block> retVal = new ArrayList<>();
-            Services.BLOCKS_REGISTRY.getTag(this.tag).ifPresent(tag -> tag.forEach(retVal::add));
-            return retVal;
-        }
+
+    public static BlockIngredient of(HolderSet<Block> tag) {
+        return new BlockIngredient(tag);
     }
 }
