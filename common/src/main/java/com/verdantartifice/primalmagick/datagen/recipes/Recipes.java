@@ -808,7 +808,30 @@ public abstract class Recipes extends RecipeProvider {
                         this.tag(ItemTagsPM.WRITING_IMPLEMENTS),
                         new ItemStackTemplate(Items.WRITABLE_BOOK))
         ).save(this.output, WritableBookCraftingRecipe.RECIPE_KEY);
-        SpecialRecipeBuilder.special(AttuneManaOrbRecipe::new).save(this.output, AttuneManaOrbRecipe.RECIPE_KEY);
+        SpecialRecipeBuilder.special(
+                () -> new AttuneManaOrbRecipe(
+                        Ingredient.of(ItemsPM.MANA_ORB_APPRENTICE.get()),
+                        this.tag(ItemTagsPM.ESSENCES_DUSTS),
+                        new ItemStackTemplate(ItemsPM.MANA_ORB_APPRENTICE.get()))
+        ).save(this.output, AttuneManaOrbRecipe.RECIPE_KEY_APPRENTICE);
+        SpecialRecipeBuilder.special(
+                () -> new AttuneManaOrbRecipe(
+                        Ingredient.of(ItemsPM.MANA_ORB_ADEPT.get()),
+                        this.tag(ItemTagsPM.ESSENCES_DUSTS),
+                        new ItemStackTemplate(ItemsPM.MANA_ORB_ADEPT.get()))
+        ).save(this.output, AttuneManaOrbRecipe.RECIPE_KEY_ADEPT);
+        SpecialRecipeBuilder.special(
+                () -> new AttuneManaOrbRecipe(
+                        Ingredient.of(ItemsPM.MANA_ORB_WIZARD.get()),
+                        this.tag(ItemTagsPM.ESSENCES_DUSTS),
+                        new ItemStackTemplate(ItemsPM.MANA_ORB_WIZARD.get()))
+        ).save(this.output, AttuneManaOrbRecipe.RECIPE_KEY_WIZARD);
+        SpecialRecipeBuilder.special(
+                () -> new AttuneManaOrbRecipe(
+                        Ingredient.of(ItemsPM.MANA_ORB_ARCHMAGE.get()),
+                        this.tag(ItemTagsPM.ESSENCES_DUSTS),
+                        new ItemStackTemplate(ItemsPM.MANA_ORB_ARCHMAGE.get()))
+        ).save(this.output, AttuneManaOrbRecipe.RECIPE_KEY_ARCHMAGE);
     }
 
     protected void registerMarbleRecipes() {
