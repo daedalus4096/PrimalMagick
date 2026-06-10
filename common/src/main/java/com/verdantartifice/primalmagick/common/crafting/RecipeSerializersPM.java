@@ -35,9 +35,9 @@ public class RecipeSerializersPM {
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WandGlamourRecipe>> WAND_GLAMOUR_SPECIAL = register("wand_glamour_special", () -> WandGlamourRecipe.SERIALIZER);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WardingModuleApplicationRecipe>> WARDING_MODULE_APPLICATION = register("warding_module_application", () -> WardingModuleApplicationRecipe.SERIALIZER);
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<StaticBookCloningRecipe>> STATIC_BOOK_CLONING = register("static_book_cloning", () -> StaticBookCloningRecipe.SERIALIZER);
+    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WritableBookCraftingRecipe>> WRITABLE_BOOK_CRAFTING = register("writable_book_crafting", () -> WritableBookCraftingRecipe.SERIALIZER);
 
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<RitualRecipe>> RITUAL = register("ritual", RitualRecipe.Serializer::new);
-    public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<WritableBookCraftingRecipe>> WRITABLE_BOOK_CRAFTING = register("writable_book_crafting", () -> new CustomRecipe.Serializer<>(WritableBookCraftingRecipe::new));
     public static final IRegistryItem<RecipeSerializer<?>, RecipeSerializer<AttuneManaOrbRecipe>> ATTUNE_MANA_ORB = register("attune_mana_orb_special", () -> new CustomRecipe.Serializer<>(AttuneManaOrbRecipe::new));
 
     private static <T extends Recipe<?>, S extends RecipeSerializer<T>> IRegistryItem<RecipeSerializer<?>, S> register(String name, Supplier<S> supplier) {

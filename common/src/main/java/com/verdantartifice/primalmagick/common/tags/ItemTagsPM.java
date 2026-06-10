@@ -44,6 +44,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> SUNWOOD_LOGS = tag("sunwood_logs");
     public static final TagKey<Item> SURFACE_STONE = tag("surface_stone");
     public static final TagKey<Item> TREEFOLK_LOVED = tag("treefolk_loved");
+    public static final TagKey<Item> WRITING_IMPLEMENTS = tag("writing_implements");
 
     public static final TagKey<Item> CASTER_CORES = tag("caster_cores");
     public static final TagKey<Item> CASTER_CORES_WAND = tag("caster_cores/wand");
