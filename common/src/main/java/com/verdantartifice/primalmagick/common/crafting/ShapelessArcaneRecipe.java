@@ -86,6 +86,7 @@ public class ShapelessArcaneRecipe extends NormalArcaneCraftingRecipe {
         return PlacementInfo.create(this.ingredients);
     }
 
+    @Override
     public boolean matches(@NotNull CraftingInput input, @NotNull Level level) {
         if (input.ingredientCount() != this.ingredients.size()) {
             return false;
@@ -96,11 +97,13 @@ public class ShapelessArcaneRecipe extends NormalArcaneCraftingRecipe {
         }
     }
 
+    @Override
     @NotNull
     public ItemStack assemble(@NotNull CraftingInput input) {
         return this.result.create();
     }
 
+    @Override
     @NotNull
     public List<RecipeDisplay> display() {
         return List.of(
