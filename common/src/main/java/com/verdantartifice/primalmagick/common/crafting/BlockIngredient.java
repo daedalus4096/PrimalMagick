@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -36,7 +37,7 @@ public class BlockIngredient implements Predicate<BlockState>, StackedContents.I
             Registries.BLOCK,
             BuiltInRegistries.BLOCK.holderByNameCodec().validate(block -> block.is(Blocks.AIR.builtInRegistryHolder()) ? DataResult.error(() -> "Block must not be minecraft:air") : DataResult.success(block)),
             false);
-    public static final Codec<BlockIngredient> CODE = ExtraCodecs.nonEmptyHolderSet(NON_AIR_HOLDER_SET_CODEC).xmap(BlockIngredient::new, i -> i.values);
+    public static final Codec<BlockIngredient> CODEC = ExtraCodecs.nonEmptyHolderSet(NON_AIR_HOLDER_SET_CODEC).xmap(BlockIngredient::new, i -> i.values);
     public static final StreamCodec<RegistryFriendlyByteBuf, BlockIngredient> CONTENTS_STREAM_CODEC =
             ByteBufCodecs.holderSet(Registries.BLOCK).map(BlockIngredient::new, i -> i.values);
     public static final StreamCodec<RegistryFriendlyByteBuf, Optional<BlockIngredient>> OPTIONAL_CONTENTS_STREAM_CODEC =
@@ -75,7 +76,7 @@ public class BlockIngredient implements Predicate<BlockState>, StackedContents.I
     }
 
     @Override
-    public boolean acceptsItem(Holder<Block> blockHolder) {
+    public boolean acceptsItem(@NotNull Holder<Block> blockHolder) {
         return this.values.contains(blockHolder);
     }
 
