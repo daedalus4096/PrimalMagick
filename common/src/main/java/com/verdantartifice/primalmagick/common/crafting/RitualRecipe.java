@@ -1,57 +1,98 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.crafting.display.RitualRecipeDisplay;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.core.NonNullList;
+import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
+import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
  * Definition for a ritual recipe.
  * 
  * @author Daedalus4096
  */
-public class RitualRecipe extends AbstractStackCraftingRecipe<CraftingInput> implements IShapelessRecipePM<CraftingInput>, IRitualRecipe {
-    public static final int MIN_INSTABILITY = 0;
-    public static final int MAX_INSTABILITY = 10;
-    
+public class RitualRecipe implements IRitualRecipe {
+    public static final MinMaxBounds.Ints ALLOWED_INSTABILITY_RANGE = MinMaxBounds.Ints.between(0, 10);
+
+    public static final MapCodec<RitualRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Recipe.CommonInfo.MAP_CODEC.forGetter(o -> o.commonInfo),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(o -> o.result),
+            Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(o -> o.ingredients),
+            BlockIngredient.CODEC.listOf().fieldOf("props").forGetter(o -> o.props),
+            AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(o -> o.requirement),
+            Codec.INT.fieldOf("instability").forGetter(o -> o.instability),
+            SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(o -> o.manaCosts),
+            Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(o -> o.baseExpertiseOverride),
+            Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(o -> o.bonusExpertiseOverride),
+            Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(o -> o.expertiseGroup),
+            ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(o -> o.disciplineOverride)
+        ).apply(instance, RitualRecipe::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, RitualRecipe> STREAM_CODEC = StreamCodecUtils.composite(
+            Recipe.CommonInfo.STREAM_CODEC, o -> o.commonInfo,
+            ItemStackTemplate.STREAM_CODEC, o -> o.result,
+            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), o -> o.ingredients,
+            BlockIngredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), o -> o.props,
+            ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), o -> o.requirement,
+            ByteBufCodecs.VAR_INT, o -> o.instability,
+            SourceList.STREAM_CODEC, o -> o.manaCosts,
+            ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), o -> o.baseExpertiseOverride,
+            ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), o -> o.bonusExpertiseOverride,
+            ByteBufCodecs.optional(Identifier.STREAM_CODEC), o -> o.expertiseGroup,
+            ByteBufCodecs.optional(ResearchDisciplineKey.STREAM_CODEC), o -> o.disciplineOverride,
+            RitualRecipe::new);
+    public static final RecipeSerializer<RitualRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
+    protected final Recipe.CommonInfo commonInfo;
+    protected final ItemStackTemplate result;
+    protected final List<Ingredient> ingredients;
+    protected final List<BlockIngredient> props;
     protected final Optional<AbstractRequirement<?>> requirement;
-    protected final SourceList manaCosts;
     protected final int instability;
-    protected final NonNullList<Ingredient> recipeItems;
-    protected final NonNullList<BlockIngredient> recipeProps;
-    protected final boolean isSimple;
+    protected final SourceList manaCosts;
     protected final Optional<Integer> baseExpertiseOverride;
     protected final Optional<Integer> bonusExpertiseOverride;
     protected final Optional<Identifier> expertiseGroup;
     protected final Optional<ResearchDisciplineKey> disciplineOverride;
+    @Nullable private PlacementInfo placementInfo;
 
-    public RitualRecipe(String group, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts, int instability,
-            Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride, Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
-        super(group, output);
+    public RitualRecipe(Recipe.CommonInfo commonInfo, ItemStackTemplate result, List<Ingredient> ingredients,
+                        List<BlockIngredient> props, Optional<AbstractRequirement<?>> requirement, int instability,
+                        SourceList manaCosts, Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride,
+                        Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
+        this.commonInfo = commonInfo;
+        this.result = result;
+        this.ingredients = ingredients;
+        this.props = props;
         this.requirement = requirement;
-        this.manaCosts = manaCosts;
         this.instability = instability;
-        this.recipeItems = items;
-        this.recipeProps = props;
-        this.isSimple = items.stream().allMatch(Services.INGREDIENTS::isSimple);
+        this.manaCosts = manaCosts;
         this.baseExpertiseOverride = baseExpertiseOverride;
         this.bonusExpertiseOverride = bonusExpertiseOverride;
         this.expertiseGroup = expertiseGroup;
@@ -59,22 +100,77 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<CraftingInput> imp
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        // Ritual recipes aren't space-limited
-        return true;
+    public boolean matches(@NotNull CraftingInput input, @NotNull Level level) {
+        if (input.ingredientCount() != this.ingredients.size()) {
+            return false;
+        } else {
+            return input.size() == 1 && this.ingredients.size() == 1
+                    ? this.ingredients.getFirst().test(input.getItem(0))
+                    : input.stackedContents().canCraft(this, null);
+        }
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return this.recipeItems;
+    @NotNull
+    public ItemStack assemble(@NotNull CraftingInput input) {
+        return this.result.create();
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return RecipeSerializersPM.RITUAL.get();
+    public boolean showNotification() {
+        return this.commonInfo.showNotification();
     }
 
     @Override
+    @NotNull
+    public String group() {
+        // Ritual recipes don't show up in the recipe book
+        return "";
+    }
+
+    @Override
+    @NotNull
+    public RecipeSerializer<RitualRecipe> getSerializer() {
+        return SERIALIZER;
+    }
+
+    @NotNull
+    protected PlacementInfo createPlacementInfo() {
+        return PlacementInfo.create(this.ingredients);
+    }
+
+    @Override
+    @NotNull
+    public PlacementInfo placementInfo() {
+        if (this.placementInfo == null) {
+            this.placementInfo = this.createPlacementInfo();
+        }
+        return this.placementInfo;
+    }
+
+    @Override
+    @NotNull
+    public List<RecipeDisplay> display() {
+        return List.of(
+                new RitualRecipeDisplay(
+                        this.ingredients.stream().map(Ingredient::display).toList(),
+                        this.props.stream().map(BlockIngredient::display).toList(),
+                        new SlotDisplay.ItemStackSlotDisplay(this.result),
+                        this.manaCosts,
+                        this.requirement,
+                        new SlotDisplay.ItemSlotDisplay(ItemsPM.RITUAL_ALTAR.get())
+                )
+        );
+    }
+
+    @Override
+    @NotNull
+    public RecipeBookCategory recipeBookCategory() {
+        // FIXME Tie into datapacked recipe book category system
+    }
+
+    @Override
+    @NotNull
     public Optional<AbstractRequirement<?>> getRequirement() {
         return this.requirement;
     }
@@ -85,8 +181,13 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<CraftingInput> imp
     }
 
     @Override
-    public NonNullList<BlockIngredient> getProps() {
-        return this.recipeProps;
+    public List<Ingredient> getIngredients() {
+        return this.ingredients;
+    }
+
+    @Override
+    public List<BlockIngredient> getProps() {
+        return this.props;
     }
     
     @Override
@@ -95,122 +196,24 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<CraftingInput> imp
     }
     
     @Override
-    public boolean isSimple() {
-        return this.isSimple;
-    }
-
-    @Override
     public int getExpertiseReward(RegistryAccess registryAccess) {
-        return this.baseExpertiseOverride.orElseGet(() -> {
-            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultExpertise()).orElse(0);
-        });
+        return this.baseExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultExpertise).orElse(0));
     }
 
     @Override
     public int getBonusExpertiseReward(RegistryAccess registryAccess) {
-        return this.bonusExpertiseOverride.orElseGet(() -> {
-            return this.getResearchTier(registryAccess).map(tier -> tier.getDefaultBonusExpertise()).orElse(0);
-        });
+        return this.bonusExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultBonusExpertise).orElse(0));
     }
 
     @Override
+    @NotNull
     public Optional<Identifier> getExpertiseGroup() {
         return this.expertiseGroup;
     }
 
     @Override
+    @NotNull
     public Optional<ResearchDisciplineKey> getResearchDisciplineOverride() {
         return this.disciplineOverride;
-    }
-
-    public static class Serializer implements RecipeSerializer<RitualRecipe> {
-        @Override
-        public MapCodec<RitualRecipe> codec() {
-            return RecordCodecBuilder.mapCodec(instance -> instance.group(
-                    Codec.STRING.optionalFieldOf("group", "").forGetter(rr -> rr.group),
-                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
-                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
-                        Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
-                        if (ingArray.length == 0) {
-                            return DataResult.error(() -> "No offerings for ritual recipe");
-                        } else {
-                            return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
-                        }
-                    }, DataResult::success).forGetter(rr -> rr.recipeItems),
-                    BlockIngredient.CODEC_NONEMPTY.listOf().fieldOf("props").flatXmap(ingredients -> {
-                        BlockIngredient[] ingArray = ingredients.stream().filter(Predicate.not(BlockIngredient::isEmpty)).toArray(BlockIngredient[]::new);
-                        if (ingArray.length == 0) {
-                            return DataResult.error(() -> "No props for ritual recipe");
-                        } else {
-                            return DataResult.success(NonNullList.of(BlockIngredient.EMPTY, ingArray));
-                        }
-                    }, DataResult::success).forGetter(rr -> rr.recipeProps),
-                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rr -> rr.requirement),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rr -> rr.manaCosts),
-                    ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability),
-                    Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
-                    Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
-                    Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
-                    ResearchDisciplineKey.CODEC.codec().optionalFieldOf("disciplineOverride").forGetter(r -> r.disciplineOverride)
-                ).apply(instance, RitualRecipe::new)
-            );
-        }
-        
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, RitualRecipe> streamCodec() {
-            return StreamCodec.of(RitualRecipe.Serializer::toNetwork, RitualRecipe.Serializer::fromNetwork);
-        }
-
-        private static RitualRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-            String group = buffer.readUtf(32767);
-            Optional<AbstractRequirement<?>> requirement = buffer.readBoolean() ? Optional.ofNullable(AbstractRequirement.dispatchStreamCodec().decode(buffer)) : Optional.empty();
-            int instability = buffer.readVarInt();
-            
-            SourceList manaCosts = SourceList.fromNetwork(buffer);
-            
-            int ingredientCount = buffer.readVarInt();
-            NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
-            ingredients.replaceAll(ing -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
-            
-            int propCount = buffer.readVarInt();
-            NonNullList<BlockIngredient> props = NonNullList.withSize(propCount, BlockIngredient.EMPTY);
-            props.replaceAll(prop -> BlockIngredient.CONTENTS_STREAM_CODEC.decode(buffer));
-            
-            Optional<Integer> baseExpOverride = buffer.readOptional(b -> b.readVarInt());
-            Optional<Integer> bonusExpOverride = buffer.readOptional(b -> b.readVarInt());
-            Optional<Identifier> expGroup = buffer.readOptional(b -> b.readResourceLocation());
-            Optional<ResearchDisciplineKey> discOverride = buffer.readOptional(ResearchDisciplineKey.STREAM_CODEC);
-            
-            ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
-            return new RitualRecipe(group, result, ingredients, props, requirement, manaCosts, instability, baseExpOverride, bonusExpOverride, expGroup, discOverride);
-        }
-
-        private static void toNetwork(RegistryFriendlyByteBuf buffer, RitualRecipe recipe) {
-            buffer.writeUtf(recipe.group);
-            recipe.requirement.ifPresentOrElse(req -> {
-                buffer.writeBoolean(true);
-                AbstractRequirement.dispatchStreamCodec().encode(buffer, req);
-            }, () -> {
-                buffer.writeBoolean(false);
-            });
-            buffer.writeVarInt(recipe.instability);
-            SourceList.toNetwork(buffer, recipe.manaCosts);
-            
-            buffer.writeVarInt(recipe.recipeItems.size());
-            for (Ingredient ingredient : recipe.recipeItems) {
-                Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
-            }
-            
-            buffer.writeVarInt(recipe.recipeProps.size());
-            for (BlockIngredient prop : recipe.recipeProps) {
-                BlockIngredient.CONTENTS_STREAM_CODEC.encode(buffer, prop);
-            }
-            
-            buffer.writeOptional(recipe.baseExpertiseOverride, (b, e) -> b.writeVarInt(e));
-            buffer.writeOptional(recipe.bonusExpertiseOverride, (b, e) -> b.writeVarInt(e));
-            buffer.writeOptional(recipe.expertiseGroup, (b, g) -> b.writeResourceLocation(g));
-            buffer.writeOptional(recipe.disciplineOverride, ResearchDisciplineKey.STREAM_CODEC);
-            ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
-        }
     }
 }

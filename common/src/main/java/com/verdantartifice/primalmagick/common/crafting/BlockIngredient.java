@@ -12,6 +12,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.HolderSetCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -93,10 +94,22 @@ public class BlockIngredient implements Predicate<BlockState>, StackedContents.I
     }
 
     public static BlockIngredient of(Stream<? extends Block> stream) {
-        return new BlockIngredient(HolderSet.direct(stream.map(e -> e.builtInRegistryHolder()).toList()));
+        return new BlockIngredient(HolderSet.direct(stream.map(Block::builtInRegistryHolder).toList()));
     }
 
     public static BlockIngredient of(HolderSet<Block> tag) {
         return new BlockIngredient(tag);
+    }
+
+    public SlotDisplay display() {
+        return new SlotDisplay.Composite(this.values.stream().map(BlockIngredient::displayForSingleItem).toList());
+    }
+
+    public static SlotDisplay optionalIngredientToDisplay(Optional<BlockIngredient> ingredient) {
+        return ingredient.map(BlockIngredient::display).orElse(SlotDisplay.Empty.INSTANCE);
+    }
+
+    private static SlotDisplay displayForSingleItem(Holder<Block> block) {
+        return new SlotDisplay.ItemSlotDisplay(block.value().asItem().builtInRegistryHolder());
     }
 }

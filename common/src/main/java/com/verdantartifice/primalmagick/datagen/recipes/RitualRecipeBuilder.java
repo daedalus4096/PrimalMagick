@@ -365,7 +365,7 @@ public class RitualRecipeBuilder {
         if (this.requirements.isEmpty()) {
             throw new IllegalStateException("No requirement is defined for ritual recipe " + id + "!");
         }
-        if (this.instability < RitualRecipe.MIN_INSTABILITY || this.instability > RitualRecipe.MAX_INSTABILITY) {
+        if (!RitualRecipe.ALLOWED_INSTABILITY_RANGE.matches(this.instability)) {
             throw new IllegalStateException("Instability out of bounds for ritual recipe " + id + "!");
         }
     }
