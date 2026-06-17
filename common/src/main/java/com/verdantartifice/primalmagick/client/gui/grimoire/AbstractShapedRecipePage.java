@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.SlotDisplayWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.util.List;
@@ -19,9 +18,9 @@ import java.util.List;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractShapedRecipePage extends AbstractRecipePage {
-    public AbstractShapedRecipePage(SlotDisplay craftingStationSlotDisplay, RegistryAccess registryAccess) {
-        super(craftingStationSlotDisplay, registryAccess);
+public abstract class AbstractShapedRecipePage<T extends RecipeDisplay> extends AbstractRecipePage<T> {
+    public AbstractShapedRecipePage(T display) {
+        super(display);
     }
 
     protected abstract int getRecipeWidth();
@@ -42,12 +41,12 @@ public abstract class AbstractShapedRecipePage extends AbstractRecipePage {
         // Render ingredient stacks
         int recipeWidth = this.getRecipeWidth();
         int recipeHeight = this.getRecipeHeight();
-        List<Ingredient> ingredients = this.getRecipeIngredients();
+        List<SlotDisplay> ingredients = this.getRecipeIngredients();
         for (int i = 0; i < Math.min(recipeWidth, 3); i++) {
             for (int j = 0; j < Math.min(recipeHeight, 3); j++) {
-                Ingredient ingredient = ingredients.get(i + j * recipeWidth);
-                if (ingredient != null) {
-                    screen.addWidgetToScreen(new IngredientWidget(ingredient, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + (i * 32), y + 67 + (j * 32), screen));
+                SlotDisplay ingDisplay = ingredients.get(i + j * recipeWidth);
+                if (ingDisplay != null) {
+                    screen.addWidgetToScreen(new SlotDisplayWidget(ingDisplay, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + (i * 32), y + 67 + (j * 32), screen));
                 }
             }
         }
@@ -57,7 +56,7 @@ public abstract class AbstractShapedRecipePage extends AbstractRecipePage {
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget
-        screen.addWidgetToScreen(new RecipeTypeWidget(this.craftingStationSlotDisplay, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.display.craftingStation(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
     }
     
     @Override
