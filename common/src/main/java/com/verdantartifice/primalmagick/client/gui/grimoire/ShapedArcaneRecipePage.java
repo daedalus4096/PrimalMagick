@@ -3,13 +3,9 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeExpertiseWidget;
-import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapedArcaneCraftingRecipeDisplay;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.ShapedCraftingRecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.util.List;
@@ -20,7 +16,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class ShapedArcaneRecipePage extends AbstractShapedRecipePage<ShapedArcaneCraftingRecipeDisplay> {
-    ResourceKey<Recipe<?>> recipeKey;
+    protected final ResourceKey<Recipe<?>> recipeKey;
 
     public ShapedArcaneRecipePage(ShapedArcaneCraftingRecipeDisplay display, ResourceKey<Recipe<?>> recipeKey) {
         super(display);
