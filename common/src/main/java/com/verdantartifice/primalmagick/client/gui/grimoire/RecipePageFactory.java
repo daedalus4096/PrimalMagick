@@ -6,11 +6,14 @@ import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IShapelessArcaneRecipePM;
 import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.display.ShapedArcaneCraftingRecipeDisplay;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 
 import javax.annotation.Nonnull;
 
@@ -23,7 +26,9 @@ public class RecipePageFactory {
     @SuppressWarnings("unchecked")
     @Nonnull
     public static AbstractRecipePage createPage(@Nonnull RecipeHolder<?> recipeHolder, RegistryAccess registryAccess) {
+        ResourceKey<Recipe<?>> recipeKey = recipeHolder.id();
         Recipe<?> recipe = recipeHolder.value();
+        RecipeDisplay display = recipe.display().getFirst();
         if (recipe instanceof SmeltingRecipe) {
             return new SmeltingRecipePage((RecipeHolder<SmeltingRecipe>)recipeHolder, registryAccess);
         } else if (recipe instanceof IRitualRecipe) {
@@ -34,8 +39,8 @@ public class RecipePageFactory {
             return new ConcoctingRecipePage((RecipeHolder<IConcoctingRecipe>)recipeHolder, registryAccess);
         } else if (recipe instanceof IDissolutionRecipe) {
             return new DissolutionRecipePage((RecipeHolder<IDissolutionRecipe>)recipeHolder, registryAccess);
-        } else if (recipe instanceof ShapedArcaneRecipe) {
-            return new ShapedArcaneRecipePage((RecipeHolder<ShapedArcaneRecipe>)recipeHolder, registryAccess);
+        } else if (display instanceof ShapedArcaneCraftingRecipeDisplay shapedArcaneDisplay) {
+            return new ShapedArcaneRecipePage(shapedArcaneDisplay, recipeKey);
         } else if (recipe instanceof IShapelessArcaneRecipePM) {
             return new ShapelessArcaneRecipePage((RecipeHolder<IShapelessArcaneRecipePM>)recipeHolder, registryAccess);
         } else if (recipe instanceof ShapedRecipe) {

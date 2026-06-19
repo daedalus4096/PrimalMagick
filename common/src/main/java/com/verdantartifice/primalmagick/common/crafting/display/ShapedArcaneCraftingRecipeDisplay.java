@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public record ShapedArcaneCraftingRecipeDisplay(int width, int height, List<SlotDisplay> ingredients, SlotDisplay result,
                                                 SourceList manaCosts, Optional<AbstractRequirement<?>> requirement,
-                                                SlotDisplay craftingStation) implements RecipeDisplay {
+                                                ExpertiseRecipeDisplay expertise, SlotDisplay craftingStation) implements RecipeDisplay {
     public static final MapCodec<ShapedArcaneCraftingRecipeDisplay> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("width").forGetter(ShapedArcaneCraftingRecipeDisplay::width),
             Codec.INT.fieldOf("height").forGetter(ShapedArcaneCraftingRecipeDisplay::height),
@@ -25,6 +25,7 @@ public record ShapedArcaneCraftingRecipeDisplay(int width, int height, List<Slot
             SlotDisplay.CODEC.fieldOf("result").forGetter(ShapedArcaneCraftingRecipeDisplay::result),
             SourceList.CODEC.fieldOf("manaCosts").forGetter(ShapedArcaneCraftingRecipeDisplay::manaCosts),
             AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ShapedArcaneCraftingRecipeDisplay::requirement),
+            ExpertiseRecipeDisplay.CODEC.fieldOf("expertise").forGetter(ShapedArcaneCraftingRecipeDisplay::expertise),
             SlotDisplay.CODEC.fieldOf("craftingStation").forGetter(ShapedArcaneCraftingRecipeDisplay::craftingStation)
     ).apply(instance, ShapedArcaneCraftingRecipeDisplay::new));
 
@@ -35,6 +36,7 @@ public record ShapedArcaneCraftingRecipeDisplay(int width, int height, List<Slot
             SlotDisplay.STREAM_CODEC, ShapedArcaneCraftingRecipeDisplay::result,
             SourceList.STREAM_CODEC, ShapedArcaneCraftingRecipeDisplay::manaCosts,
             ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), ShapedArcaneCraftingRecipeDisplay::requirement,
+            ExpertiseRecipeDisplay.STREAM_CODEC, ShapedArcaneCraftingRecipeDisplay::expertise,
             SlotDisplay.STREAM_CODEC, ShapedArcaneCraftingRecipeDisplay::craftingStation,
             ShapedArcaneCraftingRecipeDisplay::new
     );

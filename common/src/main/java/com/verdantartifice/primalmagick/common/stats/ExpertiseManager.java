@@ -17,6 +17,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -153,15 +155,19 @@ public class ExpertiseManager {
             });
         }
     }
-    
+
     public static boolean isBonusEligible(Player player, RecipeHolder<?> recipeHolder) {
         if (player != null && recipeHolder != null && recipeHolder.value() instanceof IHasExpertise expRecipe) {
-            return Services.CAPABILITIES.stats(player).map(stats ->
-                    !stats.isRecipeCrafted(recipeHolder.id()) &&
-                    (expRecipe.getExpertiseGroup().isEmpty() || !stats.isRecipeGroupCrafted(expRecipe.getExpertiseGroup().get()))
-            ).orElse(false);
+            return isBonusEligible(player, expRecipe.getExpertiseGroup(), recipeHolder.id());
         }
         return false;
+    }
+    
+    public static boolean isBonusEligible(@NotNull Player player, @NotNull Optional<Identifier> recipeGroupOpt, @NotNull ResourceKey<Recipe<?>> recipeKey) {
+        return Services.CAPABILITIES.stats(player).map(stats ->
+                !stats.isRecipeCrafted(recipeKey) &&
+                        (recipeGroupOpt.isEmpty() || !stats.isRecipeGroupCrafted(recipeGroupOpt.get()))
+        ).orElse(false);
     }
     
     protected static void markCrafted(Player player, RecipeHolder<?> recipeHolder) {

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
+import com.verdantartifice.primalmagick.common.crafting.display.ExpertiseRecipeDisplay;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.ChatFormatting;
@@ -15,38 +16,38 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Util;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.NotNull;
 
 public class RecipeExpertiseWidget extends AbstractWidget {
     protected static final Identifier ICON_LOC = ResourceUtils.loc("research/expertise_expert");
     
-    protected final RecipeHolder<?> recipeHolder;
-    
-    public RecipeExpertiseWidget(RecipeHolder<?> recipeHolder, int x, int y) {
+    public RecipeExpertiseWidget(@NotNull ExpertiseRecipeDisplay display, @NotNull ResourceKey<Recipe<?>> recipeKey, int x, int y) {
         super(x, y, 16, 16, Component.empty());
-        this.recipeHolder = recipeHolder;
-        this.setTooltip(Tooltip.create(makeTooltipComponent(recipeHolder)));
+        this.setTooltip(Tooltip.create(makeTooltipComponent(display, recipeKey)));
     }
     
-    protected static Component makeTooltipComponent(RecipeHolder<?> recipeHolder) {
+    protected static Component makeTooltipComponent(ExpertiseRecipeDisplay display, ResourceKey<Recipe<?>> recipeKey) {
         Minecraft mc = Minecraft.getInstance();
         MutableComponent retVal = Component.empty();
         
-        if (recipeHolder.value() instanceof IHasExpertise expRecipe && mc.level != null) {
+        if (mc.level != null) {
             // Render the expertise group description line, if applicable
-            expRecipe.getExpertiseGroupDescription().ifPresent(groupDesc -> {
+            display.groupOpt().map(loc -> Component.translatable(Util.makeDescriptionId("expertise_group", loc))).ifPresent(groupDesc -> {
                 retVal.append(Component.translatable("tooltip.primalmagick.expertise.group", groupDesc));
                 retVal.append(CommonComponents.NEW_LINE);
             });
             
             // Render the base expertise reward line
-            retVal.append(Component.translatable("tooltip.primalmagick.expertise.base", expRecipe.getExpertiseReward(mc.level.registryAccess())));
+            retVal.append(Component.translatable("tooltip.primalmagick.expertise.base", display.baseValue()));
             retVal.append(CommonComponents.NEW_LINE);
             
             // Render the bonus expertise reward line
-            MutableComponent bonusLine = Component.translatable("tooltip.primalmagick.expertise.bonus", expRecipe.getBonusExpertiseReward(mc.level.registryAccess()));
-            if (ExpertiseManager.isBonusEligible(mc.player, recipeHolder)) {
+            MutableComponent bonusLine = Component.translatable("tooltip.primalmagick.expertise.bonus", display.bonusValue());
+            if (display.isBonusEligible(mc.player, recipeKey)) {
                 retVal.append(bonusLine);
             } else {
                 retVal.append(bonusLine.withStyle(ChatFormatting.GRAY, ChatFormatting.STRIKETHROUGH));
