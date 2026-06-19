@@ -4,8 +4,8 @@ import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IShapelessArcaneRecipePM;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapedArcaneCraftingRecipeDisplay;
+import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneCraftingRecipeDisplay;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Recipe;
@@ -41,8 +41,8 @@ public class RecipePageFactory {
             return new DissolutionRecipePage((RecipeHolder<IDissolutionRecipe>)recipeHolder, registryAccess);
         } else if (display instanceof ShapedArcaneCraftingRecipeDisplay shapedArcaneDisplay) {
             return new ShapedArcaneRecipePage(shapedArcaneDisplay, recipeKey);
-        } else if (recipe instanceof IShapelessArcaneRecipePM) {
-            return new ShapelessArcaneRecipePage((RecipeHolder<IShapelessArcaneRecipePM>)recipeHolder, registryAccess);
+        } else if (display instanceof ShapelessArcaneCraftingRecipeDisplay shapelessArcaneDisplay) {
+            return new ShapelessArcaneRecipePage(shapelessArcaneDisplay, recipeKey);
         } else if (display instanceof ShapedCraftingRecipeDisplay shapedDisplay) {
             return new ShapedRecipePage(shapedDisplay);
         } else if (display instanceof ShapelessCraftingRecipeDisplay shapelessDisplay) {
