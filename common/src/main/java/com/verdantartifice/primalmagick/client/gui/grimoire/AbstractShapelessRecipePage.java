@@ -1,17 +1,15 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.SlotDisplayWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.util.List;
 
@@ -21,18 +19,15 @@ import java.util.List;
  * @author Daedalus4096
  * @param <T> type of recipe, e.g. ShapelessArcaneRecipe
  */
-public abstract class AbstractShapelessRecipePage<T extends Recipe<?>> extends AbstractRecipePage {
-    protected RecipeHolder<? extends T> recipe;
-    
-    public AbstractShapelessRecipePage(RecipeHolder<? extends T> recipe, RegistryAccess registryAccess) {
-        super(registryAccess);
-        this.recipe = recipe;
+public abstract class AbstractShapelessRecipePage<T extends RecipeDisplay> extends AbstractRecipePage<T> {
+    public AbstractShapelessRecipePage(T display) {
+        super(display);
     }
 
     @Override
     protected Component getTitleText() {
-        ItemStack stack = this.recipe.value().getResultItem(this.registryAccess);
-        return stack.getItem().getName(stack);
+        ItemStack result = this.getRecipeResult();
+        return result.getItem().getName(result);
     }
 
     @Override
@@ -41,20 +36,20 @@ public abstract class AbstractShapelessRecipePage<T extends Recipe<?>> extends A
         int overlayWidth = 51;
 
         // Render ingredient stacks
-        List<Ingredient> ingredients = this.recipe.value().getIngredients();
+        List<SlotDisplay> ingredients = this.getRecipeIngredients();
         for (int index = 0; index < Math.min(ingredients.size(), 9); index++) {
-            Ingredient ingredient = ingredients.get(index);
-            if (ingredient != null) {
-                screen.addWidgetToScreen(new IngredientWidget(ingredient, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + ((index % 3) * 32), y + 67 + ((index / 3) * 32), screen));
+            SlotDisplay ingDisplay = ingredients.get(index);
+            if (ingDisplay != null) {
+                screen.addWidgetToScreen(new SlotDisplayWidget(ingDisplay, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + ((index % 3) * 32), y + 67 + ((index / 3) * 32), screen));
             }
         }
         
         // Render output stack
-        ItemStack output = this.recipe.value().getResultItem(this.registryAccess);
+        ItemStack output = this.getRecipeResult();
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget
-        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe.value(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.display.craftingStation(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
     }
     
     @Override

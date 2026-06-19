@@ -5,15 +5,15 @@ import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IShapelessArcaneRecipePM;
-import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapedArcaneCraftingRecipeDisplay;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapedCraftingRecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
 
 import javax.annotation.Nonnull;
 
@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 public class RecipePageFactory {
     @SuppressWarnings("unchecked")
     @Nonnull
-    public static AbstractRecipePage createPage(@Nonnull RecipeHolder<?> recipeHolder, RegistryAccess registryAccess) {
+    public static AbstractRecipePage<?> createPage(@Nonnull RecipeHolder<?> recipeHolder, RegistryAccess registryAccess) {
         ResourceKey<Recipe<?>> recipeKey = recipeHolder.id();
         Recipe<?> recipe = recipeHolder.value();
         RecipeDisplay display = recipe.display().getFirst();
@@ -43,10 +43,12 @@ public class RecipePageFactory {
             return new ShapedArcaneRecipePage(shapedArcaneDisplay, recipeKey);
         } else if (recipe instanceof IShapelessArcaneRecipePM) {
             return new ShapelessArcaneRecipePage((RecipeHolder<IShapelessArcaneRecipePM>)recipeHolder, registryAccess);
-        } else if (recipe instanceof ShapedRecipe) {
-            return new ShapedRecipePage((RecipeHolder<ShapedRecipe>)recipeHolder, registryAccess);
+        } else if (display instanceof ShapedCraftingRecipeDisplay shapedDisplay) {
+            return new ShapedRecipePage(shapedDisplay);
+        } else if (display instanceof ShapelessCraftingRecipeDisplay shapelessDisplay) {
+            return new ShapelessRecipePage(shapelessDisplay);
         } else {
-            return new ShapelessRecipePage(recipeHolder, registryAccess);
+            throw new IllegalArgumentException("Unexpected recipe type in RecipePageFactory");
         }
     }
 }
