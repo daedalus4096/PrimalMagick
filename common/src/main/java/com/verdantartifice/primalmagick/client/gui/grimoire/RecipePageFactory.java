@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.display.ConcoctingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapedArcaneCraftingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneCraftingRecipeDisplay;
 import net.minecraft.core.RegistryAccess;
@@ -35,8 +35,8 @@ public class RecipePageFactory {
             return new RitualRecipePage((RecipeHolder<IRitualRecipe>)recipeHolder, registryAccess);
         } else if (recipe instanceof IRunecarvingRecipe) {
             return new RunecarvingRecipePage((RecipeHolder<IRunecarvingRecipe>)recipeHolder, registryAccess);
-        } else if (recipe instanceof IConcoctingRecipe) {
-            return new ConcoctingRecipePage((RecipeHolder<IConcoctingRecipe>)recipeHolder, registryAccess);
+        } else if (display instanceof ConcoctingRecipeDisplay concoctingDisplay) {
+            return new ConcoctingRecipePage(concoctingDisplay);
         } else if (recipe instanceof IDissolutionRecipe) {
             return new DissolutionRecipePage((RecipeHolder<IDissolutionRecipe>)recipeHolder, registryAccess);
         } else if (display instanceof ShapedArcaneCraftingRecipeDisplay shapedArcaneDisplay) {
