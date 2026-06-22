@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
-import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.display.ConcoctingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.DissolutionRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.RunecarvingRecipeDisplay;
@@ -11,7 +10,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.display.FurnaceRecipeDisplay;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.ShapedCraftingRecipeDisplay;
 import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
@@ -30,8 +29,8 @@ public class RecipePageFactory {
         ResourceKey<Recipe<?>> recipeKey = recipeHolder.id();
         Recipe<?> recipe = recipeHolder.value();
         RecipeDisplay display = recipe.display().getFirst();
-        if (recipe instanceof SmeltingRecipe) {
-            return new SmeltingRecipePage((RecipeHolder<SmeltingRecipe>)recipeHolder, registryAccess);
+        if (display instanceof FurnaceRecipeDisplay furnaceDisplay) {
+            return new SmeltingRecipePage(furnaceDisplay);
         } else if (recipe instanceof IRitualRecipe) {
             return new RitualRecipePage((RecipeHolder<IRitualRecipe>)recipeHolder, registryAccess);
         } else if (display instanceof RunecarvingRecipeDisplay runecarvingDisplay) {

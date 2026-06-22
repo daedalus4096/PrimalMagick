@@ -1,34 +1,26 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.SlotDisplayWidget;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.display.FurnaceRecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+
+import java.util.List;
 
 /**
  * Grimoire page showing a smelting recipe.
  * 
  * @author Daedalus4096
  */
-public class SmeltingRecipePage extends AbstractRecipePage {
-    protected RecipeHolder<SmeltingRecipe> recipe;
-    
-    public SmeltingRecipePage(RecipeHolder<SmeltingRecipe> recipe, RegistryAccess registryAccess) {
-        super(registryAccess);
-        this.recipe = recipe;
-    }
-
-    @Override
-    protected Component getTitleText() {
-        ItemStack stack = this.recipe.value().getResultItem(this.registryAccess);
-        return stack.getItem().getName(stack);
+public class SmeltingRecipePage extends AbstractRecipePage<FurnaceRecipeDisplay> {
+    public SmeltingRecipePage(FurnaceRecipeDisplay display) {
+        super(display);
     }
 
     @Override
@@ -37,19 +29,24 @@ public class SmeltingRecipePage extends AbstractRecipePage {
     }
 
     @Override
+    protected List<SlotDisplay> getRecipeIngredients() {
+        return List.of(this.display.ingredient());
+    }
+
+    @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         int indent = 124;
         int overlayWidth = 51;
 
         // Render ingredient stacks
-        screen.addWidgetToScreen(new IngredientWidget(this.recipe.value().placementInfo().ingredients().getFirst(), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 14, screen));
+        screen.addWidgetToScreen(new SlotDisplayWidget(this.display.ingredient(), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 14, screen));
 
         // Render output stack
-        ItemStack output = this.recipe.value().getResultItem(this.registryAccess);
+        ItemStack output = this.getRecipeResult();
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget
-        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe.value(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.display.craftingStation(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
     }
 
     @Override
