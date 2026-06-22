@@ -1,11 +1,15 @@
 package com.verdantartifice.primalmagick.client.events;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.books.LexiconLoader;
 import com.verdantartifice.primalmagick.client.books.StyleGuideLoader;
 import com.verdantartifice.primalmagick.client.fx.particles.DripParticlePM;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticle;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -16,12 +20,15 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -74,9 +81,6 @@ public class ClientRegistrationEvents {
         reloadListenerConsumer.accept(ItemsPM.HEXIUM_TRIDENT.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_TRIDENT.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.FORBIDDEN_TRIDENT.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.PRIMALITE_SHIELD.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.HEXIUM_SHIELD.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_SHIELD.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLTOME_APPRENTICE.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLTOME_ADEPT.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLTOME_WIZARD.get().getCustomRendererSupplier().get());
@@ -105,5 +109,11 @@ public class ClientRegistrationEvents {
 
     public interface TooltipComponentRegistrar {
         <T extends TooltipComponent> void register(Class<T> type, Function<? super T, ? extends ClientTooltipComponent> factory);
+    }
+
+    public static void onRegisterSpecialModelRenderer(BiConsumer<Identifier, MapCodec<? extends SpecialModelRenderer.Unbaked<?>>> consumer) {
+        consumer.accept(ResourceUtils.loc("primalite_shield"), PrimaliteShieldSpecialRenderer.Unbaked.MAP_CODEC);
+        consumer.accept(ResourceUtils.loc("hexium_shield"), HexiumShieldSpecialRenderer.Unbaked.MAP_CODEC);
+        consumer.accept(ResourceUtils.loc("hallowsteel_shield"), HallowsteelShieldSpecialRenderer.Unbaked.MAP_CODEC);
     }
 }

@@ -3,10 +3,7 @@ package com.verdantartifice.primalmagick.datagen.atlas;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldISTER;
-import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseISTER;
-import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaInjectorTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaRelayTER;
@@ -104,12 +101,6 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, ManaInjectorTER.BOTTOM_FRAME_TEXTURE);
 
         // Add custom item stack renderer textures to the item atlas
-        this.addSingle(itemAtlas, PrimaliteShieldISTER.TEXTURE_SHIELD_BASE);
-        this.addSingle(itemAtlas, PrimaliteShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
-        this.addSingle(itemAtlas, HexiumShieldISTER.TEXTURE_SHIELD_BASE);
-        this.addSingle(itemAtlas, HexiumShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
-        this.addSingle(itemAtlas, HallowsteelShieldISTER.TEXTURE_SHIELD_BASE);
-        this.addSingle(itemAtlas, HallowsteelShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
         this.addSingle(itemAtlas, SacredShieldItem.TEXTURE);
         this.addSingle(itemAtlas, PixieHouseISTER.TEXTURE);
 

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
@@ -29,6 +29,6 @@ public class PrimaliteShieldItem extends AbstractTieredShieldItem implements IHa
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
-        return PrimaliteShieldISTER::new;
+        return PrimaliteShieldSpecialRenderer::new;
     }
 }

@@ -27,6 +27,7 @@ import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactori
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 /**
@@ -83,5 +84,10 @@ public class ClientRegistrationEventListeners {
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
         event.registerAbove(VanillaGuiLayers.HOTBAR, WandHudOverlay.ID, WandHudOverlay::render);
         event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, WardingHudOverlay.ID, WardingHudOverlay::render);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterSpecialModelRenderer(RegisterSpecialModelRendererEvent event) {
+        ClientRegistrationEvents.onRegisterSpecialModelRenderer(event::register);
     }
 }

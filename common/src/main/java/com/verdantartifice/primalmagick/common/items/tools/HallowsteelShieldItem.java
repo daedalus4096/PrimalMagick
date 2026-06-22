@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
@@ -29,6 +29,6 @@ public class HallowsteelShieldItem extends AbstractTieredShieldItem implements I
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
-        return HallowsteelShieldISTER::new;
+        return HallowsteelShieldSpecialRenderer::new;
     }
 }

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
@@ -29,6 +29,6 @@ public class HexiumShieldItem extends AbstractTieredShieldItem implements IHasCu
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
-        return HexiumShieldISTER::new;
+        return HexiumShieldSpecialRenderer::new;
     }
 }
