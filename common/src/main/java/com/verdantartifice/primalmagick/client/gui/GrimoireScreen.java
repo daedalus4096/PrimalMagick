@@ -78,6 +78,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -87,12 +89,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.Tuple;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
@@ -157,7 +163,7 @@ public class GrimoireScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractRenderState(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh
         long millis = System.currentTimeMillis();
         if ((this.isProgressing() || this.isRefreshing() || this.currentStageIndex > this.lastStageIndex) && millis > this.lastCheck) {
@@ -174,7 +180,7 @@ public class GrimoireScreen extends Screen {
             this.initButtons();
         }
         
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     public boolean isRefreshing() {
@@ -210,7 +216,9 @@ public class GrimoireScreen extends Screen {
         this.scaledTop = (int)(this.height - BG_HEIGHT * SCALE) / 2;
         Minecraft mc = Minecraft.getInstance();
         this.knowledge = Services.CAPABILITIES.knowledge(mc.player).orElseThrow(() -> new IllegalStateException("No knowledge provider found for player"));
-        this.minecraft.getConnection().send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
+        if (this.minecraft.getConnection() != null) {
+            this.minecraft.getConnection().send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
+        }
         this.generateIndexMap();
         this.setCurrentPage(this.knowledge.getLastResearchTopic().getPage());
         this.initPages();
@@ -222,43 +230,37 @@ public class GrimoireScreen extends Screen {
         // Parse grimoire pages based on the current topic
         this.pages.clear();
         AbstractResearchTopic<?> topic = this.knowledge.getLastResearchTopic();
-        if (topic instanceof MainIndexResearchTopic) {
-            this.parseIndexPages();
-        } else if (topic instanceof DisciplineResearchTopic discTopic) {
-            this.parseDisciplinePages(discTopic.getDiscipline());
-        } else if (topic instanceof EntryResearchTopic entryTopic) {
-            this.parseEntryPages(entryTopic.getEntry());
-        } else if (topic instanceof SourceResearchTopic sourceTopic) {
-            this.parseAttunementPage(sourceTopic.getSource());
-        } else if (topic instanceof EnchantmentResearchTopic enchTopic) {
-            this.parseRuneEnchantmentPage(enchTopic.getEnchantment());
-        } else if (topic instanceof LanguageResearchTopic langTopic) {
-            this.parseLinguisticsPage(langTopic.getLanguage());
-        } else if (topic instanceof AffinityResearchTopic affinityTopic) {
-            this.parseAffinityPage(affinityTopic.getSource());
-        } else if (topic instanceof OtherResearchTopic otherTopic) {
-            String data = otherTopic.getData();
-            if (this.isIndexKey(data)) {
-                this.parseRecipeEntryPages(data);
-            } else if (StatisticsPage.TOPIC.getData().equals(data)) {
-                this.parseStatsPages();
-            } else if (AttunementIndexPage.TOPIC.getData().equals(data)) {
-                this.parseAttunementIndexPages();
-            } else if (RuneEnchantmentIndexPage.TOPIC.getData().equals(data)) {
-                this.parseRuneEnchantmentIndexPages();
-            } else if (RecipeIndexPage.TOPIC.getData().equals(data)) {
-                this.parseRecipeIndexPages();
-            } else if (TipsPage.TOPIC.getData().equals(data)) {
-                this.parseTipsPages();
-            } else if (LinguisticsIndexPage.TOPIC.getData().equals(data)) {
-                this.parseLinguisticsIndexPages();
-            } else if (AffinityIndexPage.TOPIC.getData().equals(data)) {
-                this.parseAffinityIndexPages();
-            } else {
-                LOGGER.warn("Unexpected OtherResearchTopic data {}", data);
+        switch (topic) {
+            case MainIndexResearchTopic _ -> this.parseIndexPages();
+            case DisciplineResearchTopic discTopic -> this.parseDisciplinePages(discTopic.getDiscipline());
+            case EntryResearchTopic entryTopic -> this.parseEntryPages(entryTopic.getEntry());
+            case SourceResearchTopic sourceTopic -> this.parseAttunementPage(sourceTopic.getSource());
+            case EnchantmentResearchTopic enchTopic -> this.parseRuneEnchantmentPage(enchTopic.getEnchantment());
+            case LanguageResearchTopic langTopic -> this.parseLinguisticsPage(langTopic.getLanguage());
+            case AffinityResearchTopic affinityTopic -> this.parseAffinityPage(affinityTopic.getSource());
+            case OtherResearchTopic otherTopic -> {
+                String data = otherTopic.getData();
+                if (this.isIndexKey(data)) {
+                    this.parseRecipeEntryPages(data);
+                } else if (StatisticsPage.TOPIC.getData().equals(data)) {
+                    this.parseStatsPages();
+                } else if (AttunementIndexPage.TOPIC.getData().equals(data)) {
+                    this.parseAttunementIndexPages();
+                } else if (RuneEnchantmentIndexPage.TOPIC.getData().equals(data)) {
+                    this.parseRuneEnchantmentIndexPages();
+                } else if (RecipeIndexPage.TOPIC.getData().equals(data)) {
+                    this.parseRecipeIndexPages();
+                } else if (TipsPage.TOPIC.getData().equals(data)) {
+                    this.parseTipsPages();
+                } else if (LinguisticsIndexPage.TOPIC.getData().equals(data)) {
+                    this.parseLinguisticsIndexPages();
+                } else if (AffinityIndexPage.TOPIC.getData().equals(data)) {
+                    this.parseAffinityIndexPages();
+                } else {
+                    LOGGER.warn("Unexpected OtherResearchTopic data {}", data);
+                }
             }
-        } else {
-            LOGGER.warn("Unexpected research topic type {}", topic.getType().toString());
+            default -> LOGGER.warn("Unexpected research topic type {}", topic.getType().toString());
         }
     }
     
@@ -306,8 +308,8 @@ public class GrimoireScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
+    public void extractBackground(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(guiGraphics, mouseX, mouseY, partialTick);
 
         // Render the grimoire background
         guiGraphics.pose().pushMatrix();
@@ -332,17 +334,17 @@ public class GrimoireScreen extends Screen {
     @Override
     public void tick() {
         super.tick();
-        this.pages.forEach(p -> p.tick());
+        this.pages.forEach(AbstractPage::tick);
     }
 
     private List<ResearchDiscipline> buildDisciplineList() {
         // Gather a list of all research disciplines, sorted by their registration order, that appear in the main index
-        return ResearchDisciplines.streamIndexDisciplines(this.minecraft.level.registryAccess()).toList();
+        return ResearchDisciplines.streamIndexDisciplines(Objects.requireNonNull(this.minecraft.level).registryAccess()).toList();
     }
     
     private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {
         // Gather a list of all research entries for the given discipline, sorted by their display names
-        return discipline.getEntryStream(this.minecraft.level.registryAccess())
+        return discipline.getEntryStream(Objects.requireNonNull(this.minecraft.level).registryAccess())
                 .sorted(Comparator.comparing(e -> (Component.translatable(e.getNameTranslationKey())).getString()))
                 .collect(Collectors.toList());
     }
@@ -382,7 +384,9 @@ public class GrimoireScreen extends Screen {
     
     protected void parseDisciplinePages(ResearchDisciplineKey disciplineKey) {
         Minecraft mc = this.minecraft;
-        RegistryAccess registryAccess = mc.level.registryAccess();
+        RegistryAccess registryAccess = Objects.requireNonNull(mc.level).registryAccess();
+        Player player = Objects.requireNonNull(mc.player);
+
         this.currentStageIndex = 0;
         if (disciplineKey == null) {
             return;
@@ -404,17 +408,17 @@ public class GrimoireScreen extends Screen {
         List<ResearchEntry> availableList = new ArrayList<>();
         List<ResearchEntry> upcomingList = new ArrayList<>();
         for (ResearchEntry entry : entries) {
-            if (entry.isNew(mc.player)) {
+            if (entry.isNew(player)) {
                 newList.add(entry);
-            } else if (entry.isUpdated(mc.player)) {
+            } else if (entry.isUpdated(player)) {
                 updatedList.add(entry);
-            } else if (entry.isComplete(mc.player)) {
+            } else if (entry.isComplete(player)) {
                 completeList.add(entry);
-            } else if (entry.isInProgress(mc.player)) {
+            } else if (entry.isInProgress(player)) {
                 inProgressList.add(entry);
-            } else if (!entry.flags().hidden() && entry.isAvailable(mc.player)) {
+            } else if (!entry.flags().hidden() && entry.isAvailable(player)) {
                 availableList.add(entry);
-            } else if (!entry.flags().hidden() && entry.isUpcoming(mc.player)) {
+            } else if (!entry.flags().hidden() && entry.isUpcoming(player)) {
                 upcomingList.add(entry);
             }
         }
@@ -462,7 +466,7 @@ public class GrimoireScreen extends Screen {
         // Append the section header and spacer
         Component headerText = Component.translatable("grimoire.primalmagick.section_header." + headerName).withStyle(ChatFormatting.UNDERLINE);
         if (properties.heightRemaining < 36 && !properties.page.getContents().isEmpty()) {
-            // If there's not room for the spacer, the header, and a first entry, skip to the next page
+            // If there's no room for the spacer, the header, and a first entry, skip to the next page
             properties.heightRemaining = 156;
             this.pages.add(properties.page);
             properties.page = new DisciplinePage(discipline);
@@ -490,9 +494,9 @@ public class GrimoireScreen extends Screen {
     
     private Tuple<List<String>, List<PageSprite>> parseText(String rawText) {
         // Process text
-        rawText = rawText.replaceAll("<BR>", "~B\n\n");
-        rawText = rawText.replaceAll("<LINE>", "~L");
-        rawText = rawText.replaceAll("<PAGE>", "~P");
+        rawText = rawText.replace("<BR>", "~B\n\n");
+        rawText = rawText.replace("<LINE>", "~L");
+        rawText = rawText.replace("<PAGE>", "~P");
         List<PageSprite> images = new ArrayList<>();
         String[] imgSplit = rawText.split("<IMG>");
         for (String imgStr : imgSplit) {
@@ -508,8 +512,8 @@ public class GrimoireScreen extends Screen {
                 }
             }
         }
-        rawText = rawText.replaceAll("<IMG>", "");
-        rawText = rawText.replaceAll("</IMG>", "");
+        rawText = rawText.replace("<IMG>", "");
+        rawText = rawText.replace("</IMG>", "");
         
         // Split raw text into formattable sections
         List<String> firstPassText = new ArrayList<>();
@@ -539,15 +543,14 @@ public class GrimoireScreen extends Screen {
             parsedText.addAll(this.font.getSplitter().splitLines(FormattedText.of(str), 124, Style.EMPTY));   // list formatted string to width
         }
         
-        return new Tuple<>(parsedText.stream().map((t) -> t.getString()).collect(Collectors.toList()), images);
+        return new Tuple<>(parsedText.stream().map(FormattedText::getString).collect(Collectors.toList()), images);
     }
     
     protected void parseEntryPages(ResearchEntryKey entryKey) {
         if (entryKey == null) {
             return;
         }
-        Minecraft mc = Minecraft.getInstance();
-        RegistryAccess registryAccess = mc.level.registryAccess();
+        RegistryAccess registryAccess = Objects.requireNonNull(this.minecraft.level).registryAccess();
         ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
         if (entry == null || entry.stages().isEmpty()) {
             return;
@@ -569,7 +572,7 @@ public class GrimoireScreen extends Screen {
         ResearchStage stage = entry.stages().get(this.currentStageIndex);
         List<ResearchAddendum> addenda = complete ? entry.addenda() : Collections.emptyList();
         
-        String rawText = (Component.translatable(stage.textTranslationKey())).getString();
+        StringBuilder rawText = new StringBuilder((Component.translatable(stage.textTranslationKey())).getString());
         
         // Append unlocked addendum text
         int addendumCount = 0;
@@ -577,13 +580,13 @@ public class GrimoireScreen extends Screen {
             if (addendum.completionRequirementOpt().isPresent() && addendum.completionRequirementOpt().get().isMetBy(player)) {
                 Component headerText = Component.translatable("grimoire.primalmagick.addendum_header", ++addendumCount);
                 Component addendumText = Component.translatable(addendum.textTranslationKey());
-                rawText += ("<PAGE>" + headerText.getString() + "<BR>" + addendumText.getString());
+                rawText.append("<PAGE>").append(headerText.getString()).append("<BR>").append(addendumText.getString());
             }
         }
         
         // Process text
         int lineHeight = this.font.lineHeight;
-        Tuple<List<String>, List<PageSprite>> parsedData = this.parseText(rawText);
+        Tuple<List<String>, List<PageSprite>> parsedData = this.parseText(rawText.toString());
         List<String> parsedText = parsedData.getA();
         List<PageSprite> images = parsedData.getB();
         
@@ -596,7 +599,7 @@ public class GrimoireScreen extends Screen {
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
-                    tempImages.add(images.remove(0));
+                    tempImages.add(images.removeFirst());
                 }
                 line = "";
             }
@@ -618,9 +621,9 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                tempPage.addElement(tempImages.remove(0));
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.getFirst().adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                tempPage.addElement(tempImages.removeFirst());
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
                 heightRemaining = 165;
@@ -637,13 +640,13 @@ public class GrimoireScreen extends Screen {
             tempPage = new StagePage(stage);
             heightRemaining = 165;
             while (!tempImages.isEmpty()) {
-                if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
+                if (heightRemaining < (tempImages.getFirst().adjustedHeight() + 2)) {
                     heightRemaining = 165;
                     this.pages.add(tempPage);
                     tempPage = new StagePage(stage);
                 } else {
-                    heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                    tempPage.addElement(tempImages.remove(0));
+                    heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                    tempPage.addElement(tempImages.removeFirst());
                 }
             }
             if (!tempPage.getElements().isEmpty()) {
@@ -680,28 +683,26 @@ public class GrimoireScreen extends Screen {
         }
         
         // Generate recipe pages from stage and addenda
-        List<Identifier> locList = new ArrayList<>();
-        for (Identifier loc : stage.recipes()) {
+        List<ResourceKey<Recipe<?>>> locList = new ArrayList<>();
+        for (ResourceKey<Recipe<?>> loc : stage.recipes()) {
             if (!locList.contains(loc)) {
                 locList.add(loc);
             }
         }
         for (ResearchAddendum addendum : addenda) {
             if (addendum.completionRequirementOpt().isEmpty() || addendum.completionRequirementOpt().get().isMetBy(player)) {
-                for (Identifier loc : addendum.recipes()) {
+                for (ResourceKey<Recipe<?>> loc : addendum.recipes()) {
                     if (!locList.contains(loc)) {
                         locList.add(loc);
                     }
                 }
             }
         }
-        for (Identifier recipeLoc : locList) {
-            Optional<RecipeHolder<?>> opt = level.getRecipeManager().byKey(recipeLoc);
+        for (ResourceKey<Recipe<?>> recipeKey : locList) {
+            Optional<RecipeHolder<?>> opt = level.recipeAccess().byKey(recipeKey);
             opt.ifPresent(recipe -> {
-                AbstractRecipePage page = RecipePageFactory.createPage(recipe);
-                if (page != null) {
-                    this.pages.add(page);
-                }
+                AbstractRecipePage<?> page = RecipePageFactory.createPage(recipe);
+                this.pages.add(page);
             });
         }
     }
@@ -718,14 +719,13 @@ public class GrimoireScreen extends Screen {
         int heightRemaining = 137;  // Leave enough room for the page header
         int dotWidth = this.font.width(".");
         StatisticsPage tempPage = new StatisticsPage(true);
-        Minecraft mc = this.minecraft;
         for (Stat stat : stats) {
-            int statValue = StatsManager.getValue(mc.player, stat);
+            int statValue = StatsManager.getValue(this.minecraft.player, stat);
             if (!stat.hidden() || statValue > 0) {
                 // Join the stat text and formatted value with periods in between for spacing
                 Component statText = Component.translatable(stat.getTranslationKey());
                 List<FormattedText> statTextSegments = new ArrayList<>(this.font.getSplitter().splitLines(statText, 124, Style.EMPTY));
-                FormattedText lastStatTextSegment = statTextSegments.get(statTextSegments.size() - 1);
+                FormattedText lastStatTextSegment = statTextSegments.getLast();
                 int lastStatTextSegmentWidth = this.font.width(lastStatTextSegment);
                 String statFormattedValueStr = stat.formatter().format(statValue);
                 int statFormattedValueStrWidth = this.font.width(statFormattedValueStr);
@@ -743,7 +743,7 @@ public class GrimoireScreen extends Screen {
                 }
                 
                 // Calculate the total height of the stat block, including spacer, and determine if it will fit on the current page
-                int totalHeight = (int)(this.font.lineHeight * statTextSegments.size());
+                int totalHeight = this.font.lineHeight * statTextSegments.size();
                 if (heightRemaining < totalHeight && !tempPage.getElements().isEmpty()) {
                     // If there isn't enough room for another stat block, start a new page
                     heightRemaining = 165;
@@ -775,7 +775,7 @@ public class GrimoireScreen extends Screen {
         this.currentStageIndex = 0;
         
         // Fetch the language itself
-        Holder.Reference<BookLanguage> language = BookLanguagesPM.getLanguageOrDefault(languageKey, this.minecraft.level.registryAccess(), BookLanguagesPM.DEFAULT);
+        Holder.Reference<BookLanguage> language = BookLanguagesPM.getLanguageOrDefault(languageKey, Objects.requireNonNull(this.minecraft.level).registryAccess(), BookLanguagesPM.DEFAULT);
 
         // Add the first page with just the comprehension and vocabulary trackers
         this.pages.add(new LinguisticsScorePage(language));
@@ -798,7 +798,7 @@ public class GrimoireScreen extends Screen {
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
-                    tempImages.add(images.remove(0));
+                    tempImages.add(images.removeFirst());
                 }
                 line = "";
             }
@@ -820,9 +820,9 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                tempPage.addElement(tempImages.remove(0));
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.getFirst().adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                tempPage.addElement(tempImages.removeFirst());
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
                 heightRemaining = 165;
@@ -838,13 +838,13 @@ public class GrimoireScreen extends Screen {
         tempPage = new LinguisticsDescriptionPage(language);
         heightRemaining = 165;
         while (!tempImages.isEmpty()) {
-            if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
+            if (heightRemaining < (tempImages.getFirst().adjustedHeight() + 2)) {
                 heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new LinguisticsDescriptionPage(language);
             } else {
-                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                tempPage.addElement(tempImages.remove(0));
+                heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                tempPage.addElement(tempImages.removeFirst());
             }
         }
         if (!tempPage.getElements().isEmpty()) {
@@ -887,7 +887,7 @@ public class GrimoireScreen extends Screen {
             }
         } else {
             // Trigger a page refresh when calculation is complete
-            loadedFuture.thenAccept($ -> this.setRefreshing());
+            loadedFuture.thenAccept(_ -> this.setRefreshing());
             AffinityPage loadingPage = new AffinityPage(source, loadedFuture, true);
             loadingPage.setProgressFutures(affinityFutures);
             this.pages.add(loadingPage);
@@ -924,7 +924,7 @@ public class GrimoireScreen extends Screen {
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
-                    tempImages.add(images.remove(0));
+                    tempImages.add(images.removeFirst());
                 }
                 line = "";
             }
@@ -946,9 +946,9 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                tempPage.addElement(tempImages.remove(0));
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.getFirst().adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                tempPage.addElement(tempImages.removeFirst());
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
                 heightRemaining = 165;
@@ -964,13 +964,13 @@ public class GrimoireScreen extends Screen {
         tempPage = new AttunementPage(source);
         heightRemaining = 165;
         while (!tempImages.isEmpty()) {
-            if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
+            if (heightRemaining < (tempImages.getFirst().adjustedHeight() + 2)) {
                 heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new AttunementPage(source);
             } else {
-                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                tempPage.addElement(tempImages.remove(0));
+                heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                tempPage.addElement(tempImages.removeFirst());
             }
         }
         if (!tempPage.getElements().isEmpty()) {
@@ -1000,7 +1000,7 @@ public class GrimoireScreen extends Screen {
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
-                    tempImages.add(images.remove(0));
+                    tempImages.add(images.removeFirst());
                 }
                 line = "";
             }
@@ -1022,9 +1022,9 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                tempPage.addElement(tempImages.remove(0));
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.getFirst().adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                tempPage.addElement(tempImages.removeFirst());
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
                 heightRemaining = 165;
@@ -1040,13 +1040,13 @@ public class GrimoireScreen extends Screen {
         tempPage = new RuneEnchantmentPage(enchant);
         heightRemaining = 165;
         while (!tempImages.isEmpty()) {
-            if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
+            if (heightRemaining < (tempImages.getFirst().adjustedHeight() + 2)) {
                 heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new RuneEnchantmentPage(enchant);
             } else {
-                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                tempPage.addElement(tempImages.remove(0));
+                heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                tempPage.addElement(tempImages.removeFirst());
             }
         }
         if (!tempPage.getElements().isEmpty()) {
@@ -1058,9 +1058,9 @@ public class GrimoireScreen extends Screen {
         this.currentStageIndex = 0;
         int heightRemaining = 137;
         RuneEnchantmentIndexPage tempPage = new RuneEnchantmentIndexPage(true);
-        Minecraft mc = Minecraft.getInstance();
+        Minecraft mc = this.minecraft;
 
-        for (Holder<Enchantment> enchant : RuneManager.getRuneEnchantmentsSorted(mc.level.registryAccess())) {
+        for (Holder<Enchantment> enchant : RuneManager.getRuneEnchantmentsSorted(Objects.requireNonNull(mc.level).registryAccess())) {
             List<AbstractResearchKey<?>> researchKeys = List.of(
                     new RuneEnchantmentKey(enchant), 
                     new RuneEnchantmentPartialKey(enchant, RuneType.VERB),
@@ -1083,14 +1083,19 @@ public class GrimoireScreen extends Screen {
     
     protected void generateIndexMap() {
         Minecraft mc = this.minecraft;
-        Comparator<RecipeHolder<?>> displayNameComparator = Comparator.comparing(r -> r.value().getResultItem(mc.level.registryAccess()).getHoverName().getString());
-        Comparator<RecipeHolder<?>> recipeIdComparator = Comparator.comparing(r -> r.id());
-        List<RecipeHolder<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
+        ContextMap contextMap = SlotDisplayContext.fromLevel(Objects.requireNonNull(mc.level));
+        Comparator<RecipeHolder<?>> displayNameComparator = Comparator.comparing(r -> {
+            ItemStack resultStack = r.value().display().getFirst().result().resolveForFirstStack(contextMap);
+            return resultStack.getHoverName().getString();
+        });
+        Comparator<RecipeHolder<?>> recipeIdComparator = Comparator.comparing(r -> r.id().identifier());
+        List<RecipeHolder<?>> processedRecipes = mc.level.recipeAccess().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
                 .sorted(displayNameComparator.thenComparing(recipeIdComparator)).collect(Collectors.toList());
 
         this.indexMap = new TreeMap<>();
         for (RecipeHolder<?> recipe : processedRecipes) {
-            String recipeName = recipe.value().getResultItem(mc.level.registryAccess()).getHoverName().getString();
+            ItemStack resultStack = recipe.value().display().getFirst().result().resolveForFirstStack(contextMap);
+            String recipeName = resultStack.getHoverName().getString();
             if (!this.indexMap.containsKey(recipeName)) {
                 this.indexMap.put(recipeName, new ArrayList<>());
             }
@@ -1104,7 +1109,7 @@ public class GrimoireScreen extends Screen {
     
     public void checkRecipeSearchStringUpdate(String newString) {
         if (!newString.equals(this.lastRecipeSearch.orElse(""))) {
-            this.lastRecipeSearch = Optional.ofNullable(newString);
+            this.lastRecipeSearch = Optional.of(newString);
             this.initPages();
             this.initButtons();
         }
@@ -1112,14 +1117,15 @@ public class GrimoireScreen extends Screen {
     
     protected void parseRecipeIndexPages() {
         this.currentStageIndex = 0;
-        
-        Minecraft mc = this.minecraft;
+
+        ContextMap contextMap = SlotDisplayContext.fromLevel(Objects.requireNonNull(this.minecraft.level));
+
         int heightRemaining = 113;
         RecipeIndexPage tempPage = new RecipeIndexPage(true, this.lastRecipeSearch);
         
         for (String recipeName : this.indexMap.navigableKeySet()) {
             if (recipeName.toLowerCase(Locale.ROOT).contains(this.lastRecipeSearch.orElse("").toLowerCase(Locale.ROOT))) {
-                tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).value().getResultItem(mc.level.registryAccess()));
+                tempPage.addContent(recipeName, this.indexMap.get(recipeName).getFirst().value().display().getFirst().result().resolveForFirstStack(contextMap));
                 heightRemaining -= 12;
                 if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
                     heightRemaining = 156;
@@ -1138,8 +1144,8 @@ public class GrimoireScreen extends Screen {
     
     protected static boolean isValidRecipeIndexEntry(RecipeHolder<?> recipe) {
         Minecraft mc = Minecraft.getInstance();
-        RegistryAccess registryAccess = mc.level.registryAccess();
-        if (!recipe.id().getNamespace().equals(Constants.MOD_ID) || recipe.value().getResultItem(registryAccess).isEmpty()) {
+        ContextMap contextMap = SlotDisplayContext.fromLevel(Objects.requireNonNull(mc.level));
+        if (!recipe.id().identifier().getNamespace().equals(Constants.MOD_ID) || recipe.value().display().getFirst().result().resolveForStacks(contextMap).isEmpty()) {
             return false;
         }
         if (recipe.value() instanceof IHasRequirement hrr) {
@@ -1150,24 +1156,22 @@ public class GrimoireScreen extends Screen {
     }
     
     protected void parseRecipeEntryPages(String recipeName) {
-        Minecraft mc = Minecraft.getInstance();
+        RegistryAccess registryAccess = Objects.requireNonNull(this.minecraft.level).registryAccess();
         this.currentStageIndex = 0;
         boolean firstPage = true;
         List<RecipeHolder<?>> recipes = this.indexMap.getOrDefault(recipeName, Collections.emptyList());
         for (RecipeHolder<?> recipe : recipes) {
-            AbstractRecipePage page = RecipePageFactory.createPage(recipe);
-            if (page != null) {
-                this.pages.add(new RecipeMetadataPage(recipe, mc.level.registryAccess(), firstPage));
-                this.pages.add(page);
-                firstPage = false;
-            }
+            AbstractRecipePage<?> page = RecipePageFactory.createPage(recipe);
+            this.pages.add(new RecipeMetadataPage(recipe, registryAccess, firstPage));
+            this.pages.add(page);
+            firstPage = false;
         }
     }
     
     protected Component getCurrentTip() {
         if (this.cachedTip == null) {
-            Minecraft mc = Minecraft.getInstance();
-            this.cachedTip = TipDefinitionsPM.getRandom(mc.player, mc.player.getRandom()).map(TipDefinition::getText).orElse(Component.empty());
+            Player player = Objects.requireNonNull(this.minecraft.player);
+            this.cachedTip = TipDefinitionsPM.getRandom(player, player.getRandom()).map(TipDefinition::getText).orElse(Component.empty());
         }
         return this.cachedTip;
     }
@@ -1194,7 +1198,7 @@ public class GrimoireScreen extends Screen {
         for (String line : parsedText) {
             if (line.contains("~I")) {
                 if (!images.isEmpty()) {
-                    tempImages.add(images.remove(0));
+                    tempImages.add(images.removeFirst());
                 }
                 line = "";
             }
@@ -1216,9 +1220,9 @@ public class GrimoireScreen extends Screen {
                     heightRemaining -= (int)(lineHeight * 0.66D);
                 }
             }
-            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight() + 2))) {
-                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                tempPage.addElement(tempImages.remove(0));
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.getFirst().adjustedHeight() + 2))) {
+                heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                tempPage.addElement(tempImages.removeFirst());
             }
             if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
                 heightRemaining = 165;
@@ -1234,13 +1238,13 @@ public class GrimoireScreen extends Screen {
         tempPage = new TipsPage();
         heightRemaining = 165;
         while (!tempImages.isEmpty()) {
-            if (heightRemaining < (tempImages.get(0).adjustedHeight() + 2)) {
+            if (heightRemaining < (tempImages.getFirst().adjustedHeight() + 2)) {
                 heightRemaining = 165;
                 this.pages.add(tempPage);
                 tempPage = new TipsPage();
             } else {
-                heightRemaining -= (tempImages.get(0).adjustedHeight() + 2);
-                tempPage.addElement(tempImages.remove(0));
+                heightRemaining -= (tempImages.getFirst().adjustedHeight() + 2);
+                tempPage.addElement(tempImages.removeFirst());
             }
         }
         if (!tempPage.getElements().isEmpty()) {
@@ -1248,7 +1252,7 @@ public class GrimoireScreen extends Screen {
         }
         
         // Flag the last page as such to show the refresh button
-        TipsPage lastPage = ((TipsPage)this.pages.get(this.pages.size() - 1));
+        TipsPage lastPage = ((TipsPage)this.pages.getLast());
         int contentHeight = lastPage.getElements().stream().mapToInt(IPageElement::getHeight).sum();
         if (contentHeight > (lastPage.isFirstPage() ? 112 : 140)) {
             // If the last page's contents would overlap the next tip button, add an extra page
@@ -1319,40 +1323,40 @@ public class GrimoireScreen extends Screen {
     }
     
     @Override
-    public boolean charTyped(char pCodePoint, int pModifiers) {
+    public boolean charTyped(@NotNull CharacterEvent event) {
         for (AbstractPage page : this.pages) {
-            if (page.charTyped(pCodePoint, pModifiers)) {
+            if (page.charTyped(event)) {
                 return true;
             }
         }
-        return super.charTyped(pCodePoint, pModifiers);
+        return super.charTyped(event);
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(@NotNull KeyEvent event) {
         for (AbstractPage page : this.pages) {
-            if (page.keyPressed(keyCode, scanCode, modifiers)) {
+            if (page.keyPressed(event)) {
                 return true;
             }
         }
         
-        if (keyCode == Services.INPUT.getKey(KeyBindings.GRIMOIRE_PREV_TOPIC).getValue()) {
+        if (event.input() == Services.INPUT.getKey(KeyBindings.GRIMOIRE_PREV_TOPIC).getValue()) {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
                 return true;
             }
-        } else if (keyCode == Services.INPUT.getKey(KeyBindings.GRIMOIRE_PREV_PAGE).getValue()) {
+        } else if (event.input() == Services.INPUT.getKey(KeyBindings.GRIMOIRE_PREV_PAGE).getValue()) {
             if (this.prevPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
                 return true;
             }
-        } else if (keyCode == Services.INPUT.getKey(KeyBindings.GRIMOIRE_NEXT_PAGE).getValue()) {
+        } else if (event.input() == Services.INPUT.getKey(KeyBindings.GRIMOIRE_NEXT_PAGE).getValue()) {
             if (this.nextPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
                 return true;
             }
         }
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(event);
     }
     
     @Override
@@ -1362,11 +1366,11 @@ public class GrimoireScreen extends Screen {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
-        } else if (keyCode == GLFW.GLFW_MOUSE_BUTTON_4) {
+        } else if (event.button() == GLFW.GLFW_MOUSE_BUTTON_4) {
             if (this.prevPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
-        } else if (keyCode == GLFW.GLFW_MOUSE_BUTTON_5) {
+        } else if (event.button() == GLFW.GLFW_MOUSE_BUTTON_5) {
             if (this.nextPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
