@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.crafting.display.ExpertiseRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneCraftingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
@@ -11,6 +12,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -128,6 +130,7 @@ public class ShapelessArcaneTagRecipe extends NormalArcaneCraftingRecipe {
                         new SlotDisplay.TagSlotDisplay(this.resultTag), // FIXME Does this need a custom display to show count?
                         this.manaCosts,
                         this.requirement,
+                        new ExpertiseRecipeDisplay(this, Minecraft.getInstance().player.registryAccess()),
                         new SlotDisplay.ItemSlotDisplay(ItemsPM.ARCANE_WORKBENCH.get())
                 )
         );

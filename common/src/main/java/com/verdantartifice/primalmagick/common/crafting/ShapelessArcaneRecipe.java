@@ -3,12 +3,14 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.crafting.display.ExpertiseRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneCraftingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -112,6 +114,7 @@ public class ShapelessArcaneRecipe extends NormalArcaneCraftingRecipe {
                         new SlotDisplay.ItemStackSlotDisplay(this.result),
                         this.manaCosts,
                         this.requirement,
+                        new ExpertiseRecipeDisplay(this, Minecraft.getInstance().player.registryAccess()),
                         new SlotDisplay.ItemSlotDisplay(ItemsPM.ARCANE_WORKBENCH.get())
                 )
         );
