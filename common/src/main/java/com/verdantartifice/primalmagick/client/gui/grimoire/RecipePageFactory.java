@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.display.ConcoctingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.DissolutionRecipeDisplay;
+import com.verdantartifice.primalmagick.common.crafting.display.RitualRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.RunecarvingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapedArcaneCraftingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneCraftingRecipeDisplay;
@@ -23,16 +23,14 @@ import javax.annotation.Nonnull;
  * @author Daedalus4096
  */
 public class RecipePageFactory {
-    @SuppressWarnings("unchecked")
     @Nonnull
-    public static AbstractRecipePage<?> createPage(@Nonnull RecipeHolder<?> recipeHolder, RegistryAccess registryAccess) {
+    public static AbstractRecipePage<?> createPage(@Nonnull RecipeHolder<?> recipeHolder) {
         ResourceKey<Recipe<?>> recipeKey = recipeHolder.id();
-        Recipe<?> recipe = recipeHolder.value();
-        RecipeDisplay display = recipe.display().getFirst();
+        RecipeDisplay display = recipeHolder.value().display().getFirst();
         if (display instanceof FurnaceRecipeDisplay furnaceDisplay) {
             return new SmeltingRecipePage(furnaceDisplay);
-        } else if (recipe instanceof IRitualRecipe) {
-            return new RitualRecipePage((RecipeHolder<IRitualRecipe>)recipeHolder, registryAccess);
+        } else if (display instanceof RitualRecipeDisplay ritualDisplay) {
+            return new RitualRecipePage(ritualDisplay, recipeKey);
         } else if (display instanceof RunecarvingRecipeDisplay runecarvingDisplay) {
             return new RunecarvingRecipePage(runecarvingDisplay);
         } else if (display instanceof ConcoctingRecipeDisplay concoctingDisplay) {

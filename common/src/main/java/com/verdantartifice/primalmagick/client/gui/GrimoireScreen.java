@@ -698,7 +698,7 @@ public class GrimoireScreen extends Screen {
         for (Identifier recipeLoc : locList) {
             Optional<RecipeHolder<?>> opt = level.getRecipeManager().byKey(recipeLoc);
             opt.ifPresent(recipe -> {
-                AbstractRecipePage page = RecipePageFactory.createPage(recipe, level.registryAccess());
+                AbstractRecipePage page = RecipePageFactory.createPage(recipe);
                 if (page != null) {
                     this.pages.add(page);
                 }
@@ -1155,7 +1155,7 @@ public class GrimoireScreen extends Screen {
         boolean firstPage = true;
         List<RecipeHolder<?>> recipes = this.indexMap.getOrDefault(recipeName, Collections.emptyList());
         for (RecipeHolder<?> recipe : recipes) {
-            AbstractRecipePage page = RecipePageFactory.createPage(recipe, mc.level.registryAccess());
+            AbstractRecipePage page = RecipePageFactory.createPage(recipe);
             if (page != null) {
                 this.pages.add(new RecipeMetadataPage(recipe, mc.level.registryAccess(), firstPage));
                 this.pages.add(page);

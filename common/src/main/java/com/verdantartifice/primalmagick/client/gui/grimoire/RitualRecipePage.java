@@ -1,50 +1,48 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BlockIngredientWidget;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeExpertiseWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
-import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
-import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.SlotDisplayWidget;
+import com.verdantartifice.primalmagick.common.crafting.display.RitualRecipeDisplay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.awt.Color;
+import java.util.List;
 
 /**
  * Grimoire page showing a ritual recipe.
  * 
  * @author Daedalus4096
  */
-public class RitualRecipePage extends AbstractRecipePage {
+public class RitualRecipePage extends AbstractRecipePage<RitualRecipeDisplay> {
     protected static final int ITEMS_PER_ROW = 7;
     
-    protected RecipeHolder<IRitualRecipe> recipe;
+    protected ResourceKey<Recipe<?>> recipeKey;
     
-    public RitualRecipePage(RecipeHolder<IRitualRecipe> recipe, RegistryAccess registryAccess) {
-        super(registryAccess);
-        this.recipe = recipe;
-    }
-
-    @Override
-    protected Component getTitleText() {
-        ItemStack stack = this.recipe.value().getResultItem(this.registryAccess);
-        return stack.getItem().getName(stack);
+    public RitualRecipePage(RitualRecipeDisplay display, ResourceKey<Recipe<?>> recipeKey) {
+        super(display);
+        this.recipeKey = recipeKey;
     }
 
     @Override
     protected String getRecipeTypeTranslationKey() {
         return "grimoire.primalmagick.ritual_recipe_header";
+    }
+
+    @Override
+    protected List<SlotDisplay> getRecipeIngredients() {
+        return List.of();
     }
 
     @Override
@@ -57,33 +55,33 @@ public class RitualRecipePage extends AbstractRecipePage {
         y += 25;    // Make room for page title
         
         // Render output stack
-        ItemStack output = this.recipe.value().getResultItem(this.registryAccess);
+        ItemStack output = this.getRecipeResult();
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y, false));
         
         // Add mana cost summary widget
-        if (!this.recipe.value().getManaCosts().isEmpty()) {
-            screen.addWidgetToScreen(new ManaCostSummaryWidget(this.recipe.value().getManaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y));
+        if (!this.display.manaCosts().isEmpty()) {
+            screen.addWidgetToScreen(new ManaCostSummaryWidget(this.display.manaCosts(), x + 75 + (side * 140) + (indent / 2) - (overlayWidth / 2), y));
         }
         
         // Render recipe type widget
-        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe.value(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y, Component.translatable(this.getRecipeTypeTranslationKey())));
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.display.craftingStation(), x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y, Component.translatable(this.getRecipeTypeTranslationKey())));
         
         // Render recipe expertise widget if applicable
-        if (this.recipe.value().hasExpertiseReward(this.registryAccess)) {
-            screen.addWidgetToScreen(new RecipeExpertiseWidget(this.recipe, x - 6 + (side * 140) + (indent / 2) - (overlayWidth / 2), y));
+        if (this.display.expertise().hasReward()) {
+            screen.addWidgetToScreen(new RecipeExpertiseWidget(this.display.expertise(), this.recipeKey, x - 6 + (side * 140) + (indent / 2) - (overlayWidth / 2), y));
         }
         
         y += 28;
         
         // Init ingredient widgets
-        if (!this.recipe.value().placementInfo().ingredients().isEmpty()) {
+        if (!this.display.ingredients().isEmpty()) {
             y += mc.font.lineHeight;   // Make room for section header
-            for (Ingredient ingredient : this.recipe.value().placementInfo().ingredients()) {
+            for (SlotDisplay ingredient : this.display.ingredients()) {
                 if (deltaX >= (ITEMS_PER_ROW * 18)) {
                     deltaX = 0;
                     y += 18;
                 }
-                screen.addWidgetToScreen(new IngredientWidget(ingredient, x + 8 + deltaX + (side * 144), y, screen));
+                screen.addWidgetToScreen(new SlotDisplayWidget(ingredient, x + 8 + deltaX + (side * 144), y, screen));
                 deltaX += 18;
             }
             deltaX = 0;
@@ -92,14 +90,14 @@ public class RitualRecipePage extends AbstractRecipePage {
         }
         
         // Init prop widgets
-        if (!this.recipe.value().getProps().isEmpty()) {
+        if (!this.display.props().isEmpty()) {
             y += mc.font.lineHeight;   // Make room for section header
-            for (BlockIngredient prop : this.recipe.value().getProps()) {
+            for (SlotDisplay prop : this.display.props()) {
                 if (deltaX >= (ITEMS_PER_ROW * 18)) {
                     deltaX = 0;
                     y += 18;
                 }
-                screen.addWidgetToScreen(new BlockIngredientWidget(prop, x + 8 + deltaX + (side * 144), y));
+                screen.addWidgetToScreen(new SlotDisplayWidget(prop, x + 8 + deltaX + (side * 144), y, screen));
                 deltaX += 18;
             }
             deltaX = 0;
@@ -117,26 +115,26 @@ public class RitualRecipePage extends AbstractRecipePage {
         Minecraft mc = Minecraft.getInstance();
 
         // Render ingredients section header
-        if (!this.recipe.value().placementInfo().ingredients().isEmpty()) {
+        if (!this.display.ingredients().isEmpty()) {
             Component leadComponent = Component.translatable("grimoire.primalmagick.ritual_offerings_header").withStyle(ChatFormatting.UNDERLINE);
             guiGraphics.text(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
-            y += 18 * Mth.ceil((double)this.recipe.value().placementInfo().ingredients().size() / (double)ITEMS_PER_ROW); // Make room for ingredient widgets
+            y += 18 * Mth.ceil((double)this.display.ingredients().size() / (double)ITEMS_PER_ROW); // Make room for ingredient widgets
             y += (int)(mc.font.lineHeight * 0.66F);
         }
         
         // Render props section header
-        if (!this.recipe.value().getProps().isEmpty()) {
+        if (!this.display.props().isEmpty()) {
             Component leadComponent = Component.translatable("grimoire.primalmagick.ritual_props_header").withStyle(ChatFormatting.UNDERLINE);
             guiGraphics.text(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
-            y += 18 * Mth.ceil((double)this.recipe.value().getProps().size() / (double)ITEMS_PER_ROW);       // Make room for prop widgets
+            y += 18 * Mth.ceil((double)this.display.props().size() / (double)ITEMS_PER_ROW);       // Make room for prop widgets
             y += (int)(mc.font.lineHeight * 0.66F);
         }
         
         // Render instability rating line
         Component headerComponent = Component.translatable("ritual.primalmagick.instability.header").withStyle(ChatFormatting.UNDERLINE);
-        int rating = Mth.clamp(this.recipe.value().getInstability() / 2, 0, 5);
+        int rating = Mth.clamp(this.display.instability() / 2, 0, 5);
         Component valueComponent = Component.translatable("ritual.primalmagick.instability.rating." + rating);
         Component lineComponent = Component.translatable("ritual.primalmagick.instability", headerComponent, valueComponent);
         guiGraphics.text(mc.font, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);

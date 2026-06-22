@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting.display;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -15,13 +16,16 @@ import java.util.List;
 import java.util.Optional;
 
 public record RitualRecipeDisplay(List<SlotDisplay> ingredients, List<SlotDisplay> props, SlotDisplay result, SourceList manaCosts,
-                                  Optional<AbstractRequirement<?>> requirement, SlotDisplay craftingStation) implements RecipeDisplay {
+                                  int instability, Optional<AbstractRequirement<?>> requirement, ExpertiseRecipeDisplay expertise,
+                                  SlotDisplay craftingStation) implements RecipeDisplay {
     public static final MapCodec<RitualRecipeDisplay> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SlotDisplay.CODEC.listOf().fieldOf("ingredients").forGetter(RitualRecipeDisplay::ingredients),
             SlotDisplay.CODEC.listOf().fieldOf("props").forGetter(RitualRecipeDisplay::props),
             SlotDisplay.CODEC.fieldOf("result").forGetter(RitualRecipeDisplay::result),
             SourceList.CODEC.fieldOf("manaCosts").forGetter(RitualRecipeDisplay::manaCosts),
+            Codec.INT.fieldOf("instability").forGetter(RitualRecipeDisplay::instability),
             AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(RitualRecipeDisplay::requirement),
+            ExpertiseRecipeDisplay.CODEC.fieldOf("expertise").forGetter(RitualRecipeDisplay::expertise),
             SlotDisplay.CODEC.fieldOf("craftingStation").forGetter(RitualRecipeDisplay::craftingStation)
     ).apply(instance, RitualRecipeDisplay::new));
 
@@ -30,7 +34,9 @@ public record RitualRecipeDisplay(List<SlotDisplay> ingredients, List<SlotDispla
             SlotDisplay.STREAM_CODEC.apply(ByteBufCodecs.list()), RitualRecipeDisplay::props,
             SlotDisplay.STREAM_CODEC, RitualRecipeDisplay::result,
             SourceList.STREAM_CODEC, RitualRecipeDisplay::manaCosts,
+            ByteBufCodecs.VAR_INT, RitualRecipeDisplay::instability,
             ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), RitualRecipeDisplay::requirement,
+            ExpertiseRecipeDisplay.STREAM_CODEC, RitualRecipeDisplay::expertise,
             SlotDisplay.STREAM_CODEC, RitualRecipeDisplay::craftingStation,
             RitualRecipeDisplay::new
     );

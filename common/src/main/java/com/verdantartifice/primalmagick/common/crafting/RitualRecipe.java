@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.crafting.display.ExpertiseRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.RitualRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
@@ -11,6 +12,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -157,7 +159,9 @@ public class RitualRecipe implements IRitualRecipe {
                         this.props.stream().map(BlockIngredient::display).toList(),
                         new SlotDisplay.ItemStackSlotDisplay(this.result),
                         this.manaCosts,
+                        this.instability,
                         this.requirement,
+                        new ExpertiseRecipeDisplay(this, Minecraft.getInstance().player.registryAccess()),
                         new SlotDisplay.ItemSlotDisplay(ItemsPM.RITUAL_ALTAR.get())
                 )
         );
