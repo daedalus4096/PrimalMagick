@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +35,13 @@ public abstract class AbstractRecipePage<T extends RecipeDisplay> extends Abstra
         this.contextMap = SlotDisplayContext.fromLevel(level);
         this.registryAccess = level.registryAccess();
     }
-    
+
+    @Override
+    protected Component getTitleText() {
+        ItemStack result = this.getRecipeResult();
+        return result.getItem().getName(result);
+    }
+
     @Override
     public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);

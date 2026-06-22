@@ -28,12 +28,6 @@ public abstract class AbstractShapedRecipePage<T extends RecipeDisplay> extends 
     protected abstract int getRecipeHeight();
 
     @Override
-    protected Component getTitleText() {
-        ItemStack result = this.getRecipeResult();
-        return result.getItem().getName(result);
-    }
-
-    @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         int indent = 124;
         int overlayWidth = 51;
