@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.display.ConcoctingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.DissolutionRecipeDisplay;
+import com.verdantartifice.primalmagick.common.crafting.display.RunecarvingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapedArcaneCraftingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneCraftingRecipeDisplay;
 import net.minecraft.core.RegistryAccess;
@@ -33,8 +34,8 @@ public class RecipePageFactory {
             return new SmeltingRecipePage((RecipeHolder<SmeltingRecipe>)recipeHolder, registryAccess);
         } else if (recipe instanceof IRitualRecipe) {
             return new RitualRecipePage((RecipeHolder<IRitualRecipe>)recipeHolder, registryAccess);
-        } else if (recipe instanceof IRunecarvingRecipe) {
-            return new RunecarvingRecipePage((RecipeHolder<IRunecarvingRecipe>)recipeHolder, registryAccess);
+        } else if (display instanceof RunecarvingRecipeDisplay runecarvingDisplay) {
+            return new RunecarvingRecipePage(runecarvingDisplay);
         } else if (display instanceof ConcoctingRecipeDisplay concoctingDisplay) {
             return new ConcoctingRecipePage(concoctingDisplay);
         } else if (display instanceof DissolutionRecipeDisplay dissolutionDisplay) {
