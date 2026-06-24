@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumTridentISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.HexiumTridentEntity;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -38,6 +38,6 @@ public class HexiumTridentItem extends AbstractTieredTridentItem {
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
-        return HexiumTridentISTER::new;
+        return HexiumTridentSpecialRenderer::new;
     }
 }

@@ -7,9 +7,13 @@ import com.verdantartifice.primalmagick.client.fx.particles.DripParticlePM;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticle;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ForbiddenTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -77,10 +81,6 @@ public class ClientRegistrationEvents {
     }
     
     public static void onClientReloadListenerRegister(Consumer<PreparableReloadListener> reloadListenerConsumer) {
-        reloadListenerConsumer.accept(ItemsPM.PRIMALITE_TRIDENT.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.HEXIUM_TRIDENT.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.HALLOWSTEEL_TRIDENT.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.FORBIDDEN_TRIDENT.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLTOME_APPRENTICE.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLTOME_ADEPT.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.SPELLTOME_WIZARD.get().getCustomRendererSupplier().get());
@@ -115,5 +115,9 @@ public class ClientRegistrationEvents {
         consumer.accept(ResourceUtils.loc("primalite_shield"), PrimaliteShieldSpecialRenderer.Unbaked.MAP_CODEC);
         consumer.accept(ResourceUtils.loc("hexium_shield"), HexiumShieldSpecialRenderer.Unbaked.MAP_CODEC);
         consumer.accept(ResourceUtils.loc("hallowsteel_shield"), HallowsteelShieldSpecialRenderer.Unbaked.MAP_CODEC);
+        consumer.accept(ResourceUtils.loc("primalite_trident"), PrimaliteTridentSpecialRenderer.Unbaked.MAP_CODEC);
+        consumer.accept(ResourceUtils.loc("hexium_trident"), HexiumTridentSpecialRenderer.Unbaked.MAP_CODEC);
+        consumer.accept(ResourceUtils.loc("hallowsteel_trident"), HallowsteelTridentSpecialRenderer.Unbaked.MAP_CODEC);
+        consumer.accept(ResourceUtils.loc("forbidden_trident"), ForbiddenTridentSpecialRenderer.Unbaked.MAP_CODEC);
     }
 }

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
 import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagick.client.renderers.itemstack.ForbiddenTridentISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ForbiddenTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.ForbiddenTridentEntity;
@@ -49,6 +49,6 @@ public class ForbiddenTridentItem extends AbstractTieredTridentItem implements I
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
-        return ForbiddenTridentISTER::new;
+        return ForbiddenTridentSpecialRenderer::new;
     }
 }

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelTridentISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.HallowsteelTridentEntity;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -38,6 +38,6 @@ public class HallowsteelTridentItem extends AbstractTieredTridentItem {
 
     @Override
     public Supplier<BlockEntityWithoutLevelRenderer> getCustomRendererSupplierUncached() {
-        return HallowsteelTridentISTER::new;
+        return HallowsteelTridentSpecialRenderer::new;
     }
 }
