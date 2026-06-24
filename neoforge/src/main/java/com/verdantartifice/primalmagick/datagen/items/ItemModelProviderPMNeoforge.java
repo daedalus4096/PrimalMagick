@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -46,7 +47,6 @@ import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.client.model.generators.ModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.List;
@@ -60,7 +60,7 @@ import java.util.stream.Stream;
  * 
  * @author Daedalus4096
  */
-public class ItemModelProviderPMNeoforge extends ModelProvider<ItemModelBuilderPMNeoforge> {
+public class ItemModelProviderPMNeoforge extends ModelProvider {
     @SuppressWarnings("unchecked")
     private static final List<ResourceKey<TrimMaterial>> SUPPORTED_TRIMS = ImmutableList.<ResourceKey<TrimMaterial>>builder().add(
             TrimMaterials.AMETHYST, TrimMaterials.COPPER, TrimMaterials.DIAMOND, TrimMaterials.EMERALD, TrimMaterials.GOLD,

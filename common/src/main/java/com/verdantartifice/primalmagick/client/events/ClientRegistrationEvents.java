@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldS
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteTridentSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.SpelltomeSpecialRenderer;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -81,10 +82,6 @@ public class ClientRegistrationEvents {
     }
     
     public static void onClientReloadListenerRegister(Consumer<PreparableReloadListener> reloadListenerConsumer) {
-        reloadListenerConsumer.accept(ItemsPM.SPELLTOME_APPRENTICE.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.SPELLTOME_ADEPT.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.SPELLTOME_WIZARD.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.SPELLTOME_ARCHMAGE.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_ORB_APPRENTICE.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_ORB_ADEPT.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_ORB_WIZARD.get().getCustomRendererSupplier().get());
@@ -119,5 +116,6 @@ public class ClientRegistrationEvents {
         consumer.accept(ResourceUtils.loc("hexium_trident"), HexiumTridentSpecialRenderer.Unbaked.MAP_CODEC);
         consumer.accept(ResourceUtils.loc("hallowsteel_trident"), HallowsteelTridentSpecialRenderer.Unbaked.MAP_CODEC);
         consumer.accept(ResourceUtils.loc("forbidden_trident"), ForbiddenTridentSpecialRenderer.Unbaked.MAP_CODEC);
+        consumer.accept(ResourceUtils.loc("spelltome"), SpelltomeSpecialRenderer.Unbaked.MAP_CODEC);
     }
 }
