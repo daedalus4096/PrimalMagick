@@ -29,10 +29,6 @@ public class ItemModBusEventListeners {
         registerCustomRenderer(event::registerItem, ItemsPM.PRIMALITE_SHIELD.get());
         registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_SHIELD.get());
         registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_SHIELD.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.PRIMALITE_TRIDENT.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_TRIDENT.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_TRIDENT.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.FORBIDDEN_TRIDENT.get());
         registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_APPRENTICE.get());
         registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_ADEPT.get());
         registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_WIZARD.get());
