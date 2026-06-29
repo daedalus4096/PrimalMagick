@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelSh
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumTridentSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.SpelltomeSpecialRenderer;
@@ -117,5 +118,6 @@ public class ClientRegistrationEvents {
         consumer.accept(ResourceUtils.loc("hallowsteel_trident"), HallowsteelTridentSpecialRenderer.Unbaked.MAP_CODEC);
         consumer.accept(ResourceUtils.loc("forbidden_trident"), ForbiddenTridentSpecialRenderer.Unbaked.MAP_CODEC);
         consumer.accept(ResourceUtils.loc("spelltome"), SpelltomeSpecialRenderer.Unbaked.MAP_CODEC);
+        consumer.accept(ResourceUtils.loc("pixie_house"), PixieHouseSpecialRenderer.Unbaked.MAP_CODEC);
     }
 }

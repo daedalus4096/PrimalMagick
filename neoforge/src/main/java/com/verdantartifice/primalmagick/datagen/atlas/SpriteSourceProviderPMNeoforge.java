@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.atlas;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.Constants;
-import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseISTER;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaInjectorTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaRelayTER;
@@ -102,7 +102,7 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
 
         // Add custom item stack renderer textures to the item atlas
         this.addSingle(itemAtlas, SacredShieldItem.TEXTURE);
-        this.addSingle(itemAtlas, PixieHouseISTER.TEXTURE);
+        this.addSingle(itemAtlas, PixieHouseSpecialRenderer.TEXTURE);
 
         // Add source textures to the block atlas
         this.addSingle(guiAtlas, Source.getUnknownImage());
