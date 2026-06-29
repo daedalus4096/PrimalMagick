@@ -26,9 +26,6 @@ public class ItemModBusEventListeners {
         registerCustomRenderer(event::registerItem, ItemsPM.ARCANOMETER.get());
         ManaFontBlockItem.getAllFonts().forEach(font -> registerCustomRenderer(event::registerItem, font));
         registerCustomRenderer(event::registerItem, ItemsPM.SPELLCRAFTING_ALTAR.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.PRIMALITE_SHIELD.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.HEXIUM_SHIELD.get());
-        registerCustomRenderer(event::registerItem, ItemsPM.HALLOWSTEEL_SHIELD.get());
         registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_APPRENTICE.get());
         registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_ADEPT.get());
         registerCustomRenderer(event::registerItem, ItemsPM.SPELLTOME_WIZARD.get());
