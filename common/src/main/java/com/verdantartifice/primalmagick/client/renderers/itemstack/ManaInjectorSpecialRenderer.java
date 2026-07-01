@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingBottomMiddleModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingBottomModel;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingTopMiddleModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingTopModel;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaInjectorBlock;
@@ -17,6 +18,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -24,32 +27,39 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3fc;
 
-public class ManaInjectorISTER extends BlockEntityWithoutLevelRenderer {
-    private static final Identifier CORE_TEXTURE = ResourceUtils.loc("entity/mana_cube");
-    private static final Material CORE_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, CORE_TEXTURE);
+import java.util.function.Consumer;
 
-    private static final Identifier BASIC_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_injector/basic_frame_top");
-    private static final Identifier ENCHANTED_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_injector/enchanted_frame_top");
-    private static final Identifier FORBIDDEN_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_injector/forbidden_frame_top");
-    private static final Identifier HEAVENLY_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_injector/heavenly_frame_top");
-    private static final Identifier BOTTOM_FRAME_TEXTURE = ResourceUtils.loc("entity/mana_injector/frame_bottom");
+public class ManaInjectorSpecialRenderer implements SpecialModelRenderer<DeviceTier> {
+    private static final Identifier CORE_TEXTURE = ResourceUtils.loc("textures/entity/mana_cube.png");
+//    private static final Material CORE_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, CORE_TEXTURE);
 
-    private static final Material BASIC_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BASIC_FRAME_TEXTURE);
-    private static final Material ENCHANTED_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, ENCHANTED_FRAME_TEXTURE);
-    private static final Material FORBIDDEN_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, FORBIDDEN_FRAME_TEXTURE);
-    private static final Material HEAVENLY_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, HEAVENLY_FRAME_TEXTURE);
-    private static final Material BOTTOM_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BOTTOM_FRAME_TEXTURE);
+    private static final Identifier BASIC_FRAME_TEXTURE = ResourceUtils.loc("textures/entity/mana_injector/basic_frame_top.png");
+    private static final Identifier ENCHANTED_FRAME_TEXTURE = ResourceUtils.loc("textures/entity/mana_injector/enchanted_frame_top.png");
+    private static final Identifier FORBIDDEN_FRAME_TEXTURE = ResourceUtils.loc("textures/entity/mana_injector/forbidden_frame_top.png");
+    private static final Identifier HEAVENLY_FRAME_TEXTURE = ResourceUtils.loc("textures/entity/mana_injector/heavenly_frame_top.png");
+    private static final Identifier BOTTOM_FRAME_TEXTURE = ResourceUtils.loc("textures/entity/mana_injector/frame_bottom.png");
 
-    protected ManaInjectorFrameRingTopModel ringTopModel;
-    protected ManaInjectorFrameRingTopMiddleModel ringTopMiddleModel;
-    protected ManaInjectorFrameRingBottomMiddleModel ringBottomMiddleModel;
-    protected ManaInjectorFrameRingBottomModel ringBottomModel;
-    protected ManaCubeModel cubeModel;
+//    private static final Material BASIC_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BASIC_FRAME_TEXTURE);
+//    private static final Material ENCHANTED_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, ENCHANTED_FRAME_TEXTURE);
+//    private static final Material FORBIDDEN_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, FORBIDDEN_FRAME_TEXTURE);
+//    private static final Material HEAVENLY_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, HEAVENLY_FRAME_TEXTURE);
+//    private static final Material BOTTOM_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BOTTOM_FRAME_TEXTURE);
 
-    public ManaInjectorISTER() {
-        super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(),
-                Minecraft.getInstance() == null ? null : Minecraft.getInstance().getEntityModels());
+//    protected ManaInjectorFrameRingTopModel ringTopModel;
+//    protected ManaInjectorFrameRingTopMiddleModel ringTopMiddleModel;
+//    protected ManaInjectorFrameRingBottomMiddleModel ringBottomMiddleModel;
+//    protected ManaInjectorFrameRingBottomModel ringBottomModel;
+    protected final ManaInjectorFrameRingModel ringModel;
+    protected final ManaCubeModel cubeModel;
+    protected final double cycleTime;
+
+    public ManaInjectorSpecialRenderer(ManaInjectorFrameRingModel ringModel, ManaCubeModel cubeModel, double cycleTime) {
+        this.ringModel = ringModel;
+        this.cubeModel = cubeModel;
+        this.cycleTime = cycleTime;
     }
 
     @Override
@@ -115,5 +125,22 @@ public class ManaInjectorISTER extends BlockEntityWithoutLevelRenderer {
             case FORBIDDEN -> FORBIDDEN_FRAME_MATERIAL;
             case HEAVENLY, CREATIVE -> HEAVENLY_FRAME_MATERIAL;
         };
+    }
+
+    @Override
+    public void submit(@Nullable DeviceTier deviceTier, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int i1, boolean b, int i2) {
+
+    }
+
+    @Override
+    public void getExtents(Consumer<Vector3fc> consumer) {
+        PoseStack poseStack = new PoseStack();
+        this.ringModel.setupAnim(this.cycleTime);
+        this.ringModel.root().getExtentsForGui(poseStack, consumer);
+    }
+
+    @Override
+    public @Nullable DeviceTier extractArgument(ItemStack itemStack) {
+        return null;
     }
 }
