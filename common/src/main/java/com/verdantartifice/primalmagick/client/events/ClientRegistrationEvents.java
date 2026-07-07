@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelSh
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumTridentSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaInjectorSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteTridentSpecialRenderer;
@@ -92,11 +93,6 @@ public class ClientRegistrationEvents {
         reloadListenerConsumer.accept(ItemsPM.MANA_RELAY_ENCHANTED.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_RELAY_FORBIDDEN.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(ItemsPM.MANA_RELAY_HEAVENLY.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.MANA_INJECTOR_BASIC.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.MANA_INJECTOR_ENCHANTED.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.MANA_INJECTOR_FORBIDDEN.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.MANA_INJECTOR_HEAVENLY.get().getCustomRendererSupplier().get());
-        reloadListenerConsumer.accept(ItemsPM.PIXIE_HOUSE.get().getCustomRendererSupplier().get());
         reloadListenerConsumer.accept(LexiconLoader.getOrCreateInstance());
         reloadListenerConsumer.accept(StyleGuideLoader.getOrCreateInstance());
     }
@@ -119,5 +115,6 @@ public class ClientRegistrationEvents {
         consumer.accept(ResourceUtils.loc("forbidden_trident"), ForbiddenTridentSpecialRenderer.Unbaked.MAP_CODEC);
         consumer.accept(ResourceUtils.loc("spelltome"), SpelltomeSpecialRenderer.Unbaked.MAP_CODEC);
         consumer.accept(ResourceUtils.loc("pixie_house"), PixieHouseSpecialRenderer.Unbaked.MAP_CODEC);
+        consumer.accept(ResourceUtils.loc("mana_injector"), ManaInjectorSpecialRenderer.Unbaked.MAP_CODEC);
     }
 }

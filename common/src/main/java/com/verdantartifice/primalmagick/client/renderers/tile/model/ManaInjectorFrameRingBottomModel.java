@@ -1,8 +1,5 @@
 package com.verdantartifice.primalmagick.client.renderers.tile.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -10,16 +7,16 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
+import org.jetbrains.annotations.NotNull;
 
-public class ManaInjectorFrameRingBottomModel extends Model {
+public class ManaInjectorFrameRingBottomModel extends AbstractManaInjectorFrameRingModel {
     // Made with Blockbench 4.12.4
     // Exported for Minecraft version 1.17 or later with Mojang mappings
 
     private final ModelPart bone4;
 
     public ManaInjectorFrameRingBottomModel(ModelPart root) {
-		super(RenderType::entitySolid);
+		super(root);
 		this.bone4 = root.getChild("bone4");
     }
 
@@ -33,7 +30,8 @@ public class ManaInjectorFrameRingBottomModel extends Model {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-		bone4.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+    public void setupAnim(@NotNull Double state) {
+        super.setupAnim(state);
+        this.bone4.y += 0.375F + this.getDipAmount(state, 12);
     }
 }

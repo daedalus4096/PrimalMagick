@@ -1,40 +1,37 @@
 package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingBottomMiddleModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingBottomModel;
-import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingTopMiddleModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingTopModel;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaInjectorBlock;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
-import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3fc;
 
 import java.util.function.Consumer;
 
+/**
+ * Custom item stack renderer for a mana injector.
+ *
+ * @author Daedalus4096
+ */
 public class ManaInjectorSpecialRenderer implements SpecialModelRenderer<DeviceTier> {
     private static final Identifier CORE_TEXTURE = ResourceUtils.loc("textures/entity/mana_cube.png");
-//    private static final Material CORE_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, CORE_TEXTURE);
 
     private static final Identifier BASIC_FRAME_TEXTURE = ResourceUtils.loc("textures/entity/mana_injector/basic_frame_top.png");
     private static final Identifier ENCHANTED_FRAME_TEXTURE = ResourceUtils.loc("textures/entity/mana_injector/enchanted_frame_top.png");
@@ -42,105 +39,114 @@ public class ManaInjectorSpecialRenderer implements SpecialModelRenderer<DeviceT
     private static final Identifier HEAVENLY_FRAME_TEXTURE = ResourceUtils.loc("textures/entity/mana_injector/heavenly_frame_top.png");
     private static final Identifier BOTTOM_FRAME_TEXTURE = ResourceUtils.loc("textures/entity/mana_injector/frame_bottom.png");
 
-//    private static final Material BASIC_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BASIC_FRAME_TEXTURE);
-//    private static final Material ENCHANTED_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, ENCHANTED_FRAME_TEXTURE);
-//    private static final Material FORBIDDEN_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, FORBIDDEN_FRAME_TEXTURE);
-//    private static final Material HEAVENLY_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, HEAVENLY_FRAME_TEXTURE);
-//    private static final Material BOTTOM_FRAME_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BOTTOM_FRAME_TEXTURE);
-
-//    protected ManaInjectorFrameRingTopModel ringTopModel;
-//    protected ManaInjectorFrameRingTopMiddleModel ringTopMiddleModel;
-//    protected ManaInjectorFrameRingBottomMiddleModel ringBottomMiddleModel;
-//    protected ManaInjectorFrameRingBottomModel ringBottomModel;
-    protected final ManaInjectorFrameRingModel ringModel;
+    protected ManaInjectorFrameRingTopModel ringTopModel;
+    protected ManaInjectorFrameRingTopMiddleModel ringTopMiddleModel;
+    protected ManaInjectorFrameRingBottomMiddleModel ringBottomMiddleModel;
+    protected ManaInjectorFrameRingBottomModel ringBottomModel;
     protected final ManaCubeModel cubeModel;
     protected final double cycleTime;
 
-    public ManaInjectorSpecialRenderer(ManaInjectorFrameRingModel ringModel, ManaCubeModel cubeModel, double cycleTime) {
-        this.ringModel = ringModel;
+    public ManaInjectorSpecialRenderer(ManaInjectorFrameRingTopModel ringTopModel, ManaInjectorFrameRingTopMiddleModel ringTopMiddleModel,
+                                       ManaInjectorFrameRingBottomMiddleModel ringBottomMiddleModel, ManaInjectorFrameRingBottomModel ringBottomModel,
+                                       ManaCubeModel cubeModel, double cycleTime) {
+        this.ringTopModel = ringTopModel;
+        this.ringTopMiddleModel = ringTopMiddleModel;
+        this.ringBottomMiddleModel = ringBottomMiddleModel;
+        this.ringBottomModel = ringBottomModel;
         this.cubeModel = cubeModel;
         this.cycleTime = cycleTime;
     }
 
-    @Override
-    public void onResourceManagerReload(ResourceManager pResourceManager) {
-        Minecraft mc = Minecraft.getInstance();
-        this.ringTopModel = new ManaInjectorFrameRingTopModel(mc.getEntityModels().bakeLayer(ModelLayersPM.MANA_INJECTOR_FRAME_TOP));
-        this.ringTopMiddleModel = new ManaInjectorFrameRingTopMiddleModel(mc.getEntityModels().bakeLayer(ModelLayersPM.MANA_INJECTOR_FRAME_TOP_MIDDLE));
-        this.ringBottomMiddleModel = new ManaInjectorFrameRingBottomMiddleModel(mc.getEntityModels().bakeLayer(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM_MIDDLE));
-        this.ringBottomModel = new ManaInjectorFrameRingBottomModel(mc.getEntityModels().bakeLayer(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM));
-        this.cubeModel = new ManaCubeModel(mc.getEntityModels().bakeLayer(ModelLayersPM.MANA_CUBE));
-    }
-
-    @Override
-    public void renderByItem(ItemStack pStack, ItemDisplayContext pDisplayContext, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
-        if (pStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ManaInjectorBlock injectorBlock) {
-            final float tilt = 45.0F;
-
-            // Render the injector's frame rings
-            pPoseStack.pushPose();
-            pPoseStack.translate(0.5D, 0D, 0.5D);
-            VertexConsumer topFrameBuilder = this.getTopFrameMaterial(injectorBlock.getDeviceTier()).buffer(pBuffer, RenderType::entitySolid);
-            VertexConsumer bottomFrameBuilder = BOTTOM_FRAME_MATERIAL.buffer(pBuffer, RenderType::entitySolid);
-
-            pPoseStack.pushPose();
-            pPoseStack.translate(0D, 1.875D, 0D);
-            this.ringTopModel.renderToBuffer(pPoseStack, topFrameBuilder, pPackedLight, pPackedOverlay, -1);
-            pPoseStack.popPose();
-
-            pPoseStack.pushPose();
-            pPoseStack.translate(0D, 1.375D, 0D);
-            this.ringTopMiddleModel.renderToBuffer(pPoseStack, bottomFrameBuilder, pPackedLight, pPackedOverlay, -1);
-            pPoseStack.popPose();
-
-            pPoseStack.pushPose();
-            pPoseStack.translate(0D, 0.875D, 0D);
-            this.ringBottomMiddleModel.renderToBuffer(pPoseStack, bottomFrameBuilder, pPackedLight, pPackedOverlay, -1);
-            pPoseStack.popPose();
-
-            pPoseStack.pushPose();
-            pPoseStack.translate(0D, 0.375D, 0D);
-            this.ringBottomModel.renderToBuffer(pPoseStack, bottomFrameBuilder, pPackedLight, pPackedOverlay, -1);
-            pPoseStack.popPose();
-
-            pPoseStack.popPose();
-
-            // Draw the injector core
-            final float coreScale = 0.1875F;
-            pPoseStack.pushPose();
-            pPoseStack.translate(0.5D, 0.75D, 0.5D);
-            pPoseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
-            pPoseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
-            pPoseStack.scale(coreScale, coreScale, coreScale);
-            VertexConsumer ringBuilder = CORE_MATERIAL.buffer(pBuffer, RenderType::entitySolid);
-            this.cubeModel.renderToBuffer(pPoseStack, ringBuilder, pPackedLight, pPackedOverlay, Sources.SKY.getColor());
-            pPoseStack.popPose();
-        }
-    }
-
-    private Material getTopFrameMaterial(DeviceTier tier) {
-        return switch (tier) {
-            case BASIC -> BASIC_FRAME_MATERIAL;
-            case ENCHANTED -> ENCHANTED_FRAME_MATERIAL;
-            case FORBIDDEN -> FORBIDDEN_FRAME_MATERIAL;
-            case HEAVENLY, CREATIVE -> HEAVENLY_FRAME_MATERIAL;
+    private Identifier getTopFrameTexture(@Nullable DeviceTier tier) {
+        return tier == null ? BASIC_FRAME_TEXTURE : switch (tier) {
+            case BASIC -> BASIC_FRAME_TEXTURE;
+            case ENCHANTED -> ENCHANTED_FRAME_TEXTURE;
+            case FORBIDDEN -> FORBIDDEN_FRAME_TEXTURE;
+            case HEAVENLY, CREATIVE -> HEAVENLY_FRAME_TEXTURE;
         };
     }
 
     @Override
-    public void submit(@Nullable DeviceTier deviceTier, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int i1, boolean b, int i2) {
+    public void submit(
+            @Nullable DeviceTier tier,
+            @NotNull PoseStack poseStack,
+            @NotNull SubmitNodeCollector submitNodeCollector,
+            int lightCoords,
+            int overlayCoords,
+            boolean hasFoil,
+            int outlineColor) {
+        // Render the injector's frame rings
+        poseStack.pushPose();
+        poseStack.translate(0D, 1.875D, 0D);
+        submitNodeCollector.submitModelPart(this.ringTopModel.root(), poseStack, this.ringTopModel.renderType(this.getTopFrameTexture(tier)), lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
+        poseStack.popPose();
 
+        poseStack.pushPose();
+        poseStack.translate(0D, 1.375D, 0D);
+        submitNodeCollector.submitModelPart(this.ringTopMiddleModel.root(), poseStack, this.ringTopMiddleModel.renderType(BOTTOM_FRAME_TEXTURE), lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
+        poseStack.popPose();
+
+        poseStack.pushPose();
+        poseStack.translate(0D, 0.875D, 0D);
+        submitNodeCollector.submitModelPart(this.ringBottomMiddleModel.root(), poseStack, this.ringBottomMiddleModel.renderType(BOTTOM_FRAME_TEXTURE), lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
+        poseStack.popPose();
+
+        poseStack.pushPose();
+        poseStack.translate(0D, 0.375D, 0D);
+        submitNodeCollector.submitModelPart(this.ringBottomModel.root(), poseStack, this.ringBottomModel.renderType(BOTTOM_FRAME_TEXTURE), lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
+        poseStack.popPose();
+
+        // Draw the injector core
+        final float tilt = 45.0F;
+        final float coreScale = 0.1875F;
+        poseStack.pushPose();
+        poseStack.translate(0.5D, 0.75D, 0.5D);
+        poseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
+        poseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
+        poseStack.scale(coreScale, coreScale, coreScale);
+        submitNodeCollector.submitModelPart(this.cubeModel.root(), poseStack, this.cubeModel.renderType(CORE_TEXTURE), lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
+        poseStack.popPose();
     }
 
     @Override
-    public void getExtents(Consumer<Vector3fc> consumer) {
+    public void getExtents(@NotNull Consumer<Vector3fc> consumer) {
         PoseStack poseStack = new PoseStack();
-        this.ringModel.setupAnim(this.cycleTime);
-        this.ringModel.root().getExtentsForGui(poseStack, consumer);
+        this.ringTopModel.root().getExtentsForGui(poseStack, consumer);
+        this.ringTopMiddleModel.root().getExtentsForGui(poseStack, consumer);
+        this.ringBottomMiddleModel.root().getExtentsForGui(poseStack, consumer);
+        this.ringBottomModel.root().getExtentsForGui(poseStack, consumer);
     }
 
     @Override
-    public @Nullable DeviceTier extractArgument(ItemStack itemStack) {
-        return null;
+    public @Nullable DeviceTier extractArgument(@NotNull ItemStack itemStack) {
+        if (itemStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ManaInjectorBlock injectorBlock) {
+            return injectorBlock.getDeviceTier();
+        } else {
+            return null;
+        }
+    }
+
+    public record Unbaked(double cycleTime) implements SpecialModelRenderer.Unbaked<DeviceTier> {
+        public static final MapCodec<ManaInjectorSpecialRenderer.Unbaked> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Codec.DOUBLE.fieldOf("cycleTime").forGetter(ManaInjectorSpecialRenderer.Unbaked::cycleTime)
+            ).apply(instance, ManaInjectorSpecialRenderer.Unbaked::new));
+
+        @Override
+        public ManaInjectorSpecialRenderer bake(@NotNull BakingContext bakingContext) {
+            return new ManaInjectorSpecialRenderer(
+                    new ManaInjectorFrameRingTopModel(bakingContext.entityModelSet().bakeLayer(ModelLayersPM.MANA_INJECTOR_FRAME_TOP)),
+                    new ManaInjectorFrameRingTopMiddleModel(bakingContext.entityModelSet().bakeLayer(ModelLayersPM.MANA_INJECTOR_FRAME_TOP_MIDDLE)),
+                    new ManaInjectorFrameRingBottomMiddleModel(bakingContext.entityModelSet().bakeLayer(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM_MIDDLE)),
+                    new ManaInjectorFrameRingBottomModel(bakingContext.entityModelSet().bakeLayer(ModelLayersPM.MANA_INJECTOR_FRAME_BOTTOM)),
+                    new ManaCubeModel(bakingContext.entityModelSet().bakeLayer(ModelLayersPM.MANA_CUBE)),
+                    this.cycleTime
+            );
+        }
+
+        @Override
+        @NotNull
+        public MapCodec<ManaInjectorSpecialRenderer.Unbaked> type() {
+            return MAP_CODEC;
+        }
     }
 }

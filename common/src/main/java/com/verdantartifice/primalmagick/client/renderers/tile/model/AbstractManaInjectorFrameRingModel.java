@@ -13,11 +13,11 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Math;
 
-public class ManaInjectorFrameRingModel extends Model<Double> {
-    private static final String TOP = "top";
-    private static final String TOP_MIDDLE = "top_middle";
-    private static final String BOTTOM_MIDDLE = "bottom_middle";
-    private static final String BOTTOM = "bottom";
+public abstract class AbstractManaInjectorFrameRingModel extends Model<Double> {
+    protected static final String TOP = "top";
+    protected static final String TOP_MIDDLE = "top_middle";
+    protected static final String BOTTOM_MIDDLE = "bottom_middle";
+    protected static final String BOTTOM = "bottom";
 
     private static final int DIP_DURATION = 8;
 
@@ -26,7 +26,7 @@ public class ManaInjectorFrameRingModel extends Model<Double> {
     private final ModelPart bottomMiddle;
     private final ModelPart bottom;
 
-    public ManaInjectorFrameRingModel(ModelPart root) {
+    public AbstractManaInjectorFrameRingModel(ModelPart root) {
         super(root, RenderTypes::entitySolid);
         this.top = root.getChild(TOP);
         this.topMiddle = root.getChild(TOP_MIDDLE);
@@ -58,13 +58,13 @@ public class ManaInjectorFrameRingModel extends Model<Double> {
     @Override
     public void setupAnim(@NotNull Double state) {
         super.setupAnim(state);
-        this.top.y += 1.875F + getDipAmount(state, 0);
-        this.topMiddle.y += 1.375F + getDipAmount(state, 4);
-        this.bottomMiddle.y += 0.875F + getDipAmount(state, 8);
-        this.bottom.y += 0.375F + getDipAmount(state, 12);
+        this.top.y += 1.875F + this.getDipAmount(state, 0);
+        this.topMiddle.y += 1.375F + this.getDipAmount(state, 4);
+        this.bottomMiddle.y += 0.875F + this.getDipAmount(state, 8);
+        this.bottom.y += 0.375F + this.getDipAmount(state, 12);
     }
 
-    private static float getDipAmount(double cycleTime, int dipStartTime) {
+    protected float getDipAmount(double cycleTime, int dipStartTime) {
         if (cycleTime >= dipStartTime && cycleTime <= (dipStartTime + DIP_DURATION)) {
             return -0.125F * Mth.sin((cycleTime - dipStartTime) * (Math.PI / (double)DIP_DURATION));
         } else {
