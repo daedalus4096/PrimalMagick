@@ -3,23 +3,25 @@ package com.verdantartifice.primalmagick.client.fx.particles;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Particle type shown when a Zephyr Engine is active.
  * 
  * @author Daedalus4096
  */
-public class AirCurrentParticle extends TextureSheetParticle {
-    public AirCurrentParticle(ClientLevel world, double x, double y, double z) {
-        this(world, x, y, z, 0.0D, 0.0D, 0.0D);
-    }
-    
-    public AirCurrentParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-        super(world, x, y, z, xSpeed, ySpeed, zSpeed);
+public class AirCurrentParticle extends SingleQuadParticle {
+    private final SingleQuadParticle.Layer layer;
+    private final SpriteSet spriteSet;
+
+    public AirCurrentParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet) {
+        super(world, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet.first());
+        this.spriteSet = spriteSet;
+        this.layer = SingleQuadParticle.Layer.bySprite(this.sprite);
         this.xd = xSpeed;
         this.yd = ySpeed;
         this.zd = zSpeed;
@@ -29,22 +31,27 @@ public class AirCurrentParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    @NotNull
+    protected SingleQuadParticle.Layer getLayer() {
+        return this.layer;
     }
 
-    public static class Factory implements ParticleProvider<SimpleParticleType> {
+    @Override
+    public void tick() {
+        super.tick();
+        this.setSpriteFromAge(this.spriteSet);
+    }
+
+    public static class Provider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprite;
 
-        public Factory(SpriteSet sprite) {
+        public Provider(SpriteSet sprite) {
             this.sprite = sprite;
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            AirCurrentParticle acp = new AirCurrentParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-            acp.pickSprite(this.sprite);
-            return acp;
+        public Particle createParticle(@NotNull SimpleParticleType options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
+            return new AirCurrentParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.sprite);
         }
     }
 }
