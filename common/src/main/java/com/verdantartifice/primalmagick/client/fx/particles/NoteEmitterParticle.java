@@ -5,6 +5,8 @@ import net.minecraft.client.particle.NoRenderParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Meta particle shown when playing a celestial harp.  Shows note particles over time.
@@ -36,10 +38,10 @@ public class NoteEmitterParticle extends NoRenderParticle {
         }
     }
     
-    public static class Factory implements ParticleProvider<NoteEmitterParticleData> {
+    public static class Provider implements ParticleProvider<NoteEmitterParticleData> {
         @Override
-        public Particle createParticle(NoteEmitterParticleData typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new NoteEmitterParticle(worldIn, x, y, z, typeIn.getHue(), typeIn.getDuration());
+        public Particle createParticle(@NotNull NoteEmitterParticleData options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
+            return new NoteEmitterParticle(level, x, y, z, options.getHue(), options.getDuration());
         }
     }
 }
