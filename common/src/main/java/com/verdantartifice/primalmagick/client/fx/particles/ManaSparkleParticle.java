@@ -3,18 +3,20 @@ package com.verdantartifice.primalmagick.client.fx.particles;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Particle type shown when draining a mana font with a wand.
  * 
  * @author Daedalus4096
  */
-public class ManaSparkleParticle extends TextureSheetParticle {
+public class ManaSparkleParticle extends SingleQuadParticle {
+    protected final SingleQuadParticle.Layer layer;
     protected final SpriteSet spriteSet;
     protected final double initX;
     protected final double initY;
@@ -31,7 +33,7 @@ public class ManaSparkleParticle extends TextureSheetParticle {
     protected double phase = 0.0D;
 
     protected ManaSparkleParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet) {
-        super(world, x, y, z, xSpeed, ySpeed, zSpeed);
+        super(world, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet.first());
         this.initX = x;
         this.initY = y;
         this.initZ = z;
@@ -40,12 +42,7 @@ public class ManaSparkleParticle extends TextureSheetParticle {
         this.zd = this.initZSpeed = zSpeed;
         this.quadSize = 0.125F;
         this.spriteSet = spriteSet;
-        this.setSpriteFromAge(this.spriteSet);
-    }
-
-    @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+        this.layer = SingleQuadParticle.Layer.bySprite(this.sprite);
     }
 
     public void setPhase(double phase) {
@@ -84,6 +81,8 @@ public class ManaSparkleParticle extends TextureSheetParticle {
         if (this.age >= this.lifetime) {
             this.remove();
         } else {
+            this.setSpriteFromAge(this.spriteSet);
+
             double t = (double)this.age / (double)this.lifetime;
             double tpl = 2 * Math.PI * this.loops;
             double theta = (tpl * t) + this.phase;
@@ -97,15 +96,21 @@ public class ManaSparkleParticle extends TextureSheetParticle {
         }
     }
 
-    public static class Factory implements ParticleProvider<SimpleParticleType> {
+    @Override
+    @NotNull
+    protected Layer getLayer() {
+        return this.layer;
+    }
+
+    public static class Provider implements ParticleProvider<SimpleParticleType> {
         protected final SpriteSet spriteSet;
         
-        public Factory(SpriteSet spriteSet) {
+        public Provider(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(@NotNull SimpleParticleType typeIn, @NotNull ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
             return new ManaSparkleParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
         }
     }
