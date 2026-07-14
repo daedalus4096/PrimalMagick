@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Particle data for potion explosions.
@@ -16,17 +17,21 @@ import net.minecraft.network.codec.StreamCodec;
  * @author Daedalus4096
  */
 public class PotionExplosionParticleData implements ParticleOptions {
-    public static final MapCodec<PotionExplosionParticleData> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
-        return instance.group(Codec.BOOL.fieldOf("instant").forGetter(data -> data.isInstant)).apply(instance, PotionExplosionParticleData::new);
-    });
-    
+    public static final MapCodec<PotionExplosionParticleData> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.INT.fieldOf("color").forGetter(data -> data.color),
+            Codec.BOOL.fieldOf("instant").forGetter(data -> data.isInstant)
+        ).apply(instance, PotionExplosionParticleData::new));
+
     public static final StreamCodec<ByteBuf, PotionExplosionParticleData> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.VAR_INT, data -> data.color,
             ByteBufCodecs.BOOL, data -> data.isInstant,
             PotionExplosionParticleData::new);
-    
+
+    protected final int color;
     protected final boolean isInstant;
     
-    public PotionExplosionParticleData(boolean isInstant) {
+    public PotionExplosionParticleData(int color, boolean isInstant) {
+        this.color = color;
         this.isInstant = isInstant;
     }
 
@@ -39,8 +44,13 @@ public class PotionExplosionParticleData implements ParticleOptions {
     }
 
     @Override
+    @NotNull
     public ParticleType<?> getType() {
         return ParticleTypesPM.POTION_EXPLOSION.get();
+    }
+
+    public int getColor() {
+        return this.color;
     }
 
     public boolean isInstant() {

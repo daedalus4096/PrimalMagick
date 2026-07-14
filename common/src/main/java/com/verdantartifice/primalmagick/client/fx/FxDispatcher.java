@@ -256,20 +256,12 @@ public class FxDispatcher {
     }
     
     public void potionExplosion(double x, double y, double z, int color, boolean isInstant) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.potionExplosion(x, y, z, r, g, b, isInstant);
-    }
-    
-    public void potionExplosion(double x, double y, double z, float r, float g, float b, boolean isInstant) {
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
         world.playLocalSound(x, y, z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.NEUTRAL, 4.0F, (1.0F + (world.getRandom().nextFloat() - world.getRandom().nextFloat()) * 0.2F) * 0.7F, false);
         world.addParticle(ParticleTypes.EXPLOSION_EMITTER, x, y, z, 1.0D, 0.0D, 0.0D);
-        Particle p = mc.particleEngine.createParticle(new PotionExplosionParticleData(isInstant), x, y, z, 1.0D, 0.0D, 0.0D);
-        if (p != null) {
-            p.setColor(r, g, b);
+        if (mc.level != null) {
+            mc.level.addParticle(new PotionExplosionParticleData(color, isInstant), x, y, z, 1.0D, 0.0D, 0.0D);
         }
     }
     

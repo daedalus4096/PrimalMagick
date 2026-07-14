@@ -47,7 +47,7 @@ import java.util.function.Function;
 public class ClientRegistrationEvents {
     public static void onRegisterParticleProviders(SpriteParticleProviderRegistrar sprite, SpecialParticleProviderRegistrar special) {
         // FIXME Sprite set particles are registered in platform-specific code due to access transformer weirdness
-        special.register(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
+        special.register(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Provider());
         special.register(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Provider());
         sprite.register(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), DripParticlePM::createBloodDropHangParticle);
         sprite.register(ParticleTypesPM.FALLING_BLOOD_DROP.get(), DripParticlePM::createBloodDropFallParticle);
