@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.events;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.fx.particles.AirCurrentParticle;
+import com.verdantartifice.primalmagick.client.fx.particles.DripParticlePM;
 import com.verdantartifice.primalmagick.client.fx.particles.InfernalFlameParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.OfferingParticle;
@@ -56,6 +57,9 @@ public class ClientRegistrationEventListeners {
         event.registerSpriteSet(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Provider::new);
         event.registerSpriteSet(ParticleTypesPM.VOID_SMOKE.get(), AirCurrentParticle.Provider::new);
         event.registerSpriteSet(ParticleTypesPM.LINGUISTICS.get(), FlyTowardsPositionParticle.EnchantProvider::new);
+        event.registerSpriteSet(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), DripParticlePM.HangProvider::new);
+        event.registerSpriteSet(ParticleTypesPM.FALLING_BLOOD_DROP.get(), DripParticlePM.FallProvider::new);
+        event.registerSpriteSet(ParticleTypesPM.LANDING_BLOOD_DROP.get(), DripParticlePM.LandProvider::new);
     }
     
     @SubscribeEvent

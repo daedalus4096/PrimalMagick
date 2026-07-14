@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.events;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.books.LexiconLoader;
 import com.verdantartifice.primalmagick.client.books.StyleGuideLoader;
-import com.verdantartifice.primalmagick.client.fx.particles.DripParticlePM;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticle;
@@ -45,17 +44,10 @@ import java.util.function.Function;
  * @author Daedalus4096
  */
 public class ClientRegistrationEvents {
-    public static void onRegisterParticleProviders(SpriteParticleProviderRegistrar sprite, SpecialParticleProviderRegistrar special) {
+    public static void onRegisterParticleProviders(SpecialParticleProviderRegistrar special) {
         // FIXME Sprite set particles are registered in platform-specific code due to access transformer weirdness
         special.register(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Provider());
         special.register(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Provider());
-        sprite.register(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), DripParticlePM::createBloodDropHangParticle);
-        sprite.register(ParticleTypesPM.FALLING_BLOOD_DROP.get(), DripParticlePM::createBloodDropFallParticle);
-        sprite.register(ParticleTypesPM.LANDING_BLOOD_DROP.get(), DripParticlePM::createBloodDropLandParticle);
-    }
-
-    public interface SpriteParticleProviderRegistrar {
-        <T extends ParticleOptions> void register(ParticleType<T> type, ParticleProvider.Sprite<T> sprite);
     }
 
     public interface SpecialParticleProviderRegistrar {
