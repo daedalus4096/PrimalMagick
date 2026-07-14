@@ -3,32 +3,29 @@ package com.verdantartifice.primalmagick.client.fx.particles;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Particle type shown to highlight an open prop during a ritual.
  * 
  * @author Daedalus4096
  */
-public class PropMarkerParticle extends TextureSheetParticle {
+public class PropMarkerParticle extends SingleQuadParticle {
+    protected final SingleQuadParticle.Layer layer;
     protected final SpriteSet spriteSet;
     protected final double initY;
     
     public PropMarkerParticle(ClientLevel world, double x, double y, double z, SpriteSet spriteSet) {
-        super(world, x, y, z);
+        super(world, x, y, z, spriteSet.first());
         this.initY = y;
         this.quadSize = 0.33F;
         this.lifetime = 6000;
         this.spriteSet = spriteSet;
-        this.setSpriteFromAge(this.spriteSet);
-    }
-
-    @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+        this.layer = SingleQuadParticle.Layer.bySprite(this.sprite);
     }
 
     @Override
@@ -43,17 +40,22 @@ public class PropMarkerParticle extends TextureSheetParticle {
         }
     }
 
-    public static class Factory implements ParticleProvider<SimpleParticleType> {
+    @Override
+    @NotNull
+    protected Layer getLayer() {
+        return this.layer;
+    }
+
+    public static class Provider implements ParticleProvider<SimpleParticleType> {
         protected final SpriteSet spriteSet;
         
-        public Factory(SpriteSet spriteSet) {
+        public Provider(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            PropMarkerParticle particle = new PropMarkerParticle(worldIn, x, y, z, this.spriteSet);
-            return particle;
+        public Particle createParticle(@NotNull SimpleParticleType options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
+            return new PropMarkerParticle(level, x, y, z, this.spriteSet);
         }
     }
 }
