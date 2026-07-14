@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
-import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.Identifier;
@@ -18,7 +17,7 @@ public class HallowsteelTridentRenderer extends AbstractTridentRenderer {
     }
 
     @Override
-    public Identifier getTextureLocation(AbstractTridentEntity entity) {
+    protected Identifier getTextureLocation() {
         return TEXTURE;
     }
 }
