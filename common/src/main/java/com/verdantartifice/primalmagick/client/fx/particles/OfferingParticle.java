@@ -4,20 +4,25 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.data.AtlasIds;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStackTemplate;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Particle type shown when a ritual offering is being drawn into the altar.
  * 
  * @author Daedalus4096
  */
-public class OfferingParticle extends TextureSheetParticle {
+public class OfferingParticle extends SingleQuadParticle {
     protected final float uVal;
     protected final float vVal;
     
@@ -25,10 +30,8 @@ public class OfferingParticle extends TextureSheetParticle {
     protected final double targetY;
     protected final double targetZ;
 
-    @SuppressWarnings("deprecation")
-    protected OfferingParticle(ClientLevel world, double x, double y, double z, double tx, double ty, double tz, ItemStack stack) {
-        super(world, x, y, z);
-        this.setSprite(Minecraft.getInstance().getItemRenderer().getModel(stack, world, (LivingEntity)null, 0).getParticleIcon());
+    protected OfferingParticle(ClientLevel world, double x, double y, double z, double tx, double ty, double tz, TextureAtlasSprite sprite) {
+        super(world, x, y, z, sprite);
         this.targetX = tx;
         this.targetY = ty;
         this.targetZ = tz;
@@ -51,11 +54,6 @@ public class OfferingParticle extends TextureSheetParticle {
     }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.TERRAIN_SHEET;
-    }
-
-    @Override
     protected float getU0() {
         return this.sprite.getU((this.uVal + 1.0F) / 4.0F);
     }
@@ -74,7 +72,13 @@ public class OfferingParticle extends TextureSheetParticle {
     protected float getV1() {
         return this.sprite.getV((this.vVal + 1.0F) / 4.0F);
     }
-    
+
+    @Override
+    @NotNull
+    protected SingleQuadParticle.Layer getLayer() {
+        return Layer.OPAQUE_ITEMS;
+    }
+
     @Override
     public void tick() {
         this.xo = this.x;
@@ -121,12 +125,18 @@ public class OfferingParticle extends TextureSheetParticle {
                 (Mth.floor(this.z) == Mth.floor(this.targetZ));
     }
 
-    public static class Factory implements ParticleProvider<ItemParticleOption> {
-        public Factory(SpriteSet spriteSet) {}
+    public static class Provider implements ParticleProvider<ItemParticleOption> {
+        private final ItemStackRenderState scratchRenderState = new ItemStackRenderState();
 
         @Override
-        public Particle createParticle(ItemParticleOption typeIn, ClientLevel worldIn, double x, double y, double z, double tx, double ty, double tz) {
-            return new OfferingParticle(worldIn, x, y, z, tx, ty, tz, typeIn.getItem());
+        public Particle createParticle(@NotNull ItemParticleOption options, @NotNull ClientLevel level, double x, double y, double z, double tx, double ty, double tz, @NotNull RandomSource randomSource) {
+            return new OfferingParticle(level, x, y, z, tx, ty, tz, this.getSprite(options.getItem(), level, randomSource));
+        }
+
+        protected TextureAtlasSprite getSprite(ItemStackTemplate item, ClientLevel level, RandomSource random) {
+            Minecraft.getInstance().getItemModelResolver().updateForTopItem(this.scratchRenderState, item.create(), ItemDisplayContext.GROUND, level, null, 0);
+            Material.Baked material = this.scratchRenderState.pickParticleMaterial(random);
+            return material != null ? material.sprite() : Minecraft.getInstance().getAtlasManager().getAtlasOrThrow(AtlasIds.ITEMS).missingSprite();
         }
     }
 }
