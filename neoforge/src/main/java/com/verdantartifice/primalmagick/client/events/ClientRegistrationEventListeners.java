@@ -42,7 +42,7 @@ public class ClientRegistrationEventListeners {
         ClientRegistrationEvents.onRegisterParticleProviders(event::registerSprite, event::registerSpecial);
 
         // FIXME The common access transformer refuses to recognize ParticleEngine$SpriteParticleRegistration, so do it here instead
-        event.registerSpriteSet(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Provider::new);
         event.registerSpriteSet(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Provider::new);
         event.registerSpriteSet(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Provider::new);
         event.registerSpriteSet(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);

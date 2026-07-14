@@ -3,39 +3,32 @@ package com.verdantartifice.primalmagick.client.fx.particles;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Particle type shown when transforming a block with a wand.
  * 
  * @author Daedalus4096
  */
-public class WandPoofParticle extends TextureSheetParticle {
+public class WandPoofParticle extends SingleQuadParticle {
+    protected final SingleQuadParticle.Layer layer;
     protected final SpriteSet spriteSet;
     
-    public WandPoofParticle(ClientLevel world, double x, double y, double z, SpriteSet spriteSet) {
-        this(world, x, y, z, 0.0D, 0.0D, 0.0D, spriteSet);
-    }
-    
     public WandPoofParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet) {
-        super(world, x, y, z, xSpeed, ySpeed, zSpeed);
+        super(world, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet.first());
         this.xd = xSpeed;
         this.yd = ySpeed;
         this.zd = zSpeed;
         this.quadSize = 1.0F;
         this.lifetime = 10;
         this.spriteSet = spriteSet;
-        this.setSpriteFromAge(this.spriteSet);
+        this.layer = SingleQuadParticle.Layer.bySprite(this.sprite);
     }
 
-    @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
-    }
-    
     @Override
     public void tick() {
         this.xo = this.x;
@@ -57,17 +50,22 @@ public class WandPoofParticle extends TextureSheetParticle {
         }
     }
 
-    public static class Factory implements ParticleProvider<SimpleParticleType> {
+    @Override
+    @NotNull
+    protected Layer getLayer() {
+        return this.layer;
+    }
+
+    public static class Provider implements ParticleProvider<SimpleParticleType> {
         protected final SpriteSet spriteSet;
         
-        public Factory(SpriteSet spriteSet) {
+        public Provider(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
         @Override
-        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            WandPoofParticle particle = new WandPoofParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
-            return particle;
+        public Particle createParticle(@NotNull SimpleParticleType options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
+            return new WandPoofParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
         }
     }
 }
