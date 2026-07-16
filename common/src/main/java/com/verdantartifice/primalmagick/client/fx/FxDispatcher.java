@@ -72,60 +72,33 @@ public class FxDispatcher {
     }
     
     public void spellTrail(double x, double y, double z, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.spellTrail(x, y, z, r, g, b);
-    }
-    
-    public void spellTrail(double x, double y, double z, float r, float g, float b) {
         // Show a particle trailing behind a spell projectile
-        Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, 0.0D, 0.0D);
-        if (p != null) {
-            p.setColor(r, g, b);
-        }
+        getWorld().addParticle(ColorParticleOption.create(ParticleTypesPM.SPELL_SPARKLE.get(), color), x, y, z, 0.0D, 0.0D, 0.0D);
     }
     
     public void spellImpact(double x, double y, double z, int radius, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.spellImpact(x, y, z, radius, r, g, b);
-    }
-    
-    public void spellImpact(double x, double y, double z, int radius, float r, float g, float b) {
         // Show a cluster of particles at the impact point of a spell
-        Minecraft mc = Minecraft.getInstance();
-        Level world = this.getWorld();
-        RandomSource rng = world.getRandom();
+        Level level = this.getWorld();
+        RandomSource rng = level.getRandom();
         int count = (15 + rng.nextInt(11)) * radius;
+        ColorParticleOption options = ColorParticleOption.create(ParticleTypesPM.SPELL_SPARKLE.get(), color);
         for (int index = 0; index < count; index++) {
             double dx = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
             double dy = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
             double dz = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
-            Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, dx, dy, dz);
-            if (p != null) {
-                p.setColor(r, g, b);
-            }
+            level.addParticle(options, x, y, z, dx, dy, dz);
         }
     }
     
     public void ritualGlow(BlockPos pos, int color) {
         Minecraft mc = Minecraft.getInstance();
-        Level world = this.getWorld();
-        RandomSource rng = world.getRandom();
-
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
+        Level level = this.getWorld();
+        RandomSource rng = level.getRandom();
+        ColorParticleOption options = ColorParticleOption.create(ParticleTypesPM.SPELL_SPARKLE.get(), color);
 
         int count = (10 + rng.nextInt(6));
         for (int index = 0; index < count; index++) {
-            Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), pos.getX() + rng.nextDouble(), pos.getY() + 1.0D, pos.getZ() + rng.nextDouble(), 0.0D, 0.075D, 0.0D);
-            if (p != null) {
-                p.setColor(r, g, b);
-            }
+            level.addParticle(options, pos.getX() + rng.nextDouble(), pos.getY() + 1.0D, pos.getZ() + rng.nextDouble(), 0.0D, 0.075D, 0.0D);
         }
     }
     
@@ -140,16 +113,14 @@ public class FxDispatcher {
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
         RandomSource rng = world.getRandom();
+        ColorParticleOption options = ColorParticleOption.create(ParticleTypesPM.SPELL_SPARKLE.get(), r, g, b);
 
         int count = (3 + rng.nextInt(3));
         for (int index = 0; index < count; index++) {
             double x = pos.getX() + 0.40625D + (rng.nextDouble() * 0.1875D);
             double y = pos.getY() + dy;
             double z = pos.getZ() + 0.40625D + (rng.nextDouble() * 0.1875D);
-            Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, 0.0375D, 0.0D);
-            if (p != null) {
-                p.setColor(r, g, b);
-            }
+            world.addParticle(options, x, y, z, 0.0D, 0.0375D, 0.0D);
         }
     }
     
@@ -195,18 +166,8 @@ public class FxDispatcher {
     }
     
     public void pixieDust(double x, double y, double z, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.pixieDust(x, y, z, r, g, b);
-    }
-    
-    public void pixieDust(double x, double y, double z, float r, float g, float b) {
-        Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, -0.1D, 0.0D);
-        if (p != null) {
-            p.setColor(r, g, b);
-        }
+        // Create a gently falling particle of pixie dust
+        getWorld().addParticle(ColorParticleOption.create(ParticleTypesPM.SPELL_SPARKLE.get(), color), x, y, z, 0.0D, -0.1D, 0.0D);
     }
     
     public void crucibleBubble(double x, double y, double z, int color) {
@@ -235,18 +196,8 @@ public class FxDispatcher {
     }
     
     public void manaArrowTrail(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.manaArrowTrail(x, y, z, dx, dy, dz, r, g, b);
-    }
-    
-    public void manaArrowTrail(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
-        Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, dx, dy, dz);
-        if (p != null) {
-            p.setColor(r, g, b);
-        }
+        // Draw a trail of mana sparkles in the flight path of a mana-tinged arrow
+        getWorld().addParticle(ColorParticleOption.create(ParticleTypesPM.SPELL_SPARKLE.get(), color), x, y, z, dx, dy, dz);
     }
     
     public void spellcraftingRuneU(double x, double y, double z, double dx, double dy, double dz, int color) {

@@ -5,6 +5,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,7 @@ public class SpellSparkleParticle extends SingleQuadParticle {
         return this.layer;
     }
 
-    public static class Provider implements ParticleProvider<SimpleParticleType> {
+    public static class Provider implements ParticleProvider<ColorParticleOption> {
         protected final SpriteSet spriteSet;
         
         public Provider(SpriteSet spriteSet) {
@@ -50,9 +51,10 @@ public class SpellSparkleParticle extends SingleQuadParticle {
         }
 
         @Override
-        public Particle createParticle(@NotNull SimpleParticleType options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
-            return new SpellSparkleParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
+        public Particle createParticle(@NotNull ColorParticleOption options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
+            SpellSparkleParticle p = new SpellSparkleParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
+            p.setColor(options.getRed(), options.getGreen(), options.getBlue());
+            return p;
         }
-        
     }
 }

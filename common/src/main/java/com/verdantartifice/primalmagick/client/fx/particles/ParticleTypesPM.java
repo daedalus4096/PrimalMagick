@@ -26,7 +26,7 @@ public class ParticleTypesPM {
 
     public static final IRegistryItem<ParticleType<?>, ParticleType<ColorParticleOption>> WAND_POOF = register("wand_poof", true, ColorParticleOption::codec, ColorParticleOption::streamCodec);
     public static final IRegistryItem<ParticleType<?>, ParticleType<ManaSparkleParticleData>> MANA_SPARKLE = register("mana_sparkle", true, ManaSparkleParticleData::codec, ManaSparkleParticleData::streamCodec);
-    public static final IRegistryItem<ParticleType<?>, SimpleParticleType> SPELL_SPARKLE = registerSimple("spell_sparkle", true);
+    public static final IRegistryItem<ParticleType<?>, ParticleType<ColorParticleOption>> SPELL_SPARKLE = register("spell_sparkle", true, ColorParticleOption::codec, ColorParticleOption::streamCodec);
     public static final IRegistryItem<ParticleType<?>, ParticleType<SpellBoltParticleData>> SPELL_BOLT = register("spell_bolt", false, SpellBoltParticleData::codec, SpellBoltParticleData::streamCodec);
     public static final IRegistryItem<ParticleType<?>, ParticleType<ItemParticleOption>> OFFERING = register("offering", false, ItemParticleOption::codec, ItemParticleOption::streamCodec);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> PROP_MARKER = registerSimple("prop_marker", true);
