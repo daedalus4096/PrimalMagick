@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParti
 import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticleData;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.BubbleParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -91,7 +92,6 @@ public class FxDispatcher {
     }
     
     public void ritualGlow(BlockPos pos, int color) {
-        Minecraft mc = Minecraft.getInstance();
         Level level = this.getWorld();
         RandomSource rng = level.getRandom();
         ColorParticleOption options = ColorParticleOption.create(ParticleTypesPM.SPELL_SPARKLE.get(), color);
@@ -110,7 +110,6 @@ public class FxDispatcher {
     }
     
     public void spellcraftingGlow(BlockPos pos, double dy, float r, float g, float b) {
-        Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
         RandomSource rng = world.getRandom();
         ColorParticleOption options = ColorParticleOption.create(ParticleTypesPM.SPELL_SPARKLE.get(), r, g, b);
@@ -144,15 +143,13 @@ public class FxDispatcher {
         mc.particleEngine.createParticle(new ItemParticleOption(ParticleTypesPM.OFFERING.get(), ItemStackTemplate.fromNonEmptyStack(stack)), sx, sy, sz, tx, ty, tz);
     }
     
-    public void propMarker(BlockPos pos) {
-        this.propMarker(pos, DEFAULT_PROP_MARKER_LIFETIME);
-    }
-    
     public void propMarker(BlockPos pos, int lifetimeTicks) {
         // Show a marker above a ritual prop's position and save it for later manual canceling
         Minecraft mc = Minecraft.getInstance();
         Particle p = mc.particleEngine.createParticle(ParticleTypesPM.PROP_MARKER.get(), pos.getX() + 0.5D, pos.getY() + 1.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-        p.setLifetime(lifetimeTicks);
+        if (p != null) {
+            p.setLifetime(lifetimeTicks);
+        }
         this.removePropMarker(pos);
         PROP_MARKER_PARTICLES.put(pos, p);
     }
@@ -170,18 +167,11 @@ public class FxDispatcher {
         getWorld().addParticle(ColorParticleOption.create(ParticleTypesPM.SPELL_SPARKLE.get(), color), x, y, z, 0.0D, -0.1D, 0.0D);
     }
     
-    public void crucibleBubble(double x, double y, double z, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.crucibleBubble(x, y, z, r, g, b);
-    }
-    
     public void crucibleBubble(double x, double y, double z, float r, float g, float b) {
         Minecraft mc = Minecraft.getInstance();
         Particle p = mc.particleEngine.createParticle(ParticleTypes.BUBBLE, x, y, z, 0.0D, 0.0D, 0.0D);
-        if (p != null) {
-            p.setColor(r, g, b);
+        if (p instanceof BubbleParticle bubbleParticle) {
+            bubbleParticle.setColor(r, g, b);
         }
     }
     
