@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.fx.particles;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -23,7 +24,7 @@ public class ParticleTypesPM {
         Services.PARTICLE_TYPES_REGISTRY.init();
     }
 
-    public static final IRegistryItem<ParticleType<?>, SimpleParticleType> WAND_POOF = registerSimple("wand_poof", true);
+    public static final IRegistryItem<ParticleType<?>, ParticleType<ColorParticleOption>> WAND_POOF = register("wand_poof", true, ColorParticleOption::codec, ColorParticleOption::streamCodec);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> MANA_SPARKLE = registerSimple("mana_sparkle", true);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> SPELL_SPARKLE = registerSimple("spell_sparkle", true);
     public static final IRegistryItem<ParticleType<?>, ParticleType<SpellBoltParticleData>> SPELL_BOLT = register("spell_bolt", false, SpellBoltParticleData::codec, SpellBoltParticleData::streamCodec);

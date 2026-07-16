@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
@@ -16,6 +17,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -42,17 +44,9 @@ public class FxDispatcher {
     }
     
     public void wandPoof(double x, double y, double z, int color, boolean sound, Direction side) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.wandPoof(x, y, z, r, g, b, sound, side);
-    }
-    
-    public void wandPoof(double x, double y, double z, float r, float g, float b, boolean sound, Direction side) {
         // Release a cluster of poof clouds when transforming a block with a wand
-        Minecraft mc = Minecraft.getInstance();
-        Level world = this.getWorld();
-        RandomSource rng = world.getRandom();
+        Level level = this.getWorld();
+        RandomSource rng = level.getRandom();
         if (sound) {
             this.getWorld().playLocalSound(x, y, z, SoundsPM.POOF.get(), SoundSource.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
         }
@@ -65,10 +59,7 @@ public class FxDispatcher {
                 dy += (side.getStepY() * 0.1D);
                 dz += (side.getStepZ() * 0.1D);
             }
-            Particle p = mc.particleEngine.createParticle(ParticleTypesPM.WAND_POOF.get(), x + dx * 2.0D, y + dy * 2.0D, z + dz * 2.0D, dx / 2.0D, dy / 2.0D, dz / 2.0D);
-            if (p != null) {
-                p.setColor(r, g, b);
-            }
+            level.addParticle(ColorParticleOption.create(ParticleTypesPM.WAND_POOF.get(), color), x + dx * 2.0D, y + dy * 2.0D, z + dz * 2.0D, dx / 2.0D, dy / 2.0D, dz / 2.0D);
         }
     }
     
@@ -194,7 +185,7 @@ public class FxDispatcher {
     public void offeringChannel(double sx, double sy, double sz, double tx, double ty, double tz, ItemStack stack) {
         // Show a trail of particles between the ritual offering and the altar
         Minecraft mc = Minecraft.getInstance();
-        mc.particleEngine.createParticle(new ItemParticleOption(ParticleTypesPM.OFFERING.get(), stack), sx, sy, sz, tx, ty, tz);
+        mc.particleEngine.createParticle(new ItemParticleOption(ParticleTypesPM.OFFERING.get(), ItemStackTemplate.fromNonEmptyStack(stack)), sx, sy, sz, tx, ty, tz);
     }
     
     public void propMarker(BlockPos pos) {
