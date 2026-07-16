@@ -17,9 +17,12 @@ import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Create client-side special effects, usually involving particles.
@@ -31,10 +34,11 @@ public class FxDispatcher {
     public static final int DEFAULT_PROP_MARKER_LIFETIME = 6000;
     
     protected static final Map<BlockPos, Particle> PROP_MARKER_PARTICLES = new HashMap<>();
-    
+
+    @NotNull
     protected Level getWorld() {
         Minecraft mc = Minecraft.getInstance();
-        return mc.level;
+        return Objects.requireNonNull(mc.level);
     }
     
     public void wandPoof(double x, double y, double z, int color, boolean sound, Direction side) {
@@ -181,21 +185,10 @@ public class FxDispatcher {
             world.addParticle(ParticleTypes.PORTAL, x, y + random.nextDouble() * 2.0D, z, random.nextGaussian(), 0.0D, random.nextGaussian());
         }
     }
-    
-    public void spellBolt(double sx, double sy, double sz, double tx, double ty, double tz, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.spellBolt(sx, sy, sz, tx, ty, tz, r, g, b);
-    }
-    
-    public void spellBolt(double sx, double sy, double sz, double tx, double ty, double tz, float r, float g, float b) {
-        // Show a spell bolt "particle"
-        Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particleEngine.createParticle(new SpellBoltParticleData(tx, ty, tz), sx, sy, sz, 0.0D, 0.0D, 0.0D);
-        if (p != null) {
-            p.setColor(r, g, b);
-        }
+
+    public void spellBolt(Vec3 source, Vec3 target, int color) {
+        // Show a translucent spell bolt "particle"
+        getWorld().addParticle(new SpellBoltParticleData(target, ARGB.color(0.5F, color)), source.x(), source.y(), source.z(), 0D, 0D, 0D);
     }
     
     public void offeringChannel(double sx, double sy, double sz, double tx, double ty, double tz, ItemStack stack) {

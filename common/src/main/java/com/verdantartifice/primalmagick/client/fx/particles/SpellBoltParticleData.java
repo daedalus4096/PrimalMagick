@@ -10,37 +10,24 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Particle data, specifically target point, for spell bolts
  * 
  * @author Daedalus4096
  */
-public class SpellBoltParticleData implements ParticleOptions {
-    public static final MapCodec<SpellBoltParticleData> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
-        return instance.group(
-                Codec.DOUBLE.fieldOf("x").forGetter(data -> data.target.x),
-                Codec.DOUBLE.fieldOf("y").forGetter(data -> data.target.y),
-                Codec.DOUBLE.fieldOf("z").forGetter(data -> data.target.z)
-            ).apply(instance, SpellBoltParticleData::new);
-    });
+public record SpellBoltParticleData(Vec3 target, int color) implements ParticleOptions {
+    public static final MapCodec<SpellBoltParticleData> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Vec3.CODEC.fieldOf("target").forGetter(SpellBoltParticleData::target),
+            Codec.INT.fieldOf("color").forGetter(SpellBoltParticleData::color)
+        ).apply(instance, SpellBoltParticleData::new));
     
     public static final StreamCodec<ByteBuf, SpellBoltParticleData> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.DOUBLE, data -> data.target.x,
-            ByteBufCodecs.DOUBLE, data -> data.target.y,
-            ByteBufCodecs.DOUBLE, data -> data.target.z,
+            Vec3.STREAM_CODEC, SpellBoltParticleData::target,
+            ByteBufCodecs.VAR_INT, SpellBoltParticleData::color,
             SpellBoltParticleData::new);
     
-    protected final Vec3 target;
-    
-    public SpellBoltParticleData(Vec3 target) {
-        this(target.x, target.y, target.z);
-    }
-    
-    public SpellBoltParticleData(double targetX, double targetY, double targetZ) {
-        this.target = new Vec3(targetX, targetY, targetZ);
-    }
-
     public static MapCodec<SpellBoltParticleData> codec(ParticleType<SpellBoltParticleData> pParticleType) {
         return CODEC;
     }
@@ -50,11 +37,8 @@ public class SpellBoltParticleData implements ParticleOptions {
     }
 
     @Override
+    @NotNull
     public ParticleType<?> getType() {
         return ParticleTypesPM.SPELL_BOLT.get();
-    }
-
-    public Vec3 getTargetVec() {
-        return this.target;
     }
 }

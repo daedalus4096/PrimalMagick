@@ -27,6 +27,7 @@ import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleGroupsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
@@ -40,13 +41,13 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 public class ClientRegistrationEventListeners {
     @SubscribeEvent
     public static void onRegisterParticleProviders(RegisterParticleProvidersEvent event) {
-        ClientRegistrationEvents.onRegisterParticleProviders(event::registerSprite, event::registerSpecial);
+        ClientRegistrationEvents.onRegisterParticleProviders(event::registerSpecial);
 
         // FIXME The common access transformer refuses to recognize ParticleEngine$SpriteParticleRegistration, so do it here instead
         event.registerSpriteSet(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Provider::new);
         event.registerSpriteSet(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Provider::new);
         event.registerSpriteSet(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Provider::new);
-        event.registerSpriteSet(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
+        event.registerSpecial(ParticleTypesPM.SPELL_BOLT.get(), new SpellBoltParticle.Provider());
         event.registerSpecial(ParticleTypesPM.OFFERING.get(), new OfferingParticle.Provider());
         event.registerSpriteSet(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Provider::new);
         event.registerSpriteSet(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), SpellcraftingRuneParticle.Provider::new);
@@ -60,6 +61,11 @@ public class ClientRegistrationEventListeners {
         event.registerSpriteSet(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), DripParticlePM.HangProvider::new);
         event.registerSpriteSet(ParticleTypesPM.FALLING_BLOOD_DROP.get(), DripParticlePM.FallProvider::new);
         event.registerSpriteSet(ParticleTypesPM.LANDING_BLOOD_DROP.get(), DripParticlePM.LandProvider::new);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterParticleGroups(RegisterParticleGroupsEvent event) {
+        ClientRegistrationEvents.onRegisterParticleGroups(event::register);
     }
     
     @SubscribeEvent

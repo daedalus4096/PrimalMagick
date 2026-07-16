@@ -6,6 +6,8 @@ import com.verdantartifice.primalmagick.client.books.StyleGuideLoader;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticle;
+import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticle;
+import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticleGroup;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ForbiddenTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelTridentSpecialRenderer;
@@ -25,7 +27,10 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.particle.ParticleGroup;
 import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.particles.ParticleOptions;
@@ -52,6 +57,10 @@ public class ClientRegistrationEvents {
 
     public interface SpecialParticleProviderRegistrar {
         <T extends ParticleOptions> void register(ParticleType<T> type, ParticleProvider<T> provider);
+    }
+
+    public static void onRegisterParticleGroups(BiConsumer<ParticleRenderType, Function<ParticleEngine, ParticleGroup<?>>> groupConsumer) {
+        groupConsumer.accept(SpellBoltParticle.RENDER_TYPE, SpellBoltParticleGroup::new);
     }
     
     /**

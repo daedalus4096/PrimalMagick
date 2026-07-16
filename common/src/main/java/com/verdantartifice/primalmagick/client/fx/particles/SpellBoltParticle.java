@@ -1,23 +1,16 @@
 package com.verdantartifice.primalmagick.client.fx.particles;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.common.util.LineSegment;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.util.VectorUtils;
-import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4fStack;
-import org.lwjgl.opengl.GL11;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,38 +20,39 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class SpellBoltParticle extends Particle {
-    protected static final float WIDTH = 6F;
+    public static final ParticleRenderType RENDER_TYPE = new ParticleRenderType(ResourceUtils.loc("spell_bolt").toString());
+
     protected static final double MAX_DISPLACEMENT = 0.5D;
     protected static final double PERTURB_DISTANCE = 0.002D;
     protected static final int GENERATIONS = 5;
-    
+
+    protected final Vec3 start;
     protected final Vec3 delta;
-    protected final List<LineSegment> segmentList;
-    protected final List<Vec3> perturbList;
+    protected final int color;
     
-    protected SpellBoltParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, Vec3 target) {
+    protected SpellBoltParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, Vec3 target, int color) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
-        this.delta = target.subtract(new Vec3(x, y, z));
+        this.start = new Vec3(x, y, z);
+        this.delta = target.subtract(this.start);
         this.xd = 0.0D;
         this.yd = 0.0D;
         this.zd = 0.0D;
         this.lifetime = 10;
-        this.segmentList = this.calcSegments();
-        this.perturbList = this.calcPerturbs();
+        this.color = color;
     }
     
-    @Nonnull
-    protected List<LineSegment> calcSegments() {
+    @NotNull
+    protected static List<LineSegment> calcSegments(Vec3 delta, RandomSource random) {
         List<LineSegment> retVal = new ArrayList<>();
         double curDisplacement = MAX_DISPLACEMENT;
         
         // Fractally generate a series of line segments, splitting each at the midpoint and adding an orthogonal displacement
-        retVal.add(new LineSegment(Vec3.ZERO, this.delta));
+        retVal.add(new LineSegment(Vec3.ZERO, delta));
         for (int gen = 0; gen < GENERATIONS; gen++) {
             List<LineSegment> tempList = new ArrayList<>();
             for (LineSegment segment : retVal) {
                 Vec3 midpoint = segment.getMiddle();
-                midpoint = midpoint.add(VectorUtils.getRandomOrthogonalUnitVector(segment.getDelta(), this.level.getRandom()).scale(curDisplacement));
+                midpoint = midpoint.add(VectorUtils.getRandomOrthogonalUnitVector(segment.getDelta(), random).scale(curDisplacement));
                 tempList.add(new LineSegment(segment.getStart(), midpoint));
                 tempList.add(new LineSegment(midpoint, segment.getEnd()));
             }
@@ -68,62 +62,41 @@ public class SpellBoltParticle extends Particle {
         return retVal;
     }
     
-    @Nonnull
-    protected List<Vec3> calcPerturbs() {
+    @NotNull
+    protected static List<Vec3> calcPerturbs(List<LineSegment> segmentList, Vec3 delta, RandomSource random) {
         // Generate a perturbation vector for each point in the segment list, except for the start and end points
         List<Vec3> retVal = new ArrayList<>();
         retVal.add(Vec3.ZERO);
-        for (LineSegment segment : this.segmentList) {
-            retVal.add(segment.getEnd().equals(this.delta) ? Vec3.ZERO : VectorUtils.getRandomUnitVector(this.level.getRandom()).scale(PERTURB_DISTANCE * this.level.getRandom().nextDouble()));
+        for (LineSegment segment : segmentList) {
+            retVal.add(segment.getEnd().equals(delta) ? Vec3.ZERO : VectorUtils.getRandomUnitVector(random).scale(PERTURB_DISTANCE * random.nextDouble()));
         }
         return retVal;
     }
-    
-    @Override
-    public void render(VertexConsumer builder, Camera entityIn, float partialTicks) {
-        RenderSystem.depthMask(false);
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-        RenderSystem.disableCull();
-
-        Matrix4fStack stack = RenderSystem.getModelViewStack();
-        stack.pushMatrix();
-        stack.translate((float)(this.x - entityIn.getPosition().x), (float)(this.y - entityIn.getPosition().y), (float)(this.z - entityIn.getPosition().z));
-
-        MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-        VertexConsumer lineBuilder = buffer.getBuffer(RenderTypes.LINES_TRANSLUCENT).setLineWidth(WIDTH);
-        
-        // Draw each line segment
-        for (int index = 0; index < this.segmentList.size(); index++) {
-            LineSegment segment = this.segmentList.get(index);
-            
-            // Move the endpoints of each segment along their computed motion path before rendering to make the bolt move
-            segment.perturb(this.perturbList.get(index), this.perturbList.get(index + 1));
-            
-            lineBuilder.addVertex((float)segment.getStart().x, (float)segment.getStart().y, (float)segment.getStart().z).setColor(this.rCol, this.gCol, this.bCol, 0.5F);
-            lineBuilder.addVertex((float)segment.getEnd().x, (float)segment.getEnd().y, (float)segment.getEnd().z).setColor(this.rCol, this.gCol, this.bCol, 0.5F);
-        }
-        buffer.endBatch(RenderTypes.LINES_TRANSLUCENT);
-        
-        RenderSystem.enableCull();
-        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        RenderSystem.disableBlend();
-        RenderSystem.depthMask(true);
-
-        stack.popMatrix();
-    }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.CUSTOM;
+    @NotNull
+    public ParticleRenderType getGroup() {
+        return RENDER_TYPE;
     }
 
-    public static class Factory implements ParticleProvider<SpellBoltParticleData> {
-        public Factory(SpriteSet spriteSet) {}
-        
+    public RenderState getRenderState() {
+        List<LineSegment> segmentList = calcSegments(this.delta, this.random);
+        List<Vec3> perturbList = calcPerturbs(segmentList, this.delta, this.random);
+        return new RenderState(this.start, segmentList, perturbList, this.color);
+    }
+
+    /**
+     * @param start the start point of the bolt in world space
+     * @param segmentList the list of line segments composing the bolt
+     * @param perturbList the list of perturbation vectors for the bolt to give the appearance of crackling motion
+     * @param color the color of the bolt's line segments
+     */
+    public record RenderState(Vec3 start, List<LineSegment> segmentList, List<Vec3> perturbList, int color) {}
+
+    public static class Provider implements ParticleProvider<SpellBoltParticleData> {
         @Override
-        public Particle createParticle(SpellBoltParticleData typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new SpellBoltParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, typeIn.getTargetVec());
+        public Particle createParticle(@NotNull SpellBoltParticleData options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
+            return new SpellBoltParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, options.target(), options.color());
         }
     }
 }
