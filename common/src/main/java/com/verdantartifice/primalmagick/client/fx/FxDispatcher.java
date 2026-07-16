@@ -201,63 +201,19 @@ public class FxDispatcher {
     }
     
     public void spellcraftingRuneU(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.spellcraftingRuneU(x, y, z, dx, dy, dz, r, g, b);
-    }
-    
-    public void spellcraftingRuneU(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
-        Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), x, y, z, dx, dy, dz);
-        if (p != null) {
-            p.setColor(r, g, b);
-        }
+        getWorld().addParticle(ColorParticleOption.create(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), color), x, y, z, dx, dy, dz);
     }
     
     public void spellcraftingRuneV(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.spellcraftingRuneV(x, y, z, dx, dy, dz, r, g, b);
-    }
-    
-    public void spellcraftingRuneV(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
-        Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), x, y, z, dx, dy, dz);
-        if (p != null) {
-            p.setColor(r, g, b);
-        }
+        getWorld().addParticle(ColorParticleOption.create(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), color), x, y, z, dx, dy, dz);
     }
     
     public void spellcraftingRuneT(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.spellcraftingRuneT(x, y, z, dx, dy, dz, r, g, b);
-    }
-    
-    public void spellcraftingRuneT(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
-        Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), x, y, z, dx, dy, dz);
-        if (p != null) {
-            p.setColor(r, g, b);
-        }
+        getWorld().addParticle(ColorParticleOption.create(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), color), x, y, z, dx, dy, dz);
     }
     
     public void spellcraftingRuneD(double x, double y, double z, double dx, double dy, double dz, int color) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.spellcraftingRuneD(x, y, z, dx, dy, dz, r, g, b);
-    }
-    
-    public void spellcraftingRuneD(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
-        Minecraft mc = Minecraft.getInstance();
-        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), x, y, z, dx, dy, dz);
-        if (p != null) {
-            p.setColor(r, g, b);
-        }
+        getWorld().addParticle(ColorParticleOption.create(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), color), x, y, z, dx, dy, dz);
     }
     
     public void bloodDrop(double x, double y, double z) {

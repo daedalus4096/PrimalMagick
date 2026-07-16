@@ -10,6 +10,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
@@ -32,10 +33,10 @@ public class ParticleTypesPM {
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> PROP_MARKER = registerSimple("prop_marker", true);
     public static final IRegistryItem<ParticleType<?>, ParticleType<PotionExplosionParticleData>> POTION_EXPLOSION = register("potion_explosion", false, PotionExplosionParticleData::codec, PotionExplosionParticleData::streamCodec);
     public static final IRegistryItem<ParticleType<?>, ParticleType<NoteEmitterParticleData>> NOTE_EMITTER = register("note_emitter", false, NoteEmitterParticleData::codec, NoteEmitterParticleData::streamCodec);
-    public static final IRegistryItem<ParticleType<?>, SimpleParticleType> SPELLCRAFTING_RUNE_U = registerSimple("spellcrafting_rune_u", true);
-    public static final IRegistryItem<ParticleType<?>, SimpleParticleType> SPELLCRAFTING_RUNE_V = registerSimple("spellcrafting_rune_v", true);
-    public static final IRegistryItem<ParticleType<?>, SimpleParticleType> SPELLCRAFTING_RUNE_T = registerSimple("spellcrafting_rune_t", true);
-    public static final IRegistryItem<ParticleType<?>, SimpleParticleType> SPELLCRAFTING_RUNE_D = registerSimple("spellcrafting_rune_d", true);
+    public static final IRegistryItem<ParticleType<?>, ParticleType<ColorParticleOption>> SPELLCRAFTING_RUNE_U = register("spellcrafting_rune_u", true, ColorParticleOption::codec, ColorParticleOption::streamCodec);
+    public static final IRegistryItem<ParticleType<?>, ParticleType<ColorParticleOption>> SPELLCRAFTING_RUNE_V = register("spellcrafting_rune_v", true, ColorParticleOption::codec, ColorParticleOption::streamCodec);
+    public static final IRegistryItem<ParticleType<?>, ParticleType<ColorParticleOption>> SPELLCRAFTING_RUNE_T = register("spellcrafting_rune_t", true, ColorParticleOption::codec, ColorParticleOption::streamCodec);
+    public static final IRegistryItem<ParticleType<?>, ParticleType<ColorParticleOption>> SPELLCRAFTING_RUNE_D = register("spellcrafting_rune_d", true, ColorParticleOption::codec, ColorParticleOption::streamCodec);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> INFERNAL_FLAME = registerSimple("infernal_flame", false);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> AIR_CURRENT = registerSimple("air_current", false);
     public static final IRegistryItem<ParticleType<?>, SimpleParticleType> VOID_SMOKE = registerSimple("void_smoke", false);
@@ -52,11 +53,13 @@ public class ParticleTypesPM {
             final Function<ParticleType<T>, StreamCodec<? super RegistryFriendlyByteBuf, T>> streamCodecGetter) {
         return Services.PARTICLE_TYPES_REGISTRY.register(name, () -> new ParticleType<T>(overrideLimiter) {
             @Override
+            @NotNull
             public MapCodec<T> codec() {
                 return codecGetter.apply(this);
             }
 
             @Override
+            @NotNull
             public StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec() {
                 return streamCodecGetter.apply(this);
             }
