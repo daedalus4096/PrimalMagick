@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.fx.particles;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.verdantartifice.primalmagick.client.renderers.types.ThickLinesRenderType;
 import com.verdantartifice.primalmagick.common.util.LineSegment;
 import com.verdantartifice.primalmagick.common.util.VectorUtils;
 import net.minecraft.client.Camera;
@@ -13,6 +12,7 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4fStack;
 import org.lwjgl.opengl.GL11;
@@ -91,7 +91,7 @@ public class SpellBoltParticle extends Particle {
         stack.translate((float)(this.x - entityIn.getPosition().x), (float)(this.y - entityIn.getPosition().y), (float)(this.z - entityIn.getPosition().z));
 
         MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-        VertexConsumer lineBuilder = buffer.getBuffer(ThickLinesRenderType.THICK_LINES);
+        VertexConsumer lineBuilder = buffer.getBuffer(RenderTypes.LINES_TRANSLUCENT).setLineWidth(WIDTH);
         
         // Draw each line segment
         for (int index = 0; index < this.segmentList.size(); index++) {
@@ -103,7 +103,7 @@ public class SpellBoltParticle extends Particle {
             lineBuilder.addVertex((float)segment.getStart().x, (float)segment.getStart().y, (float)segment.getStart().z).setColor(this.rCol, this.gCol, this.bCol, 0.5F);
             lineBuilder.addVertex((float)segment.getEnd().x, (float)segment.getEnd().y, (float)segment.getEnd().z).setColor(this.rCol, this.gCol, this.bCol, 0.5F);
         }
-        buffer.endBatch(ThickLinesRenderType.THICK_LINES);
+        buffer.endBatch(RenderTypes.LINES_TRANSLUCENT);
         
         RenderSystem.enableCull();
         RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
