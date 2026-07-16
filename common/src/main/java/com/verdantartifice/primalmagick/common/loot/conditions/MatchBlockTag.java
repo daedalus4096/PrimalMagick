@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -39,7 +38,7 @@ public class MatchBlockTag implements LootItemCondition {
 
     @Override
     @NotNull
-    public LootItemConditionType getType() {
-        return LootConditionTypesPM.MATCH_BLOCK_TAG.get();
+    public MapCodec<MatchBlockTag> codec() {
+        return CODEC;
     }
 }

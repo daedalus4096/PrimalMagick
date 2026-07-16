@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.registries.IRegistryItem;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 /**
  * Registration for the mod's loot condition types.
@@ -17,9 +16,9 @@ public class LootConditionTypesPM {
         Services.LOOT_ITEM_CONDITION_TYPES_REGISTRY.init();
     }
 
-    public static final IRegistryItem<LootItemConditionType, LootItemConditionType> MATCH_BLOCK_TAG = register("match_block_tag", MatchBlockTag.CODEC);
+    public static final IRegistryItem<MapCodec<? extends LootItemCondition>, MapCodec<MatchBlockTag>> MATCH_BLOCK_TAG = register("match_block_tag", MatchBlockTag.CODEC);
 
-    private static IRegistryItem<LootItemConditionType, LootItemConditionType> register(String name, MapCodec<? extends LootItemCondition> codec) {
-        return Services.LOOT_ITEM_CONDITION_TYPES_REGISTRY.register(name, () -> new LootItemConditionType(codec));
+    private static <T extends LootItemCondition> IRegistryItem<MapCodec<? extends LootItemCondition>, MapCodec<T>> register(String name, MapCodec<T> codec) {
+        return Services.LOOT_ITEM_CONDITION_TYPES_REGISTRY.register(name, () -> codec);
     }
 }
