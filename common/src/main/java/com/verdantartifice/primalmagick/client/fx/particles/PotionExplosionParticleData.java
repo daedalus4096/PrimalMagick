@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -18,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class PotionExplosionParticleData implements ParticleOptions {
     public static final MapCodec<PotionExplosionParticleData> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            Codec.INT.fieldOf("color").forGetter(data -> data.color),
+            ExtraCodecs.ARGB_COLOR_CODEC.fieldOf("color").forGetter(data -> data.color),
             Codec.BOOL.fieldOf("instant").forGetter(data -> data.isInstant)
         ).apply(instance, PotionExplosionParticleData::new));
 

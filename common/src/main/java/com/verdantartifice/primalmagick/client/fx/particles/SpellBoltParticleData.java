@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public record SpellBoltParticleData(Vec3 target, int color) implements ParticleOptions {
     public static final MapCodec<SpellBoltParticleData> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Vec3.CODEC.fieldOf("target").forGetter(SpellBoltParticleData::target),
-            Codec.INT.fieldOf("color").forGetter(SpellBoltParticleData::color)
+            ExtraCodecs.ARGB_COLOR_CODEC.fieldOf("color").forGetter(SpellBoltParticleData::color)
         ).apply(instance, SpellBoltParticleData::new));
     
     public static final StreamCodec<ByteBuf, SpellBoltParticleData> STREAM_CODEC = StreamCodec.composite(
