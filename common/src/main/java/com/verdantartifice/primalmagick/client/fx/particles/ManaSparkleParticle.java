@@ -6,6 +6,7 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -102,7 +103,7 @@ public class ManaSparkleParticle extends SingleQuadParticle {
         return this.layer;
     }
 
-    public static class Provider implements ParticleProvider<SimpleParticleType> {
+    public static class Provider implements ParticleProvider<ManaSparkleParticleData> {
         protected final SpriteSet spriteSet;
         
         public Provider(SpriteSet spriteSet) {
@@ -110,8 +111,12 @@ public class ManaSparkleParticle extends SingleQuadParticle {
         }
 
         @Override
-        public Particle createParticle(@NotNull SimpleParticleType typeIn, @NotNull ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
-            return new ManaSparkleParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
+        public Particle createParticle(@NotNull ManaSparkleParticleData options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
+            ManaSparkleParticle p = new ManaSparkleParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
+            p.setColor(ARGB.redFloat(options.color()), ARGB.greenFloat(options.color()), ARGB.blueFloat(options.color()));
+            p.setLifetime(options.lifetime());
+            p.setPhase(options.phase());
+            return p;
         }
     }
 }

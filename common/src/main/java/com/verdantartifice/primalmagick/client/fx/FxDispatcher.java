@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.fx;
 
-import com.verdantartifice.primalmagick.client.fx.particles.ManaSparkleParticle;
+import com.verdantartifice.primalmagick.client.fx.particles.ManaSparkleParticleData;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticleData;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticleData;
@@ -64,26 +64,11 @@ public class FxDispatcher {
     }
     
     public void manaSparkle(double x1, double y1, double z1, double x2, double y2, double z2, int maxAge, int color, double phase) {
-        float r = ARGB.red(color) / 255.0F;
-        float g = ARGB.green(color) / 255.0F;
-        float b = ARGB.blue(color) / 255.0F;
-        this.manaSparkle(x1, y1, z1, x2, y2, z2, maxAge, r, g, b, phase);
-    }
-    
-    public void manaSparkle(double x1, double y1, double z1, double x2, double y2, double z2, int maxAge, float r, float g, float b, double phase) {
         // Show a particle when draining a mana font with a wand
-        Minecraft mc = Minecraft.getInstance();
         double vx = (x2 - x1) / (double)maxAge;
         double vy = (y2 - y1) / (double)maxAge;
         double vz = (z2 - z1) / (double)maxAge;
-        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.MANA_SPARKLE.get(), x1, y1, z1, vx, vy, vz);
-        if (p != null) {
-            p.setColor(r, g, b);
-            p.setLifetime(maxAge);
-            if (p instanceof ManaSparkleParticle manaSparkleParticle) {
-                manaSparkleParticle.setPhase(phase);
-            }
-        }
+        getWorld().addParticle(new ManaSparkleParticleData(color, maxAge, phase), x1, y1, z1, vx, vy, vz);
     }
     
     public void spellTrail(double x, double y, double z, int color) {
