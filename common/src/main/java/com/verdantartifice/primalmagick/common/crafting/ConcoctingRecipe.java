@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.crafting.display.ConcoctingRecipeDisplay;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.ConcoctingBookCategory;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -88,6 +89,11 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
     @Override
     public final boolean showNotification() {
         return this.commonInfo.showNotification();
+    }
+
+    @Override
+    public ConcoctingBookCategory category() {
+        return this.bookInfo.category();
     }
 
     @Override

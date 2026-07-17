@@ -7,11 +7,11 @@ package com.verdantartifice.primalmagick.common.crafting;
  */
 public interface IArcaneRecipeBookItem {
     /**
-     * If true, the recipoe is special and should not show up in the arcane recipe book.
+     * If true, the recipe is special and should not show up in the arcane recipe book.
      * 
      * @return whether the recipe should be excluded from the arcane recipe book
      */
-    public default boolean isArcaneSpecial() {
+    default boolean isArcaneSpecial() {
         return false;
     }
 }

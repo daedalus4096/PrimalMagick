@@ -24,7 +24,6 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
@@ -165,12 +164,6 @@ public class RitualRecipe implements IRitualRecipe {
                         new SlotDisplay.ItemSlotDisplay(ItemsPM.RITUAL_ALTAR.get())
                 )
         );
-    }
-
-    @Override
-    @NotNull
-    public RecipeBookCategory recipeBookCategory() {
-        // FIXME Tie into datapacked recipe book category system
     }
 
     @Override

@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneCraftingBookCategory;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.ConcoctingBookCategory;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.RecipeBookCategoriesPM;
 import com.verdantartifice.primalmagick.common.util.CraftingUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -27,10 +28,7 @@ public interface IConcoctingRecipe extends Recipe<CraftingInput>, IHasManaCost, 
     @NotNull
     RecipeSerializer<? extends IConcoctingRecipe> getSerializer();
 
-    // FIXME Should this be a different category?
-    default ArcaneCraftingBookCategory category() {
-        return ArcaneCraftingBookCategory.ARCANE;
-    }
+    ConcoctingBookCategory category();
 
     @Override
     default boolean isSpecial() {
@@ -42,12 +40,16 @@ public interface IConcoctingRecipe extends Recipe<CraftingInput>, IHasManaCost, 
         return CraftingUtils.defaultCraftingReminder(input);
     }
 
+    @NotNull
     default RecipeBookCategory recipeBookCategory() {
-        // FIXME Tie into datapacked recipe book category system
+        return switch (this.category()) {
+            case DRINKABLE -> RecipeBookCategoriesPM.CONCOCTER_DRINKABLE.get();
+            case BOMB -> RecipeBookCategoriesPM.CONCOCTER_BOMB.get();
+        };
     }
 
-    record ConcoctingCraftingBookInfo(ArcaneCraftingBookCategory category, String group) implements Recipe.BookInfo<ArcaneCraftingBookCategory> {
-        public static final MapCodec<IConcoctingRecipe.ConcoctingCraftingBookInfo> MAP_CODEC = BookInfo.mapCodec(ArcaneCraftingBookCategory.CODEC, ArcaneCraftingBookCategory.ARCANE, IConcoctingRecipe.ConcoctingCraftingBookInfo::new);
-        public static final StreamCodec<RegistryFriendlyByteBuf, IConcoctingRecipe.ConcoctingCraftingBookInfo> STREAM_CODEC = BookInfo.streamCodec(ArcaneCraftingBookCategory.STREAM_CODEC, IConcoctingRecipe.ConcoctingCraftingBookInfo::new);
+    record ConcoctingCraftingBookInfo(ConcoctingBookCategory category, String group) implements Recipe.BookInfo<ConcoctingBookCategory> {
+        public static final MapCodec<IConcoctingRecipe.ConcoctingCraftingBookInfo> MAP_CODEC = BookInfo.mapCodec(ConcoctingBookCategory.CODEC, ConcoctingBookCategory.DRINKABLE, IConcoctingRecipe.ConcoctingCraftingBookInfo::new);
+        public static final StreamCodec<RegistryFriendlyByteBuf, IConcoctingRecipe.ConcoctingCraftingBookInfo> STREAM_CODEC = BookInfo.streamCodec(ConcoctingBookCategory.STREAM_CODEC, IConcoctingRecipe.ConcoctingCraftingBookInfo::new);
     }
 }

@@ -1,9 +1,12 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.RecipeBookCategoriesPM;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -37,7 +40,8 @@ public interface IRitualRecipe extends Recipe<CraftingInput>, IHasManaCost, IHas
     int getInstability();
     
     @Override
-    default RecipeType<? extends RitualRecipe> getType() {
+    @NotNull
+    default RecipeType<IRitualRecipe> getType() {
         return RecipeTypesPM.RITUAL.get();
     }
     
@@ -45,5 +49,10 @@ public interface IRitualRecipe extends Recipe<CraftingInput>, IHasManaCost, IHas
     default boolean isSpecial() {
         // Return true to keep ritual recipes from showing up in the vanilla recipe book
         return true;
+    }
+
+    @NotNull
+    default RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategoriesPM.RITUAL_MISC.get();
     }
 }

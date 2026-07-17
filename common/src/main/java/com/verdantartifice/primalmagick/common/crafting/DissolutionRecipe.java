@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.crafting.display.DissolutionRecipeDisplay;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.DissolutionBookCategory;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -75,6 +76,11 @@ public class DissolutionRecipe implements IDissolutionRecipe {
     @Override
     public final boolean showNotification() {
         return this.commonInfo.showNotification();
+    }
+
+    @Override
+    public DissolutionBookCategory category() {
+        return this.bookInfo.category();
     }
 
     @Override

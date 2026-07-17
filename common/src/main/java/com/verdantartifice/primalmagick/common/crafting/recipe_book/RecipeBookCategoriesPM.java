@@ -20,6 +20,8 @@ public class RecipeBookCategoriesPM {
     public static final IRegistryItem<RecipeBookCategory, RecipeBookCategory> CONCOCTER_BOMB = register("concocter_bomb");
     public static final IRegistryItem<RecipeBookCategory, RecipeBookCategory> DISSOLUTION_ORES = register("dissolution_ores");
     public static final IRegistryItem<RecipeBookCategory, RecipeBookCategory> DISSOLUTION_MISC = register("dissolution_misc");
+    public static final IRegistryItem<RecipeBookCategory, RecipeBookCategory> RUNECARVING_RUNE = register("runecarving_rune");
+    public static final IRegistryItem<RecipeBookCategory, RecipeBookCategory> RITUAL_MISC = register("ritual_misc");
 
     public static final IRegistryItem<RecipeBookCategory, RecipeBookCategory> SEARCH_ARCANE_CRAFTING = register("search_arcane_crafting");
     public static final IRegistryItem<RecipeBookCategory, RecipeBookCategory> SEARCH_CONCOCTER = register("search_concocter");

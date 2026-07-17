@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.crafting.display.DissolutionRecipeDisplay;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.DissolutionBookCategory;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
@@ -97,6 +98,11 @@ public class DissolutionTagRecipe implements IDissolutionRecipe {
     @Override
     public boolean showNotification() {
         return this.commonInfo.showNotification();
+    }
+
+    @Override
+    public DissolutionBookCategory category() {
+        return this.bookInfo.category();
     }
 
     @Override

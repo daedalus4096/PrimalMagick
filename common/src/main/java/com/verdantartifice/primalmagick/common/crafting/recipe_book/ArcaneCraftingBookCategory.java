@@ -11,22 +11,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.IntFunction;
 
 public enum ArcaneCraftingBookCategory implements StringRepresentable {
-    BUILDING("building", 0),
-    REDSTONE("redstone", 1),
-    EQUIPMENT("equipment", 2),
-    MISC("misc", 3),
-    ARCANE("arcane", 4);
+    ARCANE(0, "arcane"),
+    RUNECARVING(1, "runecarving"),
+    RITUAL(2, "ritual");
 
     public static final Codec<ArcaneCraftingBookCategory> CODEC = StringRepresentable.fromEnum(ArcaneCraftingBookCategory::values);
     public static final IntFunction<ArcaneCraftingBookCategory> BY_ID = ByIdMap.continuous(ArcaneCraftingBookCategory::id, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
     public static final StreamCodec<ByteBuf, ArcaneCraftingBookCategory> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, ArcaneCraftingBookCategory::id);
 
-    private final String name;
     private final int id;
+    private final String name;
 
-    ArcaneCraftingBookCategory(String name, int id) {
-        this.name = name;
+    ArcaneCraftingBookCategory(int id, String name) {
         this.id = id;
+        this.name = name;
     }
 
     @NotNull

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneCraftingBookCategory;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.RecipeBookCategoriesPM;
 import com.verdantartifice.primalmagick.common.util.CraftingUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -36,6 +37,7 @@ public interface IArcaneRecipe extends Recipe<CraftingInput>, IHasManaCost, IHas
 
     @Override
     default boolean isSpecial() {
+        // FIXME Is this still needed?
         // Return true to keep arcane recipes from showing up in the vanilla recipe book
         return true;
     }
@@ -44,8 +46,9 @@ public interface IArcaneRecipe extends Recipe<CraftingInput>, IHasManaCost, IHas
         return CraftingUtils.defaultCraftingReminder(input);
     }
 
+    @NotNull
     default RecipeBookCategory recipeBookCategory() {
-        // FIXME Tie into datapacked recipe book category system
+        return RecipeBookCategoriesPM.CRAFTING_ARCANE.get();
     }
 
     record ArcaneCraftingBookInfo(ArcaneCraftingBookCategory category, String group) implements Recipe.BookInfo<ArcaneCraftingBookCategory> {

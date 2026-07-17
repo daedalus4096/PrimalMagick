@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.mojang.serialization.MapCodec;
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneCraftingBookCategory;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.DissolutionBookCategory;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.RecipeBookCategoriesPM;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -24,18 +25,19 @@ public interface IDissolutionRecipe extends Recipe<SingleRecipeInput>, IHasManaC
     @NotNull
     RecipeSerializer<? extends IDissolutionRecipe> getSerializer();
 
-    // FIXME Should this be a different category?
-    default ArcaneCraftingBookCategory category() {
-        return ArcaneCraftingBookCategory.ARCANE;
-    }
+    DissolutionBookCategory category();
 
     default NonNullList<ItemStack> getRemainingItems(SingleRecipeInput input) {
         ItemStackTemplate remainder = input.item().getItem().getCraftingRemainder();
         return NonNullList.of(ItemStack.EMPTY, remainder != null ? remainder.create() : ItemStack.EMPTY);
     }
 
+    @NotNull
     default RecipeBookCategory recipeBookCategory() {
-        // FIXME Tie into datapacked recipe book category system
+        return switch (this.category()) {
+            case ORE -> RecipeBookCategoriesPM.DISSOLUTION_ORES.get();
+            case MISC -> RecipeBookCategoriesPM.DISSOLUTION_MISC.get();
+        };
     }
 
     @Override
@@ -44,8 +46,8 @@ public interface IDissolutionRecipe extends Recipe<SingleRecipeInput>, IHasManaC
         return true;
     }
 
-    record DissolutionCraftingBookInfo(ArcaneCraftingBookCategory category, String group) implements Recipe.BookInfo<ArcaneCraftingBookCategory> {
-        public static final MapCodec<IDissolutionRecipe.DissolutionCraftingBookInfo> MAP_CODEC = BookInfo.mapCodec(ArcaneCraftingBookCategory.CODEC, ArcaneCraftingBookCategory.ARCANE, IDissolutionRecipe.DissolutionCraftingBookInfo::new);
-        public static final StreamCodec<RegistryFriendlyByteBuf, IDissolutionRecipe.DissolutionCraftingBookInfo> STREAM_CODEC = BookInfo.streamCodec(ArcaneCraftingBookCategory.STREAM_CODEC, IDissolutionRecipe.DissolutionCraftingBookInfo::new);
+    record DissolutionCraftingBookInfo(DissolutionBookCategory category, String group) implements Recipe.BookInfo<DissolutionBookCategory> {
+        public static final MapCodec<IDissolutionRecipe.DissolutionCraftingBookInfo> MAP_CODEC = BookInfo.mapCodec(DissolutionBookCategory.CODEC, DissolutionBookCategory.MISC, IDissolutionRecipe.DissolutionCraftingBookInfo::new);
+        public static final StreamCodec<RegistryFriendlyByteBuf, IDissolutionRecipe.DissolutionCraftingBookInfo> STREAM_CODEC = BookInfo.streamCodec(DissolutionBookCategory.STREAM_CODEC, IDissolutionRecipe.DissolutionCraftingBookInfo::new);
     }
 }

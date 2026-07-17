@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.verdantartifice.primalmagick.common.crafting.inputs.RunecarvingRecipeInput;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.RecipeBookCategoriesPM;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -29,8 +30,8 @@ public interface IRunecarvingRecipe extends Recipe<RunecarvingRecipeInput>, IHas
         return true;
     }
 
-    @Override
+    @NotNull
     default RecipeBookCategory recipeBookCategory() {
-        // FIXME Tie into datapacked recipe book category system
+        return RecipeBookCategoriesPM.RUNECARVING_RUNE.get();
     }
 }
