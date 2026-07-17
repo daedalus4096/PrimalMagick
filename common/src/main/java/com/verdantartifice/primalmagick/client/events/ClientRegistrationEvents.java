@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteTrid
 import com.verdantartifice.primalmagick.client.renderers.itemstack.SpelltomeSpecialRenderer;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.RecipeBookCategoriesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
@@ -38,7 +39,11 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import net.minecraft.world.item.crafting.ExtendedRecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -61,6 +66,24 @@ public class ClientRegistrationEvents {
 
     public static void onRegisterParticleGroups(BiConsumer<ParticleRenderType, Function<ParticleEngine, ParticleGroup<?>>> groupConsumer) {
         groupConsumer.accept(SpellBoltParticle.RENDER_TYPE, SpellBoltParticleGroup::new);
+    }
+
+    public static void onRegisterRecipeBookSearchCategories(BiConsumer<ExtendedRecipeBookCategory, List<RecipeBookCategory>> consumer) {
+        consumer.accept(RecipeBookCategoriesPM.SEARCH_ARCANE_CRAFTING.get(), List.of(
+                RecipeBookCategoriesPM.CRAFTING_ARCANE.get(),
+                RecipeBookCategories.CRAFTING_EQUIPMENT,
+                RecipeBookCategories.CRAFTING_BUILDING_BLOCKS,
+                RecipeBookCategories.CRAFTING_MISC,
+                RecipeBookCategories.CRAFTING_REDSTONE
+        ));
+        consumer.accept(RecipeBookCategoriesPM.SEARCH_CONCOCTER.get(), List.of(
+                RecipeBookCategoriesPM.CONCOCTER_DRINKABLE.get(),
+                RecipeBookCategoriesPM.CONCOCTER_BOMB.get()
+        ));
+        consumer.accept(RecipeBookCategoriesPM.SEARCH_DISSOLUTION.get(), List.of(
+                RecipeBookCategoriesPM.DISSOLUTION_ORES.get(),
+                RecipeBookCategoriesPM.DISSOLUTION_MISC.get()
+        ));
     }
     
     /**

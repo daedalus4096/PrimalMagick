@@ -50,6 +50,7 @@ import com.verdantartifice.primalmagick.platform.services.registries.IMenuTypeRe
 import com.verdantartifice.primalmagick.platform.services.registries.IMobEffectRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IParticleTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IProjectMaterialTypeRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.IRecipeBookCategoryRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IRecipeDisplayTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IRecipeSerializerRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IRecipeTypeRegistryService;
@@ -152,6 +153,7 @@ public class Services {
     public static final ITestFunctionRegistryService TEST_FUNCTIONS_REGISTRY = load(ITestFunctionRegistryService.class);
     public static final IAffinityTypeRegistryService AFFINITY_TYPES_REGISTRY = load(IAffinityTypeRegistryService.class);
     public static final IRecipeDisplayTypeRegistryService RECIPE_DISPLAY_TYPES_REGISTRY = load(IRecipeDisplayTypeRegistryService.class);
+    public static final IRecipeBookCategoryRegistryService RECIPE_BOOK_CATEGORIES_REGISTRY = load(IRecipeBookCategoryRegistryService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

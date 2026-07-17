@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.client.particle.FlyTowardsPositionParticle;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -29,6 +30,7 @@ import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleGroupsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.RegisterRecipeBookSearchCategoriesEvent;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
@@ -66,6 +68,13 @@ public class ClientRegistrationEventListeners {
     @SubscribeEvent
     public static void onRegisterParticleGroups(RegisterParticleGroupsEvent event) {
         ClientRegistrationEvents.onRegisterParticleGroups(event::register);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterRecipeBookSearchCategories(RegisterRecipeBookSearchCategoriesEvent event) {
+        ClientRegistrationEvents.onRegisterRecipeBookSearchCategories(
+                (searchCategory, memberCategoryList) ->
+                        event.register(searchCategory, memberCategoryList.toArray(RecipeBookCategory[]::new)));
     }
     
     @SubscribeEvent
