@@ -243,7 +243,6 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu {
     @Override
     @NotNull
     public RecipeBookType getRecipeBookType() {
-        // FIXME Should this use an extended value for arcane crafting?
         return RecipeBookType.CRAFTING;
     }
 
