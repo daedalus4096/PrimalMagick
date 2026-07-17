@@ -4,34 +4,30 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.ArcaneCraftingResultSlot;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedItemContents;
-import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AbstractCraftingMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -39,51 +35,45 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcaneRecipeBookMenu<CraftingInput, CraftingRecipe> {
-    protected final CraftingContainer craftingInv = new TransientCraftingContainer(this, 3, 3);
+public class ArcaneWorkbenchMenu extends AbstractCraftingMenu {
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
-    protected final ContainerLevelAccess worldPosCallable;
+    protected final ContainerLevelAccess access;
     protected final Player player;
     protected final Slot wandSlot;
+
     protected RecipeHolder<IArcaneRecipe> activeArcaneRecipe = null;
-    
+    private boolean placingRecipe;
+
     public ArcaneWorkbenchMenu(int windowId, Inventory inv) {
         this(windowId, inv, ContainerLevelAccess.NULL);
     }
     
     public ArcaneWorkbenchMenu(int windowId, Inventory inv, ContainerLevelAccess callable) {
-        super(MenuTypesPM.ARCANE_WORKBENCH.get(), windowId);
-        this.worldPosCallable = callable;
+        super(MenuTypesPM.ARCANE_WORKBENCH.get(), windowId, 3, 3);
+        this.access = callable;
         this.player = inv.player;
         
         // Slot 0: Workbench output
-        this.addSlot(new ArcaneCraftingResultSlot(this.player, this.craftingInv, this.wandInv, this.resultInv, 0, 138, 52));
-        
+        this.addResultSlot(this.player, 138, 52);
+
         // Slots 1-9: Crafting inputs
-        int i, j;
-        for (i = 0; i < 3; i++) {
-            for (j = 0; j < 3; j++) {
-                this.addSlot(new Slot(this.craftingInv, j + i * 3, 44 + j * 18, 34 + i * 18));
-            }
-        }
-        
+        this.addCraftingGridSlots(44, 34);
+
         // Slot 10: Crafting wand
         this.wandSlot = this.addSlot(Services.MENU.makeWandSlot(Services.ITEM_HANDLERS.wrap(this.wandInv, null), 0, 19, 52, false));
         
         // Slots 11-37: Player backpack
-        for (i = 0; i < 3; i++) {
-            for (j = 0; j < 9; j++) {
-                this.addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 101 + i * 18));
-            }
-        }
-        
         // Slots 38-46: Player hotbar
-        for (i = 0; i < 9; i++) {
-            this.addSlot(new Slot(inv, i, 8 + i * 18, 159));
-        }
+        this.addStandardInventorySlots(inv, 8, 101);
     }
-    
+
+    @Override
+    @NotNull
+    protected Slot addResultSlot(@NotNull Player player, int x, int y) {
+        return this.addSlot(new ArcaneCraftingResultSlot(player, this.craftSlots, this.wandInv, this.resultInv, 0, x, y));
+    }
+
     @Nullable
     public RecipeHolder<IArcaneRecipe> getActiveArcaneRecipe() {
         return this.activeArcaneRecipe;
@@ -91,7 +81,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     
     @Override
     public boolean stillValid(@NotNull Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.ARCANE_WORKBENCH.get());
+        return stillValid(this.access, playerIn, BlocksPM.ARCANE_WORKBENCH.get());
     }
     
     @Override
@@ -99,7 +89,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
         // Return crafting inputs and wand to the player's inventory when GUI is closed
         super.removed(playerIn);
         this.clearContainer(playerIn, this.wandInv);
-        this.clearContainer(playerIn, this.craftingInv);
+        this.clearContainer(playerIn, this.craftSlots);
     }
     
     @Override
@@ -161,53 +151,65 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     
     @Override
     public void slotsChanged(@NotNull Container inventoryIn) {
-        super.slotsChanged(inventoryIn);
-        this.slotChangedCraftingGrid(this.player.level());
+        if (!this.placingRecipe) {
+            this.access.execute((level, pos) -> {
+                if (level instanceof ServerLevel serverLevel && this.player instanceof ServerPlayer spe) {
+                    slotChangedCraftingGrid(this, serverLevel, spe, this.craftSlots, this.resultSlots);
+                }
+            });
+        }
     }
-    
-    protected void slotChangedCraftingGrid(Level world) {
-        CraftingInput craftInput = this.craftingInv.asCraftInput();
-        if (world.isClientSide()) {
-            // Get the active recipe, if any, for client display of mana costs
-            this.activeArcaneRecipe = null;
-            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.recipeAccess().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);
-            if (arcaneOptional.isPresent()) {
-                RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
-                if (recipe.value().getRequirement().isEmpty() || recipe.value().getRequirement().get().isMetBy(player)) {
-                    this.activeArcaneRecipe = recipe;
+
+    @Override
+    public void beginPlacingRecipe() {
+        this.placingRecipe = true;
+    }
+
+    @Override
+    public void finishPlacingRecipe(@NotNull ServerLevel level, @NotNull RecipeHolder<CraftingRecipe> recipe) {
+        this.placingRecipe = false;
+        if (this.player instanceof ServerPlayer spe) {
+            slotChangedCraftingGrid(this, level, spe, this.craftSlots, this.resultSlots);
+        }
+    }
+
+    protected static void slotChangedCraftingGrid(ArcaneWorkbenchMenu menu, ServerLevel level, ServerPlayer player, CraftingContainer container, ResultContainer resultSlots) {
+        CraftingInput input = container.asCraftInput();
+        ItemStack result = ItemStack.EMPTY;
+
+        Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.recipeAccess().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), input, level);
+        if (arcaneOptional.isPresent()) {
+            // If the inputs match a defined arcane recipe, show the output if the player can use it
+            RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
+            if (menu.canUseArcaneRecipe(resultSlots, player, recipe)) {
+                ItemStack recipeResult = recipe.value().assemble(input);
+                if (recipeResult.isItemEnabled(level.enabledFeatures())) {
+                    result = recipeResult;
                 }
             }
-        }
-        if (world instanceof ServerLevel serverLevel && this.player instanceof ServerPlayer spe) {
-            ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = serverLevel.recipeAccess().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), craftInput, world);
-            if (arcaneOptional.isPresent()) {
-                // If the inputs match a defined arcane recipe, show the output if the player can use it
-                RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
-                if (this.canUseArcaneRecipe(world, spe, recipe)) {
-                    stack = recipe.value().assemble(craftInput);
-                }
-            } else {
-                Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = serverLevel.recipeAccess().getRecipeFor(RecipeType.CRAFTING, craftInput, world);
-                if (vanillaOptional.isPresent()) {
-                    // If the inputs match a defined vanilla recipe, show the output if the player can use it
-                    RecipeHolder<CraftingRecipe> recipe = vanillaOptional.get();
-                    if (this.resultInv.setRecipeUsed(world, spe, recipe)) {
-                        stack = recipe.value().assemble(craftInput);
+        } else {
+            Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = level.recipeAccess().getRecipeFor(RecipeType.CRAFTING, input, level);
+            if (vanillaOptional.isPresent()) {
+                // If the inputs match a defined vanilla recipe, show the output if the player can use it
+                RecipeHolder<CraftingRecipe> recipe = vanillaOptional.get();
+                if (resultSlots.setRecipeUsed(player, recipe)) {
+                    ItemStack recipeResult = recipe.value().assemble(input);
+                    if (recipeResult.isItemEnabled(level.enabledFeatures())) {
+                        result = recipeResult;
                     }
                 }
             }
-            
-            // Send a packet to the client to update its GUI with the shown output
-            this.resultInv.setItem(0, stack);
-            spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 0, stack));
         }
+
+        resultSlots.setItem(0, result);
+        menu.setRemoteSlot(0, result);
+        player.connection.send(new ClientboundContainerSetSlotPacket(menu.containerId, menu.incrementStateId(), 0, result));
     }
-    
-    protected boolean canUseArcaneRecipe(Level world, ServerPlayer player, RecipeHolder<IArcaneRecipe> recipeHolder) {
+
+    protected boolean canUseArcaneRecipe(ResultContainer resultSlots, ServerPlayer player, RecipeHolder<IArcaneRecipe> recipeHolder) {
         // Players must know the correct research and the wand must have enough mana in order to use the recipe
         IArcaneRecipe recipe = recipeHolder.value();
-        return this.resultInv.setRecipeUsed(world, player, recipeHolder) &&
+        return resultSlots.setRecipeUsed(player, recipeHolder) &&
                 (recipe.getRequirement().isEmpty() || recipe.getRequirement().get().isMetBy(player)) &&
                 (recipe.getManaCosts().isEmpty() || this.wandContainsEnoughMana(player, recipe));
     }
@@ -221,61 +223,31 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedItemContents contents) {
-        this.craftingInv.fillStackedContents(contents);
+    @NotNull
+    public Slot getResultSlot() {
+        return this.slots.getFirst();
     }
 
     @Override
-    public void clearCraftingContent() {
-        this.craftingInv.clearContent();
-        this.resultInv.clearContent();
+    @NotNull
+    public List<Slot> getInputGridSlots() {
+        return this.slots.subList(1, 10);
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<CraftingRecipe> recipe) {
-        return recipe.value().matches(this.craftingInv.asCraftInput(), this.player.level());
+    @NotNull
+    protected Player owner() {
+        return this.player;
     }
 
     @Override
-    public int getResultSlotIndex() {
-        return 0;
+    @NotNull
+    public RecipeBookType getRecipeBookType() {
+        // FIXME Should this use an extended value for arcane crafting?
+        return RecipeBookType.CRAFTING;
     }
 
-    @Override
-    public int getGridWidth() {
-        return this.craftingInv.getWidth();
-    }
-
-    @Override
-    public int getGridHeight() {
-        return this.craftingInv.getHeight();
-    }
-
-    @Override
-    public int getSize() {
-        return 10;
-    }
-
-    @Override
-    public ArcaneRecipeBookType getRecipeBookType() {
-        return ArcaneRecipeBookType.CRAFTING;
-    }
-
-    @Override
-    public boolean shouldMoveToInventory(int index) {
-        return index != this.getResultSlotIndex();
-    }
-
-    @Override
-    public NonNullList<Slot> getSlots() {
-        return this.slots;
-    }
-    
     public ItemStack getWand() {
         return this.wandInv.getItem(0);
-    }
-    
-    public Player getPlayer() {
-        return this.player;
     }
 }
