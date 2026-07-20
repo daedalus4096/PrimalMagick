@@ -4,6 +4,8 @@ import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneCraftingRec
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
 import com.verdantartifice.primalmagick.common.crafting.display.IManaCostRecipeDisplay;
 import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
+import com.verdantartifice.primalmagick.common.menus.slots.IHasCyclingBackgrounds;
+import com.verdantartifice.primalmagick.common.menus.slots.IHasTooltip;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -20,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * GUI screen for arcane workbench block.
@@ -46,6 +49,28 @@ public class ArcaneWorkbenchScreen extends AbstractRecipeBookScreen<ArcaneWorkbe
     @NotNull
     protected ScreenPosition getRecipeBookButtonPosition() {
         return new ScreenPosition(this.leftPos + 105, this.topPos + 69);
+    }
+
+    @Override
+    public void containerTick() {
+        super.containerTick();
+        this.menu.slots.forEach(slot -> {
+            if (slot instanceof IHasCyclingBackgrounds bgSlot) {
+                bgSlot.tickBackgrounds();
+            }
+        });
+    }
+
+    @Override
+    protected void extractTooltip(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractTooltip(graphics, mouseX, mouseY);
+
+        // Render filtered slot tooltips if appropriate
+        Optional<Component> tooltipOpt = Optional.empty();
+        if (this.hoveredSlot instanceof IHasTooltip tooltipSlot && tooltipSlot.shouldShowTooltip()) {
+            tooltipOpt = Optional.ofNullable(tooltipSlot.getTooltip());
+        }
+        tooltipOpt.ifPresent(tooltip -> graphics.setTooltipForNextFrame(this.font, tooltip, mouseX, mouseY));
     }
 
     @Override
