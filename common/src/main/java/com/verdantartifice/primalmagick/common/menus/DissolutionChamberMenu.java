@@ -1,32 +1,31 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
-import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedContents;
-import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * Server data container for the dissolution chamber GUI.
  * 
  * @author Daedalus4096
  */
-public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<DissolutionChamberTileEntity> implements IArcaneRecipeBookMenu<SingleRecipeInput, IDissolutionRecipe> {
+public class DissolutionChamberMenu extends AbstractTileRecipeBookMenu<DissolutionChamberTileEntity, SingleRecipeInput, IDissolutionRecipe> {
     protected final ContainerData chamberData;
+    protected final Slot resultSlot;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
     
@@ -35,12 +34,12 @@ public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<Disso
     }
     
     public DissolutionChamberMenu(int id, Inventory playerInv, BlockPos tilePos, DissolutionChamberTileEntity chamber, ContainerData chamberData) {
-        super(MenuTypesPM.DISSOLUTION_CHAMBER.get(), id, DissolutionChamberTileEntity.class, playerInv.player.level(), tilePos, chamber);
+        super(MenuTypesPM.DISSOLUTION_CHAMBER.get(), id, DissolutionChamberTileEntity.class, playerInv.player.level(), tilePos, chamber, 1, 1);
         checkContainerDataCount(chamberData, 4);
         this.chamberData = chamberData;
         
         // Slot 0: chamber output
-        this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(DissolutionChamberTileEntity.OUTPUT_INV_INDEX), 0, 125, 35));
+        this.resultSlot = this.addSlot(Services.MENU.makeGenericResultSlot(playerInv.player, this.getTileInventory(DissolutionChamberTileEntity.OUTPUT_INV_INDEX), 0, 125, 35));
         
         // Slot 1: ore input
         this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(DissolutionChamberTileEntity.INPUT_INV_INDEX), 0, 44, 35));
@@ -64,10 +63,11 @@ public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<Disso
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player player, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 0) {
@@ -131,58 +131,27 @@ public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<Disso
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedItemContents contents) {
-        this.tile.fillStackedContents(contents);
+    public @NotNull List<Slot> getInputGridSlots() {
+        return List.of(this.inputSlot);
     }
 
     @Override
-    public void clearCraftingContent() {
-        this.getSlot(0).set(ItemStack.EMPTY);
-        this.getSlot(1).set(ItemStack.EMPTY);
+    protected @NotNull List<Slot> getSlotsToClear() {
+        return List.of(this.resultSlot, this.inputSlot);
+    }
+
+    public Slot getResultSlot() {
+        return this.resultSlot;
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<IDissolutionRecipe> recipe) {
-        return recipe.value().matches(new SingleRecipeInput(this.getTileInventory(Direction.UP).getStackInSlot(0)), this.level);
+    protected @NotNull SingleRecipeInput getRecipeInputForMatch() {
+        return new SingleRecipeInput(this.getTileInventory(Direction.UP) != null ? this.getTileInventory(Direction.UP).getStackInSlot(0) : ItemStack.EMPTY);
     }
 
     @Override
-    public int getResultSlotIndex() {
-        return 0;
-    }
-
-    @Override
-    public int getGridWidth() {
-        return 1;
-    }
-
-    @Override
-    public int getGridHeight() {
-        return 1;
-    }
-
-    @Override
-    public int getSize() {
-        return 2;
-    }
-
-    @Override
-    public ArcaneRecipeBookType getRecipeBookType() {
-        return ArcaneRecipeBookType.DISSOLUTION;
-    }
-
-    @Override
-    public boolean shouldMoveToInventory(int index) {
-        return index != this.getResultSlotIndex();
-    }
-
-    @Override
-    public boolean isSingleIngredientMenu() {
-        return true;
-    }
-
-    @Override
-    public NonNullList<Slot> getSlots() {
-        return this.slots;
+    @NotNull
+    public RecipeBookType getRecipeBookType() {
+        return RecipeBookType.CRAFTING;
     }
 }
