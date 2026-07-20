@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge
 import com.verdantartifice.primalmagick.common.capabilities.IEntitySwappers;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
@@ -62,11 +61,6 @@ public class CapabilityServiceNeoforge implements ICapabilityService {
     @Override
     public Optional<IPlayerLinguistics> linguistics(Player player) {
         return player == null ? Optional.empty() : Optional.of(player.getData(CapabilitiesNeoforge.LINGUISTICS));
-    }
-
-    @Override
-    public Optional<IPlayerArcaneRecipeBook> arcaneRecipeBook(Player player) {
-        return player == null ? Optional.empty() : Optional.of(player.getData(CapabilitiesNeoforge.ARCANE_RECIPE_BOOK));
     }
 
     @Override

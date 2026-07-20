@@ -29,6 +29,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.List;
 import java.util.Optional;
@@ -260,5 +261,10 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu implements IRecipe
 
     public ItemStack getWand() {
         return this.wandInv.getItem(0);
+    }
+
+    @VisibleForTesting
+    public List<Slot> getSlots() {
+        return this.slots;
     }
 }

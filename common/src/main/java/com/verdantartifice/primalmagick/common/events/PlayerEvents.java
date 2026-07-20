@@ -14,7 +14,6 @@ import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -401,9 +400,6 @@ public class PlayerEvents {
         if (!level.isClientSide() && (entity instanceof ServerPlayer player)) {
             // When a player first joins a world, sync that player's capabilities to their client
             doScheduledSyncs(player, true);
-            
-            // Also sync their arcane recipe book contents with their research
-            ArcaneRecipeBookManager.syncRecipesWithResearch(player);
         }
     }
 
@@ -419,11 +415,6 @@ public class PlayerEvents {
         }
         if (immediate || CompanionManager.isSyncScheduled(player)) {
             Services.CAPABILITIES.companions(player).ifPresent(companions -> companions.sync(player));
-        }
-        if (immediate || ArcaneRecipeBookManager.isSyncScheduled(player)) {
-            Services.CAPABILITIES.arcaneRecipeBook(player).ifPresent(recipeBook -> {
-                recipeBook.sync(player);
-            });
         }
         if (immediate || LinguisticsManager.isSyncScheduled(player)) {
             Services.CAPABILITIES.linguistics(player).ifPresent(linguistics -> linguistics.sync(player));
@@ -472,13 +463,6 @@ public class PlayerEvents {
             Services.CAPABILITIES.companions(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtCompanions);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} companions", oldPlayer.getName().getString());
-        }
-        
-        try {
-            CompoundTag nbtRecipeBook = Services.CAPABILITIES.arcaneRecipeBook(oldPlayer).orElseThrow(IllegalArgumentException::new).serializeNBT(registryAccess);
-            Services.CAPABILITIES.arcaneRecipeBook(newPlayer).orElseThrow(IllegalArgumentException::new).deserializeNBT(registryAccess, nbtRecipeBook, newPlayer.level().getRecipeManager());
-        } catch (Exception e) {
-            LOGGER.error("Failed to clone player {} arcane recipe book", oldPlayer.getName().getString());
         }
         
         try {

@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.network;
 
 import com.verdantartifice.primalmagick.common.network.packets.data.ContainerSetVarintDataPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCooldownsPacket;
@@ -38,10 +37,6 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveRec
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.UnlockDisciplinePacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
-import com.verdantartifice.primalmagick.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
-import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
-import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
-import com.verdantartifice.primalmagick.common.network.packets.recipe_book.SeenArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.ChangeScribeTableModePacket;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.TranscribeActionPacket;
@@ -75,8 +70,6 @@ public class PlayPacketRegistration {
                 .registerPacket(RemovePropMarkerPacket.type(), RemovePropMarkerPacket.class, RemovePropMarkerPacket.STREAM_CODEC, RemovePropMarkerPacket::onMessage)
                 .registerPacket(SyncCompanionsPacket.type(), SyncCompanionsPacket.class, SyncCompanionsPacket.STREAM_CODEC, SyncCompanionsPacket::onMessage)
                 .registerPacket(PotionExplosionPacket.type(), PotionExplosionPacket.class, PotionExplosionPacket.STREAM_CODEC, PotionExplosionPacket::onMessage)
-                .registerPacket(SyncArcaneRecipeBookPacket.type(), SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket.STREAM_CODEC, SyncArcaneRecipeBookPacket::onMessage)
-                .registerPacket(PlaceGhostArcaneRecipePacket.type(), PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.STREAM_CODEC, PlaceGhostArcaneRecipePacket::onMessage)
                 .registerPacket(SpellcraftingRunePacket.type(), SpellcraftingRunePacket.class, SpellcraftingRunePacket.STREAM_CODEC, SpellcraftingRunePacket::onMessage)
                 .registerPacket(OpenGrimoireScreenPacket.type(), OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket.STREAM_CODEC, OpenGrimoireScreenPacket::onMessage)
                 .registerPacket(SyncWardPacket.type(), SyncWardPacket.class, SyncWardPacket.STREAM_CODEC, SyncWardPacket::onMessage)
@@ -101,9 +94,6 @@ public class PlayPacketRegistration {
                 .registerPacket(CompleteProjectPacket.type(), CompleteProjectPacket.class, CompleteProjectPacket.STREAM_CODEC, CompleteProjectPacket::onMessage)
                 .registerPacket(SetProjectMaterialSelectionPacket.type(), SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket.STREAM_CODEC, SetProjectMaterialSelectionPacket::onMessage)
                 .registerPacket(ScanEntityPacket.type(), ScanEntityPacket.class, ScanEntityPacket.STREAM_CODEC, ScanEntityPacket::onMessage)
-                .registerPacket(PlaceArcaneRecipePacket.type(), PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket.STREAM_CODEC, PlaceArcaneRecipePacket::onMessage)
-                .registerPacket(SeenArcaneRecipePacket.type(), SeenArcaneRecipePacket.class, SeenArcaneRecipePacket.STREAM_CODEC, SeenArcaneRecipePacket::onMessage)
-                .registerPacket(ChangeArcaneRecipeBookSettingsPacket.type(), ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket.STREAM_CODEC, ChangeArcaneRecipeBookSettingsPacket::onMessage)
                 .registerPacket(SetResearchTopicHistoryPacket.type(), SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket.STREAM_CODEC, SetResearchTopicHistoryPacket::onMessage)
                 .registerPacket(SetActiveSpellPacket.type(), SetActiveSpellPacket.class, SetActiveSpellPacket.STREAM_CODEC, SetActiveSpellPacket::onMessage)
                 .registerPacket(WithdrawCaskEssencePacket.type(), WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket.STREAM_CODEC, WithdrawCaskEssencePacket::onMessage)

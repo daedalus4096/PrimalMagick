@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.platform.services;
 import com.verdantartifice.primalmagick.common.capabilities.IEntitySwappers;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
@@ -30,7 +29,6 @@ public interface ICapabilityService {
     Optional<IPlayerCompanions> companions(@Nullable Player player);
     Optional<IPlayerWard> ward(@Nullable Player player);
     Optional<IPlayerLinguistics> linguistics(@Nullable Player player);
-    Optional<IPlayerArcaneRecipeBook> arcaneRecipeBook(@Nullable Player player);
 
     Optional<IEntitySwappers> swappers(@Nullable Entity entity);
 

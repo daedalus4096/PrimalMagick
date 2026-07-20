@@ -38,22 +38,6 @@ public class CapabilitiesNeoforge {
             () -> AttachmentType.serializable(PlayerWardNeoforge::new).copyOnDeath().build());
     public static final Supplier<AttachmentType<PlayerLinguisticsNeoforge>> LINGUISTICS = CAPABILITIES.register("linguistics",
             () -> AttachmentType.serializable(PlayerLinguisticsNeoforge::new).copyOnDeath().build());
-    public static final Supplier<AttachmentType<PlayerArcaneRecipeBookNeoforge>> ARCANE_RECIPE_BOOK = CAPABILITIES.register("arcane_recipe_book",
-            () -> AttachmentType.builder(PlayerArcaneRecipeBookNeoforge::new).serialize(new IAttachmentSerializer<CompoundTag, PlayerArcaneRecipeBookNeoforge>() {
-                @Override
-                public PlayerArcaneRecipeBookNeoforge read(IAttachmentHolder attachmentHolder, CompoundTag tag, HolderLookup.Provider provider) {
-                    PlayerArcaneRecipeBookNeoforge retVal = new PlayerArcaneRecipeBookNeoforge();
-                    if (attachmentHolder instanceof Player player) {
-                        retVal.deserializeNBT(provider, tag, player.level().getRecipeManager());
-                    }
-                    return retVal;
-                }
-
-                @Override
-                public @Nullable CompoundTag write(PlayerArcaneRecipeBookNeoforge arcaneRecipeBook, HolderLookup.Provider provider) {
-                    return arcaneRecipeBook.serializeNBT(provider);
-                }
-            }).copyOnDeath().build());
     public static final Supplier<AttachmentType<EntitySwappersNeoforge>> ENTITY_SWAPPERS = CAPABILITIES.register("entity_swappers",
             () -> AttachmentType.serializable(EntitySwappersNeoforge::new).build());    // Do not copy swappers on death
 

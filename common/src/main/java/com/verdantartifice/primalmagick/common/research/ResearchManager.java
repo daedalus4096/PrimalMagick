@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.advancements.criterion.CriteriaTr
 import com.verdantartifice.primalmagick.common.affinities.AffinityIndexEntry;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.UnlockDisciplinePacket;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -303,13 +302,12 @@ public class ResearchManager {
             return false;
         }
         
-        // Remove all recipes that are unlocked by the given research from the player's arcane recipe book
+        // Remove all recipes that are unlocked by the given research from the player's recipe book
         if (player instanceof ServerPlayer serverPlayer) {
             ResearchEntry entry = ResearchEntries.getEntry(player.registryAccess(), key);
             if (entry != null) {
                 RecipeManager recipeManager = serverPlayer.level().recipeAccess();
                 Set<RecipeHolder<?>> recipesToRemove = entry.getAllRecipeIds().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
-                ArcaneRecipeBookManager.removeRecipes(recipesToRemove, serverPlayer);
                 serverPlayer.resetRecipes(recipesToRemove);
             }
         }
@@ -395,10 +393,9 @@ public class ResearchManager {
                     // Process any rewards from the newly-reached stage
                     currentStage.rewards().forEach(r -> r.grant(serverPlayer));
 
-                    // Add any unlocked recipes from the current stage to the player's arcane recipe book
+                    // Add any unlocked recipes from the current stage to the player's recipe book
                     RecipeManager recipeManager = serverPlayer.level().recipeAccess();
                     Set<RecipeHolder<?>> recipesToUnlock = currentStage.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
-                    ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                     serverPlayer.awardRecipes(recipesToUnlock);
                 }
                 
@@ -429,9 +426,8 @@ public class ResearchManager {
                 RecipeManager recipeManager = serverPlayer.level().recipeAccess();
                 for (ResearchAddendum addendum : entry.addenda()) {
                     if (addendum.completionRequirementOpt().isEmpty() || addendum.completionRequirementOpt().get().isMetBy(player)) {
-                        // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
+                        // Add any unlocked recipes from this entry's addenda to the player's recipe book
                         Set<RecipeHolder<?>> recipesToUnlock = addendum.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
-                        ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                         serverPlayer.awardRecipes(recipesToUnlock);
                         
                         // Grant any sibling research from this entry's addenda
@@ -475,10 +471,9 @@ public class ResearchManager {
                                 // Process addendum rewards
                                 addendum.rewards().forEach(r -> r.grant(serverPlayer));
 
-                                // Add any unlocked recipes to the player's arcane recipe book
+                                // Add any unlocked recipes to the player's recipe book
                                 RecipeManager recipeManager = serverPlayer.level().recipeAccess();
                                 Set<RecipeHolder<?>> recipesToUnlock = addendum.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
-                                ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                                 serverPlayer.awardRecipes(recipesToUnlock);
                             }
                             

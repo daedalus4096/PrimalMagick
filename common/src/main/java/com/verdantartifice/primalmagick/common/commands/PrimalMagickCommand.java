@@ -15,7 +15,6 @@ import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.commands.arguments.AttunementTypeArgument;
@@ -27,8 +26,6 @@ import com.verdantartifice.primalmagick.common.commands.arguments.KnowledgeTypeI
 import com.verdantartifice.primalmagick.common.commands.arguments.ResourceKeyArgumentPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.SourceArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.StatValueArgument;
-import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -50,15 +47,12 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.IdentifierArgument;
-import net.minecraft.commands.arguments.ResourceKeyArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Util;
@@ -66,7 +60,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -78,7 +71,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -217,24 +209,6 @@ public class PrimalMagickCommand {
                     .then(Commands.argument("item", ItemArgument.item(buildContext)).executes(context -> explainItemAffinity(context.getSource(), ItemArgument.getItem(context, "item"))))
                 )
             )
-            .then(Commands.literal("recipes")
-                .then(Commands.argument("target", EntityArgument.player())
-                    // /pm recipes <target> reset
-                    .then(Commands.literal("reset").executes((context) -> { return resetRecipes(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
-                    // /pm recipes <target> list
-                    .then(Commands.literal("list").executes((context) -> { return listArcaneRecipes(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
-                    // /pm recipes <target> sync
-                    .then(Commands.literal("sync").executes((context) -> { return syncArcaneRecipes(context.getSource(), EntityArgument.getPlayer(context, "target")); }))
-                    .then(Commands.literal("add")
-                        // /pm recipes <target> add <recipe>
-                        .then(Commands.argument("recipe", ResourceKeyArgument.key(Registries.RECIPE)).suggests((ctx, sb) -> ctx.getSource().suggestRegistryElements(Registries.RECIPE, SharedSuggestionProvider.ElementSuggestionType.ELEMENTS, sb, ctx)).executes((context) -> { return addArcaneRecipe(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceKeyArgument.getRecipe(context, "recipe")); }))
-                    )
-                    .then(Commands.literal("remove")
-                        // /pm recipes <target> remove <recipe>
-                        .then(Commands.argument("recipe", ResourceKeyArgument.key(Registries.RECIPE)).suggests((ctx, sb) -> ctx.getSource().suggestRegistryElements(Registries.RECIPE, SharedSuggestionProvider.ElementSuggestionType.ELEMENTS, sb, ctx)).executes((context) -> { return removeArcaneRecipe(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceKeyArgument.getRecipe(context, "recipe")); }))
-                    )
-                )
-            )
             .then(Commands.literal("books")
                 .then(Commands.argument("targets", EntityArgument.players())
                     .then(Commands.literal("give")
@@ -304,7 +278,6 @@ public class PrimalMagickCommand {
         resetKnowledge(source, player);
         resetAttunements(source, player);
         resetStats(source, player);
-        resetRecipes(source, player);
         resetLinguistics(source, player);
         return 0;
     }
@@ -803,91 +776,6 @@ public class PrimalMagickCommand {
             .count();
     }
 
-    private static int resetRecipes(CommandSourceStack source, ServerPlayer target) {
-        IPlayerArcaneRecipeBook recipeBook = Services.CAPABILITIES.arcaneRecipeBook(target).orElse(null);
-        if (recipeBook == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else {
-            recipeBook.get().clear();
-            ArcaneRecipeBookManager.scheduleSync(target);
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.reset", target.getName()), true);
-            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.reset.target", source.getTextName()));
-            }
-        }
-        return 0;
-    }
-
-    private static int listArcaneRecipes(CommandSourceStack source, ServerPlayer target) {
-        IPlayerArcaneRecipeBook recipeBook = Services.CAPABILITIES.arcaneRecipeBook(target).orElse(null);
-        if (recipeBook == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else {
-            // List all known arcane research book entries for the target player
-            Set<ResourceKey<Recipe<?>>> knownSet = recipeBook.get().getKnown();
-            String[] knownList = knownSet.stream()
-                                        .map(ResourceKey::toString)
-                                        .collect(Collectors.toSet())
-                                        .toArray(new String[knownSet.size()]);
-            String knownOutput = String.join(", ", knownList);
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.list.known", target.getName(), knownOutput), true);
-
-            // List all highlighted arcane research book entries for the target player
-            Set<ResourceKey<Recipe<?>>> highlightSet = recipeBook.get().getHighlight();
-            String[] highlightList = highlightSet.stream()
-                                        .map(ResourceKey::toString)
-                                        .collect(Collectors.toSet())
-                                        .toArray(new String[highlightSet.size()]);
-            String highlightOutput = String.join(", ", highlightList);
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.list.highlight", target.getName(), highlightOutput), true);
-        }
-        return 0;
-    }
-    
-    private static int syncArcaneRecipes(CommandSourceStack source, ServerPlayer target) {
-        if (!ArcaneRecipeBookManager.syncRecipesWithResearch(target)) {
-            source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else {
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.sync", target.getName()), true);
-            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.sync.target", source.getTextName()));
-            }
-        }
-        return 0;
-    }
-
-    private static int addArcaneRecipe(CommandSourceStack source, ServerPlayer target, RecipeHolder<?> recipe) {
-        IPlayerArcaneRecipeBook recipeBook = Services.CAPABILITIES.arcaneRecipeBook(target).orElse(null);
-        if (recipeBook == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else if (!(recipe.value() instanceof IArcaneRecipeBookItem)) {
-            source.sendFailure(Component.translatable("commands.primalmagick.recipes.recipe_not_arcane"));
-        } else {
-            ArcaneRecipeBookManager.addRecipes(Collections.singletonList(recipe), target);
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.add", target.getName(), recipe.id().toString()), true);
-            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.add.target", source.getTextName(), recipe.id().toString()));
-            }
-        }
-        return 0;
-    }
-
-    private static int removeArcaneRecipe(CommandSourceStack source, ServerPlayer target, RecipeHolder<?> recipe) {
-        IPlayerArcaneRecipeBook recipeBook = Services.CAPABILITIES.arcaneRecipeBook(target).orElse(null);
-        if (recipeBook == null) {
-            source.sendFailure(Component.translatable("commands.primalmagick.error"));
-        } else if (!(recipe.value() instanceof IArcaneRecipeBookItem)) {
-            source.sendFailure(Component.translatable("commands.primalmagick.recipes.recipe_not_arcane"));
-        } else {
-            ArcaneRecipeBookManager.removeRecipes(Collections.singletonList(recipe), target);
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.remove", target.getName(), recipe.id().toString()), true);
-            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.remove.target", source.getTextName(), recipe.id().toString()));
-            }
-        }
-        return 0;
-    }
-    
     private static Holder.Reference<BookLanguage> defaultLanguage(CommandSourceStack source) {
         return BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, source.getServer().registryAccess());
     }

@@ -2,17 +2,11 @@ package com.verdantartifice.primalmagick.client.util;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.StaticBookViewScreen;
-import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -25,7 +19,7 @@ import javax.annotation.Nullable;
 public class ClientUtils {
     /**
      * Gets the current client-side player.
-     * 
+     * <br/>
      * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
      * 
      * @return the current client-side player
@@ -38,7 +32,7 @@ public class ClientUtils {
 
     /**
      * Gets the current client-side level.
-     * 
+     * <br/>
      * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
      * 
      * @return the current client-side level
@@ -51,7 +45,7 @@ public class ClientUtils {
     
     /**
      * Gets the stats counter for the current client-side player.
-     * 
+     * <br/>
      * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
      * 
      * @return the stats counter for the current player
@@ -64,7 +58,7 @@ public class ClientUtils {
     
     /**
      * Gets whether the player has the shift key held down.
-     * 
+     * <br/>
      * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
      * 
      * @return whether the shift key is down
@@ -74,29 +68,8 @@ public class ClientUtils {
     }
     
     /**
-     * Places a ghost recipe into the screen of the given IDed menu.
-     * 
-     * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
-     * 
-     * @param containerId the ID of the menu whose screen to update
-     * @param recipeId the ID of the recipe to be placed
-     */
-    public static void handlePlaceGhostRecipe(int containerId, ResourceKey<Recipe<?>> recipeId) {
-        // TODO Find a better home for this method
-        Minecraft mc = Minecraft.getInstance();
-        AbstractContainerMenu menu = mc.player.containerMenu;
-        if (menu.containerId == containerId) {
-            mc.level.getRecipeManager().byKey(recipeId).ifPresent(recipe -> {
-                if (mc.screen instanceof ArcaneRecipeUpdateListener listener) {
-                    listener.getRecipeBookComponent().setupGhostRecipe(recipe, menu.slots);
-                }
-            });
-        }
-    }
-
-    /**
      * Opens the grimoire GUI on the client.
-     * 
+     * <br/>
      * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
      */
     public static void openGrimoireScreen() {
@@ -106,7 +79,7 @@ public class ClientUtils {
     
     /**
      * Opens the static book GUI on the client for the given book ID.
-     * 
+     * <br/>
      * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
      * 
      * @param view the view of the static book whose resources to load
