@@ -9,13 +9,14 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Base class for a menu that serves a mod block entity.
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractTileMenu<T extends AbstractTilePM> extends AbstractContainerMenu {
+public abstract class AbstractTileMenu<T extends AbstractTilePM> extends AbstractContainerMenu implements ITileMenu<T> {
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected final T tile;
@@ -36,24 +37,28 @@ public abstract class AbstractTileMenu<T extends AbstractTilePM> extends Abstrac
         }
     }
     
+    @Override
     public T getTile() {
         return this.tile;
     }
     
+    @Override
     public Level getLevel() {
         return this.level;
     }
     
+    @Override
     public BlockPos getTilePos() {
         return this.tilePos;
     }
     
+    @Override
     public ContainerLevelAccess getContainerLevelAccess() {
         return this.containerLevelAccess;
     }
     
     @Override
-    public boolean stillValid(Player pPlayer) {
-        return this.tile == null ? false : this.tile.stillValid(pPlayer);
+    public boolean stillValid(@NotNull Player pPlayer) {
+        return this.tile != null && this.tile.stillValid(pPlayer);
     }
 }

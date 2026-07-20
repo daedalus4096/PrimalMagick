@@ -13,15 +13,17 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractTileSidedInventoryMenu<T extends AbstractTileSidedInventoryPM> extends AbstractTileMenu<T> {
+public abstract class AbstractTileSidedInventoryMenu<T extends AbstractTileSidedInventoryPM> extends AbstractTileMenu<T> implements ITileSidedInventoryMenu<T> {
     protected AbstractTileSidedInventoryMenu(MenuType<?> menuType, int containerId, Class<T> tileClass, Level level, BlockPos tilePos, T tile) {
         super(menuType, containerId, tileClass, level, tilePos, tile);
     }
     
+    @Override
     public IItemHandlerPM getTileInventory(Direction face) {
         return Services.CAPABILITIES.itemHandler(this.tile, face).orElseThrow(IllegalStateException::new);
     }
 
+    @Override
     public IItemHandlerPM getTileInventory(int index) {
         IItemHandlerPM retVal = this.tile.getRawItemHandler(index);
         if (retVal == null) {
