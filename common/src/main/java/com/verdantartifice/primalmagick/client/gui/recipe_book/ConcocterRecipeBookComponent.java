@@ -56,12 +56,12 @@ public class ConcocterRecipeBookComponent extends RecipeBookComponent<ConcocterM
     }
 
     @Override
-    protected boolean isCraftingSlot(Slot slot) {
+    protected boolean isCraftingSlot(@NotNull Slot slot) {
         return this.menu.getResultSlot() == slot || this.menu.getInputGridSlots().contains(slot);
     }
 
     @Override
-    protected void selectMatchingRecipes(RecipeCollection recipeCollection, StackedItemContents stackedItemContents) {
+    protected void selectMatchingRecipes(@NotNull RecipeCollection recipeCollection, @NotNull StackedItemContents stackedItemContents) {
         recipeCollection.selectRecipes(stackedItemContents, this::canDisplay);
     }
 
@@ -72,7 +72,7 @@ public class ConcocterRecipeBookComponent extends RecipeBookComponent<ConcocterM
     }
 
     @Override
-    protected void fillGhostRecipe(GhostSlots ghostSlots, RecipeDisplay recipeDisplay, ContextMap contextMap) {
+    protected void fillGhostRecipe(@NotNull GhostSlots ghostSlots, @NotNull RecipeDisplay recipeDisplay, @NotNull ContextMap contextMap) {
         ghostSlots.setResult(this.menu.getResultSlot(), contextMap, recipeDisplay.result());
         if (recipeDisplay instanceof ConcoctingRecipeDisplay concoctingRecipeDisplay) {
             List<Slot> inputSlots = this.menu.getInputGridSlots();

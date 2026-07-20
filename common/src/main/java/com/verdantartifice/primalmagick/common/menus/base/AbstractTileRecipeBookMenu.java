@@ -13,7 +13,6 @@ import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.RecipeBookMenu;
-import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
@@ -131,18 +130,12 @@ public abstract class AbstractTileRecipeBookMenu<T extends AbstractTileSidedInve
         this.tile.fillStackedContents(stackedItemContents);
     }
 
-    @Override
-    @NotNull
-    public RecipeBookType getRecipeBookType() {
-        return null;
-    }
-
     public boolean stillValid(@NotNull Player pPlayer) {
         return this.tile != null && this.tile.stillValid(pPlayer);
     }
 
     @NotNull
-    protected abstract List<Slot> getInputGridSlots();
+    public abstract List<Slot> getInputGridSlots();
 
     @NotNull
     protected abstract List<Slot> getSlotsToClear();
