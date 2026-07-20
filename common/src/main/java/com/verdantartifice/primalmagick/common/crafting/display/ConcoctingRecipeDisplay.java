@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public record ConcoctingRecipeDisplay(List<SlotDisplay> ingredients, SlotDisplay result, SourceList manaCosts,
-                                      Optional<AbstractRequirement<?>> requirement, SlotDisplay craftingStation) implements RecipeDisplay {
+                                      Optional<AbstractRequirement<?>> requirement, SlotDisplay craftingStation) implements RecipeDisplay, IManaCostRecipeDisplay {
     public static final MapCodec<ConcoctingRecipeDisplay> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SlotDisplay.CODEC.listOf().fieldOf("ingredients").forGetter(ConcoctingRecipeDisplay::ingredients),
             SlotDisplay.CODEC.fieldOf("result").forGetter(ConcoctingRecipeDisplay::result),

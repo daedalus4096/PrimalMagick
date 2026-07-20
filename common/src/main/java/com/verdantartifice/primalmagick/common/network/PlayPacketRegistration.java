@@ -34,6 +34,7 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDis
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanPositionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveRecipeDisplayPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.UnlockDisciplinePacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
@@ -84,6 +85,7 @@ public class PlayPacketRegistration {
                 .registerPacket(SyncLinguisticsPacket.type(), SyncLinguisticsPacket.class, SyncLinguisticsPacket.STREAM_CODEC, SyncLinguisticsPacket::onMessage)
                 .registerPacket(ContainerSetVarintDataPacket.type(), ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.STREAM_CODEC, ContainerSetVarintDataPacket::onMessage)
                 .registerPacket(UnlockDisciplinePacket.type(), UnlockDisciplinePacket.class, UnlockDisciplinePacket.STREAM_CODEC, UnlockDisciplinePacket::onMessage)
+                .registerPacket(SetActiveRecipeDisplayPacket.type(), SetActiveRecipeDisplayPacket.class, SetActiveRecipeDisplayPacket.STREAM_CODEC, SetActiveRecipeDisplayPacket::onMessage)
                 // Server-bound play channel packets
                 .registerPacket(SyncProgressPacket.type(), SyncProgressPacket.class, SyncProgressPacket.STREAM_CODEC, SyncProgressPacket::onMessage)
                 .registerPacket(SyncResearchFlagsPacket.type(), SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.STREAM_CODEC, SyncResearchFlagsPacket::onMessage)

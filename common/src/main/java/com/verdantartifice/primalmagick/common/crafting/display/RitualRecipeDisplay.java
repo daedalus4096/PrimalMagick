@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public record RitualRecipeDisplay(List<SlotDisplay> ingredients, List<SlotDisplay> props, SlotDisplay result, SourceList manaCosts,
                                   int instability, Optional<AbstractRequirement<?>> requirement, ExpertiseRecipeDisplay expertise,
-                                  SlotDisplay craftingStation) implements RecipeDisplay {
+                                  SlotDisplay craftingStation) implements RecipeDisplay, IManaCostRecipeDisplay {
     public static final MapCodec<RitualRecipeDisplay> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SlotDisplay.CODEC.listOf().fieldOf("ingredients").forGetter(RitualRecipeDisplay::ingredients),
             SlotDisplay.CODEC.listOf().fieldOf("props").forGetter(RitualRecipeDisplay::props),

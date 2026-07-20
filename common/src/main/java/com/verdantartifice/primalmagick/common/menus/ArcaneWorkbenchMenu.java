@@ -5,6 +5,8 @@ import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
 import com.verdantartifice.primalmagick.common.menus.slots.ArcaneCraftingResultSlot;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveRecipeDisplayPacket;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,14 +38,14 @@ import java.util.Optional;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchMenu extends AbstractCraftingMenu {
+public class ArcaneWorkbenchMenu extends AbstractCraftingMenu implements IRecipeDisplayListener {
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
     protected final ContainerLevelAccess access;
     protected final Player player;
     protected final Slot wandSlot;
 
-    protected RecipeHolder<IArcaneRecipe> activeArcaneRecipe = null;
+    protected RecipeDisplay activeRecipeDisplay = null;
     private boolean placingRecipe;
 
     public ArcaneWorkbenchMenu(int windowId, Inventory inv) {
@@ -75,10 +78,15 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu {
     }
 
     @Nullable
-    public RecipeHolder<IArcaneRecipe> getActiveArcaneRecipe() {
-        return this.activeArcaneRecipe;
+    public RecipeDisplay getActiveRecipeDisplay() {
+        return this.activeRecipeDisplay;
     }
-    
+
+    @Override
+    public void setRecipeDisplay(@Nullable RecipeDisplay display) {
+        this.activeRecipeDisplay = display;
+    }
+
     @Override
     public boolean stillValid(@NotNull Player playerIn) {
         return stillValid(this.access, playerIn, BlocksPM.ARCANE_WORKBENCH.get());
@@ -176,11 +184,13 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu {
     protected static void slotChangedCraftingGrid(ArcaneWorkbenchMenu menu, ServerLevel level, ServerPlayer player, CraftingContainer container, ResultContainer resultSlots) {
         CraftingInput input = container.asCraftInput();
         ItemStack result = ItemStack.EMPTY;
+        RecipeDisplay display = null;
 
         Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.recipeAccess().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), input, level);
         if (arcaneOptional.isPresent()) {
             // If the inputs match a defined arcane recipe, show the output if the player can use it
             RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
+            display = recipe.value().display().getFirst();
             if (menu.canUseArcaneRecipe(resultSlots, player, recipe)) {
                 ItemStack recipeResult = recipe.value().assemble(input);
                 if (recipeResult.isItemEnabled(level.enabledFeatures())) {
@@ -192,6 +202,7 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu {
             if (vanillaOptional.isPresent()) {
                 // If the inputs match a defined vanilla recipe, show the output if the player can use it
                 RecipeHolder<CraftingRecipe> recipe = vanillaOptional.get();
+                display = recipe.value().display().getFirst();
                 if (resultSlots.setRecipeUsed(player, recipe)) {
                     ItemStack recipeResult = recipe.value().assemble(input);
                     if (recipeResult.isItemEnabled(level.enabledFeatures())) {
@@ -204,6 +215,7 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu {
         resultSlots.setItem(0, result);
         menu.setRemoteSlot(0, result);
         player.connection.send(new ClientboundContainerSetSlotPacket(menu.containerId, menu.incrementStateId(), 0, result));
+        PacketHandler.sendToPlayer(new SetActiveRecipeDisplayPacket(menu.containerId, display), player);
     }
 
     protected boolean canUseArcaneRecipe(ResultContainer resultSlots, ServerPlayer player, RecipeHolder<IArcaneRecipe> recipeHolder) {
@@ -236,7 +248,7 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu {
 
     @Override
     @NotNull
-    protected Player owner() {
+    public Player owner() {
         return this.player;
     }
 

@@ -1,127 +1,97 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeBookComponent;
-import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
+import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneCraftingRecipeBookComponent;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
-import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.display.IManaCostRecipeDisplay;
 import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.ImageButton;
-import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
-import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.gui.navigation.ScreenPosition;
+import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ContainerInput;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * GUI screen for arcane workbench block.
- * 
+ *
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkbenchMenu> implements ArcaneRecipeUpdateListener {
-    protected static final Logger LOGGER = LogManager.getLogger();
+public class ArcaneWorkbenchScreen extends AbstractRecipeBookScreen<ArcaneWorkbenchMenu> {
     private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/arcane_workbench.png");
-    
-    protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();
-    protected List<ManaCostWidget> costWidgets = new ArrayList<>();
-    protected boolean widthTooNarrow;
 
-    public ArcaneWorkbenchScreen(ArcaneWorkbenchMenu screenMenu, Inventory inv, Component titleIn) {
-        super(screenMenu, inv, titleIn, 176, 183);
+    protected List<ManaCostWidget> costWidgets = new ArrayList<>();
+
+    public ArcaneWorkbenchScreen(ArcaneWorkbenchMenu menu, Inventory inventory, Component title) {
+        super(menu, new ArcaneCraftingRecipeBookComponent(menu), inventory, title);
     }
-    
+
     @Override
     protected void init() {
         super.init();
-        this.widthTooNarrow = this.width < 379;
-        this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, false, this.menu);
-        this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-
         this.initCostWidgets();
-        
-        // Add arcane recipe book button
-        this.addRenderableWidget(new ImageButton(this.leftPos + 105, this.topPos + 69, 20, 18, RecipeBookComponent.RECIPE_BUTTON_SPRITES, (button) -> {
-            this.recipeBookComponent.toggleVisibility();
-            this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-            ((ImageButton)button).setPosition(this.leftPos + 105, this.topPos + 69);
-        }));
-        this.addWidget(this.recipeBookComponent);
-        this.setInitialFocus(this.recipeBookComponent);
         this.titleLabelX = 29;
     }
 
     @Override
-    protected void containerTick() {
-        super.containerTick();
-        this.recipeBookComponent.tick();
+    @NotNull
+    protected ScreenPosition getRecipeBookButtonPosition() {
+        return new ScreenPosition(this.leftPos + 105, this.topPos + 69);
     }
 
     @Override
-    public void extractRenderState(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractBackground(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTicks);
+        int xo = this.leftPos;
+        int yo = (this.height - this.imageHeight) / 2;
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, xo, yo, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
+    }
+
+    @Override
+    public void extractRenderState(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         this.adjustCostWidgets();
-        if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
-            this.extractBackground(guiGraphics, mouseX, mouseY, partialTicks);
-        } else {
-            super.extractContents(guiGraphics, mouseX, mouseY, partialTicks);
-        }
-        guiGraphics.nextStratum();
-        this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.recipeBookComponent.renderGhostRecipe(guiGraphics, this.leftPos, this.topPos, true, partialTicks); // FIXME Is this still a thing?
-        guiGraphics.nextStratum();
-        this.extractCarriedItem(guiGraphics, mouseX, mouseY);
-        this.extractSnapbackItem(guiGraphics);
-        this.extractTooltip(guiGraphics, mouseX, mouseY);
-        this.recipeBookComponent.renderTooltip(guiGraphics, this.leftPos, this.topPos, mouseX, mouseY); // FIXME Conform to new naming scheme
+        super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
     }
 
     @Override
-    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, (this.height - this.imageHeight) / 2, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
-    }
-    
-    @Override
-    protected void extractLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+    protected void extractLabels(@NotNull GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractLabels(graphics, mouseX, mouseY);
+
         // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
-        RecipeHolder<IArcaneRecipe> activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
-        if (activeArcaneRecipe == null || activeArcaneRecipe.value().getManaCosts().isEmpty()) {
+        RecipeDisplay display = this.menu.getActiveRecipeDisplay();
+        if (display == null || (display instanceof IManaCostRecipeDisplay manaDisplay && manaDisplay.manaCosts().isEmpty())) {
             Component text = Component.translatable("label.primalmagick.crafting.no_mana");
             int width = this.font.width(text.getString());
             int x = 1 + (this.imageWidth - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
-            guiGraphics.text(this.font, text, x, y, Color.BLACK.getRGB(), false);
+            graphics.text(this.font, text, x, y, 0, false);
         }
     }
-    
+
     protected void initCostWidgets() {
         this.costWidgets.clear();
         int widgetSetWidth = Sources.getAllSorted().size() * 18;
         int x = this.leftPos + 1 + (this.imageWidth - widgetSetWidth) / 2;
         int y = this.topPos + 10;
         for (Source source : Sources.getAllSorted()) {
-            this.costWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, 0, x, y, this.menu::getWand, this.menu.getPlayer())));
+            this.costWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, 0, x, y, this.menu::getWand, this.menu.owner())));
             x += 18;
         }
     }
-    
+
     protected void adjustCostWidgets() {
-        RecipeHolder<IArcaneRecipe> activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
-        if (activeArcaneRecipe != null) {
-            SourceList manaCosts = activeArcaneRecipe.value().getManaCosts();
+        RecipeDisplay activeArcaneRecipe = this.menu.getActiveRecipeDisplay();
+        if (activeArcaneRecipe instanceof IManaCostRecipeDisplay display) {
+            SourceList manaCosts = display.manaCosts();
             int widgetSetWidth = manaCosts.getSourcesSorted().size() * 18;
             int dx = 0;
             for (ManaCostWidget widget : this.costWidgets) {
@@ -134,46 +104,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreenPM<ArcaneWorkb
                 }
             }
         } else {
-            this.costWidgets.forEach(widget -> {
-                widget.visible = false;
-            });
+            this.costWidgets.forEach(widget -> widget.visible = false);
         }
-    }
-
-    @Override
-    protected boolean isHovering(int p_97768_, int p_97769_, int p_97770_, int p_97771_, double p_97772_, double p_97773_) {
-        return (!this.widthTooNarrow || !this.recipeBookComponent.isVisible()) && super.isHovering(p_97768_, p_97769_, p_97770_, p_97771_, p_97772_, p_97773_);
-    }
-
-    @Override
-    public boolean mouseClicked(@NotNull MouseButtonEvent event, boolean doubleClick) {
-        if (this.recipeBookComponent.mouseClicked(mouseX, mouseY, buttonIndex)) {
-            this.setFocused(this.recipeBookComponent);
-            return true;
-        } else {
-            return this.widthTooNarrow && this.recipeBookComponent.isVisible() ? true : super.mouseClicked(event, doubleClick);
-        }
-    }
-
-    @Override
-    protected boolean hasClickedOutside(double mouseX, double mouseY, int leftPos, int topPos) {
-        boolean flag = mouseX < (double)leftPos || mouseY < (double)topPos || mouseX >= (double)(leftPos + this.imageWidth) || mouseY >= (double)(topPos + this.imageHeight);
-        return this.recipeBookComponent.hasClickedOutside(mouseX, mouseY, this.leftPos, this.topPos, this.imageWidth, this.imageHeight) && flag;
-    }
-
-    @Override
-    protected void slotClicked(@NotNull Slot p_97778_, int p_97779_, int p_97780_, @NotNull ContainerInput p_97781_) {
-        super.slotClicked(p_97778_, p_97779_, p_97780_, p_97781_);
-        this.recipeBookComponent.slotClicked(p_97778_);
-    }
-
-    @Override
-    public void recipesUpdated() {
-        this.recipeBookComponent.recipesUpdated();
-    }
-
-    @Override
-    public ArcaneRecipeBookComponent getRecipeBookComponent() {
-        return this.recipeBookComponent;
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 import org.jetbrains.annotations.NotNull;
 
-public record DissolutionRecipeDisplay(SlotDisplay ingredient, SlotDisplay result, SourceList manaCosts, SlotDisplay craftingStation) implements RecipeDisplay {
+public record DissolutionRecipeDisplay(SlotDisplay ingredient, SlotDisplay result, SourceList manaCosts, SlotDisplay craftingStation) implements RecipeDisplay, IManaCostRecipeDisplay {
     public static final MapCodec<DissolutionRecipeDisplay> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SlotDisplay.CODEC.fieldOf("ingredient").forGetter(DissolutionRecipeDisplay::ingredient),
             SlotDisplay.CODEC.fieldOf("result").forGetter(DissolutionRecipeDisplay::result),
