@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
-import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlotProperties;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
@@ -10,31 +8,32 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedContents;
-import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * Server data container for the infernal furnace GUI.
  * 
  * @author Daedalus4096
  */
-public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<SingleRecipeInput, AbstractCookingRecipe> {
+public class InfernalFurnaceMenu extends AbstractTileRecipeBookMenu<InfernalFurnaceTileEntity, SingleRecipeInput, AbstractCookingRecipe> {
     public static final Identifier IGNYX_SLOT_TEXTURE = ResourceUtils.loc("item/empty_ignyx_slot");
     protected static final Component IGNYX_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.infernal_furnace.slot.ignyx");
 
     protected final ContainerData furnaceData;
+    protected final Slot resultSlot;
     protected final Slot inputSlot;
     protected final Slot ignyxSlot;
     protected final Slot wandSlot;
@@ -44,12 +43,12 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
     }
     
     public InfernalFurnaceMenu(int id, Inventory playerInv, BlockPos tilePos, InfernalFurnaceTileEntity furnace, ContainerData furnaceData) {
-        super(MenuTypesPM.INFERNAL_FURNACE.get(), id, InfernalFurnaceTileEntity.class, playerInv.player.level(), tilePos, furnace);
+        super(MenuTypesPM.INFERNAL_FURNACE.get(), id, InfernalFurnaceTileEntity.class, playerInv.player.level(), tilePos, furnace, 1, 1);
         checkContainerDataCount(furnaceData, 6);
         this.furnaceData = furnaceData;
         
         // Slot 0: chamber output
-        this.addSlot(Services.MENU.makeInfernalFurnaceResultSlot(playerInv.player, this.getTileInventory(InfernalFurnaceTileEntity.OUTPUT_INV_INDEX), 0, 125, 35));
+        this.resultSlot = this.addSlot(Services.MENU.makeInfernalFurnaceResultSlot(playerInv.player, this.getTileInventory(InfernalFurnaceTileEntity.OUTPUT_INV_INDEX), 0, 125, 35));
         
         // Slot 1: material input
         this.inputSlot = this.addSlot(Services.MENU.makeSlot(this.getTileInventory(InfernalFurnaceTileEntity.INPUT_INV_INDEX), 0, 44, 17));
@@ -103,70 +102,36 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
     }
 
     @Override
-    public void fillCraftSlotsStackedContents(StackedItemContents contents) {
-        this.tile.fillStackedContents(contents);
+    public @NotNull List<Slot> getInputGridSlots() {
+        return List.of(this.inputSlot);
     }
 
     @Override
-    public void clearCraftingContent() {
-        this.getSlot(0).set(ItemStack.EMPTY);
-        this.getSlot(1).set(ItemStack.EMPTY);
+    protected @NotNull List<Slot> getSlotsToClear() {
+        return List.of(this.inputSlot, this.resultSlot);
+    }
+
+    public Slot getResultSlot() {
+        return this.resultSlot;
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<AbstractCookingRecipe> recipe) {
-        if (this.getTileInventory(Direction.UP) != null) {
-            return recipe.value().matches(new SingleRecipeInput(this.getTileInventory(Direction.UP).getStackInSlot(0)), this.level);
-        } else {
-            return false;
-        }
+    protected @NotNull SingleRecipeInput getRecipeInputForMatch() {
+        return new SingleRecipeInput(this.getTileInventory(Direction.UP) != null ? this.getTileInventory(Direction.UP).getStackInSlot(0) : ItemStack.EMPTY);
     }
 
     @Override
-    public int getResultSlotIndex() {
-        return 0;
+    @NotNull
+    public RecipeBookType getRecipeBookType() {
+        return RecipeBookType.FURNACE;
     }
 
     @Override
-    public int getGridWidth() {
-        return 1;
-    }
-
-    @Override
-    public int getGridHeight() {
-        return 1;
-    }
-
-    @Override
-    public int getSize() {
-        return 2;
-    }
-
-    @Override
-    public ArcaneRecipeBookType getRecipeBookType() {
-        return ArcaneRecipeBookType.FURNACE;
-    }
-
-    @Override
-    public boolean shouldMoveToInventory(int index) {
-        return true;
-    }
-
-    @Override
-    public boolean isSingleIngredientMenu() {
-        return true;
-    }
-
-    @Override
-    public NonNullList<Slot> getSlots() {
-        return this.slots;
-    }
-
-    @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player player, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 0) {
