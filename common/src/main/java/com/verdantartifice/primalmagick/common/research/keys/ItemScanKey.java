@@ -13,7 +13,7 @@ import net.minecraft.world.level.ItemLike;
 import java.util.Objects;
 
 public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
-    public static final MapCodec<ItemScanKey> CODEC = ItemStack.SINGLE_ITEM_CODEC.fieldOf("stack").xmap(ItemScanKey::new, key -> key.stack);
+    public static final MapCodec<ItemScanKey> CODEC = ItemStack.CODEC.fieldOf("stack").xmap(ItemScanKey::new, key -> key.stack);
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemScanKey> STREAM_CODEC = ItemStack.STREAM_CODEC.map(ItemScanKey::new, key -> key.stack);
     
     private static final String PREFIX = "!";
