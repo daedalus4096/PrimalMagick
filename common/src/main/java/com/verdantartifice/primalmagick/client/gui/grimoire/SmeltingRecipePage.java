@@ -50,8 +50,8 @@ public class SmeltingRecipePage extends AbstractRecipePage<FurnaceRecipeDisplay>
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
-        super.render(guiGraphics, side, x, y, mouseX, mouseY);
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+        super.extractRenderState(guiGraphics, side, x, y, mouseX, mouseY);
         y += 53;
         
         int indent = 124;

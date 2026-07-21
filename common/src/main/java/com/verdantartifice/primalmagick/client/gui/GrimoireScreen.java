@@ -322,7 +322,7 @@ public class GrimoireScreen extends Screen {
         int current = 0;
         for (AbstractPage page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
-                page.render(guiGraphics, current % 2, this.leftPos, this.topPos - 10, mouseX, mouseY);
+                page.extractRenderState(guiGraphics, current % 2, this.leftPos, this.topPos - 10, mouseX, mouseY);
             }
             current++;
             if (current > this.currentPage + 1) {

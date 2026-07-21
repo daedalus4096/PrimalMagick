@@ -31,7 +31,7 @@ public class RequirementsPage extends AbstractPage {
     }
     
     @Override
-    protected boolean renderTopTitleBar() {
+    protected boolean shouldRenderTopTitleBar() {
         return false;
     }
 
@@ -108,9 +108,9 @@ public class RequirementsPage extends AbstractPage {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Render page title
-        this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
+        this.extractTitleRenderState(guiGraphics, side, x, y, mouseX, mouseY, null);
         y += 53;
         
         guiGraphics.pose().pushMatrix();

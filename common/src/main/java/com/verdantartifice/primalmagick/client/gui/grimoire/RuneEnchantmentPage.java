@@ -63,7 +63,7 @@ public class RuneEnchantmentPage extends AbstractPage {
     }
     
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         int startY = y;
         int indent = 84;
         int overlayWidth = 13;
@@ -71,7 +71,7 @@ public class RuneEnchantmentPage extends AbstractPage {
         
         // Draw title page and overlay background if applicable
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
+            this.extractTitleRenderState(guiGraphics, side, x, y, mouseX, mouseY, null);
             y += 77;
             
             guiGraphics.pose().pushMatrix();

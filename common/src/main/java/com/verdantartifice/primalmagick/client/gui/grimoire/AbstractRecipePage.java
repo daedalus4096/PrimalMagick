@@ -43,12 +43,12 @@ public abstract class AbstractRecipePage<T extends RecipeDisplay> extends Abstra
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
-        this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+        this.extractTitleRenderState(guiGraphics, side, x, y, mouseX, mouseY, null);
     }
 
     @Override
-    protected boolean renderTopTitleBar() {
+    protected boolean shouldRenderTopTitleBar() {
         return false;
     }
     

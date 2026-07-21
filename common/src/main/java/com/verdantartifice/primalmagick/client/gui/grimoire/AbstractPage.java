@@ -29,7 +29,7 @@ public abstract class AbstractPage implements GuiEventListener {
      * @param mouseX
      * @param mouseY
      */
-    public abstract void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY);
+    public abstract void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY);
     
     /**
      * Get the text for this page's title
@@ -47,13 +47,13 @@ public abstract class AbstractPage implements GuiEventListener {
      */
     public abstract void initWidgets(GrimoireScreen screen, int side, int x, int y);
     
-    protected boolean renderTopTitleBar() {
+    protected boolean shouldRenderTopTitleBar() {
         return true;
     }
     
-    protected void renderTitle(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY, @Nullable Identifier icon) {
+    protected void extractTitleRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY, @Nullable Identifier icon) {
         Minecraft mc = Minecraft.getInstance();
-        if (this.renderTopTitleBar()) {
+        if (this.shouldRenderTopTitleBar()) {
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SEPARATOR_SPRITE, x + 10 + (side * 140), y + 18, 96, 5);   // Render the separator bar above the title text
         }
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SEPARATOR_SPRITE, x + 10 + (side * 140), y + 35, 96, 5);   // Render the separator bar below the title text

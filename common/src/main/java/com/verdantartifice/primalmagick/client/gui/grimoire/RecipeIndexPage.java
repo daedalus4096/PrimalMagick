@@ -7,6 +7,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +33,7 @@ public class RecipeIndexPage extends AbstractPage {
     protected static final Component SEARCH_HINT = (Component.translatable("gui.recipebook.search_hint")).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected List<IndexItem> contents = new ArrayList<>();
+    protected List<Item> contents = new ArrayList<>();
     protected boolean firstPage;
     protected Optional<String> startingSearchText;
     
@@ -50,12 +52,12 @@ public class RecipeIndexPage extends AbstractPage {
     }
     
     @Nonnull
-    public List<IndexItem> getContents() {
+    public List<Item> getContents() {
         return Collections.unmodifiableList(this.contents);
     }
     
     public boolean addContent(String entry, ItemStack stack) {
-        return this.contents.add(new IndexItem(entry, stack));
+        return this.contents.add(new Item(entry, stack));
     }
     
     public boolean isFirstPage() {
@@ -68,12 +70,12 @@ public class RecipeIndexPage extends AbstractPage {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
+            this.extractTitleRenderState(guiGraphics, side, x, y, mouseX, mouseY, null);
             if (this.searchBox != null) {
-                this.searchBox.render(guiGraphics, mouseX, mouseY, 0F);
+                this.searchBox.extractRenderState(guiGraphics, mouseX, mouseY, 0F);
             }
         }
     }
@@ -102,7 +104,7 @@ public class RecipeIndexPage extends AbstractPage {
             y += 24;
         }
         
-        for (IndexItem item : this.getContents()) {
+        for (Item item : this.getContents()) {
             // Render a recipe entry button for each recipe
             screen.addWidgetToScreen(new RecipeEntryButton(x + 12 + (side * 140), y, Component.literal(item.name), screen, item.name, item.iconStack));
             y += 12;
@@ -121,36 +123,29 @@ public class RecipeIndexPage extends AbstractPage {
     }
 
     @Override
-    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+    public boolean keyPressed(@NotNull KeyEvent event) {
         if (this.searchBox != null && this.searchBox.isFocused()) {
-            if (this.searchBox.keyPressed(pKeyCode, pScanCode, pModifiers)) {
+            if (this.searchBox.keyPressed(event)) {
                 if (this.screen != null) {
                     this.screen.checkRecipeSearchStringUpdate(this.searchBox.getValue());
                 }
                 return true;
             }
         }
-        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+        return super.keyPressed(event);
     }
 
     @Override
-    public boolean charTyped(char pCodePoint, int pModifiers) {
-        if (this.searchBox != null && this.searchBox.isFocused() && this.searchBox.charTyped(pCodePoint, pModifiers)) {
+    public boolean charTyped(@NotNull CharacterEvent event) {
+        if (this.searchBox != null && this.searchBox.isFocused() && this.searchBox.charTyped(event)) {
             if (this.screen != null) {
                 this.screen.checkRecipeSearchStringUpdate(this.searchBox.getValue());
             }
             return true;
         }
-        return super.charTyped(pCodePoint, pModifiers);
+        return super.charTyped(event);
     }
 
-    private static class IndexItem {
-        public final String name;
-        public final ItemStack iconStack;
-        
-        public IndexItem(String name, ItemStack stack) {
-            this.name = name;
-            this.iconStack = stack;
-        }
+    public record Item(String name, ItemStack iconStack) {
     }
 }

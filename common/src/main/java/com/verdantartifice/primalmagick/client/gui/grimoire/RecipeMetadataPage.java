@@ -44,16 +44,16 @@ public class RecipeMetadataPage extends AbstractPage {
     }
     
     @Override
-    protected boolean renderTopTitleBar() {
+    protected boolean shouldRenderTopTitleBar() {
         return false;
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
 
         // Draw title
-        this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
+        this.extractTitleRenderState(guiGraphics, side, x, y, mouseX, mouseY, null);
         y += 53;
         
         boolean isEntryMissing = ResearchManager.getEntryForRecipe(this.registryAccess, this.recipeHolder.id()).isEmpty();

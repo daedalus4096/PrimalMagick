@@ -35,7 +35,7 @@ public class LinguisticsDescriptionPage extends AbstractPage {
     }
     
     @Override
-    protected boolean renderTopTitleBar() {
+    protected boolean shouldRenderTopTitleBar() {
         // This is never the first page in a topic
         return false;
     }
@@ -47,7 +47,7 @@ public class LinguisticsDescriptionPage extends AbstractPage {
     }
     
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         y += 25;
         
         // Render page contents

@@ -64,11 +64,11 @@ public class AffinityPage extends AbstractPage {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Draw title page if applicable
         final int startY = y;
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
+            this.extractTitleRenderState(guiGraphics, side, x, y, mouseX, mouseY, null);
             y += 53;
         } else {
             y += 25;

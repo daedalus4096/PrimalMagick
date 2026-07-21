@@ -50,10 +50,10 @@ public class DisciplineIndexPage extends AbstractPage {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
+            this.extractTitleRenderState(guiGraphics, side, x, y, mouseX, mouseY, null);
         }
     }
     
