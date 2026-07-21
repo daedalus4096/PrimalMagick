@@ -16,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
@@ -24,6 +25,7 @@ import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +130,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     }
     
     @Override
-    public boolean clickMenuButton(Player playerIn, int id) {
+    public boolean clickMenuButton(@NotNull Player playerIn, int id) {
         if (id >= 0 && id < this.recipes.size()) {
             this.selectedRecipe.set(id);
             this.outputInventory.setRecipeUsed(this.recipes.get(id));
@@ -152,14 +154,19 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     private static RunecarvingRecipeInput createRecipeInput(IItemHandlerPM inventory) {
         return new RunecarvingRecipeInput(inventory.getStackInSlot(0), inventory.getStackInSlot(1));
     }
-    
+
+    @SuppressWarnings("unchecked")
     protected void updateAvailableRecipes(IItemHandlerPM inventoryIn, ItemStack slabStack, ItemStack lapisStack) {
         this.recipes.clear();
         this.selectedRecipe.set(-1);
         this.outputSlot.set(ItemStack.EMPTY);
-        this.recipes = this.level.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), createRecipeInput(inventoryIn), this.level).stream()
-                .filter(r -> r != null && (r.value().getRequirement().isEmpty() || r.value().getRequirement().get().isMetBy(this.player)))
-                .collect(Collectors.toList());
+        if (this.level instanceof ServerLevel serverLevel) {
+            this.recipes = serverLevel.recipeAccess().getRecipes().stream()
+                    .filter(recipeHolder -> recipeHolder.value().getType().equals(RecipeTypesPM.RUNECARVING.get()))
+                    .map(recipeHolder -> (RecipeHolder<IRunecarvingRecipe>)recipeHolder)
+                    .filter(r -> r.value().matches(createRecipeInput(inventoryIn), serverLevel) && (r.value().getRequirement().isEmpty() || r.value().getRequirement().get().isMetBy(this.player)))
+                    .collect(Collectors.toList());
+        }
     }
     
     public void updateRecipeResultSlot(RegistryAccess registryAccess) {
@@ -182,10 +189,11 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     }
     
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (index == 2) {
@@ -239,7 +247,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     }
     
     @Override
-    public void removed(Player playerIn) {
+    public void removed(@NotNull Player playerIn) {
         super.removed(playerIn);
         this.outputInventory.removeItemNoUpdate(0);
     }
