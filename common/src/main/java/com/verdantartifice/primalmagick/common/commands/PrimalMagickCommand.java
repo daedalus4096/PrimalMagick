@@ -56,12 +56,13 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Util;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.slf4j.Logger;
 
@@ -477,16 +478,16 @@ public class PrimalMagickCommand {
     private static int grantScanResearch(CommandSourceStack source, ServerPlayer target, ItemInput item) {
         ItemStack stack;
         try {
-            stack = item.createItemStack(1, false);
+            stack = item.createItemStack(1);
         } catch (CommandSyntaxException e) {
             source.sendFailure(Component.translatable("commands.primalmagick.scans.grant.failure", target.getName()));
             return 0;
         }
         // Scan the given item for the target player and grant them its research
         if (ResearchManager.setScanned(stack, target)) {
-            source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), Services.ITEMS_REGISTRY.getKey(item.getItem()).toString()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), Services.ITEMS_REGISTRY.getKey(item.item().value()).toString()), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), Services.ITEMS_REGISTRY.getKey(item.getItem()).toString()));
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), Services.ITEMS_REGISTRY.getKey(item.item().value()).toString()));
             }
         } else {
             source.sendFailure(Component.translatable("commands.primalmagick.scans.grant.failure", target.getName()));            
@@ -757,7 +758,7 @@ public class PrimalMagickCommand {
                 }
 
                 IAffinity affinityData = am.getOrGenerateItemAffinityAsync(itemId, recipeManager, registryAccess, new ArrayList<>()).join();
-                if (getRecipeCountForItem(recipeManager, registryAccess, item) ==0) {
+                if (getRecipeCountForItem(recipeManager, level, item) ==0) {
                         SourceList sources = affinityData.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()).join();
                         if (sources.isEmpty()){
                                 items.add(item);
@@ -769,10 +770,10 @@ public class PrimalMagickCommand {
         return items;
     }
 
-    private static long getRecipeCountForItem(net.minecraft.world.item.crafting.RecipeManager recipeManager, RegistryAccess registryAccess, Item item) {
+    private static long getRecipeCountForItem(net.minecraft.world.item.crafting.RecipeManager recipeManager, ServerLevel level, Item item) {
+        ContextMap context = SlotDisplayContext.fromLevel(level);
         return recipeManager.getRecipes().stream()
-            .map(RecipeHolder::value)
-            .filter(r -> r.getResultItem(registryAccess) instanceof ItemStack stack && stack.is(item))
+            .filter(rh -> rh.value().display().getFirst().result().resolveForFirstStack(context) instanceof ItemStack stack && stack.is(item))
             .count();
     }
 
@@ -887,7 +888,7 @@ public class PrimalMagickCommand {
 
     private static int explainItemAffinity(CommandSourceStack source, ItemInput item) {
         // Get the affinity data for the item
-        Identifier itemId = Services.ITEMS_REGISTRY.getKey(item.getItem());
+        Identifier itemId = Services.ITEMS_REGISTRY.getKey(item.item().value());
         IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getLevel().recipeAccess(), source.registryAccess(), new ArrayList<>()).join();
         if (affinityData instanceof ItemAffinity itemAffinity) {
             itemAffinity.getSourceRecipe().ifPresentOrElse(
