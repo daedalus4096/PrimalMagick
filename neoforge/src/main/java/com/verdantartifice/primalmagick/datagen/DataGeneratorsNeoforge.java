@@ -28,6 +28,7 @@ import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.MobEffectTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.tags.SpellPropertyTagsProviderPMNeoforge;
+import com.verdantartifice.primalmagick.datagen.tags.VillagerTradesTagsProviderPM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -70,6 +71,7 @@ public class DataGeneratorsNeoforge {
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new MobEffectTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
+        generator.addProvider(event.includeServer(), new VillagerTradesTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), registryLookupFuture));
         generator.addProvider(event.includeServer(), new LootModifierProviderNeoforge(generator.getPackOutput(), registryLookupFuture));
