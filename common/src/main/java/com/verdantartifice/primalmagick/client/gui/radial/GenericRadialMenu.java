@@ -1,21 +1,21 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.navigation.ScreenRectangle;
+import net.minecraft.client.gui.render.TextureSetup;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.state.gui.GuiElementRenderState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import org.apache.logging.log4j.util.TriConsumer;
+import org.joml.Matrix3x2f;
 import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nullable;
@@ -324,59 +324,31 @@ public class GenericRadialMenu {
 
     private void drawBackground(GuiGraphicsExtractor guiGraphics, float x, float y, float z, float radiusIn, float radiusOut)
     {
-        if (visibleItems.size() > 0)
+        if (!visibleItems.isEmpty())
         {
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            RenderSystem.setShader(GameRenderer::getPositionColorShader);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-            Tesselator tessellator = Tesselator.getInstance();
-            BufferBuilder buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
             iterateVisible((item, s, e) -> {
                 int color = item.isHovered() ? backgroundColorHover : backgroundColor;
-                drawPieArc(buffer, x, y, z, radiusIn, radiusOut, s, e, color);
+                drawPieArc(guiGraphics, x, y, z, radiusIn, radiusOut, s, e, color);
             });
-            BufferUploader.drawWithShader(buffer.buildOrThrow());
-            RenderSystem.disableBlend();
         }
     }
 
     private static final float PRECISION = 2.5f / 360.0f;
 
-    private void drawPieArc(BufferBuilder buffer, float x, float y, float z, float radiusIn, float radiusOut, float startAngle, float endAngle, int color)
+    private void drawPieArc(GuiGraphicsExtractor graphics, float x, float y, float z, float radiusIn, float radiusOut, float startAngle, float endAngle, int color)
     {
-        float angle = endAngle - startAngle;
-        int sections = Math.max(1, Mth.ceil(angle / PRECISION));
-
-        angle = endAngle - startAngle;
-
-        int r = (color >> 16) & 0xFF;
-        int g = (color >> 8) & 0xFF;
-        int b = (color >> 0) & 0xFF;
-        int a = (color >> 24) & 0xFF;
-
-        float slice = angle / sections;
-
-        for (int i = 0; i < sections; i++)
-        {
-            float angle1 = startAngle + i * slice;
-            float angle2 = startAngle + (i + 1) * slice;
-
-            float pos1InX = x + radiusIn * (float) Math.cos(angle1);
-            float pos1InY = y + radiusIn * (float) Math.sin(angle1);
-            float pos1OutX = x + radiusOut * (float) Math.cos(angle1);
-            float pos1OutY = y + radiusOut * (float) Math.sin(angle1);
-            float pos2OutX = x + radiusOut * (float) Math.cos(angle2);
-            float pos2OutY = y + radiusOut * (float) Math.sin(angle2);
-            float pos2InX = x + radiusIn * (float) Math.cos(angle2);
-            float pos2InY = y + radiusIn * (float) Math.sin(angle2);
-
-            buffer.addVertex(pos1OutX, pos1OutY, z).setColor(r, g, b, a);
-            buffer.addVertex(pos1InX, pos1InY, z).setColor(r, g, b, a);
-            buffer.addVertex(pos2InX, pos2InY, z).setColor(r, g, b, a);
-            buffer.addVertex(pos2OutX, pos2OutY, z).setColor(r, g, b, a);
-        }
+        Services.GUI_GRAPHICS.submitGuiElementRenderState(graphics, new BlitPieArc(
+                RenderPipelines.GUI,
+                TextureSetup.noTexture(),
+                graphics.pose(),
+                x,
+                y,
+                radiusIn,
+                radiusOut,
+                startAngle,
+                endAngle,
+                color,
+                null));
     }
 
     public void cyclePrevious()
@@ -502,6 +474,165 @@ public class GenericRadialMenu {
             return 0;
         double angle = ((i / numItems) + 0.25) * TWO_PI + Math.PI;
         return angle;
+    }
+
+    public record BlitPieArc(
+            RenderPipeline pipeline,
+            TextureSetup textureSetup,
+            Matrix3x2f pose,
+            float x,
+            float y,
+            float radiusIn,
+            float radiusOut,
+            float startAngle,
+            float endAngle,
+            int color,
+            @Nullable ScreenRectangle scissorArea,
+            @Nullable ScreenRectangle bounds
+    ) implements GuiElementRenderState
+    {
+        public BlitPieArc(
+                RenderPipeline pipeline,
+                TextureSetup textureSetup,
+                Matrix3x2f pose,
+                float x,
+                float y,
+                float radiusIn,
+                float radiusOut,
+                float startAngle,
+                float endAngle,
+                int color,
+                @Nullable ScreenRectangle bounds
+        ) {
+            this(
+                    pipeline,
+                    textureSetup,
+                    pose,
+                    x,
+                    y,
+                    radiusIn,
+                    radiusOut,
+                    startAngle,
+                    endAngle,
+                    color,
+                    bounds,
+                    getBounds(x, y, radiusIn, radiusOut, startAngle, endAngle, pose, bounds)
+            );
+        }
+
+        @Override
+        public void buildVertices(VertexConsumer consumer) {
+            float angle = endAngle - startAngle;
+            int sections = Math.max(1, Mth.ceil(angle / PRECISION));
+
+            angle = endAngle - startAngle;
+
+            float slice = angle / sections;
+
+            for (int i = 0; i < sections; i++)
+            {
+                float angle1 = startAngle + i * slice;
+                float angle2 = startAngle + (i + 1) * slice;
+
+                float pos1InX = x + radiusIn * Mth.cos(angle1);
+                float pos1InY = y + radiusIn * Mth.sin(angle1);
+                float pos1OutX = x + radiusOut * Mth.cos(angle1);
+                float pos1OutY = y + radiusOut * Mth.sin(angle1);
+                float pos2OutX = x + radiusOut * Mth.cos(angle2);
+                float pos2OutY = y + radiusOut * Mth.sin(angle2);
+                float pos2InX = x + radiusIn * Mth.cos(angle2);
+                float pos2InY = y + radiusIn * Mth.sin(angle2);
+
+                consumer.addVertexWith2DPose(this.pose(), pos1OutX, pos1OutY).setColor(this.color());
+                consumer.addVertexWith2DPose(this.pose(), pos1InX, pos1InY).setColor(this.color());
+                consumer.addVertexWith2DPose(this.pose(), pos2InX, pos2InY).setColor(this.color());
+                consumer.addVertexWith2DPose(this.pose(), pos2OutX, pos2OutY).setColor(this.color());
+            }
+        }
+
+        private static final float PI_3_HALFS = Mth.PI + Mth.HALF_PI;
+
+        @Nullable
+        private static ScreenRectangle getBounds(
+                float x, float y, float radiusIn, float radiusOut, float startAngle, float endAngle,
+                Matrix3x2f pose,
+                @Nullable ScreenRectangle rect
+        ) {
+
+            float x0 = x, x1 = x;
+            float y0 = y, y1 = y;
+
+            var x2 = x + Mth.cos(startAngle) * radiusIn;
+            var y2 = y + Mth.sin(startAngle) * radiusIn;
+            x0 = Math.min(x0, x2);
+            y0 = Math.min(y0, y2);
+            x1 = Math.max(x1, x2);
+            y1 = Math.max(y1, y2);
+
+            x2 = x + Mth.cos(endAngle) * radiusIn;
+            y2 = y + Mth.sin(endAngle) * radiusIn;
+            x0 = Math.min(x0, x2);
+            y0 = Math.min(y0, y2);
+            x1 = Math.max(x1, x2);
+            y1 = Math.max(y1, y2);
+
+            x2 = x + Mth.cos(startAngle) * radiusOut;
+            y2 = y + Mth.sin(startAngle) * radiusOut;
+            x0 = Math.min(x0, x2);
+            y0 = Math.min(y0, y2);
+            x1 = Math.max(x1, x2);
+            y1 = Math.max(y1, y2);
+
+            x2 = x + Mth.cos(endAngle) * radiusOut;
+            y2 = y + Mth.sin(endAngle) * radiusOut;
+            x0 = Math.min(x0, x2);
+            y0 = Math.min(y0, y2);
+            x1 = Math.max(x1, x2);
+            y1 = Math.max(y1, y2);
+
+            if (0 > startAngle && 0 < endAngle)
+            {
+                x2 = x + Mth.cos(0) * radiusOut;
+                y2 = y + Mth.sin(0) * radiusOut;
+                x0 = Math.min(x0, x2);
+                y0 = Math.min(y0, y2);
+                x1 = Math.max(x1, x2);
+                y1 = Math.max(y1, y2);
+            }
+
+            if (Mth.HALF_PI > startAngle && Mth.HALF_PI < endAngle)
+            {
+                x2 = x + Mth.cos(Mth.HALF_PI) * radiusOut;
+                y2 = y + Mth.sin(Mth.HALF_PI) * radiusOut;
+                x0 = Math.min(x0, x2);
+                y0 = Math.min(y0, y2);
+                x1 = Math.max(x1, x2);
+                y1 = Math.max(y1, y2);
+            }
+
+            if (Mth.PI > startAngle && Mth.PI < endAngle)
+            {
+                x2 = x + Mth.cos(Mth.PI) * radiusOut;
+                y2 = y + Mth.sin(Mth.PI) * radiusOut;
+                x0 = Math.min(x0, x2);
+                y0 = Math.min(y0, y2);
+                x1 = Math.max(x1, x2);
+                y1 = Math.max(y1, y2);
+            }
+
+            if (PI_3_HALFS > startAngle && PI_3_HALFS < endAngle)
+            {
+                x2 = x + Mth.cos(Mth.PI) * radiusOut;
+                y2 = y + Mth.sin(Mth.PI) * radiusOut;
+                x0 = Math.min(x0, x2);
+                y0 = Math.min(y0, y2);
+                x1 = Math.max(x1, x2);
+                y1 = Math.max(y1, y2);
+            }
+
+            ScreenRectangle screenrectangle = new ScreenRectangle(Mth.floor(x0), Mth.floor(y0), Mth.ceil(x1 - x0), Mth.ceil(y1 - y0)).transformMaxBounds(pose);
+            return rect != null ? rect.intersection(screenrectangle) : screenrectangle;
+        }
     }
 }
 

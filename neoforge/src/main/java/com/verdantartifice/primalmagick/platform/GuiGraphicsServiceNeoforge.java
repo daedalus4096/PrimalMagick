@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.platform.services.IGuiGraphicsService;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.state.gui.GuiElementRenderState;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
@@ -19,5 +20,10 @@ public class GuiGraphicsServiceNeoforge implements IGuiGraphicsService {
     @Override
     public void renderComponentTooltipFromElements(GuiGraphicsExtractor pGuiGraphics, Font pFont, List<Either<FormattedText, TooltipComponent>> pElements, int pMouseX, int pMouseY, ItemStack stack) {
         pGuiGraphics.setComponentTooltipFromElementsForNextFrame(pFont, pElements, pMouseX, pMouseY, stack);
+    }
+
+    @Override
+    public void submitGuiElementRenderState(GuiGraphicsExtractor pGuiGraphics, GuiElementRenderState renderState) {
+        pGuiGraphics.submitGuiElementRenderState(renderState);
     }
 }
