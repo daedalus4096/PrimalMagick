@@ -6,13 +6,14 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgress
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * GUI button to tell the server to attempt to progress to the next stage of the current research entry in the grimoire.
  * 
  * @author Daedalus4096
  */
-public class ProgressButton extends Button {
+public class ProgressButton extends Button.Plain {
     protected ResearchStage stage;
     protected GrimoireScreen screen;
     
@@ -32,7 +33,7 @@ public class ProgressButton extends Button {
     
     private static class Handler implements OnPress {
         @Override
-        public void onPress(Button button) {
+        public void onPress(@NotNull Button button) {
             if (button instanceof ProgressButton pb) {
                 // Send a packet to the server and tell the screen to update more frequently until resolved
                 PacketHandler.sendToServer(new SyncProgressPacket(pb.getStage().parentKey(), false, true, true, false));
