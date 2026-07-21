@@ -21,9 +21,7 @@ public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<Scrib
     protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/scribe_transcribe_works.png");
     
     public ScribeTranscribeWorksScreen(ScribeTranscribeWorksMenu menu, Inventory inv, Component title) {
-        super(menu, inv, title);
-        this.imageWidth = 176;
-        this.imageHeight = 222;
+        super(menu, inv, title, 176, 222);
         this.inventoryLabelY = this.imageHeight - 94;
     }
 
