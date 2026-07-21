@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -52,9 +53,10 @@ public class LinguisticsIndexPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a button to the screen for each discovered language
         Minecraft mc = Minecraft.getInstance();
-        List<Holder.Reference<BookLanguage>> known = mc.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(lang -> LinguisticsManager.isLanguageKnown(mc.player, lang)).sorted((a, b) -> {
-            return a.value().getName().getString().compareTo(b.value().getName().getString());
-        }).toList();
+        List<Holder.Reference<BookLanguage>> known = mc.level == null ? List.of() : mc.level.registryAccess().getOrThrow(RegistryKeysPM.BOOK_LANGUAGES).value().listElements()
+                .filter(lang -> LinguisticsManager.isLanguageKnown(mc.player, lang))
+                .sorted(Comparator.comparing(a -> a.value().getName().getString()))
+                .toList();
         for (Holder.Reference<BookLanguage> lang : known) {
             screen.addWidgetToScreen(new LinguisticsButton(x + 12 + (side * 140), y, lang.value().getName(), screen, lang));
             y += 12;
