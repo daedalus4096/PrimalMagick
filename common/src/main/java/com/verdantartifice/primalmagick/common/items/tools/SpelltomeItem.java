@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.items.IHasCustomRenderer;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public abstract class SpelltomeItem extends Item implements IHasCustomRenderer, ITieredDevice, ISpellContainer {
+public abstract class SpelltomeItem extends Item implements ITieredDevice, ISpellContainer {
     private final DeviceTier tier;
 
     public SpelltomeItem(DeviceTier tier, Item.Properties pProperties) {
