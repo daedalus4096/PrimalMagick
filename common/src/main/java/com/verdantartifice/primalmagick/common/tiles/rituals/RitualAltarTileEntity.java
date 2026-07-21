@@ -38,19 +38,20 @@ import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.common.wands.ManaManager;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -63,6 +64,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -461,7 +463,8 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     protected void finishCraft() {
         if (this.level != null) {
             this.getActiveRecipe().ifPresent(recipeHolder -> {
-                ItemStack outputStack = recipeHolder.value().getResultItem(this.level.registryAccess()).copy();
+                ContextMap context = SlotDisplayContext.fromLevel(this.level);
+                ItemStack outputStack = recipeHolder.value().display().getFirst().result().resolveForFirstStack(context);
                 this.setItem(OUTPUT_INV_INDEX, 0, outputStack);
                 Player activePlayer = this.getActivePlayer();
                 if (activePlayer != null) {
@@ -650,14 +653,10 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             
             // If no match was found, warn the player the first time then check again in a second
             if (!altar.skipWarningMessage && activePlayer != null) {
-                if (requiredOffering.isEmpty()) {
-                    activePlayer.sendSystemMessage(Component.translatable("ritual.primalmagick.warning.missing_offering.empty"));
-                } else {
-                    requiredOffering.items().findFirst().ifPresentOrElse(
-                        itemHolder -> activePlayer.displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_offering", itemHolder.value().getName()), false),
-                        () -> activePlayer.displayClientMessage(Component.translatable("ritual.primalmagick.warning.missing_offering.empty"), false)
-                    );
-                }
+                requiredOffering.items().findFirst().ifPresentOrElse(
+                        itemHolder -> activePlayer.sendSystemMessage(Component.translatable("ritual.primalmagick.warning.missing_offering", itemHolder.value().getName(new ItemStack(itemHolder.value())))),
+                        () -> activePlayer.sendSystemMessage(Component.translatable("ritual.primalmagick.warning.missing_offering.empty"))
+                );
                 altar.skipWarningMessage = true;
             }
             altar.nextCheckCount = altar.activeCount + 20;
@@ -686,13 +685,9 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
                 // If the channel was interrupted, add an instability spike and start looking again
                 altar.channeledOfferingPos = null;
                 if (activePlayer != null) {
-                    if (requiredOffering.isEmpty()) {
-                        activePlayer.sendSystemMessage(Component.translatable("ritual.primalmagick.warning.channel_interrupt.empty"));
-                    } else {
-                        requiredOffering.items().findFirst().ifPresentOrElse(
-                            itemHolder -> activePlayer.displayClientMessage(Component.translatable("ritual.primalmagick.warning.channel_interrupt", itemHolder.value().getName()), false),
-                            () -> activePlayer.displayClientMessage(Component.translatable("ritual.primalmagick.warning.channel_interrupt.empty"), false));
-                    }
+                    requiredOffering.items().findFirst().ifPresentOrElse(
+                            itemHolder -> activePlayer.sendSystemMessage(Component.translatable("ritual.primalmagick.warning.channel_interrupt", itemHolder.value().getName(new ItemStack(itemHolder.value())))),
+                            () -> activePlayer.sendSystemMessage(Component.translatable("ritual.primalmagick.warning.channel_interrupt.empty")));
                     altar.skipWarningMessage = true;
                 }
                 altar.addStability(Mth.clamp(50 * Math.min(0.0F, altar.calculateStabilityDelta()), -25.0F, -1.0F));
@@ -720,8 +715,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
                 for (BlockPos propPos : altar.propPositions) {
                     // Open the prop block if it's valid
                     BlockState propState = altar.level.getBlockState(propPos);
-                    Block block = propState.getBlock();
-                    if (requiredProp.test(block) && altar.openProp(propPos,
+                    if (requiredProp.test(propState) && altar.openProp(propPos,
                             b -> !b.isPropActivated(propState, altar.level, propPos) && b.isBlockSaltPowered(altar.level, propPos))) {
                         return true;
                     }
@@ -729,20 +723,18 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
                 
                 // If no match was found, warn the player the first time
                 if (!altar.skipWarningMessage && altar.getActivePlayer() != null) {
-                    if (requiredProp.hasNoMatchingBlocks()) {
-                        altar.getActivePlayer().sendSystemMessage(Component.translatable("ritual.primalmagick.warning.missing_prop.empty"));
-                    } else {
-                        altar.getActivePlayer().sendSystemMessage(Component.translatable("ritual.primalmagick.warning.missing_prop", requiredProp.getMatchingBlocks()[0].getName()));
-                    }
+                    requiredProp.blocks().findFirst().ifPresentOrElse(
+                            bh -> altar.getActivePlayer().sendSystemMessage(Component.translatable("ritual.primalmagick.warning.missing_prop", bh.value().getName())),
+                            () -> altar.getActivePlayer().sendSystemMessage(Component.translatable("ritual.primalmagick.warning.missing_prop.empty")));
                     altar.skipWarningMessage = true;
                 }
             } else {
                 BlockState propState = altar.level.getBlockState(altar.awaitedPropPos);
                 Block block = propState.getBlock();
-                if ( !(block instanceof IRitualPropBlock) || 
-                     !requiredProp.test(block) ||
-                     !((IRitualPropBlock)block).isBlockSaltPowered(altar.level, altar.awaitedPropPos) ) {
-                    altar.onPropInterrupted(block, propState, Services.BLOCKS_REGISTRY.getKey(requiredProp.getMatchingBlocks()[0]));
+                if ( !(block instanceof IRitualPropBlock propBlock) ||
+                     !requiredProp.test(propState) ||
+                     !propBlock.isBlockSaltPowered(altar.level, altar.awaitedPropPos) ) {
+                    altar.onPropInterrupted(block, propState, Services.BLOCKS_REGISTRY.getKey(requiredProp.blocks().findFirst().get().value()));
                 }
             }
             altar.nextCheckCount = altar.activeCount + 20;
