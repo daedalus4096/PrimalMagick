@@ -14,6 +14,8 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
+import net.minecraft.world.level.Level;
 
 import java.awt.Color;
 
@@ -79,7 +81,8 @@ public class RecipeMetadataPage extends AbstractPage {
 
     @Override
     protected Component getTitleText() {
-        ItemStack stack = this.recipeHolder.value().getResultItem(this.registryAccess);
+        Level level = Minecraft.getInstance().level;
+        ItemStack stack = level == null ? ItemStack.EMPTY : this.recipeHolder.value().display().getFirst().result().resolveForFirstStack(SlotDisplayContext.fromLevel(level));
         return stack.getItem().getName(stack);
     }
 
