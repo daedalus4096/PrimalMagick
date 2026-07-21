@@ -197,7 +197,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
 
     @Override
     @NotNull
-    public InteractionResult interactAt(@NotNull Player pPlayer, @NotNull Vec3 pVec, @NotNull InteractionHand pHand) {
+    public InteractionResult interact(@NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull Vec3 pVec) {
         ItemStack heldStack = pPlayer.getItemInHand(pHand);
         if (heldStack.getItem() instanceof IPixieItem) {
             ItemStack stack = heldStack.copyWithCount(1);
@@ -214,7 +214,7 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
             this.playSound(SoundEvents.BAT_HURT, 1.0F, 1.0F);
             return InteractionResult.SUCCESS;
         } else {
-            return super.interactAt(pPlayer, pVec, pHand);
+            return super.interact(pPlayer, pHand, pVec);
         }
     }
 
