@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.datagen.models;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.resources.Identifier;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashMap;
@@ -14,15 +14,15 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class PhasingTextureMapping {
-    private final Map<TextureSlot, Function<TimePhase, Identifier>> slots = new HashMap<>();
+    private final Map<TextureSlot, Function<TimePhase, Material>> slots = new HashMap<>();
     private final Set<TextureSlot> forcedSlots = new HashSet<>();
 
-    public PhasingTextureMapping put(TextureSlot slot, Function<TimePhase, Identifier> textureFunc) {
+    public PhasingTextureMapping put(TextureSlot slot, Function<TimePhase, Material> textureFunc) {
         this.slots.put(slot, textureFunc);
         return this;
     }
 
-    public PhasingTextureMapping putForced(TextureSlot slot, Function<TimePhase, Identifier> textureFunc) {
+    public PhasingTextureMapping putForced(TextureSlot slot, Function<TimePhase, Material> textureFunc) {
         this.forcedSlots.add(slot);
         return this.put(slot, textureFunc);
     }
@@ -41,7 +41,7 @@ public class PhasingTextureMapping {
         return this.copySlot(source, destination);
     }
 
-    public PhasingTextureMapping copyAndUpdate(TextureSlot slot, Function<TimePhase, Identifier> textureFunc) {
+    public PhasingTextureMapping copyAndUpdate(TextureSlot slot, Function<TimePhase, Material> textureFunc) {
         PhasingTextureMapping newMapping = new PhasingTextureMapping();
         newMapping.slots.putAll(this.slots);
         newMapping.forcedSlots.addAll(this.forcedSlots);
