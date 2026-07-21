@@ -56,6 +56,6 @@ public class PolymorphWolfSpellPayload extends AbstractPolymorphSpellPayload<Pol
 
     @Override
     protected SoundEvent getCastSoundEvent(HolderLookup.Provider lookupProvider) {
-        return lookupProvider.lookupOrThrow(Registries.WOLF_SOUND_VARIANT).getOrThrow(WolfSoundVariants.CLASSIC).value().ambientSound().value();
+        return lookupProvider.lookupOrThrow(Registries.WOLF_SOUND_VARIANT).getOrThrow(WolfSoundVariants.CLASSIC).value().adultSounds().ambientSound().value();
     }
 }
