@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
@@ -65,7 +66,7 @@ public class MarkReadButton extends Button {
         pGuiGraphics.pose().translate(this.getX() + dx, this.getY() + dy);
         pGuiGraphics.pose().scale(BASE_SCALE, BASE_SCALE);
         pGuiGraphics.pose().scale(scaleMod, scaleMod);
-        pGuiGraphics.blitSprite(SPRITE, (int)(-dx / BASE_SCALE), (int)(-dy / BASE_SCALE), SPRITE_WIDTH, SPRITE_HEIGHT);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SPRITE, (int)(-dx / BASE_SCALE), (int)(-dy / BASE_SCALE), SPRITE_WIDTH, SPRITE_HEIGHT);
         pGuiGraphics.pose().popMatrix();
     }
 
