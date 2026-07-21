@@ -7,12 +7,12 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.Collections;
 
@@ -61,18 +61,14 @@ public class ManaGaugeWidget extends AbstractWidget {
         pGuiGraphics.pose().translate(this.getX(), this.getY());
 
         // Render gauge background texture
-        pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        pGuiGraphics.blit(TEXTURE, 0, 0, 12, 0, this.width, this.height);
+        pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, 0, 0, 12, 0, this.width, this.height, 256, 256, -1);
         
         // Render colored gauge
         int mana = this.getScaledMana();
-        Color manaColor = new Color(this.source.getColor());
-        pGuiGraphics.setColor(manaColor.getRed() / 255.0F, manaColor.getGreen() / 255.0F, manaColor.getBlue() / 255.0F, 1.0F);
-        pGuiGraphics.blit(TEXTURE, 1, 51 - mana, 1, 1, 10, mana);
+        pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, 1, 51 - mana, 1, 1, 10, mana, 256, 256, this.source.getColor());
 
         // Render gauge foreground texture
-        pGuiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        pGuiGraphics.blit(TEXTURE, 0, 0, 24, 0, this.width, this.height);
+        pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, 0, 0, 24, 0, this.width, this.height, 256, 256, -1);
 
         pGuiGraphics.pose().popMatrix();
         
@@ -114,6 +110,6 @@ public class ManaGaugeWidget extends AbstractWidget {
     }
     
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput output) {
     }
 }
