@@ -9,6 +9,6 @@ import net.minecraft.world.level.block.state.BlockState;
 public class ParticleServiceNeoforge implements IParticleService {
     @Override
     public BlockParticleOption makeBlockParticleOptionWithPos(ParticleType<BlockParticleOption> type, BlockState state, BlockPos pos) {
-        return new BlockParticleOption(type, state).setPos(pos);
+        return new BlockParticleOption(type, state, pos);
     }
 }
