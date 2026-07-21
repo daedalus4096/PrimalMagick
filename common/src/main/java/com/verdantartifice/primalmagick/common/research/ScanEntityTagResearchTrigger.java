@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.research;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 
 /**
@@ -25,10 +27,14 @@ public class ScanEntityTagResearchTrigger extends AbstractScanResearchTrigger {
 
     @Override
     public boolean matches(ServerPlayer player, Object obj) {
-        if (obj instanceof EntityType<?> entityType) {
-            return entityType.is(this.target);
-        } else {
-            return false;
+        if (obj instanceof EntityReference<?> entityReference) {
+            @SuppressWarnings("unchecked")
+            EntityReference<Entity> typedRef = (EntityReference<Entity>)entityReference;
+            Entity entity = EntityReference.getEntity(typedRef, player.level());
+            if (entity != null) {
+                return entity.is(this.target);
+            }
         }
+        return false;
     }
 }

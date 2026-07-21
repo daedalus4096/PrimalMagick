@@ -18,7 +18,9 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.test.AbstractBaseTest;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -67,7 +69,7 @@ public class ResearchKeysTests extends AbstractBaseTest {
         var player = makeMockServerPlayer(helper);
         var key = new EntityScanKey(EntityType.BAT);
         assertFalse(helper, key.isKnownBy(player), "Baseline expectation failed");
-        ResearchManager.setScanned(EntityType.BAT, player);
+        ResearchManager.setScanned(EntityReference.of(new Bat(EntityType.BAT, player.level())), player);
         assertTrue(helper, key.isKnownBy(player), "Key not known");
         helper.succeed();
     }

@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -55,7 +56,7 @@ public abstract class ArcanometerItem extends Item implements IHasCustomRenderer
             if (!stack.isEmpty()) {
                 return !ResearchManager.isScanned(stack, player);
             } else {
-                return !ResearchManager.isScanned(entity.getType(), player);
+                return !ResearchManager.isScanned(EntityReference.of(entity), player);
             }
         } else if (result.getType() == HitResult.Type.BLOCK) {
             // If the current mouseover is a block, try to get its corresponding block item and scan that
@@ -80,7 +81,7 @@ public abstract class ArcanometerItem extends Item implements IHasCustomRenderer
                     if (!entityStack.isEmpty()) {
                         PacketHandler.sendToServer(new ScanItemPacket(entityStack));
                     } else {
-                        PacketHandler.sendToServer(new ScanEntityPacket(entity.getType()));
+                        PacketHandler.sendToServer(new ScanEntityPacket(EntityReference.of(entity)));
                     }
                 } else if (result.getType() == HitResult.Type.BLOCK) {
                     BlockPos pos = ((BlockHitResult)result).getBlockPos();

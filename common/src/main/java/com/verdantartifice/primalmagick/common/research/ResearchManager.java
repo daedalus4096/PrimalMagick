@@ -23,7 +23,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -579,8 +580,8 @@ public class ResearchManager {
         checkScanTriggersInner(player, itemProvider);
     }
     
-    public static void checkScanTriggers(ServerPlayer player, EntityType<?> entityType) {
-        checkScanTriggersInner(player, entityType);
+    public static void checkScanTriggers(ServerPlayer player, EntityReference<Entity> entityReference) {
+        checkScanTriggersInner(player, entityReference);
     }
     
     private static void checkScanTriggersInner(ServerPlayer player, Object obj) {
@@ -595,7 +596,7 @@ public class ResearchManager {
         return hasScanTriggersInner(player, itemProvider);
     }
     
-    public static boolean hasScanTriggers(ServerPlayer player, EntityType<?> entityType) {
+    public static boolean hasScanTriggers(ServerPlayer player, EntityReference<Entity> entityType) {
         return hasScanTriggersInner(player, entityType);
     }
     
@@ -640,35 +641,46 @@ public class ResearchManager {
         });
     }
     
-    public static boolean isScanned(@Nullable EntityType<?> type, @Nullable Player player) {
-        if (type == null || player == null) {
+    public static boolean isScanned(@Nullable EntityReference<Entity> entityReference, @Nullable Player player) {
+        if (entityReference == null || player == null) {
             return false;
         }
-        Optional<SourceList> affinitiesOpt = AffinityManager.getInstance().getAffinityValues(type, player.registryAccess());
+
+        Entity entity = EntityReference.getEntity(entityReference, player.level());
+        if (entity == null) {
+            return false;
+        }
+
+        Optional<SourceList> affinitiesOpt = AffinityManager.getInstance().getAffinityValues(entity.getType(), player.registryAccess());
         if (affinitiesOpt.isPresent()) {
             SourceList affinities = affinitiesOpt.get();
-            if (affinities.isEmpty() && (!(player instanceof ServerPlayer serverPlayer) || !hasScanTriggers(serverPlayer, type))) {
+            if (affinities.isEmpty() && (!(player instanceof ServerPlayer serverPlayer) || !hasScanTriggers(serverPlayer, entityReference))) {
                 // If the given entity has no affinities, consider it already scanned
                 return true;
             }
-            return new EntityScanKey(type).isKnownBy(player);
+            return new EntityScanKey(entity.getType()).isKnownBy(player);
         } else {
             // If the affinities for the entity are not ready yet, temporarily consider the entity scanned
             return true;
         }
     }
     
-    public static CompletableFuture<Boolean> isScannedAsync(@Nullable EntityType<?> type, @Nullable Player player) {
-        if (type == null || player == null) {
+    public static CompletableFuture<Boolean> isScannedAsync(@Nullable EntityReference<Entity> entityReference, @Nullable Player player) {
+        if (entityReference == null || player == null) {
+            return CompletableFuture.completedFuture(Boolean.FALSE);
+        }
+
+        Entity entity = EntityReference.getEntity(entityReference, player.level());
+        if (entity == null) {
             return CompletableFuture.completedFuture(Boolean.FALSE);
         }
         
-        return AffinityManager.getInstance().getAffinityValuesAsync(type, player.registryAccess()).thenApply(affinities -> {
-            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, type))) {
+        return AffinityManager.getInstance().getAffinityValuesAsync(entity.getType(), player.registryAccess()).thenApply(affinities -> {
+            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer serverPlayer) || !hasScanTriggers(serverPlayer, entityReference))) {
                 // If the given entity has no affinities, consider it already scanned
                 return true;
             }
-            return new EntityScanKey(type).isKnownBy(player);
+            return new EntityScanKey(entity.getType()).isKnownBy(player);
         });
     }
 
@@ -716,24 +728,28 @@ public class ResearchManager {
         }
     }
     
-    public static boolean setScanned(@Nullable EntityType<?> type, @Nullable ServerPlayer player) {
-        return setScanned(type, player, true);
+    public static boolean setScanned(@Nullable EntityReference<Entity> entityReference, @Nullable ServerPlayer player) {
+        return setScanned(entityReference, player, true);
     }
     
-    public static boolean setScanned(@Nullable EntityType<?> type, @Nullable ServerPlayer player, boolean sync) {
-        if (type == null || player == null) {
+    public static boolean setScanned(@Nullable EntityReference<Entity> entityReference, @Nullable ServerPlayer player, boolean sync) {
+        if (entityReference == null || player == null) {
             return false;
         }
         IPlayerKnowledge knowledge = Services.CAPABILITIES.knowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
+        Entity entity = EntityReference.getEntity(entityReference, player.level());
+        if (entity == null) {
+            return false;
+        }
         
         // Generate a research key for the entity type and add that research to the player
-        EntityScanKey key = new EntityScanKey(type);
+        EntityScanKey key = new EntityScanKey(entity.getType());
         if (knowledge.addResearch(key)) {
             // Determine how many observation points the entity is worth and add those to the player's knowledge
-            getObservationPointsAsync(type, player.level()).thenAccept(obsPoints -> {
+            getObservationPointsAsync(entityReference, player.level()).thenAccept(obsPoints -> {
                 if (obsPoints > 0) {
                     addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
                 }
@@ -743,7 +759,7 @@ public class ResearchManager {
             StatsManager.incrementValue(player, StatsPM.ENTITIES_ANALYZED);
             
             // Check to see if any scan triggers need to be run for the entity
-            checkScanTriggers(player, type);
+            checkScanTriggers(player, entityReference);
             
             // Sync the research/knowledge changes to the player's client if requested
             if (sync) {
@@ -811,9 +827,14 @@ public class ResearchManager {
         return AffinityManager.getInstance().getAffinityValuesAsync(stack, world).thenApply(ResearchManager::getObservationPoints);
     }
     
-    private static CompletableFuture<Integer> getObservationPointsAsync(@NotNull EntityType<?> type, @NotNull Level level) {
+    private static CompletableFuture<Integer> getObservationPointsAsync(@NotNull EntityReference<Entity> entityReference, @NotNull Level level) {
+        Entity entity = EntityReference.getEntity(entityReference, level);
+        if (entity == null) {
+            return CompletableFuture.completedFuture(0);
+        }
+
         // Get affinities from affinity manager for entity type
-        return AffinityManager.getInstance().getAffinityValuesAsync(type, level.registryAccess()).thenApply(ResearchManager::getObservationPoints);
+        return AffinityManager.getInstance().getAffinityValuesAsync(entity.getType(), level.registryAccess()).thenApply(ResearchManager::getObservationPoints);
     }
     
     private static int getObservationPoints(@Nullable SourceList affinities) {

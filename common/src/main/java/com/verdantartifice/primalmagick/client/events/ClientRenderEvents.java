@@ -27,6 +27,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
@@ -109,7 +110,7 @@ public class ClientRenderEvents {
         if (mc.player != null && (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get())) {
             Entity entity = target.getEntity();
             AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.registryAccess()).ifPresent(affinities -> {
-                boolean isScanned = ResearchManager.isScanned(entity.getType(), mc.player);
+                boolean isScanned = ResearchManager.isScanned(EntityReference.of(entity), mc.player);
                 if (isScanned && !affinities.isEmpty()) {
                     double interpolatedEntityX = entity.xo + (partialTicks * (entity.getX() - entity.xo));
                     double interpolatedEntityY = entity.yo + (partialTicks * (entity.getY() - entity.yo));

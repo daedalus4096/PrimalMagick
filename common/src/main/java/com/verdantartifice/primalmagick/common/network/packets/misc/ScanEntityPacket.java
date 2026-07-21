@@ -12,6 +12,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,46 +28,37 @@ import java.util.Objects;
  */
 public class ScanEntityPacket implements IMessageToServer {
     public static final Identifier CHANNEL = ResourceUtils.loc("scan_entity");
-    public static final StreamCodec<RegistryFriendlyByteBuf, ScanEntityPacket> STREAM_CODEC = StreamCodec.ofMember(ScanEntityPacket::encode, ScanEntityPacket::decode);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ScanEntityPacket> STREAM_CODEC = StreamCodec.composite(
+            EntityReference.streamCodec(), p -> p.reference,
+            ScanEntityPacket::new
+    );
 
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    protected final EntityType<?> type;
+    protected final EntityReference<Entity> reference;
     
-    public ScanEntityPacket(EntityType<?> type) {
-        this.type = type;
+    public ScanEntityPacket(EntityReference<Entity> reference) {
+        this.reference = reference;
     }
     
-    protected ScanEntityPacket(Identifier typeLoc) {
-        this.type = Services.ENTITY_TYPES_REGISTRY.get(typeLoc);
-    }
-
     public static CustomPacketPayload.Type<CustomPacketPayload> type() {
         return new CustomPacketPayload.Type<>(CHANNEL);
     }
 
-    public static void encode(ScanEntityPacket message, RegistryFriendlyByteBuf buf) {
-        buf.writeIdentifier(Objects.requireNonNull(Services.ENTITY_TYPES_REGISTRY.getKey(message.type)));
-    }
-    
-    public static ScanEntityPacket decode(RegistryFriendlyByteBuf buf) {
-        return new ScanEntityPacket(buf.readIdentifier());
-    }
-    
     public static void onMessage(PacketContext<ScanEntityPacket> ctx) {
         ScanEntityPacket message = ctx.message();
-        if (message.type != null) {
+        if (message.reference != null) {
             ServerPlayer player = ctx.sender();
-            ResearchManager.isScannedAsync(message.type, player).thenAccept(isScanned -> {
+            ResearchManager.isScannedAsync(message.reference, player).thenAccept(isScanned -> {
                 if (isScanned) {
                     player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED));
-                } else if (ResearchManager.setScanned(message.type, player)) {
+                } else if (ResearchManager.setScanned(message.reference, player)) {
                     player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN));
                 } else {
                     player.sendOverlayMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED));
                 }
             }).exceptionally(e -> {
-                LOGGER.error("Failed to scan entity type {}", message.type, e);
+                LOGGER.error("Failed to scan entity {}", message.reference, e);
                 return null;
             });
         }
