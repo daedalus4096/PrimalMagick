@@ -56,7 +56,7 @@ public abstract class AbstractPolymorphSpellPayload<T extends AbstractPolymorphS
     public void execute(HitResult target, Vec3 burstPoint, @NotNull SpellPackage spell, @NotNull Level world, @NotNull LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (SpellManager.canPolymorph(entityTarget.getEntity().getType())) {
+            if (SpellManager.canPolymorph(entityTarget.getEntity())) {
                 // Create and enqueue an entity swapper for the target entity
                 int ticks = 20 * this.getDurationSeconds(spell, spellSource, caster, world.registryAccess());
                 try (ProblemReporter.ScopedCollector problems = new ProblemReporter.ScopedCollector(LOGGER)) {

@@ -29,7 +29,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
@@ -265,15 +264,15 @@ public class SpellManager {
         }
     }
     
-    public static boolean canPolymorph(@NotNull EntityType<?> entityType) {
+    public static boolean canPolymorph(@NotNull Entity entity) {
         // TODO Change to deny, allow, deny pattern
-        if (entityType.is(EntityTypeTagsPM.POLYMORPH_ALLOW)) {
+        if (entity.is(EntityTypeTagsPM.POLYMORPH_ALLOW)) {
             return true;
-        } else if (entityType.is(EntityTypeTagsPM.POLYMORPH_BAN)) {
+        } else if (entity.is(EntityTypeTagsPM.POLYMORPH_BAN)) {
             return false;
         } else {
             // Don't allow misc entities like arrows and fishing bobbers unless explicitly allow-listed
-            return !entityType.getCategory().equals(MobCategory.MISC);
+            return !entity.getType().getCategory().equals(MobCategory.MISC);
         }
     }
     
