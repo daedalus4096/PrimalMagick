@@ -464,7 +464,6 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         PhasingTextureMapping leavesMapping = PhasingTextureMapping.leaves(block);
         Arrays.stream(TimePhase.values()).forEach(phase -> {
             Identifier modelId = Services.MODEL_TEMPLATES.extend(ModelTemplates.LEAVES)
-                    .withRenderType(phase == TimePhase.FULL ? CUTOUT_RENDER_TYPE : TRANSLUCENT_RENDER_TYPE)
                     .createWithSuffix(block, "_" + phase, leavesMapping.resolve(phase), blockModels.modelOutput);
             blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(modelId)));
             if (phase == TimePhase.FULL) {

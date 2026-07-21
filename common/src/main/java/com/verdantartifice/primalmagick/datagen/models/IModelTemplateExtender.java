@@ -11,8 +11,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public interface IModelTemplateExtender {
-    IModelTemplateExtender withRenderType(@NotNull Identifier renderType);
-
     Identifier create(@NotNull Block pBlock, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput);
     Identifier createWithSuffix(@NotNull Block pBlock, @NotNull String pSuffix, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput);
     Identifier createWithOverride(@NotNull Block pBlock, @NotNull String pSuffix, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput);

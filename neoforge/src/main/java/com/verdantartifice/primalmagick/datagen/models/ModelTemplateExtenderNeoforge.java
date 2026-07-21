@@ -17,7 +17,7 @@ public class ModelTemplateExtenderNeoforge extends AbstractModelTemplateExtender
     @Override
     protected Identifier createInner(@NotNull Identifier modelLocation, @NotNull TextureMapping textureMapping, @NotNull BiConsumer<Identifier, ModelInstance> output) {
         ExtendedModelTemplateBuilder builder = this.modelTemplate.extend();
-        this.renderTypeOpt.ifPresent(builder::renderType);
+        // TODO Apply extensions from the Neoforge-specific model extender
         return builder.build().create(modelLocation, textureMapping, output);
     }
 }

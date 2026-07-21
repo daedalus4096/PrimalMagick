@@ -16,16 +16,9 @@ import java.util.function.Function;
 
 public abstract class AbstractModelTemplateExtender implements IModelTemplateExtender {
     protected final ModelTemplate modelTemplate;
-    protected Optional<Identifier> renderTypeOpt = Optional.empty();
 
     protected AbstractModelTemplateExtender(ModelTemplate modelTemplate) {
         this.modelTemplate = modelTemplate;
-    }
-
-    @Override
-    public IModelTemplateExtender withRenderType(@NotNull Identifier renderType) {
-        this.renderTypeOpt = Optional.of(renderType);
-        return this;
     }
 
     @Override

@@ -78,7 +78,6 @@ public class PhasingBlockFamilyProvider {
 
     private Identifier createExtendedModel(Block block, ModelTemplate modelTemplate, TimePhase phase) {
         return Services.MODEL_TEMPLATES.extend(modelTemplate)
-                .withRenderType(phase == TimePhase.FULL ? SOLID_RENDER_TYPE : TRANSLUCENT_RENDER_TYPE)
                 .createWithSuffix(block, "_" + phase, this.mapping.resolve(phase), this.blockModelGenerators.modelOutput);
     }
 

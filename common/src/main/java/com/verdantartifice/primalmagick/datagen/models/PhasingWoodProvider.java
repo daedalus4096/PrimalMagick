@@ -26,7 +26,6 @@ public class PhasingWoodProvider {
         PhasingTextureMapping woodMapping = this.logMapping.copyAndUpdate(TextureSlot.SIDE, TextureSlot.END);
         Arrays.stream(TimePhase.values()).forEach(phase -> {
             Identifier modelId = Services.MODEL_TEMPLATES.extend(ModelTemplates.CUBE_COLUMN)
-                    .withRenderType(phase == TimePhase.FULL ? SOLID_RENDER_TYPE : TRANSLUCENT_RENDER_TYPE)
                     .createWithSuffix(logBlock, "_" + phase, woodMapping.resolve(phase), this.blockModelGenerators.modelOutput);
             this.blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createAxisAlignedPillarBlock(logBlock, BlockModelGenerators.plainVariant(modelId)));
             if (phase == TimePhase.FULL) {
@@ -39,10 +38,8 @@ public class PhasingWoodProvider {
     public PhasingWoodProvider logWithHorizontal(Block logBlock) {
         Arrays.stream(TimePhase.values()).forEach(phase -> {
             Identifier verticalModelId = Services.MODEL_TEMPLATES.extend(ModelTemplates.CUBE_COLUMN)
-                    .withRenderType(phase == TimePhase.FULL ? SOLID_RENDER_TYPE : TRANSLUCENT_RENDER_TYPE)
                     .createWithSuffix(logBlock, "_" + phase, this.logMapping.resolve(phase), this.blockModelGenerators.modelOutput);
             Identifier horizontalModelId = Services.MODEL_TEMPLATES.extend(ModelTemplates.CUBE_COLUMN_HORIZONTAL)
-                    .withRenderType(phase == TimePhase.FULL ? SOLID_RENDER_TYPE : TRANSLUCENT_RENDER_TYPE)
                     .createWithSuffix(logBlock, "_" + phase, this.logMapping.resolve(phase), this.blockModelGenerators.modelOutput);
             this.blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createRotatedPillarWithHorizontalVariant(logBlock, BlockModelGenerators.plainVariant(verticalModelId), BlockModelGenerators.plainVariant(horizontalModelId)));
             if (phase == TimePhase.FULL) {
