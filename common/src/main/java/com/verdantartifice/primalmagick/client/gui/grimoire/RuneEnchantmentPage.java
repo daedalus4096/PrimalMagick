@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -75,8 +76,8 @@ public class RuneEnchantmentPage extends AbstractPage {
             
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49);
-            guiGraphics.blit(OVERLAY, 6, 0, 0, 51, overlayWidth, overlayHeight);
-            guiGraphics.blit(OVERLAY, 26, 0, 0, 51, overlayWidth, overlayHeight);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OVERLAY, 6, 0, 0, 51, overlayWidth, overlayHeight, 256, 256);
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OVERLAY, 26, 0, 0, 51, overlayWidth, overlayHeight, 256, 256);
             guiGraphics.pose().popMatrix();
         } else {
             y += 25;
