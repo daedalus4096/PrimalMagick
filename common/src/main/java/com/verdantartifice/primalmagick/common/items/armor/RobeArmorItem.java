@@ -1,9 +1,8 @@
 package com.verdantartifice.primalmagick.common.items.armor;
 
+import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
-import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
-import com.verdantartifice.primalmagick.common.runes.SourceRune;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Player;
@@ -58,10 +57,7 @@ public class RobeArmorItem extends Item implements IManaDiscountGear {
     public Optional<Source> getAttunedSource(ItemStack stack, Player player) {
         ArmorTrim trim = stack.get(DataComponents.TRIM);
         if (trim != null && trim.pattern().is(TrimPatternsPM.RUNIC)) {
-            Item trimItem = trim.material().value().ingredient().value();
-            if (trimItem instanceof RuneItem runeItem && runeItem.getRune() instanceof SourceRune sourceRune) {
-                return Optional.ofNullable(sourceRune.getSource());
-            }
+            return trim.material().unwrapKey().map(TrimMaterialsPM::getSource);
         }
         return Optional.empty();
     }
