@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.renderers.tile.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -10,22 +8,20 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.util.Unit;
 
 /**
  * Definition of the 3D model of the frame of a mana relay.
  *
  * @author Daedalus4096
  */
-public class ManaRelayFrameModel extends Model {
+public class ManaRelayFrameModel extends Model<Unit> {
     // Made with Blockbench 4.12.4
     // Exported for Minecraft version 1.17 or later with Mojang mappings
 
-    private final ModelPart bone;
-
     public ManaRelayFrameModel(ModelPart root) {
-		super(RenderType::entitySolid);
-		this.bone = root.getChild("bone");
+		super(root, RenderTypes::entitySolid);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -46,10 +42,5 @@ public class ManaRelayFrameModel extends Model {
 		.texOffs(20, 18).addBox(-6.0F, -6.0F, -4.0F, 2.0F, 2.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 64, 32);
-    }
-
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-		bone.render(poseStack, buffer, packedLight, packedOverlay, color);
     }
 }
