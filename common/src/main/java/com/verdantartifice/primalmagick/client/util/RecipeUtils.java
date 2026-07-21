@@ -2,8 +2,10 @@ package com.verdantartifice.primalmagick.client.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 
 public class RecipeUtils {
     /**
@@ -18,6 +20,7 @@ public class RecipeUtils {
         if (level == null) {
             throw new NullPointerException("Available level must not be null!");
         }
-        return recipe.getResultItem(level.registryAccess());
+        ContextMap context = SlotDisplayContext.fromLevel(level);
+        return recipe.display().getFirst().result().resolveForFirstStack(context);
     }
 }
