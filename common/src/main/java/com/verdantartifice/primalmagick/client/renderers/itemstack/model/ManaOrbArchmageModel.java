@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.renderers.itemstack.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -10,22 +8,20 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.util.Unit;
 
 /**
  * Definition of a 3D model of the core of an archmage-grade mana orb.
  *
  * @author Daedalus4096
  */
-public class ManaOrbArchmageModel extends Model {
+public class ManaOrbArchmageModel extends Model<Unit> {
 	// Made with Blockbench 4.12.4
 	// Exported for Minecraft version 1.17 or later with Mojang mappings
 
-	private final ModelPart bb_main;
-
 	public ManaOrbArchmageModel(ModelPart root) {
-		super(RenderType::entitySolid);
-		this.bb_main = root.getChild("bb_main");
+		super(root, RenderTypes::entitySolid);
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -42,10 +38,5 @@ public class ManaOrbArchmageModel extends Model {
 		.texOffs(12, 2).addBox(-0.5F, -8.0F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 16, 16);
-	}
-
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-		bb_main.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
 	}
 }
