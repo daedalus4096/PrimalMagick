@@ -3,17 +3,12 @@ package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
@@ -60,19 +55,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
     protected List<Component> getHoverText() {
         Minecraft mc = Minecraft.getInstance();
         ItemStack stack = this.getStackToDisplay();
-        List<Component> textList = new ArrayList<>();
-        MutableComponent nameComponent = stack.getHoverName().copy();
-        if (nameComponent.getStyle().equals(Style.EMPTY)) {
-            nameComponent = nameComponent.withStyle(stack.getOrDefault(DataComponents.RARITY, Rarity.COMMON).color());
-        }
-        if (stack.has(DataComponents.CUSTOM_NAME)) {
-            nameComponent = nameComponent.withStyle(nameComponent.getStyle().applyFormat(ChatFormatting.ITALIC));
-        }
-        textList.add(nameComponent);
-        if (!stack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP)) {
-            stack.getItem().appendHoverText(stack, Item.TooltipContext.of(mc.level), textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
-        }
-        return textList;
+        return stack.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, mc.options.advancedItemTooltips ? TooltipFlag.ADVANCED : TooltipFlag.NORMAL);
     }
 
     @Nonnull
