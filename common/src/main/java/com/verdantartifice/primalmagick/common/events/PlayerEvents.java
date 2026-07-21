@@ -492,8 +492,8 @@ public class PlayerEvents {
                 ResearchManager.completeResearch(player, new StackCraftedKey(stack));
             }
             
-            // If a research entry requires crafting the a tag containing the item that was just crafted, grant the appropriate research
-            stack.getTags().filter(Objects::nonNull).forEach(tagKey -> {
+            // If a research entry requires crafting a tag containing the item that was just crafted, grant the appropriate research
+            stack.tags().forEach(tagKey -> {
                 int tagHash = tagKey.hashCode();
                 if (ResearchManager.getAllCraftingReferences().contains(tagHash)) {
                     ResearchManager.completeResearch(player, new TagCraftedKey(tagKey));
@@ -621,7 +621,7 @@ public class PlayerEvents {
         
         // Befriend the targeted witch, if appropriate
         if ( !level.isClientSide() && 
-             target.getType() == EntityType.WITCH && 
+             target.is(EntityType.WITCH) &&
              stack.getItem() instanceof NameTagItem && 
              stack.getHoverName().getString().equals(FriendlyWitchEntity.HONORED_NAME)) {
             // Enqueue an entity swapper to perform the switch between mob types
@@ -633,7 +633,7 @@ public class PlayerEvents {
 
             // Alert nearby players
             EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D).forEach(nearbyPlayer ->
-                    nearbyPlayer.displayClientMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME), false));
+                    nearbyPlayer.sendSystemMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME)));
         }
     }
 }
