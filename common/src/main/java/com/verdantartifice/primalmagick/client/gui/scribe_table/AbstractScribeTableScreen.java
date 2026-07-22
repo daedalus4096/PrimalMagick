@@ -22,10 +22,6 @@ import java.util.List;
 public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMenu> extends AbstractContainerScreenPM<T> {
     protected final List<ScribeTableModeTabButton> tabButtons = new ArrayList<>();
     
-    public AbstractScribeTableScreen(T menu, Inventory inv, Component title) {
-        super(menu, inv, title);
-    }
-
     public AbstractScribeTableScreen(T menu, Inventory inv, Component title, int width, int height) {
         super(menu, inv, title, width, height);
     }
@@ -53,8 +49,7 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     public void extractBackground(GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render background texture
         pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.getBgTexture(), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
-        // FIXME
-        this.tabButtons.forEach(tab -> tab.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick));
+        this.tabButtons.forEach(tab -> tab.extractContents(pGuiGraphics, pMouseX, pMouseY, pPartialTick));
     }
 
     @Override
