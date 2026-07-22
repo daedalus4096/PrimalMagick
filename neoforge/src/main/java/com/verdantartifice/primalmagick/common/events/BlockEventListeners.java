@@ -7,7 +7,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 /**
  * Neoforge listeners for block related events.
@@ -17,7 +17,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 @EventBusSubscriber(modid = Constants.MOD_ID)
 public class BlockEventListeners {
     @SubscribeEvent
-    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+    public static void onBlockBreak(BreakBlockEvent event) {
         Level level = (event.getLevel() instanceof Level l) ? l : null;
         if (!event.isCanceled()) {
             BlockEvents.onBlockBreak(event.getPlayer(), level, event.getPos(), event.getState());
@@ -25,7 +25,7 @@ public class BlockEventListeners {
     }
     
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onBlockBreakLowest(BlockEvent.BreakEvent event) {
+    public static void onBlockBreakLowest(BreakBlockEvent event) {
         if (!event.isCanceled()) {
             BlockEvents.onBlockBreakLowest(event.getPlayer(), event.getLevel(), event.getPos(), event.getState());
         }
