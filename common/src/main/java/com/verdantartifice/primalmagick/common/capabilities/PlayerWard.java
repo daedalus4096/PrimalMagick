@@ -58,6 +58,11 @@ public class PlayerWard extends AbstractCapability<PlayerWard> implements IPlaye
     }
 
     @Override
+    protected String serializationKey() {
+        return "ward";
+    }
+
+    @Override
     protected void copyFromInner(@NonNull PlayerWard other) {
         this.clear();
         this.current = other.current;

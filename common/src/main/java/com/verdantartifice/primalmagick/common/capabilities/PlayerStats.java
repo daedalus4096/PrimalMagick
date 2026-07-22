@@ -98,6 +98,11 @@ public class PlayerStats extends AbstractCapability<PlayerStats> implements IPla
     }
 
     @Override
+    protected String serializationKey() {
+        return "stats";
+    }
+
+    @Override
     public int getValue(Stat stat) {
         if (stat == null) {
             return 0;

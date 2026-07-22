@@ -52,6 +52,11 @@ public class PlayerCooldowns extends AbstractCapability<PlayerCooldowns> impleme
     }
 
     @Override
+    protected String serializationKey() {
+        return "cooldowns";
+    }
+
+    @Override
     protected void copyFromInner(@NotNull PlayerCooldowns other) {
         this.clear();
         this.cooldowns.putAll(other.cooldowns);

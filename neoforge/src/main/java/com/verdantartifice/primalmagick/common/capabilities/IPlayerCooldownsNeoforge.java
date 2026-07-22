@@ -1,4 +1,6 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-public interface IPlayerCooldownsNeoforge extends IPlayerCooldowns {
+import net.neoforged.neoforge.common.util.ValueIOSerializable;
+
+public interface IPlayerCooldownsNeoforge extends IPlayerCooldowns, ValueIOSerializable {
 }

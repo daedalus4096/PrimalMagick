@@ -58,6 +58,11 @@ public class PlayerCompanions extends AbstractCapability<PlayerCompanions> imple
     }
 
     @Override
+    protected String serializationKey() {
+        return "companions";
+    }
+
+    @Override
     protected void copyFromInner(@NotNull PlayerCompanions other) {
         this.clear();
         this.companions.putAll(other.companions);

@@ -2,21 +2,25 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
+import com.verdantartifice.primalmagick.common.util.IValueIOSerializablePM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.function.Function;
 
-public abstract class AbstractCapability<T extends AbstractCapability<T>> implements INBTSerializablePM<Tag> {
+public abstract class AbstractCapability<T extends AbstractCapability<T>> implements INBTSerializablePM<Tag>, IValueIOSerializablePM {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private long syncTimestamp;   // Last timestamp at which this capability received a sync from the server
@@ -31,6 +35,8 @@ public abstract class AbstractCapability<T extends AbstractCapability<T>> implem
     }
 
     public abstract Codec<T> codec();
+
+    protected abstract String serializationKey();
 
     protected long getSyncTimestamp() {
         return this.syncTimestamp;
@@ -65,6 +71,16 @@ public abstract class AbstractCapability<T extends AbstractCapability<T>> implem
         this.codec().parse(registryOps, nbt)
                 .resultOrPartial(LOGGER::error)
                 .ifPresent(this::copyFrom);
+    }
+
+    @Override
+    public void serialize(@NotNull ValueOutput output) {
+        output.store(Constants.MOD_ID + this.serializationKey(), this.codec(), this.self());
+    }
+
+    @Override
+    public void deserialize(@NotNull ValueInput input) {
+        input.read(Constants.MOD_ID + this.serializationKey(), this.codec()).ifPresent(this::copyFrom);
     }
 
     /**

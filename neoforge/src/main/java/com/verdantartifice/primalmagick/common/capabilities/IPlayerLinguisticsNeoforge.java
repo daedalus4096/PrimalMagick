@@ -1,4 +1,6 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-public interface IPlayerLinguisticsNeoforge extends IPlayerLinguistics {
+import net.neoforged.neoforge.common.util.ValueIOSerializable;
+
+public interface IPlayerLinguisticsNeoforge extends IPlayerLinguistics, ValueIOSerializable {
 }

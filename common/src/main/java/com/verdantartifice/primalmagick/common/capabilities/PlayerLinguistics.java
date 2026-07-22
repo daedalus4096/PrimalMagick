@@ -134,6 +134,11 @@ public class PlayerLinguistics extends AbstractCapability<PlayerLinguistics> imp
     }
 
     @Override
+    protected String serializationKey() {
+        return "linguistics";
+    }
+
+    @Override
     protected void copyFromInner(@NotNull PlayerLinguistics other) {
         this.clear();
         this.comprehension.putAll(other.comprehension);

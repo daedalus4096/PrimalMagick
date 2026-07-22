@@ -66,6 +66,11 @@ public class PlayerAttunements extends AbstractCapability<PlayerAttunements> imp
     }
 
     @Override
+    protected String serializationKey() {
+        return "attunements";
+    }
+
+    @Override
     protected void copyFromInner(@NotNull PlayerAttunements other) {
         this.clear();
         this.attunements.putAll(other.attunements);

@@ -128,6 +128,11 @@ public class PlayerKnowledge extends AbstractCapability<PlayerKnowledge> impleme
     }
 
     @Override
+    protected String serializationKey() {
+        return "knowledge";
+    }
+
+    @Override
     protected void copyFromInner(@NotNull PlayerKnowledge other) {
         this.clearResearch();
         this.clearKnowledge();

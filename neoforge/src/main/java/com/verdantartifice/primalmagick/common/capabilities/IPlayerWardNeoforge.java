@@ -1,4 +1,6 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
-public interface IPlayerWardNeoforge extends IPlayerWard {
+import net.neoforged.neoforge.common.util.ValueIOSerializable;
+
+public interface IPlayerWardNeoforge extends IPlayerWard, ValueIOSerializable {
 }

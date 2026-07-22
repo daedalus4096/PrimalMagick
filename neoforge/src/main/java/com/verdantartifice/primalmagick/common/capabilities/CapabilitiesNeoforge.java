@@ -3,17 +3,10 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.attachment.AttachmentType;
-import net.neoforged.neoforge.attachment.IAttachmentHolder;
-import net.neoforged.neoforge.attachment.IAttachmentSerializer;
 import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
