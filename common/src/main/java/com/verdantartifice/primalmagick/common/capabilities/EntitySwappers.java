@@ -1,11 +1,19 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -15,7 +23,19 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author Daedalus4096
  */
 public class EntitySwappers implements IEntitySwappers {
-    private final Queue<EntitySwapper> swappers = new LinkedBlockingQueue<>();  // Queue of active entity swappers for the world
+    public static final Codec<EntitySwappers> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            EntitySwapper.CODEC.listOf().fieldOf("swappers").<Queue<EntitySwapper>>xmap(LinkedBlockingQueue::new, ArrayList::new).forGetter(o -> o.swappers)
+        ).apply(instance, EntitySwappers::new));
+
+    private final Queue<EntitySwapper> swappers;  // Queue of active entity swappers for the world
+
+    public EntitySwappers() {
+        this.swappers = new LinkedBlockingQueue<>();
+    }
+
+    protected EntitySwappers(Collection<EntitySwapper> swappers) {
+        this.swappers = new LinkedBlockingQueue<>(swappers);
+    }
 
     @Override
     public CompoundTag serializeNBT(HolderLookup.Provider registries) {
@@ -45,6 +65,24 @@ public class EntitySwappers implements IEntitySwappers {
                 this.swappers.offer(swapper);
             }
         }
+    }
+
+    @Override
+    public void serialize(@NotNull ValueOutput output) {
+        output.store(Constants.MOD_ID + "swappers", CODEC, this);
+    }
+
+    @Override
+    public void deserialize(@NotNull ValueInput input) {
+        input.read(Constants.MOD_ID + "swappers", CODEC).ifPresent(this::copyFrom);
+    }
+
+    public void copyFrom(@Nullable EntitySwappers other) {
+        if (other == null) {
+            return;
+        }
+        this.swappers.clear();
+        this.swappers.addAll(other.swappers);
     }
 
     @Override

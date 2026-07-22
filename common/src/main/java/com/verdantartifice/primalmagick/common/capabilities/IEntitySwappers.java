@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import com.verdantartifice.primalmagick.common.util.INBTSerializablePM;
+import com.verdantartifice.primalmagick.common.util.IValueIOSerializablePM;
 import net.minecraft.nbt.CompoundTag;
 
 import javax.annotation.Nonnull;
@@ -13,7 +14,7 @@ import java.util.Queue;
  * 
  * @author Daedalus4096
  */
-public interface IEntitySwappers extends INBTSerializablePM<CompoundTag> {
+public interface IEntitySwappers extends INBTSerializablePM<CompoundTag>, IValueIOSerializablePM {
     /**
      * Add the given entity swapper to the world's queue.
      * 

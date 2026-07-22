@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.common.misc;
 
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.capabilities.IEntitySwappers;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -47,6 +49,13 @@ import java.util.Queue;
  */
 public class EntitySwapper implements INBTSerializablePM<CompoundTag> {
     protected static final Logger LOGGER = LogUtils.getLogger();
+
+    public static final Codec<EntitySwapper> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            EntityType.CODEC.fieldOf("entityType").forGetter(o -> o.entityType),
+            CompoundTag.CODEC.fieldOf("originalData").forGetter(o -> o.originalData),
+            Codec.INT.optionalFieldOf("polymorphDuration").forGetter(o -> o.polymorphDuration),
+            Codec.INT.fieldOf("delay").forGetter(o -> o.delay)
+        ).apply(instance, EntitySwapper::new));
 
     protected EntityType<?> entityType = null;
     protected CompoundTag originalData = new CompoundTag();
