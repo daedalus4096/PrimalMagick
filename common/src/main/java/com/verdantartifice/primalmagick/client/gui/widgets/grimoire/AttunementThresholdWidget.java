@@ -10,16 +10,17 @@ import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
@@ -65,20 +66,13 @@ public class AttunementThresholdWidget extends AbstractWidget {
     public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         if (this.threshold == AttunementThreshold.MINOR) {
             // Render casting wand into GUI
-            pGuiGraphics.renderItem(WAND_STACK, this.getX() + 1, this.getY() + 1);
+            pGuiGraphics.item(WAND_STACK, this.getX() + 1, this.getY() + 1);
         } else {
             // Render the icon appropriate for this widget's source and threshold
-            pGuiGraphics.pose().pushMatrix();
-            pGuiGraphics.pose().translate(this.getX(), this.getY());
-            pGuiGraphics.pose().scale(0.0703125F, 0.0703125F);
-            pGuiGraphics.blit(this.texture, 0, 0, 0, 0, 255, 255);
-            pGuiGraphics.pose().popMatrix();
+            pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.texture, this.getX(), this.getY(), 0F, 0F, 18, 18, 18, 18);
         }
         if (this.suppressed) {
-            pGuiGraphics.pose().pushMatrix();
-            pGuiGraphics.pose().translate(this.getX() + 1, this.getY() + 1);
-            pGuiGraphics.renderItem(SHACKLED_OVERLAY_STACK, 0, 0);
-            pGuiGraphics.pose().popMatrix();
+            pGuiGraphics.item(SHACKLED_OVERLAY_STACK, this.getX() + 1, this.getY() + 1);
         }
     }
     
@@ -89,6 +83,6 @@ public class AttunementThresholdWidget extends AbstractWidget {
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(@NotNull NarrationElementOutput output) {
     }
 }
