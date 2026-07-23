@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.util;
 
-import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
-import com.verdantartifice.primalmagick.client.gui.StaticBookViewScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.StaticBookViewScreen;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import net.minecraft.client.Minecraft;

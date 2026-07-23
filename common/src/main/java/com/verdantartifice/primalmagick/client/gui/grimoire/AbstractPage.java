@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

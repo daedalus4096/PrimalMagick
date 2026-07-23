@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.SlotDisplayWidget;

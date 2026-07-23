@@ -6,10 +6,10 @@ import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctionS
 import com.verdantartifice.primalmagick.client.compat.jei.dissolution.DissolutionRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.ritual.RitualRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.runecarving.RunecarvingRecipeCategory;
-import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
-import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
-import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
-import com.verdantartifice.primalmagick.client.gui.InfernalFurnaceScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.ArcaneWorkbenchScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.ConcocterScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.DissolutionChamberScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.InfernalFurnaceScreen;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;

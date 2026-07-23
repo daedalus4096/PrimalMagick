@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.events;
 
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
-import com.verdantartifice.primalmagick.client.gui.SpellSelectionRadialScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.SpellSelectionRadialScreen;
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.client.Minecraft;

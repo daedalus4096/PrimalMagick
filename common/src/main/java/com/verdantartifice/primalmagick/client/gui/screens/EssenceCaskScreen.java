@@ -1,0 +1,127 @@
+package com.verdantartifice.primalmagick.client.gui.screens;
+
+import com.verdantartifice.primalmagick.client.gui.widgets.EssenceCaskWidget;
+import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.menus.EssenceCaskMenu;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * GUI screen for the essence cask block.
+ * 
+ * @author Daedalus4096
+ */
+public class EssenceCaskScreen extends AbstractContainerScreenPM<EssenceCaskMenu> {
+    protected static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/essence_cask.png");
+    private static final Identifier SLOT_HIGHLIGHT_BACK_SPRITE = Identifier.withDefaultNamespace("container/slot_highlight_back");
+    private static final Identifier SLOT_HIGHLIGHT_FRONT_SPRITE = Identifier.withDefaultNamespace("container/slot_highlight_front");
+
+    protected final List<EssenceCaskWidget> caskWidgets = new ArrayList<>();
+    protected long lastCheck = 0L;
+    protected int lastTotalEssence = 0;
+
+    public EssenceCaskScreen(EssenceCaskMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn, 176, 222);
+        this.inventoryLabelY = this.imageHeight - 94;
+    }
+    
+    @Override
+    protected void init() {
+        super.init();
+        this.lastTotalEssence = this.menu.getTotalEssenceCount();
+        this.initWidgets();
+    }
+
+    protected void initWidgets() {
+        Minecraft mc = Minecraft.getInstance();
+        this.clearWidgets();
+        this.caskWidgets.clear();
+        
+        int visibleRows = Arrays.stream(EssenceType.values()).mapToInt(t -> this.menu.isEssenceTypeVisible(t, mc.player) ? 1 : 0).sum();
+        int visibleCols = Sources.getAllSorted().stream().mapToInt(s -> this.menu.isEssenceSourceVisible(s, mc.player) ? 1 : 0).sum();
+        int startX = this.leftPos + 8 + (((Sources.getAllSorted().size() - visibleCols) * 18) / 2);
+        int startY = this.topPos + 18 + (((EssenceType.values().length - visibleRows) * 18) / 2);
+        
+        int index = 0;
+        int xPos = startX;
+        int yPos = startY;
+        for (int row = 0; row < EssenceType.values().length; row++) {
+            boolean rowPopulated = false;
+            for (int col = 0; col < Sources.getAllSorted().size(); col++) {
+                EssenceType cellType = EssenceType.values()[row];
+                Source cellSource = Sources.getAllSorted().get(col);
+                if (this.menu.isEssenceTypeVisible(cellType, mc.player) && this.menu.isEssenceSourceVisible(cellSource, mc.player)) {
+                    int count = this.menu.getEssenceCount(index);
+                    this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(index, cellType, cellSource, count, xPos, yPos, this::onWidgetClicked)));
+                    xPos += 18;
+                    rowPopulated = true;
+                }
+                index++;
+            }
+            xPos = startX;
+            if (rowPopulated) {
+                yPos += 18;
+            }
+        }
+    }
+
+    @Override
+    public void extractContents(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        // Determine if we need to update the GUI based on how long it's been since the last refresh or the total essence in the cask
+        long millis = System.currentTimeMillis();
+        if (millis > this.lastCheck || this.lastTotalEssence != this.menu.getTotalEssenceCount()) {
+            this.lastCheck = millis + 2000L;
+            this.lastTotalEssence = this.menu.getTotalEssenceCount();
+            this.initWidgets();
+        }
+        
+        super.extractContents(guiGraphics, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    protected void extractSlots(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+        this.caskWidgets.stream().filter(EssenceCaskWidget::isHovered).forEach(w -> this.extractCaskWidgetHighlightBack(guiGraphics, w));
+        super.extractSlots(guiGraphics, mouseX, mouseY);
+        this.caskWidgets.stream().filter(EssenceCaskWidget::isHovered).forEach(w -> this.extractCaskWidgetHighlightFront(guiGraphics, w));
+    }
+
+    private void extractCaskWidgetHighlightBack(@NotNull GuiGraphicsExtractor guiGraphics, @NotNull EssenceCaskWidget widget) {
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHT_BACK_SPRITE, widget.getX() - 4, widget.getY() - 4, 24, 24);
+    }
+
+    private void extractCaskWidgetHighlightFront(@NotNull GuiGraphicsExtractor guiGraphics, @NotNull EssenceCaskWidget widget) {
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHT_FRONT_SPRITE, widget.getX() - 4, widget.getY() - 4, 24, 24);
+    }
+
+    @Override
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        // Render background texture
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+    }
+    
+    @Override
+    protected void extractLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+        super.extractLabels(guiGraphics, mouseX, mouseY);
+        Component contentsLabel = Component.translatable("label.primalmagick.essence_cask.contents", this.menu.getTotalEssenceCount(), this.menu.getTotalEssenceCapacity());
+        guiGraphics.text(this.font, contentsLabel, 8, 92, 4210752, false);
+    }
+
+    protected void onWidgetClicked(EssenceCaskWidget widget, int clickButton) {
+        int toRemove = clickButton == 1 ? 1 : 64;
+        PacketHandler.sendToServer(new WithdrawCaskEssencePacket(widget.getEssenceType(), widget.getSource(), toRemove, this.menu.getTilePos()));
+    }
+}

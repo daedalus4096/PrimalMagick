@@ -1,0 +1,27 @@
+package com.verdantartifice.primalmagick.client.gui.screens;
+
+import com.verdantartifice.primalmagick.common.menus.WandInscriptionTableMenu;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Inventory;
+
+/**
+ * GUI screen for wand inscription table block.
+ * 
+ * @author Daedalus4096
+ */
+public class WandInscriptionTableScreen extends AbstractContainerScreenPM<WandInscriptionTableMenu> {
+    private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/wand_inscription_table.png");
+
+    public WandInscriptionTableScreen(WandInscriptionTableMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
+    }
+
+    @Override
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+    }
+}

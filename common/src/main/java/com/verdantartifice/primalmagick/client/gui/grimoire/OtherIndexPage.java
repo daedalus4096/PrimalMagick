@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AffinityIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.DisciplineButton;

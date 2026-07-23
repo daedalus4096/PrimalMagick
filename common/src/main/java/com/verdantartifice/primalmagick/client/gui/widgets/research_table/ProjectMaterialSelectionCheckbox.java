@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import com.verdantartifice.primalmagick.client.gui.ResearchTableScreen;
+import com.verdantartifice.primalmagick.client.gui.screens.ResearchTableScreen;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
