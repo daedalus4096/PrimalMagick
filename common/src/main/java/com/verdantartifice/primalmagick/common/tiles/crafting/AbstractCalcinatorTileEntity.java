@@ -22,6 +22,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
@@ -220,13 +221,13 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
                         shouldMarkDirty = true;
                         if (entity.hasFuelRemainingItem(fuelStack)) {
                             // If the fuel has a container item (e.g. a lava bucket), place the empty container in the fuel slot
-                            entity.setItem(FUEL_INV_INDEX, 0, entity.getFuelRemainingItem(fuelStack));
+                            ItemStack oldFuelStack = entity.replaceItem(FUEL_INV_INDEX, 0, entity.getFuelRemainingItem(fuelStack));
+                            if (!oldFuelStack.isEmpty()) {
+                                Containers.dropContents(level, pos, NonNullList.of(ItemStack.EMPTY, oldFuelStack));
+                            }
                         } else if (!fuelStack.isEmpty()) {
                             // Otherwise, shrink the fuel stack
-                            fuelStack.shrink(1);
-                            if (fuelStack.isEmpty()) {
-                                entity.setItem(FUEL_INV_INDEX, 0, entity.getFuelRemainingItem(fuelStack));
-                            }
+                            entity.removeItem(FUEL_INV_INDEX, 0, 1);
                         }
                     }
                 }
@@ -265,16 +266,10 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         ItemStack inputStack = this.getItem(INPUT_INV_INDEX, 0);
         if (!inputStack.isEmpty() && this.canCalcinate(inputStack)) {
             // Merge the items already in the output inventory with the new output items from the melting
-            List<ItemStack> currentOutputs = this.inventories.get(OUTPUT_INV_INDEX);
-            List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, false);
-            List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
-            for (int index = 0; index < Math.min(mergedOutputs.size(), OUTPUT_CAPACITY); index++) {
-                ItemStack out = mergedOutputs.get(index);
-                this.setItem(OUTPUT_INV_INDEX, index, (out == null ? ItemStack.EMPTY : out));
-            }
-            
+            this.getCalcinationOutput(inputStack, false).forEach(output -> this.addItem(OUTPUT_INV_INDEX, output));
+
             // Shrink the input stack
-            inputStack.shrink(1);
+            this.removeItem(INPUT_INV_INDEX, 0, 1);
         }
     }
 
@@ -291,10 +286,9 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
             return AffinityManager.getInstance().getAffinityValues(inputStack, level).map(sources -> {
                 if (!sources.isEmpty()) {
                     // Merge the items already in the output inventory with the new output items from the melting
-                    List<ItemStack> currentOutputs = this.inventories.get(OUTPUT_INV_INDEX);
-                    List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, true);   // Force dreg generation to prevent random overflow
-                    List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
-                    return mergedOutputs.size() <= OUTPUT_CAPACITY;
+                    return this.itemHandlers.get(OUTPUT_INV_INDEX).transact(true,
+                            this.getCalcinationOutput(inputStack, true).stream().map(output ->
+                                    new IItemHandlerPM.HandlerOperation(IItemHandlerPM.OperationType.INSERT, output)).toList());
                 } else {
                     return false;
                 }

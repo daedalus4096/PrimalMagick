@@ -285,11 +285,33 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     }
     
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        // FIXME Remove and refactor callers
         this.itemHandlers.get(invIndex).setStackInSlot(slotIndex, stack);
+    }
+
+    public ItemStack addItem(int invIndex, int slotIndex, ItemStack stack) {
+        return this.itemHandlers.get(invIndex).insertItem(slotIndex, stack, false);
+    }
+
+    public ItemStack addItem(int invIndex, ItemStack stack) {
+        return this.itemHandlers.get(invIndex).insertItem(stack, false);
     }
     
     public ItemStack removeItem(int invIndex, int slotIndex, int amount) {
         return this.itemHandlers.get(invIndex).extractItem(slotIndex, amount, false);
+    }
+
+    public ItemStack removeItem(int invIndex, ItemStack stack) {
+        return this.itemHandlers.get(invIndex).extractItem(stack, false);
+    }
+
+    public ItemStack replaceItem(int invIndex, int slotIndex, ItemStack newStack) {
+        ItemStack oldStack = this.getItem(invIndex, slotIndex);
+        boolean success = this.itemHandlers.get(invIndex).transactSlots(false, List.of(
+                new IItemHandlerPM.SlotOperation(IItemHandlerPM.OperationType.EXTRACT, slotIndex, oldStack),
+                new IItemHandlerPM.SlotOperation(IItemHandlerPM.OperationType.INSERT, slotIndex, newStack)
+        ));
+        return success ? oldStack : ItemStack.EMPTY;
     }
 
     @Override

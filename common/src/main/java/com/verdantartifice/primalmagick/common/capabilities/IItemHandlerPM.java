@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -18,7 +19,15 @@ public interface IItemHandlerPM {
 
     ItemStack insertItem(int slot, ItemStack stack, boolean simulate);
 
+    ItemStack insertItem(ItemStack stack, boolean simulate);
+
     ItemStack extractItem(int slot, int amount, boolean simulate);
+
+    ItemStack extractItem(ItemStack stack, boolean simulate);
+
+    boolean transactSlots(boolean simulate, List<SlotOperation> slotOperations);
+
+    boolean transact(boolean simulate, List<HandlerOperation> handlerOperations);
 
     int getSlotLimit(int slot);
 
@@ -33,5 +42,16 @@ public interface IItemHandlerPM {
         Builder itemValidFunction(BiPredicate<Integer, ItemStack> itemValidFunction);
         Builder contentsChangedFunction(Consumer<Integer> contentsChangedFunction);
         IItemHandlerPM build();
+    }
+
+    enum OperationType {
+        INSERT,
+        EXTRACT
+    }
+
+    record SlotOperation(OperationType type, int slot, ItemStack stack) {
+    }
+
+    record HandlerOperation(OperationType type, ItemStack stack) {
     }
 }
