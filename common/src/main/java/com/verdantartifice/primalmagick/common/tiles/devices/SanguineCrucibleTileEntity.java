@@ -252,9 +252,9 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
         
         // Create output handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .slotLimitFunction(slot -> 1)
-                .itemValidFunction((slot, stack) -> stack.getItem() instanceof SanguineCoreItem)
-                .contentsChangedFunction(slot -> SanguineCrucibleTileEntity.this.updateLitState())
+                .slotLimitFunction(_ -> 1)
+                .itemValidFunction((_, stack) -> stack.getItem() instanceof SanguineCoreItem)
+                .contentsChangedFunction((_, _) -> SanguineCrucibleTileEntity.this.updateLitState())
                 .build());
 
         return retVal;

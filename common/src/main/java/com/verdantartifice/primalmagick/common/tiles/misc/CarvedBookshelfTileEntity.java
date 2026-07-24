@@ -68,9 +68,9 @@ public abstract class CarvedBookshelfTileEntity extends AbstractTileSidedInvento
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .slotLimitFunction(slot -> 1)
-                .itemValidFunction((slot, stack) -> stack.is(ItemTags.BOOKSHELF_BOOKS))
-                .contentsChangedFunction(CarvedBookshelfTileEntity.this::updateState)
+                .slotLimitFunction(_ -> 1)
+                .itemValidFunction((_, stack) -> stack.is(ItemTags.BOOKSHELF_BOOKS))
+                .contentsChangedFunction(this::updateState)
                 .build());
         
         return retVal;
@@ -93,7 +93,7 @@ public abstract class CarvedBookshelfTileEntity extends AbstractTileSidedInvento
         return Optional.of(this.itemHandlers.get(INPUT_INV_INDEX));
     }
 
-    protected void updateState(int slot) {
+    protected void updateState(int slot, ItemStack oldStack) {
         if (slot >= 0 && slot < BOOK_CAPACITY) {
             // Update the last interacted slot for redstone signal purposes
             this.lastInteractedSlot = slot;

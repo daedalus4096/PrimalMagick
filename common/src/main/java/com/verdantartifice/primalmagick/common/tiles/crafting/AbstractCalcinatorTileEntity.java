@@ -15,7 +15,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.ITieredDeviceBlockEntity;
-import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -143,21 +142,32 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         };
     }
 
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
+            this.cookTimeTotal = this.getCookTimeTotal();
+            this.cookTime = 0;
+            this.setChanged();
+        }
+    }
+
     @Override
     protected NonNullList<IItemHandlerPM> createItemHandlers() {
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.empty());
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.create(this.inventories.get(INPUT_INV_INDEX), this));
+        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
+                .contentsChangedFunction(this::onReplaceInput)
+                .build());
         
         // Create fuel handler
         retVal.set(FUEL_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(FUEL_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> this.level != null && isFuel(stack, this.level.fuelValues()))
+                .itemValidFunction((_, stack) -> this.level != null && isFuel(stack, this.level.fuelValues()))
                 .build());
 
         // Create output handler
         retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> false)
+                .itemValidFunction((_, _) -> false)
                 .build());
         
         return retVal;

@@ -4,12 +4,13 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Common interface mirroring the Forge and Neoforge item handler capability interfaces.
+ * Common interface mirroring the Neoforge item handler capability interfaces.
  * Provided here so that common code has a usable reference to capability functions.
  */
 public interface IItemHandlerPM {
@@ -40,7 +41,7 @@ public interface IItemHandlerPM {
     interface Builder {
         Builder slotLimitFunction(Function<Integer, Integer> limitFunction);
         Builder itemValidFunction(BiPredicate<Integer, ItemStack> itemValidFunction);
-        Builder contentsChangedFunction(Consumer<Integer> contentsChangedFunction);
+        Builder contentsChangedFunction(BiConsumer<Integer, ItemStack> contentsChangedFunction);
         IItemHandlerPM build();
     }
 

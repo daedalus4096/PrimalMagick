@@ -17,8 +17,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -31,7 +31,7 @@ public class ItemStackHandlerPMNeoforge extends ItemStacksResourceHandler implem
     protected final AbstractTilePM tile;
     protected final Optional<Function<Integer, Integer>> limitFuncOverride;
     protected final Optional<BiPredicate<Integer, ItemStack>> validityFuncOverride;
-    protected final Optional<Consumer<Integer>> contentsChangedFuncOverride;
+    protected final Optional<BiConsumer<Integer, ItemStack>> contentsChangedFuncOverride;
 
     public ItemStackHandlerPMNeoforge(int size, AbstractTilePM tile) {
         super(size);
@@ -62,7 +62,7 @@ public class ItemStackHandlerPMNeoforge extends ItemStacksResourceHandler implem
     }
 
     protected ItemStackHandlerPMNeoforge(NonNullList<ItemStack> stacks, AbstractTilePM tile, Optional<Function<Integer, Integer>> limit,
-                                         Optional<BiPredicate<Integer, ItemStack>> validity, Optional<Consumer<Integer>> contentsChanged) {
+                                         Optional<BiPredicate<Integer, ItemStack>> validity, Optional<BiConsumer<Integer, ItemStack>> contentsChanged) {
         super(stacks);
         this.tile = tile;
         this.limitFuncOverride = limit;
@@ -195,8 +195,7 @@ public class ItemStackHandlerPMNeoforge extends ItemStacksResourceHandler implem
             this.tile.syncTile(true);
             this.tile.setChanged();
         }
-        // TODO Refactor consumers to accept previous contents
-        this.contentsChangedFuncOverride.ifPresent(c -> c.accept(slot));
+        this.contentsChangedFuncOverride.ifPresent(c -> c.accept(slot, previousContents));
     }
 
     public static Builder builder(NonNullList<ItemStack> stacks, AbstractTilePM tile) {
@@ -208,7 +207,7 @@ public class ItemStackHandlerPMNeoforge extends ItemStacksResourceHandler implem
         private final AbstractTilePM tile;
         private Optional<Function<Integer, Integer>> limitFuncOverride = Optional.empty();
         private Optional<BiPredicate<Integer, ItemStack>> validityFuncOverride = Optional.empty();
-        private Optional<Consumer<Integer>> contentsChangedFuncOverride = Optional.empty();
+        private Optional<BiConsumer<Integer, ItemStack>> contentsChangedFuncOverride = Optional.empty();
 
         public Builder(NonNullList<ItemStack> stacks, AbstractTilePM tile) {
             this.stacks = stacks;
@@ -228,7 +227,7 @@ public class ItemStackHandlerPMNeoforge extends ItemStacksResourceHandler implem
         }
 
         @Override
-        public IItemHandlerPM.Builder contentsChangedFunction(Consumer<Integer> contentsChangedFunction) {
+        public IItemHandlerPM.Builder contentsChangedFunction(BiConsumer<Integer, ItemStack> contentsChangedFunction) {
             this.contentsChangedFuncOverride = Optional.of(contentsChangedFunction);
             return this;
         }
