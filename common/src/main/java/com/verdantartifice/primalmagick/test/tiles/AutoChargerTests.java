@@ -129,7 +129,7 @@ public class AutoChargerTests extends AbstractBaseTest {
         // Place an auto charger, get its item handler, and insert the test stack
         var chargerPos = BlockPos.ZERO;
         var handler = getItemHandlerForNewAutoCharger(helper, chargerPos, Direction.UP);
-        handler.setStackInSlot(0, stack);
+        handler.insertItem(0, stack, false);
         assertFalse(helper, handler.getStackInSlot(0).isEmpty(), "Failed to set item in charger");
 
         // Use the player's empty main hand on the charger
@@ -166,7 +166,7 @@ public class AutoChargerTests extends AbstractBaseTest {
         // Place the chargeable item stack into the auto charger
         var handler = chargerTile.getRawItemHandler(Direction.NORTH);
         assertFalse(helper, handler == null, "No item handler found");
-        handler.setStackInSlot(0, stack);
+        handler.insertItem(0, stack, false);
 
         // Confirm initial state
         var beforeStack = handler.getStackInSlot(0);
