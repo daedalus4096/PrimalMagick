@@ -332,18 +332,6 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, slotStack);
-        if (invIndex == INPUT_INV_INDEX && !flag) {
-            this.cookTimeTotal = this.getCookTimeTotal();
-            this.cookTime = 0;
-            this.setChanged();
-        }
-    }
-
-    @Override
     public void setTileOwner(Player owner) {
         this.owner = EntityReference.of(owner);
         this.researchCache.update(owner, this.relevantFilter);
