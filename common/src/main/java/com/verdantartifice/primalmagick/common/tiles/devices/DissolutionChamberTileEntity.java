@@ -20,8 +20,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentGetter;
-import net.minecraft.core.component.DataComponentMap.Builder;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -64,18 +65,13 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     protected final ContainerData chamberData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-            case 0:
-                return DissolutionChamberTileEntity.this.processTime;
-            case 1:
-                return DissolutionChamberTileEntity.this.processTimeTotal;
-            case 2:
-                return DissolutionChamberTileEntity.this.manaStorage.getManaStored(Sources.EARTH);
-            case 3:
-                return DissolutionChamberTileEntity.this.manaStorage.getMaxManaStored(Sources.EARTH);
-            default:
-                return 0;
-            }
+            return switch (index) {
+                case 0 -> DissolutionChamberTileEntity.this.processTime;
+                case 1 -> DissolutionChamberTileEntity.this.processTimeTotal;
+                case 2 -> DissolutionChamberTileEntity.this.manaStorage.getManaStored(Sources.EARTH);
+                case 3 -> DissolutionChamberTileEntity.this.manaStorage.getMaxManaStored(Sources.EARTH);
+                default -> 0;
+            };
         }
 
         @Override
@@ -123,11 +119,12 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new DissolutionChamberMenu(windowId, playerInv, this.getBlockPos(), this, this.chamberData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -139,7 +136,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     public static void tick(Level level, BlockPos pos, BlockState state, DissolutionChamberTileEntity entity) {
         boolean shouldMarkDirty = false;
         
-        if (!level.isClientSide()) {
+        if (level instanceof ServerLevel serverLevel) {
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
@@ -152,7 +149,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
             }
 
             SingleRecipeInput testInv = new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0));
-            RecipeHolder<IDissolutionRecipe> recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION.get(), testInv, level).orElse(null);
+            RecipeHolder<IDissolutionRecipe> recipe = serverLevel.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION.get(), testInv, level).orElse(null);
             if (entity.canDissolve(testInv, level.registryAccess(), recipe)) {
                 entity.processTime++;
                 if (entity.processTime >= entity.processTimeTotal) {
@@ -200,13 +197,8 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     protected void doDissolve(SingleRecipeInput inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
         if (recipe != null && this.canDissolve(inputInv, registryAccess, recipe)) {
             ItemStack recipeOutput = recipe.value().assemble(inputInv);
-            ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
-            if (currentOutput.isEmpty()) {
-                this.setItem(OUTPUT_INV_INDEX, 0, recipeOutput);
-            } else if (ItemStack.isSameItemSameComponents(recipeOutput, currentOutput)) {
-                currentOutput.grow(recipeOutput.getCount());
-            }
-            
+            this.addItem(OUTPUT_INV_INDEX, 0, recipeOutput);
+
             for (int index = 0; index < inputInv.size(); index++) {
                 ItemStack stack = inputInv.getItem(index);
                 if (!stack.isEmpty()) {
@@ -216,12 +208,10 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
             this.setMana(Sources.EARTH, this.getMana(Sources.EARTH) - recipe.value().getManaCosts().getAmount(Sources.EARTH));
         }
     }
-    
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
+
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.setChanged();
@@ -229,11 +219,12 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    public int getMana(Source source) {
+    public int getMana(@NotNull Source source) {
         return this.manaStorage.getManaStored(source);
     }
 
     @Override
+    @NotNull
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
         for (Source source : Sources.getAllSorted()) {
@@ -252,14 +243,14 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    public void setMana(Source source, int amount) {
+    public void setMana(@NotNull Source source, int amount) {
         this.manaStorage.setMana(source, amount);
         this.setChanged();
         this.syncTile(true);
     }
 
     @Override
-    public void setMana(SourceList mana) {
+    public void setMana(@NotNull SourceList mana) {
         this.manaStorage.setMana(mana);
         this.setChanged();
         this.syncTile(true);
@@ -300,7 +291,9 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.empty());
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.create(this.inventories.get(INPUT_INV_INDEX), this));
+        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
+                .contentsChangedFunction(this::onReplaceInput)
+                .build());
         
         // Create fuel handler
         retVal.set(WAND_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(WAND_INV_INDEX), this)
@@ -322,7 +315,7 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    protected void collectImplicitComponents(Builder pComponents) {
+    protected void collectImplicitComponents(@NotNull DataComponentMap.Builder pComponents) {
         super.collectImplicitComponents(pComponents);
         pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
     }
