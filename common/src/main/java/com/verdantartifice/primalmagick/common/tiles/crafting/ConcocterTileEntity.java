@@ -29,8 +29,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.DataComponentMap.Builder;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -39,7 +37,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
@@ -61,7 +58,6 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -216,7 +212,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     public static void tick(Level level, BlockPos pos, BlockState state, ConcocterTileEntity entity) {
         boolean shouldMarkDirty = false;
         
-        if (!level.isClientSide()) {
+        if (level instanceof ServerLevel serverLevel) {
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
@@ -239,7 +235,7 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
             CraftingInput realInput = CraftingInput.of(IConcoctingRecipe.MAX_WIDTH, IConcoctingRecipe.MAX_HEIGHT, realInv.getItems());
             CraftingInput testInput = CraftingInput.of(IConcoctingRecipe.MAX_WIDTH, IConcoctingRecipe.MAX_HEIGHT, testInv.getItems());
             
-            IConcoctingRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING.get(), testInput, level).map(RecipeHolder::value).orElse(null);
+            IConcoctingRecipe recipe = serverLevel.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING.get(), testInput, level).map(RecipeHolder::value).orElse(null);
             if (entity.canConcoct(realInput, level.registryAccess(), recipe)) {
                 entity.cookTime++;
                 if (entity.cookTime >= entity.cookTimeTotal) {
@@ -283,13 +279,8 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     protected void doConcoction(CraftingInput inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
         if (recipe != null && this.canConcoct(inputInv, registryAccess, recipe)) {
             ItemStack recipeOutput = recipe.assemble(inputInv);
-            ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
-            if (currentOutput.isEmpty()) {
-                this.setItem(OUTPUT_INV_INDEX, 0, recipeOutput);
-            } else if (ItemStack.isSameItemSameComponents(recipeOutput, currentOutput)) {
-                currentOutput.grow(recipeOutput.getCount());
-            }
-            
+            this.addItem(OUTPUT_INV_INDEX, 0, recipeOutput);
+
             for (int index = 0; index < inputInv.size(); index++) {
                 ItemStack stack = inputInv.getItem(index);
                 if (!stack.isEmpty()) {
@@ -346,12 +337,9 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         this.syncTile(true);
     }
 
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, slotStack);
-        if (invIndex == INPUT_INV_INDEX && !flag) {
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;
             this.setChanged();
@@ -396,7 +384,9 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.empty());
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.create(this.inventories.get(INPUT_INV_INDEX), this));
+        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
+                .contentsChangedFunction(this::onReplaceInput)
+                .build());
         
         // Create fuel handler
         retVal.set(WAND_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(WAND_INV_INDEX), this)
