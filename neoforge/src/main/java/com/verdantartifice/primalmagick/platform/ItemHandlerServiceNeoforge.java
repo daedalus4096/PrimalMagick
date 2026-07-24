@@ -17,11 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class ItemHandlerServiceNeoforge implements IItemHandlerService {
     @Override
-    public IItemHandlerPM create(@Nullable AbstractTilePM tile) {
-        return new ItemStackHandlerPMNeoforge(tile);
-    }
-
-    @Override
     public IItemHandlerPM create(int size, @Nullable AbstractTilePM tile) {
         return new ItemStackHandlerPMNeoforge(size, tile);
     }
@@ -37,6 +32,11 @@ public class ItemHandlerServiceNeoforge implements IItemHandlerService {
     }
 
     @Override
+    public IItemHandlerPM empty() {
+        // TODO Return derivation of Neoforge EmptyResourceHandler
+    }
+
+    @Override
     public IItemHandlerPM wrap(Container container, @Nullable Direction side) {
         if (container instanceof WorldlyContainer worldlyContainer) {
             return new SidedInvWrapperPMNeoforge(worldlyContainer, side);
@@ -48,7 +48,7 @@ public class ItemHandlerServiceNeoforge implements IItemHandlerService {
     @Override
     public boolean touch(BlockEntity blockEntity, Direction direction) {
         try {
-            var handler = blockEntity.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, blockEntity.getBlockPos(), direction);
+            var _ = blockEntity.getLevel().getCapability(Capabilities.Item.BLOCK, blockEntity.getBlockPos(), direction);
             return true;
         } catch (Exception e) {
             return false;

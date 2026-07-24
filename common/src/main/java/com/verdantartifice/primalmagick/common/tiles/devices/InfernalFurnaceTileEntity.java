@@ -475,7 +475,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
 
     @Override
     protected NonNullList<IItemHandlerPM> createItemHandlers() {
-        NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
+        NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.empty());
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.create(this.inventories.get(INPUT_INV_INDEX), this));

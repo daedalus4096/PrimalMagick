@@ -22,6 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,7 +72,7 @@ public class CapabilityServiceNeoforge implements ICapabilityService {
 
     @Override
     public Optional<IItemHandlerPM> itemHandler(@NotNull Level level, @NotNull BlockPos pos, @Nullable Direction face) {
-        IItemHandler neoforgeHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, face);
+        ResourceHandler<ItemResource> neoforgeHandler = level.getCapability(Capabilities.Item.BLOCK, pos, face);
         if (neoforgeHandler instanceof IItemHandlerPM castHandler) {
             // If the tile entity directly provides an appropriate item handler capability, return that
             return Optional.of(castHandler);

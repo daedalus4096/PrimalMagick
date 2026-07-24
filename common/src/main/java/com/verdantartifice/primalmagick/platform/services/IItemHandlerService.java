@@ -11,10 +11,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import javax.annotation.Nullable;
 
 public interface IItemHandlerService {
-    IItemHandlerPM create(@Nullable AbstractTilePM tile);
     IItemHandlerPM create(int size, @Nullable AbstractTilePM tile);
     IItemHandlerPM create(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile);
     IItemHandlerPM.Builder builder(NonNullList<ItemStack> stacks, @Nullable AbstractTilePM tile);
+
+    IItemHandlerPM empty();
 
     IItemHandlerPM wrap(Container container, @Nullable Direction side);
 

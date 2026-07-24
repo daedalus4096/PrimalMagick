@@ -1053,7 +1053,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     protected NonNullList<IItemHandlerPM> createItemHandlers() {
-        NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.create(this));
+        NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.empty());
         
         // Create output handler
         retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
