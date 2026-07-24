@@ -247,19 +247,10 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
         this.waterTank.fill(fluidStack, false);
 
         // Add the given empty fluid container to the output slot
-        ItemStack outputStack = this.getItem(OUTPUT_INV_INDEX, 2);
-        if (outputStack.isEmpty()) {
-            this.setItem(OUTPUT_INV_INDEX, 2, containerStack);
-        } else {
-            outputStack.grow(1);
-        }
+        this.addItem(OUTPUT_INV_INDEX, 2, containerStack.copyWithCount(1));
 
         // Shrink the input container slot
-        ItemStack inputStack = this.getItem(INPUT_INV_INDEX, 0);
-        inputStack.shrink(1);
-        if (inputStack.isEmpty()) {
-            this.setItem(INPUT_INV_INDEX, 0, ItemStack.EMPTY);
-        }
+        this.removeItem(INPUT_INV_INDEX, 0, 1);
     }
 
     protected boolean canBoil() {
@@ -273,20 +264,10 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
 
     protected void doBoil() {
         // Add salt output
-        ItemStack saltOutput = this.getItem(OUTPUT_INV_INDEX, 0);
-        if (saltOutput.isEmpty()) {
-            this.setItem(OUTPUT_INV_INDEX, 0, new ItemStack(ItemsPM.SALT_PINCH.get()));
-        } else {
-            saltOutput.grow(1);
-        }
+        this.addItem(OUTPUT_INV_INDEX, 0, new ItemStack(ItemsPM.SALT_PINCH.get()));
 
         // Add sea dust output
-        ItemStack essenceOutput = this.getItem(OUTPUT_INV_INDEX, 1);
-        if (essenceOutput.isEmpty()) {
-            this.setItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemsPM.ESSENCE_DUST_SEA.get()));
-        } else {
-            essenceOutput.grow(1);
-        }
+        this.addItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemsPM.ESSENCE_DUST_SEA.get()));
 
         // Drain water
         this.waterTank.drain(REQUIRED_WATER_AMOUNT, false);
@@ -295,11 +276,9 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
         this.manaStorage.extractMana(Sources.SUN, this.getManaCost(), false);
     }
 
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
             this.boilTimeTotal = this.getBoilTimeTotal();
             this.boilTime = 0;
             this.setChanged();
@@ -380,17 +359,18 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
 
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> isFullWaterContainer(stack))
+                .itemValidFunction((_, stack) -> isFullWaterContainer(stack))
+                .contentsChangedFunction(this::onReplaceInput)
                 .build());
 
         // Create fuel handler
         retVal.set(WAND_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(WAND_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.getItem() instanceof IWand)
+                .itemValidFunction((_, stack) -> stack.getItem() instanceof IWand)
                 .build());
 
         // Create output handler
         retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> false)
+                .itemValidFunction((_, _) -> false)
                 .build());
 
         return retVal;
