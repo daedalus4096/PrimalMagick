@@ -48,14 +48,11 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
     protected final ContainerData chargerData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-            case 0:
-                return WandChargerTileEntity.this.chargeTime;
-            case 1:
-                return WandChargerTileEntity.this.chargeTimeTotal;
-            default:
-                return 0;
-            }
+            return switch (index) {
+                case 0 -> WandChargerTileEntity.this.chargeTime;
+                case 1 -> WandChargerTileEntity.this.chargeTimeTotal;
+                default -> 0;
+            };
         }
 
         @Override
@@ -101,11 +98,12 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new WandChargerMenu(windowId, playerInv, this.getBlockPos(), this, this.chargerData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -152,7 +150,7 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
         if (inputStack != null && !inputStack.isEmpty() && inputStack.getItem() instanceof EssenceItem essence && chargeStack != null && !chargeStack.isEmpty()) {
             if (chargeStack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                 // The mana storage item can be charged if it and an essence are slotted, and the storage is not at max mana for the essence's source
-                ManaStorage manaCap = chargeStack.get(DataComponentsPM.CAPABILITY_MANA_STORAGE.get());
+                ManaStorage manaCap = chargeStack.getOrDefault(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.EMPTY);
                 return (manaCap.getManaStored(essence.getSource()) < manaCap.getMaxManaStored(essence.getSource()));
             }
         }
@@ -176,12 +174,9 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
         }
     }
     
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, slotStack);
-        if (invIndex == INPUT_INV_INDEX && !flag) {
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
             this.chargeTimeTotal = this.getChargeTimeTotal();
             this.chargeTime = 0;
             this.setChanged();
@@ -216,12 +211,13 @@ public abstract class WandChargerTileEntity extends AbstractTileSidedInventoryPM
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.getItem() instanceof EssenceItem)
+                .itemValidFunction((_, stack) -> stack.getItem() instanceof EssenceItem)
+                .contentsChangedFunction(this::onReplaceInput)
                 .build());
         
         // Create charge handler
         retVal.set(CHARGE_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(CHARGE_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
+                .itemValidFunction((_, stack) -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
                 .build());
 
         return retVal;
