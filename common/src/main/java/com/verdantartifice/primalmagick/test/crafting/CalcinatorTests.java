@@ -32,9 +32,9 @@ public class CalcinatorTests extends AbstractBaseTest {
         calcinator.setTileOwner(player);
 
         // Add a cobblestone to the calcinator's input slot and force immediate calcination
-        calcinator.setItem(0, 0, new ItemStack(Items.COBBLESTONE));
+        calcinator.addItem(0, 0, new ItemStack(Items.COBBLESTONE));
         assertTrue(helper, calcinator.getItem(0, 0).is(Items.COBBLESTONE), "Input cobblestone not set correctly");
-        calcinator.setItem(1, 0, new ItemStack(Items.CHARCOAL));
+        calcinator.addItem(1, 0, new ItemStack(Items.CHARCOAL));
         assertTrue(helper, calcinator.getItem(1, 0).is(Items.CHARCOAL), "Input fuel not set correctly");
         for (int index = 0; index < 9; index++) {
             assertTrue(helper, calcinator.getItem(2, index).isEmpty(), "Output slot " + index + " is not empty before calcination");

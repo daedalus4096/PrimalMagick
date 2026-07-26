@@ -29,9 +29,9 @@ public class RunecarvingTests extends AbstractBaseTest {
         
         // Populate the runecarving table with materials
         var tile = helper.getBlockEntity(tablePos, RunecarvingTableTileEntity.class);
-        tile.setItem(0, 0, new ItemStack(Items.STONE_SLAB));
+        tile.addItem(0, 0, new ItemStack(Items.STONE_SLAB));
         assertTrue(helper, tile.getItem(0, 0).is(Items.STONE_SLAB), "Stone slab material not properly set");
-        tile.setItem(0, 1, new ItemStack(Items.LAPIS_LAZULI));
+        tile.addItem(0, 1, new ItemStack(Items.LAPIS_LAZULI));
         assertTrue(helper, tile.getItem(0, 1).is(Items.LAPIS_LAZULI), "Lapis lazuli material not properly set");
         
         // Open the block entity menu and select the first (and only) recipe

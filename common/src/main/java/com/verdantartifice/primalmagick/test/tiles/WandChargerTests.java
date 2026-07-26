@@ -112,8 +112,8 @@ public class WandChargerTests extends AbstractBaseTest {
         var tile = helper.getBlockEntity(pos, WandChargerTileEntity.class);
 
         // Fill the block entity with essence and a chargeable item
-        tile.setItem(WandChargerTileEntity.INPUT_INV_INDEX, 0, ItemsPM.ESSENCE_DUST_EARTH.get().getDefaultInstance());
-        tile.setItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0, stack);
+        tile.addItem(WandChargerTileEntity.INPUT_INV_INDEX, 0, ItemsPM.ESSENCE_DUST_EARTH.get().getDefaultInstance());
+        tile.addItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0, stack);
 
         // Confirm that the charger can charge with the inputs provided
         assertTrue(helper, tile.canCharge(), "Unable to charge");
@@ -131,8 +131,8 @@ public class WandChargerTests extends AbstractBaseTest {
 
         // Fill the block entity with essence and a chargeable item
         var essenceItem = ItemsPM.ESSENCE_DUST_EARTH.get();
-        tile.setItem(WandChargerTileEntity.INPUT_INV_INDEX, 0, essenceItem.getDefaultInstance());
-        tile.setItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0, stack);
+        tile.addItem(WandChargerTileEntity.INPUT_INV_INDEX, 0, essenceItem.getDefaultInstance());
+        tile.addItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0, stack);
 
         // Confirm that the test stack has mana storage and note its initial load of the relevant mana source
         assertTrue(helper, stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()), "Stack has no starting mana storage");
