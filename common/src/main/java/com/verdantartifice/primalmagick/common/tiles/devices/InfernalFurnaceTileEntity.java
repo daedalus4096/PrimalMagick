@@ -19,7 +19,6 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.core.registries.Registries;
@@ -28,6 +27,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
@@ -235,31 +235,33 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
             int furnaceMaxStackSize = entity.itemHandlers.get(FUEL_INV_INDEX).getSlotLimit(0);
             
             // Handle supercharge burn
-            if (!entity.isSupercharged() && fuelPopulated && canBurn(serverLevel.registryAccess(), recipeHolder, entity, furnaceMaxStackSize)) {
+            if (!entity.isSupercharged() && fuelPopulated && canBurn(recipeHolder, entity, furnaceMaxStackSize)) {
                 entity.superchargeTimeTotal = entity.getSuperchargeDuration(fuelStack, serverLevel.fuelValues());
                 entity.superchargeTime = entity.superchargeTimeTotal;
                 if (entity.isSupercharged()) {
                     shouldMarkDirty = true;
                     ItemStackTemplate remainderStack = fuelStack.getItem().getCraftingRemainder();
                     if (remainderStack != null) {
-                        entity.setItem(FUEL_INV_INDEX, 0, remainderStack.create());
-                    } else {
-                        fuelStack.shrink(1);
-                        if (fuelStack.isEmpty()) {
-                            entity.setItem(FUEL_INV_INDEX, 0, ItemStack.EMPTY);
+                        // If the fuel has a container item (e.g. a lava bucket), place the empty container in the fuel slot
+                        ItemStack oldFuelStack = entity.replaceItem(FUEL_INV_INDEX, 0, remainderStack.create());
+                        if (!oldFuelStack.isEmpty()) {
+                            Containers.dropContents(level, pos, NonNullList.of(ItemStack.EMPTY, oldFuelStack));
                         }
+                    } else {
+                        // Otherwise, shrink the fuel stack
+                        entity.removeItem(FUEL_INV_INDEX, 0, 1);
                     }
                 }
             }
             
             // Process the item being smelted
-            if (entity.isCharged(serverLevel) && canBurn(serverLevel.registryAccess(), recipeHolder, entity, furnaceMaxStackSize)) {
+            if (entity.isCharged(serverLevel) && canBurn(recipeHolder, entity, furnaceMaxStackSize)) {
                 entity.processTime += (entity.isSupercharged() ? SUPERCHARGE_MULTIPLIER : 1);
                 if (entity.processTime >= entity.processTimeTotal) {
                     entity.processTime = 0;
                     entity.processTimeTotal = getTotalCookTime(serverLevel, entity, DEFAULT_COOK_TIME);
                     entity.litGraceTicks = LIT_GRACE_TICKS_MAX;
-                    if (burn(serverLevel.registryAccess(), recipeHolder, entity, furnaceMaxStackSize)) {
+                    if (burn(recipeHolder, entity, furnaceMaxStackSize)) {
                         entity.setRecipeUsed(recipeHolder);
                     }
                     shouldMarkDirty = true;
@@ -285,7 +287,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
         }
    }
     
-    private static boolean canBurn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipeHolder, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
+    private static boolean canBurn(@Nullable RecipeHolder<?> recipeHolder, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
         if (!entity.getItem(INPUT_INV_INDEX, 0).isEmpty() && recipeHolder != null) {
             @SuppressWarnings("unchecked")
             ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)));
@@ -308,22 +310,19 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
         }
     }
     
-    private static boolean burn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipeHolder, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
-        if (entity.getLevel() instanceof ServerLevel serverLevel && recipeHolder != null && canBurn(registryAccess, recipeHolder, entity, maxFurnaceStackSize)) {
-            ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
+    private static boolean burn(@Nullable RecipeHolder<?> recipeHolder, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
+        if (entity.getLevel() instanceof ServerLevel serverLevel && recipeHolder != null && canBurn(recipeHolder, entity, maxFurnaceStackSize)) {
             @SuppressWarnings("unchecked")
             ItemStack recipeOutput = ((Recipe<SingleRecipeInput>)recipeHolder.value()).assemble(new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0)));
-            ItemStack existingOutput = entity.getItem(OUTPUT_INV_INDEX, 0);
-            if (existingOutput.isEmpty()) {
-                entity.setItem(OUTPUT_INV_INDEX, 0, recipeOutput.copy());
-            } else if (ItemStack.isSameItem(recipeOutput, existingOutput)) {
-                existingOutput.grow(recipeOutput.getCount());
-            }
-            
+
+            // Insert the recipe output
+            entity.addItem(OUTPUT_INV_INDEX, 0, recipeOutput);
+
+            // Remove the recipe ingredients/mana
             if (entity.manaStorage.canExtract(Sources.INFERNAL)) {
                 entity.manaStorage.extractMana(Sources.INFERNAL, getManaNeeded(serverLevel, entity), false);
             }
-            inputStack.shrink(1);
+            entity.removeItem(INPUT_INV_INDEX, 0, 1);
             return true;
         } else {
             return false;
@@ -408,11 +407,9 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
         return null;
     }
 
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(this.getItem(invIndex, slotIndex), stack);
-        super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && !flag && this.level instanceof ServerLevel serverLevel) {
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (this.level instanceof ServerLevel serverLevel && (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack))) {
             this.processTimeTotal = getTotalCookTime(serverLevel, this, DEFAULT_COOK_TIME);
             this.processTime = 0;
             this.setChanged();
@@ -478,21 +475,23 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
         NonNullList<IItemHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), Services.ITEM_HANDLERS.empty());
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.create(this.inventories.get(INPUT_INV_INDEX), this));
+        retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
+                .contentsChangedFunction(this::onReplaceInput)
+                .build());
 
         // Create fuel handler
         retVal.set(FUEL_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(FUEL_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.is(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL))
+                .itemValidFunction((_, stack) -> stack.is(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL))
                 .build());
         
         // Create wand handler
         retVal.set(WAND_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(WAND_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.getItem() instanceof IWand)
+                .itemValidFunction((_, stack) -> stack.getItem() instanceof IWand)
                 .build());
 
         // Create output handler
         retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> false)
+                .itemValidFunction((_, _) -> false)
                 .build());
         
         return retVal;
