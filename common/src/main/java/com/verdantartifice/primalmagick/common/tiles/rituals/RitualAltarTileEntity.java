@@ -465,7 +465,10 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             this.getActiveRecipe().ifPresent(recipeHolder -> {
                 ContextMap context = SlotDisplayContext.fromLevel(this.level);
                 ItemStack outputStack = recipeHolder.value().display().getFirst().result().resolveForFirstStack(context);
-                this.setItem(OUTPUT_INV_INDEX, 0, outputStack);
+                ItemStack oldOutput = this.replaceItem(OUTPUT_INV_INDEX, 0, outputStack);
+                if (!oldOutput.isEmpty()) {
+                    Containers.dropContents(this.level, this.getBlockPos(), NonNullList.of(ItemStack.EMPTY, oldOutput));
+                }
                 Player activePlayer = this.getActivePlayer();
                 if (activePlayer != null) {
                     activePlayer.sendSystemMessage(Component.translatable("ritual.primalmagick.info.complete"));
@@ -1032,8 +1035,8 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         return this.syncedInventories.get(OUTPUT_INV_INDEX).getFirst();
     }
     
-    public void setItem(ItemStack stack) {
-        this.setItem(OUTPUT_INV_INDEX, 0, stack);
+    public void removeItem() {
+        this.removeItem(OUTPUT_INV_INDEX, 0, this.getItem().count());
     }
     
     @Override
@@ -1057,7 +1060,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         
         // Create output handler
         retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> false)
+                .itemValidFunction((_, _) -> false)
                 .build());
 
         return retVal;

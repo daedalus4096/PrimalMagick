@@ -84,7 +84,7 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
                 if (!altarTile.getItem().isEmpty()) {
                     // When activating a full altar, pick up the item
                     ItemStack stack = altarTile.getItem().copy();
-                    altarTile.setItem(ItemStack.EMPTY);
+                    altarTile.removeItem();
                     if (!stack.isEmpty() && !player.getInventory().add(stack)) {
                         player.drop(stack, false);
                     }
