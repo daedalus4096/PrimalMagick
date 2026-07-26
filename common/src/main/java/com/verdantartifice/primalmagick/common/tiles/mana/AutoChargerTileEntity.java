@@ -32,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -134,16 +135,17 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
         return this.syncedInventories.get(INPUT_INV_INDEX).getFirst();
     }
     
-    public void setItem(ItemStack stack) {
-        this.setItem(INPUT_INV_INDEX, 0, stack);
+    public void addItem(ItemStack stack) {
+        this.addItem(INPUT_INV_INDEX, 0, stack);
     }
 
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, slotStack);
-        if (invIndex == INPUT_INV_INDEX && !flag) {
+    public ItemStack removeItem() {
+        return this.removeItem(INPUT_INV_INDEX, 0, this.getItem().count());
+    }
+
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
             this.chargeTime = 0;
             this.setChanged();
         }
@@ -170,7 +172,8 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
+                .itemValidFunction((_, stack) -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
+                .contentsChangedFunction(this::onReplaceInput)
                 .build());
 
         return retVal;
@@ -197,6 +200,6 @@ public abstract class AutoChargerTileEntity extends AbstractTileSidedInventoryPM
     @Override
     @NotNull
     public RouteTable getRouteTable() {
-        return RouteManager.getRouteTable(this.getLevel());
+        return RouteManager.getRouteTable(Objects.requireNonNull(this.getLevel()));
     }
 }

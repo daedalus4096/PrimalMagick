@@ -77,7 +77,7 @@ public class AutoChargerBlock extends BaseEntityBlock implements SimpleWaterlogg
             if (tile instanceof AutoChargerTileEntity charger) {
                 if (charger.getItem().isEmpty() && stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get())) {
                     // If a wand is in hand and the charger is empty, deposit the wand
-                    charger.setItem(stack.copyWithCount(1));
+                    charger.addItem(stack.copyWithCount(1));
                     stack.shrink(1);
                     if (stack.getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);
@@ -87,8 +87,7 @@ public class AutoChargerBlock extends BaseEntityBlock implements SimpleWaterlogg
                     return InteractionResult.SUCCESS;
                 } else if (!charger.getItem().isEmpty() && stack.isEmpty()) {
                     // If the hand is empty and a wand is in the charger, remove the wand
-                    ItemStack chargerStack = charger.getItem();
-                    charger.setItem(ItemStack.EMPTY);
+                    ItemStack chargerStack = charger.removeItem();
                     if (!chargerStack.isEmpty() && !player.getInventory().add(chargerStack)) {
                         player.drop(chargerStack, false);
                     }
