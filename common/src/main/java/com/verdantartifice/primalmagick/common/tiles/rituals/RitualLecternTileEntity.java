@@ -86,8 +86,12 @@ public abstract class RitualLecternTileEntity extends AbstractTileSidedInventory
         return this.getItem(INPUT_INV_INDEX, 0);
     }
     
-    public void setItem(ItemStack stack) {
-        this.setItem(INPUT_INV_INDEX, 0, stack);
+    public void addItem(ItemStack stack) {
+        this.addItem(INPUT_INV_INDEX, 0, stack);
+    }
+
+    public void removeItem() {
+        this.removeItem(INPUT_INV_INDEX, 0, this.getItem().count());
     }
     
     @Override

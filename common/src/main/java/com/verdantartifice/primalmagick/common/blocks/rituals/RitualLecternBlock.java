@@ -139,7 +139,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                 if (bookStack.isEmpty() && handStack.is(Items.ENCHANTED_BOOK)) {
                     // When activating an empty lectern with an enchanted book in hand, place it on the lectern
                     ItemStack stack = handStack.copyWithCount(1);
-                    lecternTile.setItem(stack);
+                    lecternTile.addItem(stack);
                     player.getItemInHand(handIn).shrink(1);
                     if (player.getItemInHand(handIn).getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);
@@ -158,7 +158,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                     if (player.isSecondaryUseActive()) {
                         // When activating a full lectern while sneaking, pick up the book
                         ItemStack stack = bookStack.copy();
-                        lecternTile.setItem(ItemStack.EMPTY);
+                        lecternTile.removeItem();
                         if (!player.getInventory().add(stack)) {
                             player.drop(stack, false);
                         }
@@ -191,7 +191,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                     if (pPlayer.isSecondaryUseActive()) {
                         // When activating a full lectern while sneaking, pick up the book
                         ItemStack stack = bookStack.copy();
-                        lecternTile.setItem(ItemStack.EMPTY);
+                        lecternTile.removeItem();
                         if (!pPlayer.getInventory().add(stack)) {
                             pPlayer.drop(stack, false);
                         }
