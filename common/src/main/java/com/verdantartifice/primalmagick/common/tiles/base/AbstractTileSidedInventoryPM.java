@@ -284,12 +284,6 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
         return this.syncedInventories.get(invIndex).get(slotIndex);
     }
 
-    @Deprecated(forRemoval = true, since = "7.0.0")
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        // FIXME Remove and refactor callers
-        this.itemHandlers.get(invIndex).setStackInSlot(slotIndex, stack);
-    }
-
     public ItemStack addItem(int invIndex, int slotIndex, ItemStack stack) {
         return this.itemHandlers.get(invIndex).insertItem(slotIndex, stack, false);
     }
