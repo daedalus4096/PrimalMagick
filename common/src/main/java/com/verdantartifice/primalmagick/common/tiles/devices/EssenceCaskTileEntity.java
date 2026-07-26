@@ -122,11 +122,11 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
                 int capacity = entity.getTotalEssenceCapacity();
                 if (totalCount + inputCount <= capacity) {
                     entity.contents.put(essenceType, essenceSource, currentCount + inputCount);
-                    entity.setItem(INPUT_INV_INDEX, 0, ItemStack.EMPTY);
+                    entity.removeItem(INPUT_INV_INDEX, 0, inputCount);
                 } else {
                     int addable = capacity - totalCount;
                     entity.contents.put(essenceType, essenceSource, currentCount + addable);
-                    stack.shrink(addable);
+                    entity.removeItem(INPUT_INV_INDEX, 0, addable);
                 }
             }
         }
@@ -291,7 +291,7 @@ public abstract class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.getItem() instanceof EssenceItem)
+                .itemValidFunction((_, stack) -> stack.getItem() instanceof EssenceItem)
                 .build());
 
         return retVal;
