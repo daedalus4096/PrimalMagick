@@ -18,7 +18,6 @@ import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IManaContainingBlockEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
-import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
@@ -41,13 +40,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -60,8 +56,6 @@ import java.util.stream.Collectors;
  * @see com.verdantartifice.primalmagick.common.blocks.devices.EssenceTransmuterBlock
  */
 public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainingBlockEntity, IOwnedTileEntity {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     public static final int INPUT_INV_INDEX = 0;
     public static final int OUTPUT_INV_INDEX = 1;
     public static final int WAND_INV_INDEX = 2;
@@ -222,45 +216,37 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     }
 
     protected boolean canTransmute(ItemStack inputStack) {
-        List<ItemStack> newOutputs = this.getNewOutputs(inputStack);
-        return newOutputs != null && newOutputs.size() <= OUTPUT_CAPACITY;
+        ItemStack outputStack = this.getNextOutput(inputStack);
+        return !outputStack.isEmpty() && this.itemHandlers.get(OUTPUT_INV_INDEX).insertItem(outputStack, true).isEmpty();
     }
 
     protected void doTransmute(ItemStack inputStack) {
-        List<ItemStack> newOutputs = this.getNewOutputs(inputStack);
-        if (newOutputs != null) {
-            // Merge the items already in the output inventory with the new output items from the transmutation
-            for (int index = 0; index < Math.min(newOutputs.size(), OUTPUT_CAPACITY); index++) {
-                ItemStack out = newOutputs.get(index);
-                this.setItem(OUTPUT_INV_INDEX, index, (out == null ? ItemStack.EMPTY : out));
-            }
-            
+        ItemStack outputStack = this.getNextOutput(inputStack);
+        if (!outputStack.isEmpty()) {
+            this.addItem(OUTPUT_INV_INDEX, outputStack);
+
             // Deduct the inputs
-            inputStack.shrink(ESSENCE_PER_TRANSMUTE);
+            this.removeItem(INPUT_INV_INDEX, 0, ESSENCE_PER_TRANSMUTE);
             this.manaStorage.extractMana(Sources.MOON, this.getManaCost(), false);
         }
     }
-    
-    @Nullable
-    protected List<ItemStack> getNewOutputs(ItemStack inputStack) {
+
+    @NotNull
+    protected ItemStack getNextOutput(ItemStack inputStack) {
         Level level = this.getLevel();
         if (level != null && inputStack != null && !inputStack.isEmpty() && inputStack.getCount() >= ESSENCE_PER_TRANSMUTE && inputStack.getItem() instanceof EssenceItem essence) {
             EssenceType inputType = essence.getEssenceType();
             Source inputSource = essence.getSource();
             Source outputSource = this.getNextSource(inputSource, level.getRandom());
-            ItemStack outputItem = EssenceItem.getEssence(inputType, outputSource, 1);
-            List<ItemStack> currentOutputs = this.inventories.get(OUTPUT_INV_INDEX);
-            return ItemUtils.mergeItemStackIntoList(currentOutputs, outputItem);
+            return EssenceItem.getEssence(inputType, outputSource, 1);
         } else {
-            return null;
+            return ItemStack.EMPTY;
         }
     }
 
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.nextOutputSource = null;
@@ -382,17 +368,18 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.is(ItemTagsPM.ESSENCES))
+                .itemValidFunction((_, stack) -> stack.is(ItemTagsPM.ESSENCES))
+                .contentsChangedFunction(this::onReplaceInput)
                 .build());
         
         // Create fuel handler
         retVal.set(WAND_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(WAND_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.getItem() instanceof IWand)
+                .itemValidFunction((_, stack) -> stack.getItem() instanceof IWand)
                 .build());
 
         // Create output handler
         retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> false)
+                .itemValidFunction((_, _) -> false)
                 .build());
         
         return retVal;
