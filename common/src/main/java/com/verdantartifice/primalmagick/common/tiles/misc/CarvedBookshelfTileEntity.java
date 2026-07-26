@@ -114,7 +114,7 @@ public abstract class CarvedBookshelfTileEntity extends AbstractTileSidedInvento
     
     public void addBook(int slot, ItemStack bookStack) {
         if (bookStack.is(ItemTags.BOOKSHELF_BOOKS) && this.getItem(INPUT_INV_INDEX, slot).isEmpty()) {
-            this.setItem(INPUT_INV_INDEX, slot, bookStack);
+            this.addItem(INPUT_INV_INDEX, slot, bookStack);
         }
     }
     
