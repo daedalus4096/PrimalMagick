@@ -80,7 +80,7 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
                 if (pedestalTile.getItem().isEmpty() && !stack.isEmpty()) {
                     // When activating an empty pedestal with an item in hand, place it on the pedestal
                     ItemStack placementStack = stack.copyWithCount(1);
-                    pedestalTile.setItem(placementStack);
+                    pedestalTile.addItem(placementStack);
                     player.getItemInHand(handIn).shrink(1);
                     if (player.getItemInHand(handIn).getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);
@@ -101,7 +101,7 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements IRitualSta
             if (!pedestalTile.getItem().isEmpty()) {
                 // When activating a full pedestal, pick up the item
                 ItemStack stack = pedestalTile.getItem().copy();
-                pedestalTile.setItem(ItemStack.EMPTY);
+                pedestalTile.removeItem();
                 if (!stack.isEmpty() && !pPlayer.getInventory().add(stack)) {
                     pPlayer.drop(stack, false);
                 }

@@ -925,7 +925,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
                 if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
                     if (!pedestalTile.getItem().isEmpty()) {
                         if (destroy) {
-                            pedestalTile.setItem(ItemStack.EMPTY);
+                            pedestalTile.removeItem();
                         } else {
                             pedestalTile.dropContents(this.level, pedestalPos);
                         }

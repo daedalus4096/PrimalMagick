@@ -71,12 +71,16 @@ public abstract class OfferingPedestalTileEntity extends AbstractTileSidedInvent
         return this.syncedInventories.get(INPUT_INV_INDEX).getFirst();
     }
     
-    public void setItem(ItemStack stack) {
-        this.setItem(INPUT_INV_INDEX, 0, stack);
+    public void addItem(ItemStack stack) {
+        this.addItem(INPUT_INV_INDEX, 0, stack);
     }
-    
+
+    public ItemStack removeItem() {
+        return this.removeItem(this.getItem().count());
+    }
+
     public ItemStack removeItem(int count) {
-        return this.itemHandlers.get(INPUT_INV_INDEX).extractItem(0, count, false);
+        return this.removeItem(INPUT_INV_INDEX, 0, count);
     }
 
     @Override
