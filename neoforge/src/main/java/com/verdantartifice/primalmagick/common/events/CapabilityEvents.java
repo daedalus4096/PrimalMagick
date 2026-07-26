@@ -11,7 +11,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @EventBusSubscriber(modid = Constants.MOD_ID)
 public class CapabilityEvents {
@@ -19,27 +20,27 @@ public class CapabilityEvents {
     public static void onRegisterCapabilities(final RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.AUTO_CHARGER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.CALCINATOR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
-        event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.CALCINATOR.get(), (be, context) -> be.getUncachedTileResearchCache());
+        event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.CALCINATOR.get(), (be, _) -> be.getUncachedTileResearchCache());
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.CARVED_BOOKSHELF.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.CONCOCTER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
-        event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.CONCOCTER.get(), (be, context) -> be.getUncachedTileResearchCache());
-        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.CONCOCTER.get(), (be, context) -> be.getUncachedManaStorage());
+        event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.CONCOCTER.get(), (be, _) -> be.getUncachedTileResearchCache());
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.CONCOCTER.get(), (be, _) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.DESALINATOR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
-        event.registerBlockEntity(Capabilities.Fluid.BLOCK, BlockEntityTypesPM.DESALINATOR.get(), (be, face) -> cast(be.getUncachedFluidHandler()));
-        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.DESALINATOR.get(), (be, context) -> be.getUncachedManaStorage());
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, BlockEntityTypesPM.DESALINATOR.get(), (be, _) -> cast(be.getUncachedFluidHandler()));
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.DESALINATOR.get(), (be, _) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
-        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, context) -> be.getUncachedManaStorage());
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.DISSOLUTION_CHAMBER.get(), (be, _) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.ESSENCE_CASK.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.ESSENCE_FURNACE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
-        event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), (be, context) -> be.getUncachedTileResearchCache());
-        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), (be, context) -> be.getUncachedManaStorage());
+        event.registerBlockEntity(CapabilitiesNeoforge.RESEARCH_CACHE, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), (be, _) -> be.getUncachedTileResearchCache());
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.ESSENCE_TRANSMUTER.get(), (be, _) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.HONEY_EXTRACTOR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
-        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.HONEY_EXTRACTOR.get(), (be, context) -> be.getUncachedManaStorage());
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.HONEY_EXTRACTOR.get(), (be, _) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.INFERNAL_FURNACE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
-        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.INFERNAL_FURNACE.get(), (be, context) -> be.getUncachedManaStorage());
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.INFERNAL_FURNACE.get(), (be, _) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.MANA_BATTERY.get(), (be, face) -> cast(be.getRawItemHandler(face)));
-        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.MANA_BATTERY.get(), (be, context) -> be.getUncachedManaStorage());
+        event.registerBlockEntity(CapabilitiesNeoforge.MANA_STORAGE, BlockEntityTypesPM.MANA_BATTERY.get(), (be, _) -> be.getUncachedManaStorage());
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.OFFERING_PEDESTAL.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.RESEARCH_TABLE.get(), (be, face) -> cast(be.getRawItemHandler(face)));
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.RITUAL_ALTAR.get(), (be, face) -> cast(be.getRawItemHandler(face)));
@@ -50,9 +51,10 @@ public class CapabilityEvents {
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.WAND_CHARGER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
     }
 
-    private static IItemHandler cast(final IItemHandlerPM handler) {
-        if (handler instanceof IItemHandler nfHandler) {
-            return nfHandler;
+    @SuppressWarnings("unchecked")
+    private static ResourceHandler<ItemResource> cast(final IItemHandlerPM handler) {
+        if (handler instanceof ResourceHandler<?> nfHandler) {
+            return (ResourceHandler<ItemResource>)nfHandler;
         } else {
             return null;
         }
