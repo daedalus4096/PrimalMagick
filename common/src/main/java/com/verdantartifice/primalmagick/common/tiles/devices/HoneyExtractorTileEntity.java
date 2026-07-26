@@ -18,7 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentGetter;
-import net.minecraft.core.component.DataComponentMap.Builder;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -32,8 +32,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -45,8 +43,6 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainingBlockEntity {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     public static final int INPUT_INV_INDEX = 0;
     public static final int OUTPUT_INV_INDEX = 1;
     public static final int WAND_INV_INDEX = 2;
@@ -59,18 +55,13 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     protected final ContainerData extractorData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-            case 0:
-                return HoneyExtractorTileEntity.this.spinTime;
-            case 1:
-                return HoneyExtractorTileEntity.this.spinTimeTotal;
-            case 2:
-                return HoneyExtractorTileEntity.this.manaStorage.getManaStored(Sources.SKY);
-            case 3:
-                return HoneyExtractorTileEntity.this.manaStorage.getMaxManaStored(Sources.SKY);
-            default:
-                return 0;
-            }
+            return switch (index) {
+                case 0 -> HoneyExtractorTileEntity.this.spinTime;
+                case 1 -> HoneyExtractorTileEntity.this.spinTimeTotal;
+                case 2 -> HoneyExtractorTileEntity.this.manaStorage.getManaStored(Sources.SKY);
+                case 3 -> HoneyExtractorTileEntity.this.manaStorage.getMaxManaStored(Sources.SKY);
+                default -> 0;
+            };
         }
 
         @Override
@@ -118,11 +109,12 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInv, @NotNull Player player) {
         return new HoneyExtractorMenu(windowId, playerInv, this.getBlockPos(), this, this.extractorData);
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -190,31 +182,20 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
         ItemStack honeycombStack = this.getItem(INPUT_INV_INDEX, 0);
         ItemStack bottleStack = this.getItem(INPUT_INV_INDEX, 1);
         if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && this.canSpin() && this.manaStorage.getManaStored(Sources.SKY) >= this.getManaCost()) {
-            ItemStack honeyStack = this.getItem(OUTPUT_INV_INDEX, 0);
-            if (honeyStack.isEmpty()) {
-                this.setItem(OUTPUT_INV_INDEX, 0, new ItemStack(Items.HONEY_BOTTLE));
-            } else {
-                honeyStack.grow(1);
-            }
-            
-            ItemStack beeswaxStack = this.getItem(OUTPUT_INV_INDEX, 1);
-            if (beeswaxStack.isEmpty()) {
-                this.setItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemsPM.BEESWAX.get()));
-            } else {
-                beeswaxStack.grow(1);
-            }
-            
-            honeycombStack.shrink(1);
-            bottleStack.shrink(1);
+            // Add process outputs
+            this.addItem(OUTPUT_INV_INDEX, 0, new ItemStack(Items.HONEY_BOTTLE));
+            this.addItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemsPM.BEESWAX.get()));
+
+            // Remove process inputs
+            this.removeItem(INPUT_INV_INDEX, 0, 1);
+            this.removeItem(INPUT_INV_INDEX, 1, 1);
             this.manaStorage.extractMana(Sources.SKY, this.getManaCost(), false);
         }
     }
 
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
             this.spinTimeTotal = this.getSpinTimeTotal();
             this.spinTime = 0;
             this.setChanged();
@@ -222,11 +203,12 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     }
 
     @Override
-    public int getMana(Source source) {
+    public int getMana(@NotNull Source source) {
         return this.manaStorage.getManaStored(source);
     }
 
     @Override
+    @NotNull
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
         for (Source source : Sources.getAllSorted()) {
@@ -245,14 +227,14 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     }
 
     @Override
-    public void setMana(Source source, int amount) {
+    public void setMana(@NotNull Source source, int amount) {
         this.manaStorage.setMana(source, amount);
         this.setChanged();
         this.syncTile(true);
     }
 
     @Override
-    public void setMana(SourceList mana) {
+    public void setMana(@NotNull SourceList mana) {
         this.manaStorage.setMana(mana);
         this.setChanged();
         this.syncTile(true);
@@ -290,16 +272,18 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
                     case 0 -> stack.is(Items.HONEYCOMB);
                     case 1 -> stack.is(Items.GLASS_BOTTLE);
                     default -> false;
-                }).build());
+                })
+                .contentsChangedFunction(this::onReplaceInput)
+                .build());
         
         // Create fuel handler
         retVal.set(WAND_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(WAND_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.getItem() instanceof IWand)
+                .itemValidFunction((_, stack) -> stack.getItem() instanceof IWand)
                 .build());
 
         // Create output handler
         retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> false)
+                .itemValidFunction((_, _) -> false)
                 .build());
         
         return retVal;
@@ -312,7 +296,7 @@ public abstract class HoneyExtractorTileEntity extends AbstractTileSidedInventor
     }
 
     @Override
-    protected void collectImplicitComponents(Builder pComponents) {
+    protected void collectImplicitComponents(@NotNull DataComponentMap.Builder pComponents) {
         super.collectImplicitComponents(pComponents);
         pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
     }
