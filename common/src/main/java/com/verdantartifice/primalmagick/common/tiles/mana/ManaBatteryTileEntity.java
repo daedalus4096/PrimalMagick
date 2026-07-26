@@ -368,12 +368,9 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         this.syncTile(true);
     }
 
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameComponents(stack, slotStack);
-        if (invIndex == INPUT_INV_INDEX && !flag) {
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
             this.chargeTimeTotal = this.getChargeTimeTotal();
             this.chargeTime = 0;
             this.setChanged();
@@ -408,12 +405,13 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> (stack.getItem() instanceof IWand) || (stack.getItem() instanceof EssenceItem))
+                .itemValidFunction((_, stack) -> (stack.getItem() instanceof IWand) || (stack.getItem() instanceof EssenceItem))
+                .contentsChangedFunction(this::onReplaceInput)
                 .build());
         
         // Create charge handler
         retVal.set(CHARGE_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(CHARGE_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
+                .itemValidFunction((_, stack) -> stack.has(DataComponentsPM.CAPABILITY_MANA_STORAGE.get()))
                 .build());
 
         return retVal;
@@ -459,7 +457,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
 
     @Override
     public @NotNull RouteTable getRouteTable() {
-        return RouteManager.getRouteTable(this.getLevel());
+        return RouteManager.getRouteTable(Objects.requireNonNull(this.getLevel()));
     }
 
     @Override
