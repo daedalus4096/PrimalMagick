@@ -46,7 +46,7 @@ public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
-    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+    public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
         Optional<IPlayerLinguistics> capOpt = Services.CAPABILITIES.linguistics(pPlayer);
         if (capOpt.isPresent()) {
             AbstractScribeTableMenu menu = switch (capOpt.get().getScribeTableMode()) {
@@ -62,6 +62,7 @@ public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM
     }
 
     @Override
+    @NotNull
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
@@ -102,7 +103,7 @@ public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM
         
         // Create output handler
         retVal.set(OUTPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(OUTPUT_INV_INDEX), this)
-                .itemValidFunction((slot, stack) -> false)
+                .itemValidFunction((_, _) -> false)
                 .build());
 
         return retVal;
@@ -110,7 +111,7 @@ public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM
 
     public void doTranscribe(Player player) {
         Level level = this.getLevel();
-        if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
+        if (level != null && !level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             ItemStack sourceStack = this.getItem(INPUT_INV_INDEX, 0);
             ItemStack blankStack = this.getItem(INPUT_INV_INDEX, 1);
             if (sourceStack.is(ItemTagsPM.STATIC_BOOKS) && blankStack.is(Items.WRITABLE_BOOK)) {
@@ -129,13 +130,13 @@ public abstract class ScribeTableTileEntity extends AbstractTileSidedInventoryPM
                         // Add the result book to the output slot if there's room, then shrink the blank book stack
                         ItemStack existingStack = this.getItem(OUTPUT_INV_INDEX, 0);
                         if (ItemStack.isSameItemSameComponents(resultStack, existingStack) && existingStack.getCount() < existingStack.getMaxStackSize()) {
-                            existingStack.grow(1);
-                            blankStack.shrink(1);
+                            this.addItem(OUTPUT_INV_INDEX, 0, existingStack.copyWithCount(1));
+                            this.removeItem(INPUT_INV_INDEX, 1, 1);
                             this.setChanged();
                             this.syncTile(false);
                         } else if (existingStack.isEmpty()) {
-                            this.setItem(OUTPUT_INV_INDEX, 0, resultStack);
-                            blankStack.shrink(1);
+                            this.addItem(OUTPUT_INV_INDEX, 0, resultStack);
+                            this.removeItem(INPUT_INV_INDEX, 1, 1);
                             this.setChanged();
                             this.syncTile(false);
                         }
