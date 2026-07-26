@@ -150,7 +150,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
                                           @NotNull BlockHitResult pHitResult) {
         if (!pLevel.isClientSide() && pLevel.getBlockEntity(pPos) instanceof SanguineCrucibleTileEntity crucibleTile) {
             if (pStack.getItem() instanceof SanguineCoreItem && !crucibleTile.hasCore()) {
-                crucibleTile.setItem(pStack.copyWithCount(1));
+                crucibleTile.addItem(pStack.copyWithCount(1));
                 pStack.shrink(1);
                 pLevel.playSound(null, pPos, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON, SoundSource.BLOCKS, 0.3F, 0.6F);
                 pLevel.setBlock(pPos, pState.setValue(LIT, true), Block.UPDATE_ALL_IMMEDIATE);

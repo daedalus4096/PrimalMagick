@@ -155,17 +155,15 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
         return false;
     }
 
-    @Override
-    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        ItemStack slotStack = this.getItem(invIndex, slotIndex);
-        super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameComponents(stack, slotStack))) {
+    protected void onReplaceInput(int slot, ItemStack oldStack) {
+        ItemStack slotStack = this.getItem(INPUT_INV_INDEX, slot);
+        if (oldStack.isEmpty() || !ItemStack.isSameItemSameComponents(oldStack, slotStack)) {
             this.charge = 0;
             this.setChanged();
             this.syncTile(false);
         }
     }
-    
+
     public int getSouls() {
         return this.souls;
     }
@@ -214,8 +212,8 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
         return this.getItem(INPUT_INV_INDEX, 0);
     }
     
-    public void setItem(ItemStack stack) {
-        this.setItem(INPUT_INV_INDEX, 0, stack);
+    public void addItem(ItemStack stack) {
+        this.addItem(INPUT_INV_INDEX, 0, stack);
     }
     
     public ItemStack removeItem(int count) {
@@ -254,7 +252,10 @@ public abstract class SanguineCrucibleTileEntity extends AbstractTileSidedInvent
         retVal.set(INPUT_INV_INDEX, Services.ITEM_HANDLERS.builder(this.inventories.get(INPUT_INV_INDEX), this)
                 .slotLimitFunction(_ -> 1)
                 .itemValidFunction((_, stack) -> stack.getItem() instanceof SanguineCoreItem)
-                .contentsChangedFunction((_, _) -> SanguineCrucibleTileEntity.this.updateLitState())
+                .contentsChangedFunction((slot, oldStack) -> {
+                    this.onReplaceInput(slot, oldStack);
+                    this.updateLitState();
+                })
                 .build());
 
         return retVal;
