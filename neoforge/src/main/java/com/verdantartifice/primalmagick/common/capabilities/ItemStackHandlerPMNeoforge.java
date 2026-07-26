@@ -169,11 +169,6 @@ public class ItemStackHandlerPMNeoforge extends ItemStacksResourceHandler implem
     }
 
     @Override
-    public void setStackInSlot(int slot, ItemStack stack) {
-        // FIXME Remove from interface, and refactor all callers
-    }
-
-    @Override
     public int getSlotLimit(int slot) {
         return this.limitFuncOverride.map(f -> f.apply(slot)).orElseGet(() -> super.getCapacity(slot, this.getResource(slot)));
     }
