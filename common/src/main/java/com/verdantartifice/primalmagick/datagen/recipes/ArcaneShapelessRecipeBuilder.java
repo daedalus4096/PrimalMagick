@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneCraftingBookCategory;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
@@ -22,6 +24,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
@@ -40,6 +43,8 @@ public class ArcaneShapelessRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
     protected final ItemStack result;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
+    protected boolean showNotification = true;
+    protected ArcaneCraftingBookCategory category = ArcaneCraftingBookCategory.ARCANE;
     protected String group;
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected SourceList manaCosts;
@@ -128,7 +133,17 @@ public class ArcaneShapelessRecipeBuilder {
     public ArcaneShapelessRecipeBuilder addIngredient(TagKey<Item> tag) {
         return this.addIngredient(Ingredient.of(this.itemGetter.getOrThrow(tag)));
     }
-    
+
+    public ArcaneShapelessRecipeBuilder showNotification(boolean show) {
+        this.showNotification = show;
+        return this;
+    }
+
+    public ArcaneShapelessRecipeBuilder category(ArcaneCraftingBookCategory category) {
+        this.category = category;
+        return this;
+    }
+
     /**
      * Adds a group to this recipe.
      * 
@@ -214,8 +229,19 @@ public class ArcaneShapelessRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
-        ShapelessArcaneRecipe recipe = new ShapelessArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredients, this.getFinalRequirement(), 
-                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
+        ShapelessArcaneRecipe recipe = new ShapelessArcaneRecipe(
+                new Recipe.CommonInfo(this.showNotification),
+                new IArcaneRecipe.ArcaneCraftingBookInfo(
+                        Objects.requireNonNullElse(this.category, ArcaneCraftingBookCategory.ARCANE),
+                        Objects.requireNonNullElse(this.group, "")),
+                ItemStackTemplate.fromNonEmptyStack(this.result),
+                this.ingredients,
+                this.getFinalRequirement(),
+                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY),
+                this.baseExpertiseOverride,
+                this.bonusExpertiseOverride,
+                this.expertiseGroup,
+                this.disciplineOverride);
         output.accept(id, recipe, null);
     }
 
@@ -255,6 +281,9 @@ public class ArcaneShapelessRecipeBuilder {
      * @param id the ID of the recipe
      */
     protected void validate(ResourceKey<Recipe<?>> id) {
+        if (this.category == null) {
+            throw new IllegalStateException("Null category specified for arcane shapeless recipe " + id + "!");
+        }
         if (this.ingredients.isEmpty()) {
             throw new IllegalStateException("No ingredients defined for arcane shapeless recipe " + id + "!");
         }

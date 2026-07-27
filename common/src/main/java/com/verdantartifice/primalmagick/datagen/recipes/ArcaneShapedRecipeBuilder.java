@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneCraftingBookCategory;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
@@ -21,6 +23,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
@@ -43,6 +46,8 @@ public class ArcaneShapedRecipeBuilder {
     protected final ItemStack result;
     protected final List<String> patternRows = new ArrayList<>();
     protected final Map<Character, Ingredient> key = new LinkedHashMap<>();
+    protected boolean showNotification = true;
+    protected ArcaneCraftingBookCategory category = ArcaneCraftingBookCategory.ARCANE;
     protected String group;
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected SourceList manaCosts;
@@ -131,6 +136,16 @@ public class ArcaneShapedRecipeBuilder {
             return this;
         }
     }
+
+    public ArcaneShapedRecipeBuilder showNotification(boolean show) {
+        this.showNotification = show;
+        return this;
+    }
+
+    public ArcaneShapedRecipeBuilder category(ArcaneCraftingBookCategory category) {
+        this.category = category;
+        return this;
+    }
     
     /**
      * Adds a group to this recipe.
@@ -217,8 +232,19 @@ public class ArcaneShapedRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         ShapedRecipePattern pattern = this.validate(id);
-        ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.getFinalRequirement(), 
-                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY), this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
+        ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(
+                new Recipe.CommonInfo(this.showNotification),
+                new IArcaneRecipe.ArcaneCraftingBookInfo(
+                        Objects.requireNonNullElse(this.category, ArcaneCraftingBookCategory.ARCANE),
+                        Objects.requireNonNullElse(this.group, "")),
+                ItemStackTemplate.fromNonEmptyStack(this.result),
+                pattern,
+                this.getFinalRequirement(),
+                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY),
+                this.baseExpertiseOverride,
+                this.bonusExpertiseOverride,
+                this.expertiseGroup,
+                this.disciplineOverride);
         output.accept(id, recipe, null);
     }
 
@@ -258,7 +284,9 @@ public class ArcaneShapedRecipeBuilder {
      * @param id the ID of the recipe
      */
     protected ShapedRecipePattern validate(ResourceKey<Recipe<?>> id) {
-        if (this.requirements.isEmpty()) {
+        if (this.category == null) {
+            throw new IllegalStateException("Null category specified for arcane shaped recipe " + id + "!");
+        } else if (this.requirements.isEmpty()) {
             throw new IllegalStateException("No requirement is defined for arcane shaped recipe " + id + "!");
         } else if (this.patternRows.size() == 1 && this.patternRows.getFirst().length() == 1) {
             throw new IllegalStateException("Arcane shaped recipe " + id + " only takes in a single item - should it be a shapeless recipe instead?");
