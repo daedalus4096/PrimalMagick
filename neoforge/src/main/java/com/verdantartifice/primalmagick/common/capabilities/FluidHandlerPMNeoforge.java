@@ -2,81 +2,90 @@ package com.verdantartifice.primalmagick.common.capabilities;
 
 import com.verdantartifice.primalmagick.common.fluids.FluidStackPMNeoforge;
 import com.verdantartifice.primalmagick.common.fluids.IFluidStackPM;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidUtil;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
-public class FluidHandlerPMNeoforge implements IFluidHandlerPM {
-    public static final IFluidHandlerPM EMPTY = new FluidHandlerPMNeoforge(0, fs -> false);
+public class FluidHandlerPMNeoforge extends FluidStacksResourceHandler implements IFluidHandlerPM {
+    public static final IFluidHandlerPM EMPTY = new FluidHandlerPMNeoforge(0, 0, _ -> false);
 
-    protected final FluidTank tank;
+    protected final Optional<Predicate<IFluidStackPM>> validatorOpt;
 
-    public FluidHandlerPMNeoforge(int capacity) {
-        this(capacity, fs -> true);
+    public FluidHandlerPMNeoforge(int tanks, int capacity) {
+        this(tanks, capacity, Optional.empty());
     }
 
-    public FluidHandlerPMNeoforge(int capacity, Predicate<IFluidStackPM> validator) {
-        this.tank = new FluidTank(capacity, nfStack -> validator.test(new FluidStackPMNeoforge(nfStack)));
+    public FluidHandlerPMNeoforge(int tanks, int capacity, @NotNull Predicate<IFluidStackPM> validator) {
+        this(tanks, capacity, Optional.of(validator));
     }
 
-    public IFluidHandler getInner() {
-        return this.tank;
+    private FluidHandlerPMNeoforge(int tanks, int capacity, @NotNull Optional<Predicate<IFluidStackPM>> validatorOpt) {
+        super(tanks, capacity);
+        this.validatorOpt = validatorOpt;
     }
 
     @Override
     public int getTanks() {
-        return this.tank.getTanks();
+        return this.size();
     }
 
     @Override
     public IFluidStackPM getFluidInTank(int tank) {
-        return new FluidStackPMNeoforge(this.tank.getFluidInTank(tank));
+        return new FluidStackPMNeoforge(FluidUtil.getStack(this, tank));
     }
 
     @Override
     public int getTankCapacity(int tank) {
-        return this.tank.getTankCapacity(tank);
+        return this.getCapacity(tank, this.getResource(tank));
     }
 
     @Override
     public boolean isFluidValid(int tank, IFluidStackPM stack) {
-        return stack instanceof FluidStackPMNeoforge nfStack && this.tank.isFluidValid(tank, nfStack.getInner());
+        return this.isValid(tank, FluidResource.of(stack.getFluid()));
+    }
+
+    @Override
+    public boolean isValid(int index, @NotNull FluidResource resource) {
+        return this.validatorOpt.map(f -> f.test(new FluidStackPMNeoforge(resource, 1))).orElseGet(() -> this.isValid(index, resource));
     }
 
     @Override
     public int fill(IFluidStackPM stack, boolean simulate) {
-        if (stack instanceof FluidStackPMNeoforge nfStack) {
-            return this.tank.fill(nfStack.getInner(), simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE);
-        } else {
-            return 0;
+        try (Transaction tx = Transaction.openRoot()) {
+            int retVal = this.insert(FluidResource.of(stack.getFluid()), stack.getAmount(), tx);
+            if (!simulate) {
+                tx.commit();
+            }
+            return retVal;
         }
     }
 
     @Override
     public IFluidStackPM drain(IFluidStackPM stack, boolean simulate) {
-        if (stack instanceof FluidStackPMNeoforge nfStack) {
-            return new FluidStackPMNeoforge(this.tank.drain(nfStack.getInner(), simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE));
-        } else {
-            return FluidStackPMNeoforge.EMPTY;
+        try (Transaction tx = Transaction.openRoot()) {
+            FluidResource resource = FluidResource.of(stack.getFluid());
+            int retVal = this.extract(resource, stack.getAmount(), tx);
+            if (!simulate) {
+                tx.commit();
+            }
+            return new FluidStackPMNeoforge(resource, retVal);
         }
     }
 
     @Override
-    public IFluidStackPM drain(int maxDrain, boolean simulate) {
-        return new FluidStackPMNeoforge(this.tank.drain(maxDrain, simulate ? IFluidHandler.FluidAction.SIMULATE : IFluidHandler.FluidAction.EXECUTE));
-    }
-
-    @Override
-    public void serialize(ValueOutput output) {
-        ValueOutput child = output.child("Tank");
-        this.tank.serialize(child);
-    }
-
-    @Override
-    public void deserialize(ValueInput input) {
-        input.child("Tank").ifPresent(this.tank::deserialize);
+    public IFluidStackPM drain(int tank, int maxDrain, boolean simulate) {
+        try (Transaction tx = Transaction.openRoot()) {
+            FluidResource resource = this.getResource(tank);
+            int retVal = this.extract(tank, resource, maxDrain, tx);
+            if (!simulate) {
+                tx.commit();
+            }
+            return new FluidStackPMNeoforge(resource, retVal);
+        }
     }
 }

@@ -101,7 +101,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
     public DesalinatorTileEntity(BlockPos pos, BlockState state) {
         super(BlockEntityTypesPM.DESALINATOR.get(), pos, state);
         this.manaStorage = new ManaStorage(2000, 200, 200, Sources.SUN);
-        this.waterTank = Services.FLUID_HANDLERS.create(4000, fs -> fs.is(Fluids.WATER));
+        this.waterTank = Services.FLUID_HANDLERS.create(1, 4000, fs -> fs.is(Fluids.WATER));
     }
 
     public IManaStorage<?> getUncachedManaStorage() {
@@ -185,7 +185,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
             }
 
             // Process ingredients
-            if (entity.waterTank.drain(REQUIRED_WATER_AMOUNT, true).getAmount() >= REQUIRED_WATER_AMOUNT &&
+            if (entity.waterTank.drain(Services.FLUIDS.makeFluidStack(Fluids.WATER, REQUIRED_WATER_AMOUNT), true).getAmount() >= REQUIRED_WATER_AMOUNT &&
                     entity.manaStorage.getManaStored(Sources.SUN) >= entity.getManaCost()) {
                 // If boilable input is in place and the outputs are clear, process it
                 if (entity.canBoil()) {
@@ -270,7 +270,7 @@ public abstract class DesalinatorTileEntity extends AbstractTileSidedInventoryPM
         this.addItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemsPM.ESSENCE_DUST_SEA.get()));
 
         // Drain water
-        this.waterTank.drain(REQUIRED_WATER_AMOUNT, false);
+        this.waterTank.drain(Services.FLUIDS.makeFluidStack(Fluids.WATER, REQUIRED_WATER_AMOUNT), false);
 
         // Consume mana
         this.manaStorage.extractMana(Sources.SUN, this.getManaCost(), false);

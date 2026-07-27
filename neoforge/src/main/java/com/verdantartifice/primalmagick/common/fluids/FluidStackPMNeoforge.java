@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.fluids;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 
 import java.util.Objects;
 
@@ -13,6 +14,10 @@ public class FluidStackPMNeoforge implements IFluidStackPM {
 
     public FluidStackPMNeoforge(final Fluid fluid, final int amount) {
         this.innerStack = new FluidStack(fluid, amount);
+    }
+
+    public FluidStackPMNeoforge(final FluidResource resource, final int amount) {
+        this.innerStack = resource.toStack(amount);
     }
 
     public FluidStackPMNeoforge(final FluidStack innerStack) {

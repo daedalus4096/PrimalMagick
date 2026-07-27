@@ -9,12 +9,12 @@ import java.util.function.Predicate;
 
 public class FluidHandlerServiceNeoforge implements IFluidHandlerService {
     @Override
-    public IFluidHandlerPM create(int capacity) {
-        return new FluidHandlerPMNeoforge(capacity);
+    public IFluidHandlerPM create(int tanks, int capacity) {
+        return new FluidHandlerPMNeoforge(tanks, capacity);
     }
 
     @Override
-    public IFluidHandlerPM create(int capacity, Predicate<IFluidStackPM> validator) {
-        return new FluidHandlerPMNeoforge(capacity, validator);
+    public IFluidHandlerPM create(int tanks, int capacity, Predicate<IFluidStackPM> validator) {
+        return new FluidHandlerPMNeoforge(tanks, capacity, validator);
     }
 }

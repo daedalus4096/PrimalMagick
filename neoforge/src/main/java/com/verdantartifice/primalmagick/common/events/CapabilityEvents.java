@@ -5,13 +5,14 @@ import com.verdantartifice.primalmagick.common.capabilities.CapabilitiesNeoforge
 import com.verdantartifice.primalmagick.common.capabilities.FluidHandlerPMNeoforge;
 import com.verdantartifice.primalmagick.common.capabilities.IFluidHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPMNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 @EventBusSubscriber(modid = Constants.MOD_ID)
@@ -51,18 +52,17 @@ public class CapabilityEvents {
         event.registerBlockEntity(Capabilities.Item.BLOCK, BlockEntityTypesPM.WAND_CHARGER.get(), (be, face) -> cast(be.getRawItemHandler(face)));
     }
 
-    @SuppressWarnings("unchecked")
     private static ResourceHandler<ItemResource> cast(final IItemHandlerPM handler) {
-        if (handler instanceof ResourceHandler<?> nfHandler) {
-            return (ResourceHandler<ItemResource>)nfHandler;
+        if (handler instanceof ItemStackHandlerPMNeoforge nfHandler) {
+            return nfHandler;
         } else {
             return null;
         }
     }
 
-    private static IFluidHandler cast(final IFluidHandlerPM handler) {
+    private static ResourceHandler<FluidResource> cast(final IFluidHandlerPM handler) {
         if (handler instanceof FluidHandlerPMNeoforge nfHandler) {
-            return nfHandler.getInner();
+            return nfHandler;
         } else {
             return null;
         }

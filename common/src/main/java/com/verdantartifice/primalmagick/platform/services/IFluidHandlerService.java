@@ -6,6 +6,6 @@ import com.verdantartifice.primalmagick.common.fluids.IFluidStackPM;
 import java.util.function.Predicate;
 
 public interface IFluidHandlerService {
-    IFluidHandlerPM create(int capacity);
-    IFluidHandlerPM create(int capacity, Predicate<IFluidStackPM> validator);
+    IFluidHandlerPM create(int tanks, int capacity);
+    IFluidHandlerPM create(int tanks, int capacity, Predicate<IFluidStackPM> validator);
 }
