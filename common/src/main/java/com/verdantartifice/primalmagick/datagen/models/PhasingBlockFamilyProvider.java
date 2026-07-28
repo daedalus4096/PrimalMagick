@@ -17,9 +17,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class PhasingBlockFamilyProvider {
-    private static final Identifier SOLID_RENDER_TYPE = AbstractModelProviderPM.SOLID_RENDER_TYPE;
-    private static final Identifier TRANSLUCENT_RENDER_TYPE = AbstractModelProviderPM.TRANSLUCENT_RENDER_TYPE;
-
     private static final Map<BlockFamily.Variant, BiConsumer<PhasingBlockFamilyProvider, Block>> SHAPE_CONSUMERS = ImmutableMap.<BlockFamily.Variant, BiConsumer<PhasingBlockFamilyProvider, Block>>builder()
             .put(BlockFamily.Variant.SLAB, PhasingBlockFamilyProvider::slab)
             .put(BlockFamily.Variant.STAIRS, PhasingBlockFamilyProvider::stairs)
