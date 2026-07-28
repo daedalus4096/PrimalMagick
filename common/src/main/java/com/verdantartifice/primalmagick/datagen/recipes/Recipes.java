@@ -42,6 +42,7 @@ import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.HoneycombItem;
@@ -96,6 +97,14 @@ public abstract class Recipes extends RecipeProvider {
     
     protected DissolutionRecipeBuilder dissolution(ItemLike result, int count) {
         return DissolutionRecipeBuilder.dissolutionRecipe(this.items, result, count);
+    }
+
+    protected DissolutionTagRecipeBuilder dissolution(TagKey<Item> result) {
+        return DissolutionTagRecipeBuilder.dissolutionTagRecipe(this.items, result);
+    }
+
+    protected DissolutionTagRecipeBuilder dissolution(TagKey<Item> result, int count) {
+        return DissolutionTagRecipeBuilder.dissolutionTagRecipe(this.items, result, count);
     }
     
     protected RitualRecipeBuilder ritual(ItemLike result) {
