@@ -86,63 +86,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         // TODO Can this be extracted into a common super layer?
-        // Generate marble blocks
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), this.blockTexture(BlocksPM.MARBLE.get()));
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_BRICKS.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_BRICK_SLAB.get(), BlocksPM.MARBLE_BRICKS.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
-        this.pillarBlockWithItem(BlocksPM.MARBLE_PILLAR.get());
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE.get()));
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_TILES.get());
-        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE.get());
-        
-        // Generate enchanted marble blocks
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_ENCHANTED_SLAB.get(), BlocksPM.MARBLE_ENCHANTED.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_ENCHANTED_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_ENCHANTED_WALL.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICKS.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), BlocksPM.MARBLE_ENCHANTED_BRICKS.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()));
-        this.pillarBlockWithItem(BlocksPM.MARBLE_ENCHANTED_PILLAR.get());
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
-        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), BlocksPM.MARBLE_ENCHANTED.get());
-        
-        // Generate smoked marble blocks
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_SMOKED.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_SMOKED_SLAB.get(), BlocksPM.MARBLE_SMOKED.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_SMOKED_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_SMOKED_WALL.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICKS.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), BlocksPM.MARBLE_SMOKED_BRICKS.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED_BRICKS.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED_BRICKS.get()));
-        this.pillarBlockWithItem(BlocksPM.MARBLE_SMOKED_PILLAR.get());
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_SMOKED_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_SMOKED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
-        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), BlocksPM.MARBLE_SMOKED.get());
-        
-        // Generate hallowed marble blocks
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_HALLOWED.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_HALLOWED_SLAB.get(), BlocksPM.MARBLE_HALLOWED.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_HALLOWED_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_HALLOWED_WALL.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICKS.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), BlocksPM.MARBLE_HALLOWED_BRICKS.get());
-        this.stairsBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED_BRICKS.get()));
-        this.wallBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED_BRICKS.get()));
-        this.pillarBlockWithItem(BlocksPM.MARBLE_HALLOWED_PILLAR.get());
-        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_HALLOWED_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_HALLOWED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
-        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get(), BlocksPM.MARBLE_HALLOWED.get());
-        
+
         // Generate sunwood blocks
         this.phasingLogBlockWithItem(BlocksPM.SUNWOOD_LOG.get());
         this.phasingLogBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_LOG.get());
