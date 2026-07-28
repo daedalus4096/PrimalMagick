@@ -118,6 +118,10 @@ public abstract class Recipes extends RecipeProvider {
     protected RitualRecipeBuilder ritual(ItemStack result) {
         return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, result);
     }
+
+    protected RunecarvingRecipeBuilder runecarving(ItemLike result) {
+        return RunecarvingRecipeBuilder.runecarvingRecipe(this.items, result);
+    }
     
     @Override
     protected void buildRecipes() {
@@ -3130,9 +3134,9 @@ public abstract class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.BASIC_RUNEWORKING)
             .manaCost(SourceList.EMPTY.add(Sources.EARTH, 5).add(Sources.SEA, 5).add(Sources.SKY, 5).add(Sources.SUN, 5).add(Sources.MOON, 5))
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_UNATTUNED.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_UNATTUNED.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.BASIC_RUNEWORKING)
             .build(this.output);
         this.arcaneShaped(ItemsPM.RUNESCRIBING_ALTAR_BASIC.get())
@@ -3212,24 +3216,24 @@ public abstract class Recipes extends RecipeProvider {
             .setGroup("source_runes")
             .requiredResearch(ResearchEntries.RUNE_MOON)
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_PROJECT.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_PROJECT.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.RUNE_PROJECT)
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_PROTECT.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_PROTECT.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.RUNE_PROTECT)
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_ITEM.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_ITEM.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.RUNE_ITEM)
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_SELF.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_SELF.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.RUNE_SELF)
             .build(this.output);
         this.arcaneShapeless(ItemsPM.RUNE_BLOOD.get())
@@ -3250,29 +3254,29 @@ public abstract class Recipes extends RecipeProvider {
             .setGroup("source_runes")
             .requiredResearch(ResearchEntries.RUNE_VOID)
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_ABSORB.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_ABSORB.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.RUNE_ABSORB)
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_DISPEL.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_DISPEL.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.RUNE_DISPEL)
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_SUMMON.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_SUMMON.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.RUNE_SUMMON)
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_AREA.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_AREA.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.RUNE_AREA)
             .build(this.output);
-        RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_CREATURE.get())
-            .firstIngredient(Items.STONE_SLAB)
-            .secondIngredient(CommonTags.Items.GEMS_LAPIS)
+        this.runecarving(ItemsPM.RUNE_CREATURE.get())
+            .baseIngredient(Items.STONE_SLAB)
+            .etchingIngredient(CommonTags.Items.GEMS_LAPIS)
             .requiredResearch(ResearchEntries.RUNE_CREATURE)
             .build(this.output);
         this.arcaneShapeless(ItemsPM.RUNE_HALLOWED.get())

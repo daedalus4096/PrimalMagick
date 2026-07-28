@@ -12,18 +12,21 @@ import com.verdantartifice.primalmagick.common.research.requirements.AndRequirem
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -32,17 +35,19 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class RunecarvingRecipeBuilder {
+    protected final HolderGetter<Item> itemGetter;
     protected final ItemStack result;
-    protected Ingredient ingredient1;
-    protected Ingredient ingredient2;
-    protected String group;
+    protected boolean showNotification = true;
+    protected Ingredient baseIngredient;
+    protected Ingredient etchingIngredient;
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected Optional<Integer> baseExpertiseOverride = Optional.empty();
     protected Optional<Integer> bonusExpertiseOverride = Optional.empty();
     protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
-    protected RunecarvingRecipeBuilder(ItemLike item, int count) {
+    protected RunecarvingRecipeBuilder(HolderGetter<Item> itemGetter, ItemLike item, int count) {
+        this.itemGetter = itemGetter;
         this.result = new ItemStack(item, count);
     }
     
@@ -53,8 +58,8 @@ public class RunecarvingRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a runecarving recipe
      */
-    public static RunecarvingRecipeBuilder runecarvingRecipe(ItemLike item, int count) {
-        return new RunecarvingRecipeBuilder(item, count);
+    public static RunecarvingRecipeBuilder runecarvingRecipe(HolderGetter<Item> itemGetter, ItemLike item, int count) {
+        return new RunecarvingRecipeBuilder(itemGetter, item, count);
     }
     
     /**
@@ -63,8 +68,8 @@ public class RunecarvingRecipeBuilder {
      * @param item the output item type
      * @return a new builder for a runecarving recipe
      */
-    public static RunecarvingRecipeBuilder runecarvingRecipe(ItemLike item) {
-        return new RunecarvingRecipeBuilder(item, 1);
+    public static RunecarvingRecipeBuilder runecarvingRecipe(HolderGetter<Item> itemGetter, ItemLike item) {
+        return new RunecarvingRecipeBuilder(itemGetter, item, 1);
     }
     
     /**
@@ -73,8 +78,8 @@ public class RunecarvingRecipeBuilder {
      * @param ingredient the ingredient to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder firstIngredient(Ingredient ingredient) {
-        this.ingredient1 = ingredient;
+    public RunecarvingRecipeBuilder baseIngredient(Ingredient ingredient) {
+        this.baseIngredient = ingredient;
         return this;
     }
     
@@ -84,8 +89,8 @@ public class RunecarvingRecipeBuilder {
      * @param item the item to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder firstIngredient(ItemLike item) {
-        return this.firstIngredient(Ingredient.of(item));
+    public RunecarvingRecipeBuilder baseIngredient(ItemLike item) {
+        return this.baseIngredient(Ingredient.of(item));
     }
     
     /**
@@ -94,8 +99,8 @@ public class RunecarvingRecipeBuilder {
      * @param tag the tag to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder firstIngredient(TagKey<Item> tag) {
-        return this.firstIngredient(Ingredient.of(tag));
+    public RunecarvingRecipeBuilder baseIngredient(TagKey<Item> tag) {
+        return this.baseIngredient(Ingredient.of(this.itemGetter.getOrThrow(tag)));
     }
     
     /**
@@ -104,8 +109,8 @@ public class RunecarvingRecipeBuilder {
      * @param ingredient the ingredient to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder secondIngredient(Ingredient ingredient) {
-        this.ingredient2 = ingredient;
+    public RunecarvingRecipeBuilder etchingIngredient(Ingredient ingredient) {
+        this.etchingIngredient = ingredient;
         return this;
     }
     
@@ -115,8 +120,8 @@ public class RunecarvingRecipeBuilder {
      * @param item the item to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder secondIngredient(ItemLike item) {
-        return this.secondIngredient(Ingredient.of(item));
+    public RunecarvingRecipeBuilder etchingIngredient(ItemLike item) {
+        return this.etchingIngredient(Ingredient.of(item));
     }
     
     /**
@@ -125,18 +130,12 @@ public class RunecarvingRecipeBuilder {
      * @param tag the tag to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder secondIngredient(TagKey<Item> tag) {
-        return this.secondIngredient(Ingredient.of(tag));
+    public RunecarvingRecipeBuilder etchingIngredient(TagKey<Item> tag) {
+        return this.etchingIngredient(Ingredient.of(this.itemGetter.getOrThrow(tag)));
     }
-    
-    /**
-     * Adds a group to this recipe.
-     * 
-     * @param group the group to add
-     * @return the modified builder
-     */
-    public RunecarvingRecipeBuilder setGroup(String group) {
-        this.group = group;
+
+    public RunecarvingRecipeBuilder showNotification(boolean show) {
+        this.showNotification = show;
         return this;
     }
     
@@ -185,7 +184,7 @@ public class RunecarvingRecipeBuilder {
         if (this.requirements.isEmpty()) {
             return Optional.empty();
         } else if (this.requirements.size() == 1) {
-            return Optional.of(this.requirements.get(0));
+            return Optional.of(this.requirements.getFirst());
         } else {
             return Optional.of(new AndRequirement(this.requirements));
         }
@@ -197,11 +196,23 @@ public class RunecarvingRecipeBuilder {
      * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(RecipeOutput output, Identifier id) {
+    public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
-        RunecarvingRecipe recipe = new RunecarvingRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient1, this.ingredient2, this.getFinalRequirement(),
-                this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
+        RunecarvingRecipe recipe = new RunecarvingRecipe(
+                new Recipe.CommonInfo(this.showNotification),
+                ItemStackTemplate.fromNonEmptyStack(this.result),
+                this.baseIngredient,
+                this.etchingIngredient,
+                this.getFinalRequirement(),
+                this.baseExpertiseOverride,
+                this.bonusExpertiseOverride,
+                this.expertiseGroup,
+                this.disciplineOverride);
         output.accept(id, recipe, null);
+    }
+
+    public void build(RecipeOutput output, Identifier id) {
+        this.build(output, ResourceKey.create(Registries.RECIPE, id));
     }
     
     /**
@@ -235,9 +246,9 @@ public class RunecarvingRecipeBuilder {
      * 
      * @param id the ID of the recipe
      */
-    protected void validate(Identifier id) {
-        if ( this.ingredient1 == null || this.ingredient1.isEmpty() ||
-             this.ingredient2 == null || this.ingredient2.isEmpty() ) {
+    protected void validate(ResourceKey<Recipe<?>> id) {
+        if ( this.baseIngredient == null || this.baseIngredient.isEmpty() ||
+             this.etchingIngredient == null || this.etchingIngredient.isEmpty() ) {
             throw new IllegalStateException("Missing ingredient for runecarving recipe " + id + "!");
         }
         if (this.requirements.isEmpty()) {
