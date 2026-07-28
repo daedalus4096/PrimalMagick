@@ -23,6 +23,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
@@ -30,7 +31,6 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -42,9 +42,9 @@ public class RitualRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
     protected final HolderGetter<Block> blockGetter;
     protected final ItemStack result;
+    protected boolean showNotification = true;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected final NonNullList<BlockIngredient> props = NonNullList.create();
-    protected String group;
     protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected SourceList manaCosts;
     protected int instability = 0;
@@ -221,15 +221,9 @@ public class RitualRecipeBuilder {
     public RitualRecipeBuilder addProp(TagKey<Block> tag) {
         return this.addProp(tag, 1);
     }
-    
-    /**
-     * Adds a group to this recipe.
-     * 
-     * @param group the group to add
-     * @return the modified builder
-     */
-    public RitualRecipeBuilder setGroup(String group) {
-        this.group = group;
+
+    public RitualRecipeBuilder showNotification(boolean show) {
+        this.showNotification = show;
         return this;
     }
     
@@ -318,8 +312,18 @@ public class RitualRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
-        RitualRecipe recipe = new RitualRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredients, this.props, this.getFinalRequirement(), this.manaCosts, this.instability,
-                this.baseExpertiseOverride, this.bonusExpertiseOverride, this.expertiseGroup, this.disciplineOverride);
+        RitualRecipe recipe = new RitualRecipe(
+                new Recipe.CommonInfo(this.showNotification),
+                ItemStackTemplate.fromNonEmptyStack(this.result),
+                this.ingredients,
+                this.props,
+                this.getFinalRequirement(),
+                this.instability,
+                this.manaCosts,
+                this.baseExpertiseOverride,
+                this.bonusExpertiseOverride,
+                this.expertiseGroup,
+                this.disciplineOverride);
         output.accept(id, recipe, null);
     }
 
