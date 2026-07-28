@@ -88,36 +88,18 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Can this be extracted into a common super layer?
 
         // Generate sunwood blocks
-        this.phasingLogBlockWithItem(BlocksPM.SUNWOOD_LOG.get());
-        this.phasingLogBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_LOG.get());
-        this.phasingWoodBlockWithItem(BlocksPM.SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.SUNWOOD_LOG.get()));
-        this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_SUNWOOD_LOG.get()));
-        this.phasingLeavesBlockWithItem(BlocksPM.SUNWOOD_LEAVES.get());
-        this.saplingBlockWithPotAndItem(BlocksPM.SUNWOOD_SAPLING.get(), BlocksPM.POTTED_SUNWOOD_SAPLING.get());
         this.phasingCubeBlockWithItem(BlocksPM.SUNWOOD_PLANKS.get());
         this.phasingSlabBlockWithItem(BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.SUNWOOD_PLANKS.get());
         this.phasingStairsBlockWithItem(BlocksPM.SUNWOOD_STAIRS.get(), this.blockTexture(BlocksPM.SUNWOOD_PLANKS.get()));
         this.phasingPillarBlockWithItem(BlocksPM.SUNWOOD_PILLAR.get());
         
         // Generate moonwood blocks
-        this.phasingLogBlockWithItem(BlocksPM.MOONWOOD_LOG.get());
-        this.phasingLogBlockWithItem(BlocksPM.STRIPPED_MOONWOOD_LOG.get());
-        this.phasingWoodBlockWithItem(BlocksPM.MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.MOONWOOD_LOG.get()));
-        this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_MOONWOOD_LOG.get()));
-        this.phasingLeavesBlockWithItem(BlocksPM.MOONWOOD_LEAVES.get());
-        this.saplingBlockWithPotAndItem(BlocksPM.MOONWOOD_SAPLING.get(), BlocksPM.POTTED_MOONWOOD_SAPLING.get());
         this.phasingCubeBlockWithItem(BlocksPM.MOONWOOD_PLANKS.get());
         this.phasingSlabBlockWithItem(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.MOONWOOD_PLANKS.get());
         this.phasingStairsBlockWithItem(BlocksPM.MOONWOOD_STAIRS.get(), this.blockTexture(BlocksPM.MOONWOOD_PLANKS.get()));
         this.phasingPillarBlockWithItem(BlocksPM.MOONWOOD_PILLAR.get());
         
         // Generate hallowood blocks
-        this.logBlockWithItem(BlocksPM.HALLOWOOD_LOG.get());
-        this.logBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_LOG.get());
-        this.woodBlockWithItem(BlocksPM.HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.HALLOWOOD_LOG.get()));
-        this.woodBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()));
-        this.leavesBlockWithItem(BlocksPM.HALLOWOOD_LEAVES.get());
-        this.saplingBlockWithPotAndItem(BlocksPM.HALLOWOOD_SAPLING.get(), BlocksPM.POTTED_HALLOWOOD_SAPLING.get());
         this.simpleCubeBlockWithItem(BlocksPM.HALLOWOOD_PLANKS.get());
         this.slabBlockWithItem(BlocksPM.HALLOWOOD_SLAB.get(), BlocksPM.HALLOWOOD_PLANKS.get());
         this.stairsBlockWithItem(BlocksPM.HALLOWOOD_STAIRS.get(), this.blockTexture(BlocksPM.HALLOWOOD_PLANKS.get()));
