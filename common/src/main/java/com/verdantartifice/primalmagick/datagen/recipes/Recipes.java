@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.crafting.WandInscriptionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WardingModuleApplicationRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WritableBookCraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ConcoctingBookCategory;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.DissolutionBookCategory;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
@@ -7058,50 +7059,62 @@ public abstract class Recipes extends RecipeProvider {
         this.dissolution(Items.COBBLESTONE, 2)
             .ingredient(ItemTagsPM.SURFACE_STONE)
             .defaultManaCost()
+            .category(DissolutionBookCategory.MISC)
             .build(this.output, "cobblestone_from_dissolving_surface_stone");
         this.dissolution(Items.COBBLED_DEEPSLATE, 2)
             .ingredient(ItemTagsPM.DEEP_STONE)
             .defaultManaCost()
+            .category(DissolutionBookCategory.MISC)
             .build(this.output, "cobbled_deepslate_from_dissolving_deep_stone");
         this.dissolution(Items.GRAVEL, 2)
             .ingredient(CommonTags.Items.COBBLESTONES)
             .defaultManaCost()
+            .category(DissolutionBookCategory.MISC)
             .build(this.output, "gravel_from_dissolving_cobblestone");
         this.dissolution(Items.SAND, 2)
             .ingredient(CommonTags.Items.GRAVELS)
             .defaultManaCost()
+            .category(DissolutionBookCategory.MISC)
             .build(this.output, "sand_from_dissolving_gravel");
         this.dissolution(Items.BONE_MEAL, 6)
             .ingredient(CommonTags.Items.BONES)
             .defaultManaCost()
+            .category(DissolutionBookCategory.MISC)
             .build(this.output, "bone_meal_from_dissolving_bone");
         this.dissolution(Items.BLAZE_POWDER, 4)
             .ingredient(CommonTags.Items.RODS_BLAZE)
             .defaultManaCost()
+            .category(DissolutionBookCategory.MISC)
             .build(this.output, "blaze_powder_from_dissolving_blaze_rod");
         this.dissolution(Items.STRING, 4)
             .ingredient(ItemTags.WOOL)
             .defaultManaCost()
+            .category(DissolutionBookCategory.MISC)
             .build(this.output, "string_from_dissolving_wool");
         this.dissolution(Items.QUARTZ, 4)
             .ingredient(Items.QUARTZ_BLOCK)
             .defaultManaCost()
+            .category(DissolutionBookCategory.ORE)
             .build(this.output, "quartz_from_dissolving_quartz_block");
         this.dissolution(Items.GLOWSTONE_DUST, 4)
             .ingredient(Items.GLOWSTONE)
             .defaultManaCost()
+            .category(DissolutionBookCategory.MISC)
             .build(this.output, "glowstone_dust_from_dissolving_glowstone_block");
         this.dissolution(Items.NETHERITE_SCRAP, 3)
             .ingredient(Items.ANCIENT_DEBRIS)
             .defaultManaCost()
+            .category(DissolutionBookCategory.ORE)
             .build(this.output, "netherite_scrap_from_dissolving_ancient_debris");
         this.dissolution(ItemsPM.ROCK_SALT.get(), 12)
             .ingredient(ItemsPM.ROCK_SALT_ORE.get())
             .defaultManaCost()
+            .category(DissolutionBookCategory.ORE)
             .build(this.output, "rock_salt_from_dissolving_rock_salt_ore");
         this.dissolution(ItemsPM.REFINED_SALT.get(), 3)
             .ingredient(ItemsPM.ROCK_SALT.get())
             .defaultManaCost()
+            .category(DissolutionBookCategory.MISC)
             .build(this.output, "refined_salt_from_dissolving_rock_salt");
     }
     
