@@ -122,6 +122,14 @@ public abstract class Recipes extends RecipeProvider {
     protected RunecarvingRecipeBuilder runecarving(ItemLike result) {
         return RunecarvingRecipeBuilder.runecarvingRecipe(this.items, result);
     }
+
+    protected ShapelessTagRecipeBuilder shapeless(RecipeCategory category, TagKey<Item> result) {
+        return ShapelessTagRecipeBuilder.shapelessTagRecipe(this.items, category, result);
+    }
+
+    protected ShapelessTagRecipeBuilder shapeless(RecipeCategory category, TagKey<Item> result, int count) {
+        return ShapelessTagRecipeBuilder.shapelessTagRecipe(this.items, category, result, count);
+    }
     
     @Override
     protected void buildRecipes() {
