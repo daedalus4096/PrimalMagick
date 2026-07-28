@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
 import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
+import com.verdantartifice.primalmagick.common.crafting.recipe_book.DissolutionBookCategory;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -13,6 +15,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
@@ -27,6 +30,8 @@ import java.util.Objects;
 public class DissolutionRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
     protected final ItemStack result;
+    protected boolean showNotification = true;
+    protected DissolutionBookCategory category = DissolutionBookCategory.MISC;
     protected Ingredient ingredient;
     protected String group;
     protected SourceList manaCosts;
@@ -60,7 +65,17 @@ public class DissolutionRecipeBuilder {
     public DissolutionRecipeBuilder ingredient(TagKey<Item> tag) {
         return this.ingredient(Ingredient.of(this.itemGetter.getOrThrow(tag)));
     }
-    
+
+    public DissolutionRecipeBuilder showNotification(boolean show) {
+        this.showNotification = show;
+        return this;
+    }
+
+    public DissolutionRecipeBuilder category(DissolutionBookCategory category) {
+        this.category = category;
+        return this;
+    }
+
     public DissolutionRecipeBuilder setGroup(String group) {
         this.group = group;
         return this;
@@ -80,6 +95,9 @@ public class DissolutionRecipeBuilder {
     }
     
     protected void validate(ResourceKey<Recipe<?>> id) {
+        if (this.category == null) {
+            throw new IllegalStateException("Null category specified for dissolution recipe " + id + "!");
+        }
         if (this.ingredient == null) {
             throw new IllegalStateException("No ingredient defined for dissolution recipe " + id + "!");
         }
@@ -104,7 +122,14 @@ public class DissolutionRecipeBuilder {
 
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
-        DissolutionRecipe recipe = new DissolutionRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        DissolutionRecipe recipe = new DissolutionRecipe(
+                new Recipe.CommonInfo(this.showNotification),
+                new IDissolutionRecipe.DissolutionCraftingBookInfo(
+                        Objects.requireNonNullElse(this.category, DissolutionBookCategory.MISC),
+                        Objects.requireNonNullElse(this.group, "")),
+                ItemStackTemplate.fromNonEmptyStack(this.result),
+                this.ingredient,
+                Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);
     }
 }
