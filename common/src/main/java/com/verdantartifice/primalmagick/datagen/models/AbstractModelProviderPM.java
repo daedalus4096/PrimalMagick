@@ -181,6 +181,11 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createHorizontalExistingBlock(BlocksPM.WAND_ASSEMBLY_TABLE.get(), blockModels);
         this.createSimpleExistingBlock(BlocksPM.WOOD_TABLE.get(), blockModels);
         this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.ANALYSIS_TABLE.get(), blockModels);
+        this.createCalcinatorBlock(BlocksPM.ESSENCE_FURNACE.get(), blockModels, TexturedModel.ORIENTABLE);
+        this.createCalcinatorBlock(BlocksPM.CALCINATOR_BASIC.get(), blockModels, TexturedModel.ORIENTABLE);
+        this.createCalcinatorBlock(BlocksPM.CALCINATOR_ENCHANTED.get(), blockModels, TexturedModel.ORIENTABLE);
+        this.createCalcinatorBlock(BlocksPM.CALCINATOR_FORBIDDEN.get(), blockModels, TexturedModel.ORIENTABLE);
+        this.createCalcinatorBlock(BlocksPM.CALCINATOR_HEAVENLY.get(), blockModels, TexturedModel.ORIENTABLE);
 
         // TODO Generate misc blocks
     }
@@ -591,5 +596,14 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 .parent(ResourceUtils.loc("block/template_mana_font"))
                 .create(block, TextureMappingsPM.manaFont(textureSource), blockModels.modelOutput);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(modelId)));
+    }
+
+    private void createCalcinatorBlock(Block block, BlockModelGenerators blockModels, TexturedModel.Provider modelProvider) {
+        MultiVariant normalVariant = BlockModelGenerators.plainVariant(modelProvider.create(block, blockModels.modelOutput));
+        Material litFrontTexture = TextureMapping.getBlockTexture(block, "_front_on");
+        MultiVariant litVariant = BlockModelGenerators.plainVariant(modelProvider.get(block).updateTextures(t -> t.put(TextureSlot.FRONT, litFrontTexture)).createWithSuffix(block, "_on", blockModels.modelOutput));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, litVariant, normalVariant))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
     }
 }
