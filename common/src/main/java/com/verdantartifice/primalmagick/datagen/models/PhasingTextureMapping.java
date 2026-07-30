@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.models;
 
+import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
@@ -75,5 +76,33 @@ public class PhasingTextureMapping {
     public static PhasingTextureMapping leaves(Block block) {
         return new PhasingTextureMapping()
                 .put(TextureSlot.ALL, phase -> TextureMapping.getBlockTexture(block, "_" + phase));
+    }
+
+    public static PhasingTextureMapping pillar(Block block, PillarBlock.Type type) {
+        return switch (type) {
+            case BASE -> pillarBase(block);
+            case TOP -> pillarTop(block);
+            case BOTTOM -> pillarBottom(block);
+        };
+    }
+
+    private static PhasingTextureMapping pillarBase(Block block) {
+        return new PhasingTextureMapping()
+                .put(TextureSlot.SIDE, phase -> TextureMapping.getBlockTexture(block, "_" + phase))
+                .put(TextureSlotsPM.INNER, phase -> TextureMapping.getBlockTexture(block, "_inner_" + phase));
+    }
+
+    private static PhasingTextureMapping pillarTop(Block block) {
+        return new PhasingTextureMapping()
+                .put(TextureSlot.SIDE, phase -> TextureMapping.getBlockTexture(block, "_top_" + phase))
+                .put(TextureSlotsPM.INNER, phase -> TextureMapping.getBlockTexture(block, "_inner_" + phase))
+                .put(TextureSlot.TOP, phase -> TextureMapping.getBlockTexture(block, "_base_" + phase));
+    }
+
+    private static PhasingTextureMapping pillarBottom(Block block) {
+        return new PhasingTextureMapping()
+                .put(TextureSlot.SIDE, phase -> TextureMapping.getBlockTexture(block, "_bottom_" + phase))
+                .put(TextureSlotsPM.INNER, phase -> TextureMapping.getBlockTexture(block, "_inner_" + phase))
+                .put(TextureSlot.BOTTOM, phase -> TextureMapping.getBlockTexture(block, "_base_" + phase));
     }
 }

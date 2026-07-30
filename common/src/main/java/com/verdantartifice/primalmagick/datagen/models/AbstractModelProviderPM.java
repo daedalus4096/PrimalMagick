@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blocks.trees.IPhasingBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.items.EquipmentAssetsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -95,23 +96,26 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.createTrivialBlock(BlocksPM.MARBLE_HALLOWED_RUNED.get(), TexturedModel.COLUMN);
         this.createCarvedBookshelf(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get(), blockModels);
 
-        // TODO Generate sunwood blocks
+        // Generate sunwood blocks
         this.phasingWoodProvider(BlocksPM.SUNWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.SUNWOOD_LOG.get()).wood(BlocksPM.SUNWOOD_WOOD.get());
         this.phasingWoodProvider(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.STRIPPED_SUNWOOD_LOG.get()).wood(BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
         this.createPhasingLeaves(BlocksPM.SUNWOOD_LEAVES.get(), blockModels);
         blockModels.createPlantWithDefaultItem(BlocksPM.SUNWOOD_SAPLING.get(), BlocksPM.POTTED_SUNWOOD_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        this.createPhasingPillarBlock(BlocksPM.SUNWOOD_PILLAR.get(), blockModels);
 
-        // TODO Generate moonwood blocks
+        // Generate moonwood blocks
         this.phasingWoodProvider(BlocksPM.MOONWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.MOONWOOD_LOG.get()).wood(BlocksPM.MOONWOOD_WOOD.get());
         this.phasingWoodProvider(BlocksPM.STRIPPED_MOONWOOD_LOG.get(), blockModels).logWithHorizontal(BlocksPM.STRIPPED_MOONWOOD_LOG.get()).wood(BlocksPM.STRIPPED_MOONWOOD_WOOD.get());
         this.createPhasingLeaves(BlocksPM.MOONWOOD_LEAVES.get(), blockModels);
         blockModels.createPlantWithDefaultItem(BlocksPM.MOONWOOD_SAPLING.get(), BlocksPM.POTTED_MOONWOOD_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        this.createPhasingPillarBlock(BlocksPM.MOONWOOD_PILLAR.get(), blockModels);
 
-        // TODO Generate hallowood blocks
+        // Generate hallowood blocks
         blockModels.woodProvider(BlocksPM.HALLOWOOD_LOG.get()).logWithHorizontal(BlocksPM.HALLOWOOD_LOG.get()).wood(BlocksPM.HALLOWOOD_WOOD.get());
         blockModels.woodProvider(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()).logWithHorizontal(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()).wood(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get());
         blockModels.createTrivialBlock(BlocksPM.HALLOWOOD_LEAVES.get(), TexturedModel.LEAVES);
         blockModels.createPlantWithDefaultItem(BlocksPM.HALLOWOOD_SAPLING.get(), BlocksPM.POTTED_HALLOWOOD_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        this.generatePillarBlock(BlocksPM.HALLOWOOD_PILLAR.get(), blockModels);
 
         // Generate crop blocks
         blockModels.createTrivialBlock(BlocksPM.HYDROMELON.get(), TexturedModel.COLUMN);
@@ -477,6 +481,27 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 blockModels.registerSimpleItemModel(block, modelId);
             }
         });
+    }
+
+    private void createPhasingPillarBlock(Block block, BlockModelGenerators blockModels) {
+        var dispatch = PropertyDispatch.initial(IPhasingBlock.PHASE, PillarBlock.PROPERTY_TYPE);
+        Arrays.stream(TimePhase.values()).forEach(phase -> {
+            Arrays.stream(PillarBlock.Type.values()).forEach(type -> {
+                PhasingTextureMapping pillarMapping = PhasingTextureMapping.pillar(block, type);
+                Identifier modelId = Services.MODEL_TEMPLATES.extend(this.getPillarModelTemplate(type))
+                        .createWithSuffix(block, "_" + phase, pillarMapping.resolve(phase), blockModels.modelOutput);
+                dispatch.select(phase, type, BlockModelGenerators.plainVariant(modelId));
+            });
+        });
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(dispatch));
+    }
+
+    private ModelTemplate getPillarModelTemplate(PillarBlock.Type type) {
+        return switch (type) {
+            case BASE -> ModelTemplatesPM.PILLAR;
+            case TOP -> ModelTemplatesPM.PILLAR_TOP;
+            case BOTTOM -> ModelTemplatesPM.PILLAR_BOTTOM;
+        };
     }
 
     public void createEmberflower(BlockModelGenerators blockModels) {

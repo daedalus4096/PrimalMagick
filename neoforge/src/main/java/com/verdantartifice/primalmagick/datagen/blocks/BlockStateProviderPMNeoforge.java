@@ -87,24 +87,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
     protected void registerStatesAndModels() {
         // TODO Can this be extracted into a common super layer?
 
-        // Generate sunwood blocks
-        this.phasingCubeBlockWithItem(BlocksPM.SUNWOOD_PLANKS.get());
-        this.phasingSlabBlockWithItem(BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.SUNWOOD_PLANKS.get());
-        this.phasingStairsBlockWithItem(BlocksPM.SUNWOOD_STAIRS.get(), this.blockTexture(BlocksPM.SUNWOOD_PLANKS.get()));
-        this.phasingPillarBlockWithItem(BlocksPM.SUNWOOD_PILLAR.get());
-        
-        // Generate moonwood blocks
-        this.phasingCubeBlockWithItem(BlocksPM.MOONWOOD_PLANKS.get());
-        this.phasingSlabBlockWithItem(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.MOONWOOD_PLANKS.get());
-        this.phasingStairsBlockWithItem(BlocksPM.MOONWOOD_STAIRS.get(), this.blockTexture(BlocksPM.MOONWOOD_PLANKS.get()));
-        this.phasingPillarBlockWithItem(BlocksPM.MOONWOOD_PILLAR.get());
-        
-        // Generate hallowood blocks
-        this.simpleCubeBlockWithItem(BlocksPM.HALLOWOOD_PLANKS.get());
-        this.slabBlockWithItem(BlocksPM.HALLOWOOD_SLAB.get(), BlocksPM.HALLOWOOD_PLANKS.get());
-        this.stairsBlockWithItem(BlocksPM.HALLOWOOD_STAIRS.get(), this.blockTexture(BlocksPM.HALLOWOOD_PLANKS.get()));
-        this.pillarBlockWithItem(BlocksPM.HALLOWOOD_PILLAR.get());
-        
         // Generate budding gem blocks
         this.directionalCrossBlockWithItem(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get());
         this.directionalCrossBlockWithItem(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD.get());
