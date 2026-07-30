@@ -91,7 +91,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Generate skyglass pane blocks
         
         // Generate device blocks
-        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.ANALYSIS_TABLE.get());
         this.calcinatorBlockWithItem(BlocksPM.ESSENCE_FURNACE.get(), state -> this.models()
                 .getExistingFile(ResourceUtils.loc("block/essence_furnace").withSuffix(state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : "")));
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_BASIC.get());
