@@ -105,20 +105,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         this.stairsBlockWithItem(BlocksPM.HALLOWOOD_STAIRS.get(), this.blockTexture(BlocksPM.HALLOWOOD_PLANKS.get()));
         this.pillarBlockWithItem(BlocksPM.HALLOWOOD_PILLAR.get());
         
-        // Generate crop blocks
-        this.cubeColumnBlockWithItem(BlocksPM.HYDROMELON.get());
-        this.stemBlock(BlocksPM.HYDROMELON_STEM.get());
-        this.attachedStemBlock(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), this.blockTexture(BlocksPM.HYDROMELON_STEM.get()));
-        this.tallCrossBlockWithItem(BlocksPM.BLOOD_ROSE.get());
-        this.tallExistingBlockWithItem(BlocksPM.EMBERFLOWER.get(), this.blockTexture(BlocksPM.EMBERFLOWER.get()).withSuffix("_front"));
-        
-        // Generate infused stone blocks
-        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_EARTH.get());
-        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_SEA.get());
-        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_SKY.get());
-        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_SUN.get());
-        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_MOON.get());
-        
         // Generate budding gem blocks
         this.directionalCrossBlockWithItem(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get());
         this.directionalCrossBlockWithItem(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD.get());

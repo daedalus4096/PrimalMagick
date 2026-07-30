@@ -113,7 +113,11 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.createTrivialBlock(BlocksPM.HALLOWOOD_LEAVES.get(), TexturedModel.LEAVES);
         blockModels.createPlantWithDefaultItem(BlocksPM.HALLOWOOD_SAPLING.get(), BlocksPM.POTTED_HALLOWOOD_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
-        // TODO Generate crop blocks
+        // Generate crop blocks
+        blockModels.createTrivialBlock(BlocksPM.HYDROMELON.get(), TexturedModel.COLUMN);
+        blockModels.createStems(BlocksPM.HYDROMELON_STEM.get(), BlocksPM.ATTACHED_HYDROMELON_STEM.get());
+        blockModels.createDoublePlantWithDefaultItem(BlocksPM.BLOOD_ROSE.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        this.createEmberflower(blockModels);
 
         // Generate infused stone blocks
         blockModels.createTrivialCube(BlocksPM.INFUSED_STONE_EARTH.get());
@@ -473,5 +477,14 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 blockModels.registerSimpleItemModel(block, modelId);
             }
         });
+    }
+
+    public void createEmberflower(BlockModelGenerators blockModels) {
+        blockModels.registerSimpleFlatItemModel(BlocksPM.EMBERFLOWER.get(), "_front");
+        MultiVariant topModel = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(BlocksPM.EMBERFLOWER.get(), "_top"));
+        MultiVariant bottomModel = BlockModelGenerators.plainVariant(
+                blockModels.createSuffixedVariant(BlocksPM.EMBERFLOWER.get(), "_bottom", BlockModelGenerators.PlantType.NOT_TINTED.getCross(), TextureMapping::cross)
+        );
+        blockModels.createDoubleBlock(BlocksPM.EMBERFLOWER.get(), topModel, bottomModel);
     }
 }
