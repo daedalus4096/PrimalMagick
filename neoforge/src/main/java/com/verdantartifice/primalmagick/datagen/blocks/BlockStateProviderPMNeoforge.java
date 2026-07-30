@@ -100,7 +100,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_HALLOWED.get())));
         
         // Generate device blocks
-        this.simpleExistingBlockWithItem(BlocksPM.ARCANE_WORKBENCH.get());
         this.horizontalExistingBlockWithItem(BlocksPM.WAND_ASSEMBLY_TABLE.get());
         this.simpleExistingBlockWithItem(BlocksPM.WOOD_TABLE.get());
         this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.ANALYSIS_TABLE.get());

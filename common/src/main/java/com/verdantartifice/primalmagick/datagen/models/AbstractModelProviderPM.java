@@ -166,7 +166,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // TODO Generate mana font blocks
 
         // TODO Generate device blocks
-        this.generateExistingBlock(BlocksPM.ARCANE_WORKBENCH.get(), blockModels);
+        this.createSimpleExistingBlock(BlocksPM.ARCANE_WORKBENCH.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -452,7 +452,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 
-    private void generateExistingBlock(Block block, BlockModelGenerators blockModels) {
+    private void createSimpleExistingBlock(Block block, BlockModelGenerators blockModels) {
         Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
         MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
