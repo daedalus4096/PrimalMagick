@@ -114,7 +114,14 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.createPlantWithDefaultItem(BlocksPM.HALLOWOOD_SAPLING.get(), BlocksPM.POTTED_HALLOWOOD_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
         // TODO Generate crop blocks
-        // TODO Generate infused stone blocks
+
+        // Generate infused stone blocks
+        blockModels.createTrivialCube(BlocksPM.INFUSED_STONE_EARTH.get());
+        blockModels.createTrivialCube(BlocksPM.INFUSED_STONE_SEA.get());
+        blockModels.createTrivialCube(BlocksPM.INFUSED_STONE_SKY.get());
+        blockModels.createTrivialCube(BlocksPM.INFUSED_STONE_SUN.get());
+        blockModels.createTrivialCube(BlocksPM.INFUSED_STONE_MOON.get());
+
         // TODO Generate budding gem blocks
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
