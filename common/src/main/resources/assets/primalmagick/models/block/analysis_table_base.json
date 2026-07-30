@@ -3,9 +3,9 @@
 	"parent": "block/block",
 	"textures": {
 		"0": "primalmagick:block/wood_table_top",
-		"1": "primalmagick:block/analysis_side",
+		"1": "primalmagick:block/analysis_table_side",
 		"2": "primalmagick:block/wood_table_bottom",
-		"3": "primalmagick:block/analysis_misc",
+		"3": "primalmagick:block/analysis_table_misc",
 		"particle": "primalmagick:block/wood_table_top"
 	},
 	"elements": [

@@ -5,6 +5,10 @@ import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.world.level.block.Block;
 
 public class TextureMappingsPM {
+    public static TextureMapping empty(Block block) {
+        return new TextureMapping();
+    }
+
     public static TextureMapping manaFont(Block block) {
         return new TextureMapping()
                 .put(TextureSlotsPM.BASE, TextureMapping.getBlockTexture(block));

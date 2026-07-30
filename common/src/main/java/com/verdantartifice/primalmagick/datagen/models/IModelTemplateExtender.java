@@ -4,14 +4,17 @@ import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface IModelTemplateExtender {
     IModelTemplateExtender parent(@NotNull Identifier parentId);
+    IModelTemplateExtender transform(@NotNull ItemDisplayContext type, @NotNull Consumer<ITransformVecBuilderPM> action);
 
     Identifier create(@NotNull Block pBlock, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput);
     Identifier createWithSuffix(@NotNull Block pBlock, @NotNull String pSuffix, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput);

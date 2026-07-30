@@ -54,6 +54,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -179,6 +180,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createSimpleExistingBlock(BlocksPM.ARCANE_WORKBENCH.get(), blockModels);
         this.createHorizontalExistingBlock(BlocksPM.WAND_ASSEMBLY_TABLE.get(), blockModels);
         this.createSimpleExistingBlock(BlocksPM.WOOD_TABLE.get(), blockModels);
+        this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.ANALYSIS_TABLE.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -476,6 +478,17 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     private void createHorizontalExistingBlock(Block block, BlockModelGenerators blockModels) {
         Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+    }
+
+    private void createHorizontalExistingBlockWithRightHandAdjustments(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.EMPTY)
+                .parent(ModelLocationUtils.getModelLocation(block, "_base"))
+                // FIXME Should these transforms use rightRotation instead of leftRotation?
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, transform -> transform.translation(0, 2.5F, 0).leftRotation(75, 135, 0).scale(0.375F))
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, transform -> transform.translation(0, 0, 0).leftRotation(0, 135, 0).scale(0.4F))
+                .create(block, TextureMappingsPM::empty, blockModels.modelOutput);
         MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
     }
