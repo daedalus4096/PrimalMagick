@@ -90,12 +90,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
         
-        // Generate mana font blocks
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE.get())));
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.ENCHANTED).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get())));
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.FORBIDDEN).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_SMOKED.get())));
-        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_HALLOWED.get())));
-        
         // Generate device blocks
         this.horizontalExistingBlockWithItem(BlocksPM.WAND_ASSEMBLY_TABLE.get());
         this.simpleExistingBlockWithItem(BlocksPM.WOOD_TABLE.get());
