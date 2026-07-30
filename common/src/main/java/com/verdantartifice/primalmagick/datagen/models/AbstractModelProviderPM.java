@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.IPhasingBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.items.EquipmentAssetsPM;
@@ -162,7 +163,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
-        // TODO Generate ritual candle blocks
+
+        // Generate ritual candle blocks
+        RitualCandleBlock.getAllCandles().forEach(block -> this.createSimpleExistingBlock(block, blockModels, ResourceUtils.loc("block/ritual_candle")));
+
         // TODO Generate mana font blocks
 
         // TODO Generate device blocks
@@ -452,10 +456,14 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 
-    private void createSimpleExistingBlock(Block block, BlockModelGenerators blockModels) {
-        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+    private void createSimpleExistingBlock(Block block, BlockModelGenerators blockModels, Identifier modelLoc) {
         MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
+    }
+
+    private void createSimpleExistingBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        this.createSimpleExistingBlock(block, blockModels, modelLoc);
     }
 
     private void generatePillarBlock(Block block, BlockModelGenerators blockModels) {

@@ -90,9 +90,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
         
-        // Generate ritual candle blocks
-        RitualCandleBlock.getAllCandles().forEach(this::ritualCandleBlockWithItem);
-        
         // Generate mana font blocks
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE.get())));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.ENCHANTED).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get())));
