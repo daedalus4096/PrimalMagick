@@ -130,7 +130,36 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.createTrivialCube(BlocksPM.INFUSED_STONE_SUN.get());
         blockModels.createTrivialCube(BlocksPM.INFUSED_STONE_MOON.get());
 
-        // TODO Generate budding gem blocks
+        // Generate budding gem blocks
+        blockModels.createAmethystCluster(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get());
+        blockModels.createAmethystCluster(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD.get());
+        blockModels.createAmethystCluster(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD.get());
+        blockModels.createAmethystCluster(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD.get());
+        blockModels.createTrivialCube(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get());
+        blockModels.createAmethystCluster(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER.get());
+        blockModels.createAmethystCluster(BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD.get());
+        blockModels.createAmethystCluster(BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD.get());
+        blockModels.createAmethystCluster(BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD.get());
+        blockModels.createTrivialCube(BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get());
+        blockModels.createAmethystCluster(BlocksPM.SYNTHETIC_EMERALD_CLUSTER.get());
+        blockModels.createAmethystCluster(BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD.get());
+        blockModels.createAmethystCluster(BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD.get());
+        blockModels.createAmethystCluster(BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD.get());
+        blockModels.createTrivialCube(BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get());
+        blockModels.createAmethystCluster(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER.get());
+        blockModels.createAmethystCluster(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD.get());
+        blockModels.createAmethystCluster(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD.get());
+        blockModels.createAmethystCluster(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD.get());
+        blockModels.createTrivialCube(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
+
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
         // TODO Generate ritual candle blocks
