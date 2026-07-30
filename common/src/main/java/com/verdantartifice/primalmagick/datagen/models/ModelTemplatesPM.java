@@ -9,6 +9,8 @@ import java.util.Optional;
 public class ModelTemplatesPM {
     public static final ModelTemplate MANA_ORB = createItem("template_mana_orb", TextureSlot.PARTICLE);
     public static final ModelTemplate SPELLTOME = createItem("template_spelltome", TextureSlot.PARTICLE);
+
+    public static final ModelTemplate MANA_FONT = createBlock("mana_font", TextureSlotsPM.BASE);
     public static final ModelTemplate PILLAR = createBlock("pillar", TextureSlotsPM.INNER, TextureSlot.SIDE);
     public static final ModelTemplate PILLAR_BOTTOM = createBlock("pillar_bottom", TextureSlot.BOTTOM, TextureSlotsPM.INNER, TextureSlot.SIDE);
     public static final ModelTemplate PILLAR_TOP = createBlock("pillar_top", TextureSlotsPM.INNER, TextureSlot.SIDE, TextureSlot.TOP);

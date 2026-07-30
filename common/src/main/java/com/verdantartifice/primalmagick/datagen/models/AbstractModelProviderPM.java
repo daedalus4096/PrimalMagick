@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.IPhasingBlock;
@@ -23,6 +24,7 @@ import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.color.item.Constant;
@@ -167,7 +169,11 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // Generate ritual candle blocks
         RitualCandleBlock.getAllCandles().forEach(block -> this.createSimpleExistingBlock(block, blockModels, ResourceUtils.loc("block/ritual_candle")));
 
-        // TODO Generate mana font blocks
+        // Generate mana font blocks
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.createManaFontBlock(block, blockModels, BlocksPM.MARBLE.get()));
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.ENCHANTED).forEach(block -> this.createManaFontBlock(block, blockModels, BlocksPM.MARBLE_ENCHANTED.get()));
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.FORBIDDEN).forEach(block -> this.createManaFontBlock(block, blockModels, BlocksPM.MARBLE_SMOKED.get()));
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.createManaFontBlock(block, blockModels, BlocksPM.MARBLE_HALLOWED.get()));
 
         // TODO Generate device blocks
         this.createSimpleExistingBlock(BlocksPM.ARCANE_WORKBENCH.get(), blockModels);
@@ -550,12 +556,19 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         };
     }
 
-    public void createEmberflower(BlockModelGenerators blockModels) {
+    private void createEmberflower(BlockModelGenerators blockModels) {
         blockModels.registerSimpleFlatItemModel(BlocksPM.EMBERFLOWER.get(), "_front");
         MultiVariant topModel = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(BlocksPM.EMBERFLOWER.get(), "_top"));
         MultiVariant bottomModel = BlockModelGenerators.plainVariant(
                 blockModels.createSuffixedVariant(BlocksPM.EMBERFLOWER.get(), "_bottom", BlockModelGenerators.PlantType.NOT_TINTED.getCross(), TextureMapping::cross)
         );
         blockModels.createDoubleBlock(BlocksPM.EMBERFLOWER.get(), topModel, bottomModel);
+    }
+
+    private void createManaFontBlock(Block block, BlockModelGenerators blockModels, Block textureSource) {
+        Identifier modelId = Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.MANA_FONT)
+                .parent(ResourceUtils.loc("block/template_mana_font"))
+                .create(block, TextureMappingsPM.manaFont(textureSource), blockModels.modelOutput);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(modelId)));
     }
 }
