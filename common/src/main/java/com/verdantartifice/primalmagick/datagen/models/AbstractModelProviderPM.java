@@ -177,6 +177,8 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
         // TODO Generate device blocks
         this.createSimpleExistingBlock(BlocksPM.ARCANE_WORKBENCH.get(), blockModels);
+        this.createHorizontalExistingBlock(BlocksPM.WAND_ASSEMBLY_TABLE.get(), blockModels);
+        this.createSimpleExistingBlock(BlocksPM.WOOD_TABLE.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -470,6 +472,12 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     private void createSimpleExistingBlock(Block block, BlockModelGenerators blockModels) {
         Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
         this.createSimpleExistingBlock(block, blockModels, modelLoc);
+    }
+
+    private void createHorizontalExistingBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
     }
 
     private void generatePillarBlock(Block block, BlockModelGenerators blockModels) {
