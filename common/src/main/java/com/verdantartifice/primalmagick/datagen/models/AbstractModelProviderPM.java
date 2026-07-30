@@ -164,7 +164,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // TODO Generate skyglass pane blocks
         // TODO Generate ritual candle blocks
         // TODO Generate mana font blocks
+
         // TODO Generate device blocks
+        this.generateExistingBlock(BlocksPM.ARCANE_WORKBENCH.get(), blockModels);
+
         // TODO Generate misc blocks
     }
 
@@ -447,6 +450,12 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     private void generateSpelltomeItem(ItemModelGenerators itemModels, Item item, Item particleItem) {
         Identifier modelLoc = ModelTemplatesPM.SPELLTOME.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
+    }
+
+    private void generateExistingBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
     }
 
     private void generatePillarBlock(Block block, BlockModelGenerators blockModels) {
