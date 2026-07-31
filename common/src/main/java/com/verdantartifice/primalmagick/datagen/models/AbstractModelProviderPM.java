@@ -186,6 +186,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createCalcinatorBlock(BlocksPM.CALCINATOR_ENCHANTED.get(), blockModels, TexturedModel.ORIENTABLE);
         this.createCalcinatorBlock(BlocksPM.CALCINATOR_FORBIDDEN.get(), blockModels, TexturedModel.ORIENTABLE);
         this.createCalcinatorBlock(BlocksPM.CALCINATOR_HEAVENLY.get(), blockModels, TexturedModel.ORIENTABLE);
+        this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.WAND_INSCRIPTION_TABLE.get(), blockModels);
+        this.createSpellcraftingAltarBlock(BlocksPM.SPELLCRAFTING_ALTAR.get(), blockModels);
+        this.createSimpleExistingBlock(BlocksPM.WAND_CHARGER.get(), blockModels);
+        this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.RESEARCH_TABLE.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -605,5 +609,20 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                 .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, litVariant, normalVariant))
                 .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+    }
+
+    private void createSpellcraftingAltarBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.EMPTY)
+                .parent(ModelLocationUtils.getModelLocation(block, "_base"))    // FIXME Needs a builtin/entity parent in here somewhere?
+                .transform(ItemDisplayContext.GUI, transform -> transform.leftRotation(30, 225, 0).translation(0, 0, 0).scale(0.625F))
+                .transform(ItemDisplayContext.GROUND, transform -> transform.leftRotation(0, 0, 0).translation(0, 3F, 0).scale(0.25F))
+                .transform(ItemDisplayContext.FIXED, transform -> transform.leftRotation(0, 0, 0).translation(0, 0, 0).scale(0.5F))
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, transform -> transform.leftRotation(0, 225, 0).translation(0, 0, 0).scale(0.40F))
+                // FIXME Should these transforms use rightRotation instead of leftRotation?
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, transform -> transform.leftRotation(0, 45, 0).translation(0, 0, 0).scale(0.40F))
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, transform -> transform.leftRotation(75, 45, 0).translation(0, 2.5F, 0).scale(0.375F))
+                .create(block, TextureMappingsPM::empty, blockModels.modelOutput);
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
     }
 }
