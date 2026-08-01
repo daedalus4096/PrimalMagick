@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
+import com.verdantartifice.primalmagick.common.blocks.rituals.SoulAnvilBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.IPhasingBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.items.EquipmentAssetsPM;
@@ -201,6 +202,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createLitBlock(BlocksPM.INCENSE_BRAZIER.get(), blockModels);
         this.createBellBlock(BlocksPM.RITUAL_BELL.get(), blockModels);
         this.createFilledBlock(BlocksPM.BLOODLETTER.get(), blockModels);
+        this.createSoulAnvilBlock(BlocksPM.SOUL_ANVIL.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -698,6 +700,24 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         MultiVariant fullVariant = BlockModelGenerators.plainVariant(modelLoc.withSuffix("_full"));
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                 .with(BlockModelGenerators.createBooleanModelDispatch(BloodletterBlock.FILLED, fullVariant, emptyVariant))
+        );
+    }
+
+    private void createSoulAnvilBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        MultiVariant cleanVariant = BlockModelGenerators.plainVariant(modelLoc);
+        MultiVariant dirtyVariant = BlockModelGenerators.plainVariant(modelLoc.withSuffix("_dirty"));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(BlockStateProperties.HORIZONTAL_FACING, SoulAnvilBlock.DIRTY)
+                        .select(Direction.SOUTH, false, cleanVariant)
+                        .select(Direction.WEST, false, cleanVariant.with(BlockModelGenerators.Y_ROT_90))
+                        .select(Direction.NORTH, false, cleanVariant.with(BlockModelGenerators.Y_ROT_180))
+                        .select(Direction.EAST, false, cleanVariant.with(BlockModelGenerators.Y_ROT_270))
+                        .select(Direction.SOUTH, true, dirtyVariant)
+                        .select(Direction.WEST, true, dirtyVariant.with(BlockModelGenerators.Y_ROT_90))
+                        .select(Direction.NORTH, true, dirtyVariant.with(BlockModelGenerators.Y_ROT_180))
+                        .select(Direction.EAST, true, dirtyVariant.with(BlockModelGenerators.Y_ROT_270))
+                )
         );
     }
 }
