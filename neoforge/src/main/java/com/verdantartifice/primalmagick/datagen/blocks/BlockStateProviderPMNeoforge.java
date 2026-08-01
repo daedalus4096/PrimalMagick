@@ -91,12 +91,7 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Generate skyglass pane blocks
         
         // Generate device blocks
-        this.sunlampBlockWithItem(BlocksPM.SUNLAMP.get());
-        this.sunlampBlockWithItem(BlocksPM.SPIRIT_LANTERN.get());
-        this.simpleExistingBlockWithItem(BlocksPM.RITUAL_ALTAR.get());
-        this.simpleExistingBlockWithItem(BlocksPM.OFFERING_PEDESTAL.get());
         this.incenseBrazierBlockWithItem();
-        this.horizontalExistingBlockWithItem(BlocksPM.RITUAL_LECTERN.get());
         this.ritualBellBlockWithItem();
         this.bloodletterBlockWithItem();
         this.horizontalBlockWithItem(BlocksPM.SOUL_ANVIL.get(), state -> this.models()

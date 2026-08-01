@@ -193,6 +193,9 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.RESEARCH_TABLE.get(), blockModels);
         this.createLanternBlock(BlocksPM.SUNLAMP.get(), blockModels);
         this.createLanternBlock(BlocksPM.SPIRIT_LANTERN.get(), blockModels);
+        this.createSimpleExistingBlock(BlocksPM.RITUAL_ALTAR.get(), blockModels);
+        this.createSimpleExistingBlock(BlocksPM.OFFERING_PEDESTAL.get(), blockModels);
+        this.createHorizontalExistingBlock(BlocksPM.RITUAL_LECTERN.get(), blockModels);
 
         // TODO Generate misc blocks
     }
