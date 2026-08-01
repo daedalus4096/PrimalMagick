@@ -66,6 +66,11 @@ public class PhasingTextureMapping {
         return newMapping;
     }
 
+    public static PhasingTextureMapping cube(Block block) {
+        return new PhasingTextureMapping()
+                .put(TextureSlot.ALL, phase -> TextureMapping.getBlockTexture(block, "_" + phase));
+    }
+
     public static PhasingTextureMapping logColumn(Block block) {
         return new PhasingTextureMapping()
                 .put(TextureSlot.SIDE, phase -> TextureMapping.getBlockTexture(block, "_" + phase))
