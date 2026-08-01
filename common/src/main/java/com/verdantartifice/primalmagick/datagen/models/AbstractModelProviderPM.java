@@ -61,6 +61,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BellAttachType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -203,6 +204,12 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createBellBlock(BlocksPM.RITUAL_BELL.get(), blockModels);
         this.createFilledBlock(BlocksPM.BLOODLETTER.get(), blockModels);
         this.createSoulAnvilBlock(BlocksPM.SOUL_ANVIL.get(), blockModels);
+        this.createRunescribingAltarBlock(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), blockModels, BlocksPM.MARBLE.get());
+        this.createRunescribingAltarBlock(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), blockModels, BlocksPM.MARBLE_ENCHANTED.get());
+        this.createRunescribingAltarBlock(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), blockModels, BlocksPM.MARBLE_SMOKED.get());
+        this.createRunescribingAltarBlock(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), blockModels, BlocksPM.MARBLE_HALLOWED.get());
+        this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.RUNECARVING_TABLE.get(), blockModels);
+        this.createGrindstoneBlock(BlocksPM.RUNIC_GRINDSTONE.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -719,5 +726,35 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                         .select(Direction.EAST, true, dirtyVariant.with(BlockModelGenerators.Y_ROT_270))
                 )
         );
+    }
+
+    private void createRunescribingAltarBlock(Block block, BlockModelGenerators blockModels, Block textureSource) {
+        Identifier modelLoc = Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.RUNESCRIBING_ALTAR)
+                .parent(ResourceUtils.loc("block/runescribing_altar"))
+                .create(block, TextureMappingsPM.runescribingAltar(textureSource), blockModels.modelOutput);
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
+    }
+
+    private void createGrindstoneBlock(Block block, BlockModelGenerators blockModels) {
+        blockModels.blockStateOutput
+                .accept(
+                        MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block)))
+                                .with(
+                                        PropertyDispatch.modify(BlockStateProperties.ATTACH_FACE, BlockStateProperties.HORIZONTAL_FACING)
+                                                .select(AttachFace.FLOOR, Direction.NORTH, BlockModelGenerators.NOP)
+                                                .select(AttachFace.FLOOR, Direction.EAST, BlockModelGenerators.Y_ROT_90)
+                                                .select(AttachFace.FLOOR, Direction.SOUTH, BlockModelGenerators.Y_ROT_180)
+                                                .select(AttachFace.FLOOR, Direction.WEST, BlockModelGenerators.Y_ROT_270)
+                                                .select(AttachFace.WALL, Direction.NORTH, BlockModelGenerators.X_ROT_90)
+                                                .select(AttachFace.WALL, Direction.EAST, BlockModelGenerators.X_ROT_90.then(BlockModelGenerators.Y_ROT_90))
+                                                .select(AttachFace.WALL, Direction.SOUTH, BlockModelGenerators.X_ROT_90.then(BlockModelGenerators.Y_ROT_180))
+                                                .select(AttachFace.WALL, Direction.WEST, BlockModelGenerators.X_ROT_90.then(BlockModelGenerators.Y_ROT_270))
+                                                .select(AttachFace.CEILING, Direction.SOUTH, BlockModelGenerators.X_ROT_180)
+                                                .select(AttachFace.CEILING, Direction.WEST, BlockModelGenerators.X_ROT_180.then(BlockModelGenerators.Y_ROT_90))
+                                                .select(AttachFace.CEILING, Direction.NORTH, BlockModelGenerators.X_ROT_180.then(BlockModelGenerators.Y_ROT_180))
+                                                .select(AttachFace.CEILING, Direction.EAST, BlockModelGenerators.X_ROT_180.then(BlockModelGenerators.Y_ROT_270))
+                                )
+                );
     }
 }

@@ -91,12 +91,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Generate skyglass pane blocks
         
         // Generate device blocks
-        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), this.blockTexture(BlocksPM.MARBLE.get()));
-        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
-        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
-        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
-        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.RUNECARVING_TABLE.get());
-        this.horizontalFaceExistingBlockWithItem(BlocksPM.RUNIC_GRINDSTONE.get());
         this.horizontalExistingBlockWithItem(BlocksPM.HONEY_EXTRACTOR.get());
         this.golemControllerBlockWithItem(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.PRIMALITE_BLOCK.get()));
         this.golemControllerBlockWithItem(BlocksPM.HEXIUM_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.HEXIUM_BLOCK.get()));

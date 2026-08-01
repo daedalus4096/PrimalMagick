@@ -33,4 +33,10 @@ public class TextureMappingsPM {
                 .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(block, "_top"))
                 .put(TextureSlot.TOP, TextureMapping.getBlockTexture(block, "_base"));
     }
+
+    public static TextureMapping runescribingAltar(Block block) {
+        return new TextureMapping()
+                .put(TextureSlotsPM.ALTAR_BOTTOM, TextureMapping.getBlockTexture(block))
+                .put(TextureSlotsPM.ALTAR_SIDE, TextureMapping.getBlockTexture(block, "_side"));
+    }
 }
