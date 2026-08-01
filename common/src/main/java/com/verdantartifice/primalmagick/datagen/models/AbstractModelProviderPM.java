@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.IPhasingBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
@@ -59,6 +60,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BellAttachType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -196,6 +198,9 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createSimpleExistingBlock(BlocksPM.RITUAL_ALTAR.get(), blockModels);
         this.createSimpleExistingBlock(BlocksPM.OFFERING_PEDESTAL.get(), blockModels);
         this.createHorizontalExistingBlock(BlocksPM.RITUAL_LECTERN.get(), blockModels);
+        this.createLitBlock(BlocksPM.INCENSE_BRAZIER.get(), blockModels);
+        this.createBellBlock(BlocksPM.RITUAL_BELL.get(), blockModels);
+        this.createFilledBlock(BlocksPM.BLOODLETTER.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -644,6 +649,55 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 .with(BlockModelGenerators.condition(prop, Direction.EAST), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_hanging_arm")).with(BlockModelGenerators.Y_ROT_90))
                 .with(BlockModelGenerators.condition(prop, Direction.SOUTH), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_hanging_arm")).with(BlockModelGenerators.Y_ROT_180))
                 .with(BlockModelGenerators.condition(prop, Direction.WEST), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_hanging_arm")).with(BlockModelGenerators.Y_ROT_270))
+        );
+    }
+
+    private void createLitBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        MultiVariant normalVariant = BlockModelGenerators.plainVariant(modelLoc);
+        MultiVariant litVariant = BlockModelGenerators.plainVariant(modelLoc.withSuffix("_lit"));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, litVariant, normalVariant))
+        );
+    }
+
+    private void createBellBlock(Block block, BlockModelGenerators blockModels) {
+        MultiVariant floor = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_floor"));
+        MultiVariant ceiling = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_ceiling"));
+        MultiVariant wall = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_wall"));
+        MultiVariant betweenWalls = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_between_walls"));
+        blockModels.registerSimpleFlatItemModel(ItemsPM.RITUAL_BELL.get());
+        blockModels.blockStateOutput
+                .accept(
+                        MultiVariantGenerator.dispatch(block)
+                                .with(
+                                        PropertyDispatch.initial(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.BELL_ATTACHMENT)
+                                                .select(Direction.NORTH, BellAttachType.FLOOR, floor)
+                                                .select(Direction.SOUTH, BellAttachType.FLOOR, floor.with(BlockModelGenerators.Y_ROT_180))
+                                                .select(Direction.EAST, BellAttachType.FLOOR, floor.with(BlockModelGenerators.Y_ROT_90))
+                                                .select(Direction.WEST, BellAttachType.FLOOR, floor.with(BlockModelGenerators.Y_ROT_270))
+                                                .select(Direction.NORTH, BellAttachType.CEILING, ceiling)
+                                                .select(Direction.SOUTH, BellAttachType.CEILING, ceiling.with(BlockModelGenerators.Y_ROT_180))
+                                                .select(Direction.EAST, BellAttachType.CEILING, ceiling.with(BlockModelGenerators.Y_ROT_90))
+                                                .select(Direction.WEST, BellAttachType.CEILING, ceiling.with(BlockModelGenerators.Y_ROT_270))
+                                                .select(Direction.NORTH, BellAttachType.SINGLE_WALL, wall.with(BlockModelGenerators.Y_ROT_270))
+                                                .select(Direction.SOUTH, BellAttachType.SINGLE_WALL, wall.with(BlockModelGenerators.Y_ROT_90))
+                                                .select(Direction.EAST, BellAttachType.SINGLE_WALL, wall)
+                                                .select(Direction.WEST, BellAttachType.SINGLE_WALL, wall.with(BlockModelGenerators.Y_ROT_180))
+                                                .select(Direction.SOUTH, BellAttachType.DOUBLE_WALL, betweenWalls.with(BlockModelGenerators.Y_ROT_90))
+                                                .select(Direction.NORTH, BellAttachType.DOUBLE_WALL, betweenWalls.with(BlockModelGenerators.Y_ROT_270))
+                                                .select(Direction.EAST, BellAttachType.DOUBLE_WALL, betweenWalls)
+                                                .select(Direction.WEST, BellAttachType.DOUBLE_WALL, betweenWalls.with(BlockModelGenerators.Y_ROT_180))
+                                )
+                );
+    }
+
+    private void createFilledBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        MultiVariant emptyVariant = BlockModelGenerators.plainVariant(modelLoc);
+        MultiVariant fullVariant = BlockModelGenerators.plainVariant(modelLoc.withSuffix("_full"));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(BlockModelGenerators.createBooleanModelDispatch(BloodletterBlock.FILLED, fullVariant, emptyVariant))
         );
     }
 }
