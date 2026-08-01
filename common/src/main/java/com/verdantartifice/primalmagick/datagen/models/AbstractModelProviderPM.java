@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
@@ -60,6 +61,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -189,6 +191,8 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createSpellcraftingAltarBlock(BlocksPM.SPELLCRAFTING_ALTAR.get(), blockModels);
         this.createSimpleExistingBlock(BlocksPM.WAND_CHARGER.get(), blockModels);
         this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.RESEARCH_TABLE.get(), blockModels);
+        this.createLanternBlock(BlocksPM.SUNLAMP.get(), blockModels);
+        this.createLanternBlock(BlocksPM.SPIRIT_LANTERN.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -623,5 +627,20 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 .create(block, TextureMappingsPM::empty, blockModels.modelOutput);
         MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+    }
+
+    private void createLanternBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        EnumProperty<Direction> prop = SunlampBlock.ATTACHMENT;
+        blockModels.blockStateOutput.accept(MultiPartGenerator.multiPart(block)
+                .with(BlockModelGenerators.condition(prop, Direction.DOWN), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_ground_base")))
+                .with(BlockModelGenerators.condition(prop, Direction.DOWN), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_ground_chain_stub")))
+                .with(BlockModelGenerators.condition().negatedTerm(prop, Direction.DOWN), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_hanging_base")))
+                .with(BlockModelGenerators.condition(prop, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_hanging_chain_stub")))
+                .with(BlockModelGenerators.condition(prop, Direction.NORTH), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_hanging_arm")))
+                .with(BlockModelGenerators.condition(prop, Direction.EAST), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_hanging_arm")).with(BlockModelGenerators.Y_ROT_90))
+                .with(BlockModelGenerators.condition(prop, Direction.SOUTH), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_hanging_arm")).with(BlockModelGenerators.Y_ROT_180))
+                .with(BlockModelGenerators.condition(prop, Direction.WEST), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_hanging_arm")).with(BlockModelGenerators.Y_ROT_270))
+        );
     }
 }
