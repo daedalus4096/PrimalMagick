@@ -91,17 +91,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Generate skyglass pane blocks
         
         // Generate device blocks
-        this.directionalExistingBlockWithItem(BlocksPM.ZEPHYR_ENGINE.get());
-        this.directionalExistingBlockWithItem(BlocksPM.VOID_TURBINE.get());
-        this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_ENCHANTED.get());
-        this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_FORBIDDEN.get());
-        this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_HEAVENLY.get());
-        this.horizontalExistingBlockWithItem(BlocksPM.WAND_GLAMOUR_TABLE.get());
-        this.infernalFurnaceBlockWithItem();
-        this.simpleExistingBlockWithItem(BlocksPM.MANA_NEXUS.get());
-        this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY.get());
-        this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get());
-        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.SCRIBE_TABLE.get());
         this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_BASIC.get());
         this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_ENCHANTED.get());
         this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_FORBIDDEN.get());

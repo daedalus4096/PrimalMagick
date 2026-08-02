@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
+import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
@@ -222,6 +223,17 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createSimpleExistingBlock(BlocksPM.AUTO_CHARGER.get(), blockModels);
         this.createHorizontalExistingBlock(BlocksPM.ESSENCE_TRANSMUTER.get(), blockModels);
         this.createHorizontalExistingBlock(BlocksPM.DISSOLUTION_CHAMBER.get(), blockModels);
+        this.createDirectionalExistingBlock(BlocksPM.ZEPHYR_ENGINE.get(), blockModels);
+        this.createDirectionalExistingBlock(BlocksPM.VOID_TURBINE.get(), blockModels);
+        this.createEssenceCaskBlock(BlocksPM.ESSENCE_CASK_ENCHANTED.get(), blockModels);
+        this.createEssenceCaskBlock(BlocksPM.ESSENCE_CASK_FORBIDDEN.get(), blockModels);
+        this.createEssenceCaskBlock(BlocksPM.ESSENCE_CASK_HEAVENLY.get(), blockModels);
+        this.createHorizontalExistingBlock(BlocksPM.WAND_GLAMOUR_TABLE.get(), blockModels);
+        this.createInfernalFurnaceBlock(BlocksPM.INFERNAL_FURNACE.get(), blockModels);
+        this.createSimpleExistingBlock(BlocksPM.MANA_NEXUS.get(), blockModels);
+        this.createSimpleExistingBlock(BlocksPM.MANA_SINGULARITY.get(), blockModels);
+        this.createSimpleExistingBlock(BlocksPM.MANA_SINGULARITY_CREATIVE.get(), blockModels);
+        this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.SCRIBE_TABLE.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -534,6 +546,12 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
     }
 
+    private void createDirectionalExistingBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_FACING));
+    }
+
     private void generatePillarBlock(Block block, BlockModelGenerators blockModels) {
         MultiVariant baseMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR.create(block, blockModels.modelOutput));
         MultiVariant bottomMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR_BOTTOM.create(block, blockModels.modelOutput));
@@ -811,5 +829,30 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                         .select(Direction.WEST, true, litVariant.with(BlockModelGenerators.Y_ROT_270))
                 )
         );
+    }
+
+    private void createEssenceCaskBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier baseModelLoc = ModelTemplates.CUBE_BOTTOM_TOP.create(block,
+                TextureMapping.cubeBottomTop(block), blockModels.modelOutput);
+        Identifier openModelLoc = ModelTemplates.CUBE_BOTTOM_TOP.createWithSuffix(block, "_open",
+                TextureMapping.cubeBottomTop(block).put(TextureSlot.TOP, TextureMapping.getBlockTexture(block, "_top_open")), blockModels.modelOutput);
+        MultiVariant baseVariant = BlockModelGenerators.plainVariant(baseModelLoc);
+        MultiVariant openVariant = BlockModelGenerators.plainVariant(openModelLoc);
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.OPEN, openVariant, baseVariant)));
+    }
+
+    private void createInfernalFurnaceBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier baseModelLoc = ModelTemplates.CUBE_ORIENTABLE_TOP_BOTTOM.create(block,
+                TextureMapping.orientableCube(block).put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(block, "_top")), blockModels.modelOutput);
+        Identifier litModelLoc = ModelTemplates.CUBE_ORIENTABLE_TOP_BOTTOM.createWithSuffix(block, "_on",
+                TextureMapping.orientableCube(block)
+                        .put(TextureSlot.FRONT, TextureMapping.getBlockTexture(block, "_front_on"))
+                        .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(block, "_top")),
+                blockModels.modelOutput);
+        MultiVariant baseVariant = BlockModelGenerators.plainVariant(baseModelLoc);
+        MultiVariant litVariant = BlockModelGenerators.plainVariant(litModelLoc);
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, litVariant, baseVariant)));
     }
 }
