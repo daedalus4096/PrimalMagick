@@ -183,7 +183,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.FORBIDDEN).forEach(block -> this.createManaFontBlock(block, blockModels, BlocksPM.MARBLE_SMOKED.get()));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.createManaFontBlock(block, blockModels, BlocksPM.MARBLE_HALLOWED.get()));
 
-        // TODO Generate device blocks
+        // Generate device blocks
         this.createSimpleExistingBlock(BlocksPM.ARCANE_WORKBENCH.get(), blockModels);
         this.createHorizontalExistingBlock(BlocksPM.WAND_ASSEMBLY_TABLE.get(), blockModels);
         this.createSimpleExistingBlock(BlocksPM.WOOD_TABLE.get(), blockModels);
@@ -234,6 +234,15 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createSimpleExistingBlock(BlocksPM.MANA_SINGULARITY.get(), blockModels);
         this.createSimpleExistingBlock(BlocksPM.MANA_SINGULARITY_CREATIVE.get(), blockModels);
         this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.SCRIBE_TABLE.get(), blockModels);
+        this.createManaConnectorBlock(BlocksPM.MANA_RELAY_BASIC.get(), blockModels);
+        this.createManaConnectorBlock(BlocksPM.MANA_RELAY_ENCHANTED.get(), blockModels);
+        this.createManaConnectorBlock(BlocksPM.MANA_RELAY_FORBIDDEN.get(), blockModels);
+        this.createManaConnectorBlock(BlocksPM.MANA_RELAY_HEAVENLY.get(), blockModels);
+        this.createManaConnectorBlock(BlocksPM.MANA_INJECTOR_BASIC.get(), blockModels);
+        this.createManaConnectorBlock(BlocksPM.MANA_INJECTOR_ENCHANTED.get(), blockModels);
+        this.createManaConnectorBlock(BlocksPM.MANA_INJECTOR_FORBIDDEN.get(), blockModels);
+        this.createManaConnectorBlock(BlocksPM.MANA_INJECTOR_HEAVENLY.get(), blockModels);
+        this.createHorizontalExistingBlock(BlocksPM.DESALINATOR.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -854,5 +863,20 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         MultiVariant litVariant = BlockModelGenerators.plainVariant(litModelLoc);
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                 .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, litVariant, baseVariant)));
+    }
+
+    private void createManaConnectorBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.EMPTY)
+                .parent(ModelLocationUtils.getModelLocation(Blocks.COPPER_BLOCK))    // FIXME Needs a builtin/entity parent in here somewhere?
+                .transform(ItemDisplayContext.GUI, transform -> transform.leftRotation(30, 225, 0).translation(0, 0, 0).scale(0.625F))
+                .transform(ItemDisplayContext.GROUND, transform -> transform.leftRotation(0, 0, 0).translation(0, 3F, 0).scale(0.25F))
+                .transform(ItemDisplayContext.FIXED, transform -> transform.leftRotation(0, 0, 0).translation(0, 0, 0).scale(0.5F))
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, transform -> transform.leftRotation(0, 225, 0).translation(0, 0, 0).scale(0.40F))
+                // FIXME Should these transforms use rightRotation instead of leftRotation?
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, transform -> transform.leftRotation(0, 45, 0).translation(0, 0, 0).scale(0.40F))
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, transform -> transform.leftRotation(75, 45, 0).translation(0, 2.5F, 0).scale(0.375F))
+                .create(block, TextureMappingsPM::empty, blockModels.modelOutput);
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
     }
 }

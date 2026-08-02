@@ -90,17 +90,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
         
-        // Generate device blocks
-        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_BASIC.get());
-        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_ENCHANTED.get());
-        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_FORBIDDEN.get());
-        this.manaRelayBlockWithItem(BlocksPM.MANA_RELAY_HEAVENLY.get());
-        this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_BASIC.get());
-        this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_ENCHANTED.get());
-        this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_FORBIDDEN.get());
-        this.manaInjectorBlockWithItem(BlocksPM.MANA_INJECTOR_HEAVENLY.get());
-        this.horizontalExistingBlockWithItem(BlocksPM.DESALINATOR.get());
-
         // Generate misc blocks
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
         this.emptyBlock(BlocksPM.GLOW_FIELD.get());         // Do not generate an item
