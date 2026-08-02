@@ -48,40 +48,47 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(modid = Constants.MOD_ID)
 public class DataGeneratorsNeoforge {
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent event) {
-        // Add all the mod's data providers to the generator for processing
+    public static void onGatherClientData(GatherDataEvent.Client event) {
+        // Add all the mod's client data providers to the generator for processing
         DataGenerator generator = event.getGenerator();
-        CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGeneratorNeoforge.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
-        CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGeneratorNeoforge.addProviders(event.includeServer(), generator, generator.getPackOutput(), intermediate, event.getExistingFileHelper());
-        generator.addProvider(event.includeClient(), new SpriteSourceProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeClient(), new ItemModelProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
-        generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPMNeoforge(generator.getPackOutput()));
-        generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeClient(), new ModelProviderPMNeoforge(generator.getPackOutput(), Constants.MOD_ID));
-        generator.addProvider(event.includeClient(), new EquipmentAssetProviderPM(generator.getPackOutput()));
-        generator.addProvider(event.includeServer(), new RecipesNeoforge.Runner(generator.getPackOutput(), registryLookupFuture));
-        BlockTagsProviderPMNeoforge blockTagsProvider = new BlockTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture);
-        generator.addProvider(event.includeServer(), blockTagsProvider);
-        generator.addProvider(event.includeServer(), new ItemTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new BiomeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new SpellPropertyTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new MobEffectTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new VillagerTradesTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new EnchantmentTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
-        generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new LootModifierProviderNeoforge(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), new StoryAdvancementsProviderNeoforge(generator.getPackOutput(), registryLookupFuture));
-        generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
-                BlockLootTables.getSubProviderEntry(), 
-                EntityLootTables.getSubProviderEntry(), 
-                TreefolkBarteringLootTables.getSubProviderEntry(), 
-                TheorycraftingRewardLootTables.getSubProviderEntry(), 
+        CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGeneratorNeoforge.addProviders(false, generator, generator.getPackOutput(), event.getLookupProvider());
+        CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGeneratorNeoforge.addProviders(false, generator, generator.getPackOutput(), intermediate);
+        event.addProvider(new SpriteSourceProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new ItemModelProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
+        event.addProvider(new SoundDefinitionsProviderPMNeoforge(generator.getPackOutput()));
+        event.addProvider(new StyleGuideProvider(generator.getPackOutput()));
+        event.addProvider(new ModelProviderPMNeoforge(generator.getPackOutput(), Constants.MOD_ID));
+        event.addProvider(new EquipmentAssetProviderPM(generator.getPackOutput()));
+        event.addProvider(new LanguageProviderEnUs(generator.getPackOutput(), registryLookupFuture));
+    }
+    
+    @SubscribeEvent
+    public static void onGatherServerData(GatherDataEvent.Server event) {
+        // Add all the mod's server data providers to the generator for processing
+        DataGenerator generator = event.getGenerator();
+        CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGeneratorNeoforge.addProviders(true, generator, generator.getPackOutput(), event.getLookupProvider());
+        CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGeneratorNeoforge.addProviders(true, generator, generator.getPackOutput(), intermediate);
+        event.addProvider(new RecipesNeoforge.Runner(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new BlockTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new ItemTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new EntityTypeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new BiomeTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new SpellPropertyTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new RecipeSerializerTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new MobEffectTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new EnchantmentTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new VillagerTradesTagsProviderPM(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new EnchantmentTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new AffinityProvider(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new LootModifierProviderNeoforge(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
+        event.addProvider(new StoryAdvancementsProviderNeoforge(generator.getPackOutput(), registryLookupFuture));
+        generator.addProvider(true, (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
+                BlockLootTables.getSubProviderEntry(),
+                EntityLootTables.getSubProviderEntry(),
+                TreefolkBarteringLootTables.getSubProviderEntry(),
+                TheorycraftingRewardLootTables.getSubProviderEntry(),
                 LibraryLootTables.getSubProviderEntry()),
-            registryLookupFuture)));
-        generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput(), registryLookupFuture));
+                registryLookupFuture)));
     }
 }

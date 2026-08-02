@@ -6,14 +6,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EnchantmentTagsProvider;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
 public class EnchantmentTagsProviderPMNeoforge extends EnchantmentTagsProvider {
-    public EnchantmentTagsProviderPMNeoforge(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(pOutput, pLookupProvider, Constants.MOD_ID, existingFileHelper);
+    public EnchantmentTagsProviderPMNeoforge(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider) {
+        super(pOutput, pLookupProvider, Constants.MOD_ID);
     }
 
     @Override
