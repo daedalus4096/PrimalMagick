@@ -91,19 +91,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
         // TODO Generate skyglass pane blocks
         
         // Generate device blocks
-        this.horizontalExistingBlockWithItem(BlocksPM.HONEY_EXTRACTOR.get());
-        this.golemControllerBlockWithItem(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.PRIMALITE_BLOCK.get()));
-        this.golemControllerBlockWithItem(BlocksPM.HEXIUM_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.HEXIUM_BLOCK.get()));
-        this.golemControllerBlockWithItem(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.HALLOWSTEEL_BLOCK.get()));
-        this.horizontalBlockWithItem(BlocksPM.SANGUINE_CRUCIBLE.get(), state -> this.models()
-                .getExistingFile(this.defaultModel(BlocksPM.SANGUINE_CRUCIBLE.get()).withSuffix(state.getValue(SanguineCrucibleBlock.LIT) ? "_lit" : "")));
-        this.horizontalBlockWithItem(BlocksPM.CONCOCTER.get(), state -> this.models()
-                .getExistingFile(this.defaultModel(BlocksPM.CONCOCTER.get()).withSuffix(state.getValue(ConcocterBlock.HAS_BOTTLE) ? "_bottle" : "")));
-        this.horizontalExistingBlockWithItem(BlocksPM.CELESTIAL_HARP.get());
-        this.horizontalExistingBlockWithItem(BlocksPM.ENTROPY_SINK.get());
-        this.simpleExistingBlockWithItem(BlocksPM.AUTO_CHARGER.get());
-        this.horizontalExistingBlockWithItem(BlocksPM.ESSENCE_TRANSMUTER.get());
-        this.horizontalExistingBlockWithItem(BlocksPM.DISSOLUTION_CHAMBER.get());
         this.directionalExistingBlockWithItem(BlocksPM.ZEPHYR_ENGINE.get());
         this.directionalExistingBlockWithItem(BlocksPM.VOID_TURBINE.get());
         this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_ENCHANTED.get());

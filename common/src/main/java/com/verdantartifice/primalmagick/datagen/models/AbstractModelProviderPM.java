@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
@@ -210,6 +211,17 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createRunescribingAltarBlock(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), blockModels, BlocksPM.MARBLE_HALLOWED.get());
         this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.RUNECARVING_TABLE.get(), blockModels);
         this.createGrindstoneBlock(BlocksPM.RUNIC_GRINDSTONE.get(), blockModels);
+        this.createHorizontalExistingBlock(BlocksPM.HONEY_EXTRACTOR.get(), blockModels);
+        this.createGolemControllerBlock(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get(), blockModels, BlocksPM.PRIMALITE_BLOCK.get());
+        this.createGolemControllerBlock(BlocksPM.HEXIUM_GOLEM_CONTROLLER.get(), blockModels, BlocksPM.HEXIUM_BLOCK.get());
+        this.createGolemControllerBlock(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER.get(), blockModels, BlocksPM.HALLOWSTEEL_BLOCK.get());
+        this.createConcocterBlock(BlocksPM.CONCOCTER.get(), blockModels);
+        this.createSanguineCrucibleBlock(BlocksPM.SANGUINE_CRUCIBLE.get(), blockModels);
+        this.createHorizontalExistingBlock(BlocksPM.CELESTIAL_HARP.get(), blockModels);
+        this.createHorizontalExistingBlock(BlocksPM.ENTROPY_SINK.get(), blockModels);
+        this.createSimpleExistingBlock(BlocksPM.AUTO_CHARGER.get(), blockModels);
+        this.createHorizontalExistingBlock(BlocksPM.ESSENCE_TRANSMUTER.get(), blockModels);
+        this.createHorizontalExistingBlock(BlocksPM.DISSOLUTION_CHAMBER.get(), blockModels);
 
         // TODO Generate misc blocks
     }
@@ -756,5 +768,48 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                                                 .select(AttachFace.CEILING, Direction.EAST, BlockModelGenerators.X_ROT_180.then(BlockModelGenerators.Y_ROT_270))
                                 )
                 );
+    }
+
+    private void createGolemControllerBlock(Block block, BlockModelGenerators blockModels, Block textureSource) {
+        Identifier modelLoc = ModelTemplates.CUBE_ORIENTABLE.create(block,
+                TextureMapping.orientableCubeOnlyTop(block).put(TextureSlot.TOP, TextureMapping.getBlockTexture(textureSource)), blockModels.modelOutput);
+        MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+    }
+
+    private void createConcocterBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        MultiVariant emptyVariant = BlockModelGenerators.plainVariant(modelLoc);
+        MultiVariant bottleVariant = BlockModelGenerators.plainVariant(modelLoc.withSuffix("_bottle"));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(BlockStateProperties.HORIZONTAL_FACING, ConcocterBlock.HAS_BOTTLE)
+                        .select(Direction.NORTH, false, emptyVariant)
+                        .select(Direction.EAST, false, emptyVariant.with(BlockModelGenerators.Y_ROT_90))
+                        .select(Direction.SOUTH, false, emptyVariant.with(BlockModelGenerators.Y_ROT_180))
+                        .select(Direction.WEST, false, emptyVariant.with(BlockModelGenerators.Y_ROT_270))
+                        .select(Direction.NORTH, true, bottleVariant)
+                        .select(Direction.EAST, true, bottleVariant.with(BlockModelGenerators.Y_ROT_90))
+                        .select(Direction.SOUTH, true, bottleVariant.with(BlockModelGenerators.Y_ROT_180))
+                        .select(Direction.WEST, true, bottleVariant.with(BlockModelGenerators.Y_ROT_270))
+                )
+        );
+    }
+
+    private void createSanguineCrucibleBlock(Block block, BlockModelGenerators blockModels) {
+        Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
+        MultiVariant normalVariant = BlockModelGenerators.plainVariant(modelLoc);
+        MultiVariant litVariant = BlockModelGenerators.plainVariant(modelLoc.withSuffix("_lit"));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(PropertyDispatch.initial(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.LIT)
+                        .select(Direction.NORTH, false, normalVariant)
+                        .select(Direction.EAST, false, normalVariant.with(BlockModelGenerators.Y_ROT_90))
+                        .select(Direction.SOUTH, false, normalVariant.with(BlockModelGenerators.Y_ROT_180))
+                        .select(Direction.WEST, false, normalVariant.with(BlockModelGenerators.Y_ROT_270))
+                        .select(Direction.NORTH, true, litVariant)
+                        .select(Direction.EAST, true, litVariant.with(BlockModelGenerators.Y_ROT_90))
+                        .select(Direction.SOUTH, true, litVariant.with(BlockModelGenerators.Y_ROT_180))
+                        .select(Direction.WEST, true, litVariant.with(BlockModelGenerators.Y_ROT_270))
+                )
+        );
     }
 }
