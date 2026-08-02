@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.trading.TradeSetsPM;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,7 +14,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.TimeUtil;
-import net.minecraft.util.Util;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -44,8 +43,6 @@ import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
-import net.minecraft.world.entity.npc.villager.VillagerTrades;
-import net.minecraft.world.entity.npc.villager.VillagerTrades.ItemsForEmeralds;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownSplashPotion;
@@ -63,9 +60,6 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Definition of a friendly witch entity who will trade with players.  RIP Corspilla.
  * 
@@ -78,11 +72,6 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     private static final EntityDataAccessor<Boolean> DATA_USING_ITEM = SynchedEntityData.defineId(FriendlyWitchEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Long> ANGER_END_TIME = SynchedEntityData.defineId(FriendlyWitchEntity.class, EntityDataSerializers.LONG);
     private static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
-    private static final List<VillagerTrades.ItemListing> TRADE_LISTINGS = Util.make(new ArrayList<>(), list -> {
-        list.add(new ItemsForEmeralds(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), 1, 1, 5));
-        list.add(new ItemsForEmeralds(ItemsPM.BLOOD_NOTES.get(), 4, 1, 5));
-        list.add(new ItemsForEmeralds(ItemsPM.SHEEP_TOME.get(), 8, 1, 5));
-    });
 
     protected EntityReference<LivingEntity> angerTarget;
     private int usingTime;
@@ -178,12 +167,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     @Override
     protected void updateTrades(@NotNull ServerLevel serverLevel) {
         MerchantOffers offers = this.getOffers();
-        for (VillagerTrades.ItemListing listing : TRADE_LISTINGS) {
-            MerchantOffer offer = listing.getOffer(serverLevel, this, this.getRandom());
-            if (offer != null) {
-                offers.add(offer);
-            }
-        }
+        this.addOffersFromTradeSet(serverLevel, offers, TradeSetsPM.FRIENDLY_WITCH_SELLING);
     }
 
     @Override

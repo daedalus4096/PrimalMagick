@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
+import com.verdantartifice.primalmagick.common.tags.VillagerTradeTagsPM;
 import com.verdantartifice.primalmagick.common.trading.VillagerTradesPM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -24,5 +25,6 @@ public class VillagerTradesTagsProviderPM extends KeyTagProvider<VillagerTrade> 
         this.tag(VillagerTradeTags.LIBRARIAN_LEVEL_4).add(VillagerTradesPM.LIBRARIAN_4_EMERALD_THEORY_NOTES);
         this.tag(VillagerTradeTags.WANDERING_TRADER_COMMON).add(VillagerTradesPM.WANDERING_TRADER_EMERALD_OBSERVATION_NOTES);
         this.tag(VillagerTradeTags.WANDERING_TRADER_UNCOMMON).add(VillagerTradesPM.WANDERING_TRADER_EMERALD_THEORY_NOTES);
+        this.tag(VillagerTradeTagsPM.FRIENDLY_WITCH_SELLING).add(VillagerTradesPM.FRIENDLY_WITCH_EMERALD_MYSTICAL_RELIC_FRAGMENT).add(VillagerTradesPM.FRIENDLY_WITCH_EMERALD_BLOOD_NOTES).add(VillagerTradesPM.FRIENDLY_WITCH_EMERALD_SHEEP_TOME);
     }
 }

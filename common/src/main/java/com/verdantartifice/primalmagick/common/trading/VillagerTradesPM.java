@@ -21,6 +21,9 @@ public class VillagerTradesPM {
     public static final ResourceKey<VillagerTrade> LIBRARIAN_4_EMERALD_THEORY_NOTES = key("librarian/4/emerald_theory_notes");
     public static final ResourceKey<VillagerTrade> WANDERING_TRADER_EMERALD_OBSERVATION_NOTES = key("wandering_trader/emerald_observation_notes");
     public static final ResourceKey<VillagerTrade> WANDERING_TRADER_EMERALD_THEORY_NOTES = key("wandering_trader/emerald_theory_notes");
+    public static final ResourceKey<VillagerTrade> FRIENDLY_WITCH_EMERALD_MYSTICAL_RELIC_FRAGMENT = key("friendly_witch/emerald_mystical_relic_fragment");
+    public static final ResourceKey<VillagerTrade> FRIENDLY_WITCH_EMERALD_BLOOD_NOTES = key("friendly_witch/emerald_blood_notes");
+    public static final ResourceKey<VillagerTrade> FRIENDLY_WITCH_EMERALD_SHEEP_TOME = key("friendly_witch/emerald_sheep_tome");
 
     public static void bootstrap(BootstrapContext<VillagerTrade> context) {
         register(context, LIBRARIAN_1_MYSTICAL_RELIC_FRAGMENT_EMERALD,
@@ -35,6 +38,12 @@ public class VillagerTradesPM {
                 new VillagerTrade(new TradeCost(Items.EMERALD, 8), new ItemStackTemplate(ItemsPM.OBSERVATION_NOTES.get()), 12, 5, 0.05F, Optional.empty(), List.of()));
         register(context, WANDERING_TRADER_EMERALD_THEORY_NOTES,
                 new VillagerTrade(new TradeCost(Items.EMERALD, 16), new ItemStackTemplate(ItemsPM.THEORY_NOTES.get()), 12, 15, 0.05F, Optional.empty(), List.of()));
+        register(context, FRIENDLY_WITCH_EMERALD_MYSTICAL_RELIC_FRAGMENT,
+                new VillagerTrade(new TradeCost(Items.EMERALD, 1), new ItemStackTemplate(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get()), 12, 5, 0.05F, Optional.empty(), List.of()));
+        register(context, FRIENDLY_WITCH_EMERALD_BLOOD_NOTES,
+                new VillagerTrade(new TradeCost(Items.EMERALD, 4), new ItemStackTemplate(ItemsPM.BLOOD_NOTES.get()), 12, 5, 0.05F, Optional.empty(), List.of()));
+        register(context, FRIENDLY_WITCH_EMERALD_SHEEP_TOME,
+                new VillagerTrade(new TradeCost(Items.EMERALD, 8), new ItemStackTemplate(ItemsPM.SHEEP_TOME.get()), 12, 5, 0.05F, Optional.empty(), List.of()));
     }
 
     public static Holder.Reference<VillagerTrade> register(BootstrapContext<VillagerTrade> context, ResourceKey<VillagerTrade> resourceKey, VillagerTrade villagerTrade) {

@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplates;
 import com.verdantartifice.primalmagick.common.tips.TipDefinitionsPM;
+import com.verdantartifice.primalmagick.common.trading.TradeSetsPM;
 import com.verdantartifice.primalmagick.common.trading.VillagerTradesPM;
 import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPMNeoforge;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
@@ -57,6 +58,7 @@ public class RegistryDataGeneratorNeoforge extends DatapackBuiltinEntriesProvide
             .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap)
             .add(Registries.ENCHANTMENT, EnchantmentsPM::bootstrap)
             .add(Registries.VILLAGER_TRADE, VillagerTradesPM::bootstrap)
+            .add(Registries.TRADE_SET, TradeSetsPM::bootstrap)
             .add(RegistryKeysPM.RESEARCH_DISCIPLINES, ResearchDisciplines::bootstrap)
             .add(RegistryKeysPM.RESEARCH_ENTRIES, ResearchEntries::bootstrap)
             .add(RegistryKeysPM.PROJECT_TEMPLATES, ProjectTemplates::bootstrap)
