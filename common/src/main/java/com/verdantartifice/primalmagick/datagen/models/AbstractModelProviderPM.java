@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.client.item.color.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
-import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
