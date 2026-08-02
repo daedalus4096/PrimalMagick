@@ -89,23 +89,6 @@ public class BlockStateProviderPMNeoforge extends BlockStateProvider {
 
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
-        
-        // Generate misc blocks
-        this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
-        this.emptyBlock(BlocksPM.GLOW_FIELD.get());         // Do not generate an item
-        this.emptyBlock(BlocksPM.SOUL_GLOW_FIELD.get());    // Do not generate an item
-        // TODO Generate salt trail block
-        this.simpleCubeBlockWithItem(BlocksPM.ROCK_SALT_ORE.get());
-        this.simpleCubeBlockWithItem(BlocksPM.QUARTZ_ORE.get());
-        this.simpleCubeBlockWithItem(BlocksPM.PRIMALITE_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlocksPM.HEXIUM_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlocksPM.HALLOWSTEEL_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlocksPM.IGNYX_BLOCK.get());
-        this.simpleCubeBlockWithItem(BlocksPM.SALT_BLOCK.get());
-        this.crossBlockWithItem(BlocksPM.TREEFOLK_SPROUT.get(), this.key(ItemsPM.TREEFOLK_SEED.get()));
-        this.horizontalExistingBlockWithBasicItem(BlocksPM.ENDERWARD.get());
-
-        // TODO Genreate arcanometer blockstates
     }
 
     private Identifier key(Block block) {

@@ -244,7 +244,22 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createManaConnectorBlock(BlocksPM.MANA_INJECTOR_HEAVENLY.get(), blockModels);
         this.createHorizontalExistingBlock(BlocksPM.DESALINATOR.get(), blockModels);
 
-        // TODO Generate misc blocks
+        // Generate misc blocks
+        this.createEmptyBlock(BlocksPM.CONSECRATION_FIELD.get(), blockModels);
+        this.createEmptyBlock(BlocksPM.GLOW_FIELD.get(), blockModels);
+        this.createEmptyBlock(BlocksPM.SOUL_GLOW_FIELD.get(), blockModels);
+        // TODO Generate salt trail block
+        blockModels.createTrivialCube(BlocksPM.ROCK_SALT_ORE.get());
+        blockModels.createTrivialCube(BlocksPM.QUARTZ_ORE.get());
+        blockModels.createTrivialCube(BlocksPM.PRIMALITE_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.HEXIUM_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.HALLOWSTEEL_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.IGNYX_BLOCK.get());
+        blockModels.createTrivialCube(BlocksPM.SALT_BLOCK.get());
+        this.createCropCrossBlock(BlocksPM.TREEFOLK_SPROUT.get(), blockModels, BlockModelGenerators.PlantType.NOT_TINTED, ItemsPM.TREEFOLK_SEED.get());
+        this.createHorizontalExistingBlockWithFlatItem(BlocksPM.ENDERWARD.get(), blockModels);
+
+        // TODO Generate arcanometer blockstates
     }
 
     protected void executeItemModelGenerators(ItemModelGenerators itemModels) {
@@ -528,6 +543,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
     }
 
+    private void createEmptyBlock(Block block, BlockModelGenerators blockModels) {
+        this.createSimpleExistingBlock(block, blockModels, ResourceUtils.loc("block/empty"));
+    }
+
     private void createSimpleExistingBlock(Block block, BlockModelGenerators blockModels, Identifier modelLoc) {
         MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
@@ -542,6 +561,11 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
         MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+    }
+
+    private void createHorizontalExistingBlockWithFlatItem(Block block, BlockModelGenerators blockModels) {
+        blockModels.registerSimpleFlatItemModel(block.asItem());
+        this.createHorizontalExistingBlock(block, blockModels);
     }
 
     private void createHorizontalExistingBlockWithRightHandAdjustments(Block block, BlockModelGenerators blockModels) {
@@ -878,5 +902,12 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 .create(block, TextureMappingsPM::empty, blockModels.modelOutput);
         MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
+    }
+
+    private void createCropCrossBlock(Block cropBlock, BlockModelGenerators blockModels, BlockModelGenerators.PlantType plantType, Item seedItem) {
+        blockModels.registerSimpleFlatItemModel(seedItem);
+        TextureMapping textures = plantType.getTextureMapping(cropBlock);
+        MultiVariant model = BlockModelGenerators.plainVariant(plantType.getCross().create(cropBlock, textures, blockModels.modelOutput));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(cropBlock, model));
     }
 }
