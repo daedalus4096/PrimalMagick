@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagick.common.blocks.base.IHasTintColor;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualCandleTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -46,7 +47,7 @@ import java.util.List;
  * 
  * @author Daedalus4096
  */
-public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlock {
+public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlock, IHasTintColor {
     public static final MapCodec<RitualCandleBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             DyeColor.CODEC.fieldOf("color").forGetter(b -> b.color),
             propertiesCodec()

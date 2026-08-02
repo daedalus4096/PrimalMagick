@@ -15,15 +15,10 @@ import net.neoforged.neoforge.client.event.RegisterSelectItemModelPropertyEvent;
 @EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public class ColorEventListeners {
     @SubscribeEvent
-    public static void onBlockColorInit(RegisterColorHandlersEvent.Block event) {
+    public static void onBlockColorInit(RegisterColorHandlersEvent.BlockTintSources event) {
         ColorEvents.onBlockColorInit(event::register);
     }
     
-    @SubscribeEvent
-    public static void onItemColorInit(RegisterColorHandlersEvent.Item event) {
-        ColorEvents.onItemColorInit(event::register);
-    }
-
     @SubscribeEvent
     public static void onItemTintSourceInit(RegisterColorHandlersEvent.ItemTintSources event) {
         ColorEvents.onItemTintSourceInit(event::register);

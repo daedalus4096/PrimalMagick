@@ -1,13 +1,17 @@
 package com.verdantartifice.primalmagick.datagen.models;
 
 import com.mojang.datafixers.util.Pair;
-import com.verdantartifice.primalmagick.client.item.color.SourceTint;
+import com.verdantartifice.primalmagick.client.color.item.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blocks.misc.SkyglassBlock;
+import com.verdantartifice.primalmagick.common.blocks.misc.SkyglassPaneBlock;
+import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
+import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.SoulAnvilBlock;
@@ -131,7 +135,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.createTrivialBlock(BlocksPM.HYDROMELON.get(), TexturedModel.COLUMN);
         blockModels.createStems(BlocksPM.HYDROMELON_STEM.get(), BlocksPM.ATTACHED_HYDROMELON_STEM.get());
         blockModels.createDoublePlantWithDefaultItem(BlocksPM.BLOOD_ROSE.get(), BlockModelGenerators.PlantType.NOT_TINTED);
-        this.createEmberflower(blockModels);
+        this.createEmberflowerBlock(blockModels);
 
         // Generate infused stone blocks
         blockModels.createTrivialCube(BlocksPM.INFUSED_STONE_EARTH.get());
@@ -172,9 +176,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_BLACK.get(), BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), blockModels);
 
         // Generate ritual candle blocks
-        RitualCandleBlock.getAllCandles().forEach(block -> this.createSimpleExistingBlock(block, blockModels, ResourceUtils.loc("block/ritual_candle")));
+        RitualCandleBlock.getAllCandles().forEach(block -> this.createRitualCandleBlock(block, blockModels));
 
         // Generate mana font blocks
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.createManaFontBlock(block, blockModels, BlocksPM.MARBLE.get()));
@@ -668,13 +673,31 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         };
     }
 
-    private void createEmberflower(BlockModelGenerators blockModels) {
+    private void createEmberflowerBlock(BlockModelGenerators blockModels) {
         blockModels.registerSimpleFlatItemModel(BlocksPM.EMBERFLOWER.get(), "_front");
         MultiVariant topModel = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(BlocksPM.EMBERFLOWER.get(), "_top"));
         MultiVariant bottomModel = BlockModelGenerators.plainVariant(
                 blockModels.createSuffixedVariant(BlocksPM.EMBERFLOWER.get(), "_bottom", BlockModelGenerators.PlantType.NOT_TINTED.getCross(), TextureMapping::cross)
         );
         blockModels.createDoubleBlock(BlocksPM.EMBERFLOWER.get(), topModel, bottomModel);
+    }
+
+    private void createSkyglassBlocks(Block glassBlock, Block paneBlock, BlockModelGenerators blockModels) {
+        // TODO Define block states and models for glass and pane
+        blockModels.registerSimpleItemModel(paneBlock.asItem(), blockModels.createFlatItemModelWithBlockTexture(paneBlock.asItem(), glassBlock));
+    }
+
+    private void createStainedSkyglassBlocks(StainedSkyglassBlock glassBlock, StainedSkyglassPaneBlock paneBlock, BlockModelGenerators blockModels) {
+        // TODO Define block states and models for glass and pane
+        blockModels.registerSimpleTintedItemModel(glassBlock, glassModelLoc, ItemModelUtils.constantTint(glassBlock.getColor().getFireworkColor()));
+        blockModels.registerSimpleTintedItemModel(paneBlock, blockModels.createFlatItemModelWithBlockTexture(paneBlock.asItem(), glassBlock), ItemModelUtils.constantTint(paneBlock.getColor().getFireworkColor()));
+    }
+
+    private void createRitualCandleBlock(RitualCandleBlock block, BlockModelGenerators blockModels) {
+        Identifier blockModel = ModelLocationUtils.getModelLocation(block);
+        MultiVariant variant = BlockModelGenerators.plainVariant(ResourceUtils.loc("block/ritual_candle"));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
+        blockModels.registerSimpleTintedItemModel(block, blockModel, ItemModelUtils.constantTint(block.getColor().getFireworkColor()));
     }
 
     private void createManaFontBlock(Block block, BlockModelGenerators blockModels, Block textureSource) {

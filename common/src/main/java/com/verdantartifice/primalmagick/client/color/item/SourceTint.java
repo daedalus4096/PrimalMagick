@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.client.item.color;
+package com.verdantartifice.primalmagick.client.color.item;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

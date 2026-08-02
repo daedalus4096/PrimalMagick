@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.misc;
 
+import com.verdantartifice.primalmagick.common.blocks.base.IHasTintColor;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.Block;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * 
  * @author Daedalus4096
  */
-public class StainedSkyglassPaneBlock extends SkyglassPaneBlock implements BeaconBeamBlock {
+public class StainedSkyglassPaneBlock extends SkyglassPaneBlock implements BeaconBeamBlock, IHasTintColor {
     protected final DyeColor color;
 
     public StainedSkyglassPaneBlock(DyeColor colorIn, Block.Properties properties) {
