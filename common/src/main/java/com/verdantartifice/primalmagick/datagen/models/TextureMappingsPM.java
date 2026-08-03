@@ -48,23 +48,23 @@ public class TextureMappingsPM {
     public static TextureMapping skyglass0(Block block) {
         return connected(
                 block,
-                TextureConnection.UNCONNECTED,
-                TextureConnection.UNCONNECTED,
-                TextureConnection.UNCONNECTED,
-                TextureConnection.UNCONNECTED,
-                TextureConnection.UNCONNECTED,
-                TextureConnection.UNCONNECTED);
+                TextureConnections.UNCONNECTED,
+                TextureConnections.UNCONNECTED,
+                TextureConnections.UNCONNECTED,
+                TextureConnections.UNCONNECTED,
+                TextureConnections.UNCONNECTED,
+                TextureConnections.UNCONNECTED);
     }
 
     public static TextureMapping skyglass1(Block block) {
         return connected(
                 block,
-                TextureConnection.UDLR,
-                TextureConnection.UNCONNECTED,
-                TextureConnection.U,
-                TextureConnection.U,
-                TextureConnection.U,
-                TextureConnection.U);
+                TextureConnections.UDLR,
+                TextureConnections.UNCONNECTED,
+                TextureConnections.U,
+                TextureConnections.U,
+                TextureConnections.U,
+                TextureConnections.U);
     }
 
     private static TextureMapping connected(Block block, TextureConnection up, TextureConnection down, TextureConnection north,
@@ -82,7 +82,7 @@ public class TextureMappingsPM {
 
     private static TextureMapping connected(Identifier id, TextureConnection up, TextureConnection down, TextureConnection north,
                                             TextureConnection south, TextureConnection west, TextureConnection east) {
-        return connected(id, up, down, north, south, west, east, TextureConnection.UNCONNECTED);
+        return connected(id, up, down, north, south, west, east, TextureConnections.UNCONNECTED);
     }
 
     private static TextureMapping connected(Identifier id, TextureConnection up, TextureConnection down, TextureConnection north,
