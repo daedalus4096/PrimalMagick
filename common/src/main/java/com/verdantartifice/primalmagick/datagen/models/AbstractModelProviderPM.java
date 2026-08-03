@@ -175,9 +175,24 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.createTrivialCube(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get());
         blockModels.createTrivialCube(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
 
-        // TODO Generate skyglass blocks
-        // TODO Generate skyglass pane blocks
+        // Generate skyglass full and pane blocks
+        this.createSkyglassBlocks(BlocksPM.SKYGLASS.get(), BlocksPM.SKYGLASS_PANE.get(), blockModels);
         this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_BLACK.get(), BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_BROWN.get(), BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_CYAN.get(), BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_GREEN.get(), BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_LIME.get(), BlocksPM.STAINED_SKYGLASS_PANE_LIME.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_MAGENTA.get(), BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_ORANGE.get(), BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_PINK.get(), BlocksPM.STAINED_SKYGLASS_PANE_PINK.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_PURPLE.get(), BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_RED.get(), BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_WHITE.get(), BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), blockModels);
+        this.createStainedSkyglassBlocks(BlocksPM.STAINED_SKYGLASS_YELLOW.get(), BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get(), blockModels);
 
         // Generate ritual candle blocks
         RitualCandleBlock.getAllCandles().forEach(block -> this.createRitualCandleBlock(block, blockModels));
@@ -697,8 +712,21 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     private void createStainedSkyglassBlocks(StainedSkyglassBlock glassBlock, StainedSkyglassPaneBlock paneBlock, BlockModelGenerators blockModels) {
-        // TODO Define block states and models for glass and pane
-        blockModels.registerSimpleTintedItemModel(glassBlock, glassModelLoc, ItemModelUtils.constantTint(glassBlock.getColor().getFireworkColor()));
+        // Define block models and states for full glass block
+        Map<ModelConnection, Identifier> glassModelIds = ModelConnectionSets.CUBE.modelConnections().stream().collect(Collectors.toMap(
+                modelConnection -> modelConnection,
+                modelConnection -> Services.MODEL_TEMPLATES.extend(ModelTemplates.CUBE_DIRECTIONAL)
+                        .parent(ResourceUtils.loc("block/stained_skyglass_base"))
+                        .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput)));
+        Identifier variantZeroLoc = glassModelIds.get(ModelConnections.ZERO);
+        Map<ModelConnection, MultiVariant> glassVariants = glassModelIds.entrySet().stream().collect(Collectors.toMap(
+                Map.Entry::getKey,
+                entry -> BlockModelGenerators.plainVariant(entry.getValue())
+        ));
+        blockModels.blockStateOutput.accept(ModelConnectionSets.CUBE.generatorFactory().apply(glassBlock, glassVariants));
+        blockModels.registerSimpleTintedItemModel(glassBlock, variantZeroLoc, ItemModelUtils.constantTint(glassBlock.getColor().getFireworkColor()));
+
+        // TODO Define block states and models for pane
         blockModels.registerSimpleTintedItemModel(paneBlock, blockModels.createFlatItemModelWithBlockTexture(paneBlock.asItem(), glassBlock), ItemModelUtils.constantTint(paneBlock.getColor().getFireworkColor()));
     }
 
