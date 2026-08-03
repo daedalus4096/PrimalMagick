@@ -78,6 +78,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
     public AbstractModelProviderPM(PackOutput output) {
@@ -684,6 +685,22 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     private void createSkyglassBlocks(Block glassBlock, Block paneBlock, BlockModelGenerators blockModels) {
         // TODO Define block states and models for glass and pane
+        Map<ModelConnection, MultiVariant> glassVariants = ModelConnectionSets.CUBE.modelConnections().stream().collect(Collectors.toMap(
+                modelConnection -> modelConnection,
+                modelConnection -> BlockModelGenerators.plainVariant(Services.MODEL_TEMPLATES.extend(ModelTemplates.CUBE_DIRECTIONAL)
+                        .parent(ResourceUtils.loc("block/skyglass_base"))
+                        .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection), blockModels.modelOutput))));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(glassBlock).with(
+                PropertyDispatchPM.initial(BlockStateProperties.DOWN, BlockStateProperties.EAST, BlockStateProperties.NORTH, BlockStateProperties.SOUTH, BlockStateProperties.UP, BlockStateProperties.WEST)
+                        .select(false, false, false, false, false, false, glassVariants.get(ModelConnections.ZERO))
+                        .select(false, false, false, false, true, false, glassVariants.get(ModelConnections.ONE))
+                        .select(true, false, false, false, false, false, glassVariants.get(ModelConnections.ONE).with(BlockModelGenerators.X_ROT_180))
+                        .select(false, false, true, false, false, false, glassVariants.get(ModelConnections.ONE).with(BlockModelGenerators.X_ROT_90))
+                        .select(false, false, false, true, false, false, glassVariants.get(ModelConnections.ONE).with(BlockModelGenerators.X_ROT_270))
+                        .select(false, false, false, false, false, true, glassVariants.get(ModelConnections.ONE).with(BlockModelGenerators.X_ROT_90.then(BlockModelGenerators.Y_ROT_270)))
+                        .select(false, true, false, false, false, false, glassVariants.get(ModelConnections.ONE).with(BlockModelGenerators.X_ROT_90.then(BlockModelGenerators.Y_ROT_90)))
+        ));
+
         blockModels.registerSimpleItemModel(paneBlock.asItem(), blockModels.createFlatItemModelWithBlockTexture(paneBlock.asItem(), glassBlock));
     }
 

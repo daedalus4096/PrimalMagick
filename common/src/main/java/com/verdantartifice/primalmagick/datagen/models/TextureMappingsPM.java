@@ -45,15 +45,7 @@ public class TextureMappingsPM {
                 .put(TextureSlotsPM.ALTAR_SIDE, TextureMapping.getBlockTexture(block, "_side"));
     }
 
-    public static TextureMapping skyglass0(Block block) {
-        return connected(block, ModelConnections.ZERO);
-    }
-
-    public static TextureMapping skyglass1(Block block) {
-        return connected(block, ModelConnections.ONE);
-    }
-
-    private static TextureMapping connected(Block block, ModelConnection modelConnection) {
+    public static TextureMapping connected(Block block, ModelConnection modelConnection) {
         Identifier id = Services.BLOCKS_REGISTRY.getKey(block);
         return connected(Objects.requireNonNull(id), modelConnection);
     }
