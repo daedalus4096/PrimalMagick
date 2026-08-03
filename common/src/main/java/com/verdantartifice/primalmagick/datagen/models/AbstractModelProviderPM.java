@@ -689,7 +689,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 modelConnection -> modelConnection,
                 modelConnection -> BlockModelGenerators.plainVariant(Services.MODEL_TEMPLATES.extend(ModelTemplates.CUBE_DIRECTIONAL)
                         .parent(ResourceUtils.loc("block/skyglass_base"))
-                        .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection), blockModels.modelOutput))));
+                        .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput))));
         blockModels.blockStateOutput.accept(ModelConnectionSets.CUBE.generatorFactory().apply(glassBlock, glassVariants));
 
         // TODO Define block states and models for pane
