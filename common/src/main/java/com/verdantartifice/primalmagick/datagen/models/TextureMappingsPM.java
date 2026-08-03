@@ -46,63 +46,29 @@ public class TextureMappingsPM {
     }
 
     public static TextureMapping skyglass0(Block block) {
-        return connected(
-                block,
-                TextureConnections.UNCONNECTED,
-                TextureConnections.UNCONNECTED,
-                TextureConnections.UNCONNECTED,
-                TextureConnections.UNCONNECTED,
-                TextureConnections.UNCONNECTED,
-                TextureConnections.UNCONNECTED);
+        return connected(block, ModelConnections.ZERO);
     }
 
     public static TextureMapping skyglass1(Block block) {
-        return connected(
-                block,
-                TextureConnections.UDLR,
-                TextureConnections.UNCONNECTED,
-                TextureConnections.U,
-                TextureConnections.U,
-                TextureConnections.U,
-                TextureConnections.U);
+        return connected(block, ModelConnections.ONE);
     }
 
-    private static TextureMapping connected(Block block, TextureConnection up, TextureConnection down, TextureConnection north,
-                                            TextureConnection south, TextureConnection west, TextureConnection east) {
+    private static TextureMapping connected(Block block, ModelConnection modelConnection) {
         Identifier id = Services.BLOCKS_REGISTRY.getKey(block);
-        return connected(Objects.requireNonNull(id), up, down, north, south, west, east);
+        return connected(Objects.requireNonNull(id), modelConnection);
     }
 
-    private static TextureMapping connected(Block block, TextureConnection up, TextureConnection down, TextureConnection north,
-                                            TextureConnection south, TextureConnection west, TextureConnection east,
-                                            TextureConnection particle) {
-        Identifier id = Services.BLOCKS_REGISTRY.getKey(block);
-        return connected(Objects.requireNonNull(id), up, down, north, south, west, east, particle);
-    }
-
-    private static TextureMapping connected(Identifier id, TextureConnection up, TextureConnection down, TextureConnection north,
-                                            TextureConnection south, TextureConnection west, TextureConnection east) {
-        return connected(id, up, down, north, south, west, east, TextureConnections.UNCONNECTED);
-    }
-
-    private static TextureMapping connected(Identifier id, TextureConnection up, TextureConnection down, TextureConnection north,
-                                            TextureConnection south, TextureConnection west, TextureConnection east,
-                                            TextureConnection particle) {
-        return new TextureMapping()
-                .put(TextureSlot.UP, getConnectedBlockTexture(id, up))
-                .put(TextureSlot.DOWN, getConnectedBlockTexture(id, down))
-                .put(TextureSlot.NORTH, getConnectedBlockTexture(id, north))
-                .put(TextureSlot.SOUTH, getConnectedBlockTexture(id, south))
-                .put(TextureSlot.WEST, getConnectedBlockTexture(id, west))
-                .put(TextureSlot.EAST, getConnectedBlockTexture(id, east))
-                .put(TextureSlot.PARTICLE, getConnectedBlockTexture(id, particle));
+    private static TextureMapping connected(Identifier id, ModelConnection modelConnection) {
+        TextureMapping retVal = new TextureMapping();
+        modelConnection.textureConnections().forEach((slot, textureConnection) -> retVal.put(slot, getConnectedBlockTexture(id, textureConnection)));
+        return retVal;
     }
 
     private static Material getConnectedBlockTexture(Block block, TextureConnection connection) {
-        return TextureMapping.getBlockTexture(block, "_" + connection);
+        return TextureMapping.getBlockTexture(block, connection.suffix());
     }
 
     private static Material getConnectedBlockTexture(Identifier baseId, TextureConnection connection) {
-        return new Material(baseId.withPath(path -> "block/" + path + "_" + connection));
+        return new Material(baseId.withPath(path -> "block/" + path + connection.suffix()));
     }
 }
