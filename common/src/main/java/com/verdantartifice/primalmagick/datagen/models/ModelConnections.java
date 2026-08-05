@@ -98,6 +98,12 @@ public class ModelConnections {
     public static final ModelConnection PANE_SIDE_ALT_UDLR = createPaneConnection(true, true, TextureConnections.UDLR);
     public static final ModelConnection PANE_SIDE_ALT_ULR = createPaneConnection(true, true, TextureConnections.ULR);
     public static final ModelConnection PANE_SIDE_ALT_UNCONNECTED = createPaneConnection(true, true, TextureConnections.UNCONNECTED);
+    public static final ModelConnection PANE_SIDE_LR = createPaneConnection(true, false, TextureConnections.LR);
+    public static final ModelConnection PANE_SIDE_U = createPaneConnection(true, false, TextureConnections.U);
+    public static final ModelConnection PANE_SIDE_UD = createPaneConnection(true, false, TextureConnections.UD);
+    public static final ModelConnection PANE_SIDE_UDLR = createPaneConnection(true, false, TextureConnections.UDLR);
+    public static final ModelConnection PANE_SIDE_ULR = createPaneConnection(true, false, TextureConnections.ULR);
+    public static final ModelConnection PANE_SIDE_UNCONNECTED = createPaneConnection(true, false, TextureConnections.UNCONNECTED);
 
     protected static ModelConnection createPaneConnection(boolean side, boolean alt, TextureConnection textureConnection) {
         return new ModelConnection((side ? "side_" : "noside_") + (alt ? "alt_" : "") + textureConnection.name(), ImmutableMap.of(TextureSlot.PANE, textureConnection));
