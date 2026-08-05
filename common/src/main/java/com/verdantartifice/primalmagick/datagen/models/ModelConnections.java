@@ -85,4 +85,21 @@ public class ModelConnections {
             .put(TextureSlot.EAST, TextureConnections.UDLR)
             .put(TextureSlot.PARTICLE, TextureConnections.UNCONNECTED)
             .build());
+
+    public static final ModelConnection PANE_NOSIDE_ALT_U = createPaneConnection(false, true, TextureConnections.U);
+    public static final ModelConnection PANE_NOSIDE_ALT_UD = createPaneConnection(false, true, TextureConnections.UD);
+    public static final ModelConnection PANE_NOSIDE_ALT_UNCONNECTED = createPaneConnection(false, true, TextureConnections.UNCONNECTED);
+    public static final ModelConnection PANE_NOSIDE_U = createPaneConnection(false, false, TextureConnections.U);
+    public static final ModelConnection PANE_NOSIDE_UD = createPaneConnection(false, false, TextureConnections.UD);
+    public static final ModelConnection PANE_NOSIDE_UNCONNECTED = createPaneConnection(false, false, TextureConnections.UNCONNECTED);
+    public static final ModelConnection PANE_SIDE_ALT_LR = createPaneConnection(true, true, TextureConnections.LR);
+    public static final ModelConnection PANE_SIDE_ALT_U = createPaneConnection(true, true, TextureConnections.U);
+    public static final ModelConnection PANE_SIDE_ALT_UD = createPaneConnection(true, true, TextureConnections.UD);
+    public static final ModelConnection PANE_SIDE_ALT_UDLR = createPaneConnection(true, true, TextureConnections.UDLR);
+    public static final ModelConnection PANE_SIDE_ALT_ULR = createPaneConnection(true, true, TextureConnections.ULR);
+    public static final ModelConnection PANE_SIDE_ALT_UNCONNECTED = createPaneConnection(true, true, TextureConnections.UNCONNECTED);
+
+    protected static ModelConnection createPaneConnection(boolean side, boolean alt, TextureConnection textureConnection) {
+        return new ModelConnection((side ? "side_" : "noside_") + (alt ? "alt_" : "") + textureConnection.name(), ImmutableMap.of(TextureSlot.PANE, textureConnection));
+    }
 }
