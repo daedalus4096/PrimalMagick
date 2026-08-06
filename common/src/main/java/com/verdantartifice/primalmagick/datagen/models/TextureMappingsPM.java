@@ -50,7 +50,7 @@ public class TextureMappingsPM {
         return connected(Objects.requireNonNull(id), modelConnection);
     }
 
-    private static TextureMapping connected(Identifier id, ModelConnection modelConnection) {
+    public static TextureMapping connected(Identifier id, ModelConnection modelConnection) {
         TextureMapping retVal = new TextureMapping();
         modelConnection.textureConnections().forEach((slot, textureConnection) -> retVal.put(slot, getConnectedBlockTexture(id, textureConnection)));
         return retVal;
