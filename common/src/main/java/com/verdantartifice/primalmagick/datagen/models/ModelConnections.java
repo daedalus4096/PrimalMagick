@@ -104,6 +104,7 @@ public class ModelConnections {
     public static final ModelConnection PANE_SIDE_UDLR = createPaneConnection(true, false, TextureConnections.UDLR);
     public static final ModelConnection PANE_SIDE_ULR = createPaneConnection(true, false, TextureConnections.ULR);
     public static final ModelConnection PANE_SIDE_UNCONNECTED = createPaneConnection(true, false, TextureConnections.UNCONNECTED);
+    public static final ModelConnection PANE_POST = new ModelConnection("post", ImmutableMap.of());
 
     protected static ModelConnection createPaneConnection(boolean side, boolean alt, TextureConnection textureConnection) {
         return new ModelConnection((side ? "side_" : "noside_") + (alt ? "alt_" : "") + textureConnection.name(), ImmutableMap.of(TextureSlot.PANE, textureConnection));
