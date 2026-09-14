@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
-import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -16,7 +15,6 @@ import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.client.resources.model.sprite.SpriteId;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -31,31 +29,13 @@ import java.util.function.Consumer;
  *
  * @see com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock
  */
-public class ManaFontSpecialRenderer implements SpecialModelRenderer<ManaFontSpecialRenderer.FontData> {
-    private static final Identifier MODEL_BASIC = ResourceUtils.loc("ancient_font_earth");
-    private static final Identifier MODEL_ENCHANTED = ResourceUtils.loc("artificial_font_earth");
-    private static final Identifier MODEL_FORBIDDEN = ResourceUtils.loc("forbidden_font_earth");
-    private static final Identifier MODEL_HEAVENLY = ResourceUtils.loc("heavenly_font_earth");
+public class ManaFontSpecialRenderer implements SpecialModelRenderer<Source> {
     private static final SpriteId CORE_SPRITE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("mana_font_core"));
-
-    /**
-     * Render argument extracted from a mana font item stack.
-     */
-    public record FontData(DeviceTier tier, Source source) {}
 
     private final SpriteGetter sprites;
 
     public ManaFontSpecialRenderer(SpriteGetter sprites) {
         this.sprites = sprites;
-    }
-
-    private static Identifier getModelLocation(@Nullable DeviceTier tier) {
-        return tier == null ? MODEL_BASIC : switch (tier) {
-            case BASIC -> MODEL_BASIC;
-            case ENCHANTED -> MODEL_ENCHANTED;
-            case FORBIDDEN -> MODEL_FORBIDDEN;
-            case HEAVENLY, CREATIVE -> MODEL_HEAVENLY;
-        };
     }
 
     private static void addVertex(VertexConsumer consumer, PoseStack.Pose pose, float x, float y, float z, float r, float g, float b, float u, float v, int lightCoords, int overlayCoords) {
@@ -69,21 +49,15 @@ public class ManaFontSpecialRenderer implements SpecialModelRenderer<ManaFontSpe
 
     @Override
     public void submit(
-            @Nullable FontData data,
+            @Nullable Source source,
             @NotNull PoseStack poseStack,
             @NotNull SubmitNodeCollector submitNodeCollector,
             int lightCoords,
             int overlayCoords,
             boolean hasFoil,
             int outlineColor) {
-        DeviceTier tier = data == null ? DeviceTier.BASIC : data.tier();
-        Source source = data == null || data.source() == null ? Sources.EARTH : data.source();
-
-        // Draw the font base
-        SubModelRenderHelper.submitItemModel(getModelLocation(tier), ItemStack.EMPTY, poseStack, submitNodeCollector, lightCoords, overlayCoords, hasFoil, outlineColor);
-
-        // Draw the font core
-        Color sourceColor = new Color(source.getColor());
+        // Draw the font core; the font base is drawn by the sibling model in the item definition's composite
+        Color sourceColor = new Color(source == null ? Sources.EARTH.getColor() : source.getColor());
         final float r = sourceColor.getRed() / 255.0F;
         final float g = sourceColor.getGreen() / 255.0F;
         final float b = sourceColor.getBlue() / 255.0F;
@@ -140,15 +114,15 @@ public class ManaFontSpecialRenderer implements SpecialModelRenderer<ManaFontSpe
     }
 
     @Override
-    public @Nullable FontData extractArgument(@NotNull ItemStack itemStack) {
+    public @Nullable Source extractArgument(@NotNull ItemStack itemStack) {
         if (itemStack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof AbstractManaFontBlock fontBlock) {
-            return new FontData(fontBlock.getDeviceTier(), fontBlock.getSource());
+            return fontBlock.getSource();
         } else {
             return null;
         }
     }
 
-    public record Unbaked() implements SpecialModelRenderer.Unbaked<FontData> {
+    public record Unbaked() implements SpecialModelRenderer.Unbaked<Source> {
         public static final MapCodec<ManaFontSpecialRenderer.Unbaked> MAP_CODEC = MapCodec.unit(new ManaFontSpecialRenderer.Unbaked());
 
         @Override

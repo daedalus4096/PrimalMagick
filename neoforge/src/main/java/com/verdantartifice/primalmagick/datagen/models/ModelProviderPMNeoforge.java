@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.datagen.models;
 
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.renderer.item.ClientItem;
+import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -42,6 +44,11 @@ public class ModelProviderPMNeoforge extends AbstractModelProviderPM {
     @Override
     public String getName() {
         return "Model Definitions - " + this.modIdentifier;
+    }
+
+    @Override
+    protected void registerClientItem(ItemModelGenerators itemModels, Identifier id, ItemModel.Unbaked model) {
+        itemModels.itemModelOutput.register(id, new ClientItem(model, ClientItem.Properties.DEFAULT));
     }
 
     @Override

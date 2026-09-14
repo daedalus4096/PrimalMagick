@@ -3,6 +3,17 @@ package com.verdantartifice.primalmagick.datagen.models;
 import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.client.color.item.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ArcanometerSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaFontSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaInjectorSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaOrbSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaRelaySpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.MundaneWandSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ScanStateItemProperty;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.SpellcraftingAltarSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.SpelltomeSpecialRenderer;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
@@ -34,6 +45,9 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import com.verdantartifice.primalmagick.common.wands.WandCap;
+import com.verdantartifice.primalmagick.common.wands.WandCore;
+import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.color.item.Constant;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -54,7 +68,12 @@ import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.minecraft.client.renderer.block.dispatch.multipart.CombinedCondition;
 import net.minecraft.client.renderer.block.dispatch.multipart.Condition;
 import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.RangeSelectItemModel;
 import net.minecraft.client.renderer.item.SelectItemModel;
+import net.minecraft.client.renderer.item.properties.conditional.IsUsingItem;
+import net.minecraft.client.renderer.item.properties.select.DisplayContext;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.data.BlockFamily;
@@ -71,7 +90,6 @@ import net.minecraft.world.level.block.state.properties.BellAttachType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -353,7 +371,9 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.PRIMAL_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.PRIMAL_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFishingRod(ItemsPM.PRIMAL_FISHING_ROD.get());
-        // TODO Generate client item for sacred shield?
+        itemModels.itemModelOutput.accept(ItemsPM.SACRED_SHIELD.get(), ItemModelUtils.conditional(new IsUsingItem(),
+                ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(ItemsPM.SACRED_SHIELD.get(), "_blocking")),
+                ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(ItemsPM.SACRED_SHIELD.get()))));
         this.generateSpelltomeItem(itemModels, ItemsPM.SPELLTOME_APPRENTICE.get(), ItemsPM.STATIC_BOOK.get());
         this.generateSpelltomeItem(itemModels, ItemsPM.SPELLTOME_ADEPT.get(), ItemsPM.STATIC_BOOK_UNCOMMON.get());
         this.generateSpelltomeItem(itemModels, ItemsPM.SPELLTOME_WIZARD.get(), ItemsPM.STATIC_BOOK_RARE.get());
@@ -362,6 +382,22 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.generateManaOrbItem(itemModels, ItemsPM.MANA_ORB_ADEPT.get(), ItemsPM.ADEPT_WAND_GEM_ITEM.get());
         this.generateManaOrbItem(itemModels, ItemsPM.MANA_ORB_WIZARD.get(), ItemsPM.WIZARD_WAND_GEM_ITEM.get());
         this.generateManaOrbItem(itemModels, ItemsPM.MANA_ORB_ARCHMAGE.get(), ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get());
+
+        // Generate client item definitions for the device blocks drawn by special renderers
+        List.of(DeviceTier.BASIC, DeviceTier.ENCHANTED, DeviceTier.FORBIDDEN, DeviceTier.HEAVENLY).forEach(tier ->
+                AbstractManaFontBlock.getAllManaFontsForTier(tier).forEach(block -> this.generateManaFontItem(itemModels, block)));
+        this.generateDeviceItem(itemModels, BlocksPM.MANA_RELAY_BASIC.get(), ManaRelaySpecialRenderer.Unbaked.INSTANCE);
+        this.generateDeviceItem(itemModels, BlocksPM.MANA_RELAY_ENCHANTED.get(), ManaRelaySpecialRenderer.Unbaked.INSTANCE);
+        this.generateDeviceItem(itemModels, BlocksPM.MANA_RELAY_FORBIDDEN.get(), ManaRelaySpecialRenderer.Unbaked.INSTANCE);
+        this.generateDeviceItem(itemModels, BlocksPM.MANA_RELAY_HEAVENLY.get(), ManaRelaySpecialRenderer.Unbaked.INSTANCE);
+        this.generateDeviceItem(itemModels, BlocksPM.MANA_INJECTOR_BASIC.get(), new ManaInjectorSpecialRenderer.Unbaked(MANA_INJECTOR_CYCLE_TIME));
+        this.generateDeviceItem(itemModels, BlocksPM.MANA_INJECTOR_ENCHANTED.get(), new ManaInjectorSpecialRenderer.Unbaked(MANA_INJECTOR_CYCLE_TIME));
+        this.generateDeviceItem(itemModels, BlocksPM.MANA_INJECTOR_FORBIDDEN.get(), new ManaInjectorSpecialRenderer.Unbaked(MANA_INJECTOR_CYCLE_TIME));
+        this.generateDeviceItem(itemModels, BlocksPM.MANA_INJECTOR_HEAVENLY.get(), new ManaInjectorSpecialRenderer.Unbaked(MANA_INJECTOR_CYCLE_TIME));
+        Identifier altarModelLoc = ModelLocationUtils.getModelLocation(BlocksPM.SPELLCRAFTING_ALTAR.get());
+        itemModels.itemModelOutput.accept(BlocksPM.SPELLCRAFTING_ALTAR.get().asItem(), ItemModelUtils.composite(
+                ItemModelUtils.plainModel(altarModelLoc),
+                ItemModelUtils.specialModel(altarModelLoc, SpellcraftingAltarSpecialRenderer.Unbaked.INSTANCE)));
 
         // Generate mana arrow items
         ManaArrowItem.getManaArrows().forEach(item ->
@@ -400,7 +436,14 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // Generate miscellaneous items
         itemModels.generateFlatItem(ItemsPM.GRIMOIRE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.CREATIVE_GRIMOIRE.get(), ModelTemplates.FLAT_ITEM);
-        // TODO Generate arcanometer
+        var arcanometerBase = ItemModelUtils.rangeSelect(new ScanStateItemProperty(),
+                ItemModelUtils.plainModel(ResourceUtils.loc("item/arcanometer_0")),
+                new RangeSelectItemModel.Entry(0.0625F, ItemModelUtils.plainModel(ResourceUtils.loc("item/arcanometer_1"))),
+                new RangeSelectItemModel.Entry(0.3125F, ItemModelUtils.plainModel(ResourceUtils.loc("item/arcanometer_2"))),
+                new RangeSelectItemModel.Entry(0.5625F, ItemModelUtils.plainModel(ResourceUtils.loc("item/arcanometer_3"))),
+                new RangeSelectItemModel.Entry(0.8125F, ItemModelUtils.plainModel(ResourceUtils.loc("item/arcanometer_4"))));
+        itemModels.itemModelOutput.accept(ItemsPM.ARCANOMETER.get(), ItemModelUtils.composite(arcanometerBase,
+                ItemModelUtils.specialModel(ModelLocationUtils.getModelLocation(ItemsPM.ARCANOMETER.get()), ArcanometerSpecialRenderer.Unbaked.INSTANCE)));
         itemModels.generateFlatItem(ItemsPM.MAGNIFYING_GLASS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.ALCHEMICAL_WASTE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.BLOODY_FLESH.get(), ModelTemplates.FLAT_ITEM);
@@ -436,7 +479,8 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.BASIC_WARDING_MODULE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.GREATER_WARDING_MODULE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.SUPREME_WARDING_MODULE.get(), ModelTemplates.FLAT_ITEM);
-        // TODO Generate pixie house item
+        itemModels.itemModelOutput.accept(ItemsPM.PIXIE_HOUSE.get(), ItemModelUtils.specialModel(
+                ResourceUtils.loc("block/empty"), PixieHouseSpecialRenderer.DEFAULT_TRANSFORMATION, PixieHouseSpecialRenderer.Unbaked.INSTANCE));
 
         // Generate knowledge items
         itemModels.generateFlatItem(ItemsPM.OBSERVATION_NOTES.get(), ModelTemplates.FLAT_ITEM);
@@ -483,9 +527,24 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // Generate caster items
         itemModels.generateFlatItem(ItemsPM.SPELL_SCROLL_BLANK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.SPELL_SCROLL_FILLED.get(), ModelTemplates.FLAT_ITEM);
-        // TODO Generate mundane wand
-        // TODO Generate modular wand
-        // TODO Generate modular staff
+        itemModels.itemModelOutput.accept(ItemsPM.MUNDANE_WAND.get(), ItemModelUtils.specialModel(
+                ModelLocationUtils.getModelLocation(ItemsPM.MUNDANE_WAND.get()), MundaneWandSpecialRenderer.Unbaked.INSTANCE));
+        itemModels.itemModelOutput.accept(ItemsPM.MODULAR_WAND.get(), ItemModelUtils.specialModel(
+                ModelLocationUtils.getModelLocation(ItemsPM.MODULAR_WAND.get()), new ModularWandSpecialRenderer.Unbaked(false)));
+        itemModels.itemModelOutput.accept(ItemsPM.MODULAR_STAFF.get(), ItemModelUtils.specialModel(
+                ModelLocationUtils.getModelLocation(ItemsPM.MODULAR_STAFF.get()), new ModularWandSpecialRenderer.Unbaked(true)));
+
+        // Generate client item definitions for the component models drawn by the wand special renderers
+        this.registerPartClientItem(itemModels, ResourceUtils.loc("mundane_wand_core"));
+        WandCore.getAllWandCores().forEach(core -> {
+            this.registerPartClientItem(itemModels, core.getWandModelResourceLocationNamespace());
+            this.registerPartClientItem(itemModels, core.getStaffModelResourceLocationNamespace());
+        });
+        WandCap.getAllWandCaps().forEach(cap -> {
+            this.registerPartClientItem(itemModels, cap.getWandModelResourceLocationNamespace());
+            this.registerPartClientItem(itemModels, cap.getStaffModelResourceLocationNamespace());
+        });
+        WandGem.getAllWandGems().forEach(gem -> this.registerPartClientItem(itemModels, gem.getModelResourceLocationNamespace()));
 
         // Generate wand component items
         WandCoreItem.getAllCores().forEach(item -> itemModels.generateFlatItem(item, ModelTemplates.FLAT_ITEM));
@@ -553,14 +612,57 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 Optional.ofNullable(defaultModel)));
     }
 
+    /** Book openness (in degrees) that the old spelltome renderer used while the tome was held in first person */
+    private static final float SPELLTOME_OPEN_DEGREES = 71.62F;
+    /** Length in ticks of the mana injector's bob animation, matching ManaInjectorTER.CYCLE_DURATION */
+    private static final double MANA_INJECTOR_CYCLE_TIME = 40D;
+
+    /**
+     * Register a client item definition under an arbitrary identifier, rather than for a registered item.
+     * Used for the wand component models resolved by id at render time. Platform-specific because the
+     * vanilla ItemModelOutput is keyed by item; NeoForge patches in an identifier-keyed overload.
+     */
+    protected abstract void registerClientItem(ItemModelGenerators itemModels, Identifier id, ItemModel.Unbaked model);
+
+    private void registerPartClientItem(ItemModelGenerators itemModels, Identifier modelId) {
+        this.registerClientItem(itemModels, modelId, ItemModelUtils.plainModel(modelId));
+    }
+
+    private void generateDeviceItem(ItemModelGenerators itemModels, Block block, SpecialModelRenderer.Unbaked<?> unbaked) {
+        itemModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.specialModel(ModelLocationUtils.getModelLocation(block), unbaked));
+    }
+
+    private void generateManaFontItem(ItemModelGenerators itemModels, Block block) {
+        Identifier itemModelLoc = this.deviceTransforms(Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.EMPTY)
+                        .parent(ModelLocationUtils.getModelLocation(block)))
+                .createWithSuffix(block, "_item", TextureMappingsPM::empty, itemModels.modelOutput);
+        itemModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.composite(
+                ItemModelUtils.plainModel(itemModelLoc),
+                ItemModelUtils.specialModel(itemModelLoc, new ManaFontSpecialRenderer.Unbaked())));
+    }
+
+    private IModelTemplateExtender deviceTransforms(IModelTemplateExtender extender) {
+        return extender
+                .transform(ItemDisplayContext.GUI, transform -> transform.leftRotation(30, 225, 0).translation(0, 0, 0).scale(0.625F))
+                .transform(ItemDisplayContext.GROUND, transform -> transform.leftRotation(0, 0, 0).translation(0, 3F, 0).scale(0.25F))
+                .transform(ItemDisplayContext.FIXED, transform -> transform.leftRotation(0, 0, 0).translation(0, 0, 0).scale(0.5F))
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, transform -> transform.leftRotation(0, 225, 0).translation(0, 0, 0).scale(0.40F))
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, transform -> transform.leftRotation(0, 45, 0).translation(0, 0, 0).scale(0.40F))
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, transform -> transform.leftRotation(75, 45, 0).translation(0, 2.5F, 0).scale(0.375F));
+    }
+
     private void generateManaOrbItem(ItemModelGenerators itemModels, Item item, Item particleItem) {
         Identifier modelLoc = ModelTemplatesPM.MANA_ORB.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
-        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.specialModel(modelLoc, new ManaOrbSpecialRenderer.Unbaked(true)));
     }
 
     private void generateSpelltomeItem(ItemModelGenerators itemModels, Item item, Item particleItem) {
         Identifier modelLoc = ModelTemplatesPM.SPELLTOME.create(item, TextureMapping.particleFromItem(particleItem), itemModels.modelOutput);
-        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(modelLoc));
+        // The tome sits open in a reader's hands but rests closed everywhere else, as under the old renderer
+        var openTome = ItemModelUtils.specialModel(modelLoc, new SpelltomeSpecialRenderer.Unbaked(SPELLTOME_OPEN_DEGREES, 0.1F, 0.9F));
+        var closedTome = ItemModelUtils.specialModel(modelLoc, new SpelltomeSpecialRenderer.Unbaked(0F, 0.1F, 0.9F));
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.select(new DisplayContext(), closedTome,
+                ItemModelUtils.when(List.of(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, ItemDisplayContext.FIRST_PERSON_RIGHT_HAND), openTome)));
     }
 
     private void createEmptyBlock(Block block, BlockModelGenerators blockModels) {
