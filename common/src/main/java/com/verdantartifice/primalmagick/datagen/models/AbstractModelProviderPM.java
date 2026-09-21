@@ -19,8 +19,6 @@ import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
-import com.verdantartifice.primalmagick.common.blocks.misc.SkyglassBlock;
-import com.verdantartifice.primalmagick.common.blocks.misc.SkyglassPaneBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
@@ -90,6 +88,7 @@ import net.minecraft.world.level.block.state.properties.BellAttachType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -814,8 +813,8 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 modelConnection -> modelConnection,
                 modelConnection -> BlockModelGenerators.plainVariant(
                         modelConnection.extendModel(ModelTemplates.STAINED_GLASS_PANE_NOSIDE, ResourceUtils.loc("block/skyglass_pane"))
-                            .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput))));
-        blockModels.blockStateOutput.accept(ModelConnectionSets.PANE.generatorFactory().apply(glassBlock, paneVariants));
+                            .createWithSuffix(paneBlock, modelConnection.suffix(), TextureMappingsPM.connected(paneBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput))));
+        blockModels.blockStateOutput.accept(ModelConnectionSets.PANE.generatorFactory().apply(paneBlock, paneVariants));
         blockModels.registerSimpleItemModel(paneBlock.asItem(), blockModels.createFlatItemModelWithBlockTexture(paneBlock.asItem(), glassBlock));
     }
 
@@ -833,7 +832,13 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.blockStateOutput.accept(ModelConnectionSets.CUBE.generatorFactory().apply(glassBlock, glassVariants));
         blockModels.registerSimpleTintedItemModel(glassBlock, variantZeroLoc, ItemModelUtils.constantTint(glassBlock.getColor().getFireworkColor()));
 
-        // TODO Define block states and models for pane
+        // Define block states and models for pane
+        Map<ModelConnection, MultiVariant> paneVariants = ModelConnectionSets.PANE.modelConnections().stream().collect(Collectors.toMap(
+                modelConnection -> modelConnection,
+                modelConnection -> BlockModelGenerators.plainVariant(
+                        modelConnection.extendModel(ModelTemplates.STAINED_GLASS_PANE_NOSIDE, ResourceUtils.loc("block/stained_skyglass_pane"))
+                            .createWithSuffix(paneBlock, modelConnection.suffix(), TextureMappingsPM.connected(paneBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput))));
+        blockModels.blockStateOutput.accept(ModelConnectionSets.PANE.generatorFactory().apply(paneBlock, paneVariants));
         blockModels.registerSimpleTintedItemModel(paneBlock, blockModels.createFlatItemModelWithBlockTexture(paneBlock.asItem(), glassBlock), ItemModelUtils.constantTint(paneBlock.getColor().getFireworkColor()));
     }
 
