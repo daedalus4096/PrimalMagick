@@ -39,21 +39,10 @@ import com.verdantartifice.primalmagick.client.renderers.tile.SanguineCrucibleTE
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WindGeneratorTER;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.FishingRodItem;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
@@ -70,7 +59,6 @@ public class ClientModLifecycleEvents {
         if (INITIALIZED.compareAndSet(false, true)) {
             registerScreens();
             registerTERs();
-            registerItemProperties(workConsumer);
         }
     }
 
@@ -120,67 +108,5 @@ public class ClientModLifecycleEvents {
         BlockEntityRenderers.register(BlockEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTER::new);
         BlockEntityRenderers.register(BlockEntityTypesPM.MANA_RELAY.get(), ManaRelayTER::new);
         BlockEntityRenderers.register(BlockEntityTypesPM.MANA_INJECTOR.get(), ManaInjectorTER::new);
-    }
-    
-    private static void registerItemProperties(Consumer<Runnable> workConsumer) {
-        // Register properties for items on the main thread in a thread-safe fashion
-        workConsumer.accept(() -> {
-            ItemProperties.register(ItemsPM.FLYING_CARPET.get(), FlyingCarpetItem.COLOR_PROPERTY, (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
-                DyeColor color = null;
-                if (stack != null && stack.getItem() instanceof FlyingCarpetItem carpetItem) {
-                    color = carpetItem.getDyeColor(stack);
-                }
-                if (color == null) {
-                    // Default to white if no dye color is applied
-                    color = DyeColor.WHITE;
-                }
-                return ((float)color.getId() / 16.0F);
-            });
-
-            ClampedItemPropertyFunction castProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
-                if (entity == null) {
-                    return 0.0F;
-                } else {
-                    boolean inMain = entity.getMainHandItem() == stack;
-                    boolean inOff = entity.getOffhandItem() == stack;
-                    if (entity.getMainHandItem().getItem() instanceof FishingRodItem) {
-                        inOff = false;
-                    }
-                    return (inMain || inOff) && entity instanceof Player && ((Player)entity).fishing != null ? 1.0F : 0.0F;
-                }
-            };
-            ItemProperties.register(ItemsPM.PRIMALITE_FISHING_ROD.get(), Identifier.withDefaultNamespace("cast"), castProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_FISHING_ROD.get(), Identifier.withDefaultNamespace("cast"), castProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), Identifier.withDefaultNamespace("cast"), castProperty);
-            ItemProperties.register(ItemsPM.PRIMAL_FISHING_ROD.get(), Identifier.withDefaultNamespace("cast"), castProperty);
-
-            ClampedItemPropertyFunction handActiveProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
-                return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
-            };
-            ItemProperties.register(ItemsPM.PRIMALITE_TRIDENT.get(), Identifier.withDefaultNamespace("throwing"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_TRIDENT.get(), Identifier.withDefaultNamespace("throwing"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_TRIDENT.get(), Identifier.withDefaultNamespace("throwing"), handActiveProperty);
-            ItemProperties.register(ItemsPM.FORBIDDEN_TRIDENT.get(), Identifier.withDefaultNamespace("throwing"), handActiveProperty);
-            ItemProperties.register(ItemsPM.PRIMALITE_SHIELD.get(), Identifier.withDefaultNamespace("blocking"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_SHIELD.get(), Identifier.withDefaultNamespace("blocking"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_SHIELD.get(), Identifier.withDefaultNamespace("blocking"), handActiveProperty);
-            ItemProperties.register(ItemsPM.SACRED_SHIELD.get(), Identifier.withDefaultNamespace("blocking"), handActiveProperty);
-
-            ClampedItemPropertyFunction pullProperty = (ItemStack stack, ClientLevel world, LivingEntity entity, int seed) -> {
-                if (entity == null) {
-                    return 0.0F;
-                } else {
-                    return entity.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / 20.0F;
-                }
-            };
-            ItemProperties.register(ItemsPM.PRIMALITE_BOW.get(), Identifier.withDefaultNamespace("pull"), pullProperty);
-            ItemProperties.register(ItemsPM.PRIMALITE_BOW.get(), Identifier.withDefaultNamespace("pulling"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_BOW.get(), Identifier.withDefaultNamespace("pull"), pullProperty);
-            ItemProperties.register(ItemsPM.HEXIUM_BOW.get(), Identifier.withDefaultNamespace("pulling"), handActiveProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_BOW.get(), Identifier.withDefaultNamespace("pull"), pullProperty);
-            ItemProperties.register(ItemsPM.HALLOWSTEEL_BOW.get(), Identifier.withDefaultNamespace("pulling"), handActiveProperty);
-            ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), Identifier.withDefaultNamespace("pull"), pullProperty);
-            ItemProperties.register(ItemsPM.FORBIDDEN_BOW.get(), Identifier.withDefaultNamespace("pulling"), handActiveProperty);
-        });
     }
 }
