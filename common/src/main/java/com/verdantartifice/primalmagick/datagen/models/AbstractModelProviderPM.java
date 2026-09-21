@@ -804,12 +804,18 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // Define block models and states for full glass block
         Map<ModelConnection, MultiVariant> glassVariants = ModelConnectionSets.CUBE.modelConnections().stream().collect(Collectors.toMap(
                 modelConnection -> modelConnection,
-                modelConnection -> BlockModelGenerators.plainVariant(Services.MODEL_TEMPLATES.extend(ModelTemplates.CUBE_DIRECTIONAL)
-                        .parent(ResourceUtils.loc("block/skyglass_base"))
-                        .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput))));
+                modelConnection -> BlockModelGenerators.plainVariant(
+                        modelConnection.extendModel(ModelTemplates.CUBE_DIRECTIONAL, ResourceUtils.loc("block/skyglass"))
+                            .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput))));
         blockModels.blockStateOutput.accept(ModelConnectionSets.CUBE.generatorFactory().apply(glassBlock, glassVariants));
 
-        // TODO Define block states and models for pane
+        // Define block states and models for pane
+        Map<ModelConnection, MultiVariant> paneVariants = ModelConnectionSets.PANE.modelConnections().stream().collect(Collectors.toMap(
+                modelConnection -> modelConnection,
+                modelConnection -> BlockModelGenerators.plainVariant(
+                        modelConnection.extendModel(ModelTemplates.STAINED_GLASS_PANE_NOSIDE, ResourceUtils.loc("block/skyglass_pane"))
+                            .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput))));
+        blockModels.blockStateOutput.accept(ModelConnectionSets.PANE.generatorFactory().apply(glassBlock, paneVariants));
         blockModels.registerSimpleItemModel(paneBlock.asItem(), blockModels.createFlatItemModelWithBlockTexture(paneBlock.asItem(), glassBlock));
     }
 
@@ -817,8 +823,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // Define block models and states for full glass block
         Map<ModelConnection, Identifier> glassModelIds = ModelConnectionSets.CUBE.modelConnections().stream().collect(Collectors.toMap(
                 modelConnection -> modelConnection,
-                modelConnection -> Services.MODEL_TEMPLATES.extend(ModelTemplates.CUBE_DIRECTIONAL)
-                        .parent(ResourceUtils.loc("block/stained_skyglass_base"))
+                modelConnection -> modelConnection.extendModel(ModelTemplates.CUBE_DIRECTIONAL, ResourceUtils.loc("block/stained_skyglass"))
                         .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(ResourceUtils.loc("block/stained_skyglass"), modelConnection).forceAllTranslucent(), blockModels.modelOutput)));
         Identifier variantZeroLoc = glassModelIds.get(ModelConnections.ZERO);
         Map<ModelConnection, MultiVariant> glassVariants = glassModelIds.entrySet().stream().collect(Collectors.toMap(

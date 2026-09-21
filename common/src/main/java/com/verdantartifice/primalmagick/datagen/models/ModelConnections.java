@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.datagen.models;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.data.models.model.TextureSlot;
 
+import java.util.Optional;
+
 public class ModelConnections {
     public static final ModelConnection ZERO = new ModelConnection("0", ImmutableMap.<TextureSlot, TextureConnection>builder()
             .put(TextureSlot.UP, TextureConnections.UNCONNECTED)
@@ -104,9 +106,12 @@ public class ModelConnections {
     public static final ModelConnection PANE_SIDE_UDLR = createPaneConnection(true, false, TextureConnections.UDLR);
     public static final ModelConnection PANE_SIDE_ULR = createPaneConnection(true, false, TextureConnections.ULR);
     public static final ModelConnection PANE_SIDE_UNCONNECTED = createPaneConnection(true, false, TextureConnections.UNCONNECTED);
-    public static final ModelConnection PANE_POST = new ModelConnection("post", ImmutableMap.of());
+    public static final ModelConnection PANE_POST = new ModelConnection("post", Optional.empty(), ImmutableMap.of());
 
     protected static ModelConnection createPaneConnection(boolean side, boolean alt, TextureConnection textureConnection) {
-        return new ModelConnection((side ? "side_" : "noside_") + (alt ? "alt_" : "") + textureConnection.name(), ImmutableMap.of(TextureSlot.PANE, textureConnection));
+        return new ModelConnection(
+                (side ? "side_" : "noside_") + (alt ? "alt_" : "") + textureConnection.name(),
+                Optional.of((side ? "side_" : "noside_") + (alt ? "alt_" : "") + "base"),
+                ImmutableMap.of(TextureSlot.PANE, textureConnection));
     }
 }
