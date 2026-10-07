@@ -583,6 +583,9 @@ public class PlayerEvents {
     }
     
     public static void onUseHoe(Player player, UseOnContext context, Consumer<BlockState> stateUpdater) {
+        if (context.getPlayer() == null) {
+            return;  // Tool-use events without a player have nothing to do here
+        }
         ItemStack stack = context.getItemInHand();
         int enchantLevel = EnchantmentHelperPM.getEnchantmentLevel(stack, EnchantmentsPM.VERDANT, context.getPlayer().registryAccess());
         if (enchantLevel > 0) {
