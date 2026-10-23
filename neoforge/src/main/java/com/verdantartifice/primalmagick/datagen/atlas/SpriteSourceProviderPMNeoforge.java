@@ -86,7 +86,7 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(guiAtlas, DesalinatorMenu.FLASK_SLOT_TEXTURE);
 
         // Add block entity renderer textures to the block atlas
-        this.addSingle(blockAtlas, ManaFontTER.TEXTURE);
+        this.addSingle(blockAtlas, ResourceUtils.loc("entity/mana_font_core"));
         this.addSingle(blockAtlas, RitualBellTER.TEXTURE);
         this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE);
         this.addSingle(blockAtlas, ManaRelayTER.CORE_TEXTURE);
