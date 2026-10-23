@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
@@ -130,20 +130,14 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         }
     }
     
-    public Color getCurrentColor(float partialTicks) {
+    public int getCurrentColor(float partialTicks) {
         if (this.nextUpdate == 0) {
-            return new Color(Sources.EARTH.getColor());
+            return Sources.EARTH.getColor();
         } else if (this.currentRotation.isPause()) {
-            return new Color(this.nextSource.getColor());
+            return this.nextSource.getColor();
         } else {
-            Color last = new Color(this.lastSource.getColor());
-            Color next = new Color(this.nextSource.getColor());
             float blend = (this.phaseTicks + partialTicks) / (float)this.nextUpdate;
-            float inverse = 1F - blend;
-            float r = (next.getRed() * blend) + (last.getRed() * inverse);
-            float g = (next.getGreen() * blend) + (last.getGreen() * inverse);
-            float b = (next.getBlue() * blend) + (last.getBlue() * inverse);
-            return new Color(Mth.clamp(r / 255F, 0, 1F), Mth.clamp(g / 255F, 0, 1F), Mth.clamp(b / 255F, 0, 1F));
+            return ARGB.linearLerp(blend, this.lastSource.getColor(), this.nextSource.getColor());
         }
     }
     
