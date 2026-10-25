@@ -44,6 +44,7 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
     protected void addVertex(VertexConsumer renderer, PoseStack.Pose stack, float x, float y, float z, float r, float g, float b, float u, float v) {
         renderer.addVertex(stack, x, y, z)
                 .setColor(r, g, b, 1.0F)
+                .setOverlay(OverlayTexture.NO_OVERLAY)
                 .setUv(u, v)
                 .setUv2(240, 240)
                 .setNormal(1, 0, 0);

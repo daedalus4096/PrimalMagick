@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.util.ARGB;
@@ -34,6 +35,7 @@ public class WindGeneratorTER implements BlockEntityRenderer<WindGeneratorTileEn
     protected void addVertex(VertexConsumer renderer, PoseStack.Pose pose, float x, float y, float z, float r, float g, float b, float u, float v) {
         renderer.addVertex(pose, x, y, z)
                 .setColor(r, g, b, 1.0F)
+                .setOverlay(OverlayTexture.NO_OVERLAY)
                 .setUv(u, v)
                 .setUv2(240, 240)
                 .setNormal(1, 0, 0);
