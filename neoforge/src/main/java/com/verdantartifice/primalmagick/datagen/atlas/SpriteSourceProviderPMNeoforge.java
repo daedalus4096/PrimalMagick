@@ -86,19 +86,19 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(guiAtlas, DesalinatorMenu.FLASK_SLOT_TEXTURE);
 
         // Add block entity renderer textures to the block atlas
-        this.addSingle(blockAtlas, ResourceUtils.loc("entity/mana_font_core"));
-        this.addSingle(blockAtlas, RitualBellTER.TEXTURE);
-        this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE);
+        this.addSingle(blockAtlas, ManaFontTER.CORE_SPRITE.texture());
+        this.addSingle(blockAtlas, RitualBellTER.BELL_TEXTURE.texture());
+        this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE.texture());
         this.addSingle(blockAtlas, ManaRelayTER.CORE_TEXTURE);
         this.addSingle(blockAtlas, ManaRelayTER.BASIC_FRAME_TEXTURE);
         this.addSingle(blockAtlas, ManaRelayTER.ENCHANTED_FRAME_TEXTURE);
         this.addSingle(blockAtlas, ManaRelayTER.FORBIDDEN_FRAME_TEXTURE);
         this.addSingle(blockAtlas, ManaRelayTER.HEAVENLY_FRAME_TEXTURE);
-        this.addSingle(blockAtlas, ManaInjectorTER.BASIC_FRAME_TEXTURE);
-        this.addSingle(blockAtlas, ManaInjectorTER.ENCHANTED_FRAME_TEXTURE);
-        this.addSingle(blockAtlas, ManaInjectorTER.FORBIDDEN_FRAME_TEXTURE);
-        this.addSingle(blockAtlas, ManaInjectorTER.HEAVENLY_FRAME_TEXTURE);
-        this.addSingle(blockAtlas, ManaInjectorTER.BOTTOM_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaInjectorTER.BASIC_FRAME_TOP.texture());
+        this.addSingle(blockAtlas, ManaInjectorTER.ENCHANTED_FRAME_TOP.texture());
+        this.addSingle(blockAtlas, ManaInjectorTER.FORBIDDEN_FRAME_TOP.texture());
+        this.addSingle(blockAtlas, ManaInjectorTER.HEAVENLY_FRAME_TOP.texture());
+        this.addSingle(blockAtlas, ManaInjectorTER.FRAME_BOTTOM.texture());
 
         // Add custom item stack renderer textures to the item atlas
         this.addSingle(itemAtlas, SacredShieldItem.TEXTURE);

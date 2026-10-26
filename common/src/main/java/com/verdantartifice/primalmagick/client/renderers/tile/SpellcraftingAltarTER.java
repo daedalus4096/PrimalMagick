@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingAltarTileEntity, SpellcraftingAltarTER.RenderState> {
-    private static final SpriteId RING_TEXTURE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("spellcrafting_altar/spellcrafting_altar_ring"));
+    public static final SpriteId RING_TEXTURE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("spellcrafting_altar/spellcrafting_altar_ring"));
 
     protected final SpellcraftingAltarRingModel ringModel;
     private final BlockEntityRendererProvider.Context context;
