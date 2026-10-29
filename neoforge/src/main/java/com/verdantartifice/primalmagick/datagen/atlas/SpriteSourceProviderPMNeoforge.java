@@ -89,11 +89,11 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(blockAtlas, ManaFontTER.CORE_SPRITE.texture());
         this.addSingle(blockAtlas, RitualBellTER.BELL_TEXTURE.texture());
         this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE.texture());
-        this.addSingle(blockAtlas, ManaRelayTER.CORE_TEXTURE);
-        this.addSingle(blockAtlas, ManaRelayTER.BASIC_FRAME_TEXTURE);
-        this.addSingle(blockAtlas, ManaRelayTER.ENCHANTED_FRAME_TEXTURE);
-        this.addSingle(blockAtlas, ManaRelayTER.FORBIDDEN_FRAME_TEXTURE);
-        this.addSingle(blockAtlas, ManaRelayTER.HEAVENLY_FRAME_TEXTURE);
+        this.addSingle(blockAtlas, ManaRelayTER.CORE.texture());
+        this.addSingle(blockAtlas, ManaRelayTER.BASIC_FRAME.texture());
+        this.addSingle(blockAtlas, ManaRelayTER.ENCHANTED_FRAME.texture());
+        this.addSingle(blockAtlas, ManaRelayTER.FORBIDDEN_FRAME.texture());
+        this.addSingle(blockAtlas, ManaRelayTER.HEAVENLY_FRAME.texture());
         this.addSingle(blockAtlas, ManaInjectorTER.BASIC_FRAME_TOP.texture());
         this.addSingle(blockAtlas, ManaInjectorTER.ENCHANTED_FRAME_TOP.texture());
         this.addSingle(blockAtlas, ManaInjectorTER.FORBIDDEN_FRAME_TOP.texture());
