@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEnti
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -58,13 +59,14 @@ public class DowsingRodItem extends Item {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    @NotNull
+    public InteractionResult useOn(@NotNull UseOnContext context) {
         Level level = context.getLevel();
         ItemStack stack = context.getItemInHand();
         Player player = context.getPlayer();
         BlockPos targetPos = context.getClickedPos();
         this.recordDowsingPosition(stack, player, targetPos);
-        if (!level.isClientSide()) {
+        if (player != null && !level.isClientSide()) {
             Block block = level.getBlockState(targetPos).getBlock();
             BlockEntity blockEntity = level.getBlockEntity(targetPos);
             if (blockEntity instanceof RitualAltarTileEntity altarEntity) {
@@ -94,7 +96,8 @@ public class DowsingRodItem extends Item {
     }
 
     @Override
-    public InteractionResult use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    @NotNull
+    public InteractionResult use(@NotNull Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
         // If using the dowsing rod on empty air, then clear any recorded dowsing positions
         InteractionResult retVal = super.use(pLevel, pPlayer, pUsedHand);
         this.recordDowsingPosition(pPlayer.getItemInHand(pUsedHand), pPlayer, null);
@@ -102,9 +105,9 @@ public class DowsingRodItem extends Item {
     }
 
     @Override
-    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
-        if (pIsSelected) {
+    public void inventoryTick(@NotNull ItemStack pStack, @NotNull ServerLevel pLevel, @NotNull Entity pEntity, @Nullable EquipmentSlot pSlot) {
+        super.inventoryTick(pStack, pLevel, pEntity, pSlot);
+        if (pSlot == EquipmentSlot.MAINHAND || pSlot == EquipmentSlot.OFFHAND) {
             // Only show network route highlights if the dowsing rod is currently selected
             BlockPos primaryPos = pStack.has(DataComponentsPM.DOWSING_PRIMARY_POSITION.get()) ? pStack.get(DataComponentsPM.DOWSING_PRIMARY_POSITION.get()) : null;
             if (primaryPos != null && pLevel.getBlockEntity(primaryPos) instanceof IManaNetworkNode primaryNode) {
@@ -167,20 +170,18 @@ public class DowsingRodItem extends Item {
 
     protected void doRouteTableCheck(@NotNull Level level, @NotNull IManaNetworkNode primaryNode, @NotNull Player player, @NotNull ItemStack stack) {
         BlockPos secondaryPos = stack.has(DataComponentsPM.DOWSING_SECONDARY_POSITION.get()) ? stack.get(DataComponentsPM.DOWSING_SECONDARY_POSITION.get()) : null;
-        player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.routes",
-                ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))), false);
+        player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.routes",
+                ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
         if (secondaryPos != null && level.getBlockEntity(secondaryPos) instanceof IManaNetworkNode secondaryNode) {
             if (secondaryNode instanceof IManaSupplier supplier && primaryNode instanceof IManaConsumer consumer &&
                     consumer.getRouteTable().getRoute(level, Optional.empty(), supplier, consumer).isPresent()) {
-                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.route_highlight",
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.route_highlight",
                         ComponentUtils.wrapInSquareBrackets(Component.literal(secondaryPos.toShortString())),
-                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))),
-                    false);
+                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
             } else {
-                player.displayClientMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.no_route",
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.mana_network.no_route",
                         ComponentUtils.wrapInSquareBrackets(Component.literal(secondaryPos.toShortString())),
-                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))),
-                    false);
+                        ComponentUtils.wrapInSquareBrackets(Component.literal(primaryNode.getBlockPos().toShortString()))));
             }
         }
     }
