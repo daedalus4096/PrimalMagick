@@ -185,7 +185,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         return inventoryIndex == OUTPUT_INV_INDEX ? ImmutableSet.of(0) : ImmutableSet.of();
     }
     
-    public Color getOrbColor() {
+    public int getOrbColor() {
         float hue, saturation;
         if (stability >= 0.0F) {
             hue = 120.0F / 360.0F;  // Green
@@ -194,7 +194,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
             hue = 0.0F / 360.0F;    // Red
             saturation = Mth.clamp(this.stability / MIN_STABILITY, 0.0F, 1.0F);
         }
-        return Color.getHSBColor(hue, saturation, 1.0F);
+        return Color.getHSBColor(hue, saturation, 1.0F).getRGB();
     }
     
     @Override
