@@ -27,7 +27,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -88,7 +88,7 @@ public class EventServiceNeoforge implements IEventService {
     @Override
     public int fireBlockBreakEvent(Level level, GameType gameType, ServerPlayer entityPlayer, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
-        BlockEvent.BreakEvent event = CommonHooks.fireBlockBreak(level, gameType, entityPlayer, pos, state);
+        BreakBlockEvent event = CommonHooks.fireBlockBreak(level, gameType, entityPlayer, pos, state);
         return event.isCanceled() ? -1 : state.getExpDrop(level, pos, level.getBlockEntity(pos), entityPlayer, entityPlayer.getMainHandItem());
     }
 
