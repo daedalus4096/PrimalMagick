@@ -56,7 +56,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity, Ma
     public void extractRenderState(@NotNull ManaRelayTileEntity blockEntity, @NotNull ManaRelayTER.RenderState state,
                                    float partialTicks, @NotNull Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
-        long time = blockEntity.getLevel().getLevelData().getGameTime();
+        long time = blockEntity.getLevel() == null ? 0 : blockEntity.getLevel().getLevelData().getGameTime();
         state.tier = blockEntity.getDeviceTier();
         state.bobDelta = 0.125D * Math.sin((time + (double)partialTicks) * (2D * Math.PI / (double)ManaRelayTileEntity.BOB_CYCLE_TIME_TICKS));
         state.coreRotation = 2F * ((time % 360) + partialTicks);

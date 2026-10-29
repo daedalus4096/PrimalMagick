@@ -60,7 +60,7 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
     public void extractRenderState(@NotNull SpellcraftingAltarTileEntity blockEntity, @NotNull SpellcraftingAltarTER.RenderState state,
                                    float partialTicks, @NotNull Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
-        long time = blockEntity.getLevel().getLevelData().getGameTime();
+        long time = blockEntity.getLevel() == null ? 0 : blockEntity.getLevel().getLevelData().getGameTime();
         state.coreColor = blockEntity.getCurrentColor(partialTicks);
         state.coreRotation = (time % 360) + partialTicks;
         state.ringRotation = blockEntity.getCurrentRotation(partialTicks);

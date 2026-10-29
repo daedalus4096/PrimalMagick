@@ -70,7 +70,7 @@ public class ManaInjectorTER implements BlockEntityRenderer<ManaInjectorTileEnti
     public void extractRenderState(@NotNull ManaInjectorTileEntity blockEntity, @NotNull ManaInjectorTER.RenderState state,
                                    float partialTicks, @NotNull Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
-        long time = blockEntity.getLevel().getLevelData().getGameTime();
+        long time = blockEntity.getLevel() == null ? 0 : blockEntity.getLevel().getLevelData().getGameTime();
         state.tier = blockEntity.getDeviceTier();
         state.topDip = this.getDipAmount(time, partialTicks, 0);
         state.topMiddleDip = this.getDipAmount(time, partialTicks, 4);

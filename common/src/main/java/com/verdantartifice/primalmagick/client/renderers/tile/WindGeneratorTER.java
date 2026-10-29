@@ -52,7 +52,7 @@ public class WindGeneratorTER implements BlockEntityRenderer<WindGeneratorTileEn
                                    float partialTicks, @NotNull Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.coreColor = blockEntity.getBlockState().getBlock() instanceof AbstractWindGeneratorBlock windBlock ? windBlock.getCoreColor() : 0;
-        state.coreRotation = (blockEntity.getLevel().getLevelData().getGameTime() % 360) + partialTicks;
+        state.coreRotation = blockEntity.getLevel() == null ? 0 : (blockEntity.getLevel().getLevelData().getGameTime() % 360) + partialTicks;
         if (blockEntity.getBlockState().getValue(AbstractWindGeneratorBlock.POWERED)) {
             state.coreRotation *= 30F;
         }

@@ -38,7 +38,7 @@ public class AutoChargerTER implements BlockEntityRenderer<AutoChargerTileEntity
                                    float partialTicks, @NotNull Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.stack = blockEntity.getSyncedStack().copyWithCount(1);
-        state.stackRotation = (blockEntity.getLevel().getLevelData().getGameTime() % 360) + partialTicks;
+        state.stackRotation = blockEntity.getLevel() == null ? 0 : (blockEntity.getLevel().getLevelData().getGameTime() % 360) + partialTicks;
     }
 
     @Override

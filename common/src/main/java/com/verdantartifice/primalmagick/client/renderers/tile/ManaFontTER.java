@@ -56,7 +56,7 @@ public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEnti
                                    float partialTicks, @NotNull Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.coreColor = blockEntity.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock ? fontBlock.getSource().getColor() : 0;
-        state.coreRotation = (blockEntity.getLevel().getLevelData().getGameTime() % 360) + partialTicks;
+        state.coreRotation = blockEntity.getLevel() == null ? 0 : (blockEntity.getLevel().getLevelData().getGameTime() % 360) + partialTicks;
         state.coreScale = (float)blockEntity.getMana() / Math.max(2000.0F, (float)blockEntity.getManaCapacity());   // Shrink the core as it holds less mana
     }
 

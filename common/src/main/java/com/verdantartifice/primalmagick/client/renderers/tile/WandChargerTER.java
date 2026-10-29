@@ -38,7 +38,7 @@ public class WandChargerTER implements BlockEntityRenderer<WandChargerTileEntity
                                    float partialTicks, @NotNull Vec3 cameraPosition, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.stack = blockEntity.getSyncedItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0).copyWithCount(1);
-        state.stackRotation = (blockEntity.getLevel().getLevelData().getGameTime() % 360) + partialTicks;
+        state.stackRotation = blockEntity.getLevel() == null ? 0 : (blockEntity.getLevel().getLevelData().getGameTime() % 360) + partialTicks;
     }
 
     @Override
