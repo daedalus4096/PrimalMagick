@@ -13,6 +13,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
 import javax.annotation.Nullable;
@@ -91,9 +92,13 @@ public class IconDefinition {
         if (this.tooltipOverrideOpt.isPresent()) {
             return ImmutableList.of(Component.translatable(this.tooltipOverrideOpt.get()));
         } else if (this.isItem && this.asItem() instanceof Item castItem) {
-            return ImmutableList.of(castItem.getName());
+            return ImmutableList.of(castItem.getName(new ItemStack(castItem)));
         } else if (this.isTag) {
-            return Services.ITEMS_REGISTRY.getTag(this.asTagKey()).map(tag -> tag.stream().map(Item::getName).toList()).orElse(ImmutableList.of());
+            return Services.ITEMS_REGISTRY.getTag(this.asTagKey())
+                    .map(tag -> tag.stream()
+                            .map(item -> item.getName(new ItemStack(item)))
+                            .toList())
+                    .orElse(ImmutableList.of());
         } else {
             return ImmutableList.of();
         }
