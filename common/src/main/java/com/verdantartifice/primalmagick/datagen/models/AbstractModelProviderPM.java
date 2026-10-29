@@ -72,6 +72,7 @@ import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.client.renderer.item.properties.conditional.IsUsingItem;
 import net.minecraft.client.renderer.item.properties.select.DisplayContext;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.data.BlockFamily;
@@ -478,8 +479,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFlatItem(ItemsPM.BASIC_WARDING_MODULE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.GREATER_WARDING_MODULE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.SUPREME_WARDING_MODULE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.itemModelOutput.accept(ItemsPM.PIXIE_HOUSE.get(), ItemModelUtils.specialModel(
-                ResourceUtils.loc("block/empty"), PixieHouseSpecialRenderer.DEFAULT_TRANSFORMATION, PixieHouseSpecialRenderer.Unbaked.INSTANCE));
+        this.generatePixieHouseItem(itemModels, ItemsPM.PIXIE_HOUSE.get());
 
         // Generate knowledge items
         itemModels.generateFlatItem(ItemsPM.OBSERVATION_NOTES.get(), ModelTemplates.FLAT_ITEM);
@@ -648,6 +648,23 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, transform -> transform.leftRotation(0, 225, 0).translation(0, 0, 0).scale(0.40F))
                 .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, transform -> transform.leftRotation(0, 45, 0).translation(0, 0, 0).scale(0.40F))
                 .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, transform -> transform.leftRotation(75, 45, 0).translation(0, 2.5F, 0).scale(0.375F));
+    }
+
+    private void generatePixieHouseItem(ItemModelGenerators itemModels, Item item) {
+        Identifier itemModelLoc = Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.EMPTY)
+                .parent(Identifier.withDefaultNamespace("builtin/entity"))
+                .guiLight(UnbakedModel.GuiLight.FRONT)
+                .transform(ItemDisplayContext.GUI, transform -> transform.translation(2, 3, 0).leftRotation(15, -25, -5).scale(0.65F))
+                .transform(ItemDisplayContext.GROUND, transform -> transform.translation(4, 4, 2).leftRotation(0, 0, 0).scale(0.25F))
+                .transform(ItemDisplayContext.FIXED, transform -> transform.translation(-2, 4, -5).leftRotation(0, 180, 0).scale(0.5F))
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, transform -> transform.translation(-2, 7, 0).leftRotation(0, 0, 5).scale(0.7F))
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND, transform -> transform.translation(6, 12, 5.75F).leftRotation(0, 90, 0).scale(0.7F))
+                // FIXME Should these transforms use rightRotation instead of leftRotation?
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, transform -> transform.translation(7, 7, 0).leftRotation(0, 0, 5).scale(0.7F))
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, transform -> transform.translation(6, 12, -3.75F).leftRotation(0, 90, 0).scale(0.7F))
+                .create(item, TextureMapping.particle(Blocks.OAK_LOG), itemModels.modelOutput);
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.specialModel(
+                itemModelLoc, PixieHouseSpecialRenderer.DEFAULT_TRANSFORMATION, PixieHouseSpecialRenderer.Unbaked.INSTANCE));
     }
 
     private void generateManaOrbItem(ItemModelGenerators itemModels, Item item, Item particleItem) {

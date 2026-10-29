@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.datagen.advancements.StoryAdvancementsPr
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
 import com.verdantartifice.primalmagick.datagen.atlas.SpriteSourceProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.books.StyleGuideProvider;
-import com.verdantartifice.primalmagick.datagen.items.ItemModelProviderPMNeoforge;
 import com.verdantartifice.primalmagick.datagen.lang.LanguageProviderEnUs;
 import com.verdantartifice.primalmagick.datagen.linguistics.GridDefinitionProvider;
 import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProviderNeoforge;
@@ -54,7 +53,6 @@ public class DataGeneratorsNeoforge {
         CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGeneratorNeoforge.addProviders(false, generator, generator.getPackOutput(), event.getLookupProvider());
         CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGeneratorNeoforge.addProviders(false, generator, generator.getPackOutput(), intermediate);
         event.addProvider(new SpriteSourceProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
-        event.addProvider(new ItemModelProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture, event.getExistingFileHelper()));
         event.addProvider(new SoundDefinitionsProviderPMNeoforge(generator.getPackOutput()));
         event.addProvider(new StyleGuideProvider(generator.getPackOutput()));
         event.addProvider(new ModelProviderPMNeoforge(generator.getPackOutput(), Constants.MOD_ID));

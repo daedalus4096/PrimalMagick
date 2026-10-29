@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.datagen.models;
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
@@ -17,6 +18,7 @@ import java.util.function.Consumer;
 
 public class ModelTemplateExtenderNeoforge extends AbstractModelTemplateExtender {
     private Optional<Identifier> parentOpt = Optional.empty();
+    private Optional<UnbakedModel.GuiLight> guiLightOpt = Optional.empty();
     private final Map<ItemDisplayContext, TransformVecBuilderPMNeoforge> transforms = new HashMap<>();
 
     public ModelTemplateExtenderNeoforge(ModelTemplate modelTemplate) {
@@ -27,6 +29,7 @@ public class ModelTemplateExtenderNeoforge extends AbstractModelTemplateExtender
     protected Identifier createInner(@NotNull Identifier modelLocation, @NotNull TextureMapping textureMapping, @NotNull BiConsumer<Identifier, ModelInstance> output) {
         ExtendedModelTemplateBuilder builder = this.modelTemplate.extend();
         this.parentOpt.ifPresent(builder::parent);
+        this.guiLightOpt.ifPresent(builder::guiLight);
         this.transforms.forEach((type, transformBuilder) -> builder.transform(type, transformBuilder::exportTo));
         // TODO Apply other extensions from the Neoforge-specific model extender
         return builder.build().create(modelLocation, textureMapping, output);
@@ -35,6 +38,12 @@ public class ModelTemplateExtenderNeoforge extends AbstractModelTemplateExtender
     @Override
     public IModelTemplateExtender parent(@NotNull Identifier parentId) {
         this.parentOpt = Optional.of(parentId);
+        return this;
+    }
+
+    @Override
+    public IModelTemplateExtender guiLight(@NotNull UnbakedModel.GuiLight guiLight) {
+        this.guiLightOpt = Optional.of(guiLight);
         return this;
     }
 

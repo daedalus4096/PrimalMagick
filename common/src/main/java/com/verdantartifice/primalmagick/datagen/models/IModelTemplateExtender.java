@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.models;
 
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -14,6 +15,7 @@ import java.util.function.Function;
 
 public interface IModelTemplateExtender {
     IModelTemplateExtender parent(@NotNull Identifier parentId);
+    IModelTemplateExtender guiLight(@NotNull UnbakedModel.GuiLight guiLight);
     IModelTemplateExtender transform(@NotNull ItemDisplayContext type, @NotNull Consumer<ITransformVecBuilderPM> action);
 
     Identifier create(@NotNull Block pBlock, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput);
