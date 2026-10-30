@@ -377,7 +377,7 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
             if (opt.isPresent() && opt.get().value() instanceof SpellcraftingRecipe recipe) {
                 // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
                 if (recipe.matches(this.scrollInv.asCraftInput(), level) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
-                    stack = recipe.assemble(this.scrollInv.asCraftInput(), level.registryAccess());
+                    stack = recipe.assemble(this.scrollInv.asCraftInput());
                     if (stack.getItem() instanceof SpellScrollItem scrollItem) {
                         scrollItem.setSpell(stack, this.getSpellPackage());
                     }
