@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.NotNull;
 
 public class PixieHouseRenderer extends LivingEntityRenderer<PixieHouseEntity, PixieHouseRenderState, PixieHouseModel> {
@@ -19,7 +20,7 @@ public class PixieHouseRenderer extends LivingEntityRenderer<PixieHouseEntity, P
 
     public PixieHouseRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, new PixieHouseModel(pContext.bakeLayer(ModelLayersPM.PIXIE_HOUSE)), 0.0F);
-        this.addLayer(new PixieHouseOccupantLayer(this, pContext.getModelSet()));
+        this.addLayer(new PixieHouseOccupantLayer(this, pContext));
     }
 
     @Override
@@ -51,5 +52,10 @@ public class PixieHouseRenderer extends LivingEntityRenderer<PixieHouseEntity, P
     public void extractRenderState(PixieHouseEntity pEntity, PixieHouseRenderState pRenderState, float pPartialTicks) {
         super.extractRenderState(pEntity, pRenderState, pPartialTicks);
         pRenderState.wiggle = (float)(pEntity.level().getGameTime() - pEntity.lastHit) + pPartialTicks;
+        pRenderState.occupantStack = pEntity.getHousedPixie();
+        pRenderState.isOccupantPresent = pEntity.getDeployedPixieReference().isEmpty();
+        RandomSource random = pEntity.getRandom();
+        pRenderState.occupantDx = random.nextGaussian() * 0.125D;
+        pRenderState.occupantDz = random.nextGaussian() * 0.125D;
     }
 }
