@@ -911,7 +911,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     protected void doMishapEffects(BlockPos target, boolean playSound) {
         if (this.level instanceof ServerLevel serverLevel) {
             BlockPos source = this.worldPosition.above(2);
-            PacketHandler.sendToAllAround(new SpellBoltPacket(source, target, this.getOrbColor().getRGB()), serverLevel, source, 32.0D);
+            PacketHandler.sendToAllAround(new SpellBoltPacket(source, target, this.getOrbColor()), serverLevel, source, 32.0D);
             if (playSound) {
                 this.level.playSound(null, source, SoundsPM.ELECTRIC.get(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(level.getRandom().nextGaussian() * 0.05D));
             }
