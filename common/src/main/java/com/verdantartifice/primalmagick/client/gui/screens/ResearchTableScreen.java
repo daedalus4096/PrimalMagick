@@ -239,7 +239,7 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
      * 
      * @author Daedalus4096
      */
-    protected static class StartProjectButton extends Button {
+    protected static class StartProjectButton extends Button.Plain {
         protected ResearchTableScreen screen;
         
         public StartProjectButton(int xIn, int yIn, Component text, ResearchTableScreen screen) {
@@ -268,7 +268,7 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
      * 
      * @author Daedalus4096
      */
-    protected static class CompleteProjectButton extends Button {
+    protected static class CompleteProjectButton extends Button.Plain {
         protected ResearchTableScreen screen;
         
         public CompleteProjectButton(int xIn, int yIn, Component text, ResearchTableScreen screen) {
