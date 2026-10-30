@@ -1,9 +1,7 @@
 package com.verdantartifice.primalmagick.client.renderers.entity.model;
 
 import com.verdantartifice.primalmagick.client.renderers.entity.state.PixieRenderState;
-import com.verdantartifice.primalmagick.common.entities.pixies.companions.AbstractPixieEntity;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
