@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.ContextAwarePredicate;
-import net.minecraft.advancements.criterion.CriterionValidator;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.LocationPredicate;
@@ -16,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.Validatable;
+import net.minecraft.world.level.storage.loot.ValidationContextSource;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
@@ -63,9 +64,9 @@ public class ScanLocationTrigger extends SimpleCriterionTrigger<ScanLocationTrig
             return this.location.isEmpty() || this.location.get().matches(pContext);
         }
 
-        public void validate(@NotNull CriterionValidator pValidator) {
-            SimpleCriterionTrigger.SimpleInstance.super.validate(pValidator);
-            this.location.ifPresent(loc -> pValidator.validate(loc, LootContextParamSets.ADVANCEMENT_LOCATION, ".location"));
+        public void validate(@NotNull ValidationContextSource contextSource) {
+            SimpleCriterionTrigger.SimpleInstance.super.validate(contextSource);
+            this.location.ifPresent(loc -> Validatable.validate(contextSource.context(LootContextParamSets.ADVANCEMENT_LOCATION), ".location", loc));
         }
 
         @NotNull
