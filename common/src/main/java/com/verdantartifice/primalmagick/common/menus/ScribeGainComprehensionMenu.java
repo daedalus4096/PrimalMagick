@@ -15,13 +15,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
 /**
@@ -77,7 +78,7 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     
     public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
-        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().identifier().hashCode() == hashCode).findFirst()
+        return this.level.registryAccess().lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).listElements().filter(h -> h.key().identifier().hashCode() == hashCode).findFirst()
                 .orElse(BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, this.level.registryAccess()));
     }
     
@@ -86,10 +87,11 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(pIndex);
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             stack = slotStack.copy();
             if (pIndex == 0) {

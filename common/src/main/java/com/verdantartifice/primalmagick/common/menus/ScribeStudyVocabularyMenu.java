@@ -29,6 +29,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
 import java.util.Optional;
@@ -103,7 +104,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                     for (int index = 0; index < 3; index++) {
                         // Set the cost of each slot, including the cost of any previous unstudied slots.  Studied slots are given a cost
                         // of -1 as a marker.  In isolation, each slot's cost is equal to its indexed value in COSTS_PER_SLOT (i.e. 25, 100, 300
-                        // respectively.  Thus, the final costs in the case where none have been studied would be 25, 125, and 425 respectively.
+                        // respectively).  Thus, the final costs in the case where none have been studied would be 25, 125, and 425 respectively.
                         // If, rather, the first slot had been studied, the costs would instead be -1, 100, and 400 respectively.  In addition,
                         // each slot's based cost is reduced by 1% per linguistics power being channeled into the block by its surroundings.  To
                         // extend the previous example, with 20 linguistics power, the final costs would then be -1, 80, and 320 respectively.
@@ -113,9 +114,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                     }
                     this.languageClue.set(lang.getRegisteredName().hashCode());
                     this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
-                }, () -> {
-                    this.setDefaultBookData();
-                });
+                }, this::setDefaultBookData);
             });
         } else {
             this.setDefaultBookData();
@@ -198,7 +197,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     
     public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
-        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().identifier().toString().hashCode() == hashCode).findFirst()
+        return this.level.registryAccess().lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).listElements().filter(h -> h.key().identifier().toString().hashCode() == hashCode).findFirst()
                 .orElse(BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, this.level.registryAccess()));
     }
 
@@ -207,7 +206,8 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+    @NotNull
+    public ItemStack quickMoveStack(@NotNull Player pPlayer, int pIndex) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(pIndex);
         if (slot.hasItem()) {
