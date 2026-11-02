@@ -17,9 +17,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +46,13 @@ public class SpellSelectionRadialScreen extends Screen {
             @Override
             public void renderTooltip(GuiGraphicsExtractor guiGraphics, ItemStack stack, int mouseX, int mouseY)
             {
-                guiGraphics.renderTooltip(font, stack, mouseX, mouseY);
+                guiGraphics.setTooltipForNextFrame(font, stack, mouseX, mouseY);
             }
 
             @Override
             public void renderTooltip(GuiGraphicsExtractor guiGraphics, List<Component> textComponents, int mouseX, int mouseY)
             {
-                guiGraphics.renderTooltip(font, textComponents, Optional.empty(), mouseX, mouseY);
+                guiGraphics.setTooltipForNextFrame(font, textComponents, Optional.empty(), mouseX, mouseY);
             }
 
             @Override
@@ -127,9 +129,9 @@ public class SpellSelectionRadialScreen extends Screen {
     }
 
     @Override
-    public boolean mouseReleased(double p_94722_, double p_94723_, int p_94724_) {
+    public boolean mouseReleased(@NotNull MouseButtonEvent event) {
         this.processClick(true);
-        return super.mouseReleased(p_94722_, p_94723_, p_94724_);
+        return super.mouseReleased(event);
     }
     
     protected void processClick(boolean triggeredByMouse) {
@@ -137,9 +139,9 @@ public class SpellSelectionRadialScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         guiGraphics.pose().pushMatrix();
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        super.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.pose().popMatrix();
 
         if (this.mainHandStack.getItem() instanceof ISpellContainer || this.offHandStack.getItem() instanceof ISpellContainer) {
