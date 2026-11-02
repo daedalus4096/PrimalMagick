@@ -19,6 +19,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.stream.Stream;
 
@@ -74,7 +75,7 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
     @Override
     public Component getStatDescription() {
         Component baseLabel = this.stat.getType().getDisplayName();
-        Component itemLabel = this.stat.getValue().getName();
+        Component itemLabel = this.stat.getValue().getName(new ItemStack(this.stat.getValue()));
         return Component.translatable("tooltip.primalmagick.stat_description.vanilla", baseLabel, itemLabel);
     }
 
