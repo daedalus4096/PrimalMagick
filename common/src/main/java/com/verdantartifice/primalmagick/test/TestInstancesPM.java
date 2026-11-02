@@ -487,7 +487,7 @@ public class TestInstancesPM {
     private static Holder.Reference<GameTestInstance> registerFunction(BootstrapContext<GameTestInstance> context,
                                                                        ResourceKey<GameTestInstance> instanceKey,
                                                                        ResourceKey<Consumer<GameTestHelper>> funcKey,
-                                                                       ResourceKey<TestEnvironmentDefinition> envKey) {
+                                                                       ResourceKey<TestEnvironmentDefinition<?>> envKey) {
         return registerFunction(context, instanceKey, funcKey, envKey, TestUtils.DEFAULT_TEMPLATE);
     }
 
@@ -502,16 +502,16 @@ public class TestInstancesPM {
     private static Holder.Reference<GameTestInstance> registerFunction(BootstrapContext<GameTestInstance> context,
                                                                        ResourceKey<GameTestInstance> instanceKey,
                                                                        ResourceKey<Consumer<GameTestHelper>> funcKey,
-                                                                       ResourceKey<TestEnvironmentDefinition> envKey,
+                                                                       ResourceKey<TestEnvironmentDefinition<?>> envKey,
                                                                        Identifier templateLoc) {
-        HolderGetter<TestEnvironmentDefinition> envs = context.lookup(Registries.TEST_ENVIRONMENT);
+        HolderGetter<TestEnvironmentDefinition<?>> envs = context.lookup(Registries.TEST_ENVIRONMENT);
         return registerFunction(context, instanceKey, funcKey, TestDataBuilder.withEnvironment(envKey, envs).template(templateLoc).build());
     }
 
     private static Holder.Reference<GameTestInstance> registerFunction(BootstrapContext<GameTestInstance> context,
                                                                        ResourceKey<GameTestInstance> instanceKey,
                                                                        ResourceKey<Consumer<GameTestHelper>> funcKey,
-                                                                       TestData<Holder<TestEnvironmentDefinition>> testData) {
+                                                                       TestData<Holder<TestEnvironmentDefinition<?>>> testData) {
         return context.register(instanceKey, new FunctionGameTestInstance(funcKey, testData));
     }
 }

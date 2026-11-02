@@ -6,15 +6,17 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.clock.WorldClocks;
 
 public class TestEnvironmentsPM {
-    public static final ResourceKey<TestEnvironmentDefinition> DEFAULT = ResourceKey.create(Registries.TEST_ENVIRONMENT, Identifier.withDefaultNamespace("default"));
+    public static final ResourceKey<TestEnvironmentDefinition<?>> DEFAULT = ResourceKey.create(Registries.TEST_ENVIRONMENT, Identifier.withDefaultNamespace("default"));
 
-    public static final ResourceKey<TestEnvironmentDefinition> DAYTIME_ENV = ResourceKey.create(Registries.TEST_ENVIRONMENT, ResourceUtils.loc("daytime"));
-    public static final ResourceKey<TestEnvironmentDefinition> NIGHTTIME_ENV = ResourceKey.create(Registries.TEST_ENVIRONMENT, ResourceUtils.loc("nighttime"));
+    public static final ResourceKey<TestEnvironmentDefinition<?>> DAYTIME_ENV = ResourceKey.create(Registries.TEST_ENVIRONMENT, ResourceUtils.loc("daytime"));
+    public static final ResourceKey<TestEnvironmentDefinition<?>> NIGHTTIME_ENV = ResourceKey.create(Registries.TEST_ENVIRONMENT, ResourceUtils.loc("nighttime"));
 
-    public static void bootstrap(BootstrapContext<TestEnvironmentDefinition> context) {
-        context.register(DAYTIME_ENV, new TestEnvironmentDefinition.TimeOfDay(6000));
-        context.register(NIGHTTIME_ENV, new TestEnvironmentDefinition.TimeOfDay(18000));
+    public static void bootstrap(BootstrapContext<TestEnvironmentDefinition<?>> context) {
+        var overworldClock = context.lookup(Registries.WORLD_CLOCK).getOrThrow(WorldClocks.OVERWORLD);
+        context.register(DAYTIME_ENV, new TestEnvironmentDefinition.ClockTime(overworldClock, 6000));
+        context.register(NIGHTTIME_ENV, new TestEnvironmentDefinition.ClockTime(overworldClock, 18000));
     }
 }

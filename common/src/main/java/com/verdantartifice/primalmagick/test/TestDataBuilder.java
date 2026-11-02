@@ -4,12 +4,12 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.gametest.framework.TestData;
 import net.minecraft.gametest.framework.TestEnvironmentDefinition;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Rotation;
 
 public class TestDataBuilder {
-    private final Holder<TestEnvironmentDefinition> envHolder;
+    private final Holder<TestEnvironmentDefinition<?>> envHolder;
     private Identifier template = TestUtils.DEFAULT_TEMPLATE;
     private int maxTicks = 400;
     private int setupTicks = 50;
@@ -19,12 +19,13 @@ public class TestDataBuilder {
     private int maxAttempts = 3;
     private int requiredSuccesses = 1;
     private boolean skyAccess = false;
+    private int padding = 1;
 
-    private TestDataBuilder(ResourceKey<TestEnvironmentDefinition> envKey, HolderGetter<TestEnvironmentDefinition> holderGetter) {
+    private TestDataBuilder(ResourceKey<TestEnvironmentDefinition<?>> envKey, HolderGetter<TestEnvironmentDefinition<?>> holderGetter) {
         this.envHolder = holderGetter.getOrThrow(envKey);
     }
 
-    public static TestDataBuilder withEnvironment(ResourceKey<TestEnvironmentDefinition> envKey, HolderGetter<TestEnvironmentDefinition> holderGetter) {
+    public static TestDataBuilder withEnvironment(ResourceKey<TestEnvironmentDefinition<?>> envKey, HolderGetter<TestEnvironmentDefinition<?>> holderGetter) {
         return new TestDataBuilder(envKey, holderGetter);
     }
 
@@ -73,7 +74,12 @@ public class TestDataBuilder {
         return this;
     }
 
-    public TestData<Holder<TestEnvironmentDefinition>> build() {
-        return new TestData<>(this.envHolder, this.template, this.maxTicks, this.setupTicks, this.required, this.rotation, this.manualOnly, this.maxAttempts, this.requiredSuccesses, this.skyAccess);
+    public TestDataBuilder padding(int padding) {
+        this.padding = padding;
+        return this;
+    }
+
+    public TestData<Holder<TestEnvironmentDefinition<?>>> build() {
+        return new TestData<>(this.envHolder, this.template, this.maxTicks, this.setupTicks, this.required, this.rotation, this.manualOnly, this.maxAttempts, this.requiredSuccesses, this.skyAccess, this.padding);
     }
 }
