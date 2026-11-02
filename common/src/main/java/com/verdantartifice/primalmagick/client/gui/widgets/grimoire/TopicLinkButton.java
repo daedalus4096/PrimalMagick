@@ -16,7 +16,7 @@ import net.minecraft.client.gui.components.Button;
  *
  * @author Daedalus4096
  */
-public class TopicLinkButton extends Button {
+public class TopicLinkButton extends Button.Plain {
     public static final int WIDTH = 119;
     public static final int HEIGHT = 20;
 
