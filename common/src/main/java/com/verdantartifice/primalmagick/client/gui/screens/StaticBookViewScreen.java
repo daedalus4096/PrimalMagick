@@ -6,10 +6,13 @@ import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import net.minecraft.client.GameNarrator;
+import net.minecraft.client.gui.ActiveTextCollector;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.TextAlignment;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -104,17 +107,13 @@ public class StaticBookViewScreen extends Screen {
     }
 
     protected void createMenuControls() {
-        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, button -> this.onClose()).bounds(this.width / 2 - 100, IMAGE_HEIGHT + 4, IMAGE_WIDTH + 8, 20).build());
+        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, _ -> this.onClose()).bounds(this.width / 2 - 100, IMAGE_HEIGHT + 4, IMAGE_WIDTH + 8, 20).build());
     }
 
     protected void createPageControlButtons() {
         int x = (this.width - IMAGE_WIDTH) / 2;
-        this.forwardButton = this.addRenderableWidget(new StaticBookPageButton(x + 116, 159, true, (p_98297_) -> {
-            this.pageForward();
-        }, this.playTurnSound, this.bookType));
-        this.backButton = this.addRenderableWidget(new StaticBookPageButton(x + 43, 159, false, (p_98287_) -> {
-            this.pageBack();
-        }, this.playTurnSound, this.bookType));
+        this.forwardButton = this.addRenderableWidget(new StaticBookPageButton(x + 116, 159, true, _ -> this.pageForward(), this.playTurnSound, this.bookType));
+        this.backButton = this.addRenderableWidget(new StaticBookPageButton(x + 43, 159, false, _ -> this.pageBack(), this.playTurnSound, this.bookType));
         this.updateButtonVisibility();
     }
 
@@ -142,26 +141,27 @@ public class StaticBookViewScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-        if (super.keyPressed(pKeyCode, pScanCode, pModifiers)) {
+    public boolean keyPressed(@NotNull KeyEvent event) {
+        if (super.keyPressed(event)) {
             return true;
         } else {
-            switch (pKeyCode) {
-            case GLFW.GLFW_KEY_PAGE_UP:
-                this.backButton.onPress();
-                return true;
-            case GLFW.GLFW_KEY_PAGE_DOWN:
-                this.forwardButton.onPress();
-                return true;
-            default:
-                return false;
-            }
+            return switch (event.input()) {
+                case GLFW.GLFW_KEY_PAGE_UP -> {
+                    this.backButton.onPress(event);
+                    yield true;
+                }
+                case GLFW.GLFW_KEY_PAGE_DOWN -> {
+                    this.forwardButton.onPress(event);
+                    yield true;
+                }
+                default -> false;
+            };
         }
     }
 
     @Override
-    public void render(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    public void extractRenderState(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
 
         this.renderedLines.clear();
         
@@ -192,17 +192,20 @@ public class StaticBookViewScreen extends Screen {
         // Draw any hover effects dictated by text style
         this.getRenderedLineEntryAt(mouseX, mouseY).ifPresent(entry -> {
             int startX = entry.getKey().x;
+            int startY = entry.getKey().y;
             FormattedCharSequence line = entry.getValue();
-            Style style = this.font.getSplitter().componentStyleAtWidth(line, mouseX - startX);
+            var collector = new ActiveTextCollector.ClickableStyleFinder(font, mouseX - startX, mouseY - startY);
+            collector.accept(TextAlignment.LEFT, 0, 0, line);
+            Style style = collector.result();
             if (style != null && style.getHoverEvent() != null) {
-                guiGraphics.renderComponentHoverEffect(this.font, style, mouseX, mouseY);
+                guiGraphics.componentHoverEffect(this.font, style, mouseX, mouseY);
             }
         });
     }
     
     @Override
-    public void renderBackground(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        super.renderBackground(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+    public void extractBackground(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.extractBackground(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         
         int xPos = (this.width - IMAGE_WIDTH) / 2;
         int yPos = 2;
