@@ -69,7 +69,7 @@ public class InnerDemonRenderer extends HumanoidMobRenderer<InnerDemonEntity, Pl
             float f6 = (float)(crystal.getX() - Mth.lerp((double)partialTicks, entityIn.xo, entityIn.getX()));
             float f8 = (float)(crystal.getY() - Mth.lerp((double)partialTicks, entityIn.yo, entityIn.getY()));
             float f9 = (float)(crystal.getZ() - Mth.lerp((double)partialTicks, entityIn.zo, entityIn.getZ()));
-            EnderDragonRenderer.renderCrystalBeams(f6, f8 + SinCrystalRenderer.getDeltaY(crystal, partialTicks), f9, partialTicks, entityIn.tickCount, matrixStackIn, bufferIn, packedLightIn);
+            EnderDragonRenderer.renderCrystalBeams(f6, f8 + SinCrystalRenderer.getDeltaY(crystal.innerRotation + partialTicks), f9, partialTicks, entityIn.tickCount, matrixStackIn, bufferIn, packedLightIn);
             matrixStackIn.popPose();
         }
     }
