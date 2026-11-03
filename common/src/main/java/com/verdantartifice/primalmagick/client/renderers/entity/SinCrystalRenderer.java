@@ -17,6 +17,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Renderer for a sin crystal entity. Looks and functions like the end dragon's crystals, but are summoned by
+ * an Inner Demon entity for use in that fight. They also summon a damage cloud around themselves.
+ * 
+ * @author Daedalus4096
+ */
 public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity, EndCrystalRenderState> {
     protected static final Identifier TEXTURE = Identifier.withDefaultNamespace("textures/entity/end_crystal/end_crystal.png");
 
