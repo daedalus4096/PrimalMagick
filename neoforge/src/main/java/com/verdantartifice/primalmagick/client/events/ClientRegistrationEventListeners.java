@@ -23,14 +23,14 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.IItemDecorator;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleGroupsEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.client.event.RegisterRecipeBookSearchCategoriesEvent;
 import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
+import net.neoforged.neoforge.client.event.RegisterRecipeBookSearchCategoriesEvent;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
@@ -78,8 +78,8 @@ public class ClientRegistrationEventListeners {
     }
     
     @SubscribeEvent
-    public static void onClientReloadListenerRegister(RegisterClientReloadListenersEvent event) {
-        ClientRegistrationEvents.onClientReloadListenerRegister(event::registerReloadListener);
+    public static void onClientReloadListenerRegister(AddClientReloadListenersEvent event) {
+        ClientRegistrationEvents.onClientReloadListenerRegister(event::addListener);
     }
     
     @SubscribeEvent

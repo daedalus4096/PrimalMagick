@@ -89,9 +89,9 @@ public class ClientRegistrationEvents {
         ));
     }
     
-    public static void onClientReloadListenerRegister(Consumer<PreparableReloadListener> reloadListenerConsumer) {
-        reloadListenerConsumer.accept(LexiconLoader.getOrCreateInstance());
-        reloadListenerConsumer.accept(StyleGuideLoader.getOrCreateInstance());
+    public static void onClientReloadListenerRegister(BiConsumer<Identifier, PreparableReloadListener> reloadListenerConsumer) {
+        reloadListenerConsumer.accept(ResourceUtils.loc("lexicon"), LexiconLoader.getOrCreateInstance());
+        reloadListenerConsumer.accept(ResourceUtils.loc("styleguide"), StyleGuideLoader.getOrCreateInstance());
     }
     
     public static void onRegisterClientTooltipComponentFactories(TooltipComponentRegistrar clientTooltipComponentRegistrar) {
