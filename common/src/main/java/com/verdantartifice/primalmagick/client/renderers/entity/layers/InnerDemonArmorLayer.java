@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.client.renderers.entity.layers;
 
-import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.resources.Identifier;
 
 /**
@@ -15,13 +14,18 @@ import net.minecraft.resources.Identifier;
  * 
  * @author Daedalus4096
  */
-public class InnerDemonArmorLayer extends EnergySwirlLayer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
+public class InnerDemonArmorLayer extends EnergySwirlLayer<AvatarRenderState, PlayerModel> {
     protected static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/inner_demon/inner_demon_armor.png");
-    protected final PlayerModel<InnerDemonEntity> model;
+    protected final PlayerModel model;
 
-    public InnerDemonArmorLayer(RenderLayerParent<InnerDemonEntity, PlayerModel<InnerDemonEntity>> renderer, EntityModelSet modelSet, boolean slimModel) {
+    public InnerDemonArmorLayer(RenderLayerParent<AvatarRenderState, PlayerModel> renderer, EntityModelSet modelSet, boolean slimModel) {
         super(renderer);
-        this.model = new PlayerModel<InnerDemonEntity>(modelSet.bakeLayer(slimModel ? ModelLayers.PLAYER_SLIM : ModelLayers.PLAYER), slimModel);
+        this.model = new PlayerModel(modelSet.bakeLayer(slimModel ? ModelLayers.PLAYER_SLIM : ModelLayers.PLAYER), slimModel);
+    }
+
+    @Override
+    protected boolean isPowered(AvatarRenderState state) {
+        return true;
     }
 
     @Override
@@ -35,7 +39,7 @@ public class InnerDemonArmorLayer extends EnergySwirlLayer<InnerDemonEntity, Pla
     }
 
     @Override
-    protected EntityModel<InnerDemonEntity> model() {
+    protected PlayerModel model() {
         return this.model;
     }
 }
