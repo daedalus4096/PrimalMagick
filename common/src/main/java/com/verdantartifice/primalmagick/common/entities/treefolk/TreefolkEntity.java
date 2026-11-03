@@ -69,6 +69,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
             MemoryModuleTypesPM.DANCED_RECENTLY.get(), MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get(), MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(),
             MemoryModuleTypesPM.TIME_TRYING_TO_REACH_FERTILIZE_BLOCK.get(), MemoryModuleTypesPM.DISABLE_WALK_TO_FERTILIZE_BLOCK.get(), MemoryModuleTypesPM.NEARBY_TREEFOLK.get(),
             MemoryModuleType.AVOID_TARGET);
+    protected static final Brain.Provider<TreefolkEntity> BRAIN_PROVIDER = Brain.provider(MEMORY_TYPES, SENSOR_TYPES, TreefolkAi::getActivities);
     private static final EntityDataAccessor<Boolean> DATA_IS_DANCING = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.BOOLEAN);
 
     public TreefolkEntity(EntityType<? extends TreefolkEntity> entityType, Level world) {
@@ -101,14 +102,8 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
 
     @Override
     @NotNull
-    protected Provider<TreefolkEntity> brainProvider() {
-        return Brain.provider(MEMORY_TYPES, SENSOR_TYPES);
-    }
-
-    @Override
-    @NotNull
-    protected Brain<?> makeBrain(@NotNull Dynamic<?> pDynamic) {
-        return TreefolkAi.makeBrain(this, this.brainProvider().makeBrain(pDynamic));
+    protected Brain<TreefolkEntity> makeBrain(@NotNull Brain.Packed packedBrain) {
+        return BRAIN_PROVIDER.makeBrain(this, packedBrain);
     }
 
     @SuppressWarnings("unchecked")
