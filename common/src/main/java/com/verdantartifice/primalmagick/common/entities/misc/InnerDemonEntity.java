@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
@@ -56,7 +57,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob {
     public static final double HEAL_RANGE = 16.0D;
     protected static final double SIN_CRASH_RANGE = 12.0D;
 
-    protected final ServerBossEvent bossInfo = (ServerBossEvent)(new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
+    protected final ServerBossEvent bossInfo = (ServerBossEvent)(new ServerBossEvent(Mth.createInsecureUUID(this.random), this.getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
     protected boolean isSuffocating = false;
     protected List<SinCrystalEntity> crystalsInRange = new ArrayList<>();
 
