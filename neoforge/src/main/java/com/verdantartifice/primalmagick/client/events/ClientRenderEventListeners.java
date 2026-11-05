@@ -4,8 +4,8 @@ import com.verdantartifice.primalmagick.Constants;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderHighlightEvent;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
+import net.neoforged.neoforge.client.event.SubmitCustomGeometryEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 /**
@@ -26,7 +26,7 @@ public class ClientRenderEventListeners {
     }
     
     @SubscribeEvent
-    public static void onHighlightEntity(RenderHighlightEvent.Entity event) {
-        ClientRenderEvents.onHighlightEntity(event.getTarget(), event.getPoseStack(), event.getMultiBufferSource(), event.getDeltaTracker().getGameTimeDeltaPartialTick(true));
+    public static void onSubmitCustomGeometry(SubmitCustomGeometryEvent event) {
+        ClientRenderEvents.onSubmitCustomGeometry(event.getLevelRenderState(), event.getSubmitNodeCollector(), event.getPoseStack());
     }
 }

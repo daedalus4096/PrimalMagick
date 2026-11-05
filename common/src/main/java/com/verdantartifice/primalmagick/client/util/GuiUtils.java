@@ -13,21 +13,24 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.data.AtlasIds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4f;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -52,9 +55,7 @@ public class GuiUtils {
             Minecraft mc = Minecraft.getInstance();
             
             guiGraphics.pose().pushMatrix();
-            scaleOpt.ifPresent(scale -> {
-                guiGraphics.pose().scale((float)scale.x, (float)scale.y);
-            });
+            scaleOpt.ifPresent(scale -> guiGraphics.pose().scale((float)scale.x, (float)scale.y));
 
             // Render the item stack into the GUI and, if applicable, its stack size and/or damage bar
             guiGraphics.item(stack, x, y);
@@ -148,8 +149,11 @@ public class GuiUtils {
         guiGraphics.pose().popMatrix();
     }
     
-    public static void renderSourcesBillboard(PoseStack poseStack, MultiBufferSource buffers, double x, double y, double z, SourceList sources, float partialTicks) {
+    public static void renderSourcesBillboard(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, double x, double y, double z, SourceList sources, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) {
+            return;
+        }
         
         double interpolatedPlayerX = mc.player.xo + (partialTicks * (mc.player.getX() - mc.player.xo));
         double interpolatedPlayerY = mc.player.yo + (partialTicks * (mc.player.getY() - mc.player.yo));
@@ -174,20 +178,20 @@ public class GuiUtils {
                 Identifier texLoc = source.isDiscovered(mc.player) ? source.getImage() : Source.getUnknownImage();
                 Identifier guiAtlas = AtlasIds.GUI;
                 SpriteId texSprite = new SpriteId(guiAtlas, texLoc);
-                VertexConsumer builder = texSprite.buffer(mc.getAtlasManager(), buffers, RenderTypes::itemCutout);
                 TextureAtlasSprite sprite = mc.getAtlasManager().get(texSprite);
-                Matrix4f matrix = poseStack.last().pose();
-                builder.addVertex(matrix, 0.0F, 16.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
-                builder.addVertex(matrix, 16.0F, 16.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU1(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
-                builder.addVertex(matrix, 16.0F, 0.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU1(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
-                builder.addVertex(matrix, 0.0F, 0.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
+                submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.entityCutout(guiAtlas), (pose, vertexConsumer) -> {
+                    vertexConsumer.addVertex(pose, 0.0F, 16.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setUv(sprite.getU0(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
+                    vertexConsumer.addVertex(pose, 16.0F, 16.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setUv(sprite.getU1(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
+                    vertexConsumer.addVertex(pose, 16.0F, 0.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setUv(sprite.getU1(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
+                    vertexConsumer.addVertex(pose, 0.0F, 0.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setUv(sprite.getU0(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
+                });
 
                 String amountStr = Integer.toString(amount);
                 int amountWidth = mc.font.width(amountStr);
                 poseStack.pushPose();
                 poseStack.scale(0.5F, 0.5F, -0.5F);
                 poseStack.translate(32.0D - amountWidth, 32.0D - mc.font.lineHeight, 0.0D);
-                mc.font.drawInBatch(amountStr, 0F, 0F, Color.WHITE.getRGB(), true, poseStack.last().pose(), buffers, Font.DisplayMode.NORMAL, 0, 15728880);
+                submitNodeCollector.submitText(poseStack, 0F, 0F, FormattedCharSequence.forward(amountStr, Style.EMPTY), true, Font.DisplayMode.NORMAL, 15728880, -1, 0, 0);
                 poseStack.popPose();
 
                 poseStack.popPose();

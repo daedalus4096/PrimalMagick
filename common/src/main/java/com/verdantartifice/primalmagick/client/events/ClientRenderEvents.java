@@ -22,7 +22,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -104,20 +105,24 @@ public class ClientRenderEvents {
             });
         }
     }
-    
-    public static void onHighlightEntity(EntityHitResult target, PoseStack poseStack, MultiBufferSource multiBufferSource, float partialTicks) {
+
+    public static void onSubmitCustomGeometry(LevelRenderState levelRenderState, SubmitNodeCollector submitNodeCollector, PoseStack poseStack) {
+        // If a scanned entity is being looked at with an arcanometer, render a billboard effect with the entity's affinities
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player != null && (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get())) {
-            Entity entity = target.getEntity();
-            AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.registryAccess()).ifPresent(affinities -> {
-                boolean isScanned = ResearchManager.isScanned(EntityReference.of(entity), mc.player);
-                if (isScanned && !affinities.isEmpty()) {
-                    double interpolatedEntityX = entity.xo + (partialTicks * (entity.getX() - entity.xo));
-                    double interpolatedEntityY = entity.yo + (partialTicks * (entity.getY() - entity.yo));
-                    double interpolatedEntityZ = entity.zo + (partialTicks * (entity.getZ() - entity.zo));
-                    GuiUtils.renderSourcesBillboard(poseStack, multiBufferSource, interpolatedEntityX, interpolatedEntityY + entity.getBbHeight(), interpolatedEntityZ, affinities, partialTicks);
-                }
-            });
+        float partialTicks = mc.getDeltaTracker().getGameTimeDeltaPartialTick(true);
+        if (mc.hitResult instanceof EntityHitResult target) {
+            if (mc.player != null && (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get())) {
+                Entity entity = target.getEntity();
+                AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.registryAccess()).ifPresent(affinities -> {
+                    boolean isScanned = ResearchManager.isScanned(EntityReference.of(entity), mc.player);
+                    if (isScanned && !affinities.isEmpty()) {
+                        double interpolatedEntityX = entity.xo + (partialTicks * (entity.getX() - entity.xo));
+                        double interpolatedEntityY = entity.yo + (partialTicks * (entity.getY() - entity.yo));
+                        double interpolatedEntityZ = entity.zo + (partialTicks * (entity.getZ() - entity.zo));
+                        GuiUtils.renderSourcesBillboard(poseStack, submitNodeCollector, interpolatedEntityX, interpolatedEntityY + entity.getBbHeight(), interpolatedEntityZ, affinities, partialTicks);
+                    }
+                });
+            }
         }
     }
 }
