@@ -26,7 +26,6 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
@@ -236,12 +235,12 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
             CraftingInput testInput = CraftingInput.of(IConcoctingRecipe.MAX_WIDTH, IConcoctingRecipe.MAX_HEIGHT, testInv.getItems());
             
             IConcoctingRecipe recipe = serverLevel.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING.get(), testInput, level).map(RecipeHolder::value).orElse(null);
-            if (entity.canConcoct(realInput, level.registryAccess(), recipe)) {
+            if (entity.canConcoct(realInput, recipe)) {
                 entity.cookTime++;
                 if (entity.cookTime >= entity.cookTimeTotal) {
                     entity.cookTime = 0;
                     entity.cookTimeTotal = entity.getCookTimeTotal();
-                    entity.doConcoction(realInput, level.registryAccess(), recipe);
+                    entity.doConcoction(realInput, recipe);
                     shouldMarkDirty = true;
                 }
             } else {
@@ -257,9 +256,9 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         }
     }
     
-    protected boolean canConcoct(CraftingInput inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
+    protected boolean canConcoct(CraftingInput inputInv, @Nullable IConcoctingRecipe recipe) {
         if (!inputInv.isEmpty() && recipe != null) {
-            ItemStack output = recipe.getResultItem(registryAccess);
+            ItemStack output = recipe.assemble(inputInv);
             if (output.isEmpty()) {
                 return false;
             } else if (this.getMana(Sources.INFERNAL) < recipe.getManaCosts().getAmount(Sources.INFERNAL)) {
@@ -276,8 +275,8 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
         }
     }
     
-    protected void doConcoction(CraftingInput inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
-        if (recipe != null && this.canConcoct(inputInv, registryAccess, recipe)) {
+    protected void doConcoction(CraftingInput inputInv, @Nullable IConcoctingRecipe recipe) {
+        if (recipe != null && this.canConcoct(inputInv, recipe)) {
             ItemStack recipeOutput = recipe.assemble(inputInv);
             this.addItem(OUTPUT_INV_INDEX, 0, recipeOutput);
 
