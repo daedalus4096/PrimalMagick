@@ -18,7 +18,6 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
@@ -150,12 +149,12 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
 
             SingleRecipeInput testInv = new SingleRecipeInput(entity.getItem(INPUT_INV_INDEX, 0));
             RecipeHolder<IDissolutionRecipe> recipe = serverLevel.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION.get(), testInv, level).orElse(null);
-            if (entity.canDissolve(testInv, level.registryAccess(), recipe)) {
+            if (entity.canDissolve(testInv, recipe)) {
                 entity.processTime++;
                 if (entity.processTime >= entity.processTimeTotal) {
                     entity.processTime = 0;
                     entity.processTimeTotal = entity.getProcessTimeTotal();
-                    entity.doDissolve(testInv, level.registryAccess(), recipe);
+                    entity.doDissolve(testInv, recipe);
                     shouldMarkDirty = true;
                 }
             } else {
@@ -169,9 +168,9 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
         }
     }
     
-    protected boolean canDissolve(SingleRecipeInput inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
+    protected boolean canDissolve(SingleRecipeInput inputInv, RecipeHolder<IDissolutionRecipe> recipe) {
         if (!inputInv.isEmpty() && recipe != null) {
-            ItemStack output = recipe.value().getResultItem(registryAccess);
+            ItemStack output = recipe.value().assemble(inputInv);
             if (output.isEmpty()) {
                 return false;
             } else if (this.getMana(Sources.EARTH) < recipe.value().getManaCosts().getAmount(Sources.EARTH)) {
@@ -194,8 +193,8 @@ public abstract class DissolutionChamberTileEntity extends AbstractTileSidedInve
         }
     }
     
-    protected void doDissolve(SingleRecipeInput inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
-        if (recipe != null && this.canDissolve(inputInv, registryAccess, recipe)) {
+    protected void doDissolve(SingleRecipeInput inputInv, RecipeHolder<IDissolutionRecipe> recipe) {
+        if (recipe != null && this.canDissolve(inputInv, recipe)) {
             ItemStack recipeOutput = recipe.value().assemble(inputInv);
             this.addItem(OUTPUT_INV_INDEX, 0, recipeOutput);
 
