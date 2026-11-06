@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.screens;
 
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
+import com.verdantartifice.primalmagick.client.crafting.ClientRecipes;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractRecipePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AffinityIndexPage;
@@ -699,7 +700,7 @@ public class GrimoireScreen extends Screen {
             }
         }
         for (ResourceKey<Recipe<?>> recipeKey : locList) {
-            Optional<RecipeHolder<?>> opt = level.recipeAccess().byKey(recipeKey);
+            Optional<RecipeHolder<?>> opt = ClientRecipes.byKey(recipeKey);
             opt.ifPresent(recipe -> {
                 AbstractRecipePage<?> page = RecipePageFactory.createPage(recipe);
                 this.pages.add(page);
@@ -1082,15 +1083,14 @@ public class GrimoireScreen extends Screen {
     }
     
     protected void generateIndexMap() {
-        Minecraft mc = this.minecraft;
-        ContextMap contextMap = SlotDisplayContext.fromLevel(Objects.requireNonNull(mc.level));
+        ContextMap contextMap = SlotDisplayContext.fromLevel(Objects.requireNonNull(this.minecraft.level));
         Comparator<RecipeHolder<?>> displayNameComparator = Comparator.comparing(r -> {
             ItemStack resultStack = r.value().display().getFirst().result().resolveForFirstStack(contextMap);
             return resultStack.getHoverName().getString();
         });
         Comparator<RecipeHolder<?>> recipeIdComparator = Comparator.comparing(r -> r.id().identifier());
-        List<RecipeHolder<?>> processedRecipes = mc.level.recipeAccess().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
-                .sorted(displayNameComparator.thenComparing(recipeIdComparator)).collect(Collectors.toList());
+        List<RecipeHolder<?>> processedRecipes = ClientRecipes.getAll().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
+                .sorted(displayNameComparator.thenComparing(recipeIdComparator)).toList();
 
         this.indexMap = new TreeMap<>();
         for (RecipeHolder<?> recipe : processedRecipes) {
