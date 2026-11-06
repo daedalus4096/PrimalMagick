@@ -1,16 +1,18 @@
 package com.verdantartifice.primalmagick.common.entities;
 
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class EntityDataSerializersPM {
-    @SuppressWarnings("unchecked")
-    public static final EntityDataSerializer<Optional<EntityReference<Entity>>> OPTIONAL_ENTITY_REFERENCE = register(EntityDataSerializer.<Entity>forValueType(EntityReference.streamCodec().apply(ByteBufCodecs::optional)));
+    public static final EntityDataSerializer<Optional<UUID>> OPTIONAL_UUID = register(EntityDataSerializer.forValueType(UUIDUtil.STREAM_CODEC.apply(ByteBufCodecs::optional)));
 
     private static <T> EntityDataSerializer<T> register(EntityDataSerializer<T> serializer) {
         EntityDataSerializers.registerSerializer(serializer);

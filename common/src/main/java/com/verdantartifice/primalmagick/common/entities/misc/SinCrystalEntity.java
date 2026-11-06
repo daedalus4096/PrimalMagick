@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Definition of a sin crystal entity.  Created by an inner demon to heal it, similar to an ender crystal.
@@ -35,7 +36,7 @@ import java.util.Optional;
  */
 public class SinCrystalEntity extends Entity {
     private static final EntityDataAccessor<Optional<BlockPos>> BEAM_TARGET = SynchedEntityData.defineId(SinCrystalEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
-    private static final EntityDataAccessor<Optional<EntityReference<Entity>>> DAMAGE_CLOUD = SynchedEntityData.defineId(SinCrystalEntity.class, EntityDataSerializersPM.OPTIONAL_ENTITY_REFERENCE);
+    private static final EntityDataAccessor<Optional<UUID>> DAMAGE_CLOUD = SynchedEntityData.defineId(SinCrystalEntity.class, EntityDataSerializersPM.OPTIONAL_UUID);
     
     public int innerRotation;
 
@@ -142,7 +143,7 @@ public class SinCrystalEntity extends Entity {
     }
 
     protected void setDamageCloudInner(@NotNull Optional<EntityReference<Entity>> cloudRefOpt) {
-        this.getEntityData().set(DAMAGE_CLOUD, cloudRefOpt);
+        this.getEntityData().set(DAMAGE_CLOUD, cloudRefOpt.map(EntityReference::getUUID));
     }
 
     public void setDamageCloud(@Nullable EntityReference<Entity> cloudId) {
@@ -156,7 +157,7 @@ public class SinCrystalEntity extends Entity {
     
     @NotNull
     protected Optional<EntityReference<Entity>> getDamageCloudReference() {
-        return this.getEntityData().get(DAMAGE_CLOUD);
+        return this.getEntityData().get(DAMAGE_CLOUD).map(EntityReference::of);
     }
     
     /**
