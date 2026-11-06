@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Default implementation of the player attunements capability.
@@ -28,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerAttunements extends AbstractCapability<PlayerAttunements> implements IPlayerAttunements {
     public static final Codec<PlayerAttunements> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Entry.CODEC.listOf().<Map<Source, Map<AttunementType, Integer>>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::source, Entry::typeVals)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(Entry::source, Entry::typeVals)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
             ).fieldOf("attunements").forGetter(a -> a.attunements),
             Source.CODEC.listOf().<Set<Source>>xmap(ImmutableSet::copyOf, ImmutableList::copyOf).fieldOf("suppressions").forGetter(a -> a.suppressions),
@@ -37,7 +38,7 @@ public class PlayerAttunements extends AbstractCapability<PlayerAttunements> imp
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerAttunements> STREAM_CODEC = StreamCodec.composite(
             Entry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::source, Entry::typeVals)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(Entry::source, Entry::typeVals)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
             ), a -> a.attunements,
             Source.STREAM_CODEC.apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), a -> a.suppressions,
@@ -130,7 +131,7 @@ public class PlayerAttunements extends AbstractCapability<PlayerAttunements> imp
         public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Source.CODEC.fieldOf("source").forGetter(Entry::source),
                 SubEntry.CODEC.listOf().<Map<AttunementType, Integer>>xmap(
-                        subEntryList -> subEntryList.stream().collect(ImmutableMap.toImmutableMap(SubEntry::type, SubEntry::value)),
+                        subEntryList -> subEntryList.stream().collect(Collectors.toMap(SubEntry::type, SubEntry::value)),
                         subEntryMap -> subEntryMap.entrySet().stream().map(e -> new SubEntry(e.getKey(), e.getValue())).toList()
                 ).fieldOf("typeVals").forGetter(e -> e.typeVals)
         ).apply(instance, Entry::new));
@@ -138,7 +139,7 @@ public class PlayerAttunements extends AbstractCapability<PlayerAttunements> imp
         public static final StreamCodec<RegistryFriendlyByteBuf, Entry> STREAM_CODEC = StreamCodec.composite(
                 Source.STREAM_CODEC, Entry::source,
                 SubEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                        subEntryList -> subEntryList.stream().collect(ImmutableMap.toImmutableMap(SubEntry::type, SubEntry::value)),
+                        subEntryList -> subEntryList.stream().collect(Collectors.toMap(SubEntry::type, SubEntry::value)),
                         subEntryMap -> subEntryMap.entrySet().stream().map(e -> new SubEntry(e.getKey(), e.getValue())).toList()
                 ), Entry::typeVals,
                 Entry::new

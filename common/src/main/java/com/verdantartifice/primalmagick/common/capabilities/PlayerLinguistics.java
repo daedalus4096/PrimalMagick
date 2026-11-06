@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Default implementation of the player linguistics capability.
@@ -33,27 +34,27 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerLinguistics extends AbstractCapability<PlayerLinguistics> implements IPlayerLinguistics {
     public static final Codec<PlayerLinguistics> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             IdentifiedScoreEntry.CODEC.listOf().<Map<Identifier, Integer>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new IdentifiedScoreEntry(e.getKey(), e.getValue())).toList()
             ).fieldOf("comprehension").forGetter(l -> l.comprehension),
             IdentifiedScoreEntry.CODEC.listOf().<Map<Identifier, Integer>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new IdentifiedScoreEntry(e.getKey(), e.getValue())).toList()
             ).fieldOf("vocabulary").forGetter(l -> l.vocabulary),
             BooksReadEntry.CODEC.listOf().<Map<Identifier, Set<Identifier>>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(BooksReadEntry::languageId, BooksReadEntry::bookIds)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(BooksReadEntry::languageId, BooksReadEntry::bookIds)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new BooksReadEntry(e.getKey(), e.getValue())).toList()
             ).fieldOf("booksRead").forGetter(l -> l.booksRead),
             StudyCountEntry.CODEC.listOf().<Map<Identifier, Map<Identifier, Integer>>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(StudyCountEntry::bookId, StudyCountEntry::languageScores)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(StudyCountEntry::bookId, StudyCountEntry::languageScores)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new StudyCountEntry(e.getKey(), e.getValue())).toList()
             ).fieldOf("studyCounts").forGetter(l -> l.studyCounts),
             GridUnlockEntry.CODEC.listOf().<Map<Identifier, Set<Vector2i>>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(GridUnlockEntry::gridId, GridUnlockEntry::positions)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(GridUnlockEntry::gridId, GridUnlockEntry::positions)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new GridUnlockEntry(e.getKey(), e.getValue())).toList()
             ).fieldOf("unlocks").forGetter(l -> l.unlocks),
             GridModificationTimeEntry.CODEC.listOf().<Map<Identifier, Long>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(GridModificationTimeEntry::gridId, GridModificationTimeEntry::modificationTime)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(GridModificationTimeEntry::gridId, GridModificationTimeEntry::modificationTime)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new GridModificationTimeEntry(e.getKey(), e.getValue())).toList()
             ).fieldOf("gridModificationTimes").forGetter(l -> l.gridModificationTimes),
             ScribeTableMode.CODEC.fieldOf("scribeTableMode").forGetter(l -> l.scribeTableMode),
@@ -62,27 +63,27 @@ public class PlayerLinguistics extends AbstractCapability<PlayerLinguistics> imp
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerLinguistics> STREAM_CODEC = StreamCodec.composite(
             IdentifiedScoreEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new IdentifiedScoreEntry(e.getKey(), e.getValue())).toList()
             ), l -> l.comprehension,
             IdentifiedScoreEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new IdentifiedScoreEntry(e.getKey(), e.getValue())).toList()
             ), l -> l.vocabulary,
             BooksReadEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(BooksReadEntry::languageId, BooksReadEntry::bookIds)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(BooksReadEntry::languageId, BooksReadEntry::bookIds)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new BooksReadEntry(e.getKey(), e.getValue())).toList()
             ), l -> l.booksRead,
             StudyCountEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(StudyCountEntry::bookId, StudyCountEntry::languageScores)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(StudyCountEntry::bookId, StudyCountEntry::languageScores)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new StudyCountEntry(e.getKey(), e.getValue())).toList()
             ), l -> l.studyCounts,
             GridUnlockEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(GridUnlockEntry::gridId, GridUnlockEntry::positions)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(GridUnlockEntry::gridId, GridUnlockEntry::positions)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new GridUnlockEntry(e.getKey(), e.getValue())).toList()
             ), l -> l.unlocks,
             GridModificationTimeEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(GridModificationTimeEntry::gridId, GridModificationTimeEntry::modificationTime)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(GridModificationTimeEntry::gridId, GridModificationTimeEntry::modificationTime)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new GridModificationTimeEntry(e.getKey(), e.getValue())).toList()
             ), l -> l.gridModificationTimes,
             ScribeTableMode.STREAM_CODEC, l -> l.scribeTableMode,
@@ -260,7 +261,7 @@ public class PlayerLinguistics extends AbstractCapability<PlayerLinguistics> imp
         public static final Codec<StudyCountEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Identifier.CODEC.fieldOf("bookId").forGetter(StudyCountEntry::bookId),
                 IdentifiedScoreEntry.CODEC.listOf().<Map<Identifier, Integer>>xmap(
-                        iseList -> iseList.stream().collect(ImmutableMap.toImmutableMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
+                        iseList -> iseList.stream().collect(Collectors.toMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
                         iseMap -> iseMap.entrySet().stream().map(e -> new IdentifiedScoreEntry(e.getKey(), e.getValue())).toList()
                 ).fieldOf("languageScores").forGetter(e -> e.languageScores)
         ).apply(instance, StudyCountEntry::new));
@@ -268,7 +269,7 @@ public class PlayerLinguistics extends AbstractCapability<PlayerLinguistics> imp
         public static final StreamCodec<RegistryFriendlyByteBuf, StudyCountEntry> STREAM_CODEC = StreamCodec.composite(
                 Identifier.STREAM_CODEC, StudyCountEntry::bookId,
                 IdentifiedScoreEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                        iseList -> iseList.stream().collect(ImmutableMap.toImmutableMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
+                        iseList -> iseList.stream().collect(Collectors.toMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
                         iseMap -> iseMap.entrySet().stream().map(e -> new IdentifiedScoreEntry(e.getKey(), e.getValue())).toList()
                 ), StudyCountEntry::languageScores,
                 StudyCountEntry::new);

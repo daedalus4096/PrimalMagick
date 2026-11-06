@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Default implementation of the player statistics capability.
@@ -31,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerStats extends AbstractCapability<PlayerStats> implements IPlayerStats {
     public static final Codec<PlayerStats> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             IdentifiedScoreEntry.CODEC.listOf().<Map<Identifier, Integer>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new IdentifiedScoreEntry(e.getKey(), e.getValue())).toList()
             ).fieldOf("stats").forGetter(s -> s.stats),
             BlockPos.CODEC.listOf().<Set<BlockPos>>xmap(ImmutableSet::copyOf, ImmutableList::copyOf).fieldOf("discoveredShrines").forGetter(s -> s.discoveredShrines),
@@ -43,7 +44,7 @@ public class PlayerStats extends AbstractCapability<PlayerStats> implements IPla
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerStats> STREAM_CODEC = StreamCodec.composite(
             IdentifiedScoreEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(IdentifiedScoreEntry::id, IdentifiedScoreEntry::score)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new IdentifiedScoreEntry(e.getKey(), e.getValue())).toList()
             ), s -> s.stats,
             BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), s -> s.discoveredShrines,

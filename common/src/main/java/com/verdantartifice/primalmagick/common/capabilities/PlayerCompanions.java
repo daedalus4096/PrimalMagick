@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Default implementation of the player companion capability.
@@ -27,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerCompanions extends AbstractCapability<PlayerCompanions> implements IPlayerCompanions {
     public static final Codec<PlayerCompanions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Entry.CODEC.listOf().<Map<CompanionType, LinkedList<EntityReference<LivingEntity>>>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::companionType, Entry::idList)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(Entry::companionType, Entry::idList)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
             ).fieldOf("companions").forGetter(c -> c.companions),
             Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(AbstractCapability::getSyncTimestamp)
@@ -35,7 +36,7 @@ public class PlayerCompanions extends AbstractCapability<PlayerCompanions> imple
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerCompanions> STREAM_CODEC = StreamCodec.composite(
             Entry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::companionType, Entry::idList)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(Entry::companionType, Entry::idList)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
             ), c -> c.companions,
             ByteBufCodecs.VAR_LONG, AbstractCapability::getSyncTimestamp,

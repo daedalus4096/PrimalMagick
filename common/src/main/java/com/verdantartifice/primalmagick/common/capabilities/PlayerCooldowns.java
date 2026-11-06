@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Default implementation of the player cooldown capability.
@@ -21,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PlayerCooldowns extends AbstractCapability<PlayerCooldowns> implements IPlayerCooldowns {
     public static final Codec<PlayerCooldowns> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Entry.CODEC.listOf().<Map<CooldownType, Long>>xmap(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::type, Entry::recoveryTime)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(Entry::type, Entry::recoveryTime)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
             ).fieldOf("cooldowns").forGetter(c -> c.cooldowns),
             Codec.LONG.optionalFieldOf("syncTimestamp", 0L).forGetter(AbstractCapability::getSyncTimestamp)
@@ -29,7 +30,7 @@ public class PlayerCooldowns extends AbstractCapability<PlayerCooldowns> impleme
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerCooldowns> STREAM_CODEC = StreamCodec.composite(
             Entry.STREAM_CODEC.apply(ByteBufCodecs.list()).map(
-                    entryList -> entryList.stream().collect(ImmutableMap.toImmutableMap(Entry::type, Entry::recoveryTime)),
+                    entryList -> entryList.stream().collect(Collectors.toMap(Entry::type, Entry::recoveryTime)),
                     entryMap -> entryMap.entrySet().stream().map(e -> new Entry(e.getKey(), e.getValue())).toList()
             ), c -> c.cooldowns,
             ByteBufCodecs.VAR_LONG, AbstractCapability::getSyncTimestamp,
