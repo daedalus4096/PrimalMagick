@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 /**
  * Local store for recipe datapack information, synced from the server upon player connection or data reload.
- * 
+ *
  * @author Daedalus4096
  */
 public class ClientRecipes {

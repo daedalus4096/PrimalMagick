@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.compat.jei;
 
+import com.verdantartifice.primalmagick.client.crafting.ClientRecipes;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
@@ -23,8 +24,6 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class CategoryRecipes {
-    private final RecipeManager recipeManager;
-    
     public CategoryRecipes() {
         Minecraft mc = Minecraft.getInstance();
         if (mc == null) {
@@ -34,38 +33,34 @@ public class CategoryRecipes {
         if (level == null) {
             throw new IllegalStateException("Client level instance not initialized");
         }
-        this.recipeManager = level.getRecipeManager();
-        if (this.recipeManager == null) {
-            throw new IllegalStateException("Recipe manager instance not initialized");
-        }
     }
     
     public List<RecipeHolder<IArcaneRecipe>> getArcaneRecipes(IRecipeCategory<RecipeHolder<IArcaneRecipe>> category) {
         CategoryRecipeValidatorPM<IArcaneRecipe> validator = new CategoryRecipeValidatorPM<>(category, 9, true);
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.ARCANE_CRAFTING.get(), validator);
+        return getValidHandledRecipes(RecipeTypesPM.ARCANE_CRAFTING.get(), validator);
     }
     
     public List<RecipeHolder<IConcoctingRecipe>> getConcoctingRecipes(IRecipeCategory<RecipeHolder<IConcoctingRecipe>> category) {
         CategoryRecipeValidatorPM<IConcoctingRecipe> validator = new CategoryRecipeValidatorPM<>(category, 9, true);
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.CONCOCTING.get(), validator);
+        return getValidHandledRecipes(RecipeTypesPM.CONCOCTING.get(), validator);
     }
     
     public List<RecipeHolder<IRunecarvingRecipe>> getRunecarvingRecipes(IRecipeCategory<RecipeHolder<IRunecarvingRecipe>> category) {
         CategoryRecipeValidatorPM<IRunecarvingRecipe> validator = new CategoryRecipeValidatorPM<>(category, 2, true);
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RUNECARVING.get(), validator);
+        return getValidHandledRecipes(RecipeTypesPM.RUNECARVING.get(), validator);
     }
     
     public List<RecipeHolder<IDissolutionRecipe>> getDissolutionRecipes(IRecipeCategory<RecipeHolder<IDissolutionRecipe>> category) {
         CategoryRecipeValidatorPM<IDissolutionRecipe> validator = new CategoryRecipeValidatorPM<>(category, 1, true);
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.DISSOLUTION.get(), validator);
+        return getValidHandledRecipes(RecipeTypesPM.DISSOLUTION.get(), validator);
     }
     
     public List<RecipeHolder<IRitualRecipe>> getRitualRecipes(IRecipeCategory<RecipeHolder<IRitualRecipe>> category) {
         CategoryRecipeValidatorPM<IRitualRecipe> validator = new CategoryRecipeValidatorPM<>(category, 100, true);  // TODO Fix max inputs for JEI rituals
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RITUAL.get(), validator);
+        return getValidHandledRecipes(RecipeTypesPM.RITUAL.get(), validator);
     }
     
-    private static <I extends RecipeInput, T extends Recipe<I>> List<RecipeHolder<T>> getValidHandledRecipes(RecipeManager recipeManager, RecipeType<T> recipeType, CategoryRecipeValidatorPM<T> validator) {
-        return recipeManager.getAllRecipesFor(recipeType).stream().filter(r -> validator.isRecipeValid(r) && validator.isRecipeHandled(r)).toList();
+    private static <I extends RecipeInput, T extends Recipe<I>> List<RecipeHolder<T>> getValidHandledRecipes(RecipeType<T> recipeType, CategoryRecipeValidatorPM<T> validator) {
+        return ClientRecipes.byType(recipeType).stream().filter(r -> validator.isRecipeValid(r) && validator.isRecipeHandled(r)).toList();
     }
 }
