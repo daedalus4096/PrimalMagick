@@ -68,7 +68,7 @@ public class PlayerKnowledge extends AbstractCapability<PlayerKnowledge> impleme
             ).apply(instance, PlayerKnowledge::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerKnowledge> STREAM_CODEC = StreamCodecUtils.composite(
-            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).map(ImmutableSet::copyOf, ImmutableList::copyOf), k -> k.research,
+            AbstractResearchKey.dispatchStreamCodec().apply(ByteBufCodecs.list()).map(Set::copyOf, List::copyOf), k -> k.research,
             StageEntry.STREAM_CODEC.apply(ByteBufCodecs.list()).<Map<AbstractResearchKey<?>, Integer>>map(
                 entryList -> entryList.stream().collect(Collectors.toMap(StageEntry::key, StageEntry::stage)),
                 entryMap -> entryMap.entrySet().stream().map(e -> new StageEntry(e.getKey(), e.getValue())).toList()
