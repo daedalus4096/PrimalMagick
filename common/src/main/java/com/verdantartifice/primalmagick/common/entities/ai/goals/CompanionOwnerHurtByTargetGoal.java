@@ -13,7 +13,6 @@ import java.util.EnumSet;
  * AI goal for a companion to target any entities that attack their owner.
  * 
  * @author Daedalus4096
- * @see {@link net.minecraft.entity.ai.goal.OwnerHurtByTargetGoal}
  */
 public class CompanionOwnerHurtByTargetGoal extends TargetGoal {
     protected final AbstractCompanionEntity entity;

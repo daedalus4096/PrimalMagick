@@ -30,7 +30,7 @@ import java.util.function.Consumer;
  * item definition JSON; this renderer only draws the preview of whatever the player is looking at onto the
  * arcanometer's screen.
  *
- * @see {@link com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem}
+ * @see com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem
  */
 public class ArcanometerSpecialRenderer implements NoDataSpecialModelRenderer {
     private static final AtomicBoolean isRenderingScreen = new AtomicBoolean(false);

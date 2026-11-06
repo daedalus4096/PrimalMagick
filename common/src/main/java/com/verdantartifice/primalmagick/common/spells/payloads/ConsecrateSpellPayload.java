@@ -27,7 +27,7 @@ import java.util.List;
  * when cast by non-players.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.blocks.misc.ConsecrationFieldBlock}
+ * @see com.verdantartifice.primalmagick.common.blocks.misc.ConsecrationFieldBlock
  */
 public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload<ConsecrateSpellPayload> {
     public static final ConsecrateSpellPayload INSTANCE = new ConsecrateSpellPayload();

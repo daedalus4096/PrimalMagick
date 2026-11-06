@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * Range-select item model property for the arcanometer's scan state. Ramps the antennae up when the
  * currently moused-over block or entity has not yet been scanned, and back down otherwise.
  *
- * @see {@link com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem}
+ * @see com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem
  */
 public final class ScanStateItemProperty implements RangeSelectItemModelProperty {
     public static final MapCodec<ScanStateItemProperty> MAP_CODEC = MapCodec.unit(new ScanStateItemProperty());

@@ -5,9 +5,9 @@ package com.verdantartifice.primalmagick.common.spells;
  * respective interfaces.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle}
- * @see {@link com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload}
- * @see {@link com.verdantartifice.primalmagick.common.spells.mods.ISpellMod}
+ * @see com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle
+ * @see com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload
+ * @see com.verdantartifice.primalmagick.common.spells.mods.ISpellMod
  */
 public enum SpellComponent {
     VEHICLE,

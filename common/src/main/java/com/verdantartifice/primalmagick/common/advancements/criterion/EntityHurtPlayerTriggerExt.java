@@ -15,8 +15,8 @@ import java.util.Optional;
 
 /**
  * Advancement criterion that is trigger when the player is hurt by an entity.  Like the vanilla
- * {@link net.minecraft.advancements.critereon.EntityHurtPlayerTrigger}, except that it takes into 
- * account the player predicate as well, instead of just the damage source.
+ * EntityHurtPlayerTrigger, except that it takes into account the player predicate as well,
+ * instead of just the damage source.
  * 
  * @author Daedalus4096
  */

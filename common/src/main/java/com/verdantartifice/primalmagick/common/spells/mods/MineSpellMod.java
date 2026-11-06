@@ -28,7 +28,7 @@ import java.util.function.Supplier;
  * duration property determines how long the mine exists before despawning.
  * 
  * @author Daedalus4096
- * @see {@link com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity}
+ * @see com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity
  */
 public class MineSpellMod extends AbstractSpellMod<MineSpellMod> {
     public static final MineSpellMod INSTANCE = new MineSpellMod();
