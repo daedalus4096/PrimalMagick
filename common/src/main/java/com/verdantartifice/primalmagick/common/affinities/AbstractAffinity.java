@@ -3,13 +3,11 @@ package com.verdantartifice.primalmagick.common.affinities;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -38,12 +36,12 @@ public abstract class AbstractAffinity<T extends AbstractAffinity<T>> implements
     public abstract @NotNull AffinityType<T> getType();
 
     @Override
-    public @NotNull CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
+    public @NotNull CompletableFuture<SourceList> getTotalAsync(@NotNull Level level, @NotNull List<Identifier> history) {
         if (this.totalCache == null) {
-            this.totalCache = this.calculateTotalAsync(recipeManager, registryAccess, history);
+            this.totalCache = this.calculateTotalAsync(level, history);
         }
         return this.totalCache;
     }
     
-    protected abstract CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history);
+    protected abstract CompletableFuture<SourceList> calculateTotalAsync(@NotNull Level level, @NotNull List<Identifier> history);
 }

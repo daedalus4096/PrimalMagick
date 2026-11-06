@@ -651,7 +651,7 @@ public class ResearchManager {
             return false;
         }
 
-        Optional<SourceList> affinitiesOpt = AffinityManager.getInstance().getAffinityValues(entity.getType(), player.registryAccess());
+        Optional<SourceList> affinitiesOpt = AffinityManager.getInstance().getAffinityValues(entity.getType(), player.level());
         if (affinitiesOpt.isPresent()) {
             SourceList affinities = affinitiesOpt.get();
             if (affinities.isEmpty() && (!(player instanceof ServerPlayer serverPlayer) || !hasScanTriggers(serverPlayer, entityReference))) {
@@ -675,7 +675,7 @@ public class ResearchManager {
             return CompletableFuture.completedFuture(Boolean.FALSE);
         }
         
-        return AffinityManager.getInstance().getAffinityValuesAsync(entity.getType(), player.registryAccess()).thenApply(affinities -> {
+        return AffinityManager.getInstance().getAffinityValuesAsync(entity.getType(), player.level()).thenApply(affinities -> {
             if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer serverPlayer) || !hasScanTriggers(serverPlayer, entityReference))) {
                 // If the given entity has no affinities, consider it already scanned
                 return true;
@@ -834,7 +834,7 @@ public class ResearchManager {
         }
 
         // Get affinities from affinity manager for entity type
-        return AffinityManager.getInstance().getAffinityValuesAsync(entity.getType(), level.registryAccess()).thenApply(ResearchManager::getObservationPoints);
+        return AffinityManager.getInstance().getAffinityValuesAsync(entity.getType(), level).thenApply(ResearchManager::getObservationPoints);
     }
     
     private static int getObservationPoints(@Nullable SourceList affinities) {

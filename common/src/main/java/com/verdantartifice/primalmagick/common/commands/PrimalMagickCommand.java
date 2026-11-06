@@ -61,8 +61,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.display.SlotDisplayContext;
+import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.slf4j.Logger;
 
@@ -648,10 +648,8 @@ public class PrimalMagickCommand {
         Logger LOGGER = LogUtils.getLogger();
 
         ServerLevel level = source.getLevel();
-        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getLevel().recipeAccess();
-        RegistryAccess registryAccess = source.registryAccess();
 
-        List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
+        List<Item> sourcelessItems = listSourcelessItems(level, excludeNamespaces);
 
         String excludeNote = "";
         if ( (excludeNamespaces != null) && (!excludeNamespaces.isEmpty())) {
@@ -670,14 +668,13 @@ public class PrimalMagickCommand {
         Logger LOGGER = LogUtils.getLogger();
         ServerPlayer target = source.getPlayer();
         ServerLevel level = source.getLevel();
-        RecipeManager recipeManager = source.getLevel().recipeAccess();
         RegistryAccess registryAccess = source.registryAccess();
 
         target.sendSystemMessage(Component.literal("Starting datapack template generation; this may take a while."));
 
         CompletableFuture.runAsync(() -> {
-            List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
-            List<EntityType<?>> sourcelessEntities = listSourcelessEntityTypes(registryAccess, excludeNamespaces);
+            List<Item> sourcelessItems = listSourcelessItems(level, excludeNamespaces);
+            List<EntityType<?>> sourcelessEntities = listSourcelessEntityTypes(level, excludeNamespaces);
 
             byte[] itemsToDataPackTemplate;
             try {
@@ -713,7 +710,7 @@ public class PrimalMagickCommand {
         return 0;
     }
     
-    private static List<EntityType<?>> listSourcelessEntityTypes(RegistryAccess registryAccess, Collection<String> excludeNamespaces) {
+    private static List<EntityType<?>> listSourcelessEntityTypes(Level level, Collection<String> excludeNamespaces) {
         AffinityManager am = AffinityManager.getOrCreateInstance();
         Vector<EntityType<?>> retVal = new Vector<>();
 
@@ -728,7 +725,7 @@ public class PrimalMagickCommand {
                 return;
             }
             
-            CompletableFuture<SourceList> future = am.getAffinityValuesAsync(entityType, registryAccess);
+            CompletableFuture<SourceList> future = am.getAffinityValuesAsync(entityType, level);
             try {
                 SourceList sources = future.get();
                 if (sources.isEmpty()) {
@@ -742,7 +739,7 @@ public class PrimalMagickCommand {
         return retVal;
     }
 
-    private static List<Item> listSourcelessItems(net.minecraft.world.item.crafting.RecipeManager recipeManager, RegistryAccess registryAccess, ServerLevel level, Collection<String> excludeNamespaces ) {
+    private static List<Item> listSourcelessItems(ServerLevel level, Collection<String> excludeNamespaces ) {
         AffinityManager am = AffinityManager.getOrCreateInstance();
 
         Vector<Item> items = new Vector<>();
@@ -757,9 +754,9 @@ public class PrimalMagickCommand {
                     return;
                 }
 
-                IAffinity affinityData = am.getOrGenerateItemAffinityAsync(itemId, recipeManager, registryAccess, new ArrayList<>()).join();
-                if (getRecipeCountForItem(recipeManager, level, item) ==0) {
-                        SourceList sources = affinityData.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()).join();
+                IAffinity affinityData = am.getOrGenerateItemAffinityAsync(itemId, level, new ArrayList<>()).join();
+                if (getRecipeCountForItem(level, item) ==0) {
+                        SourceList sources = affinityData.getTotalAsync(level, new ArrayList<>()).join();
                         if (sources.isEmpty()){
                                 items.add(item);
                         }
@@ -770,9 +767,9 @@ public class PrimalMagickCommand {
         return items;
     }
 
-    private static long getRecipeCountForItem(net.minecraft.world.item.crafting.RecipeManager recipeManager, ServerLevel level, Item item) {
+    private static long getRecipeCountForItem(ServerLevel level, Item item) {
         ContextMap context = SlotDisplayContext.fromLevel(level);
-        return recipeManager.getRecipes().stream()
+        return level.recipeAccess().getRecipes().stream()
             .filter(rh -> rh.value().display().getFirst().result().resolveForFirstStack(context) instanceof ItemStack stack && stack.is(item))
             .count();
     }
@@ -889,7 +886,7 @@ public class PrimalMagickCommand {
     private static int explainItemAffinity(CommandSourceStack source, ItemInput item) {
         // Get the affinity data for the item
         Identifier itemId = Services.ITEMS_REGISTRY.getKey(item.item().value());
-        IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getLevel().recipeAccess(), source.registryAccess(), new ArrayList<>()).join();
+        IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getLevel(), new ArrayList<>()).join();
         if (affinityData instanceof ItemAffinity itemAffinity) {
             itemAffinity.getSourceRecipe().ifPresentOrElse(
                     recipeLoc -> source.sendSuccess(() -> Component.translatable("commands.primalmagick.affinities.explain.from_recipe", itemId.toString(), recipeLoc.toString()), true),

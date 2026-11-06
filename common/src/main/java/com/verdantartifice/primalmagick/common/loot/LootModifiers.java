@@ -115,7 +115,7 @@ public class LootModifiers {
             int enchantLevel = getEnchantLevel(context, EnchantmentsPM.ESSENCE_THIEF);
             if (enchantLevel > 0) {
                 // The affinity data is needed at the time of loot modification, so if it's not ready then we have no choice but to wait
-                SourceList affinities = AffinityManager.getInstance().getAffinityValuesAsync(victim.getType(), victim.level().registryAccess()).join();
+                SourceList affinities = AffinityManager.getInstance().getAffinityValuesAsync(victim.getType(), victim.level()).join();
                 if (affinities != null && !affinities.isEmpty()) {
                     WeightedRandomBag<Source> bag = new WeightedRandomBag<>();
                     for (Source source : affinities.getSources()) {

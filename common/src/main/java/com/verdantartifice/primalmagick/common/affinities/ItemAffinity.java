@@ -7,7 +7,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -15,9 +14,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,15 +60,13 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
     }
     
     @Override
-    protected CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @NotNull RegistryAccess registryAccess, @NotNull List<Identifier> history) {
+    protected CompletableFuture<SourceList> calculateTotalAsync(@NotNull Level level, @NotNull List<Identifier> history) {
         return this.valuesEither.map(
             fv -> CompletableFuture.completedFuture(fv.set),
-            dv -> recipeManager == null ?
-                    CompletableFuture.completedFuture(SourceList.EMPTY) :
-                    AffinityManager.getInstance().getOrGenerateItemAffinityAsync(dv.base, recipeManager, registryAccess, history)
+            dv -> AffinityManager.getInstance().getOrGenerateItemAffinityAsync(dv.base, level, history)
                             .thenCompose(baseEntry -> baseEntry == null ?
                                     CompletableFuture.completedFuture(SourceList.EMPTY) :
-                                    baseEntry.getTotalAsync(recipeManager, registryAccess, history))
+                                    baseEntry.getTotalAsync(level, history))
                             .thenApply(baseSources -> baseSources.add(dv.add).remove(dv.remove))
         );
     }

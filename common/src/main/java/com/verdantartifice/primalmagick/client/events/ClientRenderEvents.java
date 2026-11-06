@@ -113,7 +113,7 @@ public class ClientRenderEvents {
         if (mc.hitResult instanceof EntityHitResult target) {
             if (mc.player != null && (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get())) {
                 Entity entity = target.getEntity();
-                AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.registryAccess()).ifPresent(affinities -> {
+                AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.level()).ifPresent(affinities -> {
                     boolean isScanned = ResearchManager.isScanned(EntityReference.of(entity), mc.player);
                     if (isScanned && !affinities.isEmpty()) {
                         double interpolatedEntityX = entity.xo + (partialTicks * (entity.getX() - entity.xo));
