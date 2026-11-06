@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.Constants;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 
 /**
@@ -16,5 +17,10 @@ public class ClientEntityEventListeners {
     @SubscribeEvent
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         ClientEntityEvents.onEntityJoinLevel(event.getEntity(), event.getLevel());
+    }
+
+    @SubscribeEvent
+    public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
+        ClientEntityEvents.onLoggingOut();
     }
 }

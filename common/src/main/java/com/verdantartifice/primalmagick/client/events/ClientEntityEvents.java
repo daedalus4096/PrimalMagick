@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.events;
 
 import com.verdantartifice.primalmagick.client.books.LexiconLoader;
+import com.verdantartifice.primalmagick.client.crafting.ClientRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -18,5 +19,10 @@ public class ClientEntityEvents {
             // Update client lexicons with tag-delineated book data
             LexiconLoader.getInstance().updateWithTagData(level.registryAccess());
         }
+    }
+
+    public static void onLoggingOut() {
+        // Clean up the local recipe store when the player logs out, per recommendation in docs
+        ClientRecipes.reset();
     }
 }
