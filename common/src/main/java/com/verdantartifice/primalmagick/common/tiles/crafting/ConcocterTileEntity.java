@@ -195,11 +195,10 @@ public abstract class ConcocterTileEntity extends AbstractTileSidedInventoryPM i
     
     protected static Set<AbstractResearchKey<?>> assembleRelevantResearch(RecipeManager recipeManager) {
         // Get a set of all the research keys used in any concocting recipe
-        return recipeManager.getAllRecipesFor(RecipeTypesPM.CONCOCTING.get()).stream().flatMap(holder -> {
-            return holder.value().getRequirement().map(req -> {
-                return req.streamKeys();
-            }).orElse(Stream.empty());
-        }).distinct().collect(Collectors.toUnmodifiableSet());
+        return recipeManager.getRecipes().stream()
+                .filter(holder -> holder.value().getType().equals(RecipeTypesPM.CONCOCTING.get()))
+                .flatMap(holder -> ((IConcoctingRecipe)holder.value()).getRequirement().map(AbstractRequirement::streamKeys).orElse(Stream.empty()))
+                .collect(Collectors.toUnmodifiableSet());
     }
     
     @Override
