@@ -40,7 +40,7 @@ public abstract class EnchantedCountIncreaseFunctionMixin extends LootItemCondit
 
     @Shadow
     @Final
-    private NumberProvider value;
+    private NumberProvider count;
 
     @Shadow
     @Final
@@ -67,7 +67,7 @@ public abstract class EnchantedCountIncreaseFunctionMixin extends LootItemCondit
             int enchantmentLevel = Math.max(EnchantmentHelper.getEnchantmentLevel(this.enchantment, livingEntity),
                     EnchantmentHelper.getEnchantmentLevel(treasureHolder, livingEntity));
             if (enchantmentLevel > 0) {
-                float f = (float)enchantmentLevel * this.value.getFloat(pContext);
+                float f = (float)enchantmentLevel * this.count.getFloat(pContext);
                 pStack.grow(Math.round(f));
                 if (this.hasLimit()) {
                     pStack.limitSize(this.limit);
