@@ -31,7 +31,7 @@ public class CombatEventListeners {
     
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onEntityHurtLowest(LivingDamageEvent.Post event) {
-        CombatEvents.onEntityHurtLowest(event.getEntity(), event.getSource(), event.getNewDamage());
+        CombatEvents.onEntityHurtLowest(event.getEntity(), event.getSource(), event.getInflictedDamage());
     }
     
     @SubscribeEvent
