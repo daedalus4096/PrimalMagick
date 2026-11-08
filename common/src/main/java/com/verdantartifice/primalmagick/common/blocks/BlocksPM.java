@@ -432,19 +432,19 @@ public class BlocksPM {
     public static final IRegistryItem<Block, DesalinatorBlock> DESALINATOR = register("desalinator", DesalinatorBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.5F, 6.0F).sound(SoundType.COPPER).noOcclusion());
 
     // Register misc blocks
-    public static final IRegistryItem<Block, ConsecrationFieldBlock> CONSECRATION_FIELD = register("consecration_field", ConsecrationFieldBlock::new);
-    public static final IRegistryItem<Block, GlowFieldBlock> GLOW_FIELD = register("glow_field", GlowFieldBlock::new);
-    public static final IRegistryItem<Block, GlowFieldBlock> SOUL_GLOW_FIELD = register("soul_glow_field", GlowFieldBlock::new);
-    public static final IRegistryItem<Block, SaltTrailBlock> SALT_TRAIL = register("salt_trail", SaltTrailBlock::new);
-    public static final IRegistryItem<Block, Block> ROCK_SALT_ORE = register("rock_salt_ore", () -> new Block(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 3.0F)));
-    public static final IRegistryItem<Block, DropExperienceBlock> QUARTZ_ORE = register("quartz_ore", () -> new DropExperienceBlock(UniformInt.of(2, 5), Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 3.0F)));
-    public static final IRegistryItem<Block, Block> PRIMALITE_BLOCK = register("primalite_block", () -> new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final IRegistryItem<Block, Block> HEXIUM_BLOCK = register("hexium_block", () -> new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(7.0F, 6.0F).sound(SoundType.METAL)));
-    public static final IRegistryItem<Block, Block> HALLOWSTEEL_BLOCK = register("hallowsteel_block", () -> new Block(Block.Properties.of().mapColor(MapColor.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL)));
-    public static final IRegistryItem<Block, Block> IGNYX_BLOCK = register("ignyx_block", () -> new Block(Block.Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM).strength(5.0F, 6.0F)));
-    public static final IRegistryItem<Block, Block> SALT_BLOCK = register("salt_block", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 3.0F)));
-    public static final IRegistryItem<Block, TreefolkSproutBlock> TREEFOLK_SPROUT = register("treefolk_sprout", () -> new TreefolkSproutBlock(Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollision().randomTicks().instabreak().sound(SoundType.GRASS)));
-    public static final IRegistryItem<Block, EnderwardBlock> ENDERWARD = register("enderward", EnderwardBlock::new);
+    public static final IRegistryItem<Block, ConsecrationFieldBlock> CONSECRATION_FIELD = register("consecration_field", ConsecrationFieldBlock::new, () -> Block.Properties.of().air().replaceable().strength(-1, 3600000).lightLevel(state -> 15).isSuffocating((state, blockReader, pos) -> false).isViewBlocking((state, blockReader, pos) -> false).noLootTable().noOcclusion());
+    public static final IRegistryItem<Block, GlowFieldBlock> GLOW_FIELD = register("glow_field", GlowFieldBlock::new, () -> Block.Properties.of().air().replaceable().strength(-1, 3600000).lightLevel(state -> state.getValue(GlowFieldBlock.LIGHT)).noLootTable().noOcclusion().randomTicks());
+    public static final IRegistryItem<Block, GlowFieldBlock> SOUL_GLOW_FIELD = register("soul_glow_field", GlowFieldBlock::new, () -> Block.Properties.of().air().replaceable().strength(-1, 3600000).lightLevel(state -> state.getValue(GlowFieldBlock.LIGHT)).noLootTable().noOcclusion().randomTicks());
+    public static final IRegistryItem<Block, SaltTrailBlock> SALT_TRAIL = register("salt_trail", SaltTrailBlock::new, () -> Block.Properties.of().pushReaction(PushReaction.DESTROY).noCollision().strength(0.0F));
+    public static final IRegistryItem<Block, Block> ROCK_SALT_ORE = register("rock_salt_ore", () -> Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 3.0F));
+    public static final IRegistryItem<Block, DropExperienceBlock> QUARTZ_ORE = register("quartz_ore", props -> new DropExperienceBlock(UniformInt.of(2, 5), props), () -> Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 3.0F));
+    public static final IRegistryItem<Block, Block> PRIMALITE_BLOCK = register("primalite_block", () -> Block.Properties.of().mapColor(MapColor.METAL).strength(5.0F, 6.0F).sound(SoundType.METAL));
+    public static final IRegistryItem<Block, Block> HEXIUM_BLOCK = register("hexium_block", () -> Block.Properties.of().mapColor(MapColor.METAL).strength(7.0F, 6.0F).sound(SoundType.METAL));
+    public static final IRegistryItem<Block, Block> HALLOWSTEEL_BLOCK = register("hallowsteel_block", () -> Block.Properties.of().mapColor(MapColor.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL));
+    public static final IRegistryItem<Block, Block> IGNYX_BLOCK = register("ignyx_block", () -> Block.Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM).strength(5.0F, 6.0F));
+    public static final IRegistryItem<Block, Block> SALT_BLOCK = register("salt_block", () -> Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 3.0F));
+    public static final IRegistryItem<Block, TreefolkSproutBlock> TREEFOLK_SPROUT = register("treefolk_sprout", TreefolkSproutBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollision().randomTicks().instabreak().sound(SoundType.GRASS));
+    public static final IRegistryItem<Block, EnderwardBlock> ENDERWARD = register("enderward", EnderwardBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instabreak().pushReaction(PushReaction.DESTROY).sound(SoundType.WOOD).noOcclusion());
 
     // Helper functions for block properties
     protected static boolean never(BlockState state, BlockGetter reader, BlockPos pos) {

@@ -19,6 +19,7 @@ import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -58,8 +59,8 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     
     protected final Set<BlockPos> blocksNeedingUpdate = new HashSet<>();
 
-    public SaltTrailBlock() {
-        super(Block.Properties.of().pushReaction(PushReaction.DESTROY).noCollision().strength(0.0F));
+    public SaltTrailBlock(BlockBehaviour.Properties props) {
+        super(props);
         this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, SaltSide.NONE).setValue(EAST, SaltSide.NONE).setValue(SOUTH, SaltSide.NONE).setValue(WEST, SaltSide.NONE).setValue(POWER, 0));
     }
     

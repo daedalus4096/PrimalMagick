@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -47,8 +48,8 @@ public class EnderwardBlock extends Block {
             .put(Direction.EAST, VoxelShapeUtils.rotate(BASE_AABB, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90))
             .build());
 
-    public EnderwardBlock() {
-        super(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instabreak().pushReaction(PushReaction.DESTROY).sound(SoundType.WOOD).noOcclusion());
+    public EnderwardBlock(BlockBehaviour.Properties props) {
+        super(props);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 

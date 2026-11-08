@@ -14,6 +14,7 @@ import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -38,8 +39,8 @@ public class GlowFieldBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty SPARKLING = BooleanProperty.create("sparkling");
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     
-    public GlowFieldBlock() {
-        super(Block.Properties.of().air().replaceable().strength(-1, 3600000).lightLevel(state -> state.getValue(LIGHT)).noLootTable().noOcclusion().randomTicks());
+    public GlowFieldBlock(BlockBehaviour.Properties props) {
+        super(props);
         this.registerDefaultState(this.stateDefinition.any().setValue(LIGHT, 15).setValue(FADING, Boolean.FALSE).setValue(SPARKLING, Boolean.TRUE).setValue(WATERLOGGED, Boolean.FALSE));
     }
     

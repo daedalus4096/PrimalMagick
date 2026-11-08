@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.TransparentBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -41,11 +42,8 @@ import org.jetbrains.annotations.NotNull;
 public class ConsecrationFieldBlock extends TransparentBlock implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     
-    public ConsecrationFieldBlock() {
-        super(Block.Properties.of().air().replaceable().strength(-1, 3600000).lightLevel(state -> 15)
-                .isSuffocating((state, blockReader, pos) -> false)
-                .isViewBlocking((state, blockReader, pos) -> false)
-                .noLootTable().noOcclusion());
+    public ConsecrationFieldBlock(BlockBehaviour.Properties props) {
+        super(props);
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
     }
 
