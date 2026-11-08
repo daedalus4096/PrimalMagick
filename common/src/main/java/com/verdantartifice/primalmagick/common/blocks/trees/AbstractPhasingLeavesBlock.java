@@ -136,7 +136,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IPhasi
         }
     }
 
-    protected static Boolean allowsSpawnOnLeaves(BlockState state, BlockGetter reader, BlockPos pos, EntityType<?> entity) {
+    public static Boolean allowsSpawnOnLeaves(BlockState state, BlockGetter reader, BlockPos pos, EntityType<?> entity) {
        return entity == EntityType.OCELOT || entity == EntityType.PARROT;
     }
 }

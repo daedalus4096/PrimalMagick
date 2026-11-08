@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.trees;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 
@@ -12,8 +13,8 @@ import net.minecraft.world.level.material.MapColor;
  * @author Daedalus4096
  */
 public class SunwoodLogBlock extends AbstractPhasingLogBlock implements ISunwoodBlock {
-    public SunwoodLogBlock(Block stripped) {
-        super(stripped, Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).randomTicks().noOcclusion().sound(SoundType.WOOD));
+    public SunwoodLogBlock(Block stripped, BlockBehaviour.Properties baseProperties) {
+        super(stripped, baseProperties);
     }
 
     @Override
