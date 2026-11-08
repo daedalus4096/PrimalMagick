@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -42,9 +43,8 @@ import org.jetbrains.annotations.NotNull;
 public class WandAssemblyTableBlock extends Block implements SimpleWaterloggedBlock {
     protected static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
-    public WandAssemblyTableBlock() {
-        super(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE).noOcclusion());
-
+    public WandAssemblyTableBlock(BlockBehaviour.Properties props) {
+        super(props);
         registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.WATERLOGGED, false));
     }
     
