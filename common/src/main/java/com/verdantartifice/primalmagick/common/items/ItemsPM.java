@@ -105,7 +105,9 @@ import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.level.block.Block;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -119,8 +121,20 @@ public class ItemsPM {
         Services.ITEMS_REGISTRY.init();
     }
 
-    protected static <I extends Item> IRegistryItem<Item, I> registerSupplier(String name, Supplier<I> itemSupplier) {
-        IRegistryItem<Item, I> obj = registerWithoutTab(name, itemSupplier);
+    protected static <I extends Item> IRegistryItem<Item, I> registerSupplier(String name, Function<Item.Properties, ? extends I> itemFactory, Supplier<Item.Properties> propertiesSupplier) {
+        IRegistryItem<Item, I> obj = registerWithoutTab(name, itemFactory, propertiesSupplier);
+        CreativeModeTabsPM.registerSupplier(obj);
+        return obj;
+    }
+
+    protected static IRegistryItem<Item, BlockItem> registerSupplier(String name, Supplier<? extends Block> blockSupplier) {
+        IRegistryItem<Item, BlockItem> obj = registerWithoutTab(name, blockSupplier);
+        CreativeModeTabsPM.registerSupplier(obj);
+        return obj;
+    }
+
+    protected static IRegistryItem<Item, BlockItem> registerSupplier(String name, Supplier<? extends Block> blockSupplier, Supplier<Item.Properties> propertiesSupplier) {
+        IRegistryItem<Item, BlockItem> obj = registerWithoutTab(name, blockSupplier, propertiesSupplier);
         CreativeModeTabsPM.registerSupplier(obj);
         return obj;
     }
@@ -137,206 +151,214 @@ public class ItemsPM {
         return obj;
     }
 
-    protected static <I extends Item> IRegistryItem<Item, I> registerWithoutTab(String name, Supplier<I> itemSupplier) {
-        return Services.ITEMS_REGISTRY.register(name, itemSupplier);
+    protected static IRegistryItem<Item, BlockItem> registerWithoutTab(String name, Supplier<? extends Block> blockSupplier) {
+        return Services.ITEMS_REGISTRY.registerSimpleBlockItem(name, blockSupplier);
+    }
+
+    protected static IRegistryItem<Item, BlockItem> registerWithoutTab(String name, Supplier<? extends Block> blockSupplier, Supplier<Item.Properties> propertiesSupplier) {
+        return Services.ITEMS_REGISTRY.registerSimpleBlockItem(name, blockSupplier, propertiesSupplier);
+    }
+
+    protected static <I extends Item> IRegistryItem<Item, I> registerWithoutTab(String name, Function<Item.Properties, ? extends I> itemFactory, Supplier<Item.Properties> propertiesSupplier) {
+        return Services.ITEMS_REGISTRY.registerItem(name, itemFactory, propertiesSupplier);
     }
 
     // Register grimoire items
-    public static final IRegistryItem<Item, GrimoireItem> GRIMOIRE = registerSupplier("grimoire", () -> new GrimoireItem(false, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, GrimoireItem> CREATIVE_GRIMOIRE = registerSupplier("grimoire_creative", () -> new GrimoireItem(true, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, GrimoireItem> GRIMOIRE = registerSupplier("grimoire", props -> new GrimoireItem(false, props), () -> new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, GrimoireItem> CREATIVE_GRIMOIRE = registerSupplier("grimoire_creative", props -> new GrimoireItem(true, props), () -> new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
 
     // Register raw marble block items
-    public static final IRegistryItem<Item, BlockItem> MARBLE = registerSupplier("marble", () -> new BlockItem(BlocksPM.MARBLE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SLAB = registerSupplier("marble_slab", () -> new BlockItem(BlocksPM.MARBLE_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_STAIRS = registerSupplier("marble_stairs", () -> new BlockItem(BlocksPM.MARBLE_STAIRS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_WALL = registerSupplier("marble_wall", () -> new BlockItem(BlocksPM.MARBLE_WALL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_BRICKS = registerSupplier("marble_bricks", () -> new BlockItem(BlocksPM.MARBLE_BRICKS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_BRICK_SLAB = registerSupplier("marble_brick_slab", () -> new BlockItem(BlocksPM.MARBLE_BRICK_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_BRICK_STAIRS = registerSupplier("marble_brick_stairs", () -> new BlockItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_BRICK_WALL = registerSupplier("marble_brick_wall", () -> new BlockItem(BlocksPM.MARBLE_BRICK_WALL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_PILLAR = registerSupplier("marble_pillar", () -> new BlockItem(BlocksPM.MARBLE_PILLAR.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_CHISELED = registerSupplier("marble_chiseled", () -> new BlockItem(BlocksPM.MARBLE_CHISELED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_RUNED = registerSupplier("marble_runed", () -> new BlockItem(BlocksPM.MARBLE_RUNED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_TILES = registerSupplier("marble_tiles", () -> new BlockItem(BlocksPM.MARBLE_TILES.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_BOOKSHELF = registerSupplier("marble_bookshelf", () -> new BlockItem(BlocksPM.MARBLE_BOOKSHELF.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> MARBLE = registerSupplier("marble", BlocksPM.MARBLE);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SLAB = registerSupplier("marble_slab", BlocksPM.MARBLE_SLAB);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_STAIRS = registerSupplier("marble_stairs", BlocksPM.MARBLE_STAIRS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_WALL = registerSupplier("marble_wall", BlocksPM.MARBLE_WALL);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_BRICKS = registerSupplier("marble_bricks", BlocksPM.MARBLE_BRICKS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_BRICK_SLAB = registerSupplier("marble_brick_slab", BlocksPM.MARBLE_BRICK_SLAB);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_BRICK_STAIRS = registerSupplier("marble_brick_stairs", BlocksPM.MARBLE_BRICK_STAIRS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_BRICK_WALL = registerSupplier("marble_brick_wall", BlocksPM.MARBLE_BRICK_WALL);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_PILLAR = registerSupplier("marble_pillar", BlocksPM.MARBLE_PILLAR);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_CHISELED = registerSupplier("marble_chiseled", BlocksPM.MARBLE_CHISELED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_RUNED = registerSupplier("marble_runed", BlocksPM.MARBLE_RUNED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_TILES = registerSupplier("marble_tiles", BlocksPM.MARBLE_TILES);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_BOOKSHELF = registerSupplier("marble_bookshelf", BlocksPM.MARBLE_BOOKSHELF);
 
     // Register enchanted marble block items
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED = registerSupplier("marble_enchanted", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_SLAB = registerSupplier("marble_enchanted_slab", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_STAIRS = registerSupplier("marble_enchanted_stairs", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_STAIRS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_WALL = registerSupplier("marble_enchanted_wall", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_WALL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BRICKS = registerSupplier("marble_enchanted_bricks", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_BRICKS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BRICK_SLAB = registerSupplier("marble_enchanted_brick_slab", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BRICK_STAIRS = registerSupplier("marble_enchanted_brick_stairs", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BRICK_WALL = registerSupplier("marble_enchanted_brick_wall", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_PILLAR = registerSupplier("marble_enchanted_pillar", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_PILLAR.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_CHISELED = registerSupplier("marble_enchanted_chiseled", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_CHISELED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_RUNED = registerSupplier("marble_enchanted_runed", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BOOKSHELF = registerSupplier("marble_enchanted_bookshelf", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED = registerSupplier("marble_enchanted", BlocksPM.MARBLE_ENCHANTED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_SLAB = registerSupplier("marble_enchanted_slab", BlocksPM.MARBLE_ENCHANTED_SLAB);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_STAIRS = registerSupplier("marble_enchanted_stairs", BlocksPM.MARBLE_ENCHANTED_STAIRS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_WALL = registerSupplier("marble_enchanted_wall", BlocksPM.MARBLE_ENCHANTED_WALL);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BRICKS = registerSupplier("marble_enchanted_bricks", BlocksPM.MARBLE_ENCHANTED_BRICKS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BRICK_SLAB = registerSupplier("marble_enchanted_brick_slab", BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BRICK_STAIRS = registerSupplier("marble_enchanted_brick_stairs", BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BRICK_WALL = registerSupplier("marble_enchanted_brick_wall", BlocksPM.MARBLE_ENCHANTED_BRICK_WALL);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_PILLAR = registerSupplier("marble_enchanted_pillar", BlocksPM.MARBLE_ENCHANTED_PILLAR);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_CHISELED = registerSupplier("marble_enchanted_chiseled", BlocksPM.MARBLE_ENCHANTED_CHISELED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_RUNED = registerSupplier("marble_enchanted_runed", BlocksPM.MARBLE_ENCHANTED_RUNED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_ENCHANTED_BOOKSHELF = registerSupplier("marble_enchanted_bookshelf", BlocksPM.MARBLE_ENCHANTED_BOOKSHELF);
 
     // Register smoked marble block items
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED = registerSupplier("marble_smoked", () -> new BlockItem(BlocksPM.MARBLE_SMOKED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_SLAB = registerSupplier("marble_smoked_slab", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_STAIRS = registerSupplier("marble_smoked_stairs", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_STAIRS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_WALL = registerSupplier("marble_smoked_wall", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_WALL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BRICKS = registerSupplier("marble_smoked_bricks", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_BRICKS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BRICK_SLAB = registerSupplier("marble_smoked_brick_slab", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BRICK_STAIRS = registerSupplier("marble_smoked_brick_stairs", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BRICK_WALL = registerSupplier("marble_smoked_brick_wall", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_PILLAR = registerSupplier("marble_smoked_pillar", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_PILLAR.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_CHISELED = registerSupplier("marble_smoked_chiseled", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_CHISELED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_RUNED = registerSupplier("marble_smoked_runed", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_RUNED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BOOKSHELF = registerSupplier("marble_smoked_bookshelf", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED = registerSupplier("marble_smoked", BlocksPM.MARBLE_SMOKED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_SLAB = registerSupplier("marble_smoked_slab", BlocksPM.MARBLE_SMOKED_SLAB);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_STAIRS = registerSupplier("marble_smoked_stairs", BlocksPM.MARBLE_SMOKED_STAIRS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_WALL = registerSupplier("marble_smoked_wall", BlocksPM.MARBLE_SMOKED_WALL);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BRICKS = registerSupplier("marble_smoked_bricks", BlocksPM.MARBLE_SMOKED_BRICKS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BRICK_SLAB = registerSupplier("marble_smoked_brick_slab", BlocksPM.MARBLE_SMOKED_BRICK_SLAB);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BRICK_STAIRS = registerSupplier("marble_smoked_brick_stairs", BlocksPM.MARBLE_SMOKED_BRICK_STAIRS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BRICK_WALL = registerSupplier("marble_smoked_brick_wall", BlocksPM.MARBLE_SMOKED_BRICK_WALL);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_PILLAR = registerSupplier("marble_smoked_pillar", BlocksPM.MARBLE_SMOKED_PILLAR);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_CHISELED = registerSupplier("marble_smoked_chiseled", BlocksPM.MARBLE_SMOKED_CHISELED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_RUNED = registerSupplier("marble_smoked_runed", BlocksPM.MARBLE_SMOKED_RUNED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_SMOKED_BOOKSHELF = registerSupplier("marble_smoked_bookshelf", BlocksPM.MARBLE_SMOKED_BOOKSHELF);
 
     // Register hallowed marble block items
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED = registerSupplier("marble_hallowed", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_SLAB = registerSupplier("marble_hallowed_slab", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_STAIRS = registerSupplier("marble_hallowed_stairs", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_STAIRS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_WALL = registerSupplier("marble_hallowed_wall", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_WALL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BRICKS = registerSupplier("marble_hallowed_bricks", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BRICKS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BRICK_SLAB = registerSupplier("marble_hallowed_brick_slab", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BRICK_STAIRS = registerSupplier("marble_hallowed_brick_stairs", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BRICK_WALL = registerSupplier("marble_hallowed_brick_wall", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_PILLAR = registerSupplier("marble_hallowed_pillar", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_PILLAR.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_CHISELED = registerSupplier("marble_hallowed_chiseled", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_CHISELED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_RUNED = registerSupplier("marble_hallowed_runed", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_RUNED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BOOKSHELF = registerSupplier("marble_hallowed_bookshelf", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED = registerSupplier("marble_hallowed", BlocksPM.MARBLE_HALLOWED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_SLAB = registerSupplier("marble_hallowed_slab", BlocksPM.MARBLE_HALLOWED_SLAB);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_STAIRS = registerSupplier("marble_hallowed_stairs", BlocksPM.MARBLE_HALLOWED_STAIRS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_WALL = registerSupplier("marble_hallowed_wall", BlocksPM.MARBLE_HALLOWED_WALL);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BRICKS = registerSupplier("marble_hallowed_bricks", BlocksPM.MARBLE_HALLOWED_BRICKS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BRICK_SLAB = registerSupplier("marble_hallowed_brick_slab", BlocksPM.MARBLE_HALLOWED_BRICK_SLAB);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BRICK_STAIRS = registerSupplier("marble_hallowed_brick_stairs", BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BRICK_WALL = registerSupplier("marble_hallowed_brick_wall", BlocksPM.MARBLE_HALLOWED_BRICK_WALL);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_PILLAR = registerSupplier("marble_hallowed_pillar", BlocksPM.MARBLE_HALLOWED_PILLAR);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_CHISELED = registerSupplier("marble_hallowed_chiseled", BlocksPM.MARBLE_HALLOWED_CHISELED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_RUNED = registerSupplier("marble_hallowed_runed", BlocksPM.MARBLE_HALLOWED_RUNED);
+    public static final IRegistryItem<Item, BlockItem> MARBLE_HALLOWED_BOOKSHELF = registerSupplier("marble_hallowed_bookshelf", BlocksPM.MARBLE_HALLOWED_BOOKSHELF);
 
     // Register sunwood block items
-    public static final IRegistryItem<Item, BlockItem> SUNWOOD_LOG = registerSupplier("sunwood_log", () -> new BlockItem(BlocksPM.SUNWOOD_LOG.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STRIPPED_SUNWOOD_LOG = registerSupplier("stripped_sunwood_log", () -> new BlockItem(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SUNWOOD_WOOD = registerSupplier("sunwood_wood", () -> new BlockItem(BlocksPM.SUNWOOD_WOOD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STRIPPED_SUNWOOD_WOOD = registerSupplier("stripped_sunwood_wood", () -> new BlockItem(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SUNWOOD_LEAVES = registerSupplier("sunwood_leaves", () -> new BlockItem(BlocksPM.SUNWOOD_LEAVES.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SUNWOOD_SAPLING = registerSupplier("sunwood_sapling", () -> new BlockItem(BlocksPM.SUNWOOD_SAPLING.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SUNWOOD_PLANKS = registerSupplier("sunwood_planks", () -> new BlockItem(BlocksPM.SUNWOOD_PLANKS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SUNWOOD_SLAB = registerSupplier("sunwood_slab", () -> new BlockItem(BlocksPM.SUNWOOD_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SUNWOOD_STAIRS = registerSupplier("sunwood_stairs", () -> new BlockItem(BlocksPM.SUNWOOD_STAIRS.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> SUNWOOD_LOG = registerSupplier("sunwood_log", BlocksPM.SUNWOOD_LOG);
+    public static final IRegistryItem<Item, BlockItem> STRIPPED_SUNWOOD_LOG = registerSupplier("stripped_sunwood_log", BlocksPM.STRIPPED_SUNWOOD_LOG);
+    public static final IRegistryItem<Item, BlockItem> SUNWOOD_WOOD = registerSupplier("sunwood_wood", BlocksPM.SUNWOOD_WOOD);
+    public static final IRegistryItem<Item, BlockItem> STRIPPED_SUNWOOD_WOOD = registerSupplier("stripped_sunwood_wood", BlocksPM.STRIPPED_SUNWOOD_WOOD);
+    public static final IRegistryItem<Item, BlockItem> SUNWOOD_LEAVES = registerSupplier("sunwood_leaves", BlocksPM.SUNWOOD_LEAVES);
+    public static final IRegistryItem<Item, BlockItem> SUNWOOD_SAPLING = registerSupplier("sunwood_sapling", BlocksPM.SUNWOOD_SAPLING);
+    public static final IRegistryItem<Item, BlockItem> SUNWOOD_PLANKS = registerSupplier("sunwood_planks", BlocksPM.SUNWOOD_PLANKS);
+    public static final IRegistryItem<Item, BlockItem> SUNWOOD_SLAB = registerSupplier("sunwood_slab", BlocksPM.SUNWOOD_SLAB);
+    public static final IRegistryItem<Item, BlockItem> SUNWOOD_STAIRS = registerSupplier("sunwood_stairs", BlocksPM.SUNWOOD_STAIRS);
     public static final IRegistryItem<Item, BurnableBlockItem> SUNWOOD_PILLAR = registerSupplier("sunwood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.SUNWOOD_PILLAR, 300, new Item.Properties()));
 
     // Register moonwood block items
-    public static final IRegistryItem<Item, BlockItem> MOONWOOD_LOG = registerSupplier("moonwood_log", () -> new BlockItem(BlocksPM.MOONWOOD_LOG.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STRIPPED_MOONWOOD_LOG = registerSupplier("stripped_moonwood_log", () -> new BlockItem(BlocksPM.STRIPPED_MOONWOOD_LOG.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MOONWOOD_WOOD = registerSupplier("moonwood_wood", () -> new BlockItem(BlocksPM.MOONWOOD_WOOD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STRIPPED_MOONWOOD_WOOD = registerSupplier("stripped_moonwood_wood", () -> new BlockItem(BlocksPM.STRIPPED_MOONWOOD_WOOD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MOONWOOD_LEAVES = registerSupplier("moonwood_leaves", () -> new BlockItem(BlocksPM.MOONWOOD_LEAVES.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MOONWOOD_SAPLING = registerSupplier("moonwood_sapling", () -> new BlockItem(BlocksPM.MOONWOOD_SAPLING.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MOONWOOD_PLANKS = registerSupplier("moonwood_planks", () -> new BlockItem(BlocksPM.MOONWOOD_PLANKS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MOONWOOD_SLAB = registerSupplier("moonwood_slab", () -> new BlockItem(BlocksPM.MOONWOOD_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MOONWOOD_STAIRS = registerSupplier("moonwood_stairs", () -> new BlockItem(BlocksPM.MOONWOOD_STAIRS.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> MOONWOOD_LOG = registerSupplier("moonwood_log", BlocksPM.MOONWOOD_LOG);
+    public static final IRegistryItem<Item, BlockItem> STRIPPED_MOONWOOD_LOG = registerSupplier("stripped_moonwood_log", BlocksPM.STRIPPED_MOONWOOD_LOG);
+    public static final IRegistryItem<Item, BlockItem> MOONWOOD_WOOD = registerSupplier("moonwood_wood", BlocksPM.MOONWOOD_WOOD);
+    public static final IRegistryItem<Item, BlockItem> STRIPPED_MOONWOOD_WOOD = registerSupplier("stripped_moonwood_wood", BlocksPM.STRIPPED_MOONWOOD_WOOD);
+    public static final IRegistryItem<Item, BlockItem> MOONWOOD_LEAVES = registerSupplier("moonwood_leaves", BlocksPM.MOONWOOD_LEAVES);
+    public static final IRegistryItem<Item, BlockItem> MOONWOOD_SAPLING = registerSupplier("moonwood_sapling", BlocksPM.MOONWOOD_SAPLING);
+    public static final IRegistryItem<Item, BlockItem> MOONWOOD_PLANKS = registerSupplier("moonwood_planks", BlocksPM.MOONWOOD_PLANKS);
+    public static final IRegistryItem<Item, BlockItem> MOONWOOD_SLAB = registerSupplier("moonwood_slab", BlocksPM.MOONWOOD_SLAB);
+    public static final IRegistryItem<Item, BlockItem> MOONWOOD_STAIRS = registerSupplier("moonwood_stairs", BlocksPM.MOONWOOD_STAIRS);
     public static final IRegistryItem<Item, BurnableBlockItem> MOONWOOD_PILLAR = registerSupplier("moonwood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.MOONWOOD_PILLAR, 300, new Item.Properties()));
 
     // Register hallowood block items
-    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_LOG = registerSupplier("hallowood_log", () -> new BlockItem(BlocksPM.HALLOWOOD_LOG.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STRIPPED_HALLOWOOD_LOG = registerSupplier("stripped_hallowood_log", () -> new BlockItem(BlocksPM.STRIPPED_HALLOWOOD_LOG.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_WOOD = registerSupplier("hallowood_wood", () -> new BlockItem(BlocksPM.HALLOWOOD_WOOD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STRIPPED_HALLOWOOD_WOOD = registerSupplier("stripped_hallowood_wood", () -> new BlockItem(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_LEAVES = registerSupplier("hallowood_leaves", () -> new BlockItem(BlocksPM.HALLOWOOD_LEAVES.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_SAPLING = registerSupplier("hallowood_sapling", () -> new BlockItem(BlocksPM.HALLOWOOD_SAPLING.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_PLANKS = registerSupplier("hallowood_planks", () -> new BlockItem(BlocksPM.HALLOWOOD_PLANKS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_SLAB = registerSupplier("hallowood_slab", () -> new BlockItem(BlocksPM.HALLOWOOD_SLAB.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_STAIRS = registerSupplier("hallowood_stairs", () -> new BlockItem(BlocksPM.HALLOWOOD_STAIRS.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_LOG = registerSupplier("hallowood_log", BlocksPM.HALLOWOOD_LOG);
+    public static final IRegistryItem<Item, BlockItem> STRIPPED_HALLOWOOD_LOG = registerSupplier("stripped_hallowood_log", BlocksPM.STRIPPED_HALLOWOOD_LOG);
+    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_WOOD = registerSupplier("hallowood_wood", BlocksPM.HALLOWOOD_WOOD);
+    public static final IRegistryItem<Item, BlockItem> STRIPPED_HALLOWOOD_WOOD = registerSupplier("stripped_hallowood_wood", BlocksPM.STRIPPED_HALLOWOOD_WOOD);
+    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_LEAVES = registerSupplier("hallowood_leaves", BlocksPM.HALLOWOOD_LEAVES);
+    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_SAPLING = registerSupplier("hallowood_sapling", BlocksPM.HALLOWOOD_SAPLING);
+    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_PLANKS = registerSupplier("hallowood_planks", BlocksPM.HALLOWOOD_PLANKS);
+    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_SLAB = registerSupplier("hallowood_slab", BlocksPM.HALLOWOOD_SLAB);
+    public static final IRegistryItem<Item, BlockItem> HALLOWOOD_STAIRS = registerSupplier("hallowood_stairs", BlocksPM.HALLOWOOD_STAIRS);
     public static final IRegistryItem<Item, BurnableBlockItem> HALLOWOOD_PILLAR = registerSupplier("hallowood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.HALLOWOOD_PILLAR, 300, new Item.Properties()));
 
     // Register crop items
     public static final IRegistryItem<Item, BlockItem> HYDROMELON_SEEDS = registerSupplier("hydromelon_seeds", () -> new BlockItem(BlocksPM.HYDROMELON_STEM.get(), new Item.Properties().useItemDescriptionPrefix()));
-    public static final IRegistryItem<Item, Item> HYDROMELON = registerSupplier("hydromelon", () -> new BlockItem(BlocksPM.HYDROMELON.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, Item> HYDROMELON = registerSupplier("hydromelon", BlocksPM.HYDROMELON);
     public static final IRegistryItem<Item, Item> HYDROMELON_SLICE = registerSupplier("hydromelon_slice", () -> new Item(new Item.Properties().food(FoodsPM.HYDROMELON_SLICE)));
     public static final IRegistryItem<Item, DoubleHighBlockItem> BLOOD_ROSE = registerSupplier("blood_rose", () -> new DoubleHighBlockItem(BlocksPM.BLOOD_ROSE.get(), new Item.Properties()));
     public static final IRegistryItem<Item, DoubleHighBlockItem> EMBERFLOWER = registerSupplier("emberflower", () -> new DoubleHighBlockItem(BlocksPM.EMBERFLOWER.get(), new Item.Properties()));
 
     // Register infused stone block items
-    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_EARTH = registerSupplier("infused_stone_earth", () -> new BlockItem(BlocksPM.INFUSED_STONE_EARTH.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_SEA = registerSupplier("infused_stone_sea", () -> new BlockItem(BlocksPM.INFUSED_STONE_SEA.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_SKY = registerSupplier("infused_stone_sky", () -> new BlockItem(BlocksPM.INFUSED_STONE_SKY.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_SUN = registerSupplier("infused_stone_sun", () -> new BlockItem(BlocksPM.INFUSED_STONE_SUN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_MOON = registerSupplier("infused_stone_moon", () -> new BlockItem(BlocksPM.INFUSED_STONE_MOON.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_EARTH = registerSupplier("infused_stone_earth", BlocksPM.INFUSED_STONE_EARTH);
+    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_SEA = registerSupplier("infused_stone_sea", BlocksPM.INFUSED_STONE_SEA);
+    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_SKY = registerSupplier("infused_stone_sky", BlocksPM.INFUSED_STONE_SKY);
+    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_SUN = registerSupplier("infused_stone_sun", BlocksPM.INFUSED_STONE_SUN);
+    public static final IRegistryItem<Item, BlockItem> INFUSED_STONE_MOON = registerSupplier("infused_stone_moon", BlocksPM.INFUSED_STONE_MOON);
 
     // Register budding gem block items
-    public static final IRegistryItem<Item, BlockItem> SYNTHETIC_AMETHYST_CLUSTER = registerSupplier("synthetic_amethyst_cluster", () -> new BlockItem(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> LARGE_SYNTHETIC_AMETHYST_BUD = registerSupplier("large_synthetic_amethyst_bud", () -> new BlockItem(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MEDIUM_SYNTHETIC_AMETHYST_BUD = registerSupplier("medium_synthetic_amethyst_bud", () -> new BlockItem(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SMALL_SYNTHETIC_AMETHYST_BUD = registerSupplier("small_synthetic_amethyst_bud", () -> new BlockItem(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> DAMAGED_BUDDING_AMETHYST_BLOCK = registerSupplier("damaged_budding_amethyst_block", () -> new BlockItem(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> CHIPPED_BUDDING_AMETHYST_BLOCK = registerSupplier("chipped_budding_amethyst_block", () -> new BlockItem(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> FLAWED_BUDDING_AMETHYST_BLOCK = registerSupplier("flawed_budding_amethyst_block", () -> new BlockItem(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SYNTHETIC_DIAMOND_CLUSTER = registerSupplier("synthetic_diamond_cluster", () -> new BlockItem(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> LARGE_SYNTHETIC_DIAMOND_BUD = registerSupplier("large_synthetic_diamond_bud", () -> new BlockItem(BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MEDIUM_SYNTHETIC_DIAMOND_BUD = registerSupplier("medium_synthetic_diamond_bud", () -> new BlockItem(BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SMALL_SYNTHETIC_DIAMOND_BUD = registerSupplier("small_synthetic_diamond_bud", () -> new BlockItem(BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> DAMAGED_BUDDING_DIAMOND_BLOCK = registerSupplier("damaged_budding_diamond_block", () -> new BlockItem(BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> CHIPPED_BUDDING_DIAMOND_BLOCK = registerSupplier("chipped_budding_diamond_block", () -> new BlockItem(BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> FLAWED_BUDDING_DIAMOND_BLOCK = registerSupplier("flawed_budding_diamond_block", () -> new BlockItem(BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SYNTHETIC_EMERALD_CLUSTER = registerSupplier("synthetic_emerald_cluster", () -> new BlockItem(BlocksPM.SYNTHETIC_EMERALD_CLUSTER.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> LARGE_SYNTHETIC_EMERALD_BUD = registerSupplier("large_synthetic_emerald_bud", () -> new BlockItem(BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MEDIUM_SYNTHETIC_EMERALD_BUD = registerSupplier("medium_synthetic_emerald_bud", () -> new BlockItem(BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SMALL_SYNTHETIC_EMERALD_BUD = registerSupplier("small_synthetic_emerald_bud", () -> new BlockItem(BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> DAMAGED_BUDDING_EMERALD_BLOCK = registerSupplier("damaged_budding_emerald_block", () -> new BlockItem(BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> CHIPPED_BUDDING_EMERALD_BLOCK = registerSupplier("chipped_budding_emerald_block", () -> new BlockItem(BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> FLAWED_BUDDING_EMERALD_BLOCK = registerSupplier("flawed_budding_emerald_block", () -> new BlockItem(BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SYNTHETIC_QUARTZ_CLUSTER = registerSupplier("synthetic_quartz_cluster", () -> new BlockItem(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> LARGE_SYNTHETIC_QUARTZ_BUD = registerSupplier("large_synthetic_quartz_bud", () -> new BlockItem(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> MEDIUM_SYNTHETIC_QUARTZ_BUD = registerSupplier("medium_synthetic_quartz_bud", () -> new BlockItem(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SMALL_SYNTHETIC_QUARTZ_BUD = registerSupplier("small_synthetic_quartz_bud", () -> new BlockItem(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> DAMAGED_BUDDING_QUARTZ_BLOCK = registerSupplier("damaged_budding_quartz_block", () -> new BlockItem(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> CHIPPED_BUDDING_QUARTZ_BLOCK = registerSupplier("chipped_budding_quartz_block", () -> new BlockItem(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> FLAWED_BUDDING_QUARTZ_BLOCK = registerSupplier("flawed_budding_quartz_block", () -> new BlockItem(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> SYNTHETIC_AMETHYST_CLUSTER = registerSupplier("synthetic_amethyst_cluster", BlocksPM.SYNTHETIC_AMETHYST_CLUSTER);
+    public static final IRegistryItem<Item, BlockItem> LARGE_SYNTHETIC_AMETHYST_BUD = registerSupplier("large_synthetic_amethyst_bud", BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD);
+    public static final IRegistryItem<Item, BlockItem> MEDIUM_SYNTHETIC_AMETHYST_BUD = registerSupplier("medium_synthetic_amethyst_bud", BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD);
+    public static final IRegistryItem<Item, BlockItem> SMALL_SYNTHETIC_AMETHYST_BUD = registerSupplier("small_synthetic_amethyst_bud", BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD);
+    public static final IRegistryItem<Item, BlockItem> DAMAGED_BUDDING_AMETHYST_BLOCK = registerSupplier("damaged_budding_amethyst_block", BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> CHIPPED_BUDDING_AMETHYST_BLOCK = registerSupplier("chipped_budding_amethyst_block", BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> FLAWED_BUDDING_AMETHYST_BLOCK = registerSupplier("flawed_budding_amethyst_block", BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> SYNTHETIC_DIAMOND_CLUSTER = registerSupplier("synthetic_diamond_cluster", BlocksPM.SYNTHETIC_DIAMOND_CLUSTER);
+    public static final IRegistryItem<Item, BlockItem> LARGE_SYNTHETIC_DIAMOND_BUD = registerSupplier("large_synthetic_diamond_bud", BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD);
+    public static final IRegistryItem<Item, BlockItem> MEDIUM_SYNTHETIC_DIAMOND_BUD = registerSupplier("medium_synthetic_diamond_bud", BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD);
+    public static final IRegistryItem<Item, BlockItem> SMALL_SYNTHETIC_DIAMOND_BUD = registerSupplier("small_synthetic_diamond_bud", BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD);
+    public static final IRegistryItem<Item, BlockItem> DAMAGED_BUDDING_DIAMOND_BLOCK = registerSupplier("damaged_budding_diamond_block", BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> CHIPPED_BUDDING_DIAMOND_BLOCK = registerSupplier("chipped_budding_diamond_block", BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> FLAWED_BUDDING_DIAMOND_BLOCK = registerSupplier("flawed_budding_diamond_block", BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> SYNTHETIC_EMERALD_CLUSTER = registerSupplier("synthetic_emerald_cluster", BlocksPM.SYNTHETIC_EMERALD_CLUSTER);
+    public static final IRegistryItem<Item, BlockItem> LARGE_SYNTHETIC_EMERALD_BUD = registerSupplier("large_synthetic_emerald_bud", BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD);
+    public static final IRegistryItem<Item, BlockItem> MEDIUM_SYNTHETIC_EMERALD_BUD = registerSupplier("medium_synthetic_emerald_bud", BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD);
+    public static final IRegistryItem<Item, BlockItem> SMALL_SYNTHETIC_EMERALD_BUD = registerSupplier("small_synthetic_emerald_bud", BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD);
+    public static final IRegistryItem<Item, BlockItem> DAMAGED_BUDDING_EMERALD_BLOCK = registerSupplier("damaged_budding_emerald_block", BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> CHIPPED_BUDDING_EMERALD_BLOCK = registerSupplier("chipped_budding_emerald_block", BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> FLAWED_BUDDING_EMERALD_BLOCK = registerSupplier("flawed_budding_emerald_block", BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> SYNTHETIC_QUARTZ_CLUSTER = registerSupplier("synthetic_quartz_cluster", BlocksPM.SYNTHETIC_QUARTZ_CLUSTER);
+    public static final IRegistryItem<Item, BlockItem> LARGE_SYNTHETIC_QUARTZ_BUD = registerSupplier("large_synthetic_quartz_bud", BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD);
+    public static final IRegistryItem<Item, BlockItem> MEDIUM_SYNTHETIC_QUARTZ_BUD = registerSupplier("medium_synthetic_quartz_bud", BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD);
+    public static final IRegistryItem<Item, BlockItem> SMALL_SYNTHETIC_QUARTZ_BUD = registerSupplier("small_synthetic_quartz_bud", BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD);
+    public static final IRegistryItem<Item, BlockItem> DAMAGED_BUDDING_QUARTZ_BLOCK = registerSupplier("damaged_budding_quartz_block", BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> CHIPPED_BUDDING_QUARTZ_BLOCK = registerSupplier("chipped_budding_quartz_block", BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> FLAWED_BUDDING_QUARTZ_BLOCK = registerSupplier("flawed_budding_quartz_block", BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK);
 
     // Register skyglass block items
-    public static final IRegistryItem<Item, BlockItem> SKYGLASS = registerSupplier("skyglass", () -> new BlockItem(BlocksPM.SKYGLASS.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_BLACK = registerSupplier("stained_skyglass_black", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_BLACK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_BLUE = registerSupplier("stained_skyglass_blue", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_BLUE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_BROWN = registerSupplier("stained_skyglass_brown", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_BROWN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_CYAN = registerSupplier("stained_skyglass_cyan", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_CYAN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_GRAY = registerSupplier("stained_skyglass_gray", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_GRAY.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_GREEN = registerSupplier("stained_skyglass_green", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_GREEN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_LIGHT_BLUE = registerSupplier("stained_skyglass_light_blue", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_LIGHT_GRAY = registerSupplier("stained_skyglass_light_gray", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_LIME = registerSupplier("stained_skyglass_lime", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_LIME.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_MAGENTA = registerSupplier("stained_skyglass_magenta", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_MAGENTA.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_ORANGE = registerSupplier("stained_skyglass_orange", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_ORANGE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PINK = registerSupplier("stained_skyglass_pink", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PINK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PURPLE = registerSupplier("stained_skyglass_purple", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PURPLE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_RED = registerSupplier("stained_skyglass_red", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_RED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_WHITE = registerSupplier("stained_skyglass_white", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_WHITE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_YELLOW = registerSupplier("stained_skyglass_yellow", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_YELLOW.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> SKYGLASS = registerSupplier("skyglass", BlocksPM.SKYGLASS);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_BLACK = registerSupplier("stained_skyglass_black", BlocksPM.STAINED_SKYGLASS_BLACK);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_BLUE = registerSupplier("stained_skyglass_blue", BlocksPM.STAINED_SKYGLASS_BLUE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_BROWN = registerSupplier("stained_skyglass_brown", BlocksPM.STAINED_SKYGLASS_BROWN);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_CYAN = registerSupplier("stained_skyglass_cyan", BlocksPM.STAINED_SKYGLASS_CYAN);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_GRAY = registerSupplier("stained_skyglass_gray", BlocksPM.STAINED_SKYGLASS_GRAY);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_GREEN = registerSupplier("stained_skyglass_green", BlocksPM.STAINED_SKYGLASS_GREEN);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_LIGHT_BLUE = registerSupplier("stained_skyglass_light_blue", BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_LIGHT_GRAY = registerSupplier("stained_skyglass_light_gray", BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_LIME = registerSupplier("stained_skyglass_lime", BlocksPM.STAINED_SKYGLASS_LIME);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_MAGENTA = registerSupplier("stained_skyglass_magenta", BlocksPM.STAINED_SKYGLASS_MAGENTA);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_ORANGE = registerSupplier("stained_skyglass_orange", BlocksPM.STAINED_SKYGLASS_ORANGE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PINK = registerSupplier("stained_skyglass_pink", BlocksPM.STAINED_SKYGLASS_PINK);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PURPLE = registerSupplier("stained_skyglass_purple", BlocksPM.STAINED_SKYGLASS_PURPLE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_RED = registerSupplier("stained_skyglass_red", BlocksPM.STAINED_SKYGLASS_RED);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_WHITE = registerSupplier("stained_skyglass_white", BlocksPM.STAINED_SKYGLASS_WHITE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_YELLOW = registerSupplier("stained_skyglass_yellow", BlocksPM.STAINED_SKYGLASS_YELLOW);
 
     // Register skyglass pane block items
-    public static final IRegistryItem<Item, BlockItem> SKYGLASS_PANE = registerSupplier("skyglass_pane", () -> new BlockItem(BlocksPM.SKYGLASS_PANE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_BLACK = registerSupplier("stained_skyglass_pane_black", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_BLUE = registerSupplier("stained_skyglass_pane_blue", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_BROWN = registerSupplier("stained_skyglass_pane_brown", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_CYAN = registerSupplier("stained_skyglass_pane_cyan", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_GRAY = registerSupplier("stained_skyglass_pane_gray", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_GREEN = registerSupplier("stained_skyglass_pane_green", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_LIGHT_BLUE = registerSupplier("stained_skyglass_pane_light_blue", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_LIGHT_GRAY = registerSupplier("stained_skyglass_pane_light_gray", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_LIME = registerSupplier("stained_skyglass_pane_lime", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_LIME.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_MAGENTA = registerSupplier("stained_skyglass_pane_magenta", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_ORANGE = registerSupplier("stained_skyglass_pane_orange", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_PINK = registerSupplier("stained_skyglass_pane_pink", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_PINK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_PURPLE = registerSupplier("stained_skyglass_pane_purple", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_RED = registerSupplier("stained_skyglass_pane_red", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_WHITE = registerSupplier("stained_skyglass_pane_white", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_YELLOW = registerSupplier("stained_skyglass_pane_yellow", () -> new BlockItem(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> SKYGLASS_PANE = registerSupplier("skyglass_pane", BlocksPM.SKYGLASS_PANE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_BLACK = registerSupplier("stained_skyglass_pane_black", BlocksPM.STAINED_SKYGLASS_PANE_BLACK);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_BLUE = registerSupplier("stained_skyglass_pane_blue", BlocksPM.STAINED_SKYGLASS_PANE_BLUE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_BROWN = registerSupplier("stained_skyglass_pane_brown", BlocksPM.STAINED_SKYGLASS_PANE_BROWN);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_CYAN = registerSupplier("stained_skyglass_pane_cyan", BlocksPM.STAINED_SKYGLASS_PANE_CYAN);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_GRAY = registerSupplier("stained_skyglass_pane_gray", BlocksPM.STAINED_SKYGLASS_PANE_GRAY);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_GREEN = registerSupplier("stained_skyglass_pane_green", BlocksPM.STAINED_SKYGLASS_PANE_GREEN);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_LIGHT_BLUE = registerSupplier("stained_skyglass_pane_light_blue", BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_LIGHT_GRAY = registerSupplier("stained_skyglass_pane_light_gray", BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_LIME = registerSupplier("stained_skyglass_pane_lime", BlocksPM.STAINED_SKYGLASS_PANE_LIME);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_MAGENTA = registerSupplier("stained_skyglass_pane_magenta", BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_ORANGE = registerSupplier("stained_skyglass_pane_orange", BlocksPM.STAINED_SKYGLASS_PANE_ORANGE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_PINK = registerSupplier("stained_skyglass_pane_pink", BlocksPM.STAINED_SKYGLASS_PANE_PINK);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_PURPLE = registerSupplier("stained_skyglass_pane_purple", BlocksPM.STAINED_SKYGLASS_PANE_PURPLE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_RED = registerSupplier("stained_skyglass_pane_red", BlocksPM.STAINED_SKYGLASS_PANE_RED);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_WHITE = registerSupplier("stained_skyglass_pane_white", BlocksPM.STAINED_SKYGLASS_PANE_WHITE);
+    public static final IRegistryItem<Item, BlockItem> STAINED_SKYGLASS_PANE_YELLOW = registerSupplier("stained_skyglass_pane_yellow", BlocksPM.STAINED_SKYGLASS_PANE_YELLOW);
 
     // Register ritual candle block items
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_BLACK = registerSupplier("ritual_candle_black", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_BLACK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_BLUE = registerSupplier("ritual_candle_blue", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_BLUE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_BROWN = registerSupplier("ritual_candle_brown", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_BROWN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_CYAN = registerSupplier("ritual_candle_cyan", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_CYAN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_GRAY = registerSupplier("ritual_candle_gray", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_GRAY.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_GREEN = registerSupplier("ritual_candle_green", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_GREEN.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_LIGHT_BLUE = registerSupplier("ritual_candle_light_blue", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_LIGHT_BLUE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_LIGHT_GRAY = registerSupplier("ritual_candle_light_gray", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_LIGHT_GRAY.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_LIME = registerSupplier("ritual_candle_lime", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_LIME.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_MAGENTA = registerSupplier("ritual_candle_magenta", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_MAGENTA.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_ORANGE = registerSupplier("ritual_candle_orange", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_ORANGE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_PINK = registerSupplier("ritual_candle_pink", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_PINK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_PURPLE = registerSupplier("ritual_candle_purple", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_PURPLE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_RED = registerSupplier("ritual_candle_red", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_RED.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_WHITE = registerSupplier("ritual_candle_white", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_WHITE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_YELLOW = registerSupplier("ritual_candle_yellow", () -> new BlockItem(BlocksPM.RITUAL_CANDLE_YELLOW.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_BLACK = registerSupplier("ritual_candle_black", BlocksPM.RITUAL_CANDLE_BLACK);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_BLUE = registerSupplier("ritual_candle_blue", BlocksPM.RITUAL_CANDLE_BLUE);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_BROWN = registerSupplier("ritual_candle_brown", BlocksPM.RITUAL_CANDLE_BROWN);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_CYAN = registerSupplier("ritual_candle_cyan", BlocksPM.RITUAL_CANDLE_CYAN);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_GRAY = registerSupplier("ritual_candle_gray", BlocksPM.RITUAL_CANDLE_GRAY);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_GREEN = registerSupplier("ritual_candle_green", BlocksPM.RITUAL_CANDLE_GREEN);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_LIGHT_BLUE = registerSupplier("ritual_candle_light_blue", BlocksPM.RITUAL_CANDLE_LIGHT_BLUE);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_LIGHT_GRAY = registerSupplier("ritual_candle_light_gray", BlocksPM.RITUAL_CANDLE_LIGHT_GRAY);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_LIME = registerSupplier("ritual_candle_lime", BlocksPM.RITUAL_CANDLE_LIME);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_MAGENTA = registerSupplier("ritual_candle_magenta", BlocksPM.RITUAL_CANDLE_MAGENTA);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_ORANGE = registerSupplier("ritual_candle_orange", BlocksPM.RITUAL_CANDLE_ORANGE);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_PINK = registerSupplier("ritual_candle_pink", BlocksPM.RITUAL_CANDLE_PINK);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_PURPLE = registerSupplier("ritual_candle_purple", BlocksPM.RITUAL_CANDLE_PURPLE);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_RED = registerSupplier("ritual_candle_red", BlocksPM.RITUAL_CANDLE_RED);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_WHITE = registerSupplier("ritual_candle_white", BlocksPM.RITUAL_CANDLE_WHITE);
+    public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_YELLOW = registerSupplier("ritual_candle_yellow", BlocksPM.RITUAL_CANDLE_YELLOW);
 
     // Register mana font block items
     public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_EARTH = registerSupplier("ancient_font_earth", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
@@ -374,51 +396,51 @@ public class ItemsPM {
 
     // Register device block items
     public static final IRegistryItem<Item, BurnableBlockItem> ARCANE_WORKBENCH = registerSupplier("arcane_workbench", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ARCANE_WORKBENCH, 300, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> WAND_ASSEMBLY_TABLE = registerSupplier("wand_assembly_table", () -> new BlockItem(BlocksPM.WAND_ASSEMBLY_TABLE.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> WAND_ASSEMBLY_TABLE = registerSupplier("wand_assembly_table", BlocksPM.WAND_ASSEMBLY_TABLE);
     public static final IRegistryItem<Item, BurnableBlockItem> WOOD_TABLE = registerSupplier("wood_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WOOD_TABLE, 300, new Item.Properties()));
     public static final IRegistryItem<Item, BurnableBlockItem> ANALYSIS_TABLE = registerSupplier("analysis_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ANALYSIS_TABLE, 300, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> ESSENCE_FURNACE = registerSupplier("essence_furnace", () -> new BlockItem(BlocksPM.ESSENCE_FURNACE.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> ESSENCE_FURNACE = registerSupplier("essence_furnace", BlocksPM.ESSENCE_FURNACE);
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_BASIC = registerSupplier("calcinator_basic", () -> new BlockItem(BlocksPM.CALCINATOR_BASIC.get(), new Item.Properties().rarity(Rarity.COMMON)));
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_ENCHANTED = registerSupplier("calcinator_enchanted", () -> new BlockItem(BlocksPM.CALCINATOR_ENCHANTED.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_FORBIDDEN = registerSupplier("calcinator_forbidden", () -> new BlockItem(BlocksPM.CALCINATOR_FORBIDDEN.get(), new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_HEAVENLY = registerSupplier("calcinator_heavenly", () -> new BlockItem(BlocksPM.CALCINATOR_HEAVENLY.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, BurnableBlockItem> WAND_INSCRIPTION_TABLE = registerSupplier("wand_inscription_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WAND_INSCRIPTION_TABLE, 300, new Item.Properties()));
     public static final IRegistryItem<Item, SpellcraftingAltarBlockItem> SPELLCRAFTING_ALTAR = registerSupplier("spellcrafting_altar", Services.ITEM_PROTOTYPES.spellcraftingAltar(BlocksPM.SPELLCRAFTING_ALTAR, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> WAND_CHARGER = registerSupplier("wand_charger", () -> new BlockItem(BlocksPM.WAND_CHARGER.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> WAND_CHARGER = registerSupplier("wand_charger", BlocksPM.WAND_CHARGER);
     public static final IRegistryItem<Item, BurnableBlockItem> RESEARCH_TABLE = registerSupplier("research_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RESEARCH_TABLE, 300, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SUNLAMP = registerSupplier("sunlamp", () -> new BlockItem(BlocksPM.SUNLAMP.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SPIRIT_LANTERN = registerSupplier("spirit_lantern", () -> new BlockItem(BlocksPM.SPIRIT_LANTERN.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> SUNLAMP = registerSupplier("sunlamp", BlocksPM.SUNLAMP);
+    public static final IRegistryItem<Item, BlockItem> SPIRIT_LANTERN = registerSupplier("spirit_lantern", BlocksPM.SPIRIT_LANTERN);
     public static final IRegistryItem<Item, BlockItem> RITUAL_ALTAR = registerSupplier("ritual_altar", () -> new BlockItem(BlocksPM.RITUAL_ALTAR.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, BlockItem> OFFERING_PEDESTAL = registerSupplier("offering_pedestal", () -> new BlockItem(BlocksPM.OFFERING_PEDESTAL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> INCENSE_BRAZIER = registerSupplier("incense_brazier", () -> new BlockItem(BlocksPM.INCENSE_BRAZIER.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> OFFERING_PEDESTAL = registerSupplier("offering_pedestal", BlocksPM.OFFERING_PEDESTAL);
+    public static final IRegistryItem<Item, BlockItem> INCENSE_BRAZIER = registerSupplier("incense_brazier", BlocksPM.INCENSE_BRAZIER);
     public static final IRegistryItem<Item, BurnableBlockItem> RITUAL_LECTERN = registerSupplier("ritual_lectern", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RITUAL_LECTERN, 300, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RITUAL_BELL = registerSupplier("ritual_bell", () -> new BlockItem(BlocksPM.RITUAL_BELL.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> BLOODLETTER = registerSupplier("bloodletter", () -> new BlockItem(BlocksPM.BLOODLETTER.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SOUL_ANVIL = registerSupplier("soul_anvil", () -> new BlockItem(BlocksPM.SOUL_ANVIL.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> RITUAL_BELL = registerSupplier("ritual_bell", BlocksPM.RITUAL_BELL);
+    public static final IRegistryItem<Item, BlockItem> BLOODLETTER = registerSupplier("bloodletter", BlocksPM.BLOODLETTER);
+    public static final IRegistryItem<Item, BlockItem> SOUL_ANVIL = registerSupplier("soul_anvil", BlocksPM.SOUL_ANVIL);
     public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_BASIC = registerSupplier("runescribing_altar_basic", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), new Item.Properties().rarity(Rarity.COMMON)));
     public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_ENCHANTED = registerSupplier("runescribing_altar_enchanted", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_FORBIDDEN = registerSupplier("runescribing_altar_forbidden", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_HEAVENLY = registerSupplier("runescribing_altar_heavenly", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, BurnableBlockItem> RUNECARVING_TABLE = registerSupplier("runecarving_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RUNECARVING_TABLE, 300, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> RUNIC_GRINDSTONE = registerSupplier("runic_grindstone", () -> new BlockItem(BlocksPM.RUNIC_GRINDSTONE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> HONEY_EXTRACTOR = registerSupplier("honey_extractor", () -> new BlockItem(BlocksPM.HONEY_EXTRACTOR.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> RUNIC_GRINDSTONE = registerSupplier("runic_grindstone", BlocksPM.RUNIC_GRINDSTONE);
+    public static final IRegistryItem<Item, BlockItem> HONEY_EXTRACTOR = registerSupplier("honey_extractor", BlocksPM.HONEY_EXTRACTOR);
     public static final IRegistryItem<Item, BlockItem> PRIMALITE_GOLEM_CONTROLLER = registerSupplier("primalite_golem_controller", () -> new BlockItem(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, BlockItem> HEXIUM_GOLEM_CONTROLLER = registerSupplier("hexium_golem_controller", () -> new BlockItem(BlocksPM.HEXIUM_GOLEM_CONTROLLER.get(), new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, BlockItem> HALLOWSTEEL_GOLEM_CONTROLLER = registerSupplier("hallowsteel_golem_controller", () -> new BlockItem(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER.get(), new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, BlockItem> SANGUINE_CRUCIBLE = registerSupplier("sanguine_crucible", () -> new BlockItem(BlocksPM.SANGUINE_CRUCIBLE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> CONCOCTER = registerSupplier("concocter", () -> new BlockItem(BlocksPM.CONCOCTER.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> SANGUINE_CRUCIBLE = registerSupplier("sanguine_crucible", BlocksPM.SANGUINE_CRUCIBLE);
+    public static final IRegistryItem<Item, BlockItem> CONCOCTER = registerSupplier("concocter", BlocksPM.CONCOCTER);
     public static final IRegistryItem<Item, BurnableBlockItem> CELESTIAL_HARP = registerSupplier("celestial_harp", Services.ITEM_PROTOTYPES.burnable(BlocksPM.CELESTIAL_HARP, 300, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> ENTROPY_SINK = registerSupplier("entropy_sink", () -> new BlockItem(BlocksPM.ENTROPY_SINK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> AUTO_CHARGER = registerSupplier("auto_charger", () -> new BlockItem(BlocksPM.AUTO_CHARGER.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> ESSENCE_TRANSMUTER = registerSupplier("essence_transmuter", () -> new BlockItem(BlocksPM.ESSENCE_TRANSMUTER.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> DISSOLUTION_CHAMBER = registerSupplier("dissolution_chamber", () -> new BlockItem(BlocksPM.DISSOLUTION_CHAMBER.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> ZEPHYR_ENGINE = registerSupplier("zephyr_engine", () -> new BlockItem(BlocksPM.ZEPHYR_ENGINE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> VOID_TURBINE = registerSupplier("void_turbine", () -> new BlockItem(BlocksPM.VOID_TURBINE.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> ENTROPY_SINK = registerSupplier("entropy_sink", BlocksPM.ENTROPY_SINK);
+    public static final IRegistryItem<Item, BlockItem> AUTO_CHARGER = registerSupplier("auto_charger", BlocksPM.AUTO_CHARGER);
+    public static final IRegistryItem<Item, BlockItem> ESSENCE_TRANSMUTER = registerSupplier("essence_transmuter", BlocksPM.ESSENCE_TRANSMUTER);
+    public static final IRegistryItem<Item, BlockItem> DISSOLUTION_CHAMBER = registerSupplier("dissolution_chamber", BlocksPM.DISSOLUTION_CHAMBER);
+    public static final IRegistryItem<Item, BlockItem> ZEPHYR_ENGINE = registerSupplier("zephyr_engine", BlocksPM.ZEPHYR_ENGINE);
+    public static final IRegistryItem<Item, BlockItem> VOID_TURBINE = registerSupplier("void_turbine", BlocksPM.VOID_TURBINE);
     public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_ENCHANTED = registerSupplier("essence_cask_enchanted", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_ENCHANTED, 300, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_FORBIDDEN = registerSupplier("essence_cask_forbidden", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_FORBIDDEN, 300, new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_HEAVENLY = registerSupplier("essence_cask_heavenly", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_HEAVENLY, 300, new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, BurnableBlockItem> WAND_GLAMOUR_TABLE = registerSupplier("wand_glamour_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WAND_GLAMOUR_TABLE, 300, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> INFERNAL_FURNACE = registerSupplier("infernal_furnace", () -> new BlockItem(BlocksPM.INFERNAL_FURNACE.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> INFERNAL_FURNACE = registerSupplier("infernal_furnace", BlocksPM.INFERNAL_FURNACE);
     public static final IRegistryItem<Item, BlockItem> MANA_NEXUS = registerSupplier("mana_nexus", () -> new BlockItem(BlocksPM.MANA_NEXUS.get(), new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY = registerSupplier("mana_singularity", () -> new BlockItem(BlocksPM.MANA_SINGULARITY.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY_CREATIVE = registerSupplier("mana_singularity_creative", () -> new BlockItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get(), new Item.Properties().rarity(Rarity.EPIC)));
@@ -431,20 +453,20 @@ public class ItemsPM {
     public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_ENCHANTED = registerSupplier("mana_injector_enchanted", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_FORBIDDEN = registerSupplier("mana_injector_forbidden", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
     public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_HEAVENLY = registerSupplier("mana_injector_heavenly", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, BlockItem> DESALINATOR = registerSupplier("desalinator", () -> new BlockItem(BlocksPM.DESALINATOR.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> DESALINATOR = registerSupplier("desalinator", BlocksPM.DESALINATOR);
 
     // Register pixie structure items
     public static final IRegistryItem<Item, PixieHouseItem> PIXIE_HOUSE = registerSupplier("pixie_house", Services.ITEM_PROTOTYPES.pixieHouse(new Item.Properties().stacksTo(16)));
 
     // Register miscellaneous block items
     public static final IRegistryItem<Item, BlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new BlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().useItemDescriptionPrefix()));
-    public static final IRegistryItem<Item, BlockItem> ROCK_SALT_ORE = registerSupplier("rock_salt_ore", () -> new BlockItem(BlocksPM.ROCK_SALT_ORE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> QUARTZ_ORE = registerSupplier("quartz_ore", () -> new BlockItem(BlocksPM.QUARTZ_ORE.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> PRIMALITE_BLOCK = registerSupplier("primalite_block", () -> new BlockItem(BlocksPM.PRIMALITE_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> HEXIUM_BLOCK = registerSupplier("hexium_block", () -> new BlockItem(BlocksPM.HEXIUM_BLOCK.get(), new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> HALLOWSTEEL_BLOCK = registerSupplier("hallowsteel_block", () -> new BlockItem(BlocksPM.HALLOWSTEEL_BLOCK.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> ROCK_SALT_ORE = registerSupplier("rock_salt_ore", BlocksPM.ROCK_SALT_ORE);
+    public static final IRegistryItem<Item, BlockItem> QUARTZ_ORE = registerSupplier("quartz_ore", BlocksPM.QUARTZ_ORE);
+    public static final IRegistryItem<Item, BlockItem> PRIMALITE_BLOCK = registerSupplier("primalite_block", BlocksPM.PRIMALITE_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> HEXIUM_BLOCK = registerSupplier("hexium_block", BlocksPM.HEXIUM_BLOCK);
+    public static final IRegistryItem<Item, BlockItem> HALLOWSTEEL_BLOCK = registerSupplier("hallowsteel_block", BlocksPM.HALLOWSTEEL_BLOCK);
     public static final IRegistryItem<Item, BurnableBlockItem> IGNYX_BLOCK = registerSupplier("ignyx_block", Services.ITEM_PROTOTYPES.burnable(BlocksPM.IGNYX_BLOCK, 128000, new Item.Properties()));
-    public static final IRegistryItem<Item, BlockItem> SALT_BLOCK = registerSupplier("salt_block", () -> new BlockItem(BlocksPM.SALT_BLOCK.get(), new Item.Properties()));
+    public static final IRegistryItem<Item, BlockItem> SALT_BLOCK = registerSupplier("salt_block", BlocksPM.SALT_BLOCK);
     public static final IRegistryItem<Item, BlockItem> TREEFOLK_SEED = registerSupplier("treefolk_seed", () -> new BlockItem(BlocksPM.TREEFOLK_SPROUT.get(), new Item.Properties().useItemDescriptionPrefix()));
     public static final IRegistryItem<Item, BlockItem> ENDERWARD = registerSupplier("enderward", () -> new BlockItem(BlocksPM.ENDERWARD.get(), new Item.Properties().stacksTo(16)));
 
