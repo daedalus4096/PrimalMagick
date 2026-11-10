@@ -50,12 +50,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.block.Block;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     @Override
-    public <T extends Block> Supplier<BurnableBlockItem> burnable(Supplier<T> blockSupplier, int burnTicks, Item.Properties properties) {
-        return () -> new BurnableBlockItemNeoforge(blockSupplier.get(), burnTicks, properties);
+    public <T extends Block> Function<Item.Properties, BurnableBlockItem> burnable(Supplier<T> blockSupplier, int burnTicks) {
+        return props -> new BurnableBlockItemNeoforge(blockSupplier.get(), burnTicks, props);
     }
 
     @Override

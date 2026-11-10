@@ -27,10 +27,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.block.Block;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface IItemPrototypeService {
-    <T extends Block> Supplier<BurnableBlockItem> burnable(Supplier<T> block, int burnTicks, Item.Properties properties);
+    <T extends Block> Function<Item.Properties, BurnableBlockItem> burnable(Supplier<T> block, int burnTicks);
 
     Supplier<ArcanometerItem> arcanometer();
     Supplier<IgnyxItem> ignyx(Item.Properties properties);

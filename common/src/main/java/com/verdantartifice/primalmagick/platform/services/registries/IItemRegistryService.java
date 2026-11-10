@@ -12,4 +12,5 @@ public interface IItemRegistryService extends IRegistryService<Item> {
     IRegistryItem<Item, BlockItem> registerSimpleBlockItem(String name, Supplier<? extends Block> blockSupplier);
     IRegistryItem<Item, BlockItem> registerSimpleBlockItem(String name, Supplier<? extends Block> blockSupplier, Supplier<Item.Properties> propertiesSupplier);
     <I extends Item> IRegistryItem<Item, I> registerItem(String name, Function<Item.Properties, ? extends I> itemFactory, Supplier<Item.Properties> propertiesSupplier);
+    <I extends Item> IRegistryItem<Item, I> registerItem(String name, Function<Item.Properties, ? extends I> itemFactory);
 }

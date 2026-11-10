@@ -46,4 +46,9 @@ public class ItemRegistryServiceNeoforge extends AbstractRegistryServiceNeoforge
     public <I extends Item> IRegistryItem<Item, I> registerItem(String name, Function<Item.Properties, ? extends I> itemFactory, Supplier<Item.Properties> propertiesSupplier) {
         return new RegistryItemNeoforge<>(ITEMS.registerItem(name, itemFactory, propertiesSupplier));
     }
+
+    @Override
+    public <I extends Item> IRegistryItem<Item, I> registerItem(String name, Function<Item.Properties, ? extends I> itemFactory) {
+        return new RegistryItemNeoforge<>(ITEMS.registerItem(name, itemFactory));
+    }
 }
