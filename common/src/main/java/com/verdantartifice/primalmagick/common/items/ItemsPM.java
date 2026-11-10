@@ -157,8 +157,8 @@ public class ItemsPM {
         return obj;
     }
 
-    protected static <I extends Item> IRegistryItem<Item, I> registerDefaultInstance(String name, Supplier<I> itemSupplier) {
-        IRegistryItem<Item, I> obj = registerWithoutTab(name, itemSupplier);
+    protected static <I extends Item> IRegistryItem<Item, I> registerDefaultInstance(String name, Function<Item.Properties, I> itemFactory, Supplier<Item.Properties> propertiesSupplier) {
+        IRegistryItem<Item, I> obj = registerWithoutTab(name, itemFactory, propertiesSupplier);
         CreativeModeTabsPM.registerDefaultInstance(obj);
         return obj;
     }
@@ -525,67 +525,67 @@ public class ItemsPM {
     public static final IRegistryItem<Item, Item> HEXIUM_NUGGET = registerSimpleItemSupplier("hexium_nugget");
     public static final IRegistryItem<Item, Item> HALLOWSTEEL_NUGGET = registerSimpleItemSupplier("hallowsteel_nugget");
     public static final IRegistryItem<Item, Item> QUARTZ_NUGGET = registerSimpleItemSupplier("quartz_nugget");
-    public static final IRegistryItem<Item, EnergizedGemItem> ENERGIZED_AMETHYST = registerSimpleBlockItemSupplier("energized_amethyst", () -> new EnergizedGemItem(new Item.Properties()));
-    public static final IRegistryItem<Item, EnergizedGemItem> ENERGIZED_DIAMOND = registerSimpleBlockItemSupplier("energized_diamond", () -> new EnergizedGemItem(new Item.Properties()));
-    public static final IRegistryItem<Item, EnergizedGemItem> ENERGIZED_EMERALD = registerSimpleBlockItemSupplier("energized_emerald", () -> new EnergizedGemItem(new Item.Properties()));
-    public static final IRegistryItem<Item, EnergizedGemItem> ENERGIZED_QUARTZ = registerSimpleBlockItemSupplier("energized_quartz", () -> new EnergizedGemItem(new Item.Properties()));
+    public static final IRegistryItem<Item, EnergizedGemItem> ENERGIZED_AMETHYST = registerSupplier("energized_amethyst", EnergizedGemItem::new);
+    public static final IRegistryItem<Item, EnergizedGemItem> ENERGIZED_DIAMOND = registerSupplier("energized_diamond", EnergizedGemItem::new);
+    public static final IRegistryItem<Item, EnergizedGemItem> ENERGIZED_EMERALD = registerSupplier("energized_emerald", EnergizedGemItem::new);
+    public static final IRegistryItem<Item, EnergizedGemItem> ENERGIZED_QUARTZ = registerSupplier("energized_quartz", EnergizedGemItem::new);
 
     // Register tool items
-    public static final IRegistryItem<Item, Item> PRIMALITE_SWORD = registerSimpleBlockItemSupplier("primalite_sword", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).sword(ToolMaterialsPM.PRIMALITE, 3, -2.4F)));
-    public static final IRegistryItem<Item, PrimaliteTridentItem> PRIMALITE_TRIDENT = registerSupplier("primalite_trident", Services.ITEM_PROTOTYPES.primaliteTrident(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, AbstractTieredBowItem> PRIMALITE_BOW = registerSupplier("primalite_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, ShovelItem> PRIMALITE_SHOVEL = registerSimpleBlockItemSupplier("primalite_shovel", () -> new ShovelItem(ToolMaterialsPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, Item> PRIMALITE_PICKAXE = registerSimpleBlockItemSupplier("primalite_pickaxe", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).pickaxe(ToolMaterialsPM.PRIMALITE, 1.0F, -2.8F)));
-    public static final IRegistryItem<Item, AxeItem> PRIMALITE_AXE = registerSimpleBlockItemSupplier("primalite_axe", () -> new AxeItem(ToolMaterialsPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, HoeItem> PRIMALITE_HOE = registerSimpleBlockItemSupplier("primalite_hoe", () -> new HoeItem(ToolMaterialsPM.PRIMALITE, -2.0F, 0.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, TieredFishingRodItem> PRIMALITE_FISHING_ROD = registerSimpleBlockItemSupplier("primalite_fishing_rod", () -> new TieredFishingRodItem(ToolMaterialsPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, PrimaliteShieldItem> PRIMALITE_SHIELD = registerSupplier("primalite_shield", Services.ITEM_PROTOTYPES.primaliteShield(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, Item> HEXIUM_SWORD = registerSimpleBlockItemSupplier("hexium_sword", () -> new Item(new Item.Properties().rarity(Rarity.RARE).sword(ToolMaterialsPM.HEXIUM, 3, -2.4F)));
-    public static final IRegistryItem<Item, HexiumTridentItem> HEXIUM_TRIDENT = registerSupplier("hexium_trident", Services.ITEM_PROTOTYPES.hexiumTrident(new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, AbstractTieredBowItem> HEXIUM_BOW = registerSupplier("hexium_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, ShovelItem> HEXIUM_SHOVEL = registerSimpleBlockItemSupplier("hexium_shovel", () -> new ShovelItem(ToolMaterialsPM.HEXIUM, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, Item> HEXIUM_PICKAXE = registerSimpleBlockItemSupplier("hexium_pickaxe", () -> new Item(new Item.Properties().rarity(Rarity.RARE).pickaxe(ToolMaterialsPM.HEXIUM, 1.0F, -2.8F)));
-    public static final IRegistryItem<Item, AxeItem> HEXIUM_AXE = registerSimpleBlockItemSupplier("hexium_axe", () -> new AxeItem(ToolMaterialsPM.HEXIUM, 4.0F, -3.0F, new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, HoeItem> HEXIUM_HOE = registerSimpleBlockItemSupplier("hexium_hoe", () -> new HoeItem(ToolMaterialsPM.HEXIUM, -4.0F, 0.0F, new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, TieredFishingRodItem> HEXIUM_FISHING_ROD = registerSimpleBlockItemSupplier("hexium_fishing_rod", () -> new TieredFishingRodItem(ToolMaterialsPM.HEXIUM, new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, HexiumShieldItem> HEXIUM_SHIELD = registerSupplier("hexium_shield", Services.ITEM_PROTOTYPES.hexiumShield(new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, Item> HALLOWSTEEL_SWORD = registerSimpleBlockItemSupplier("hallowsteel_sword", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).sword(ToolMaterialsPM.HALLOWSTEEL, 3, -2.4F)));
-    public static final IRegistryItem<Item, HallowsteelTridentItem> HALLOWSTEEL_TRIDENT = registerSupplier("hallowsteel_trident", Services.ITEM_PROTOTYPES.hallowsteelTrident(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, AbstractTieredBowItem> HALLOWSTEEL_BOW = registerSupplier("hallowsteel_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, ShovelItem> HALLOWSTEEL_SHOVEL = registerSimpleBlockItemSupplier("hallowsteel_shovel", () -> new ShovelItem(ToolMaterialsPM.HALLOWSTEEL, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, Item> HALLOWSTEEL_PICKAXE = registerSimpleBlockItemSupplier("hallowsteel_pickaxe", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).pickaxe(ToolMaterialsPM.HALLOWSTEEL, 1.0F, -2.8F)));
-    public static final IRegistryItem<Item, AxeItem> HALLOWSTEEL_AXE = registerSimpleBlockItemSupplier("hallowsteel_axe", () -> new AxeItem(ToolMaterialsPM.HALLOWSTEEL, 3.5F, -3.0F, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, HoeItem> HALLOWSTEEL_HOE = registerSimpleBlockItemSupplier("hallowsteel_hoe", () -> new HoeItem(ToolMaterialsPM.HALLOWSTEEL, -5.0F, 0.0F, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, TieredFishingRodItem> HALLOWSTEEL_FISHING_ROD = registerSimpleBlockItemSupplier("hallowsteel_fishing_rod", () -> new TieredFishingRodItem(ToolMaterialsPM.HALLOWSTEEL, new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, HallowsteelShieldItem> HALLOWSTEEL_SHIELD = registerSupplier("hallowsteel_shield", Services.ITEM_PROTOTYPES.hallowsteelShield(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, PrimalShovelItem> PRIMAL_SHOVEL = registerDefaultInstance("primal_shovel", () -> new PrimalShovelItem(ToolMaterialsPM.PRIMALITE, 1.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, PrimalFishingRodItem> PRIMAL_FISHING_ROD = registerDefaultInstance("primal_fishing_rod", () -> new PrimalFishingRodItem(ToolMaterialsPM.PRIMALITE, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, PrimalAxeItem> PRIMAL_AXE = registerDefaultInstance("primal_axe", () -> new PrimalAxeItem(ToolMaterialsPM.PRIMALITE, 5.5F, -3.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, PrimalHoeItem> PRIMAL_HOE = registerDefaultInstance("primal_hoe", () -> new PrimalHoeItem(ToolMaterialsPM.PRIMALITE, -2.0F, 0.0F, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, PrimalPickaxeItem> PRIMAL_PICKAXE = registerDefaultInstance("primal_pickaxe", () -> new PrimalPickaxeItem(new Item.Properties().rarity(Rarity.UNCOMMON).pickaxe(ToolMaterialsPM.PRIMALITE, 1.0F, -2.8F)));
-    public static final IRegistryItem<Item, ForbiddenTridentItem> FORBIDDEN_TRIDENT = registerDefaultInstance("forbidden_trident", Services.ITEM_PROTOTYPES.forbiddenTrident(new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, ForbiddenBowItem> FORBIDDEN_BOW = registerDefaultInstance("forbidden_bow", Services.ITEM_PROTOTYPES.forbiddenBow(new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, ForbiddenSwordItem> FORBIDDEN_SWORD = registerDefaultInstance("forbidden_sword", () -> new ForbiddenSwordItem(new Item.Properties().rarity(Rarity.RARE).sword(ToolMaterialsPM.HEXIUM, 3, -2.4F)));
-    public static final IRegistryItem<Item, SacredShieldItem> SACRED_SHIELD = registerDefaultInstance("sacred_shield", () -> new SacredShieldItem(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_APPRENTICE = registerSupplier("spelltome_apprentice", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.BASIC, new Item.Properties().rarity(Rarity.COMMON).enchantable(13).stacksTo(1)));
-    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ADEPT = registerSupplier("spelltome_adept", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON).enchantable(18).stacksTo(1)));
-    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_WIZARD = registerSupplier("spelltome_wizard", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE).enchantable(23).stacksTo(1)));
-    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ARCHMAGE = registerSupplier("spelltome_archmage", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC).enchantable(28).stacksTo(1)));
-    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_APPRENTICE = registerSupplier("mana_orb_apprentice", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.BASIC, new Item.Properties().rarity(Rarity.COMMON).enchantable(13).stacksTo(1)));
-    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_ADEPT = registerSupplier("mana_orb_adept", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON).enchantable(18).stacksTo(1)));
-    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_WIZARD = registerSupplier("mana_orb_wizard", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE).enchantable(23).stacksTo(1)));
-    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_ARCHMAGE = registerSupplier("mana_orb_archmage", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC).enchantable(28).stacksTo(1)));
+    public static final IRegistryItem<Item, Item> PRIMALITE_SWORD = registerSimpleItemSupplier("primalite_sword", () -> new Item.Properties().rarity(Rarity.UNCOMMON).sword(ToolMaterialsPM.PRIMALITE, 3, -2.4F));
+    public static final IRegistryItem<Item, PrimaliteTridentItem> PRIMALITE_TRIDENT = registerSupplier("primalite_trident", Services.ITEM_PROTOTYPES.primaliteTrident(), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, AbstractTieredBowItem> PRIMALITE_BOW = registerSupplier("primalite_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.PRIMALITE), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ShovelItem> PRIMALITE_SHOVEL = registerSupplier("primalite_shovel", props -> new ShovelItem(ToolMaterialsPM.PRIMALITE, 1.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, Item> PRIMALITE_PICKAXE = registerSimpleItemSupplier("primalite_pickaxe", () -> new Item.Properties().rarity(Rarity.UNCOMMON).pickaxe(ToolMaterialsPM.PRIMALITE, 1.0F, -2.8F));
+    public static final IRegistryItem<Item, AxeItem> PRIMALITE_AXE = registerSupplier("primalite_axe", props -> new AxeItem(ToolMaterialsPM.PRIMALITE, 5.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, HoeItem> PRIMALITE_HOE = registerSupplier("primalite_hoe", props -> new HoeItem(ToolMaterialsPM.PRIMALITE, -2.0F, 0.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, TieredFishingRodItem> PRIMALITE_FISHING_ROD = registerSupplier("primalite_fishing_rod", props -> new TieredFishingRodItem(ToolMaterialsPM.PRIMALITE, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, PrimaliteShieldItem> PRIMALITE_SHIELD = registerSupplier("primalite_shield", Services.ITEM_PROTOTYPES.primaliteShield(), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, Item> HEXIUM_SWORD = registerSimpleItemSupplier("hexium_sword", () -> new Item.Properties().rarity(Rarity.RARE).sword(ToolMaterialsPM.HEXIUM, 3, -2.4F));
+    public static final IRegistryItem<Item, HexiumTridentItem> HEXIUM_TRIDENT = registerSupplier("hexium_trident", Services.ITEM_PROTOTYPES.hexiumTrident(), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, AbstractTieredBowItem> HEXIUM_BOW = registerSupplier("hexium_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.HEXIUM), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ShovelItem> HEXIUM_SHOVEL = registerSupplier("hexium_shovel", props -> new ShovelItem(ToolMaterialsPM.HEXIUM, 1.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, Item> HEXIUM_PICKAXE = registerSimpleItemSupplier("hexium_pickaxe", () -> new Item.Properties().rarity(Rarity.RARE).pickaxe(ToolMaterialsPM.HEXIUM, 1.0F, -2.8F));
+    public static final IRegistryItem<Item, AxeItem> HEXIUM_AXE = registerSupplier("hexium_axe", props -> new AxeItem(ToolMaterialsPM.HEXIUM, 4.0F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, HoeItem> HEXIUM_HOE = registerSupplier("hexium_hoe", props -> new HoeItem(ToolMaterialsPM.HEXIUM, -4.0F, 0.0F, props), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, TieredFishingRodItem> HEXIUM_FISHING_ROD = registerSupplier("hexium_fishing_rod", props -> new TieredFishingRodItem(ToolMaterialsPM.HEXIUM, props), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, HexiumShieldItem> HEXIUM_SHIELD = registerSupplier("hexium_shield", Services.ITEM_PROTOTYPES.hexiumShield(), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_SWORD = registerSimpleItemSupplier("hallowsteel_sword", () -> new Item.Properties().rarity(Rarity.EPIC).sword(ToolMaterialsPM.HALLOWSTEEL, 3, -2.4F));
+    public static final IRegistryItem<Item, HallowsteelTridentItem> HALLOWSTEEL_TRIDENT = registerSupplier("hallowsteel_trident", Services.ITEM_PROTOTYPES.hallowsteelTrident(), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, AbstractTieredBowItem> HALLOWSTEEL_BOW = registerSupplier("hallowsteel_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.HALLOWSTEEL), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ShovelItem> HALLOWSTEEL_SHOVEL = registerSupplier("hallowsteel_shovel", props -> new ShovelItem(ToolMaterialsPM.HALLOWSTEEL, 1.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_PICKAXE = registerSimpleItemSupplier("hallowsteel_pickaxe", () -> new Item.Properties().rarity(Rarity.EPIC).pickaxe(ToolMaterialsPM.HALLOWSTEEL, 1.0F, -2.8F));
+    public static final IRegistryItem<Item, AxeItem> HALLOWSTEEL_AXE = registerSupplier("hallowsteel_axe", props -> new AxeItem(ToolMaterialsPM.HALLOWSTEEL, 3.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, HoeItem> HALLOWSTEEL_HOE = registerSupplier("hallowsteel_hoe", props -> new HoeItem(ToolMaterialsPM.HALLOWSTEEL, -5.0F, 0.0F, props), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, TieredFishingRodItem> HALLOWSTEEL_FISHING_ROD = registerSupplier("hallowsteel_fishing_rod", props -> new TieredFishingRodItem(ToolMaterialsPM.HALLOWSTEEL, props), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, HallowsteelShieldItem> HALLOWSTEEL_SHIELD = registerSupplier("hallowsteel_shield", Services.ITEM_PROTOTYPES.hallowsteelShield(), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, PrimalShovelItem> PRIMAL_SHOVEL = registerDefaultInstance("primal_shovel", props -> new PrimalShovelItem(ToolMaterialsPM.PRIMALITE, 1.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, PrimalFishingRodItem> PRIMAL_FISHING_ROD = registerDefaultInstance("primal_fishing_rod", props -> new PrimalFishingRodItem(ToolMaterialsPM.PRIMALITE, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, PrimalAxeItem> PRIMAL_AXE = registerDefaultInstance("primal_axe", props -> new PrimalAxeItem(ToolMaterialsPM.PRIMALITE, 5.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, PrimalHoeItem> PRIMAL_HOE = registerDefaultInstance("primal_hoe", props -> new PrimalHoeItem(ToolMaterialsPM.PRIMALITE, -2.0F, 0.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, PrimalPickaxeItem> PRIMAL_PICKAXE = registerDefaultInstance("primal_pickaxe", PrimalPickaxeItem::new, () -> new Item.Properties().rarity(Rarity.UNCOMMON).pickaxe(ToolMaterialsPM.PRIMALITE, 1.0F, -2.8F));
+    public static final IRegistryItem<Item, ForbiddenTridentItem> FORBIDDEN_TRIDENT = registerDefaultInstance("forbidden_trident", Services.ITEM_PROTOTYPES.forbiddenTrident(), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ForbiddenBowItem> FORBIDDEN_BOW = registerDefaultInstance("forbidden_bow", Services.ITEM_PROTOTYPES.forbiddenBow(), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ForbiddenSwordItem> FORBIDDEN_SWORD = registerDefaultInstance("forbidden_sword", ForbiddenSwordItem::new, () -> new Item.Properties().rarity(Rarity.RARE).sword(ToolMaterialsPM.HEXIUM, 3, -2.4F));
+    public static final IRegistryItem<Item, SacredShieldItem> SACRED_SHIELD = registerDefaultInstance("sacred_shield", SacredShieldItem::new, () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_APPRENTICE = registerSupplier("spelltome_apprentice", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.BASIC), () -> new Item.Properties().rarity(Rarity.COMMON).enchantable(13).stacksTo(1));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ADEPT = registerSupplier("spelltome_adept", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.ENCHANTED), () -> new Item.Properties().rarity(Rarity.UNCOMMON).enchantable(18).stacksTo(1));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_WIZARD = registerSupplier("spelltome_wizard", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.FORBIDDEN), () -> new Item.Properties().rarity(Rarity.RARE).enchantable(23).stacksTo(1));
+    public static final IRegistryItem<Item, SpelltomeItem> SPELLTOME_ARCHMAGE = registerSupplier("spelltome_archmage", Services.ITEM_PROTOTYPES.spelltome(DeviceTier.HEAVENLY), () -> new Item.Properties().rarity(Rarity.EPIC).enchantable(28).stacksTo(1));
+    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_APPRENTICE = registerSupplier("mana_orb_apprentice", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.BASIC), () -> new Item.Properties().rarity(Rarity.COMMON).enchantable(13).stacksTo(1));
+    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_ADEPT = registerSupplier("mana_orb_adept", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.ENCHANTED), () -> new Item.Properties().rarity(Rarity.UNCOMMON).enchantable(18).stacksTo(1));
+    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_WIZARD = registerSupplier("mana_orb_wizard", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.FORBIDDEN), () -> new Item.Properties().rarity(Rarity.RARE).enchantable(23).stacksTo(1));
+    public static final IRegistryItem<Item, ManaOrbItem> MANA_ORB_ARCHMAGE = registerSupplier("mana_orb_archmage", Services.ITEM_PROTOTYPES.manaOrb(DeviceTier.HEAVENLY), () -> new Item.Properties().rarity(Rarity.EPIC).enchantable(28).stacksTo(1));
 
     // Register mana arrow items
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_EARTH = registerSimpleBlockItemSupplier("mana_arrow_earth", () -> new ManaArrowItem(Sources.EARTH, new Item.Properties()));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SEA = registerSimpleBlockItemSupplier("mana_arrow_sea", () -> new ManaArrowItem(Sources.SEA, new Item.Properties()));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SKY = registerSimpleBlockItemSupplier("mana_arrow_sky", () -> new ManaArrowItem(Sources.SKY, new Item.Properties()));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SUN = registerSimpleBlockItemSupplier("mana_arrow_sun", () -> new ManaArrowItem(Sources.SUN, new Item.Properties()));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_MOON = registerSimpleBlockItemSupplier("mana_arrow_moon", () -> new ManaArrowItem(Sources.MOON, new Item.Properties()));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_BLOOD = registerSimpleBlockItemSupplier("mana_arrow_blood", () -> new ManaArrowItem(Sources.BLOOD, new Item.Properties()));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_INFERNAL = registerSimpleBlockItemSupplier("mana_arrow_infernal", () -> new ManaArrowItem(Sources.INFERNAL, new Item.Properties()));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_VOID = registerSimpleBlockItemSupplier("mana_arrow_void", () -> new ManaArrowItem(Sources.VOID, new Item.Properties()));
-    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_HALLOWED = registerSimpleBlockItemSupplier("mana_arrow_hallowed", () -> new ManaArrowItem(Sources.HALLOWED, new Item.Properties()));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_EARTH = registerSupplier("mana_arrow_earth", props -> new ManaArrowItem(Sources.EARTH, props));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SEA = registerSupplier("mana_arrow_sea", props -> new ManaArrowItem(Sources.SEA, props));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SKY = registerSupplier("mana_arrow_sky", props -> new ManaArrowItem(Sources.SKY, props));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_SUN = registerSupplier("mana_arrow_sun", props -> new ManaArrowItem(Sources.SUN, props));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_MOON = registerSupplier("mana_arrow_moon", props -> new ManaArrowItem(Sources.MOON, props));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_BLOOD = registerSupplier("mana_arrow_blood", props -> new ManaArrowItem(Sources.BLOOD, props));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_INFERNAL = registerSupplier("mana_arrow_infernal", props -> new ManaArrowItem(Sources.INFERNAL, props));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_VOID = registerSupplier("mana_arrow_void", props -> new ManaArrowItem(Sources.VOID, props));
+    public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_HALLOWED = registerSupplier("mana_arrow_hallowed", props -> new ManaArrowItem(Sources.HALLOWED, props));
 
     // Register armor items
     public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_HEAD = registerSimpleBlockItemSupplier("imbued_wool_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));

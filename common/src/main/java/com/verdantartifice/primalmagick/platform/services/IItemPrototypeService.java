@@ -43,22 +43,22 @@ public interface IItemPrototypeService {
 
     Function<Item.Properties, PixieHouseItem> pixieHouse();
 
-    Supplier<PrimaliteShieldItem> primaliteShield(Item.Properties properties);
-    Supplier<HexiumShieldItem> hexiumShield(Item.Properties properties);
-    Supplier<HallowsteelShieldItem> hallowsteelShield(Item.Properties properties);
+    Function<Item.Properties, PrimaliteShieldItem> primaliteShield();
+    Function<Item.Properties, HexiumShieldItem> hexiumShield();
+    Function<Item.Properties, HallowsteelShieldItem> hallowsteelShield();
 
-    Supplier<PrimaliteTridentItem> primaliteTrident(Item.Properties properties);
-    Supplier<HexiumTridentItem> hexiumTrident(Item.Properties properties);
-    Supplier<HallowsteelTridentItem> hallowsteelTrident(Item.Properties properties);
-    Supplier<ForbiddenTridentItem> forbiddenTrident(Item.Properties properties);
+    Function<Item.Properties, PrimaliteTridentItem> primaliteTrident();
+    Function<Item.Properties, HexiumTridentItem> hexiumTrident();
+    Function<Item.Properties, HallowsteelTridentItem> hallowsteelTrident();
+    Function<Item.Properties, ForbiddenTridentItem> forbiddenTrident();
 
-    Supplier<AbstractTieredBowItem> tieredBow(ToolMaterial material, Item.Properties properties);
-    Supplier<ForbiddenBowItem> forbiddenBow(Item.Properties properties);
+    Function<Item.Properties, AbstractTieredBowItem> tieredBow(ToolMaterial material);
+    Function<Item.Properties, ForbiddenBowItem> forbiddenBow();
 
-    Supplier<SpelltomeItem> spelltome(DeviceTier tier, Item.Properties properties);
-    Supplier<ManaOrbItem> manaOrb(DeviceTier tier, Item.Properties properties);
+    Function<Item.Properties, SpelltomeItem> spelltome(DeviceTier tier);
+    Function<Item.Properties, ManaOrbItem> manaOrb(DeviceTier tier);
 
-    Supplier<MundaneWandItem> mundaneWand();
-    Supplier<ModularWandItem> modularWand(Item.Properties properties);
-    Supplier<ModularStaffItem> modularStaff(Item.Properties properties);
+    Function<Item.Properties, MundaneWandItem> mundaneWand();
+    Function<Item.Properties, ModularWandItem> modularWand();
+    Function<Item.Properties, ModularStaffItem> modularStaff();
 }
