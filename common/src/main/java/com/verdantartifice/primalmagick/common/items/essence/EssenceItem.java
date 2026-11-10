@@ -5,9 +5,9 @@ import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -22,8 +22,8 @@ public class EssenceItem extends Item {
     protected final EssenceType type;
     protected final Source source;
 
-    public EssenceItem(@Nonnull EssenceType type, @Nonnull Source source) {
-        super(new Item.Properties().rarity(type.getRarity()));
+    public EssenceItem(@NotNull EssenceType type, @NotNull Source source, @NotNull Item.Properties properties) {
+        super(properties.rarity(type.getRarity()));
         this.type = type;
         this.source = source;
         register(type, source, this);
@@ -37,16 +37,16 @@ public class EssenceItem extends Item {
         return this.source;
     }
     
-    protected static void register(@Nonnull EssenceType type, @Nonnull Source source, @Nonnull Item item) {
+    protected static void register(@NotNull EssenceType type, @NotNull Source source, @NotNull Item item) {
         ESSENCES.put(type, source, item);
     }
     
-    @Nonnull
+    @NotNull
     public static ItemStack getEssence(@Nullable EssenceType type, @Nullable Source source) {
         return getEssence(type, source, 1);
     }
     
-    @Nonnull
+    @NotNull
     public static ItemStack getEssence(@Nullable EssenceType type, @Nullable Source source, int count) {
         Item item = ESSENCES.get(type, source);
         return (item == null) ? ItemStack.EMPTY : new ItemStack(item, count);

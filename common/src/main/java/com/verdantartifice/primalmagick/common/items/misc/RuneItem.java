@@ -9,9 +9,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,8 +29,8 @@ public class RuneItem extends Item {
     
     protected final Rune rune;
     
-    public RuneItem(@Nonnull Rune rune) {
-        super(new Item.Properties().rarity(rune.getRarity()));
+    public RuneItem(@NotNull Rune rune, @NotNull Item.Properties properties) {
+        super(properties.rarity(rune.getRarity()));
         this.rune = rune;
         register(rune, this);
     }
@@ -60,16 +60,16 @@ public class RuneItem extends Item {
         }
     }
     
-    protected static void register(@Nonnull Rune rune, @Nonnull Item item) {
+    protected static void register(@NotNull Rune rune, @NotNull Item item) {
         RUNES.put(rune, item);
     }
     
-    @Nonnull
+    @NotNull
     public static ItemStack getRune(@Nullable Rune rune) {
         return getRune(rune, 1);
     }
     
-    @Nonnull
+    @NotNull
     public static ItemStack getRune(@Nullable Rune rune, int count) {
         Item item = RUNES.get(rune);
         return (item == null) ? ItemStack.EMPTY : new ItemStack(item, count);

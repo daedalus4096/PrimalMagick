@@ -656,80 +656,80 @@ public class ItemsPM {
     public static final IRegistryItem<Item, WardingModuleItem> SUPREME_WARDING_MODULE = registerSupplier("warding_module_supreme", props -> new WardingModuleItem(DeviceTier.HEAVENLY, props), () -> new Item.Properties().rarity(Rarity.EPIC));
 
     // Register knowledge items
-    public static final IRegistryItem<Item, KnowledgeGainItem> OBSERVATION_NOTES = registerSimpleBlockItemSupplier("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties()));
-    public static final IRegistryItem<Item, KnowledgeGainItem> THEORY_NOTES = registerSimpleBlockItemSupplier("theory_notes", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, KnowledgeGainItem> MYSTICAL_RELIC = registerSimpleBlockItemSupplier("mystical_relic", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, KnowledgeGainItem> OBSERVATION_NOTES = registerSupplier("observation_notes", props -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), props));
+    public static final IRegistryItem<Item, KnowledgeGainItem> THEORY_NOTES = registerSupplier("theory_notes", props -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, KnowledgeGainItem> MYSTICAL_RELIC = registerSupplier("mystical_relic", props -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, Item> MYSTICAL_RELIC_FRAGMENT = registerSimpleItemSupplier("mystical_relic_fragment");
-    public static final IRegistryItem<Item, ForbiddenSourceGainItem> BLOOD_NOTES = registerSimpleBlockItemSupplier("blood_notes", () -> new ForbiddenSourceGainItem(Sources.BLOOD, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, ResearchGainItem> SHEEP_TOME = registerSimpleBlockItemSupplier("sheep_tome", () -> new ResearchGainItem(() -> new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_POLYMORPH_SHEEP), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, ForbiddenSourceGainItem> BLOOD_NOTES = registerSupplier("blood_notes", props -> new ForbiddenSourceGainItem(Sources.BLOOD, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ResearchGainItem> SHEEP_TOME = registerSupplier("sheep_tome", props -> new ResearchGainItem(() -> new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_POLYMORPH_SHEEP), props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
 
     // Register dust essence items
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_EARTH = registerSimpleBlockItemSupplier("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Sources.EARTH));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_SEA = registerSimpleBlockItemSupplier("essence_dust_sea", () -> new EssenceItem(EssenceType.DUST, Sources.SEA));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_SKY = registerSimpleBlockItemSupplier("essence_dust_sky", () -> new EssenceItem(EssenceType.DUST, Sources.SKY));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_SUN = registerSimpleBlockItemSupplier("essence_dust_sun", () -> new EssenceItem(EssenceType.DUST, Sources.SUN));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_MOON = registerSimpleBlockItemSupplier("essence_dust_moon", () -> new EssenceItem(EssenceType.DUST, Sources.MOON));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_BLOOD = registerSimpleBlockItemSupplier("essence_dust_blood", () -> new EssenceItem(EssenceType.DUST, Sources.BLOOD));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_INFERNAL = registerSimpleBlockItemSupplier("essence_dust_infernal", () -> new EssenceItem(EssenceType.DUST, Sources.INFERNAL));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_VOID = registerSimpleBlockItemSupplier("essence_dust_void", () -> new EssenceItem(EssenceType.DUST, Sources.VOID));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_HALLOWED = registerSimpleBlockItemSupplier("essence_dust_hallowed", () -> new EssenceItem(EssenceType.DUST, Sources.HALLOWED));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_EARTH = registerSupplier("essence_dust_earth", props -> new EssenceItem(EssenceType.DUST, Sources.EARTH, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_SEA = registerSupplier("essence_dust_sea", props -> new EssenceItem(EssenceType.DUST, Sources.SEA, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_SKY = registerSupplier("essence_dust_sky", props -> new EssenceItem(EssenceType.DUST, Sources.SKY, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_SUN = registerSupplier("essence_dust_sun", props -> new EssenceItem(EssenceType.DUST, Sources.SUN, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_MOON = registerSupplier("essence_dust_moon", props -> new EssenceItem(EssenceType.DUST, Sources.MOON, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_BLOOD = registerSupplier("essence_dust_blood", props -> new EssenceItem(EssenceType.DUST, Sources.BLOOD, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_INFERNAL = registerSupplier("essence_dust_infernal", props -> new EssenceItem(EssenceType.DUST, Sources.INFERNAL, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_VOID = registerSupplier("essence_dust_void", props -> new EssenceItem(EssenceType.DUST, Sources.VOID, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_DUST_HALLOWED = registerSupplier("essence_dust_hallowed", props -> new EssenceItem(EssenceType.DUST, Sources.HALLOWED, props));
 
     // Register shard essence items
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_EARTH = registerSimpleBlockItemSupplier("essence_shard_earth", () -> new EssenceItem(EssenceType.SHARD, Sources.EARTH));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_SEA = registerSimpleBlockItemSupplier("essence_shard_sea", () -> new EssenceItem(EssenceType.SHARD, Sources.SEA));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_SKY = registerSimpleBlockItemSupplier("essence_shard_sky", () -> new EssenceItem(EssenceType.SHARD, Sources.SKY));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_SUN = registerSimpleBlockItemSupplier("essence_shard_sun", () -> new EssenceItem(EssenceType.SHARD, Sources.SUN));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_MOON = registerSimpleBlockItemSupplier("essence_shard_moon", () -> new EssenceItem(EssenceType.SHARD, Sources.MOON));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_BLOOD = registerSimpleBlockItemSupplier("essence_shard_blood", () -> new EssenceItem(EssenceType.SHARD, Sources.BLOOD));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_INFERNAL = registerSimpleBlockItemSupplier("essence_shard_infernal", () -> new EssenceItem(EssenceType.SHARD, Sources.INFERNAL));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_VOID = registerSimpleBlockItemSupplier("essence_shard_void", () -> new EssenceItem(EssenceType.SHARD, Sources.VOID));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_HALLOWED = registerSimpleBlockItemSupplier("essence_shard_hallowed", () -> new EssenceItem(EssenceType.SHARD, Sources.HALLOWED));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_EARTH = registerSupplier("essence_shard_earth", props -> new EssenceItem(EssenceType.SHARD, Sources.EARTH, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_SEA = registerSupplier("essence_shard_sea", props -> new EssenceItem(EssenceType.SHARD, Sources.SEA, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_SKY = registerSupplier("essence_shard_sky", props -> new EssenceItem(EssenceType.SHARD, Sources.SKY, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_SUN = registerSupplier("essence_shard_sun", props -> new EssenceItem(EssenceType.SHARD, Sources.SUN, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_MOON = registerSupplier("essence_shard_moon", props -> new EssenceItem(EssenceType.SHARD, Sources.MOON, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_BLOOD = registerSupplier("essence_shard_blood", props -> new EssenceItem(EssenceType.SHARD, Sources.BLOOD, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_INFERNAL = registerSupplier("essence_shard_infernal", props -> new EssenceItem(EssenceType.SHARD, Sources.INFERNAL, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_VOID = registerSupplier("essence_shard_void", props -> new EssenceItem(EssenceType.SHARD, Sources.VOID, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_SHARD_HALLOWED = registerSupplier("essence_shard_hallowed", props -> new EssenceItem(EssenceType.SHARD, Sources.HALLOWED, props));
 
     // Register crystal essence items
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_EARTH = registerSimpleBlockItemSupplier("essence_crystal_earth", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.EARTH));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_SEA = registerSimpleBlockItemSupplier("essence_crystal_sea", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.SEA));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_SKY = registerSimpleBlockItemSupplier("essence_crystal_sky", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.SKY));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_SUN = registerSimpleBlockItemSupplier("essence_crystal_sun", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.SUN));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_MOON = registerSimpleBlockItemSupplier("essence_crystal_moon", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.MOON));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_BLOOD = registerSimpleBlockItemSupplier("essence_crystal_blood", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.BLOOD));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_INFERNAL = registerSimpleBlockItemSupplier("essence_crystal_infernal", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.INFERNAL));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_VOID = registerSimpleBlockItemSupplier("essence_crystal_void", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.VOID));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_HALLOWED = registerSimpleBlockItemSupplier("essence_crystal_hallowed", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.HALLOWED));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_EARTH = registerSupplier("essence_crystal_earth", props -> new EssenceItem(EssenceType.CRYSTAL, Sources.EARTH, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_SEA = registerSupplier("essence_crystal_sea", props -> new EssenceItem(EssenceType.CRYSTAL, Sources.SEA, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_SKY = registerSupplier("essence_crystal_sky", props -> new EssenceItem(EssenceType.CRYSTAL, Sources.SKY, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_SUN = registerSupplier("essence_crystal_sun", props -> new EssenceItem(EssenceType.CRYSTAL, Sources.SUN, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_MOON = registerSupplier("essence_crystal_moon", props -> new EssenceItem(EssenceType.CRYSTAL, Sources.MOON, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_BLOOD = registerSupplier("essence_crystal_blood", props -> new EssenceItem(EssenceType.CRYSTAL, Sources.BLOOD, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_INFERNAL = registerSupplier("essence_crystal_infernal", props -> new EssenceItem(EssenceType.CRYSTAL, Sources.INFERNAL, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_VOID = registerSupplier("essence_crystal_void", props -> new EssenceItem(EssenceType.CRYSTAL, Sources.VOID, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CRYSTAL_HALLOWED = registerSupplier("essence_crystal_hallowed", props -> new EssenceItem(EssenceType.CRYSTAL, Sources.HALLOWED, props));
 
     // Register cluster essence items
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_EARTH = registerSimpleBlockItemSupplier("essence_cluster_earth", () -> new EssenceItem(EssenceType.CLUSTER, Sources.EARTH));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_SEA = registerSimpleBlockItemSupplier("essence_cluster_sea", () -> new EssenceItem(EssenceType.CLUSTER, Sources.SEA));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_SKY = registerSimpleBlockItemSupplier("essence_cluster_sky", () -> new EssenceItem(EssenceType.CLUSTER, Sources.SKY));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_SUN = registerSimpleBlockItemSupplier("essence_cluster_sun", () -> new EssenceItem(EssenceType.CLUSTER, Sources.SUN));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_MOON = registerSimpleBlockItemSupplier("essence_cluster_moon", () -> new EssenceItem(EssenceType.CLUSTER, Sources.MOON));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_BLOOD = registerSimpleBlockItemSupplier("essence_cluster_blood", () -> new EssenceItem(EssenceType.CLUSTER, Sources.BLOOD));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_INFERNAL = registerSimpleBlockItemSupplier("essence_cluster_infernal", () -> new EssenceItem(EssenceType.CLUSTER, Sources.INFERNAL));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_VOID = registerSimpleBlockItemSupplier("essence_cluster_void", () -> new EssenceItem(EssenceType.CLUSTER, Sources.VOID));
-    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_HALLOWED = registerSimpleBlockItemSupplier("essence_cluster_hallowed", () -> new EssenceItem(EssenceType.CLUSTER, Sources.HALLOWED));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_EARTH = registerSupplier("essence_cluster_earth", props -> new EssenceItem(EssenceType.CLUSTER, Sources.EARTH, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_SEA = registerSupplier("essence_cluster_sea", props -> new EssenceItem(EssenceType.CLUSTER, Sources.SEA, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_SKY = registerSupplier("essence_cluster_sky", props -> new EssenceItem(EssenceType.CLUSTER, Sources.SKY, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_SUN = registerSupplier("essence_cluster_sun", props -> new EssenceItem(EssenceType.CLUSTER, Sources.SUN, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_MOON = registerSupplier("essence_cluster_moon", props -> new EssenceItem(EssenceType.CLUSTER, Sources.MOON, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_BLOOD = registerSupplier("essence_cluster_blood", props -> new EssenceItem(EssenceType.CLUSTER, Sources.BLOOD, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_INFERNAL = registerSupplier("essence_cluster_infernal", props -> new EssenceItem(EssenceType.CLUSTER, Sources.INFERNAL, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_VOID = registerSupplier("essence_cluster_void", props -> new EssenceItem(EssenceType.CLUSTER, Sources.VOID, props));
+    public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_HALLOWED = registerSupplier("essence_cluster_hallowed", props -> new EssenceItem(EssenceType.CLUSTER, Sources.HALLOWED, props));
 
     // Register rune items
     public static final IRegistryItem<Item, Item> RUNE_UNATTUNED = registerSimpleItemSupplier("rune_unattuned");
-    public static final IRegistryItem<Item, RuneItem> RUNE_EARTH = registerSimpleBlockItemSupplier("rune_earth", () -> new RuneItem(Rune.EARTH));
-    public static final IRegistryItem<Item, RuneItem> RUNE_SEA = registerSimpleBlockItemSupplier("rune_sea", () -> new RuneItem(Rune.SEA));
-    public static final IRegistryItem<Item, RuneItem> RUNE_SKY = registerSimpleBlockItemSupplier("rune_sky", () -> new RuneItem(Rune.SKY));
-    public static final IRegistryItem<Item, RuneItem> RUNE_SUN = registerSimpleBlockItemSupplier("rune_sun", () -> new RuneItem(Rune.SUN));
-    public static final IRegistryItem<Item, RuneItem> RUNE_MOON = registerSimpleBlockItemSupplier("rune_moon", () -> new RuneItem(Rune.MOON));
-    public static final IRegistryItem<Item, RuneItem> RUNE_BLOOD = registerSimpleBlockItemSupplier("rune_blood", () -> new RuneItem(Rune.BLOOD));
-    public static final IRegistryItem<Item, RuneItem> RUNE_INFERNAL = registerSimpleBlockItemSupplier("rune_infernal", () -> new RuneItem(Rune.INFERNAL));
-    public static final IRegistryItem<Item, RuneItem> RUNE_VOID = registerSimpleBlockItemSupplier("rune_void", () -> new RuneItem(Rune.VOID));
-    public static final IRegistryItem<Item, RuneItem> RUNE_HALLOWED = registerSimpleBlockItemSupplier("rune_hallowed", () -> new RuneItem(Rune.HALLOWED));
-    public static final IRegistryItem<Item, RuneItem> RUNE_ABSORB = registerSimpleBlockItemSupplier("rune_absorb", () -> new RuneItem(Rune.ABSORB));
-    public static final IRegistryItem<Item, RuneItem> RUNE_DISPEL = registerSimpleBlockItemSupplier("rune_dispel", () -> new RuneItem(Rune.DISPEL));
-    public static final IRegistryItem<Item, RuneItem> RUNE_PROJECT = registerSimpleBlockItemSupplier("rune_project", () -> new RuneItem(Rune.PROJECT));
-    public static final IRegistryItem<Item, RuneItem> RUNE_PROTECT = registerSimpleBlockItemSupplier("rune_protect", () -> new RuneItem(Rune.PROTECT));
-    public static final IRegistryItem<Item, RuneItem> RUNE_SUMMON = registerSimpleBlockItemSupplier("rune_summon", () -> new RuneItem(Rune.SUMMON));
-    public static final IRegistryItem<Item, RuneItem> RUNE_AREA = registerSimpleBlockItemSupplier("rune_area", () -> new RuneItem(Rune.AREA));
-    public static final IRegistryItem<Item, RuneItem> RUNE_CREATURE = registerSimpleBlockItemSupplier("rune_creature", () -> new RuneItem(Rune.CREATURE));
-    public static final IRegistryItem<Item, RuneItem> RUNE_ITEM = registerSimpleBlockItemSupplier("rune_item", () -> new RuneItem(Rune.ITEM));
-    public static final IRegistryItem<Item, RuneItem> RUNE_SELF = registerSimpleBlockItemSupplier("rune_self", () -> new RuneItem(Rune.SELF));
-    public static final IRegistryItem<Item, RuneItem> RUNE_INSIGHT = registerSimpleBlockItemSupplier("rune_insight", () -> new RuneItem(Rune.INSIGHT));
-    public static final IRegistryItem<Item, RuneItem> RUNE_POWER = registerSimpleBlockItemSupplier("rune_power", () -> new RuneItem(Rune.POWER));
-    public static final IRegistryItem<Item, RuneItem> RUNE_GRACE = registerSimpleBlockItemSupplier("rune_grace", () -> new RuneItem(Rune.GRACE));
+    public static final IRegistryItem<Item, RuneItem> RUNE_EARTH = registerSupplier("rune_earth", props -> new RuneItem(Rune.EARTH, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_SEA = registerSupplier("rune_sea", props -> new RuneItem(Rune.SEA, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_SKY = registerSupplier("rune_sky", props -> new RuneItem(Rune.SKY, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_SUN = registerSupplier("rune_sun", props -> new RuneItem(Rune.SUN, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_MOON = registerSupplier("rune_moon", props -> new RuneItem(Rune.MOON, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_BLOOD = registerSupplier("rune_blood", props -> new RuneItem(Rune.BLOOD, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_INFERNAL = registerSupplier("rune_infernal", props -> new RuneItem(Rune.INFERNAL, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_VOID = registerSupplier("rune_void", props -> new RuneItem(Rune.VOID, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_HALLOWED = registerSupplier("rune_hallowed", props -> new RuneItem(Rune.HALLOWED, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_ABSORB = registerSupplier("rune_absorb", props -> new RuneItem(Rune.ABSORB, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_DISPEL = registerSupplier("rune_dispel", props -> new RuneItem(Rune.DISPEL, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_PROJECT = registerSupplier("rune_project", props -> new RuneItem(Rune.PROJECT, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_PROTECT = registerSupplier("rune_protect", props -> new RuneItem(Rune.PROTECT, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_SUMMON = registerSupplier("rune_summon", props -> new RuneItem(Rune.SUMMON, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_AREA = registerSupplier("rune_area", props -> new RuneItem(Rune.AREA, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_CREATURE = registerSupplier("rune_creature", props -> new RuneItem(Rune.CREATURE, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_ITEM = registerSupplier("rune_item", props -> new RuneItem(Rune.ITEM, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_SELF = registerSupplier("rune_self", props -> new RuneItem(Rune.SELF, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_INSIGHT = registerSupplier("rune_insight", props -> new RuneItem(Rune.INSIGHT, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_POWER = registerSupplier("rune_power", props -> new RuneItem(Rune.POWER, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_GRACE = registerSupplier("rune_grace", props -> new RuneItem(Rune.GRACE, props));
 
     // Register ambrosia items
     public static final IRegistryItem<Item, AmbrosiaItem> BASIC_EARTH_AMBROSIA = registerSimpleBlockItemSupplier("ambrosia_basic_earth", () -> new AmbrosiaItem(Sources.EARTH, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
