@@ -36,7 +36,7 @@ public interface IItemPrototypeService {
     Supplier<ArcanometerItem> arcanometer();
     Supplier<IgnyxItem> ignyx(Item.Properties properties);
 
-    <T extends Block> Supplier<ManaFontBlockItem> manaFont(Supplier<T> blockSupplier, Item.Properties properties);
+    <T extends Block> Function<Item.Properties, ManaFontBlockItem> manaFont(Supplier<T> blockSupplier);
     <T extends Block> Supplier<SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier, Item.Properties properties);
     <T extends Block> Supplier<ManaRelayBlockItem> manaRelay(Supplier<T> blockSupplier, Item.Properties properties);
     <T extends Block> Supplier<ManaInjectorBlockItem> manaInjector(Supplier<T> blockSupplier, Item.Properties properties);
