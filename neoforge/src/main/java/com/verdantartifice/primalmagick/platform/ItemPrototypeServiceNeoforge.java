@@ -75,23 +75,23 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     }
 
     @Override
-    public <T extends Block> Supplier<SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier, Item.Properties properties) {
-        return () -> new SpellcraftingAltarBlockItemNeoforge(blockSupplier.get(), properties);
+    public <T extends Block> Function<Item.Properties, SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier) {
+        return properties -> new SpellcraftingAltarBlockItemNeoforge(blockSupplier.get(), properties);
     }
 
     @Override
-    public <T extends Block> Supplier<ManaRelayBlockItem> manaRelay(Supplier<T> blockSupplier, Item.Properties properties) {
-        return () -> new ManaRelayBlockItemNeoforge(blockSupplier.get(), properties);
+    public <T extends Block> Function<Item.Properties, ManaRelayBlockItem> manaRelay(Supplier<T> blockSupplier) {
+        return properties -> new ManaRelayBlockItemNeoforge(blockSupplier.get(), properties);
     }
 
     @Override
-    public <T extends Block> Supplier<ManaInjectorBlockItem> manaInjector(Supplier<T> blockSupplier, Item.Properties properties) {
-        return () -> new ManaInjectorBlockItemNeoforge(blockSupplier.get(), properties);
+    public <T extends Block> Function<Item.Properties, ManaInjectorBlockItem> manaInjector(Supplier<T> blockSupplier) {
+        return properties -> new ManaInjectorBlockItemNeoforge(blockSupplier.get(), properties);
     }
 
     @Override
-    public Supplier<PixieHouseItem> pixieHouse(Item.Properties properties) {
-        return () -> new PixieHouseItemNeoforge(properties);
+    public Function<Item.Properties, PixieHouseItem> pixieHouse() {
+        return PixieHouseItemNeoforge::new;
     }
 
     @Override

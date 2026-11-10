@@ -33,6 +33,16 @@ public class ItemRegistryServiceNeoforge extends AbstractRegistryServiceNeoforge
     }
 
     @Override
+    public IRegistryItem<Item, Item> registerSimpleItem(String name, Supplier<Item.Properties> propertiesSupplier) {
+        return new RegistryItemNeoforge<>(ITEMS.registerSimpleItem(name, propertiesSupplier));
+    }
+
+    @Override
+    public IRegistryItem<Item, Item> registerSimpleItem(String name) {
+        return new RegistryItemNeoforge<>(ITEMS.registerSimpleItem(name));
+    }
+
+    @Override
     public IRegistryItem<Item, BlockItem> registerSimpleBlockItem(String name, Supplier<? extends Block> blockSupplier) {
         return new RegistryItemNeoforge<>(ITEMS.registerSimpleBlockItem(name, blockSupplier));
     }

@@ -37,11 +37,11 @@ public interface IItemPrototypeService {
     Supplier<IgnyxItem> ignyx(Item.Properties properties);
 
     <T extends Block> Function<Item.Properties, ManaFontBlockItem> manaFont(Supplier<T> blockSupplier);
-    <T extends Block> Supplier<SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier, Item.Properties properties);
-    <T extends Block> Supplier<ManaRelayBlockItem> manaRelay(Supplier<T> blockSupplier, Item.Properties properties);
-    <T extends Block> Supplier<ManaInjectorBlockItem> manaInjector(Supplier<T> blockSupplier, Item.Properties properties);
+    <T extends Block> Function<Item.Properties, SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier);
+    <T extends Block> Function<Item.Properties, ManaRelayBlockItem> manaRelay(Supplier<T> blockSupplier);
+    <T extends Block> Function<Item.Properties, ManaInjectorBlockItem> manaInjector(Supplier<T> blockSupplier);
 
-    Supplier<PixieHouseItem> pixieHouse(Item.Properties properties);
+    Function<Item.Properties, PixieHouseItem> pixieHouse();
 
     Supplier<PrimaliteShieldItem> primaliteShield(Item.Properties properties);
     Supplier<HexiumShieldItem> hexiumShield(Item.Properties properties);
