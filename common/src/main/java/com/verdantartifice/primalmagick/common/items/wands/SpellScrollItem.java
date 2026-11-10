@@ -30,8 +30,8 @@ import java.util.function.Consumer;
 public class SpellScrollItem extends Item {
     protected static final Component TOOLTIP = Component.translatable("tooltip.primalmagick.spell_scroll").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
     
-    public SpellScrollItem() {
-        super(new Item.Properties());
+    public SpellScrollItem(Item.Properties properties) {
+        super(properties);
     }
     
     @Nullable

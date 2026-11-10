@@ -22,8 +22,8 @@ import java.util.List;
 public abstract class MundaneWandItem extends AbstractWandItem {
     public static final int MAX_MANA = 2500;
 
-    public MundaneWandItem() {
-        super(new Item.Properties().stacksTo(1).enchantable(1));
+    public MundaneWandItem(Item.Properties properties) {
+        super(properties);
     }
 
     @Override

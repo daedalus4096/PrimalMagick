@@ -1,10 +1,15 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 
 public class MundaneWandItemNeoforge extends MundaneWandItem {
+    public MundaneWandItemNeoforge(Item.Properties properties) {
+        super(properties);
+    }
+
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         return this.onWandUseFirst(stack, context);
