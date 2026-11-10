@@ -32,8 +32,6 @@ import java.util.stream.Stream;
  * @see net.minecraft.world.item.crafting.Ingredient
  */
 public class BlockIngredient implements Predicate<BlockState>, StackedContents.IngredientInfo<Holder<Block>> {
-    public static final BlockIngredient EMPTY = BlockIngredient.of(Stream.empty());
-
     public static final Codec<HolderSet<Block>> NON_AIR_HOLDER_SET_CODEC = HolderSetCodec.create(
             Registries.BLOCK,
             BuiltInRegistries.BLOCK.holderByNameCodec().validate(block -> block.is(Blocks.AIR.builtInRegistryHolder()) ? DataResult.error(() -> "Block must not be minecraft:air") : DataResult.success(block)),
