@@ -36,8 +36,8 @@ import javax.annotation.Nullable;
 public abstract class ArcanometerItem extends Item {
     public static final Identifier SCAN_STATE_PROPERTY = ResourceUtils.loc("scan_state");
 
-    public ArcanometerItem() {
-        super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+    public ArcanometerItem(Item.Properties properties) {
+        super(properties);
     }
     
     public static boolean isMouseOverScannable(@Nullable HitResult result, @Nullable Level world, @Nullable Player player) {

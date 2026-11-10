@@ -28,8 +28,8 @@ import java.util.function.Consumer;
 public class DreamVisionTalismanItem extends Item {
     protected static final int CAPACITY = 64;
     
-    public DreamVisionTalismanItem() {
-        super(new Item.Properties().durability(64));
+    public DreamVisionTalismanItem(Item.Properties properties) {
+        super(properties);
     }
     
     /**

@@ -60,13 +60,13 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     }
 
     @Override
-    public Supplier<ArcanometerItem> arcanometer() {
+    public Function<Item.Properties, ArcanometerItem> arcanometer() {
         return ArcanometerItemNeoforge::new;
     }
 
     @Override
-    public Supplier<IgnyxItem> ignyx(Item.Properties properties) {
-        return () -> new IgnyxItemNeoforge(properties);
+    public Function<Item.Properties, IgnyxItem> ignyx() {
+        return IgnyxItemNeoforge::new;
     }
 
     @Override

@@ -33,8 +33,8 @@ import java.util.function.Supplier;
 public interface IItemPrototypeService {
     <T extends Block> Function<Item.Properties, BurnableBlockItem> burnable(Supplier<T> block, int burnTicks);
 
-    Supplier<ArcanometerItem> arcanometer();
-    Supplier<IgnyxItem> ignyx(Item.Properties properties);
+    Function<Item.Properties, ArcanometerItem> arcanometer();
+    Function<Item.Properties, IgnyxItem> ignyx();
 
     <T extends Block> Function<Item.Properties, ManaFontBlockItem> manaFont(Supplier<T> blockSupplier);
     <T extends Block> Function<Item.Properties, SpellcraftingAltarBlockItem> spellcraftingAltar(Supplier<T> blockSupplier);

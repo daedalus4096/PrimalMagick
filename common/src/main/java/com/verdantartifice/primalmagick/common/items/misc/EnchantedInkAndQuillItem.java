@@ -9,8 +9,8 @@ import net.minecraft.world.item.Item;
  * @author Daedalus4096
  */
 public class EnchantedInkAndQuillItem extends Item implements IWritingImplement {
-    public EnchantedInkAndQuillItem() {
-        super(new Item.Properties().durability(63));
+    public EnchantedInkAndQuillItem(Item.Properties properties) {
+        super(properties);
     }
 
     @Override

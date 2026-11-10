@@ -18,8 +18,8 @@ import java.util.function.Consumer;
  * @author Daedalus4096
  */
 public class HallowedOrbItem extends Item {
-    public HallowedOrbItem() {
-        super(new Item.Properties().rarity(Rarity.RARE));
+    public HallowedOrbItem(Item.Properties properties) {
+        super(properties);
     }
 
     @Override

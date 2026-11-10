@@ -618,22 +618,22 @@ public class ItemsPM {
     public static final IRegistryItem<Item, Item> HALLOWSTEEL_FEET = registerSimpleItemSupplier("hallowsteel_feet", () -> new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.BOOTS));
 
     // Register miscellaneous items
-    public static final IRegistryItem<Item, ArcanometerItem> ARCANOMETER = registerSupplier("arcanometer", Services.ITEM_PROTOTYPES.arcanometer());
+    public static final IRegistryItem<Item, ArcanometerItem> ARCANOMETER = registerSupplier("arcanometer", Services.ITEM_PROTOTYPES.arcanometer(), () -> new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, Item> MAGNIFYING_GLASS = registerSimpleItemSupplier("magnifying_glass");
     public static final IRegistryItem<Item, Item> ALCHEMICAL_WASTE = registerSimpleItemSupplier("alchemical_waste");
-    public static final IRegistryItem<Item, BloodyFleshItem> BLOODY_FLESH = registerSimpleBlockItemSupplier("bloody_flesh", BloodyFleshItem::new);
-    public static final IRegistryItem<Item, HallowedOrbItem> HALLOWED_ORB = registerSimpleBlockItemSupplier("hallowed_orb", HallowedOrbItem::new);
+    public static final IRegistryItem<Item, BloodyFleshItem> BLOODY_FLESH = registerSupplier("bloody_flesh", BloodyFleshItem::new, () -> new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.BLOODY_FLESH));
+    public static final IRegistryItem<Item, HallowedOrbItem> HALLOWED_ORB = registerSupplier("hallowed_orb", HallowedOrbItem::new, () -> new Item.Properties().rarity(Rarity.RARE));
     public static final IRegistryItem<Item, Item> HEARTWOOD = registerSimpleItemSupplier("heartwood");
     public static final IRegistryItem<Item, Item> ENCHANTED_INK = registerSimpleItemSupplier("enchanted_ink");
-    public static final IRegistryItem<Item, Item> ENCHANTED_INK_AND_QUILL = registerSimpleBlockItemSupplier("enchanted_ink_and_quill", EnchantedInkAndQuillItem::new);
-    public static final IRegistryItem<Item, SeascribePenItem> SEASCRIBE_PEN = registerSimpleBlockItemSupplier("seascribe_pen", () -> new SeascribePenItem(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> ENCHANTED_INK_AND_QUILL = registerSupplier("enchanted_ink_and_quill", EnchantedInkAndQuillItem::new, () -> new Item.Properties().durability(63));
+    public static final IRegistryItem<Item, SeascribePenItem> SEASCRIBE_PEN = registerSupplier("seascribe_pen", SeascribePenItem::new);
     public static final IRegistryItem<Item, Item> ROCK_SALT = registerSimpleItemSupplier("rock_salt");
-    public static final IRegistryItem<Item, Item> EARTHSHATTER_HAMMER = registerSimpleBlockItemSupplier("earthshatter_hammer", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, Item> EARTHSHATTER_HAMMER = registerSimpleItemSupplier("earthshatter_hammer", () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, Item> MANA_PRISM = registerSimpleItemSupplier("mana_prism");
     public static final IRegistryItem<Item, Item> TALLOW = registerSimpleItemSupplier("tallow");
-    public static final IRegistryItem<Item, Item> BEESWAX = registerSimpleBlockItemSupplier("beeswax", () -> new HoneycombItem(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> BEESWAX = registerSupplier("beeswax", HoneycombItem::new);
     public static final IRegistryItem<Item, Item> MANA_SALTS = registerSimpleItemSupplier("mana_salts");
-    public static final IRegistryItem<Item, ManafruitItem> MANAFRUIT = registerSimpleBlockItemSupplier("manafruit", () -> new ManafruitItem(0, new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationModifier(0.8F).build())));
+    public static final IRegistryItem<Item, ManafruitItem> MANAFRUIT = registerSupplier("manafruit", props -> new ManafruitItem(0, props), () -> new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationModifier(0.8F).build()));
     public static final IRegistryItem<Item, Item> INCENSE_STICK = registerSimpleItemSupplier("incense_stick");
     public static final IRegistryItem<Item, Item> SOUL_GEM = registerSimpleItemSupplier("soul_gem");
     public static final IRegistryItem<Item, Item> SOUL_GEM_SLIVER = registerSimpleItemSupplier("soul_gem_sliver");
@@ -644,16 +644,16 @@ public class ItemsPM {
     public static final IRegistryItem<Item, Item> MAGITECH_PARTS_ENCHANTED = registerSimpleItemSupplier("magitech_parts_enchanted");
     public static final IRegistryItem<Item, Item> MAGITECH_PARTS_FORBIDDEN = registerSimpleItemSupplier("magitech_parts_forbidden");
     public static final IRegistryItem<Item, Item> MAGITECH_PARTS_HEAVENLY = registerSimpleItemSupplier("magitech_parts_heavenly");
-    public static final IRegistryItem<Item, FlyingCarpetItem> FLYING_CARPET = registerSimpleBlockItemSupplier("flying_carpet", () -> new FlyingCarpetItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, DreamVisionTalismanItem> DREAM_VISION_TALISMAN = registerSimpleBlockItemSupplier("dream_vision_talisman", DreamVisionTalismanItem::new);
-    public static final IRegistryItem<Item, IgnyxItem> IGNYX = registerSupplier("ignyx", Services.ITEM_PROTOTYPES.ignyx(new Item.Properties()));
-    public static final IRegistryItem<Item, DowsingRodItem> DOWSING_ROD = registerSimpleBlockItemSupplier("dowsing_rod", () -> new DowsingRodItem(new Item.Properties().stacksTo(1).durability(63)));
+    public static final IRegistryItem<Item, FlyingCarpetItem> FLYING_CARPET = registerSupplier("flying_carpet", FlyingCarpetItem::new, () -> new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, DreamVisionTalismanItem> DREAM_VISION_TALISMAN = registerSupplier("dream_vision_talisman", DreamVisionTalismanItem::new, () -> new Item.Properties().durability(64));
+    public static final IRegistryItem<Item, IgnyxItem> IGNYX = registerSupplier("ignyx", Services.ITEM_PROTOTYPES.ignyx());
+    public static final IRegistryItem<Item, DowsingRodItem> DOWSING_ROD = registerSupplier("dowsing_rod", DowsingRodItem::new, () -> new Item.Properties().stacksTo(1).durability(63));
     public static final IRegistryItem<Item, Item> FOUR_LEAF_CLOVER = registerSimpleItemSupplier("four_leaf_clover");
-    public static final IRegistryItem<Item, RecallStoneItem> RECALL_STONE = registerSimpleBlockItemSupplier("recall_stone", () -> new RecallStoneItem(new Item.Properties()));
-    public static final IRegistryItem<Item, SmithingTemplateItem> RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE = registerSimpleBlockItemSupplier("runic_armor_trim_smithing_template", () -> TrimPatternsPM.createRunicArmorTrimTemplate(new Item.Properties()));
-    public static final IRegistryItem<Item, WardingModuleItem> BASIC_WARDING_MODULE = registerSimpleBlockItemSupplier("warding_module_basic", () -> new WardingModuleItem(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, WardingModuleItem> GREATER_WARDING_MODULE = registerSimpleBlockItemSupplier("warding_module_greater", () -> new WardingModuleItem(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, WardingModuleItem> SUPREME_WARDING_MODULE = registerSimpleBlockItemSupplier("warding_module_supreme", () -> new WardingModuleItem(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, RecallStoneItem> RECALL_STONE = registerSupplier("recall_stone", RecallStoneItem::new);
+    public static final IRegistryItem<Item, SmithingTemplateItem> RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE = registerSupplier("runic_armor_trim_smithing_template", TrimPatternsPM::createRunicArmorTrimTemplate);
+    public static final IRegistryItem<Item, WardingModuleItem> BASIC_WARDING_MODULE = registerSupplier("warding_module_basic", props -> new WardingModuleItem(DeviceTier.ENCHANTED, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, WardingModuleItem> GREATER_WARDING_MODULE = registerSupplier("warding_module_greater", props -> new WardingModuleItem(DeviceTier.FORBIDDEN, props), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, WardingModuleItem> SUPREME_WARDING_MODULE = registerSupplier("warding_module_supreme", props -> new WardingModuleItem(DeviceTier.HEAVENLY, props), () -> new Item.Properties().rarity(Rarity.EPIC));
 
     // Register knowledge items
     public static final IRegistryItem<Item, KnowledgeGainItem> OBSERVATION_NOTES = registerSimpleBlockItemSupplier("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties()));

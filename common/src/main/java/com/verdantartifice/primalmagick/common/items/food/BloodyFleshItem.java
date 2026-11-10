@@ -23,8 +23,8 @@ import java.util.function.Consumer;
  * @author Daedalus4096
  */
 public class BloodyFleshItem extends Item {
-    public BloodyFleshItem() {
-        super(new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.BLOODY_FLESH));
+    public BloodyFleshItem(Item.Properties properties) {
+        super(properties);
     }
 
     @Override
