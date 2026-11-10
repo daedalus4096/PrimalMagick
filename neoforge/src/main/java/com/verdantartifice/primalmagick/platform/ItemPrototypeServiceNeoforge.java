@@ -70,8 +70,8 @@ public class ItemPrototypeServiceNeoforge implements IItemPrototypeService {
     }
 
     @Override
-    public <T extends Block> Supplier<ManaFontBlockItem> manaFont(Supplier<T> blockSupplier, Item.Properties properties) {
-        return () -> new ManaFontBlockItemNeoforge(blockSupplier.get(), properties);
+    public <T extends Block> Function<Item.Properties, ManaFontBlockItem> manaFont(Supplier<T> blockSupplier) {
+        return props -> new ManaFontBlockItemNeoforge(blockSupplier.get(), props);
     }
 
     @Override
