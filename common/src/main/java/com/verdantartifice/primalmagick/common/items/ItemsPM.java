@@ -588,67 +588,67 @@ public class ItemsPM {
     public static final IRegistryItem<Item, ManaArrowItem> MANA_ARROW_HALLOWED = registerSupplier("mana_arrow_hallowed", props -> new ManaArrowItem(Sources.HALLOWED, props));
 
     // Register armor items
-    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_HEAD = registerSimpleBlockItemSupplier("imbued_wool_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
-    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_CHEST = registerSimpleBlockItemSupplier("imbued_wool_chest", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
-    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_LEGS = registerSimpleBlockItemSupplier("imbued_wool_legs", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
-    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_FEET = registerSimpleBlockItemSupplier("imbued_wool_feet", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 1)));
-    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_HEAD = registerSimpleBlockItemSupplier("spellcloth_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
-    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_CHEST = registerSimpleBlockItemSupplier("spellcloth_chest", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
-    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_LEGS = registerSimpleBlockItemSupplier("spellcloth_legs", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
-    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_FEET = registerSimpleBlockItemSupplier("spellcloth_feet", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 2)));
-    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_HEAD = registerSimpleBlockItemSupplier("hexweave_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
-    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_CHEST = registerSimpleBlockItemSupplier("hexweave_chest", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 5)));
-    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_LEGS = registerSimpleBlockItemSupplier("hexweave_legs", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
-    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_FEET = registerSimpleBlockItemSupplier("hexweave_feet", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 3)));
-    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_HEAD = registerSimpleBlockItemSupplier("saintswool_head", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
-    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_CHEST = registerSimpleBlockItemSupplier("saintswool_chest", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 6)));
-    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_LEGS = registerSimpleBlockItemSupplier("saintswool_legs", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 6)));
-    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_FEET = registerSimpleBlockItemSupplier("saintswool_feet", () -> new RobeArmorItem(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 4)));
-    public static final IRegistryItem<Item, Item> PRIMALITE_HEAD = registerSimpleBlockItemSupplier("primalite_head", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.HELMET)));
-    public static final IRegistryItem<Item, Item> PRIMALITE_CHEST = registerSimpleBlockItemSupplier("primalite_chest", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.CHESTPLATE)));
-    public static final IRegistryItem<Item, Item> PRIMALITE_LEGS = registerSimpleBlockItemSupplier("primalite_legs", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.LEGGINGS)));
-    public static final IRegistryItem<Item, Item> PRIMALITE_FEET = registerSimpleBlockItemSupplier("primalite_feet", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.BOOTS)));
-    public static final IRegistryItem<Item, Item> HEXIUM_HEAD = registerSimpleBlockItemSupplier("hexium_head", () -> new Item(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.HELMET)));
-    public static final IRegistryItem<Item, Item> HEXIUM_CHEST = registerSimpleBlockItemSupplier("hexium_chest", () -> new Item(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.CHESTPLATE)));
-    public static final IRegistryItem<Item, Item> HEXIUM_LEGS = registerSimpleBlockItemSupplier("hexium_legs", () -> new Item(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.LEGGINGS)));
-    public static final IRegistryItem<Item, Item> HEXIUM_FEET = registerSimpleBlockItemSupplier("hexium_feet", () -> new Item(new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.BOOTS)));
-    public static final IRegistryItem<Item, Item> HALLOWSTEEL_HEAD = registerSimpleBlockItemSupplier("hallowsteel_head", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.HELMET)));
-    public static final IRegistryItem<Item, Item> HALLOWSTEEL_CHEST = registerSimpleBlockItemSupplier("hallowsteel_chest", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.CHESTPLATE)));
-    public static final IRegistryItem<Item, Item> HALLOWSTEEL_LEGS = registerSimpleBlockItemSupplier("hallowsteel_legs", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.LEGGINGS)));
-    public static final IRegistryItem<Item, Item> HALLOWSTEEL_FEET = registerSimpleBlockItemSupplier("hallowsteel_feet", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.BOOTS)));
+    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_HEAD = registerSupplier("imbued_wool_head", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 1));
+    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_CHEST = registerSupplier("imbued_wool_chest", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 2));
+    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_LEGS = registerSupplier("imbued_wool_legs", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 1));
+    public static final IRegistryItem<Item, RobeArmorItem> IMBUED_WOOL_FEET = registerSupplier("imbued_wool_feet", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.COMMON).humanoidArmor(ArmorMaterialsPM.IMBUED_WOOL, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 1));
+    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_HEAD = registerSupplier("spellcloth_head", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 2));
+    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_CHEST = registerSupplier("spellcloth_chest", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 3));
+    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_LEGS = registerSupplier("spellcloth_legs", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 3));
+    public static final IRegistryItem<Item, RobeArmorItem> SPELLCLOTH_FEET = registerSupplier("spellcloth_feet", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.SPELLCLOTH, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 2));
+    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_HEAD = registerSupplier("hexweave_head", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 3));
+    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_CHEST = registerSupplier("hexweave_chest", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 5));
+    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_LEGS = registerSupplier("hexweave_legs", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 4));
+    public static final IRegistryItem<Item, RobeArmorItem> HEXWEAVE_FEET = registerSupplier("hexweave_feet", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXWEAVE, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 3));
+    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_HEAD = registerSupplier("saintswool_head", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.HELMET).component(DataComponentsPM.MANA_DISCOUNT.get(), 4));
+    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_CHEST = registerSupplier("saintswool_chest", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.CHESTPLATE).component(DataComponentsPM.MANA_DISCOUNT.get(), 6));
+    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_LEGS = registerSupplier("saintswool_legs", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.LEGGINGS).component(DataComponentsPM.MANA_DISCOUNT.get(), 6));
+    public static final IRegistryItem<Item, RobeArmorItem> SAINTSWOOL_FEET = registerSupplier("saintswool_feet", RobeArmorItem::new, () -> new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.SAINTSWOOL, ArmorType.BOOTS).component(DataComponentsPM.MANA_DISCOUNT.get(), 4));
+    public static final IRegistryItem<Item, Item> PRIMALITE_HEAD = registerSimpleItemSupplier("primalite_head", () -> new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.HELMET));
+    public static final IRegistryItem<Item, Item> PRIMALITE_CHEST = registerSimpleItemSupplier("primalite_chest", () -> new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.CHESTPLATE));
+    public static final IRegistryItem<Item, Item> PRIMALITE_LEGS = registerSimpleItemSupplier("primalite_legs", () -> new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.LEGGINGS));
+    public static final IRegistryItem<Item, Item> PRIMALITE_FEET = registerSimpleItemSupplier("primalite_feet", () -> new Item.Properties().rarity(Rarity.UNCOMMON).humanoidArmor(ArmorMaterialsPM.PRIMALITE, ArmorType.BOOTS));
+    public static final IRegistryItem<Item, Item> HEXIUM_HEAD = registerSimpleItemSupplier("hexium_head", () -> new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.HELMET));
+    public static final IRegistryItem<Item, Item> HEXIUM_CHEST = registerSimpleItemSupplier("hexium_chest", () -> new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.CHESTPLATE));
+    public static final IRegistryItem<Item, Item> HEXIUM_LEGS = registerSimpleItemSupplier("hexium_legs", () -> new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.LEGGINGS));
+    public static final IRegistryItem<Item, Item> HEXIUM_FEET = registerSimpleItemSupplier("hexium_feet", () -> new Item.Properties().rarity(Rarity.RARE).humanoidArmor(ArmorMaterialsPM.HEXIUM, ArmorType.BOOTS));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_HEAD = registerSimpleItemSupplier("hallowsteel_head", () -> new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.HELMET));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_CHEST = registerSimpleItemSupplier("hallowsteel_chest", () -> new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.CHESTPLATE));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_LEGS = registerSimpleItemSupplier("hallowsteel_legs", () -> new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.LEGGINGS));
+    public static final IRegistryItem<Item, Item> HALLOWSTEEL_FEET = registerSimpleItemSupplier("hallowsteel_feet", () -> new Item.Properties().rarity(Rarity.EPIC).humanoidArmor(ArmorMaterialsPM.HALLOWSTEEL, ArmorType.BOOTS));
 
     // Register miscellaneous items
     public static final IRegistryItem<Item, ArcanometerItem> ARCANOMETER = registerSupplier("arcanometer", Services.ITEM_PROTOTYPES.arcanometer());
-    public static final IRegistryItem<Item, Item> MAGNIFYING_GLASS = registerSimpleBlockItemSupplier("magnifying_glass", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> ALCHEMICAL_WASTE = registerSimpleBlockItemSupplier("alchemical_waste", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> MAGNIFYING_GLASS = registerSimpleItemSupplier("magnifying_glass");
+    public static final IRegistryItem<Item, Item> ALCHEMICAL_WASTE = registerSimpleItemSupplier("alchemical_waste");
     public static final IRegistryItem<Item, BloodyFleshItem> BLOODY_FLESH = registerSimpleBlockItemSupplier("bloody_flesh", BloodyFleshItem::new);
     public static final IRegistryItem<Item, HallowedOrbItem> HALLOWED_ORB = registerSimpleBlockItemSupplier("hallowed_orb", HallowedOrbItem::new);
-    public static final IRegistryItem<Item, Item> HEARTWOOD = registerSimpleBlockItemSupplier("heartwood", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> ENCHANTED_INK = registerSimpleBlockItemSupplier("enchanted_ink", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> HEARTWOOD = registerSimpleItemSupplier("heartwood");
+    public static final IRegistryItem<Item, Item> ENCHANTED_INK = registerSimpleItemSupplier("enchanted_ink");
     public static final IRegistryItem<Item, Item> ENCHANTED_INK_AND_QUILL = registerSimpleBlockItemSupplier("enchanted_ink_and_quill", EnchantedInkAndQuillItem::new);
     public static final IRegistryItem<Item, SeascribePenItem> SEASCRIBE_PEN = registerSimpleBlockItemSupplier("seascribe_pen", () -> new SeascribePenItem(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> ROCK_SALT = registerSimpleBlockItemSupplier("rock_salt", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> ROCK_SALT = registerSimpleItemSupplier("rock_salt");
     public static final IRegistryItem<Item, Item> EARTHSHATTER_HAMMER = registerSimpleBlockItemSupplier("earthshatter_hammer", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, Item> MANA_PRISM = registerSimpleBlockItemSupplier("mana_prism", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> TALLOW = registerSimpleBlockItemSupplier("tallow", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> MANA_PRISM = registerSimpleItemSupplier("mana_prism");
+    public static final IRegistryItem<Item, Item> TALLOW = registerSimpleItemSupplier("tallow");
     public static final IRegistryItem<Item, Item> BEESWAX = registerSimpleBlockItemSupplier("beeswax", () -> new HoneycombItem(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> MANA_SALTS = registerSimpleBlockItemSupplier("mana_salts", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> MANA_SALTS = registerSimpleItemSupplier("mana_salts");
     public static final IRegistryItem<Item, ManafruitItem> MANAFRUIT = registerSimpleBlockItemSupplier("manafruit", () -> new ManafruitItem(0, new Item.Properties().food(new FoodProperties.Builder().nutrition(8).saturationModifier(0.8F).build())));
-    public static final IRegistryItem<Item, Item> INCENSE_STICK = registerSimpleBlockItemSupplier("incense_stick", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> SOUL_GEM = registerSimpleBlockItemSupplier("soul_gem", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> SOUL_GEM_SLIVER = registerSimpleBlockItemSupplier("soul_gem_sliver", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> SPELLCLOTH = registerSimpleBlockItemSupplier("spellcloth", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> HEXWEAVE = registerSimpleBlockItemSupplier("hexweave", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> SAINTSWOOL = registerSimpleBlockItemSupplier("saintswool", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> MAGITECH_PARTS_BASIC = registerSimpleBlockItemSupplier("magitech_parts_basic", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> MAGITECH_PARTS_ENCHANTED = registerSimpleBlockItemSupplier("magitech_parts_enchanted", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> MAGITECH_PARTS_FORBIDDEN = registerSimpleBlockItemSupplier("magitech_parts_forbidden", () -> new Item(new Item.Properties()));
-    public static final IRegistryItem<Item, Item> MAGITECH_PARTS_HEAVENLY = registerSimpleBlockItemSupplier("magitech_parts_heavenly", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> INCENSE_STICK = registerSimpleItemSupplier("incense_stick");
+    public static final IRegistryItem<Item, Item> SOUL_GEM = registerSimpleItemSupplier("soul_gem");
+    public static final IRegistryItem<Item, Item> SOUL_GEM_SLIVER = registerSimpleItemSupplier("soul_gem_sliver");
+    public static final IRegistryItem<Item, Item> SPELLCLOTH = registerSimpleItemSupplier("spellcloth");
+    public static final IRegistryItem<Item, Item> HEXWEAVE = registerSimpleItemSupplier("hexweave");
+    public static final IRegistryItem<Item, Item> SAINTSWOOL = registerSimpleItemSupplier("saintswool");
+    public static final IRegistryItem<Item, Item> MAGITECH_PARTS_BASIC = registerSimpleItemSupplier("magitech_parts_basic");
+    public static final IRegistryItem<Item, Item> MAGITECH_PARTS_ENCHANTED = registerSimpleItemSupplier("magitech_parts_enchanted");
+    public static final IRegistryItem<Item, Item> MAGITECH_PARTS_FORBIDDEN = registerSimpleItemSupplier("magitech_parts_forbidden");
+    public static final IRegistryItem<Item, Item> MAGITECH_PARTS_HEAVENLY = registerSimpleItemSupplier("magitech_parts_heavenly");
     public static final IRegistryItem<Item, FlyingCarpetItem> FLYING_CARPET = registerSimpleBlockItemSupplier("flying_carpet", () -> new FlyingCarpetItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, DreamVisionTalismanItem> DREAM_VISION_TALISMAN = registerSimpleBlockItemSupplier("dream_vision_talisman", DreamVisionTalismanItem::new);
     public static final IRegistryItem<Item, IgnyxItem> IGNYX = registerSupplier("ignyx", Services.ITEM_PROTOTYPES.ignyx(new Item.Properties()));
     public static final IRegistryItem<Item, DowsingRodItem> DOWSING_ROD = registerSimpleBlockItemSupplier("dowsing_rod", () -> new DowsingRodItem(new Item.Properties().stacksTo(1).durability(63)));
-    public static final IRegistryItem<Item, Item> FOUR_LEAF_CLOVER = registerSimpleBlockItemSupplier("four_leaf_clover", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> FOUR_LEAF_CLOVER = registerSimpleItemSupplier("four_leaf_clover");
     public static final IRegistryItem<Item, RecallStoneItem> RECALL_STONE = registerSimpleBlockItemSupplier("recall_stone", () -> new RecallStoneItem(new Item.Properties()));
     public static final IRegistryItem<Item, SmithingTemplateItem> RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE = registerSimpleBlockItemSupplier("runic_armor_trim_smithing_template", () -> TrimPatternsPM.createRunicArmorTrimTemplate(new Item.Properties()));
     public static final IRegistryItem<Item, WardingModuleItem> BASIC_WARDING_MODULE = registerSimpleBlockItemSupplier("warding_module_basic", () -> new WardingModuleItem(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
@@ -659,7 +659,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, KnowledgeGainItem> OBSERVATION_NOTES = registerSimpleBlockItemSupplier("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties()));
     public static final IRegistryItem<Item, KnowledgeGainItem> THEORY_NOTES = registerSimpleBlockItemSupplier("theory_notes", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, KnowledgeGainItem> MYSTICAL_RELIC = registerSimpleBlockItemSupplier("mystical_relic", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, Item> MYSTICAL_RELIC_FRAGMENT = registerSimpleBlockItemSupplier("mystical_relic_fragment", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> MYSTICAL_RELIC_FRAGMENT = registerSimpleItemSupplier("mystical_relic_fragment");
     public static final IRegistryItem<Item, ForbiddenSourceGainItem> BLOOD_NOTES = registerSimpleBlockItemSupplier("blood_notes", () -> new ForbiddenSourceGainItem(Sources.BLOOD, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final IRegistryItem<Item, ResearchGainItem> SHEEP_TOME = registerSimpleBlockItemSupplier("sheep_tome", () -> new ResearchGainItem(() -> new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_POLYMORPH_SHEEP), new Item.Properties().rarity(Rarity.UNCOMMON)));
 
@@ -708,7 +708,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, EssenceItem> ESSENCE_CLUSTER_HALLOWED = registerSimpleBlockItemSupplier("essence_cluster_hallowed", () -> new EssenceItem(EssenceType.CLUSTER, Sources.HALLOWED));
 
     // Register rune items
-    public static final IRegistryItem<Item, Item> RUNE_UNATTUNED = registerSimpleBlockItemSupplier("rune_unattuned", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> RUNE_UNATTUNED = registerSimpleItemSupplier("rune_unattuned");
     public static final IRegistryItem<Item, RuneItem> RUNE_EARTH = registerSimpleBlockItemSupplier("rune_earth", () -> new RuneItem(Rune.EARTH));
     public static final IRegistryItem<Item, RuneItem> RUNE_SEA = registerSimpleBlockItemSupplier("rune_sea", () -> new RuneItem(Rune.SEA));
     public static final IRegistryItem<Item, RuneItem> RUNE_SKY = registerSimpleBlockItemSupplier("rune_sky", () -> new RuneItem(Rune.SKY));
@@ -784,7 +784,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, HummingArtifactItem> HUMMING_ARTIFACT_HALLOWED = registerSimpleBlockItemSupplier("humming_artifact_hallowed", () -> new HummingArtifactItem(Sources.HALLOWED, new Item.Properties().rarity(Rarity.RARE)));
 
     // Register sanguine core items
-    public static final IRegistryItem<Item, Item> SANGUINE_CORE_BLANK = registerSimpleBlockItemSupplier("sanguine_core_blank", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> SANGUINE_CORE_BLANK = registerSimpleItemSupplier("sanguine_core_blank");
     public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_ALLAY = registerSimpleBlockItemSupplier("sanguine_core_allay", () -> new SanguineCoreItem(() -> EntityType.ALLAY, 4, new Item.Properties().rarity(Rarity.UNCOMMON).durability(15)));
     public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_ARMADILLO = registerSimpleBlockItemSupplier("sanguine_core_armadillo", () -> new SanguineCoreItem(() -> EntityType.ARMADILLO, 2, new Item.Properties().rarity(Rarity.UNCOMMON).durability(31)));
     public static final IRegistryItem<Item, SanguineCoreItem> SANGUINE_CORE_AXOLOTL = registerSimpleBlockItemSupplier("sanguine_core_axolotl", () -> new SanguineCoreItem(() -> EntityType.AXOLOTL, 4, new Item.Properties().rarity(Rarity.UNCOMMON).durability(15)));
@@ -866,7 +866,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, AlchemicalBombItem> ALCHEMICAL_BOMB = registerCustom("alchemical_bomb", AlchemicalBombItem::registerCreativeTabItems, () -> new AlchemicalBombItem(new Item.Properties().stacksTo(1)));
 
     // Register caster/wand items
-    public static final IRegistryItem<Item, Item> SPELL_SCROLL_BLANK = registerSimpleBlockItemSupplier("spell_scroll_blank", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> SPELL_SCROLL_BLANK = registerSimpleItemSupplier("spell_scroll_blank");
     public static final IRegistryItem<Item, SpellScrollItem> SPELL_SCROLL_FILLED = registerSimpleBlockItemWithoutTab("spell_scroll_filled", SpellScrollItem::new);
     public static final IRegistryItem<Item, MundaneWandItem> MUNDANE_WAND = registerSupplier("mundane_wand", Services.ITEM_PROTOTYPES.mundaneWand());
     public static final IRegistryItem<Item, ModularWandItem> MODULAR_WAND = registerCustom("modular_wand", ModularWandItem::registerCreativeTabItems, Services.ITEM_PROTOTYPES.modularWand(new Item.Properties().stacksTo(1)));
@@ -973,7 +973,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, StaticBookItem> STATIC_BOOK_UNCOMMON = registerSimpleBlockItemWithoutTab("static_book_uncommon", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));  // Deliberately not setting rarity here
     public static final IRegistryItem<Item, StaticBookItem> STATIC_BOOK_RARE = registerSimpleBlockItemWithoutTab("static_book_rare", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));  // Deliberately not setting rarity here
     public static final IRegistryItem<Item, StaticBookItem> STATIC_TABLET = registerSimpleBlockItemWithoutTab("static_tablet", () -> new StaticBookItem(BookType.TABLET, new Item.Properties().stacksTo(16)));
-    public static final IRegistryItem<Item, Item> LORE_TABLET_FRAGMENT = registerSimpleBlockItemSupplier("lore_tablet_fragment", () -> new Item(new Item.Properties()));
+    public static final IRegistryItem<Item, Item> LORE_TABLET_FRAGMENT = registerSimpleItemSupplier("lore_tablet_fragment");
     public static final IRegistryItem<Item, LootGeneratorItem> LORE_TABLET_DIRTY = registerSimpleBlockItemSupplier("lore_tablet_dirty", () -> new LootGeneratorItem(LootTablesPM.LIBRARY_ARCHAEOLOGY, new Item.Properties()));
 
     // Register debug items
