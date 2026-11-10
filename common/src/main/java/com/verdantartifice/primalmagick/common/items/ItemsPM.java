@@ -271,7 +271,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BurnableBlockItem> HALLOWOOD_PILLAR = registerSupplier("hallowood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.HALLOWOOD_PILLAR, 300));
 
     // Register crop items
-    public static final IRegistryItem<Item, BlockItem> HYDROMELON_SEEDS = registerSupplier("hydromelon_seeds", props -> new BlockItem(BlocksPM.HYDROMELON_STEM.get(), props.useItemDescriptionPrefix()));
+    public static final IRegistryItem<Item, BlockItem> HYDROMELON_SEEDS = registerSupplier("hydromelon_seeds", BlocksPM.HYDROMELON_STEM, () -> new Item.Properties().useItemDescriptionPrefix());
     public static final IRegistryItem<Item, BlockItem> HYDROMELON = registerSupplier("hydromelon", BlocksPM.HYDROMELON);
     public static final IRegistryItem<Item, Item> HYDROMELON_SLICE = registerSupplier("hydromelon_slice", Item::new, () -> new Item.Properties().food(FoodsPM.HYDROMELON_SLICE));
     public static final IRegistryItem<Item, DoubleHighBlockItem> BLOOD_ROSE = registerSupplier("blood_rose", props -> new DoubleHighBlockItem(BlocksPM.BLOOD_ROSE.get(), props));
@@ -410,33 +410,33 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BurnableBlockItem> WOOD_TABLE = registerSupplier("wood_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WOOD_TABLE, 300));
     public static final IRegistryItem<Item, BurnableBlockItem> ANALYSIS_TABLE = registerSupplier("analysis_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ANALYSIS_TABLE, 300));
     public static final IRegistryItem<Item, BlockItem> ESSENCE_FURNACE = registerSupplier("essence_furnace", BlocksPM.ESSENCE_FURNACE);
-    public static final IRegistryItem<Item, BlockItem> CALCINATOR_BASIC = registerSupplier("calcinator_basic", () -> new BlockItem(BlocksPM.CALCINATOR_BASIC.get(), new Item.Properties().rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, BlockItem> CALCINATOR_ENCHANTED = registerSupplier("calcinator_enchanted", () -> new BlockItem(BlocksPM.CALCINATOR_ENCHANTED.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, BlockItem> CALCINATOR_FORBIDDEN = registerSupplier("calcinator_forbidden", () -> new BlockItem(BlocksPM.CALCINATOR_FORBIDDEN.get(), new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, BlockItem> CALCINATOR_HEAVENLY = registerSupplier("calcinator_heavenly", () -> new BlockItem(BlocksPM.CALCINATOR_HEAVENLY.get(), new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, BlockItem> CALCINATOR_BASIC = registerSupplier("calcinator_basic", BlocksPM.CALCINATOR_BASIC, () -> new Item.Properties().rarity(Rarity.COMMON));
+    public static final IRegistryItem<Item, BlockItem> CALCINATOR_ENCHANTED = registerSupplier("calcinator_enchanted", BlocksPM.CALCINATOR_ENCHANTED, () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, BlockItem> CALCINATOR_FORBIDDEN = registerSupplier("calcinator_forbidden", BlocksPM.CALCINATOR_FORBIDDEN, () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, BlockItem> CALCINATOR_HEAVENLY = registerSupplier("calcinator_heavenly", BlocksPM.CALCINATOR_HEAVENLY, () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, BurnableBlockItem> WAND_INSCRIPTION_TABLE = registerSupplier("wand_inscription_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WAND_INSCRIPTION_TABLE, 300));
     public static final IRegistryItem<Item, SpellcraftingAltarBlockItem> SPELLCRAFTING_ALTAR = registerSupplier("spellcrafting_altar", Services.ITEM_PROTOTYPES.spellcraftingAltar(BlocksPM.SPELLCRAFTING_ALTAR, new Item.Properties()));
     public static final IRegistryItem<Item, BlockItem> WAND_CHARGER = registerSupplier("wand_charger", BlocksPM.WAND_CHARGER);
     public static final IRegistryItem<Item, BurnableBlockItem> RESEARCH_TABLE = registerSupplier("research_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RESEARCH_TABLE, 300));
     public static final IRegistryItem<Item, BlockItem> SUNLAMP = registerSupplier("sunlamp", BlocksPM.SUNLAMP);
     public static final IRegistryItem<Item, BlockItem> SPIRIT_LANTERN = registerSupplier("spirit_lantern", BlocksPM.SPIRIT_LANTERN);
-    public static final IRegistryItem<Item, BlockItem> RITUAL_ALTAR = registerSupplier("ritual_altar", () -> new BlockItem(BlocksPM.RITUAL_ALTAR.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final IRegistryItem<Item, BlockItem> RITUAL_ALTAR = registerSupplier("ritual_altar", BlocksPM.RITUAL_ALTAR, () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, BlockItem> OFFERING_PEDESTAL = registerSupplier("offering_pedestal", BlocksPM.OFFERING_PEDESTAL);
     public static final IRegistryItem<Item, BlockItem> INCENSE_BRAZIER = registerSupplier("incense_brazier", BlocksPM.INCENSE_BRAZIER);
     public static final IRegistryItem<Item, BurnableBlockItem> RITUAL_LECTERN = registerSupplier("ritual_lectern", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RITUAL_LECTERN, 300));
     public static final IRegistryItem<Item, BlockItem> RITUAL_BELL = registerSupplier("ritual_bell", BlocksPM.RITUAL_BELL);
     public static final IRegistryItem<Item, BlockItem> BLOODLETTER = registerSupplier("bloodletter", BlocksPM.BLOODLETTER);
     public static final IRegistryItem<Item, BlockItem> SOUL_ANVIL = registerSupplier("soul_anvil", BlocksPM.SOUL_ANVIL);
-    public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_BASIC = registerSupplier("runescribing_altar_basic", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), new Item.Properties().rarity(Rarity.COMMON)));
-    public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_ENCHANTED = registerSupplier("runescribing_altar_enchanted", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_FORBIDDEN = registerSupplier("runescribing_altar_forbidden", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_HEAVENLY = registerSupplier("runescribing_altar_heavenly", () -> new BlockItem(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_BASIC = registerSupplier("runescribing_altar_basic", BlocksPM.RUNESCRIBING_ALTAR_BASIC, () -> new Item.Properties().rarity(Rarity.COMMON));
+    public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_ENCHANTED = registerSupplier("runescribing_altar_enchanted", BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED, () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_FORBIDDEN = registerSupplier("runescribing_altar_forbidden", BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN, () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_HEAVENLY = registerSupplier("runescribing_altar_heavenly", BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY, () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, BurnableBlockItem> RUNECARVING_TABLE = registerSupplier("runecarving_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RUNECARVING_TABLE, 300));
     public static final IRegistryItem<Item, BlockItem> RUNIC_GRINDSTONE = registerSupplier("runic_grindstone", BlocksPM.RUNIC_GRINDSTONE);
     public static final IRegistryItem<Item, BlockItem> HONEY_EXTRACTOR = registerSupplier("honey_extractor", BlocksPM.HONEY_EXTRACTOR);
-    public static final IRegistryItem<Item, BlockItem> PRIMALITE_GOLEM_CONTROLLER = registerSupplier("primalite_golem_controller", () -> new BlockItem(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final IRegistryItem<Item, BlockItem> HEXIUM_GOLEM_CONTROLLER = registerSupplier("hexium_golem_controller", () -> new BlockItem(BlocksPM.HEXIUM_GOLEM_CONTROLLER.get(), new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, BlockItem> HALLOWSTEEL_GOLEM_CONTROLLER = registerSupplier("hallowsteel_golem_controller", () -> new BlockItem(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER.get(), new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, BlockItem> PRIMALITE_GOLEM_CONTROLLER = registerSupplier("primalite_golem_controller", BlocksPM.PRIMALITE_GOLEM_CONTROLLER, () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, BlockItem> HEXIUM_GOLEM_CONTROLLER = registerSupplier("hexium_golem_controller", BlocksPM.HEXIUM_GOLEM_CONTROLLER, () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, BlockItem> HALLOWSTEEL_GOLEM_CONTROLLER = registerSupplier("hallowsteel_golem_controller", BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER, () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, BlockItem> SANGUINE_CRUCIBLE = registerSupplier("sanguine_crucible", BlocksPM.SANGUINE_CRUCIBLE);
     public static final IRegistryItem<Item, BlockItem> CONCOCTER = registerSupplier("concocter", BlocksPM.CONCOCTER);
     public static final IRegistryItem<Item, BurnableBlockItem> CELESTIAL_HARP = registerSupplier("celestial_harp", Services.ITEM_PROTOTYPES.burnable(BlocksPM.CELESTIAL_HARP, 300));
@@ -451,9 +451,9 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_HEAVENLY = registerSupplier("essence_cask_heavenly", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_HEAVENLY, 300), () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, BurnableBlockItem> WAND_GLAMOUR_TABLE = registerSupplier("wand_glamour_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WAND_GLAMOUR_TABLE, 300));
     public static final IRegistryItem<Item, BlockItem> INFERNAL_FURNACE = registerSupplier("infernal_furnace", BlocksPM.INFERNAL_FURNACE);
-    public static final IRegistryItem<Item, BlockItem> MANA_NEXUS = registerSupplier("mana_nexus", () -> new BlockItem(BlocksPM.MANA_NEXUS.get(), new Item.Properties().rarity(Rarity.RARE)));
-    public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY = registerSupplier("mana_singularity", () -> new BlockItem(BlocksPM.MANA_SINGULARITY.get(), new Item.Properties().rarity(Rarity.EPIC)));
-    public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY_CREATIVE = registerSupplier("mana_singularity_creative", () -> new BlockItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get(), new Item.Properties().rarity(Rarity.EPIC)));
+    public static final IRegistryItem<Item, BlockItem> MANA_NEXUS = registerSupplier("mana_nexus", BlocksPM.MANA_NEXUS, () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY = registerSupplier("mana_singularity", BlocksPM.MANA_SINGULARITY, () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY_CREATIVE = registerSupplier("mana_singularity_creative", BlocksPM.MANA_SINGULARITY_CREATIVE, () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, BurnableBlockItem> SCRIBE_TABLE = registerSupplier("scribe_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.SCRIBE_TABLE, 300));
     public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_BASIC = registerSupplier("mana_relay_basic", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_BASIC, new Item.Properties()));
     public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_ENCHANTED = registerSupplier("mana_relay_enchanted", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
@@ -469,7 +469,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, PixieHouseItem> PIXIE_HOUSE = registerSupplier("pixie_house", Services.ITEM_PROTOTYPES.pixieHouse(new Item.Properties().stacksTo(16)));
 
     // Register miscellaneous block items
-    public static final IRegistryItem<Item, BlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new BlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().useItemDescriptionPrefix()));
+    public static final IRegistryItem<Item, BlockItem> REFINED_SALT = registerSupplier("refined_salt", BlocksPM.SALT_TRAIL, () -> new Item.Properties().useItemDescriptionPrefix());
     public static final IRegistryItem<Item, BlockItem> ROCK_SALT_ORE = registerSupplier("rock_salt_ore", BlocksPM.ROCK_SALT_ORE);
     public static final IRegistryItem<Item, BlockItem> QUARTZ_ORE = registerSupplier("quartz_ore", BlocksPM.QUARTZ_ORE);
     public static final IRegistryItem<Item, BlockItem> PRIMALITE_BLOCK = registerSupplier("primalite_block", BlocksPM.PRIMALITE_BLOCK);
@@ -477,8 +477,8 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> HALLOWSTEEL_BLOCK = registerSupplier("hallowsteel_block", BlocksPM.HALLOWSTEEL_BLOCK);
     public static final IRegistryItem<Item, BurnableBlockItem> IGNYX_BLOCK = registerSupplier("ignyx_block", Services.ITEM_PROTOTYPES.burnable(BlocksPM.IGNYX_BLOCK, 128000));
     public static final IRegistryItem<Item, BlockItem> SALT_BLOCK = registerSupplier("salt_block", BlocksPM.SALT_BLOCK);
-    public static final IRegistryItem<Item, BlockItem> TREEFOLK_SEED = registerSupplier("treefolk_seed", () -> new BlockItem(BlocksPM.TREEFOLK_SPROUT.get(), new Item.Properties().useItemDescriptionPrefix()));
-    public static final IRegistryItem<Item, BlockItem> ENDERWARD = registerSupplier("enderward", () -> new BlockItem(BlocksPM.ENDERWARD.get(), new Item.Properties().stacksTo(16)));
+    public static final IRegistryItem<Item, BlockItem> TREEFOLK_SEED = registerSupplier("treefolk_seed", BlocksPM.TREEFOLK_SPROUT, () -> new Item.Properties().useItemDescriptionPrefix());
+    public static final IRegistryItem<Item, BlockItem> ENDERWARD = registerSupplier("enderward", BlocksPM.ENDERWARD, () -> new Item.Properties().stacksTo(16));
 
     // Register salted food items
     public static final IRegistryItem<Item, Item> SALTED_BAKED_POTATO = registerSupplier("salted_baked_potato", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.72F).build())));
