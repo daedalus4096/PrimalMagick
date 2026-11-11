@@ -15,7 +15,7 @@ public class RequirementWidgetFactory {
     public static AbstractWidget fromRequirement(AbstractRequirement<?> requirement, int x, int y, boolean isComplete) {
         Minecraft mc = Minecraft.getInstance();
         if (requirement instanceof ItemStackRequirement req) {
-            return new ItemStackWidget(req.getStack(), x, y, isComplete);
+            return new ItemStackWidget(req.getStack().create(), x, y, isComplete);
         } else if (requirement instanceof ItemTagRequirement req) {
             return new ItemTagWidget(req.getTag(), req.getAmount(), x, y, isComplete);
         } else if (requirement instanceof KnowledgeRequirement req) {

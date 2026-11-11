@@ -864,7 +864,7 @@ public class ResearchManager {
         return Services.CAPABILITIES.knowledge(player).map(knowledge -> knowledge.getResearchSet().stream()
                 .map(k -> k instanceof ItemScanKey scanKey ? scanKey : null)
                 .filter(Objects::nonNull)
-                .map(k -> new AffinityIndexEntry(k.getStack(), AffinityManager.getInstance().getAffinityValuesAsync(k.getStack(), level)))
+                .map(k -> new AffinityIndexEntry(k.getStack().create(), AffinityManager.getInstance().getAffinityValuesAsync(k.getStack().create(), level)))
                 .toList())
             .orElseGet(List::of);
     }
