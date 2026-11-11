@@ -21,6 +21,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 
@@ -56,7 +57,7 @@ public class ResearchCompletedTrigger extends SimpleCriterionTrigger<ResearchCom
             return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new ItemScanKey(itemLike)));
         }
         
-        public static Criterion<ResearchCompletedTrigger.TriggerInstance> itemScanned(ItemStack stack) {
+        public static Criterion<ResearchCompletedTrigger.TriggerInstance> itemScanned(ItemStackTemplate stack) {
             return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new ItemScanKey(stack)));
         }
         
@@ -73,7 +74,7 @@ public class ResearchCompletedTrigger extends SimpleCriterionTrigger<ResearchCom
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> stackCrafted(ItemStack stack) {
-            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new StackCraftedKey(stack)));
+            return CriteriaTriggersPM.RESEARCH_COMPLETED.get().createCriterion(new ResearchCompletedTrigger.TriggerInstance(Optional.empty(), new StackCraftedKey(ItemStackTemplate.fromNonEmptyStack(stack))));
         }
         
         public static Criterion<ResearchCompletedTrigger.TriggerInstance> tagCrafted(TagKey<Item> tagKey) {

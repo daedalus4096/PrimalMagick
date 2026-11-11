@@ -8,29 +8,29 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.Objects;
 
 public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
-    public static final MapCodec<StackCraftedKey> CODEC = ItemStack.CODEC.fieldOf("stack").xmap(StackCraftedKey::new, key -> key.stack);
-    public static final StreamCodec<RegistryFriendlyByteBuf, StackCraftedKey> STREAM_CODEC = ItemStack.STREAM_CODEC.map(StackCraftedKey::new, key -> key.stack);
+    public static final MapCodec<StackCraftedKey> CODEC = ItemStackTemplate.CODEC.fieldOf("stack").xmap(StackCraftedKey::new, key -> key.stack);
+    public static final StreamCodec<RegistryFriendlyByteBuf, StackCraftedKey> STREAM_CODEC = ItemStackTemplate.STREAM_CODEC.map(StackCraftedKey::new, key -> key.stack);
     
     private static final String PREFIX = "[#]";
     
-    protected final ItemStack stack;
+    protected final ItemStackTemplate stack;
     
-    public StackCraftedKey(ItemStack stack) {
-        if (stack == null || stack.isEmpty()) {
-            throw new IllegalArgumentException("Item stack may not be null or empty");
+    public StackCraftedKey(ItemStackTemplate stack) {
+        if (stack == null) {
+            throw new IllegalArgumentException("Item stack template may not be null");
         }
-        this.stack = stack.copyWithCount(1);    // Preserve the stack NBT but not its count
+        this.stack = stack.withCount(1);    // Preserve the stack components but not its count
         ResearchManager.addCraftingReference(this.hashCode());
     }
     
     public StackCraftedKey(ItemLike itemLike) {
-        this(new ItemStack(itemLike.asItem()));
+        this(new ItemStackTemplate(itemLike.asItem()));
     }
     
     @Override
@@ -50,12 +50,12 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
 
     @Override
     public IconDefinition getIcon(RegistryAccess registryAccess) {
-        return IconDefinition.of(this.stack.getItem());
+        return IconDefinition.of(this.stack.item().value());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Services.ITEMS_REGISTRY.getKey(this.stack.getItem()), this.stack.getComponents());
+        return Objects.hash(Services.ITEMS_REGISTRY.getKey(this.stack.item().value()), this.stack.components());
     }
 
     @Override
@@ -67,6 +67,6 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
         if (getClass() != obj.getClass())
             return false;
         StackCraftedKey other = (StackCraftedKey) obj;
-        return ItemStack.isSameItemSameComponents(this.stack, other.stack);
+        return this.stack.equals(other.stack);
     }
 }

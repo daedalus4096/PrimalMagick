@@ -28,6 +28,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.phys.Vec3;
@@ -53,7 +54,7 @@ public class ResearchRequirementsTests extends AbstractBaseTest {
 
     public static void item_stack_requirement(GameTestHelper helper) {
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
-        var req = new ItemStackRequirement(new ItemStack(Items.IRON_INGOT));
+        var req = new ItemStackRequirement(new ItemStackTemplate(Items.IRON_INGOT));
         assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         player.getInventory().add(new ItemStack(Items.IRON_INGOT));
         assertTrue(helper, req.isMetBy(player), "Requirement not met");
@@ -114,7 +115,7 @@ public class ResearchRequirementsTests extends AbstractBaseTest {
         var req = new AndRequirement(
                 new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS)),
                 new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5),
-                new ItemStackRequirement(new ItemStack(Items.IRON_INGOT))
+                new ItemStackRequirement(new ItemStackTemplate(Items.IRON_INGOT))
             );
         assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         
@@ -137,7 +138,7 @@ public class ResearchRequirementsTests extends AbstractBaseTest {
         var req = new OrRequirement(
                 new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS)),
                 new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5),
-                new ItemStackRequirement(new ItemStack(Items.IRON_INGOT))
+                new ItemStackRequirement(new ItemStackTemplate(Items.IRON_INGOT))
             );
         assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         
@@ -162,7 +163,7 @@ public class ResearchRequirementsTests extends AbstractBaseTest {
         var req = new QuorumRequirement(2,
                 new ResearchRequirement(new ResearchEntryKey(ResearchEntries.FIRST_STEPS)),
                 new KnowledgeRequirement(KnowledgeType.OBSERVATION, 5),
-                new ItemStackRequirement(new ItemStack(Items.IRON_INGOT))
+                new ItemStackRequirement(new ItemStackTemplate(Items.IRON_INGOT))
             );
         assertFalse(helper, req.isMetBy(player), "Baseline expectation failed");
         

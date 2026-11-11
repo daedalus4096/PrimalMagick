@@ -73,6 +73,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.NameTagItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -489,7 +490,7 @@ public class PlayerEvents {
         if (player != null && !player.level().isClientSide()) {
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
             if (ResearchManager.getAllCraftingReferences().contains(ItemUtils.getHashCode(stack))) {
-                ResearchManager.completeResearch(player, new StackCraftedKey(stack));
+                ResearchManager.completeResearch(player, new StackCraftedKey(ItemStackTemplate.fromNonEmptyStack(stack)));
             }
             
             // If a research entry requires crafting a tag containing the item that was just crafted, grant the appropriate research

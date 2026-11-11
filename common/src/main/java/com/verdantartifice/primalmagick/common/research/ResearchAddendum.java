@@ -32,7 +32,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
@@ -129,24 +129,24 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
             return this;
         }
         
-        public Builder requiredCraft(ItemStack stack) {
-            return this.requirement(new ResearchRequirement(new StackCraftedKey(stack.copy())));
+        public Builder requiredCraft(ItemStackTemplate stack) {
+            return this.requirement(new ResearchRequirement(new StackCraftedKey(stack)));
         }
         
         public Builder requiredCraft(ItemLike item) {
-            return this.requiredCraft(new ItemStack(item.asItem()));
+            return this.requiredCraft(new ItemStackTemplate(item.asItem()));
         }
         
         public Builder requiredCraft(TagKey<Item> tag) {
             return this.requirement(new ResearchRequirement(new TagCraftedKey(tag)));
         }
         
-        public Builder requiredItem(ItemStack stack) {
-            return this.requirement(new ItemStackRequirement(stack.copy()));
+        public Builder requiredItem(ItemStackTemplate stack) {
+            return this.requirement(new ItemStackRequirement(stack));
         }
         
         public Builder requiredItem(ItemLike item, int count) {
-            return this.requiredItem(new ItemStack(item.asItem(), count));
+            return this.requiredItem(new ItemStackTemplate(item.asItem(), count));
         }
         
         public Builder requiredItem(ItemLike item) {

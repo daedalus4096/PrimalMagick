@@ -4,7 +4,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.ItemLike;
 
 /**
@@ -28,7 +28,7 @@ public class ScanItemTagResearchTrigger extends AbstractScanResearchTrigger {
     @Override
     public boolean matches(ServerPlayer player, Object obj) {
         if (obj instanceof ItemLike itemLike) {
-            return new ItemStack(itemLike).is(this.target);
+            return new ItemStackTemplate(itemLike.asItem()).is(this.target);
         } else {
             return false;
         }

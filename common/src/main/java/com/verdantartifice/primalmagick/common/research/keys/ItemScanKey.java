@@ -7,31 +7,31 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.Objects;
 
 public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
-    public static final MapCodec<ItemScanKey> CODEC = ItemStack.CODEC.fieldOf("stack").xmap(ItemScanKey::new, key -> key.stack);
-    public static final StreamCodec<RegistryFriendlyByteBuf, ItemScanKey> STREAM_CODEC = ItemStack.STREAM_CODEC.map(ItemScanKey::new, key -> key.stack);
+    public static final MapCodec<ItemScanKey> CODEC = ItemStackTemplate.CODEC.fieldOf("stack").xmap(ItemScanKey::new, key -> key.stack);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ItemScanKey> STREAM_CODEC = ItemStackTemplate.STREAM_CODEC.map(ItemScanKey::new, key -> key.stack);
     
     private static final String PREFIX = "!";
     
-    protected final ItemStack stack;
+    protected final ItemStackTemplate stack;
     
-    public ItemScanKey(ItemStack stack) {
-        if (stack == null || stack.isEmpty()) {
+    public ItemScanKey(ItemStackTemplate stack) {
+        if (stack == null) {
             throw new IllegalArgumentException("Item stack may not be null or empty");
         }
-        this.stack = stack.copy();
+        this.stack = stack;
     }
 
     public ItemScanKey(ItemLike itemLike) {
-        this(new ItemStack(itemLike.asItem()));
+        this(new ItemStackTemplate(itemLike.asItem()));
     }
 
-    public ItemStack getStack() {
+    public ItemStackTemplate getStack() {
         return this.stack;
     }
     
@@ -52,12 +52,12 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
 
     @Override
     public IconDefinition getIcon(RegistryAccess registryAccess) {
-        return IconDefinition.of(this.stack.getItem());
+        return IconDefinition.of(this.stack.item().value());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Services.ITEMS_REGISTRY.getKey(this.stack.getItem()));
+        return Objects.hash(Services.ITEMS_REGISTRY.getKey(this.stack.item().value()));
     }
 
     @Override
@@ -69,6 +69,6 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
         if (getClass() != obj.getClass())
             return false;
         ItemScanKey other = (ItemScanKey) obj;
-        return ItemStack.isSameItem(this.stack, other.stack);
+        return this.stack.equals(other.stack);
     }
 }

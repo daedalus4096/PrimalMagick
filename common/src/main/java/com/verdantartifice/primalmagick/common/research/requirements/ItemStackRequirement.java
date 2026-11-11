@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 import java.util.stream.Stream;
 
@@ -16,31 +16,31 @@ import java.util.stream.Stream;
  * @author Daedalus4096
  */
 public class ItemStackRequirement extends AbstractRequirement<ItemStackRequirement> {
-    public static final MapCodec<ItemStackRequirement> CODEC = ItemStack.CODEC.fieldOf("stack").xmap(ItemStackRequirement::new, req -> req.stack);
-    public static final StreamCodec<RegistryFriendlyByteBuf, ItemStackRequirement> STREAM_CODEC = ItemStack.STREAM_CODEC.map(ItemStackRequirement::new, req -> req.stack);
+    public static final MapCodec<ItemStackRequirement> CODEC = ItemStackTemplate.CODEC.fieldOf("stack").xmap(ItemStackRequirement::new, req -> req.stack);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ItemStackRequirement> STREAM_CODEC = ItemStackTemplate.STREAM_CODEC.map(ItemStackRequirement::new, req -> req.stack);
     
-    protected final ItemStack stack;
+    protected final ItemStackTemplate stack;
     
-    public ItemStackRequirement(ItemStack stack) {
-        if (stack == null || stack.isEmpty()) {
+    public ItemStackRequirement(ItemStackTemplate stack) {
+        if (stack == null) {
             throw new IllegalArgumentException("Item stack may not be empty");
         }
-        this.stack = stack.copy();
+        this.stack = stack;
     }
     
-    public ItemStack getStack() {
+    public ItemStackTemplate getStack() {
         return this.stack;
     }
 
     @Override
     public boolean isMetBy(Player player) {
-        return player != null && InventoryUtils.isPlayerCarrying(player, this.stack);
+        return player != null && InventoryUtils.isPlayerCarrying(player, this.stack.create());
     }
 
     @Override
     public void consumeComponents(Player player) {
         if (player != null && this.isMetBy(player)) {
-            InventoryUtils.consumeItem(player, this.stack);
+            InventoryUtils.consumeItem(player, this.stack.create());
         }
     }
 
