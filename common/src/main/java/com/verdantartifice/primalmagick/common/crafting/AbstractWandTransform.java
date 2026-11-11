@@ -9,6 +9,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,12 +25,12 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public abstract class AbstractWandTransform implements IWandTransform {
-    protected final ItemStack result;
+    protected final ItemStackTemplate result;
     protected final AbstractRequirement<?> requirement;
     protected final Map<Block, MutableComponent> similarBlocks = new HashMap<>();
     protected final Map<TagKey<Block>, MutableComponent> similarTags = new HashMap<>();
 
-    public AbstractWandTransform(@Nonnull ItemStack result, @Nullable AbstractRequirement<?> requirement) {
+    public AbstractWandTransform(@Nonnull ItemStackTemplate result, @Nullable AbstractRequirement<?> requirement) {
         this.result = result;
         this.requirement = requirement;
     }
@@ -72,8 +73,9 @@ public abstract class AbstractWandTransform implements IWandTransform {
     @Override
     public void execute(Level world, Player player, BlockPos pos) {
         // Enqueue a block swapper to be executed on the world next tick
-        Services.EVENTS.firePlayerCraftingEvent(player, this.result, new FakeInventory(1));
+        ItemStack resultStack = this.result.create();
+        Services.EVENTS.firePlayerCraftingEvent(player, resultStack, new FakeInventory(1));
         BlockState state = world.getBlockState(pos);
-        BlockSwapper.enqueue(world, new BlockSwapper(pos, state, this.result, player));
+        BlockSwapper.enqueue(world, new BlockSwapper(pos, state, resultStack, player));
     }
 }

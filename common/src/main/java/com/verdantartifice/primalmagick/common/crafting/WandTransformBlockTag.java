@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 public class WandTransformBlockTag extends AbstractWandTransform {
     protected final TagKey<Block> target;
     
-    public WandTransformBlockTag(@Nonnull TagKey<Block> target, @Nonnull ItemStack result, @Nullable AbstractRequirement<?> requirement) {
+    public WandTransformBlockTag(@Nonnull TagKey<Block> target, @Nonnull ItemStackTemplate result, @Nullable AbstractRequirement<?> requirement) {
         super(result, requirement);
         this.target = target;
     }

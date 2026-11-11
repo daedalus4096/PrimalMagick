@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.crafting.WandTransformBlock;
 import com.verdantartifice.primalmagick.common.crafting.WandTransformBlockTag;
 import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -10,12 +9,10 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.OrRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
-import com.verdantartifice.primalmagick.common.tags.BlockExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.block.ComposterBlock;
 
 /**
@@ -25,11 +22,11 @@ import net.minecraft.world.level.block.ComposterBlock;
  */
 public class InitRecipes {
     public static void initWandTransforms() {
-        WandTransformBlockTag grimoireTransform = new WandTransformBlockTag(CommonTags.Blocks.BOOKSHELVES, new ItemStack(ItemsPM.GRIMOIRE.get()), new OrRequirement(new ResearchRequirement(new ResearchEntryKey(ResearchEntries.GOT_DREAM)), new ResearchRequirement(new ResearchStageKey(ResearchEntries.FIRST_STEPS, 1))));
+        WandTransformBlockTag grimoireTransform = new WandTransformBlockTag(CommonTags.Blocks.BOOKSHELVES, new ItemStackTemplate(ItemsPM.GRIMOIRE.get()), new OrRequirement(new ResearchRequirement(new ResearchEntryKey(ResearchEntries.GOT_DREAM)), new ResearchRequirement(new ResearchStageKey(ResearchEntries.FIRST_STEPS, 1))));
         grimoireTransform.addSimilar(BlockTagsPM.EMPTY_BOOKSHELVES, Component.translatable("event.primalmagick.wand_transform.wrong_bookshelf"));
         WandTransforms.register(grimoireTransform);
-        WandTransforms.register(new WandTransformBlockTag(CommonTags.Blocks.PLAYER_WORKSTATIONS_CRAFTING_TABLES, new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.FIRST_STEPS, 1))));
-        WandTransforms.register(new WandTransformBlockTag(CommonTags.Blocks.PLAYER_WORKSTATIONS_FURNACES, new ItemStack(BlocksPM.ESSENCE_FURNACE.get()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.BASIC_ALCHEMY, 1))));
+        WandTransforms.register(new WandTransformBlockTag(CommonTags.Blocks.PLAYER_WORKSTATIONS_CRAFTING_TABLES, new ItemStackTemplate(BlocksPM.ARCANE_WORKBENCH.get().asItem()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.FIRST_STEPS, 1))));
+        WandTransforms.register(new WandTransformBlockTag(CommonTags.Blocks.PLAYER_WORKSTATIONS_FURNACES, new ItemStackTemplate(BlocksPM.ESSENCE_FURNACE.get().asItem()), new ResearchRequirement(new ResearchStageKey(ResearchEntries.BASIC_ALCHEMY, 1))));
     }
     
     public static void initCompostables() {
