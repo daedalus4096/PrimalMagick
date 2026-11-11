@@ -15,7 +15,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
@@ -33,7 +33,7 @@ import java.util.Set;
 public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMaterial> {
     public static MapCodec<ItemProjectMaterial> codec() { 
         return RecordCodecBuilder.mapCodec(instance -> instance.group(
-                ItemStack.CODEC.fieldOf("stack").forGetter(ItemProjectMaterial::getItemStack),
+                ItemStackTemplate.CODEC.fieldOf("stack").forGetter(ItemProjectMaterial::getItemStack),
                 Codec.BOOL.fieldOf("consumed").forGetter(ItemProjectMaterial::isConsumed),
                 Codec.BOOL.fieldOf("matchNBT").forGetter(material -> material.matchNBT),
                 ExtraCodecs.NON_NEGATIVE_INT.fieldOf("afterCrafting").forGetter(ItemProjectMaterial::getAfterCrafting),
@@ -45,7 +45,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
     
     public static StreamCodec<RegistryFriendlyByteBuf, ItemProjectMaterial> streamCodec() {
         return StreamCodecUtils.composite(
-                ItemStack.STREAM_CODEC,
+                ItemStackTemplate.STREAM_CODEC,
                 ItemProjectMaterial::getItemStack,
                 ByteBufCodecs.BOOL,
                 ItemProjectMaterial::isConsumed,
@@ -62,14 +62,14 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
                 ItemProjectMaterial::new);
     }
     
-    protected final ItemStack stack;
+    protected final ItemStackTemplate stack;
     protected final boolean consumed;
     protected final boolean matchNBT;
     protected final int afterCrafting;
     
-    protected ItemProjectMaterial(ItemStack stack, boolean consumed, boolean matchNBT, int afterCrafting, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+    protected ItemProjectMaterial(ItemStackTemplate stack, boolean consumed, boolean matchNBT, int afterCrafting, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
         super(weight, bonusReward, requirement);
-        this.stack = stack.copy();
+        this.stack = stack;
         this.consumed = consumed;
         this.matchNBT = matchNBT;
         this.afterCrafting = afterCrafting;
@@ -82,9 +82,9 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
 
     @Override
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
-        if (InventoryUtils.isPlayerCarrying(player, this.stack, this.matchNBT)) {
+        if (InventoryUtils.isPlayerCarrying(player, this.stack.create(), this.matchNBT)) {
             return true;
-        } else if (!this.consumed && this.stack.getCount() == 1 && surroundings != null && this.stack.getItem() instanceof BlockItem blockItem && surroundings.contains(blockItem.getBlock())) {
+        } else if (!this.consumed && this.stack.count() == 1 && surroundings != null && this.stack.item().value() instanceof BlockItem blockItem && surroundings.contains(blockItem.getBlock())) {
             // Only allow satisfaction from surroundings if not consuming the material and only one item is required
             return true;
         }
@@ -95,14 +95,14 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
     public boolean consume(Player player) {
         // Remove this material's item from the player's inventory if it's supposed to be consumed
         if (this.consumed) {
-            return InventoryUtils.consumeItem(player, this.stack, this.matchNBT);
+            return InventoryUtils.consumeItem(player, this.stack.create(), this.matchNBT);
         } else {
             return true;
         }
     }
     
     @Nonnull
-    public ItemStack getItemStack() {
+    public ItemStackTemplate getItemStack() {
         return this.stack;
     }
     
@@ -117,7 +117,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
     
     @Override
     public boolean isAllowedInProject(ServerPlayer player) {
-        return super.isAllowedInProject(player) && player.getStats().getValue(Stats.ITEM_CRAFTED.get(this.getItemStack().getItem())) >= this.getAfterCrafting();
+        return super.isAllowedInProject(player) && player.getStats().getValue(Stats.ITEM_CRAFTED.get(this.getItemStack().item().value())) >= this.getAfterCrafting();
     }
 
     @Override
@@ -138,15 +138,15 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
             return false;
         ItemProjectMaterial other = (ItemProjectMaterial) obj;
         return afterCrafting == other.afterCrafting && consumed == other.consumed && matchNBT == other.matchNBT
-                && ItemStack.matches(stack, other.stack);
+                && stack.equals(other.stack);
     }
 
-    public static Builder builder(ItemStack stack) {
+    public static Builder builder(ItemStackTemplate stack) {
         return new Builder(stack);
     }
     
     public static Builder builder(ItemLike item, int count) {
-        return builder(new ItemStack(Preconditions.checkNotNull(item).asItem(), count));
+        return builder(new ItemStackTemplate(Preconditions.checkNotNull(item).asItem(), count));
     }
     
     public static Builder builder(ItemLike item) {
@@ -154,13 +154,13 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
     }
     
     public static class Builder extends AbstractProjectMaterial.Builder<ItemProjectMaterial, Builder> {
-        protected final ItemStack stack;
+        protected final ItemStackTemplate stack;
         protected boolean consumed = false;
         protected boolean matchNBT = false;
         protected int afterCrafting = 0;
         
-        protected Builder(ItemStack stack) {
-            this.stack = Preconditions.checkNotNull(stack).copy();
+        protected Builder(ItemStackTemplate stack) {
+            this.stack = Preconditions.checkNotNull(stack);
         }
         
         public Builder consumed() {
