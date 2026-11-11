@@ -771,7 +771,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     private PhasingBlockFamilyProvider phasingFamily(Block block, Function<Block, PhasingTextureMapping> textureMapping, BlockModelGenerators blockModels) {
-        return new PhasingBlockFamilyProvider(textureMapping.apply(block), blockModels).fullBlock(block, ModelTemplates.CUBE);
+        return new PhasingBlockFamilyProvider(textureMapping.apply(block), blockModels).fullBlock(block, ModelTemplates.CUBE_COLUMN);
     }
 
     private void createPhasingLeaves(Block block, BlockModelGenerators blockModels) {
