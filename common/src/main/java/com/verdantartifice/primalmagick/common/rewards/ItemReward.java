@@ -15,6 +15,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.ItemLike;
 
 import javax.annotation.Nonnull;
@@ -27,21 +28,21 @@ import java.util.Objects;
  */
 public class ItemReward extends AbstractReward<ItemReward> {
     public static final MapCodec<ItemReward> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ItemStack.CODEC.fieldOf("stack").forGetter(r -> r.stack)
+            ItemStackTemplate.CODEC.fieldOf("stack").forGetter(r -> r.stack)
         ).apply(instance, ItemReward::new));
     
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemReward> STREAM_CODEC = StreamCodec.composite(
-            ItemStack.STREAM_CODEC, reward -> reward.stack,
+            ItemStackTemplate.STREAM_CODEC, reward -> reward.stack,
             ItemReward::new);
     
-    private final ItemStack stack;
+    private final ItemStackTemplate stack;
     
-    public ItemReward(@Nonnull ItemStack stack) {
-        this.stack = stack.copy();
+    public ItemReward(@Nonnull ItemStackTemplate stack) {
+        this.stack = stack;
     }
     
     public ItemReward(ItemLike item, int count) {
-        this(new ItemStack(Preconditions.checkNotNull(item).asItem(), count));
+        this(new ItemStackTemplate(Preconditions.checkNotNull(item).asItem(), count));
     }
     
     public ItemReward(ItemLike item) {
@@ -55,8 +56,9 @@ public class ItemReward extends AbstractReward<ItemReward> {
 
     @Override
     public void grant(ServerPlayer player) {
-        if (!player.addItem(this.stack)) {
-            ItemEntity entity = player.drop(this.stack, false);
+        ItemStack toGrant = this.stack.create();
+        if (!player.addItem(toGrant)) {
+            ItemEntity entity = player.drop(toGrant, false);
             if (entity != null) {
                 entity.setNoPickUpDelay();
                 entity.setTarget(player.getUUID());
@@ -68,11 +70,12 @@ public class ItemReward extends AbstractReward<ItemReward> {
 
     @Override
     public Component getDescription(Player player) {
-        MutableComponent itemName = Component.empty().append(this.stack.getHoverName()).withStyle(this.stack.getRarity().color());
-        if (this.stack.has(DataComponents.CUSTOM_NAME)) {
+        ItemStack descStack = this.stack.create();
+        MutableComponent itemName = Component.empty().append(descStack.getHoverName()).withStyle(descStack.getRarity().color());
+        if (descStack.has(DataComponents.CUSTOM_NAME)) {
             itemName.withStyle(ChatFormatting.ITALIC);
         }
-        return Component.translatable("label.primalmagick.research_table.reward", this.stack.getCount(), itemName);
+        return Component.translatable("label.primalmagick.research_table.reward", descStack.getCount(), itemName);
     }
 
     @Override
