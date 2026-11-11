@@ -5,10 +5,16 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -134,5 +140,9 @@ public class ItemUtils {
             Optional<Holder<Item>> fallbackItemOpt = tagOpt.flatMap(tag -> tag.stream().findFirst());
             return fallbackItemOpt.map(itemHolder -> new ItemStack(itemHolder.value())).orElse(ItemStack.EMPTY);
         }
+    }
+
+    public static ItemStackTemplate createPotionTemplate(Holder<Potion> potionHolder) {
+        return new ItemStackTemplate(Items.POTION, DataComponentPatch.builder().set(DataComponents.POTION_CONTENTS, new PotionContents(potionHolder)).build());
     }
 }
