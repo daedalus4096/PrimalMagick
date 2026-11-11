@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/shield/sacred_shield"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:textures/entity/pixie_house.png"
+    },
+    {
+      "type": "minecraft:paletted_permutations",
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "amethyst": "minecraft:trims/color_palettes/amethyst",
+        "copper": "minecraft:trims/color_palettes/copper",
+        "diamond": "minecraft:trims/color_palettes/diamond",
+        "emerald": "minecraft:trims/color_palettes/emerald",
+        "gold": "minecraft:trims/color_palettes/gold",
+        "iron": "minecraft:trims/color_palettes/iron",
+        "lapis": "minecraft:trims/color_palettes/lapis",
+        "netherite": "minecraft:trims/color_palettes/netherite",
+        "quartz": "minecraft:trims/color_palettes/quartz",
+        "redstone": "minecraft:trims/color_palettes/redstone"
+      },
+      "textures": [
+        "primalmagick:trims/items/robe_chest_trim",
+        "primalmagick:trims/items/robe_feet_trim",
+        "primalmagick:trims/items/robe_head_trim",
+        "primalmagick:trims/items/robe_legs_trim"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "entries": [
+    {
+      "hoverTranslationKey": "tooltip.primalmagick.written_language.illegible_hover",
+      "style": {
+        "hover_event": {
+          "action": "show_text",
+          "value": {
+            "translate": "tooltip.primalmagick.written_language.illegible_hover"
+          }
+        },
+        "obfuscated": true
+      },
+      "translationKey": "tooltip.primalmagick.written_language.illegible_text"
+    }
+  ]
+}
