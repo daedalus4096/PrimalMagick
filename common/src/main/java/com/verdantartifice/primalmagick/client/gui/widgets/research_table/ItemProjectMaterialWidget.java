@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
@@ -29,9 +30,10 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget<Ite
     public void extractWidgetRenderState(@NotNull GuiGraphicsExtractor pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Draw stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
-        GuiUtils.renderItemStack(pGuiGraphics, this.material.getItemStack(), this.getX(), this.getY(), this.getMessage().getString(), false);
-        if (this.material.getItemStack().getCount() > 1) {
-            Component amountText = Component.literal(Integer.toString(this.material.getItemStack().getCount()));
+        ItemStackTemplate stackTemplate = this.material.getItemStack();
+        GuiUtils.renderItemStack(pGuiGraphics, stackTemplate.create(), this.getX(), this.getY(), this.getMessage().getString(), false);
+        if (stackTemplate.count() > 1) {
+            Component amountText = Component.literal(Integer.toString(stackTemplate.count()));
             int width = mc.font.width(amountText);
             pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12);
@@ -47,7 +49,7 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget<Ite
     @Override
     protected List<Component> getHoverText() {
         Minecraft mc = Minecraft.getInstance();
-        ItemStack stack = this.material.getItemStack();
+        ItemStack stack = this.material.getItemStack().create();
         return stack.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, mc.options.advancedItemTooltips ? TooltipFlag.ADVANCED : TooltipFlag.NORMAL);
     }
 }
