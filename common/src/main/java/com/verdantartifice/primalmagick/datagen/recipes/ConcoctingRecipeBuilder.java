@@ -45,6 +45,7 @@ import java.util.Optional;
 public class ConcoctingRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
     protected final ItemStackTemplate result;
+    protected final Holder<Potion> potionHolder;
     protected final ConcoctionType concoctionType;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected boolean showNotification = true;
@@ -56,6 +57,7 @@ public class ConcoctingRecipeBuilder {
 
     protected ConcoctingRecipeBuilder(HolderGetter<Item> itemGetter, Holder<Potion> potion, ConcoctionType concoctionType) {
         this.itemGetter = itemGetter;
+        this.potionHolder = potion;
         this.concoctionType = concoctionType;
         this.result = concoctionType == ConcoctionType.BOMB ? ConcoctionUtils.newBomb(potion, FuseType.MEDIUM) : ConcoctionUtils.newConcoction(potion, concoctionType);
     }
@@ -161,12 +163,12 @@ public class ConcoctingRecipeBuilder {
     
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
-        String groupStr = this.getResultPotionKey().map(Identifier::getPath).orElse(this.group);
+        String groupStr = this.getResultPotionKey().getPath();
         ConcoctingRecipe recipe = new ConcoctingRecipe(
                 new Recipe.CommonInfo(this.showNotification),
                 new IConcoctingRecipe.ConcoctingCraftingBookInfo(
                         Objects.requireNonNullElse(this.category, ConcoctingBookCategory.DRINKABLE),
-                        Objects.requireNonNullElse(groupStr, "")),
+                        groupStr),
                 this.result,
                 this.ingredients,
                 this.getFinalRequirement(),
@@ -175,17 +177,11 @@ public class ConcoctingRecipeBuilder {
     }
     
     public void build(RecipeOutput output) {
-        ConcoctionType type = this.concoctionType;
-        Identifier recipeId = this.getResultPotionKey().map(id -> id.withSuffix("_" + type.getSerializedName())).orElseThrow(() -> new IllegalStateException("Cannot determine concoction ID in recipe builder!"));
+        Identifier recipeId = this.getResultPotionKey().withSuffix("_" + this.concoctionType.getSerializedName());
         this.build(output, ResourceKey.create(Registries.RECIPE, recipeId));
     }
 
-    private Optional<Identifier> getResultPotionKey() {
-        PotionContents contents = this.result.get(DataComponents.POTION_CONTENTS);
-        if (contents == null) {
-            return Optional.empty();
-        } else {
-            return contents.potion().map(Holder::value).map(BuiltInRegistries.POTION::getKey);
-        }
+    private Identifier getResultPotionKey() {
+        return BuiltInRegistries.POTION.getKey(this.potionHolder.value());
     }
 }
