@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/trade",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/forbidden",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "primalmagick:gameplay/library/culture/hallowed",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 20
+        }
+      ],
+      "rolls": 6.0
+    }
+  ],
+  "random_sequence": "primalmagick:gameplay/library/forbidden"
+}
