@@ -19,7 +19,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -36,7 +35,7 @@ import java.util.Optional;
  */
 public class RunecarvingRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
-    protected final ItemStack result;
+    protected final ItemStackTemplate result;
     protected boolean showNotification = true;
     protected Ingredient baseIngredient;
     protected Ingredient etchingIngredient;
@@ -48,7 +47,7 @@ public class RunecarvingRecipeBuilder {
 
     protected RunecarvingRecipeBuilder(HolderGetter<Item> itemGetter, ItemLike item, int count) {
         this.itemGetter = itemGetter;
-        this.result = new ItemStack(item, count);
+        this.result = new ItemStackTemplate(item.asItem(), count);
     }
     
     /**
@@ -200,7 +199,7 @@ public class RunecarvingRecipeBuilder {
         this.validate(id);
         RunecarvingRecipe recipe = new RunecarvingRecipe(
                 new Recipe.CommonInfo(this.showNotification),
-                ItemStackTemplate.fromNonEmptyStack(this.result),
+                this.result,
                 this.baseIngredient,
                 this.etchingIngredient,
                 this.getFinalRequirement(),
@@ -223,7 +222,7 @@ public class RunecarvingRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
+        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.item().value());
         Identifier saveLoc = Identifier.parse(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Runecarving Recipe " + save + " should remove its 'save' argument");
@@ -238,7 +237,7 @@ public class RunecarvingRecipeBuilder {
      * @param output a consumer for the finished recipe
      */
     public void build(RecipeOutput output) {
-        this.build(output, Services.ITEMS_REGISTRY.getKey(this.result.getItem()));
+        this.build(output, Services.ITEMS_REGISTRY.getKey(this.result.item().value()));
     }
     
     /**

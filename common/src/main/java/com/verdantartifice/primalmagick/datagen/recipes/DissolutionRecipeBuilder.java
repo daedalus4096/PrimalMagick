@@ -14,7 +14,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -29,24 +28,24 @@ import java.util.Objects;
  */
 public class DissolutionRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
-    protected final ItemStack result;
+    protected final ItemStackTemplate result;
     protected boolean showNotification = true;
     protected DissolutionBookCategory category = DissolutionBookCategory.MISC;
     protected Ingredient ingredient;
     protected String group;
     protected SourceList manaCosts;
 
-    protected DissolutionRecipeBuilder(HolderGetter<Item> itemGetter, ItemStack result) {
+    protected DissolutionRecipeBuilder(HolderGetter<Item> itemGetter, ItemStackTemplate result) {
         this.itemGetter = itemGetter;
-        this.result = result.copy();
+        this.result = result;
     }
     
-    public static DissolutionRecipeBuilder dissolutionRecipe(HolderGetter<Item> itemGetter, ItemStack result) {
+    public static DissolutionRecipeBuilder dissolutionRecipe(HolderGetter<Item> itemGetter, ItemStackTemplate result) {
         return new DissolutionRecipeBuilder(itemGetter, result);
     }
     
     public static DissolutionRecipeBuilder dissolutionRecipe(HolderGetter<Item> itemGetter, ItemLike item, int count) {
-        return dissolutionRecipe(itemGetter, new ItemStack(item.asItem(), count));
+        return dissolutionRecipe(itemGetter, new ItemStackTemplate(item.asItem(), count));
     }
     
     public static DissolutionRecipeBuilder dissolutionRecipe(HolderGetter<Item> itemGetter, ItemLike item) {
@@ -111,7 +110,7 @@ public class DissolutionRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
+        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.item().value());
         ResourceKey<Recipe<?>> saveLoc = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc(save));
         if (saveLoc.identifier().equals(id)) {
             throw new IllegalStateException("Dissolution Recipe " + save + " should remove its 'save' argument");
@@ -127,7 +126,7 @@ public class DissolutionRecipeBuilder {
                 new IDissolutionRecipe.DissolutionCraftingBookInfo(
                         Objects.requireNonNullElse(this.category, DissolutionBookCategory.MISC),
                         Objects.requireNonNullElse(this.group, "")),
-                ItemStackTemplate.fromNonEmptyStack(this.result),
+                this.result,
                 this.ingredient,
                 Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);

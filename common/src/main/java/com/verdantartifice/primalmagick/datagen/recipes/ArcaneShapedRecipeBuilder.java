@@ -18,11 +18,10 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -43,7 +42,7 @@ import java.util.Optional;
  */
 public class ArcaneShapedRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
-    protected final ItemStack result;
+    protected final ItemStackTemplate result;
     protected final List<String> patternRows = new ArrayList<>();
     protected final Map<Character, Ingredient> key = new LinkedHashMap<>();
     protected boolean showNotification = true;
@@ -58,7 +57,7 @@ public class ArcaneShapedRecipeBuilder {
     
     protected ArcaneShapedRecipeBuilder(HolderGetter<Item> itemGetter, ItemLike result, int count) {
         this.itemGetter = itemGetter;
-        this.result = new ItemStack(result, count);
+        this.result = new ItemStackTemplate(result.asItem(), count);
     }
     
     /**
@@ -237,7 +236,7 @@ public class ArcaneShapedRecipeBuilder {
                 new IArcaneRecipe.ArcaneCraftingBookInfo(
                         Objects.requireNonNullElse(this.category, ArcaneCraftingBookCategory.ARCANE),
                         Objects.requireNonNullElse(this.group, "")),
-                ItemStackTemplate.fromNonEmptyStack(this.result),
+                this.result,
                 pattern,
                 this.getFinalRequirement(),
                 Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY),
@@ -260,7 +259,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
+        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.item().value());
         ResourceKey<Recipe<?>> saveLoc = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc(save));
         if (saveLoc.identifier().equals(id)) {
             throw new IllegalStateException("Arcane Shaped Recipe " + save + " should remove its 'save' argument");
@@ -275,7 +274,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param output a consumer for the finished recipe
      */
     public void build(RecipeOutput output) {
-        this.build(output, Services.ITEMS_REGISTRY.getKey(this.result.getItem()));
+        this.build(output, Services.ITEMS_REGISTRY.getKey(this.result.item().value()));
     }
 
     /**

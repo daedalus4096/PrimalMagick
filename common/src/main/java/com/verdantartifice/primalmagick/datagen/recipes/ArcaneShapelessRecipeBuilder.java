@@ -19,11 +19,10 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -41,7 +40,7 @@ import java.util.Optional;
  */
 public class ArcaneShapelessRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
-    protected final ItemStack result;
+    protected final ItemStackTemplate result;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected boolean showNotification = true;
     protected ArcaneCraftingBookCategory category = ArcaneCraftingBookCategory.ARCANE;
@@ -55,7 +54,7 @@ public class ArcaneShapelessRecipeBuilder {
 
     protected ArcaneShapelessRecipeBuilder(HolderGetter<Item> itemGetter, ItemLike result, int count) {
         this.itemGetter = itemGetter;
-        this.result = new ItemStack(result, count);
+        this.result = new ItemStackTemplate(result.asItem(), count);
     }
     
     /**
@@ -234,7 +233,7 @@ public class ArcaneShapelessRecipeBuilder {
                 new IArcaneRecipe.ArcaneCraftingBookInfo(
                         Objects.requireNonNullElse(this.category, ArcaneCraftingBookCategory.ARCANE),
                         Objects.requireNonNullElse(this.group, "")),
-                ItemStackTemplate.fromNonEmptyStack(this.result),
+                this.result,
                 this.ingredients,
                 this.getFinalRequirement(),
                 Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY),
@@ -257,7 +256,7 @@ public class ArcaneShapelessRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.getItem());
+        Identifier id = Services.ITEMS_REGISTRY.getKey(this.result.item().value());
         ResourceKey<Recipe<?>> saveLoc = ResourceKey.create(Registries.RECIPE, ResourceUtils.loc(save));
         if (saveLoc.identifier().equals(id)) {
             throw new IllegalStateException("Arcane Shapeless Recipe " + save + " should remove its 'save' argument");
@@ -272,7 +271,7 @@ public class ArcaneShapelessRecipeBuilder {
      * @param output a consumer for the finished recipe
      */
     public void build(RecipeOutput output) {
-        this.build(output, Services.ITEMS_REGISTRY.getKey(this.result.getItem()));
+        this.build(output, Services.ITEMS_REGISTRY.getKey(this.result.item().value()));
     }
 
     /**
