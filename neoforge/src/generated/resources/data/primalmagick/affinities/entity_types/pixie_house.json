@@ -1,8 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "primalmagick:pixie_house",
-  "values": {
-    "primalmagick:earth": 5,
-    "primalmagick:sky": 5
-  }
-}

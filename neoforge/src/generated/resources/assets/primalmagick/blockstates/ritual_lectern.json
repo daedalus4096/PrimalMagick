@@ -1,32 +1,17 @@
 {
   "variants": {
-    "facing=east,has_book=false": {
+    "facing=east": {
       "model": "primalmagick:block/ritual_lectern",
       "y": 90
     },
-    "facing=east,has_book=true": {
-      "model": "primalmagick:block/ritual_lectern",
-      "y": 90
-    },
-    "facing=north,has_book=false": {
+    "facing=north": {
       "model": "primalmagick:block/ritual_lectern"
     },
-    "facing=north,has_book=true": {
-      "model": "primalmagick:block/ritual_lectern"
-    },
-    "facing=south,has_book=false": {
+    "facing=south": {
       "model": "primalmagick:block/ritual_lectern",
       "y": 180
     },
-    "facing=south,has_book=true": {
-      "model": "primalmagick:block/ritual_lectern",
-      "y": 180
-    },
-    "facing=west,has_book=false": {
-      "model": "primalmagick:block/ritual_lectern",
-      "y": 270
-    },
-    "facing=west,has_book=true": {
+    "facing=west": {
       "model": "primalmagick:block/ritual_lectern",
       "y": 270
     }

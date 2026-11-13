@@ -1,0 +1,9 @@
+{
+  "parent": "primalmagick:block/stained_skyglass_pane_noside_base",
+  "textures": {
+    "pane": {
+      "force_translucent": true,
+      "sprite": "primalmagick:block/stained_skyglass_pane_brown_ud"
+    }
+  }
+}

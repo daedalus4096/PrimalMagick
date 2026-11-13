@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:moon": 2
-  },
-  "base": "minecraft:netherrack",
-  "target": "minecraft:crimson_nylium"
-}

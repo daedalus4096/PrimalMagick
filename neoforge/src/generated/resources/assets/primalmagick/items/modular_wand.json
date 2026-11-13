@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "primalmagick:item/modular_wand",
+    "model": {
+      "type": "primalmagick:modular_wand"
+    }
+  }
+}

@@ -1,3 +1,7 @@
 {
-  "parent": "primalmagick:item/template_attunement_shackles"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/attunement_shackles_overlay",
+    "layer1": "primalmagick:item/attunement_shackles"
+  }
 }

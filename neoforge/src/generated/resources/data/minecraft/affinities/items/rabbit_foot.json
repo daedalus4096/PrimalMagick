@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:blood": 5,
-    "primalmagick:moon": 20
-  },
-  "target": "minecraft:rabbit_foot"
-}

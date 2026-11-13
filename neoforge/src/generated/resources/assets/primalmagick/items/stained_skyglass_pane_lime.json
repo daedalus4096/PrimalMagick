@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:item/stained_skyglass_pane_lime",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12464844
+      }
+    ]
+  }
+}

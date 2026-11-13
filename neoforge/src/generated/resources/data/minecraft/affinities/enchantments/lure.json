@@ -1,7 +1,0 @@
-{
-  "type": "enchantment_bonus",
-  "multiplier": {
-    "primalmagick:sea": 1
-  },
-  "target": "minecraft:lure"
-}

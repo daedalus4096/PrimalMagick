@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:item/ambrosia_greater_infernal",
+    "tints": [
+      {
+        "type": "primalmagick:source",
+        "default": -1
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "primalmagick:block/heavenly_font_hallowed_item"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "primalmagick:block/heavenly_font_hallowed_item",
+        "model": {
+          "type": "primalmagick:mana_font"
+        }
+      }
+    ]
+  }
+}

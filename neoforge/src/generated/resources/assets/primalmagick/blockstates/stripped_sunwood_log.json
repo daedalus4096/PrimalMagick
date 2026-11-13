@@ -1,22 +1,22 @@
 {
   "variants": {
     "axis=x,phase=faded": {
-      "model": "primalmagick:block/stripped_sunwood_log_faded",
+      "model": "primalmagick:block/stripped_sunwood_log_faded_horizontal",
       "x": 90,
       "y": 90
     },
     "axis=x,phase=full": {
-      "model": "primalmagick:block/stripped_sunwood_log_full",
+      "model": "primalmagick:block/stripped_sunwood_log_full_horizontal",
       "x": 90,
       "y": 90
     },
     "axis=x,phase=waning": {
-      "model": "primalmagick:block/stripped_sunwood_log_waning",
+      "model": "primalmagick:block/stripped_sunwood_log_waning_horizontal",
       "x": 90,
       "y": 90
     },
     "axis=x,phase=waxing": {
-      "model": "primalmagick:block/stripped_sunwood_log_waxing",
+      "model": "primalmagick:block/stripped_sunwood_log_waxing_horizontal",
       "x": 90,
       "y": 90
     },
@@ -33,19 +33,19 @@
       "model": "primalmagick:block/stripped_sunwood_log_waxing"
     },
     "axis=z,phase=faded": {
-      "model": "primalmagick:block/stripped_sunwood_log_faded",
+      "model": "primalmagick:block/stripped_sunwood_log_faded_horizontal",
       "x": 90
     },
     "axis=z,phase=full": {
-      "model": "primalmagick:block/stripped_sunwood_log_full",
+      "model": "primalmagick:block/stripped_sunwood_log_full_horizontal",
       "x": 90
     },
     "axis=z,phase=waning": {
-      "model": "primalmagick:block/stripped_sunwood_log_waning",
+      "model": "primalmagick:block/stripped_sunwood_log_waning_horizontal",
       "x": 90
     },
     "axis=z,phase=waxing": {
-      "model": "primalmagick:block/stripped_sunwood_log_waxing",
+      "model": "primalmagick:block/stripped_sunwood_log_waxing_horizontal",
       "x": 90
     }
   }

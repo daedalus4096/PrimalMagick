@@ -1,8 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "primalmagick:hallowsteel_golem",
-  "values": {
-    "primalmagick:earth": 20,
-    "primalmagick:hallowed": 10
-  }
-}

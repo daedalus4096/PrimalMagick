@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:item/hallowsteel_golem_spawn_egg",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -131104
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1187422
+      }
+    ]
+  }
+}

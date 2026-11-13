@@ -1,0 +1,9 @@
+{
+  "parent": "primalmagick:block/skyglass_pane_post_base",
+  "textures": {
+    "edge": {
+      "force_translucent": true,
+      "sprite": "primalmagick:block/stained_skyglass_pane_cyan_edge"
+    }
+  }
+}

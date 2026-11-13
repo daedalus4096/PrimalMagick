@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:blood": 5,
-    "primalmagick:void": 5
-  },
-  "target": "minecraft:shulker_shell"
-}

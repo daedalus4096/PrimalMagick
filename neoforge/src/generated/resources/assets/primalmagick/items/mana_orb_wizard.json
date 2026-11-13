@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "primalmagick:item/mana_orb_wizard",
+    "model": {
+      "type": "primalmagick:mana_orb"
+    }
+  }
+}

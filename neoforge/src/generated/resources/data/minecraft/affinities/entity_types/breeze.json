@@ -1,7 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "minecraft:breeze",
-  "values": {
-    "primalmagick:sky": 25
-  }
-}

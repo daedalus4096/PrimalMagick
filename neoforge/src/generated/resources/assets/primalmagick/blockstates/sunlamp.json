@@ -21,7 +21,7 @@
         "model": "primalmagick:block/sunlamp_hanging_base"
       },
       "when": {
-        "attachment": "north|south|west|east|up"
+        "attachment": "!down"
       }
     },
     {
@@ -29,15 +29,7 @@
         "model": "primalmagick:block/sunlamp_hanging_chain_stub"
       },
       "when": {
-        "attachment": "north|south|west|east"
-      }
-    },
-    {
-      "apply": {
-        "model": "primalmagick:block/sunlamp_hanging_chain_full"
-      },
-      "when": {
-        "attachment": "up"
+        "attachment": "east|north|south|west"
       }
     },
     {

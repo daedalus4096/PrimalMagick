@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "primalmagick:hexium"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "primalmagick:hexium"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "primalmagick:hexium"
+      }
+    ]
+  }
+}

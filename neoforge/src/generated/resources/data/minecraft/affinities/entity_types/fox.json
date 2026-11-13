@@ -1,7 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "minecraft:fox",
-  "values": {
-    "primalmagick:blood": 5
-  }
-}

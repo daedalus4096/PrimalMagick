@@ -1,5 +1,5 @@
 {
-  "parent": "primalmagick:item/hexium_bow",
+  "parent": "minecraft:item/bow",
   "textures": {
     "layer0": "primalmagick:item/hexium_bow_pulling_0"
   }

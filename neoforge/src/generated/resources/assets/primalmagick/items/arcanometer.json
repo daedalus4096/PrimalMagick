@@ -1,0 +1,52 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:range_dispatch",
+        "entries": [
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "primalmagick:item/arcanometer_1"
+            },
+            "threshold": 0.0625
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "primalmagick:item/arcanometer_2"
+            },
+            "threshold": 0.3125
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "primalmagick:item/arcanometer_3"
+            },
+            "threshold": 0.5625
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "primalmagick:item/arcanometer_4"
+            },
+            "threshold": 0.8125
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/arcanometer_0"
+        },
+        "property": "primalmagick:scan_state"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "primalmagick:item/arcanometer",
+        "model": {
+          "type": "primalmagick:arcanometer"
+        }
+      }
+    ]
+  }
+}

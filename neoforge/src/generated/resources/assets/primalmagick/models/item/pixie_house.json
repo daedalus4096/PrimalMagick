@@ -116,8 +116,5 @@
       ]
     }
   },
-  "gui_light": "front",
-  "textures": {
-    "particle": "minecraft:block/oak_log"
-  }
+  "gui_light": "front"
 }

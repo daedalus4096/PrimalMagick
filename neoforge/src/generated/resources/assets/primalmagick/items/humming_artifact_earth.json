@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:item/humming_artifact_earth",
+    "tints": [
+      {
+        "type": "primalmagick:source",
+        "default": -1
+      }
+    ]
+  }
+}

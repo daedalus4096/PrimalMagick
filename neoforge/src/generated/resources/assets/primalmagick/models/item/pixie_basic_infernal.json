@@ -1,3 +1,7 @@
 {
-  "parent": "primalmagick:item/template_pixie"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/pixie_overlay",
+    "layer1": "primalmagick:item/pixie"
+  }
 }

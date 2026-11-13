@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "primalmagick:block/marble_hallowed",
-    "side": "primalmagick:block/marble_hallowed_runed"
+    "end": "primalmagick:block/marble_hallowed_runed_top",
+    "side": "primalmagick:block/marble_hallowed_runed_side"
   }
 }

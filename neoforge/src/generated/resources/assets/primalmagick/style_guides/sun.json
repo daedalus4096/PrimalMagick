@@ -34,9 +34,9 @@
       "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
       "style": {
         "color": "#8A0303",
-        "hoverEvent": {
+        "hover_event": {
           "action": "show_text",
-          "contents": {
+          "value": {
             "translate": "tooltip.primalmagick.written_language.obfuscated_word"
           }
         },
@@ -48,9 +48,9 @@
       "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
       "style": {
         "color": "#ED2F1B",
-        "hoverEvent": {
+        "hover_event": {
           "action": "show_text",
-          "contents": {
+          "value": {
             "translate": "tooltip.primalmagick.written_language.obfuscated_word"
           }
         },
@@ -62,9 +62,9 @@
       "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
       "style": {
         "color": "#551A8B",
-        "hoverEvent": {
+        "hover_event": {
           "action": "show_text",
-          "contents": {
+          "value": {
             "translate": "tooltip.primalmagick.written_language.obfuscated_word"
           }
         },
@@ -76,9 +76,9 @@
       "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
       "style": {
         "color": "#EEEBD9",
-        "hoverEvent": {
+        "hover_event": {
           "action": "show_text",
-          "contents": {
+          "value": {
             "translate": "tooltip.primalmagick.written_language.obfuscated_word"
           }
         },
@@ -89,9 +89,9 @@
     {
       "hoverTranslationKey": "tooltip.primalmagick.written_language.illegible_hover",
       "style": {
-        "hoverEvent": {
+        "hover_event": {
           "action": "show_text",
-          "contents": {
+          "value": {
             "translate": "tooltip.primalmagick.written_language.illegible_hover"
           }
         },

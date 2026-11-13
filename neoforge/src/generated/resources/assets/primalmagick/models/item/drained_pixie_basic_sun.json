@@ -1,3 +1,6 @@
 {
-  "parent": "primalmagick:item/template_drained_pixie"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/drained_pixie"
+  }
 }

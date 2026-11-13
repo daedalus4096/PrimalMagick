@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:earth": 5
-  },
-  "base": "minecraft:deepslate",
-  "target": "minecraft:deepslate_redstone_ore"
-}

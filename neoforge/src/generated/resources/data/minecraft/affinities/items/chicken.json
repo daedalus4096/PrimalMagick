@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:blood": 5,
-    "primalmagick:sky": 5
-  },
-  "target": "minecraft:chicken"
-}

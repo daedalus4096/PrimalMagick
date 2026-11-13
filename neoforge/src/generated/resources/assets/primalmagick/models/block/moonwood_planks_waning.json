@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
-  "render_type": "minecraft:translucent",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "primalmagick:block/moonwood_planks_waning"
+    "end": "primalmagick:block/moonwood_planks_waning",
+    "side": "primalmagick:block/moonwood_planks_waning"
   }
 }

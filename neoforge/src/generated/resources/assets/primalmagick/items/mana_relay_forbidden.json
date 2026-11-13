@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "primalmagick:block/mana_relay_forbidden",
+    "model": {
+      "type": "primalmagick:mana_relay"
+    }
+  }
+}

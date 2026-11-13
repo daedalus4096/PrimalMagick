@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
-  "render_type": "minecraft:solid",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "primalmagick:block/sunwood_planks_full"
+    "end": "primalmagick:block/sunwood_planks_full",
+    "side": "primalmagick:block/sunwood_planks_full"
   }
 }

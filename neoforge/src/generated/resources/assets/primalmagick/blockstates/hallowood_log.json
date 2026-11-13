@@ -1,7 +1,7 @@
 {
   "variants": {
     "axis=x": {
-      "model": "primalmagick:block/hallowood_log",
+      "model": "primalmagick:block/hallowood_log_horizontal",
       "x": 90,
       "y": 90
     },
@@ -9,7 +9,7 @@
       "model": "primalmagick:block/hallowood_log"
     },
     "axis=z": {
-      "model": "primalmagick:block/hallowood_log",
+      "model": "primalmagick:block/hallowood_log_horizontal",
       "x": 90
     }
   }

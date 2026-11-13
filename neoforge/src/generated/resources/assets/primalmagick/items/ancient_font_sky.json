@@ -1,0 +1,18 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "primalmagick:block/ancient_font_sky_item"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "primalmagick:block/ancient_font_sky_item",
+        "model": {
+          "type": "primalmagick:mana_font"
+        }
+      }
+    ]
+  }
+}

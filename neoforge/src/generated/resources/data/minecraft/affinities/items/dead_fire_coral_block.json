@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:sea": 15
-  },
-  "base": "minecraft:dead_fire_coral",
-  "target": "minecraft:dead_fire_coral_block"
-}

@@ -1,5 +1,5 @@
 {
-  "parent": "primalmagick:item/primalite_bow",
+  "parent": "minecraft:item/bow",
   "textures": {
     "layer0": "primalmagick:item/primalite_bow_pulling_2"
   }

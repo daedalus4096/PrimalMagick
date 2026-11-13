@@ -1,5 +1,5 @@
 {
-  "parent": "primalmagick:item/hallowsteel_bow",
+  "parent": "minecraft:item/bow",
   "textures": {
     "layer0": "primalmagick:item/hallowsteel_bow_pulling_1"
   }

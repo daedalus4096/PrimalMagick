@@ -1,3 +1,7 @@
 {
-  "parent": "primalmagick:item/template_humming_artifact"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/humming_artifact_glow",
+    "layer1": "primalmagick:item/humming_artifact_case"
+  }
 }

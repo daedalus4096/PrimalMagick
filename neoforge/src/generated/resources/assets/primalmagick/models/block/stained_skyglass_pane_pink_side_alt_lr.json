@@ -1,0 +1,13 @@
+{
+  "parent": "primalmagick:block/stained_skyglass_pane_side_alt_base",
+  "textures": {
+    "edge": {
+      "force_translucent": true,
+      "sprite": "primalmagick:block/stained_skyglass_pane_pink_edge"
+    },
+    "pane": {
+      "force_translucent": true,
+      "sprite": "primalmagick:block/stained_skyglass_pane_pink_lr"
+    }
+  }
+}

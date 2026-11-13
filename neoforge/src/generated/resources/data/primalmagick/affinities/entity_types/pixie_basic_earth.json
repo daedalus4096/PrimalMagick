@@ -1,9 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "primalmagick:pixie_basic_earth",
-  "values": {
-    "primalmagick:blood": 5,
-    "primalmagick:earth": 5,
-    "primalmagick:sky": 10
-  }
-}

@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "primalmagick:item/mundane_wand",
+    "model": {
+      "type": "primalmagick:mundane_wand"
+    }
+  }
+}

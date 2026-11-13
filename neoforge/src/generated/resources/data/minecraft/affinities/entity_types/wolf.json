@@ -1,7 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "minecraft:wolf",
-  "values": {
-    "primalmagick:blood": 10
-  }
-}

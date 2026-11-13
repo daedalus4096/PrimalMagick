@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:item/pixie_basic_sea",
+    "tints": [
+      {
+        "type": "primalmagick:source",
+        "default": -1
+      }
+    ]
+  }
+}

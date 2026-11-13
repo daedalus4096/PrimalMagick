@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "primalmagick:block/moonwood_log_top_waning",
+    "side": "primalmagick:block/moonwood_log_waning"
+  }
+}

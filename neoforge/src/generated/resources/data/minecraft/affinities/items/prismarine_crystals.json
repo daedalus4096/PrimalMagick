@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "set": {
-    "primalmagick:earth": 5,
-    "primalmagick:sea": 20
-  },
-  "target": "minecraft:prismarine_crystals"
-}

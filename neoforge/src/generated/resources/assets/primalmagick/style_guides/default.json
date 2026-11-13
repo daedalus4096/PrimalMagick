@@ -3,9 +3,9 @@
     {
       "hoverTranslationKey": "tooltip.primalmagick.written_language.illegible_hover",
       "style": {
-        "hoverEvent": {
+        "hover_event": {
           "action": "show_text",
-          "contents": {
+          "value": {
             "translate": "tooltip.primalmagick.written_language.illegible_hover"
           }
         },

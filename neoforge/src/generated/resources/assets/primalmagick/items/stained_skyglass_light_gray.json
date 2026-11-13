@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:block/stained_skyglass_light_gray_0",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -5526613
+      }
+    ]
+  }
+}

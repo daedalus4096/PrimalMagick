@@ -4,7 +4,7 @@
       "model": "primalmagick:block/marble_slab"
     },
     "type=double": {
-      "model": "primalmagick:block/marble_raw"
+      "model": "primalmagick:block/marble"
     },
     "type=top": {
       "model": "primalmagick:block/marble_slab_top"

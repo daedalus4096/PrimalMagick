@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:sun": 10
-  },
-  "base": "minecraft:obsidian",
-  "target": "minecraft:crying_obsidian"
-}

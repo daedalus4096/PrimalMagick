@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "primalmagick:blood": 2
-  },
-  "base": "minecraft:cobblestone",
-  "target": "minecraft:infested_cobblestone"
-}

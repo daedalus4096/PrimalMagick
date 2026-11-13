@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:item/stained_skyglass_pane_magenta",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -3975987
+      }
+    ]
+  }
+}

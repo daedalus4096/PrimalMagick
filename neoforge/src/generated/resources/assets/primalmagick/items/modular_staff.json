@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "primalmagick:item/modular_staff",
+    "model": {
+      "type": "primalmagick:modular_wand",
+      "staff": true
+    }
+  }
+}

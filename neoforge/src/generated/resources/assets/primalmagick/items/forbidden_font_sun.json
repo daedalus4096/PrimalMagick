@@ -1,0 +1,18 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "primalmagick:block/forbidden_font_sun_item"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "primalmagick:block/forbidden_font_sun_item",
+        "model": {
+          "type": "primalmagick:mana_font"
+        }
+      }
+    ]
+  }
+}

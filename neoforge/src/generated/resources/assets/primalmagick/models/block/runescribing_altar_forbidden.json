@@ -2,6 +2,6 @@
   "parent": "primalmagick:block/runescribing_altar",
   "textures": {
     "altar_bottom": "primalmagick:block/marble_smoked",
-    "altar_side": "primalmagick:block/runescribing_altar_forbidden_side"
+    "altar_side": "primalmagick:block/marble_smoked_side"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "primalmagick:block/mana_injector_forbidden",
+    "model": {
+      "type": "primalmagick:mana_injector",
+      "cycleTime": 40.0
+    }
+  }
+}

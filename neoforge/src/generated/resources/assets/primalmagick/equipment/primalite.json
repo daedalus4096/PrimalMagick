@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "primalmagick:primalite"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "primalmagick:primalite"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "primalmagick:primalite"
+      }
+    ]
+  }
+}

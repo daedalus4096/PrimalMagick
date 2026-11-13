@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:item/hexium_golem_spawn_egg",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -8839639
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -15726794
+      }
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "primalmagick:block/hydromelon_end",
+    "end": "primalmagick:block/hydromelon_top",
     "side": "primalmagick:block/hydromelon_side"
   }
 }

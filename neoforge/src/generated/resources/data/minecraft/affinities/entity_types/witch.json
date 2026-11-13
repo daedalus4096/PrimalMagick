@@ -1,9 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "minecraft:witch",
-  "values": {
-    "primalmagick:blood": 10,
-    "primalmagick:infernal": 5,
-    "primalmagick:void": 5
-  }
-}

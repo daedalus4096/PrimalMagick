@@ -1,0 +1,531 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_post"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_unconnected"
+      },
+      "when": {
+        "down": "!glass",
+        "north": "other",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_u",
+        "x": 180,
+        "y": 180
+      },
+      "when": {
+        "down": "glass",
+        "north": "other",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_u"
+      },
+      "when": {
+        "down": "!glass",
+        "north": "other",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_ud"
+      },
+      "when": {
+        "down": "glass",
+        "north": "other",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_lr"
+      },
+      "when": {
+        "down": "!glass",
+        "north": "glass",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_ulr",
+        "x": 180,
+        "y": 180
+      },
+      "when": {
+        "down": "glass",
+        "north": "glass",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_ulr"
+      },
+      "when": {
+        "down": "!glass",
+        "north": "glass",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_udlr"
+      },
+      "when": {
+        "down": "glass",
+        "north": "glass",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_unconnected"
+      },
+      "when": {
+        "down": "!glass",
+        "north": "none",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_u",
+        "x": 180,
+        "y": 180
+      },
+      "when": {
+        "down": "glass",
+        "north": "none",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_u"
+      },
+      "when": {
+        "down": "!glass",
+        "north": "none",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_ud"
+      },
+      "when": {
+        "down": "glass",
+        "north": "none",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_unconnected",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "east": "other",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_u",
+        "x": 180,
+        "y": 270
+      },
+      "when": {
+        "down": "glass",
+        "east": "other",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_u",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "east": "other",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_ud",
+        "y": 90
+      },
+      "when": {
+        "down": "glass",
+        "east": "other",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_lr",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "east": "glass",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_ulr",
+        "x": 180,
+        "y": 270
+      },
+      "when": {
+        "down": "glass",
+        "east": "glass",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_ulr",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "east": "glass",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_udlr",
+        "y": 90
+      },
+      "when": {
+        "down": "glass",
+        "east": "glass",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_unconnected",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "east": "none",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_u",
+        "x": 180,
+        "y": 270
+      },
+      "when": {
+        "down": "glass",
+        "east": "none",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_u",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "east": "none",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_ud",
+        "y": 90
+      },
+      "when": {
+        "down": "glass",
+        "east": "none",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_unconnected"
+      },
+      "when": {
+        "down": "!glass",
+        "south": "other",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_u",
+        "x": 180,
+        "y": 180
+      },
+      "when": {
+        "down": "glass",
+        "south": "other",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_u"
+      },
+      "when": {
+        "down": "!glass",
+        "south": "other",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_ud"
+      },
+      "when": {
+        "down": "glass",
+        "south": "other",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_lr"
+      },
+      "when": {
+        "down": "!glass",
+        "south": "glass",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_ulr",
+        "x": 180,
+        "y": 180
+      },
+      "when": {
+        "down": "glass",
+        "south": "glass",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_ulr"
+      },
+      "when": {
+        "down": "!glass",
+        "south": "glass",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_udlr"
+      },
+      "when": {
+        "down": "glass",
+        "south": "glass",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_alt_unconnected"
+      },
+      "when": {
+        "down": "!glass",
+        "south": "none",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_alt_u",
+        "x": 180,
+        "y": 180
+      },
+      "when": {
+        "down": "glass",
+        "south": "none",
+        "up": "!glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_alt_u"
+      },
+      "when": {
+        "down": "!glass",
+        "south": "none",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_alt_ud"
+      },
+      "when": {
+        "down": "glass",
+        "south": "none",
+        "up": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_unconnected",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "up": "!glass",
+        "west": "other"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_u",
+        "x": 180,
+        "y": 270
+      },
+      "when": {
+        "down": "glass",
+        "up": "!glass",
+        "west": "other"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_u",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "up": "glass",
+        "west": "other"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_ud",
+        "y": 90
+      },
+      "when": {
+        "down": "glass",
+        "up": "glass",
+        "west": "other"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_lr",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "up": "!glass",
+        "west": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_ulr",
+        "x": 180,
+        "y": 270
+      },
+      "when": {
+        "down": "glass",
+        "up": "!glass",
+        "west": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_ulr",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "up": "glass",
+        "west": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_side_alt_udlr",
+        "y": 90
+      },
+      "when": {
+        "down": "glass",
+        "up": "glass",
+        "west": "glass"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_alt_unconnected",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "up": "!glass",
+        "west": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_alt_u",
+        "x": 180,
+        "y": 270
+      },
+      "when": {
+        "down": "glass",
+        "up": "!glass",
+        "west": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_alt_u",
+        "y": 90
+      },
+      "when": {
+        "down": "!glass",
+        "up": "glass",
+        "west": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "primalmagick:block/skyglass_pane_noside_alt_ud",
+        "y": 90
+      },
+      "when": {
+        "down": "glass",
+        "up": "glass",
+        "west": "none"
+      }
+    }
+  ]
+}

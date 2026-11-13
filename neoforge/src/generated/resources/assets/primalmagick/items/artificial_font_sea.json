@@ -1,0 +1,18 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "primalmagick:block/artificial_font_sea_item"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "primalmagick:block/artificial_font_sea_item",
+        "model": {
+          "type": "primalmagick:mana_font"
+        }
+      }
+    ]
+  }
+}

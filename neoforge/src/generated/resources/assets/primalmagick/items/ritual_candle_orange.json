@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:block/ritual_candle_orange",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -1341372
+      }
+    ]
+  }
+}

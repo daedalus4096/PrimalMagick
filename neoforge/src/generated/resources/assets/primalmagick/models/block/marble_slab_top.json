@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/slab_top",
   "textures": {
-    "bottom": "primalmagick:block/marble_raw",
-    "side": "primalmagick:block/marble_raw",
-    "top": "primalmagick:block/marble_raw"
+    "bottom": "primalmagick:block/marble",
+    "side": "primalmagick:block/marble",
+    "top": "primalmagick:block/marble"
   }
 }

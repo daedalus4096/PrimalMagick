@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "primalmagick:item/primalite_golem_spawn_egg",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -14163513
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -16620936
+      }
+    ]
+  }
+}

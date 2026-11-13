@@ -1,8 +1,0 @@
-{
-  "type": "entity_type",
-  "target": "minecraft:mooshroom",
-  "values": {
-    "primalmagick:blood": 10,
-    "primalmagick:moon": 5
-  }
-}
