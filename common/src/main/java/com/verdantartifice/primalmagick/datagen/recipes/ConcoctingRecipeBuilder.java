@@ -17,7 +17,6 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -27,7 +26,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
@@ -146,8 +144,7 @@ public class ConcoctingRecipeBuilder {
     }
     
     protected void validate(ResourceKey<Recipe<?>> id) {
-        PotionContents contents = this.result.get(DataComponents.POTION_CONTENTS);
-        if (contents == null || contents.potion().isEmpty()) {
+        if (this.potionHolder == null) {
             throw new IllegalStateException("No potion effect defined for concocting recipe " + id + "!");
         }
         if (this.category == null) {
