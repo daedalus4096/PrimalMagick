@@ -17,6 +17,12 @@ public class ModelTemplatesPM {
     public static final ModelTemplate PILLAR_TOP = createBlock("pillar_top", TextureSlotsPM.INNER, TextureSlot.SIDE, TextureSlot.TOP);
     public static final ModelTemplate RUNESCRIBING_ALTAR = createBlock("runescribing_altar", TextureSlotsPM.ALTAR_BOTTOM, TextureSlotsPM.ALTAR_SIDE);
 
+    public static final ModelTemplate SKYGLASS_PANE_NOSIDE = createBlock("skyglass_pane_noside_base", TextureSlot.PANE);
+    public static final ModelTemplate SKYGLASS_PANE_NOSIDE_ALT = createBlock("skyglass_pane_noside_alt_base", TextureSlot.PANE);
+    public static final ModelTemplate SKYGLASS_PANE_POST = createBlock("skyglass_pane_post_base", TextureSlot.EDGE);
+    public static final ModelTemplate SKYGLASS_PANE_SIDE = createBlock("skyglass_pane_side_base", TextureSlot.PANE, TextureSlot.EDGE);
+    public static final ModelTemplate SKYGLASS_PANE_SIDE_ALT = createBlock("skyglass_pane_side_alt_base", TextureSlot.PANE, TextureSlot.EDGE);
+
     public static ModelTemplate createBlock(String name, TextureSlot... requiredSlots) {
         return new ModelTemplate(Optional.of(ResourceUtils.loc(name).withPrefix("block/")), Optional.empty(), requiredSlots);
     }

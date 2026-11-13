@@ -15,9 +15,9 @@ import java.util.Optional;
  *
  * @author Daedalus4096
  */
-public record ModelConnection(String name, Optional<String> parentSuffixOpt, Map<TextureSlot, TextureConnection> textureConnections) {
-    public ModelConnection(String name, Map<TextureSlot, TextureConnection> textureConnections) {
-        this(name, Optional.of("base"), textureConnections);
+public record ModelConnection(String name, ModelTemplate modelTemplate, Optional<String> parentSuffixOpt, Map<TextureSlot, TextureConnection> textureConnections) {
+    public ModelConnection(String name, ModelTemplate modelTemplate, Map<TextureSlot, TextureConnection> textureConnections) {
+        this(name, modelTemplate, Optional.of("base"), textureConnections);
     }
 
     @NotNull
@@ -25,8 +25,8 @@ public record ModelConnection(String name, Optional<String> parentSuffixOpt, Map
         return "_" + this.name;
     }
 
-    public IModelTemplateExtender extendModel(ModelTemplate modelTemplate, Identifier parentPrefix) {
-        IModelTemplateExtender extender = Services.MODEL_TEMPLATES.extend(modelTemplate);
+    public IModelTemplateExtender extendModel(Identifier parentPrefix) {
+        IModelTemplateExtender extender = Services.MODEL_TEMPLATES.extend(this.modelTemplate);
         parentSuffixOpt.ifPresent(suffix -> {
             extender.parent(parentPrefix.withSuffix("_" + suffix));
         });

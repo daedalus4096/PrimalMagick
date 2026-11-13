@@ -12,4 +12,5 @@ public class TextureConnections {
     public static final TextureConnection UDR = new TextureConnection("udr");
     public static final TextureConnection ULR = new TextureConnection("ulr");
     public static final TextureConnection UDLR = new TextureConnection("udlr");
+    public static final TextureConnection EDGE = new TextureConnection("edge");
 }
