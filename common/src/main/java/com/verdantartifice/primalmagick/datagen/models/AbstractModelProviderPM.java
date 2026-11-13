@@ -794,7 +794,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
             Arrays.stream(PillarBlock.Type.values()).forEach(type -> {
                 PhasingTextureMapping pillarMapping = PhasingTextureMapping.pillar(block, type);
                 Identifier modelId = Services.MODEL_TEMPLATES.extend(this.getPillarModelTemplate(type))
-                        .createWithSuffix(block, "_" + phase, pillarMapping.resolve(phase), blockModels.modelOutput);
+                        .createWithSuffix(block, "_" + (type == PillarBlock.Type.BASE ? "" : (type + "_")) + phase, pillarMapping.resolve(phase), blockModels.modelOutput);
                 dispatch.select(phase, type, BlockModelGenerators.plainVariant(modelId));
             });
         });
