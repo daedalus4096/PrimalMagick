@@ -775,15 +775,17 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     private void createPhasingLeaves(Block block, BlockModelGenerators blockModels) {
+        var propertyDispatch = PropertyDispatch.initial(IPhasingBlock.PHASE);
         PhasingTextureMapping leavesMapping = PhasingTextureMapping.leaves(block);
         Arrays.stream(TimePhase.values()).forEach(phase -> {
             Identifier modelId = Services.MODEL_TEMPLATES.extend(ModelTemplates.LEAVES)
                     .createWithSuffix(block, "_" + phase, leavesMapping.resolve(phase), blockModels.modelOutput);
-            blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(modelId)));
+            propertyDispatch.select(phase, BlockModelGenerators.plainVariant(modelId));
             if (phase == TimePhase.FULL) {
                 blockModels.registerSimpleItemModel(block, modelId);
             }
         });
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(propertyDispatch));
     }
 
     private void createPhasingPillarBlock(Block block, BlockModelGenerators blockModels) {
