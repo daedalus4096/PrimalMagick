@@ -93,6 +93,7 @@ public class EntityLootTables extends EntityLootSubProvider {
         this.registerEmptyLootTable(EntityTypesPM.SIN_CRASH.get());
         this.registerEmptyLootTable(EntityTypesPM.SIN_CRYSTAL.get());
         this.registerEmptyLootTable(EntityTypesPM.FLYING_CARPET.get());
+        this.registerEmptyLootTable(EntityTypesPM.PIXIE_HOUSE.get());
         this.registerLootTable(EntityTypesPM.TREEFOLK.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.HEARTWOOD.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))).apply(SmeltItemFunction.smelted().when(this.shouldSmeltLoot())).apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F))))));
         this.registerLootTable(EntityTypesPM.INNER_DEMON.get(), LootTable.lootTable()); // Loot dropped by Inner Demons is special, so use an empty table
         this.registerLootTable(EntityTypesPM.FRIENDLY_WITCH.get(), LootTable.lootTable());  // No loot dropped by Friendly Witches, so use an empty table

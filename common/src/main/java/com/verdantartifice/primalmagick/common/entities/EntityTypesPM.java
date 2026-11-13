@@ -72,49 +72,62 @@ public class EntityTypesPM {
     }
 
     public static final IRegistryItem<EntityType<?>, EntityType<SpellProjectileEntity>> SPELL_PROJECTILE = register("spell_projectile", SpellProjectileEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.25F, 0.25F));
     public static final IRegistryItem<EntityType<?>, EntityType<SpellMineEntity>> SPELL_MINE = register("spell_mine", SpellMineEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.25F, 0.25F));
     public static final IRegistryItem<EntityType<?>, EntityType<SinCrashEntity>> SIN_CRASH = register("sin_crash", SinCrashEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.25F, 0.25F)
             .clientTrackingRange(4)
             .updateInterval(10));
     public static final IRegistryItem<EntityType<?>, EntityType<SinCrystalEntity>> SIN_CRYSTAL = register("sin_crystal", SinCrystalEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(2.0F, 2.0F)
             .clientTrackingRange(16)
             .updateInterval(Integer.MAX_VALUE));
     public static final IRegistryItem<EntityType<?>, EntityType<FlyingCarpetEntity>> FLYING_CARPET = register("flying_carpet", FlyingCarpetEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(1.0F, 0.0625F)
             .clientTrackingRange(10));
     public static final IRegistryItem<EntityType<?>, EntityType<AppleEntity>> APPLE = register("apple", AppleEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.25F, 0.25F)
             .clientTrackingRange(4)
             .updateInterval(10));
     public static final IRegistryItem<EntityType<?>, EntityType<IgnyxEntity>> IGNYX = register("ignyx", IgnyxEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.25F, 0.25F)
             .clientTrackingRange(4)
             .updateInterval(10));
     public static final IRegistryItem<EntityType<?>, EntityType<AlchemicalBombEntity>> ALCHEMICAL_BOMB = register("alchemical_bomb", AlchemicalBombEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.25F, 0.25F)
             .clientTrackingRange(4)
             .updateInterval(10));
     public static final IRegistryItem<EntityType<?>, EntityType<ManaArrowEntity>> MANA_ARROW = register("mana_arrow", ManaArrowEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.5F, 0.5F)
             .clientTrackingRange(4)
             .updateInterval(20));
     public static final IRegistryItem<EntityType<?>, EntityType<AbstractTridentEntity>> PRIMALITE_TRIDENT = register("primalite_trident", PrimaliteTridentEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.5F, 0.5F)
             .clientTrackingRange(4)
             .updateInterval(20));
     public static final IRegistryItem<EntityType<?>, EntityType<AbstractTridentEntity>> HEXIUM_TRIDENT = register("hexium_trident", HexiumTridentEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.5F, 0.5F)
             .clientTrackingRange(4)
             .updateInterval(20));
     public static final IRegistryItem<EntityType<?>, EntityType<AbstractTridentEntity>> HALLOWSTEEL_TRIDENT = register("hallowsteel_trident", HallowsteelTridentEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.5F, 0.5F)
             .clientTrackingRange(4)
             .updateInterval(20));
     public static final IRegistryItem<EntityType<?>, EntityType<AbstractTridentEntity>> FORBIDDEN_TRIDENT = register("forbidden_trident", ForbiddenTridentEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.5F, 0.5F)
             .clientTrackingRange(4)
             .updateInterval(20));
@@ -224,6 +237,7 @@ public class EntityTypesPM {
             .sized(0.5F, 0.5F)
             .clientTrackingRange(10));
     public static final IRegistryItem<EntityType<?>, EntityType<PixieHouseEntity>> PIXIE_HOUSE = register("pixie_house", PixieHouseEntity::new, MobCategory.MISC, builder -> builder
+            .noLootTable()
             .sized(0.875F, 2.0F)
             .eyeHeight(1.7775F)
             .clientTrackingRange(10));
