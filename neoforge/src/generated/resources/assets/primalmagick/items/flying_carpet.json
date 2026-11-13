@@ -12,30 +12,9 @@
       {
         "model": {
           "type": "minecraft:model",
-          "model": "primalmagick:item/flying_carpet_green"
+          "model": "primalmagick:item/flying_carpet_orange"
         },
-        "when": "green"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "primalmagick:item/flying_carpet_purple"
-        },
-        "when": "purple"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "primalmagick:item/flying_carpet_pink"
-        },
-        "when": "pink"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "primalmagick:item/flying_carpet_magenta"
-        },
-        "when": "magenta"
+        "when": "orange"
       },
       {
         "model": {
@@ -47,9 +26,30 @@
       {
         "model": {
           "type": "minecraft:model",
+          "model": "primalmagick:item/flying_carpet_blue"
+        },
+        "when": "blue"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/flying_carpet_gray"
+        },
+        "when": "gray"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
           "model": "primalmagick:item/flying_carpet_light_blue"
         },
         "when": "light_blue"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/flying_carpet_black"
+        },
+        "when": "black"
       },
       {
         "model": {
@@ -68,23 +68,16 @@
       {
         "model": {
           "type": "minecraft:model",
-          "model": "primalmagick:item/flying_carpet_orange"
+          "model": "primalmagick:item/flying_carpet_pink"
         },
-        "when": "orange"
+        "when": "pink"
       },
       {
         "model": {
           "type": "minecraft:model",
-          "model": "primalmagick:item/flying_carpet_gray"
+          "model": "primalmagick:item/flying_carpet_magenta"
         },
-        "when": "gray"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "primalmagick:item/flying_carpet_blue"
-        },
-        "when": "blue"
+        "when": "magenta"
       },
       {
         "model": {
@@ -96,6 +89,13 @@
       {
         "model": {
           "type": "minecraft:model",
+          "model": "primalmagick:item/flying_carpet_brown"
+        },
+        "when": "brown"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
           "model": "primalmagick:item/flying_carpet_cyan"
         },
         "when": "cyan"
@@ -103,16 +103,16 @@
       {
         "model": {
           "type": "minecraft:model",
-          "model": "primalmagick:item/flying_carpet_black"
+          "model": "primalmagick:item/flying_carpet_purple"
         },
-        "when": "black"
+        "when": "purple"
       },
       {
         "model": {
           "type": "minecraft:model",
-          "model": "primalmagick:item/flying_carpet_brown"
+          "model": "primalmagick:item/flying_carpet_green"
         },
-        "when": "brown"
+        "when": "green"
       }
     ],
     "fallback": {
