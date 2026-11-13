@@ -725,8 +725,8 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     private void generatePillarBlock(Block block, BlockModelGenerators blockModels) {
         MultiVariant baseMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR.create(block, blockModels.modelOutput));
-        MultiVariant bottomMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR_BOTTOM.create(block, blockModels.modelOutput));
-        MultiVariant topMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR_TOP.create(block, blockModels.modelOutput));
+        MultiVariant bottomMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR_BOTTOM.createWithSuffix(block, "_bottom", blockModels.modelOutput));
+        MultiVariant topMultiVariant = BlockModelGenerators.plainVariant(TexturedModelsPM.PILLAR_TOP.createWithSuffix(block, "_top", blockModels.modelOutput));
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                 .with(PropertyDispatch.initial(PillarBlock.PROPERTY_TYPE)
                         .select(PillarBlock.Type.BASE, baseMultiVariant)
