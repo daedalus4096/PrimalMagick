@@ -203,21 +203,7 @@ public abstract class ModularWandItem extends AbstractWandItem implements IHasWa
     }
     
     protected Rarity calculateRarity(ItemStack stack) {
-        // A modular wand's unenchanted rarity is the highest of those of its components
-        Rarity retVal = Rarity.COMMON;
-        WandCore core = this.getWandCore(stack);
-        if (core != null && core.getRarity().compareTo(retVal) > 0) {
-            retVal = core.getRarity();
-        }
-        WandCap cap = this.getWandCap(stack);
-        if (cap != null && cap.getRarity().compareTo(retVal) > 0) {
-            retVal = cap.getRarity();
-        }
-        WandGem gem = this.getWandGem(stack);
-        if (gem != null && gem.getRarity().compareTo(retVal) > 0) {
-            retVal = gem.getRarity();
-        }
-        return retVal;
+        return IHasWandComponents.calculateRarity(this.getWandCore(stack), this.getWandCap(stack), this.getWandGem(stack));
     }
     
     public static void registerCreativeTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier) {

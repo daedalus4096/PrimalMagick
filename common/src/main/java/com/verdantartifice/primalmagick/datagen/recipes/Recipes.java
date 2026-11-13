@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
-import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.AttuneManaOrbRecipe;
 import com.verdantartifice.primalmagick.common.crafting.FlyingCarpetDyeRecipe;
 import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
@@ -29,6 +28,7 @@ import com.verdantartifice.primalmagick.common.tags.CommonTags;
 import com.verdantartifice.primalmagick.common.tags.ItemExtensionTags;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -50,6 +50,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -91,8 +92,8 @@ public abstract class Recipes extends RecipeProvider {
         return ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(this.items, result, count);
     }
 
-    protected ConcoctingRecipeBuilder concocting(ItemStack result) {
-        return ConcoctingRecipeBuilder.concoctingRecipe(this.items, result);
+    protected ConcoctingRecipeBuilder concocting(Holder<Potion> potion, ConcoctionType concoctionType) {
+        return ConcoctingRecipeBuilder.concoctingRecipe(this.items, potion, concoctionType);
     }
     
     protected DissolutionRecipeBuilder dissolution(ItemLike result, int count) {
@@ -4975,7 +4976,7 @@ public abstract class Recipes extends RecipeProvider {
             .requiredResearch(ResearchEntries.CONCOCTING_TINCTURES)
             .manaCost(SourceList.EMPTY.add(Sources.INFERNAL, 40))
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.NIGHT_VISION, ConcoctionType.TINCTURE))
+        this.concocting(Potions.NIGHT_VISION, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -4985,7 +4986,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_NIGHT_VISION, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -4996,7 +4997,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.TINCTURE))
+        this.concocting(Potions.INVISIBILITY, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5007,7 +5008,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_INVISIBILITY, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5019,7 +5020,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LEAPING, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5029,7 +5030,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_LEAPING, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5040,7 +5041,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.TINCTURE))
+        this.concocting(Potions.STRONG_LEAPING, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5051,7 +5052,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.TINCTURE))
+        this.concocting(Potions.FIRE_RESISTANCE, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5062,7 +5063,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5074,7 +5075,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.TINCTURE))
+        this.concocting(Potions.SWIFTNESS, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5084,7 +5085,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_SWIFTNESS, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5095,7 +5096,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.TINCTURE))
+        this.concocting(Potions.STRONG_SWIFTNESS, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5106,7 +5107,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.TINCTURE))
+        this.concocting(Potions.TURTLE_MASTER, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5116,7 +5117,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_TURTLE_MASTER, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5127,7 +5128,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.TINCTURE))
+        this.concocting(Potions.STRONG_TURTLE_MASTER, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5138,7 +5139,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.TINCTURE))
+        this.concocting(Potions.WATER_BREATHING, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
@@ -5149,7 +5150,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_WATER_BREATHING, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
@@ -5161,7 +5162,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.TINCTURE))
+        this.concocting(Potions.HEALING, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
@@ -5173,7 +5174,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.TINCTURE))
+        this.concocting(Potions.STRONG_HEALING, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
@@ -5186,7 +5187,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE))
+        this.concocting(Potions.REGENERATION, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
@@ -5198,7 +5199,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_REGENERATION, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
@@ -5211,7 +5212,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.TINCTURE))
+        this.concocting(Potions.STRONG_REGENERATION, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
@@ -5224,7 +5225,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.TINCTURE))
+        this.concocting(Potions.STRENGTH, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5234,7 +5235,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_STRENGTH, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5245,7 +5246,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.TINCTURE))
+        this.concocting(Potions.STRONG_STRENGTH, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5256,7 +5257,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.TINCTURE))
+        this.concocting(Potions.SLOW_FALLING, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5266,7 +5267,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LONG_SLOW_FALLING, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5277,7 +5278,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.TINCTURE)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.TINCTURE))
+        this.concocting(Potions.LUCK, ConcoctionType.TINCTURE)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5290,7 +5291,7 @@ public abstract class Recipes extends RecipeProvider {
     }
     
     protected void registerPhilterRecipes() {
-        this.concocting(ConcoctionUtils.newConcoction(Potions.NIGHT_VISION, ConcoctionType.PHILTER))
+        this.concocting(Potions.NIGHT_VISION, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5300,7 +5301,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_NIGHT_VISION, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5311,7 +5312,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.PHILTER))
+        this.concocting(Potions.INVISIBILITY, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5322,7 +5323,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_INVISIBILITY, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5334,7 +5335,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.PHILTER))
+        this.concocting(Potions.LEAPING, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5344,7 +5345,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_LEAPING, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5355,7 +5356,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.PHILTER))
+        this.concocting(Potions.STRONG_LEAPING, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5366,7 +5367,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.PHILTER))
+        this.concocting(Potions.FIRE_RESISTANCE, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5377,7 +5378,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5389,7 +5390,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.PHILTER))
+        this.concocting(Potions.SWIFTNESS, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5399,7 +5400,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_SWIFTNESS, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5410,7 +5411,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.PHILTER))
+        this.concocting(Potions.STRONG_SWIFTNESS, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5421,7 +5422,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.PHILTER))
+        this.concocting(Potions.TURTLE_MASTER, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5431,7 +5432,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_TURTLE_MASTER, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5442,7 +5443,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.PHILTER))
+        this.concocting(Potions.STRONG_TURTLE_MASTER, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5453,7 +5454,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.PHILTER))
+        this.concocting(Potions.WATER_BREATHING, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
@@ -5464,7 +5465,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_WATER_BREATHING, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
@@ -5476,7 +5477,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.PHILTER))
+        this.concocting(Potions.HEALING, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5488,7 +5489,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.PHILTER))
+        this.concocting(Potions.STRONG_HEALING, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5501,7 +5502,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.PHILTER))
+        this.concocting(Potions.REGENERATION, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5513,7 +5514,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_REGENERATION, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5526,7 +5527,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.PHILTER))
+        this.concocting(Potions.STRONG_REGENERATION, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -5539,7 +5540,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.PHILTER))
+        this.concocting(Potions.STRENGTH, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5549,7 +5550,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_STRENGTH, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5560,7 +5561,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.PHILTER))
+        this.concocting(Potions.STRONG_STRENGTH, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5571,7 +5572,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.PHILTER))
+        this.concocting(Potions.SLOW_FALLING, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5581,7 +5582,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.PHILTER))
+        this.concocting(Potions.LONG_SLOW_FALLING, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5592,7 +5593,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.PHILTER)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.PHILTER))
+        this.concocting(Potions.LUCK, ConcoctionType.PHILTER)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5605,7 +5606,7 @@ public abstract class Recipes extends RecipeProvider {
     }
     
     protected void registerElixirRecipes() {
-        this.concocting(ConcoctionUtils.newConcoction(Potions.NIGHT_VISION, ConcoctionType.ELIXIR))
+        this.concocting(Potions.NIGHT_VISION, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5615,7 +5616,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_NIGHT_VISION, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5626,7 +5627,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.ELIXIR))
+        this.concocting(Potions.INVISIBILITY, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5637,7 +5638,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_INVISIBILITY, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5649,7 +5650,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LEAPING, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5659,7 +5660,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_LEAPING, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5670,7 +5671,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.ELIXIR))
+        this.concocting(Potions.STRONG_LEAPING, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5681,7 +5682,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.ELIXIR))
+        this.concocting(Potions.FIRE_RESISTANCE, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5692,7 +5693,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5704,7 +5705,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.ELIXIR))
+        this.concocting(Potions.SWIFTNESS, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5714,7 +5715,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_SWIFTNESS, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5725,7 +5726,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.ELIXIR))
+        this.concocting(Potions.STRONG_SWIFTNESS, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5736,7 +5737,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.ELIXIR))
+        this.concocting(Potions.TURTLE_MASTER, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5746,7 +5747,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_TURTLE_MASTER, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5757,7 +5758,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.ELIXIR))
+        this.concocting(Potions.STRONG_TURTLE_MASTER, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5768,7 +5769,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.ELIXIR))
+        this.concocting(Potions.WATER_BREATHING, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
@@ -5779,7 +5780,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_WATER_BREATHING, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
@@ -5791,7 +5792,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.ELIXIR))
+        this.concocting(Potions.HEALING, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
@@ -5803,7 +5804,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.ELIXIR))
+        this.concocting(Potions.STRONG_HEALING, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
@@ -5816,7 +5817,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.ELIXIR))
+        this.concocting(Potions.REGENERATION, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
@@ -5828,7 +5829,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_REGENERATION, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
@@ -5841,7 +5842,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.ELIXIR))
+        this.concocting(Potions.STRONG_REGENERATION, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
@@ -5854,7 +5855,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.ELIXIR))
+        this.concocting(Potions.STRENGTH, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5864,7 +5865,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_STRENGTH, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5875,7 +5876,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.ELIXIR))
+        this.concocting(Potions.STRONG_STRENGTH, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5886,7 +5887,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.ELIXIR))
+        this.concocting(Potions.SLOW_FALLING, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5896,7 +5897,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LONG_SLOW_FALLING, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5907,7 +5908,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.ELIXIR)
             .category(ConcoctingBookCategory.DRINKABLE)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.ELIXIR))
+        this.concocting(Potions.LUCK, ConcoctionType.ELIXIR)
             .addIngredient(this.makeWaterFlaskIngredient())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5929,7 +5930,7 @@ public abstract class Recipes extends RecipeProvider {
             .key('F', ItemsPM.SKYGLASS_FLASK.get())
             .requiredResearch(ResearchEntries.CONCOCTING_BOMBS)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.NIGHT_VISION))
+        this.concocting(Potions.NIGHT_VISION, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5938,7 +5939,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_NIGHT_VISION))
+        this.concocting(Potions.LONG_NIGHT_VISION, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5948,7 +5949,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.INVISIBILITY))
+        this.concocting(Potions.INVISIBILITY, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5958,7 +5959,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_INVISIBILITY))
+        this.concocting(Potions.LONG_INVISIBILITY, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5969,7 +5970,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LEAPING))
+        this.concocting(Potions.LEAPING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5978,7 +5979,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_LEAPING))
+        this.concocting(Potions.LONG_LEAPING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5988,7 +5989,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRONG_LEAPING))
+        this.concocting(Potions.STRONG_LEAPING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -5998,7 +5999,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.FIRE_RESISTANCE))
+        this.concocting(Potions.FIRE_RESISTANCE, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6008,7 +6009,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_FIRE_RESISTANCE))
+        this.concocting(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6019,7 +6020,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.SWIFTNESS))
+        this.concocting(Potions.SWIFTNESS, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6028,7 +6029,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_SWIFTNESS))
+        this.concocting(Potions.LONG_SWIFTNESS, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6038,7 +6039,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRONG_SWIFTNESS))
+        this.concocting(Potions.STRONG_SWIFTNESS, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6048,7 +6049,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.TURTLE_MASTER))
+        this.concocting(Potions.TURTLE_MASTER, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6057,7 +6058,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_TURTLE_MASTER))
+        this.concocting(Potions.LONG_TURTLE_MASTER, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6067,7 +6068,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRONG_TURTLE_MASTER))
+        this.concocting(Potions.STRONG_TURTLE_MASTER, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6077,7 +6078,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.WATER_BREATHING))
+        this.concocting(Potions.WATER_BREATHING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
@@ -6087,7 +6088,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_WATER_BREATHING))
+        this.concocting(Potions.LONG_WATER_BREATHING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
@@ -6098,7 +6099,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.HEALING))
+        this.concocting(Potions.HEALING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6109,7 +6110,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRONG_HEALING))
+        this.concocting(Potions.STRONG_HEALING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6121,7 +6122,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.REGENERATION))
+        this.concocting(Potions.REGENERATION, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6132,7 +6133,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_REGENERATION))
+        this.concocting(Potions.LONG_REGENERATION, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6144,7 +6145,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRONG_REGENERATION))
+        this.concocting(Potions.STRONG_REGENERATION, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6156,7 +6157,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRENGTH))
+        this.concocting(Potions.STRENGTH, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6165,7 +6166,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_STRENGTH))
+        this.concocting(Potions.LONG_STRENGTH, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6175,7 +6176,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRONG_STRENGTH))
+        this.concocting(Potions.STRONG_STRENGTH, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6185,7 +6186,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.SLOW_FALLING))
+        this.concocting(Potions.SLOW_FALLING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6194,7 +6195,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_SLOW_FALLING))
+        this.concocting(Potions.LONG_SLOW_FALLING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6204,7 +6205,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.SLOWNESS))
+        this.concocting(Potions.SLOWNESS, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -6216,7 +6217,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_SLOWNESS))
+        this.concocting(Potions.LONG_SLOWNESS, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -6229,7 +6230,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRONG_SLOWNESS))
+        this.concocting(Potions.STRONG_SLOWNESS, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -6242,7 +6243,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.HARMING))
+        this.concocting(Potions.HARMING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6253,7 +6254,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRONG_HARMING))
+        this.concocting(Potions.STRONG_HARMING, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)
@@ -6265,7 +6266,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.POISON))
+        this.concocting(Potions.POISON, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6276,7 +6277,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_POISON))
+        this.concocting(Potions.LONG_POISON, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6288,7 +6289,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.STRONG_POISON))
+        this.concocting(Potions.STRONG_POISON, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -6300,7 +6301,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.WEAKNESS))
+        this.concocting(Potions.WEAKNESS, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -6310,7 +6311,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LONG_WEAKNESS))
+        this.concocting(Potions.LONG_WEAKNESS, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -6321,7 +6322,7 @@ public abstract class Recipes extends RecipeProvider {
             .defaultManaCost(ConcoctionType.BOMB)
             .category(ConcoctingBookCategory.BOMB)
             .build(this.output);
-        this.concocting(ConcoctionUtils.newBomb(Potions.LUCK))
+        this.concocting(Potions.LUCK, ConcoctionType.BOMB)
             .addIngredient(this.makeWaterBombIngredient())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(CommonTags.Items.CROPS_NETHER_WART)

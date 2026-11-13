@@ -113,7 +113,7 @@ public abstract class StoryAdvancementsPM {
                 .rewards(AdvancementRewards.Builder.experience(100))
                 .addCriterion("completed_many_projects", StatValueTrigger.TriggerInstance.atLeast(StatsPM.RESEARCH_PROJECTS_COMPLETED, 250))
                 .save(saver, ResourceUtils.loc("story/many_theorycrafts").toString());
-        ItemStackTemplate apprenticeWand = ItemStackTemplate.fromNonEmptyStack(IHasWandComponents.setWandComponents(new ItemStack(ItemsPM.MODULAR_WAND.get()), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE));
+        ItemStackTemplate apprenticeWand = IHasWandComponents.createTemplate(ItemsPM.MODULAR_WAND.get(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE);
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_modular_wand").icon(apprenticeWand).build())
                 .parent(craftArcaneWorkbench)
                 .addCriterion("has_wand", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.MODULAR_WAND.get()))
@@ -435,7 +435,7 @@ public abstract class StoryAdvancementsPM {
                 .addCriterion("has_pen", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.SEASCRIBE_PEN.get()))
                 .save(saver, ResourceUtils.loc("story/craft_seascribe_pen").toString());
         AdvancementHolder craftAlchemicalBomb = makeBombAdvancement(registries, "craft_alchemical_bomb", ConcoctionUtils.newBomb(Potions.HARMING), AdvancementType.TASK, craftArcanometer, false, saver);
-        makeBombAdvancement(registries, "craft_all_alchemical_bombs", new ItemStack(Items.TNT), AdvancementType.CHALLENGE, craftAlchemicalBomb, true, saver);
+        makeBombAdvancement(registries, "craft_all_alchemical_bombs", new ItemStackTemplate(Items.TNT), AdvancementType.CHALLENGE, craftAlchemicalBomb, true, saver);
         Advancement.Builder.advancement().display(DisplayInfoBuilder.id("craft_zephyr_engine").icon(ItemsPM.ZEPHYR_ENGINE.get()).build())
                 .parent(craftArcanometer)
                 .addCriterion("has_engine", InventoryChangeTrigger.TriggerInstance.hasItems(ItemsPM.ZEPHYR_ENGINE.get()))
@@ -519,9 +519,9 @@ public abstract class StoryAdvancementsPM {
         return builder.save(saver, ResourceUtils.loc("story/" + id).toString());
     }
     
-    private static AdvancementHolder makeBombAdvancement(HolderLookup.Provider registries, String id, ItemStack icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, Consumer<AdvancementHolder> saver) {
+    private static AdvancementHolder makeBombAdvancement(HolderLookup.Provider registries, String id, ItemStackTemplate icon, AdvancementType type, AdvancementHolder parent, boolean requireAll, Consumer<AdvancementHolder> saver) {
         HolderGetter<Item> itemGetter = registries.lookupOrThrow(Registries.ITEM);
-        Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(ItemStackTemplate.fromNonEmptyStack(icon)).type(type).build())
+        Advancement.Builder builder = Advancement.Builder.advancement().display(DisplayInfoBuilder.id(id).icon(icon).type(type).build())
                 .parent(parent)
                 .requirements(requireAll ? AdvancementRequirements.Strategy.AND : AdvancementRequirements.Strategy.OR);
         registries.lookupOrThrow(Registries.POTION).listElements().filter(potHolder -> !potHolder.value().getEffects().isEmpty()).sorted(Comparator.comparing(potHolder -> potHolder.key().identifier().toString())).forEach(potHolder ->

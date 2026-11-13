@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class WandSpellcastTests extends AbstractBaseTest {
     protected static ItemStack getTestWand() {
-        return IHasWandComponents.setWandComponents(ItemsPM.MODULAR_WAND.get().getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE);
+        return IHasWandComponents.createTemplate(ItemsPM.MODULAR_WAND.get(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE).create();
     }
 
     public static void damage_spells_deduct_mana_from_wand_and_award_expertise(GameTestHelper helper, SpellPayloadType<?> payloadType) {

@@ -37,8 +37,8 @@ public class ConcocterRecipeBookComponent extends RecipeBookComponent<ConcocterM
     private static final Component ONLY_CRAFTABLES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.craftable");
     private static final List<TabInfo> TABS = List.of(
             new RecipeBookComponent.TabInfo(Items.COMPASS, RecipeBookCategoriesPM.SEARCH_CONCOCTER.get()),
-            new RecipeBookComponent.TabInfo(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE), Optional.empty(), RecipeBookCategoriesPM.CONCOCTER_DRINKABLE.get()),
-            new RecipeBookComponent.TabInfo(ConcoctionUtils.newBomb(Potions.POISON), Optional.empty(), RecipeBookCategoriesPM.CONCOCTER_BOMB.get())
+            new RecipeBookComponent.TabInfo(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE).create(), Optional.empty(), RecipeBookCategoriesPM.CONCOCTER_DRINKABLE.get()),
+            new RecipeBookComponent.TabInfo(ConcoctionUtils.newBomb(Potions.POISON).create(), Optional.empty(), RecipeBookCategoriesPM.CONCOCTER_BOMB.get())
     );
 
     public ConcocterRecipeBookComponent(ConcocterMenu menu) {

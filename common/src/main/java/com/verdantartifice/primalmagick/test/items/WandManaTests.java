@@ -24,7 +24,7 @@ public class WandManaTests extends AbstractBaseTest {
     }
 
     protected static ItemStack getTestWand() {
-        return IHasWandComponents.setWandComponents(getTestWandItem().getDefaultInstance(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE);
+        return IHasWandComponents.createTemplate(getTestWandItem(), WandCore.HEARTWOOD, WandCap.IRON, WandGem.APPRENTICE).create();
     }
 
     public static void wand_can_get_and_add_mana(GameTestHelper helper) {
