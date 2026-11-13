@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "salted_food",
+  "ingredients": [
+    "primalmagick:refined_salt",
+    "minecraft:baked_potato"
+  ],
+  "result": {
+    "id": "primalmagick:salted_baked_potato"
+  }
+}

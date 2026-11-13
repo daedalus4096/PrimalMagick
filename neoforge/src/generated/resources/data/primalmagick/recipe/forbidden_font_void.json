@@ -1,0 +1,44 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:mana_font_forbidden",
+  "group": "forbidden_mana_fonts",
+  "key": {
+    "E": "primalmagick:essence_crystal_void",
+    "F": "primalmagick:artificial_font_void",
+    "I": "#primalmagick:ingots/hexium",
+    "M": "primalmagick:marble_smoked_slab"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:void": 75000
+    }
+  },
+  "pattern": [
+    "IMI",
+    "EFE",
+    "IMI"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:forbidden_mana_fonts"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:forbidden_font_void"
+  }
+}

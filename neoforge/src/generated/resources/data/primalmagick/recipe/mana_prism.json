@@ -1,0 +1,24 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "D": "#primalmagick:essences/terrestrial_dusts",
+    "N": "#c:nuggets/iron",
+    "Q": "#c:nuggets/quartz"
+  },
+  "pattern": [
+    " N ",
+    "QDQ",
+    " N "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_manaweaving"
+    }
+  },
+  "result": {
+    "id": "primalmagick:mana_prism"
+  }
+}

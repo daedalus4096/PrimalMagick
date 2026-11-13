@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "waxed_weathered_copper_bars",
+  "ingredients": [
+    "minecraft:weathered_copper_bars",
+    "primalmagick:beeswax"
+  ],
+  "result": {
+    "id": "minecraft:waxed_weathered_copper_bars"
+  }
+}

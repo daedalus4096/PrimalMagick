@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:enchanting_table",
+    {
+      "id": "quark:matrix_enchanter",
+      "required": false
+    }
+  ]
+}

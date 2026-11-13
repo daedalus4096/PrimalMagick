@@ -1,0 +1,33 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:blaze_rod_core",
+  "key": {
+    "#": "#c:rods/blaze",
+    "D": "primalmagick:essence_dust_infernal"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 500,
+      "primalmagick:infernal": 1500,
+      "primalmagick:moon": 500,
+      "primalmagick:sea": 500,
+      "primalmagick:sky": 500,
+      "primalmagick:sun": 500
+    }
+  },
+  "pattern": [
+    "D#",
+    "#D"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_blaze_rod"
+    }
+  },
+  "result": {
+    "id": "primalmagick:blaze_rod_wand_core_item"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "minecraft:glass_bottle",
+    "#c:dyes/black",
+    "#primalmagick:essences/terrestrial_dusts"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_stage",
+      "rootKey": "primalmagick:theorycrafting",
+      "stage": 2
+    }
+  },
+  "result": {
+    "id": "primalmagick:enchanted_ink"
+  }
+}

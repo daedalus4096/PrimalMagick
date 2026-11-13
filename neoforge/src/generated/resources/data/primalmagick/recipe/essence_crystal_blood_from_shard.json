@@ -1,0 +1,37 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:essence_crystal",
+  "group": "essence_crystal",
+  "key": {
+    "#": "primalmagick:essence_shard_blood",
+    "Q": "minecraft:quartz"
+  },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:crystal_synthesis"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:essence_crystal_blood"
+  }
+}

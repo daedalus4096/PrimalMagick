@@ -1,0 +1,33 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "I": "#primalmagick:ingots/primalite",
+    "P": "primalmagick:magitech_parts_enchanted",
+    "R": "#c:storage_blocks/redstone"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 2000,
+      "primalmagick:moon": 2000,
+      "primalmagick:sea": 2000,
+      "primalmagick:sky": 2000,
+      "primalmagick:sun": 2000
+    }
+  },
+  "pattern": [
+    "PIP",
+    "IRI",
+    "PIP"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:primalite_golem"
+    }
+  },
+  "result": {
+    "id": "primalmagick:primalite_golem_controller"
+  }
+}

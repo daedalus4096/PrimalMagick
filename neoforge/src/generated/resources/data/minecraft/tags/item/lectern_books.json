@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:enchanted_book",
+    "primalmagick:grimoire",
+    "primalmagick:grimoire_creative",
+    "primalmagick:static_book",
+    "primalmagick:static_book_uncommon",
+    "primalmagick:static_book_rare"
+  ]
+}

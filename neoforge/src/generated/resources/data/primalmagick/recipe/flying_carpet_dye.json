@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:flying_carpet_dye_special",
+  "carpet": "primalmagick:flying_carpet",
+  "dye": "#minecraft:dyes",
+  "result": {
+    "id": "primalmagick:flying_carpet"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "type": "primalmagick:ritual",
+  "disciplineOverride": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "expertiseGroup": "primalmagick:primal_core",
+  "ingredients": [
+    "primalmagick:obsidian_staff_core_item",
+    "primalmagick:coral_staff_core_item",
+    "primalmagick:bamboo_staff_core_item",
+    "primalmagick:sunwood_staff_core_item",
+    "primalmagick:moonwood_staff_core_item",
+    "primalmagick:mana_salts",
+    "primalmagick:mana_salts"
+  ],
+  "instability": 4,
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1500,
+      "primalmagick:moon": 1500,
+      "primalmagick:sea": 1500,
+      "primalmagick:sky": 1500,
+      "primalmagick:sun": 1500
+    }
+  },
+  "props": [
+    "primalmagick:ritual_bell",
+    "primalmagick:ritual_lectern",
+    "#primalmagick:ritual_candles"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:wand_core_primal"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:primal_staff_core_item"
+  }
+}

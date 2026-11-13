@@ -1,0 +1,21 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:sanguine_core",
+  "group": "attuned_sanguine_cores",
+  "ingredients": [
+    "primalmagick:sanguine_core_blank",
+    "minecraft:golden_axe",
+    "primalmagick:essence_dust_infernal"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sanguine_core_demons"
+    }
+  },
+  "result": {
+    "id": "primalmagick:sanguine_core_piglin_brute"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "group": "calcinators",
+  "key": {
+    "C": "primalmagick:calcinator_basic",
+    "E": "#primalmagick:essences/terrestrial_shards",
+    "M": "primalmagick:marble_enchanted"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 2000,
+      "primalmagick:moon": 2000,
+      "primalmagick:sea": 2000,
+      "primalmagick:sky": 2000,
+      "primalmagick:sun": 2000
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MCM",
+    "EEE"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:calcinator_enchanted"
+    }
+  },
+  "result": {
+    "id": "primalmagick:calcinator_enchanted"
+  }
+}

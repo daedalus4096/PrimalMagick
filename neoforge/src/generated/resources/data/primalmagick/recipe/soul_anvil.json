@@ -1,0 +1,28 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "B": "#primalmagick:storage_blocks/hexium",
+    "I": "#primalmagick:ingots/hexium"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 5000
+    }
+  },
+  "pattern": [
+    "BBB",
+    " I ",
+    "III"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:soul_anvil"
+    }
+  },
+  "result": {
+    "id": "primalmagick:soul_anvil"
+  }
+}

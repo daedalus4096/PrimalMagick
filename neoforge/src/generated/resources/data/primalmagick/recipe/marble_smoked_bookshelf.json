@@ -1,0 +1,25 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "category": "arcane",
+  "key": {
+    "M": "primalmagick:marble_smoked",
+    "S": "primalmagick:marble_smoked_slab"
+  },
+  "pattern": [
+    "MMM",
+    "SSS",
+    "MMM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:master_manaweaving"
+    }
+  },
+  "result": {
+    "id": "primalmagick:marble_smoked_bookshelf"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:essence_crystal",
+  "group": "essence_crystal",
+  "key": {
+    "#": "primalmagick:essence_shard_sun",
+    "Q": "minecraft:quartz"
+  },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:crystal_synthesis"
+    }
+  },
+  "result": {
+    "id": "primalmagick:essence_crystal_sun"
+  }
+}

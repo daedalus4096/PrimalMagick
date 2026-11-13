@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "B": "minecraft:brewing_stand",
+    "C": "#c:ingots/copper",
+    "M": "primalmagick:marble_enchanted",
+    "P": "primalmagick:magitech_parts_enchanted"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 4000
+    }
+  },
+  "pattern": [
+    "CPC",
+    "PBP",
+    "MMM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_tinctures"
+    }
+  },
+  "result": {
+    "id": "primalmagick:concocter"
+  }
+}

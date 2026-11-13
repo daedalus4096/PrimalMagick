@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "group": "magitech_parts",
+  "key": {
+    "I": "#primalmagick:ingots/hallowsteel",
+    "P": "primalmagick:magitech_parts_forbidden",
+    "S": "primalmagick:mana_salts"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 10000
+    }
+  },
+  "pattern": [
+    "SIS",
+    "IPI",
+    "SIS"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:supreme_magitech"
+    }
+  },
+  "result": {
+    "id": "primalmagick:magitech_parts_heavenly"
+  }
+}

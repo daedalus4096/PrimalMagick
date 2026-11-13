@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:dissolution",
+  "category": "misc",
+  "ingredient": "#c:rods/blaze",
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1000
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:blaze_powder"
+  }
+}

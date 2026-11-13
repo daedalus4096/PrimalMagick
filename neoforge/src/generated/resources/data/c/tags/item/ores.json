@@ -1,0 +1,21 @@
+{
+  "values": [
+    "#c:ores/rock_salt",
+    {
+      "id": "#c:ores/tin",
+      "required": false
+    },
+    {
+      "id": "#c:ores/lead",
+      "required": false
+    },
+    {
+      "id": "#c:ores/silver",
+      "required": false
+    },
+    {
+      "id": "#c:ores/uranium",
+      "required": false
+    }
+  ]
+}

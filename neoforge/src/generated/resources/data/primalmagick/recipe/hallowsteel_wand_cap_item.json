@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "N": "#primalmagick:nuggets/hallowsteel"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 15000,
+      "primalmagick:moon": 15000,
+      "primalmagick:sea": 15000,
+      "primalmagick:sky": 15000,
+      "primalmagick:sun": 15000
+    }
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_cap_hallowsteel"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hallowsteel_wand_cap_item"
+  }
+}

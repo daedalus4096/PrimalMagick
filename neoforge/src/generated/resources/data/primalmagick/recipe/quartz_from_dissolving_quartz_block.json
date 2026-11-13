@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:dissolution",
+  "category": "ore",
+  "ingredient": "minecraft:quartz_block",
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1000
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:quartz"
+  }
+}

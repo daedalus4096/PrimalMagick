@@ -1,0 +1,18 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "minecraft:rotten_flesh",
+    "primalmagick:essence_dust_sun"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ritual_candles"
+    }
+  },
+  "result": {
+    "id": "primalmagick:tallow"
+  }
+}

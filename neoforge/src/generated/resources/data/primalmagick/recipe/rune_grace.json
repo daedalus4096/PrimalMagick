@@ -1,0 +1,18 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "primalmagick:rune_unattuned",
+    "primalmagick:essence_cluster_hallowed"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:rune_grace"
+    }
+  },
+  "result": {
+    "id": "primalmagick:rune_grace"
+  }
+}

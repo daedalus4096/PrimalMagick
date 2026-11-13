@@ -1,0 +1,23 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "category": "arcane",
+  "key": {
+    "M": "primalmagick:marble_enchanted_slab"
+  },
+  "pattern": [
+    "M",
+    "M"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:expert_manaweaving"
+    }
+  },
+  "result": {
+    "id": "primalmagick:marble_enchanted_chiseled"
+  }
+}

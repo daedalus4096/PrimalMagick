@@ -1,0 +1,36 @@
+{
+  "type": "primalmagick:ritual",
+  "ingredients": [
+    "primalmagick:hallowsteel_shield",
+    "primalmagick:essence_shard_hallowed",
+    "primalmagick:essence_shard_hallowed",
+    "primalmagick:rune_hallowed",
+    "primalmagick:mana_prism",
+    "primalmagick:mana_salts"
+  ],
+  "instability": 3,
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 4000
+    }
+  },
+  "props": [
+    "primalmagick:celestial_harp",
+    "primalmagick:celestial_harp"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sacred_shield"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "primalmagick:bulwark": 2
+      }
+    },
+    "id": "primalmagick:sacred_shield"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "M": "primalmagick:marble",
+    "S": "primalmagick:spell_scroll_blank"
+  },
+  "pattern": [
+    "MMM",
+    "MSM",
+    "MMM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_sorcery"
+    }
+  },
+  "result": {
+    "id": "primalmagick:spellcrafting_altar"
+  }
+}

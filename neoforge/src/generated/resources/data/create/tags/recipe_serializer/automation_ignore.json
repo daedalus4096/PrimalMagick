@@ -1,0 +1,36 @@
+{
+  "values": [
+    {
+      "id": "primalmagick:shaped_arcane",
+      "required": false
+    },
+    {
+      "id": "primalmagick:shapeless_arcane",
+      "required": false
+    },
+    {
+      "id": "primalmagick:shapeless_arcane_tag",
+      "required": false
+    },
+    {
+      "id": "primalmagick:ritual",
+      "required": false
+    },
+    {
+      "id": "primalmagick:runecarving",
+      "required": false
+    },
+    {
+      "id": "primalmagick:concocting",
+      "required": false
+    },
+    {
+      "id": "primalmagick:dissolution",
+      "required": false
+    },
+    {
+      "id": "primalmagick:dissolution_tag",
+      "required": false
+    }
+  ]
+}

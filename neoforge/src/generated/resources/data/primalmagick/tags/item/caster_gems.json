@@ -1,0 +1,9 @@
+{
+  "values": [
+    "primalmagick:apprentice_wand_gem_item",
+    "primalmagick:adept_wand_gem_item",
+    "primalmagick:wizard_wand_gem_item",
+    "primalmagick:archmage_wand_gem_item",
+    "primalmagick:creative_wand_gem_item"
+  ]
+}

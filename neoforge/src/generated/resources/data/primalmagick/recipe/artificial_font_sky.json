@@ -1,0 +1,31 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:mana_font_artificial",
+  "group": "artificial_mana_fonts",
+  "key": {
+    "E": "primalmagick:essence_shard_sky",
+    "I": "#primalmagick:ingots/primalite",
+    "M": "primalmagick:marble_enchanted_slab"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:sky": 25000
+    }
+  },
+  "pattern": [
+    "IMI",
+    " E ",
+    "IMI"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:artificial_mana_fonts"
+    }
+  },
+  "result": {
+    "id": "primalmagick:artificial_font_sky"
+  }
+}

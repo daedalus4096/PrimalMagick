@@ -1,0 +1,31 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "#c:gems/quartz",
+    "primalmagick:essence_shard_earth",
+    "primalmagick:essence_shard_hallowed"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:synthetic_gem_buds"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:energized_quartz"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "category": "arcane",
+  "ingredients": [
+    "minecraft:emerald_block",
+    "primalmagick:energized_emerald"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:synthetic_gem_buds"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:damaged_budding_emerald_block"
+  }
+}

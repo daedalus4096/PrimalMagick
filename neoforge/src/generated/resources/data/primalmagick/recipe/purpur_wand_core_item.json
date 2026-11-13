@@ -1,0 +1,33 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:purpur_core",
+  "key": {
+    "#": "minecraft:purpur_block",
+    "D": "primalmagick:essence_dust_void"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 500,
+      "primalmagick:moon": 500,
+      "primalmagick:sea": 500,
+      "primalmagick:sky": 500,
+      "primalmagick:sun": 500,
+      "primalmagick:void": 1500
+    }
+  },
+  "pattern": [
+    "D#",
+    "#D"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_purpur"
+    }
+  },
+  "result": {
+    "id": "primalmagick:purpur_wand_core_item"
+  }
+}

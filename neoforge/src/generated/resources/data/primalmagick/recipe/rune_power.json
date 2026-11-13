@@ -1,0 +1,20 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "primalmagick:rune_unattuned",
+    "primalmagick:essence_crystal_blood",
+    "primalmagick:essence_crystal_infernal",
+    "primalmagick:essence_crystal_void"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:rune_power"
+    }
+  },
+  "result": {
+    "id": "primalmagick:rune_power"
+  }
+}

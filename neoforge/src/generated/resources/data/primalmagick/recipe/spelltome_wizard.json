@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "minecraft:book",
+    "primalmagick:spell_scroll_blank",
+    "primalmagick:spell_scroll_blank",
+    "primalmagick:spell_scroll_blank",
+    "#primalmagick:essences/terrestrial_crystals"
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 5000,
+      "primalmagick:moon": 5000,
+      "primalmagick:sea": 5000,
+      "primalmagick:sky": 5000,
+      "primalmagick:sun": 5000
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:spelltome_wizard"
+    }
+  },
+  "result": {
+    "id": "primalmagick:spelltome_wizard"
+  }
+}

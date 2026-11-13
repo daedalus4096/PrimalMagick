@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:dissolution",
+  "category": "misc",
+  "ingredient": "#minecraft:wool",
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1000
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:string"
+  }
+}

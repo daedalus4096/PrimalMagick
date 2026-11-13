@@ -1,0 +1,42 @@
+{
+  "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:pixie_basic",
+  "ingredients": [
+    "primalmagick:mana_salts",
+    "primalmagick:essence_shard_blood",
+    "primalmagick:rune_summon",
+    "primalmagick:rune_creature"
+  ],
+  "instability": 3,
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 4000
+    }
+  },
+  "props": [
+    "primalmagick:incense_brazier",
+    "primalmagick:ritual_bell"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:pixies"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:pixie_basic_blood"
+  }
+}

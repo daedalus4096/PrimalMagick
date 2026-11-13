@@ -1,0 +1,34 @@
+{
+  "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:ambrosia_greater",
+  "ingredients": [
+    "primalmagick:manafruit",
+    "primalmagick:mana_prism",
+    "primalmagick:essence_crystal_sky",
+    "primalmagick:rune_absorb",
+    "primalmagick:rune_self",
+    "primalmagick:rune_insight"
+  ],
+  "instability": 6,
+  "mana": {
+    "sources": {
+      "primalmagick:sky": 10000
+    }
+  },
+  "props": [
+    "#primalmagick:ritual_candles",
+    "#primalmagick:ritual_candles",
+    "primalmagick:ritual_lectern",
+    "primalmagick:bloodletter"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:greater_ambrosia"
+    }
+  },
+  "result": {
+    "id": "primalmagick:ambrosia_greater_sky"
+  }
+}

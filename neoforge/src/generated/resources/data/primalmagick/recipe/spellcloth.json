@@ -1,0 +1,33 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "#minecraft:wool",
+    "E": "#primalmagick:essences/terrestrial_dusts",
+    "S": "#c:strings"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 500,
+      "primalmagick:moon": 500,
+      "primalmagick:sea": 500,
+      "primalmagick:sky": 500,
+      "primalmagick:sun": 500
+    }
+  },
+  "pattern": [
+    "ESE",
+    " C ",
+    "ESE"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:spellcloth"
+    }
+  },
+  "result": {
+    "id": "primalmagick:spellcloth"
+  }
+}

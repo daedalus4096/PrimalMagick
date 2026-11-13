@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "N": "#c:nuggets/gold"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 500,
+      "primalmagick:moon": 500,
+      "primalmagick:sea": 500,
+      "primalmagick:sky": 500,
+      "primalmagick:sun": 500
+    }
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_cap_gold"
+    }
+  },
+  "result": {
+    "id": "primalmagick:gold_wand_cap_item"
+  }
+}

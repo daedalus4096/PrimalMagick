@@ -1,0 +1,27 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "#c:gems/diamond",
+    "#primalmagick:essences/terrestrial_crystals"
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 10000,
+      "primalmagick:moon": 10000,
+      "primalmagick:sea": 10000,
+      "primalmagick:sky": 10000,
+      "primalmagick:sun": 10000
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_gem_wizard"
+    }
+  },
+  "result": {
+    "id": "primalmagick:wizard_wand_gem_item"
+  }
+}

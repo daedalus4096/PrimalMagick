@@ -1,0 +1,20 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:essence_shard",
+  "group": "essence_shard",
+  "ingredients": [
+    "primalmagick:essence_crystal_earth"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:crystal_desynthesis"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "primalmagick:essence_shard_earth"
+  }
+}

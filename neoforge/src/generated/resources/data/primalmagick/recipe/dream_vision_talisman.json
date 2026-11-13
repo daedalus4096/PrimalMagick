@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:ritual",
+  "ingredients": [
+    "minecraft:amethyst_shard",
+    "#c:ingots/gold",
+    "#c:ingots/copper",
+    "#c:strings",
+    "#minecraft:sand",
+    "minecraft:phantom_membrane"
+  ],
+  "instability": 4,
+  "mana": {
+    "sources": {
+      "primalmagick:moon": 4000
+    }
+  },
+  "props": [
+    "#primalmagick:ritual_candles",
+    "primalmagick:incense_brazier",
+    "primalmagick:ritual_lectern"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:dream_vision_talisman"
+    }
+  },
+  "result": {
+    "id": "primalmagick:dream_vision_talisman"
+  }
+}

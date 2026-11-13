@@ -1,0 +1,9 @@
+{
+  "type": "primalmagick:wand_assembly_special",
+  "cap": "#primalmagick:caster_cores",
+  "core": "#primalmagick:caster_cores/staff",
+  "gem": "#primalmagick:caster_gems",
+  "result": {
+    "id": "primalmagick:modular_staff"
+  }
+}

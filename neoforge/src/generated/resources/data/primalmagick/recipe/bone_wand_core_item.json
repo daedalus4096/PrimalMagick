@@ -1,0 +1,33 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:bone_core",
+  "key": {
+    "#": "minecraft:bone",
+    "D": "primalmagick:essence_dust_blood"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 1500,
+      "primalmagick:earth": 500,
+      "primalmagick:moon": 500,
+      "primalmagick:sea": 500,
+      "primalmagick:sky": 500,
+      "primalmagick:sun": 500
+    }
+  },
+  "pattern": [
+    "D#",
+    "#D"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_bone"
+    }
+  },
+  "result": {
+    "id": "primalmagick:bone_wand_core_item"
+  }
+}

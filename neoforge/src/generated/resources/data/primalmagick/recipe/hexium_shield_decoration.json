@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_special_shielddecoration",
+  "banner": "#minecraft:banners",
+  "result": {
+    "id": "primalmagick:hexium_shield"
+  },
+  "target": "primalmagick:hexium_shield"
+}

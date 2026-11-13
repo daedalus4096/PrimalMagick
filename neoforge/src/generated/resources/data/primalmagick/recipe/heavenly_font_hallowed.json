@@ -1,0 +1,44 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:mana_font_heavenly",
+  "group": "heavenly_mana_fonts",
+  "key": {
+    "E": "primalmagick:essence_cluster_hallowed",
+    "F": "primalmagick:forbidden_font_hallowed",
+    "I": "#primalmagick:ingots/hallowsteel",
+    "M": "primalmagick:marble_hallowed_slab"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 250000
+    }
+  },
+  "pattern": [
+    "IMI",
+    "EFE",
+    "IMI"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:heavenly_mana_fonts"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:heavenly_font_hallowed"
+  }
+}

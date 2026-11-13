@@ -1,0 +1,44 @@
+{
+  "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:ambrosia_basic",
+  "ingredients": [
+    "primalmagick:manafruit",
+    "primalmagick:mana_prism",
+    "primalmagick:essence_shard_blood",
+    "primalmagick:rune_absorb",
+    "primalmagick:rune_self"
+  ],
+  "instability": 4,
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 4000
+    }
+  },
+  "props": [
+    "#primalmagick:ritual_candles",
+    "#primalmagick:ritual_candles",
+    "primalmagick:ritual_lectern"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:ambrosia"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:ambrosia_basic_blood"
+  }
+}

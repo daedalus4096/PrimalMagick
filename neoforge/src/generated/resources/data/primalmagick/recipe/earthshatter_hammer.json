@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "E": "primalmagick:essence_shard_earth",
+    "I": "#c:ingots/iron",
+    "S": "#c:rods/wooden"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 2000
+    }
+  },
+  "pattern": [
+    "III",
+    "IEI",
+    " S "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:earthshatter_hammer"
+    }
+  },
+  "result": {
+    "id": "primalmagick:earthshatter_hammer"
+  }
+}

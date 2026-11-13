@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:quartz"
+  ],
+  "result": {
+    "count": 9,
+    "id": "primalmagick:quartz_nugget"
+  }
+}

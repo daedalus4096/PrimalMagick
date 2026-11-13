@@ -1,0 +1,37 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:essence_shard",
+  "group": "essence_shard",
+  "key": {
+    "#": "primalmagick:essence_dust_infernal",
+    "Q": "primalmagick:quartz_nugget"
+  },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:shard_synthesis"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:essence_shard_infernal"
+  }
+}

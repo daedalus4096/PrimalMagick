@@ -1,0 +1,21 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "group": "hexium_ingot",
+  "ingredients": [
+    "#primalmagick:ingots/primalite",
+    "primalmagick:essence_shard_blood",
+    "primalmagick:essence_shard_infernal",
+    "primalmagick:essence_shard_void"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hexium"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hexium_ingot"
+  }
+}

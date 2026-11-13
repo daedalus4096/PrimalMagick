@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "N": "#primalmagick:nuggets/hexium"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 5000,
+      "primalmagick:moon": 5000,
+      "primalmagick:sea": 5000,
+      "primalmagick:sky": 5000,
+      "primalmagick:sun": 5000
+    }
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_cap_hexium"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hexium_wand_cap_item"
+  }
+}

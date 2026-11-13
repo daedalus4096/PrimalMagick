@@ -1,0 +1,19 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "#c:gems/amethyst",
+    "primalmagick:essence_shard_earth",
+    "primalmagick:essence_shard_sun"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:synthetic_gem_buds"
+    }
+  },
+  "result": {
+    "id": "primalmagick:energized_amethyst"
+  }
+}

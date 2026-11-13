@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "primalmagick:marble_smoked",
+  "result": {
+    "id": "primalmagick:marble_smoked_brick_stairs"
+  }
+}

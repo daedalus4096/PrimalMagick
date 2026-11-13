@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "B": "minecraft:bucket",
+    "C": "#c:ingots/copper",
+    "G": "#c:glass_blocks/colorless",
+    "P": "primalmagick:magitech_parts_basic"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:sun": 1000
+    }
+  },
+  "pattern": [
+    "GGG",
+    "BPB",
+    "CCC"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:desalinator"
+    }
+  },
+  "result": {
+    "id": "primalmagick:desalinator"
+  }
+}

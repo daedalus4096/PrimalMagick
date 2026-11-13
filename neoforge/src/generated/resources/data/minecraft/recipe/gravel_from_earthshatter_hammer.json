@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "primalmagick:earthshatter_hammer",
+    "#c:cobblestones"
+  ],
+  "result": {
+    "id": "minecraft:gravel"
+  }
+}

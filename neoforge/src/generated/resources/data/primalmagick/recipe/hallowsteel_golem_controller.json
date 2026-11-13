@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "I": "#primalmagick:ingots/hallowsteel",
+    "P": "primalmagick:magitech_parts_heavenly",
+    "R": "#c:storage_blocks/redstone"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 10000
+    }
+  },
+  "pattern": [
+    "PIP",
+    "IRI",
+    "PIP"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hallowsteel_golem"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hallowsteel_golem_controller"
+  }
+}

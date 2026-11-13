@@ -1,0 +1,43 @@
+{
+  "type": "primalmagick:concocting",
+  "category": "drinkable",
+  "group": "strong_turtle_master",
+  "ingredients": [
+    {
+      "neoforge:ingredient_type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": "primalmagick:concoction"
+    },
+    "primalmagick:essence_dust_sea",
+    "#c:crops/nether_wart",
+    "minecraft:turtle_helmet",
+    "#c:dusts/glowstone"
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 200
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_tinctures"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:strong_turtle_master"
+      },
+      "primalmagick:concoction_doses": 3,
+      "primalmagick:concoction_type": "tincture"
+    },
+    "id": "primalmagick:concoction"
+  }
+}

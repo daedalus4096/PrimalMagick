@@ -1,0 +1,34 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "group": "magitech_parts",
+  "key": {
+    "I": "#primalmagick:ingots/primalite",
+    "P": "primalmagick:magitech_parts_basic",
+    "S": "primalmagick:mana_salts"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 2000,
+      "primalmagick:moon": 2000,
+      "primalmagick:sea": 2000,
+      "primalmagick:sky": 2000,
+      "primalmagick:sun": 2000
+    }
+  },
+  "pattern": [
+    "SIS",
+    "IPI",
+    "SIS"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:expert_magitech"
+    }
+  },
+  "result": {
+    "id": "primalmagick:magitech_parts_enchanted"
+  }
+}

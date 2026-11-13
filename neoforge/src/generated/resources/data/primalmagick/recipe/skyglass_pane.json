@@ -1,0 +1,23 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:skyglass_pane",
+  "key": {
+    "G": "primalmagick:skyglass"
+  },
+  "pattern": [
+    "GGG",
+    "GGG"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:skyglass"
+    }
+  },
+  "result": {
+    "count": 16,
+    "id": "primalmagick:skyglass_pane"
+  }
+}

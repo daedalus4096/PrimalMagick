@@ -1,0 +1,34 @@
+{
+  "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:pixie_majestic",
+  "ingredients": [
+    "primalmagick:mana_salts",
+    "primalmagick:essence_cluster_sky",
+    "#c:ingots/gold",
+    "primalmagick:rune_summon",
+    "primalmagick:rune_creature",
+    "primalmagick:rune_power"
+  ],
+  "instability": 7,
+  "mana": {
+    "sources": {
+      "primalmagick:sky": 20000
+    }
+  },
+  "props": [
+    "primalmagick:incense_brazier",
+    "primalmagick:ritual_bell",
+    "primalmagick:soul_anvil",
+    "primalmagick:celestial_harp"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:majestic_pixies"
+    }
+  },
+  "result": {
+    "id": "primalmagick:pixie_majestic_sky"
+  }
+}

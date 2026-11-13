@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "I": "#c:nuggets/iron",
+    "P": "#primalmagick:ingots/primalite",
+    "S": "#c:rods/wooden"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:sea": 1000
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PSP",
+    "PIP"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ritual_bell"
+    }
+  },
+  "result": {
+    "id": "primalmagick:ritual_bell"
+  }
+}

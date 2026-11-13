@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:coral_core",
+  "key": {
+    "#": "#primalmagick:coral_blocks",
+    "D": "primalmagick:essence_dust_sea"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 500,
+      "primalmagick:moon": 500,
+      "primalmagick:sea": 1500,
+      "primalmagick:sky": 500,
+      "primalmagick:sun": 500
+    }
+  },
+  "pattern": [
+    "D#",
+    "#D"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_coral"
+    }
+  },
+  "result": {
+    "id": "primalmagick:coral_wand_core_item"
+  }
+}

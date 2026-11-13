@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "primalmagick:essence_crystal_earth",
+    "D": "#c:gems/diamond",
+    "M": "primalmagick:marble_smoked_slab",
+    "P": "primalmagick:magitech_parts_forbidden"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 10000
+    }
+  },
+  "pattern": [
+    "DDD",
+    "DCD",
+    "MPM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:dissolution_chamber"
+    }
+  },
+  "result": {
+    "id": "primalmagick:dissolution_chamber"
+  }
+}

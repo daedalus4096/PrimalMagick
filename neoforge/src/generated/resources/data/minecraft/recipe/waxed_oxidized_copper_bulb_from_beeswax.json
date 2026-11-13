@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "waxed_oxidized_copper_bulb",
+  "ingredients": [
+    "minecraft:oxidized_copper_bulb",
+    "primalmagick:beeswax"
+  ],
+  "result": {
+    "id": "minecraft:waxed_oxidized_copper_bulb"
+  }
+}

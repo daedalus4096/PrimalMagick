@@ -1,0 +1,31 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "primalmagick:spellcloth",
+    "E": "#primalmagick:essences/forbidden_shards",
+    "S": "#c:strings"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 2000,
+      "primalmagick:infernal": 2000,
+      "primalmagick:void": 2000
+    }
+  },
+  "pattern": [
+    "ESE",
+    " C ",
+    "ESE"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hexweave"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hexweave"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "A": "#c:gems/amethyst",
+    "G": "primalmagick:wizard_wand_gem_item",
+    "M": "primalmagick:marble_smoked",
+    "P": "primalmagick:magitech_parts_forbidden"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 25000,
+      "primalmagick:moon": 25000,
+      "primalmagick:sea": 25000,
+      "primalmagick:sky": 25000,
+      "primalmagick:sun": 25000
+    }
+  },
+  "pattern": [
+    "APA",
+    "MGM",
+    "APA"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_nexus"
+    }
+  },
+  "result": {
+    "id": "primalmagick:mana_nexus"
+  }
+}

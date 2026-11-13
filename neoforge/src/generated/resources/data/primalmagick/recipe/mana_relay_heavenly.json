@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "#c:storage_blocks/copper",
+    "E": "#primalmagick:essences/terrestrial_clusters",
+    "M": "#primalmagick:ingots/hallowsteel",
+    "P": "primalmagick:magitech_parts_heavenly"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 10000
+    }
+  },
+  "pattern": [
+    "MEM",
+    " C ",
+    "MPM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:heavenly_mana_networking"
+    }
+  },
+  "result": {
+    "id": "primalmagick:mana_relay_heavenly"
+  }
+}

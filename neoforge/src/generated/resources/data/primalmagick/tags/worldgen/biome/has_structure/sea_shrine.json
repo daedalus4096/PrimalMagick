@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#minecraft:is_river",
+    "#minecraft:is_beach",
+    "minecraft:swamp",
+    "minecraft:snowy_plains",
+    "minecraft:ice_spikes"
+  ]
+}

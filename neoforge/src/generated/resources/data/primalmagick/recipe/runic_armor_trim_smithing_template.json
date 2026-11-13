@@ -1,0 +1,33 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "#": "#c:gems/diamond",
+    "M": "primalmagick:marble",
+    "R": "primalmagick:rune_unattuned"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 4000,
+      "primalmagick:moon": 4000,
+      "primalmagick:sea": 4000,
+      "primalmagick:sky": 4000,
+      "primalmagick:sun": 4000
+    }
+  },
+  "pattern": [
+    "#R#",
+    "#M#",
+    "###"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:runic_trim"
+    }
+  },
+  "result": {
+    "id": "primalmagick:runic_armor_trim_smithing_template"
+  }
+}

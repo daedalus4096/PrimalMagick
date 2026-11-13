@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:wand_glamour_special",
+  "cap": "#primalmagick:caster_caps",
+  "caster": "primalmagick:modular_wand",
+  "core": "#primalmagick:caster_cores/wand",
+  "gem": "#primalmagick:caster_gems",
+  "result": {
+    "id": "primalmagick:modular_wand"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:ritual",
+  "ingredients": [
+    "#c:seeds/melon",
+    "minecraft:water_bucket",
+    "primalmagick:essence_shard_sea",
+    "primalmagick:rune_sea"
+  ],
+  "instability": 3,
+  "mana": {
+    "sources": {
+      "primalmagick:sea": 5000
+    }
+  },
+  "props": [
+    "#primalmagick:ritual_candles",
+    "primalmagick:ritual_bell"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hydromelon"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hydromelon_seeds"
+  }
+}

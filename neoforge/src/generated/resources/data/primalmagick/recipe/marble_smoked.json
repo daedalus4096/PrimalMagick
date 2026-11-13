@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "#minecraft:coals",
+    "M": "primalmagick:marble"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:moon": 500
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MMM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:master_manaweaving"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "primalmagick:marble_smoked"
+  }
+}

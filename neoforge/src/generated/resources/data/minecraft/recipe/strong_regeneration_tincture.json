@@ -1,0 +1,56 @@
+{
+  "type": "primalmagick:concocting",
+  "category": "drinkable",
+  "group": "strong_regeneration",
+  "ingredients": [
+    {
+      "neoforge:ingredient_type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": "primalmagick:concoction"
+    },
+    "primalmagick:essence_dust_sun",
+    "primalmagick:essence_dust_blood",
+    "#c:crops/nether_wart",
+    "minecraft:ghast_tear",
+    "#c:dusts/glowstone"
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 200
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:concocting_tinctures"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:strong_regeneration"
+      },
+      "primalmagick:concoction_doses": 3,
+      "primalmagick:concoction_type": "tincture"
+    },
+    "id": "primalmagick:concoction"
+  }
+}

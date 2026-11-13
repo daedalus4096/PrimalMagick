@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "primalmagick:essence_crystal_infernal",
+    "M": "primalmagick:marble_smoked",
+    "P": "primalmagick:magitech_parts_forbidden"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 5000
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MPM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:infernal_furnace"
+    }
+  },
+  "result": {
+    "id": "primalmagick:infernal_furnace"
+  }
+}

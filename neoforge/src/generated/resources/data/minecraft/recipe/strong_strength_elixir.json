@@ -1,0 +1,43 @@
+{
+  "type": "primalmagick:concocting",
+  "category": "drinkable",
+  "group": "strong_strength",
+  "ingredients": [
+    {
+      "neoforge:ingredient_type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": "primalmagick:concoction"
+    },
+    "primalmagick:essence_crystal_earth",
+    "#c:crops/nether_wart",
+    "minecraft:blaze_powder",
+    "#c:dusts/glowstone"
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 5000
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_elixirs"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:strong_strength"
+      },
+      "primalmagick:concoction_doses": 9,
+      "primalmagick:concoction_type": "elixir"
+    },
+    "id": "primalmagick:concoction"
+  }
+}

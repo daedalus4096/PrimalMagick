@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "primalmagick:hexweave",
+    "E": "primalmagick:essence_crystal_hallowed",
+    "S": "#c:strings"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 5000
+    }
+  },
+  "pattern": [
+    "ESE",
+    " C ",
+    "ESE"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:saintswool"
+    }
+  },
+  "result": {
+    "id": "primalmagick:saintswool"
+  }
+}

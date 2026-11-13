@@ -1,0 +1,43 @@
+{
+  "type": "primalmagick:concocting",
+  "category": "drinkable",
+  "group": "strong_swiftness",
+  "ingredients": [
+    {
+      "neoforge:ingredient_type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": "primalmagick:concoction"
+    },
+    "primalmagick:essence_shard_sky",
+    "#c:crops/nether_wart",
+    "minecraft:sugar",
+    "#c:dusts/glowstone"
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 1000
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_philters"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:strong_swiftness"
+      },
+      "primalmagick:concoction_doses": 6,
+      "primalmagick:concoction_type": "philter"
+    },
+    "id": "primalmagick:concoction"
+  }
+}

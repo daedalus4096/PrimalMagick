@@ -1,0 +1,34 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "group": "calcinators",
+  "key": {
+    "B": "primalmagick:essence_crystal_blood",
+    "C": "primalmagick:calcinator_enchanted",
+    "I": "primalmagick:essence_crystal_infernal",
+    "M": "primalmagick:marble_smoked",
+    "V": "primalmagick:essence_crystal_void"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 5000,
+      "primalmagick:infernal": 5000,
+      "primalmagick:void": 5000
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MCM",
+    "BIV"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:calcinator_forbidden"
+    }
+  },
+  "result": {
+    "id": "primalmagick:calcinator_forbidden"
+  }
+}

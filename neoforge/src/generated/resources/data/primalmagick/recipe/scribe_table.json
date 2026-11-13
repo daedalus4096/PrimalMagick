@@ -1,0 +1,19 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "primalmagick:wood_table",
+    "minecraft:bookshelf",
+    "minecraft:writable_book"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:linguistics"
+    }
+  },
+  "result": {
+    "id": "primalmagick:scribe_table"
+  }
+}

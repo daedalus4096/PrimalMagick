@@ -1,0 +1,45 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:obsidian_core",
+  "key": {
+    "#": "#c:obsidians",
+    "D": "primalmagick:essence_shard_earth"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1500,
+      "primalmagick:moon": 500,
+      "primalmagick:sea": 500,
+      "primalmagick:sky": 500,
+      "primalmagick:sun": 500
+    }
+  },
+  "pattern": [
+    " D#",
+    "D#D",
+    "#D "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:wand_core_obsidian"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:obsidian_staff_core_item"
+  }
+}

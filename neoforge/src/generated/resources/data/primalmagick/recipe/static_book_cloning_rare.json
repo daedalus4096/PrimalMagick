@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:static_book_cloning",
+  "material": "#minecraft:book_cloning_target",
+  "result": {
+    "id": "primalmagick:static_book_rare"
+  },
+  "source": "primalmagick:static_book_rare"
+}

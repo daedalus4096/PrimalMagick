@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "B": "minecraft:glass_bottle",
+    "H": "minecraft:honeycomb",
+    "P": "primalmagick:magitech_parts_basic",
+    "W": "#minecraft:planks"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:sky": 1000
+    }
+  },
+  "pattern": [
+    "HWB",
+    "WPW",
+    "BWH"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:honey_extractor"
+    }
+  },
+  "result": {
+    "id": "primalmagick:honey_extractor"
+  }
+}

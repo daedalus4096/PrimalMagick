@@ -1,0 +1,35 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "group": "runescribing_altar",
+  "key": {
+    "A": "primalmagick:runescribing_altar_basic",
+    "D": "#c:gems/diamond",
+    "M": "primalmagick:marble_enchanted",
+    "R": "primalmagick:rune_unattuned"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 2000,
+      "primalmagick:moon": 2000,
+      "primalmagick:sea": 2000,
+      "primalmagick:sky": 2000,
+      "primalmagick:sun": 2000
+    }
+  },
+  "pattern": [
+    " R ",
+    "DAD",
+    "MMM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:expert_runeworking"
+    }
+  },
+  "result": {
+    "id": "primalmagick:runescribing_altar_enchanted"
+  }
+}

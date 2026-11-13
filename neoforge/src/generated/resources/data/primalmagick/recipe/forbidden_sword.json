@@ -1,0 +1,36 @@
+{
+  "type": "primalmagick:ritual",
+  "ingredients": [
+    "primalmagick:hexium_sword",
+    "primalmagick:essence_shard_void",
+    "primalmagick:essence_shard_void",
+    "primalmagick:rune_void",
+    "primalmagick:mana_prism",
+    "primalmagick:mana_salts"
+  ],
+  "instability": 3,
+  "mana": {
+    "sources": {
+      "primalmagick:void": 4000
+    }
+  },
+  "props": [
+    "primalmagick:bloodletter",
+    "primalmagick:soul_anvil"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:forbidden_sword"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "primalmagick:essence_thief": 2
+      }
+    },
+    "id": "primalmagick:forbidden_sword"
+  }
+}

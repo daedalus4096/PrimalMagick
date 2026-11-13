@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "G": "#c:ingots/gold",
+    "I": "primalmagick:enchanted_ink",
+    "N": "#c:nuggets/iron",
+    "P": "primalmagick:magitech_parts_basic"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:sea": 1000
+    }
+  },
+  "pattern": [
+    " GP",
+    "GIG",
+    "NG "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:seascribe_pen"
+    }
+  },
+  "result": {
+    "id": "primalmagick:seascribe_pen"
+  }
+}

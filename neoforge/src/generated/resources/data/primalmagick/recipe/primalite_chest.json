@@ -1,0 +1,23 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:primalite_armor",
+  "key": {
+    "I": "#primalmagick:ingots/primalite"
+  },
+  "pattern": [
+    "I I",
+    "III",
+    "III"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:primalite"
+    }
+  },
+  "result": {
+    "id": "primalmagick:primalite_chest"
+  }
+}

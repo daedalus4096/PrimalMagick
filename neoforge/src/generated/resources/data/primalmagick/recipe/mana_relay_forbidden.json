@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "#c:storage_blocks/copper",
+    "E": "#primalmagick:essences/terrestrial_crystals",
+    "M": "#primalmagick:ingots/hexium",
+    "P": "primalmagick:magitech_parts_forbidden"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 5000,
+      "primalmagick:infernal": 5000,
+      "primalmagick:void": 5000
+    }
+  },
+  "pattern": [
+    "MEM",
+    " C ",
+    "MPM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:forbidden_mana_networking"
+    }
+  },
+  "result": {
+    "id": "primalmagick:mana_relay_forbidden"
+  }
+}

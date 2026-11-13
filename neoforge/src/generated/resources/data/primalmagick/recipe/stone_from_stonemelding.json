@@ -1,0 +1,24 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "D": "primalmagick:essence_dust_earth",
+    "S": "#c:cobblestones/normal"
+  },
+  "pattern": [
+    "SSS",
+    "SDS",
+    "SSS"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:stonemelding"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "minecraft:stone"
+  }
+}

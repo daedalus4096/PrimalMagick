@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "ritual_candles",
+  "ingredients": [
+    "#primalmagick:ritual_candles",
+    "#c:dyes/white"
+  ],
+  "result": {
+    "id": "primalmagick:ritual_candle_white"
+  }
+}

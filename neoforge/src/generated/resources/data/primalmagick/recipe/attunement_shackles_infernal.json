@@ -1,0 +1,41 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:attunement_shackles",
+  "key": {
+    "C": "minecraft:iron_chain",
+    "S": "primalmagick:essence_shard_infernal"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 4000
+    }
+  },
+  "pattern": [
+    "CSC",
+    "C C",
+    "S S"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:attunement_shackles"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:attunement_shackles_infernal"
+  }
+}

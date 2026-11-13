@@ -1,0 +1,39 @@
+{
+  "type": "primalmagick:ritual",
+  "ingredients": [
+    "primalmagick:sanguine_core_blank",
+    "#c:nether_stars",
+    "primalmagick:essence_crystal_blood",
+    "primalmagick:essence_crystal_infernal",
+    "primalmagick:essence_crystal_void",
+    "primalmagick:rune_summon",
+    "primalmagick:rune_self",
+    "primalmagick:rune_power",
+    "primalmagick:rune_power"
+  ],
+  "instability": 7,
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 10000,
+      "primalmagick:infernal": 10000,
+      "primalmagick:void": 10000
+    }
+  },
+  "props": [
+    "#primalmagick:ritual_candles",
+    "primalmagick:ritual_bell",
+    "primalmagick:ritual_lectern",
+    "primalmagick:bloodletter",
+    "primalmagick:soul_anvil"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:cleansing_rite"
+    }
+  },
+  "result": {
+    "id": "primalmagick:sanguine_core_inner_demon"
+  }
+}

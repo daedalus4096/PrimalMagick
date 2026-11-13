@@ -1,0 +1,24 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:hexium_weapon",
+  "key": {
+    "I": "#primalmagick:ingots/hexium",
+    "S": "#c:rods/wooden"
+  },
+  "pattern": [
+    "II",
+    "IS",
+    " S"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hexium"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hexium_axe"
+  }
+}

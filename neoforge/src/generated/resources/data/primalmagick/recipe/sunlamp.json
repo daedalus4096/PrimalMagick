@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:sunlamp",
+  "key": {
+    "N": "#primalmagick:nuggets/primalite",
+    "T": "minecraft:torch"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:sun": 1000
+    }
+  },
+  "pattern": [
+    "NNN",
+    "NTN",
+    "NNN"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sunlamp"
+    }
+  },
+  "result": {
+    "id": "primalmagick:sunlamp"
+  }
+}

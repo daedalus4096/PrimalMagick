@@ -1,0 +1,28 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "S": "#c:strings",
+    "W": "primalmagick:hallowood_planks"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 10000
+    }
+  },
+  "pattern": [
+    "WWW",
+    "SSW",
+    "SW "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:celestial_harp"
+    }
+  },
+  "result": {
+    "id": "primalmagick:celestial_harp"
+  }
+}

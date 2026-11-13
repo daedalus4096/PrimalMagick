@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "primalmagick:marble_enchanted",
+  "result": {
+    "id": "primalmagick:marble_enchanted_brick_stairs"
+  }
+}

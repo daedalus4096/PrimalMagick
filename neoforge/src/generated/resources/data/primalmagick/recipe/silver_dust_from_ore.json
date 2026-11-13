@@ -1,0 +1,32 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/silver"
+          }
+        },
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ores/silver"
+          }
+        }
+      ]
+    }
+  ],
+  "type": "primalmagick:shapeless_tag",
+  "category": "misc",
+  "group": "earthshatter_hammer_grit",
+  "ingredients": [
+    "primalmagick:earthshatter_hammer",
+    "#c:ores/silver"
+  ],
+  "resultAmount": 2,
+  "resultTag": "c:dusts/silver"
+}

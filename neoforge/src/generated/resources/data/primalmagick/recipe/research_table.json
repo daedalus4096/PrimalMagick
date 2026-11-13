@@ -1,0 +1,20 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "primalmagick:wood_table",
+    "minecraft:book",
+    "minecraft:paper"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_stage",
+      "rootKey": "primalmagick:theorycrafting",
+      "stage": 2
+    }
+  },
+  "result": {
+    "id": "primalmagick:research_table"
+  }
+}

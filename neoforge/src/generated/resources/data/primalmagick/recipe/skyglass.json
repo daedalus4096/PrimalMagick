@@ -1,0 +1,25 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:skyglass_block",
+  "key": {
+    "D": "primalmagick:essence_dust_sky",
+    "G": "minecraft:glass"
+  },
+  "pattern": [
+    "GGG",
+    "GDG",
+    "GGG"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:skyglass"
+    }
+  },
+  "result": {
+    "count": 8,
+    "id": "primalmagick:skyglass"
+  }
+}

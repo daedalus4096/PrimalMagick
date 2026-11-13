@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "primalmagick:earthshatter_hammer",
+    "primalmagick:rock_salt_ore"
+  ],
+  "result": {
+    "count": 8,
+    "id": "primalmagick:rock_salt"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:attune_mana_orb_special",
+  "dust": "#primalmagick:essences/dusts",
+  "orb": "primalmagick:mana_orb_apprentice",
+  "result": {
+    "id": "primalmagick:mana_orb_apprentice"
+  }
+}

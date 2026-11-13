@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "M": "primalmagick:marble_smoked",
+    "P": "primalmagick:marble_smoked_pillar",
+    "S": "minecraft:diamond_sword"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 5000
+    }
+  },
+  "pattern": [
+    "MSM",
+    "MMM",
+    " P "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:bloodletter"
+    }
+  },
+  "result": {
+    "id": "primalmagick:bloodletter"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "M": "primalmagick:marble_enchanted",
+    "P": "primalmagick:magitech_parts_enchanted",
+    "R": "#c:storage_blocks/redstone",
+    "S": "primalmagick:marble_enchanted_slab",
+    "T": "primalmagick:refined_salt"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 7500,
+      "primalmagick:moon": 7500,
+      "primalmagick:sea": 7500,
+      "primalmagick:sky": 7500,
+      "primalmagick:sun": 7500
+    }
+  },
+  "pattern": [
+    "PSP",
+    "TRT",
+    "MMM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:entropy_sink"
+    }
+  },
+  "result": {
+    "id": "primalmagick:entropy_sink"
+  }
+}

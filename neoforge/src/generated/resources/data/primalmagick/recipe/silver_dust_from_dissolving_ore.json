@@ -1,0 +1,34 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/silver"
+          }
+        },
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ores/silver"
+          }
+        }
+      ]
+    }
+  ],
+  "type": "primalmagick:dissolution_tag",
+  "category": "ore",
+  "group": "silver_dust_dissolution",
+  "ingredient": "#c:ores/silver",
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1000
+    }
+  },
+  "resultAmount": 3,
+  "resultTag": "c:dusts/silver"
+}

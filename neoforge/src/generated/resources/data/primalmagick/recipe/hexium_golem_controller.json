@@ -1,0 +1,31 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "I": "#primalmagick:ingots/hexium",
+    "P": "primalmagick:magitech_parts_forbidden",
+    "R": "#c:storage_blocks/redstone"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 5000,
+      "primalmagick:infernal": 5000,
+      "primalmagick:void": 5000
+    }
+  },
+  "pattern": [
+    "PIP",
+    "IRI",
+    "PIP"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hexium_golem"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hexium_golem_controller"
+  }
+}

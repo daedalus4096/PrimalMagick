@@ -1,0 +1,31 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "I": "#primalmagick:ingots/primalite",
+    "P": "primalmagick:magitech_parts_enchanted",
+    "R": "#c:dusts/redstone",
+    "S": "primalmagick:essence_shard_sky",
+    "W": "minecraft:warped_planks"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:sky": 4000
+    }
+  },
+  "pattern": [
+    "IPI",
+    "WSW",
+    "WRW"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:zephyr_engine"
+    }
+  },
+  "result": {
+    "id": "primalmagick:zephyr_engine"
+  }
+}

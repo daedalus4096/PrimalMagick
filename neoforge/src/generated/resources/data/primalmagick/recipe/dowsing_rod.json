@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "D": "#primalmagick:essences/terrestrial_dusts",
+    "S": "#c:rods/wooden"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 500,
+      "primalmagick:moon": 500,
+      "primalmagick:sea": 500,
+      "primalmagick:sky": 500,
+      "primalmagick:sun": 500
+    }
+  },
+  "pattern": [
+    "  S",
+    "SS ",
+    "DS "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:dowsing_rod"
+    }
+  },
+  "result": {
+    "id": "primalmagick:dowsing_rod"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "G": "primalmagick:adept_wand_gem_item",
+    "N": "#c:nuggets/gold"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 2000,
+      "primalmagick:moon": 2000,
+      "primalmagick:sea": 2000,
+      "primalmagick:sky": 2000,
+      "primalmagick:sun": 2000
+    }
+  },
+  "pattern": [
+    " N ",
+    "NGN",
+    " N "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_orb_adept"
+    }
+  },
+  "result": {
+    "id": "primalmagick:mana_orb_adept"
+  }
+}

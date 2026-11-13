@@ -1,0 +1,38 @@
+{
+  "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:primal_core",
+  "ingredients": [
+    "primalmagick:obsidian_wand_core_item",
+    "primalmagick:coral_wand_core_item",
+    "primalmagick:bamboo_wand_core_item",
+    "primalmagick:sunwood_wand_core_item",
+    "primalmagick:moonwood_wand_core_item",
+    "primalmagick:mana_salts",
+    "primalmagick:mana_salts"
+  ],
+  "instability": 3,
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1500,
+      "primalmagick:moon": 1500,
+      "primalmagick:sea": 1500,
+      "primalmagick:sky": 1500,
+      "primalmagick:sun": 1500
+    }
+  },
+  "props": [
+    "primalmagick:ritual_bell",
+    "primalmagick:ritual_lectern",
+    "#primalmagick:ritual_candles"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_primal"
+    }
+  },
+  "result": {
+    "id": "primalmagick:primal_wand_core_item"
+  }
+}

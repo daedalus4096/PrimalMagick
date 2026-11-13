@@ -1,0 +1,18 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "minecraft:water_bucket",
+    "primalmagick:essence_dust_sea"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:cryotreatment"
+    }
+  },
+  "result": {
+    "id": "minecraft:ice"
+  }
+}

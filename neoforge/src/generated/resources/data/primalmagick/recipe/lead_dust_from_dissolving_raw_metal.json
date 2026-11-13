@@ -1,0 +1,34 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/lead"
+          }
+        },
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:raw_materials/lead"
+          }
+        }
+      ]
+    }
+  ],
+  "type": "primalmagick:dissolution_tag",
+  "category": "ore",
+  "group": "lead_dust_dissolution",
+  "ingredient": "#c:raw_materials/lead",
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1000
+    }
+  },
+  "resultAmount": 3,
+  "resultTag": "c:dusts/lead"
+}

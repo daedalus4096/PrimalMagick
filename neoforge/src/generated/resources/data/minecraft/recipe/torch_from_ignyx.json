@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "primalmagick:ignyx",
+    "#c:rods/wooden",
+    "#c:rods/wooden",
+    "#c:rods/wooden",
+    "#c:rods/wooden",
+    "#c:rods/wooden",
+    "#c:rods/wooden",
+    "#c:rods/wooden",
+    "#c:rods/wooden"
+  ],
+  "result": {
+    "count": 32,
+    "id": "minecraft:torch"
+  }
+}

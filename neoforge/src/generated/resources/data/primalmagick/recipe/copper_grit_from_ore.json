@@ -1,0 +1,32 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:dusts/copper"
+          }
+        },
+        {
+          "type": "neoforge:not",
+          "value": {
+            "type": "neoforge:tag_empty",
+            "tag": "c:ores/copper"
+          }
+        }
+      ]
+    }
+  ],
+  "type": "primalmagick:shapeless_tag",
+  "category": "misc",
+  "group": "earthshatter_hammer_grit",
+  "ingredients": [
+    "primalmagick:earthshatter_hammer",
+    "#c:ores/copper"
+  ],
+  "resultAmount": 2,
+  "resultTag": "c:dusts/copper"
+}

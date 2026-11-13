@@ -1,0 +1,18 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "primalmagick:mana_relay_basic",
+    "minecraft:hopper"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_networking"
+    }
+  },
+  "result": {
+    "id": "primalmagick:mana_injector_basic"
+  }
+}

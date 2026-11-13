@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "B": "primalmagick:essence_cask_enchanted",
+    "E": "#primalmagick:essences/forbidden_crystals",
+    "M": "#primalmagick:ingots/hexium",
+    "W": "minecraft:popped_chorus_fruit"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 10000,
+      "primalmagick:infernal": 10000,
+      "primalmagick:void": 10000
+    }
+  },
+  "pattern": [
+    "WEW",
+    "MBM",
+    "WWW"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:essence_cask_forbidden"
+    }
+  },
+  "result": {
+    "id": "primalmagick:essence_cask_forbidden"
+  }
+}

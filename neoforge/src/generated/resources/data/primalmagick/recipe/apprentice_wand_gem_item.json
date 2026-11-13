@@ -1,0 +1,27 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "#c:gems/diamond",
+    "#primalmagick:essences/terrestrial_dusts"
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1000,
+      "primalmagick:moon": 1000,
+      "primalmagick:sea": 1000,
+      "primalmagick:sky": 1000,
+      "primalmagick:sun": 1000
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_gem_apprentice"
+    }
+  },
+  "result": {
+    "id": "primalmagick:apprentice_wand_gem_item"
+  }
+}

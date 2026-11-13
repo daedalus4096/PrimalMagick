@@ -1,0 +1,31 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "group": "runescribing_altar",
+  "key": {
+    "A": "primalmagick:runescribing_altar_forbidden",
+    "D": "#c:gems/diamond",
+    "M": "primalmagick:marble_hallowed",
+    "R": "primalmagick:rune_unattuned"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 10000
+    }
+  },
+  "pattern": [
+    " R ",
+    "DAD",
+    "MMM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:supreme_runeworking"
+    }
+  },
+  "result": {
+    "id": "primalmagick:runescribing_altar_heavenly"
+  }
+}

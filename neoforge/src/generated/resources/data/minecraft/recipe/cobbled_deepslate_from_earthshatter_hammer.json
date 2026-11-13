@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "primalmagick:earthshatter_hammer",
+    "#primalmagick:deep_stone"
+  ],
+  "result": {
+    "id": "minecraft:cobbled_deepslate"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "primalmagick:runecarving",
+  "base": "minecraft:stone_slab",
+  "etching": "#c:gems/lapis",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:rune_protect"
+    }
+  },
+  "result": {
+    "id": "primalmagick:rune_protect"
+  }
+}

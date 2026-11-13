@@ -1,0 +1,19 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "ingredients": [
+    "#minecraft:coals",
+    "primalmagick:essence_dust_earth",
+    "primalmagick:essence_dust_infernal"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ignyx"
+    }
+  },
+  "result": {
+    "id": "primalmagick:ignyx"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "type": "primalmagick:concocting",
+  "category": "drinkable",
+  "group": "long_water_breathing",
+  "ingredients": [
+    {
+      "neoforge:ingredient_type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        },
+        "primalmagick:concoction_type": "water"
+      },
+      "items": "primalmagick:concoction"
+    },
+    "primalmagick:essence_dust_sea",
+    "primalmagick:essence_dust_sky",
+    "#c:crops/nether_wart",
+    "minecraft:pufferfish",
+    "#c:dusts/redstone"
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 200
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_tinctures"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:long_water_breathing"
+      },
+      "primalmagick:concoction_doses": 3,
+      "primalmagick:concoction_type": "tincture"
+    },
+    "id": "primalmagick:concoction"
+  }
+}

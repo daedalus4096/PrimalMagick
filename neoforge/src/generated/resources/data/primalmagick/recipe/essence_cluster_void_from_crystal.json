@@ -1,0 +1,37 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:essence_cluster",
+  "group": "essence_cluster",
+  "key": {
+    "#": "primalmagick:essence_crystal_void",
+    "Q": "minecraft:quartz_block"
+  },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:cluster_synthesis"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:essence_cluster_void"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "primalmagick:hydromelon_slice",
+    "primalmagick:hydromelon_slice",
+    "primalmagick:hydromelon_slice",
+    "primalmagick:hydromelon_slice",
+    "primalmagick:hydromelon_slice",
+    "primalmagick:hydromelon_slice",
+    "primalmagick:hydromelon_slice",
+    "primalmagick:hydromelon_slice",
+    "primalmagick:hydromelon_slice"
+  ],
+  "result": {
+    "id": "primalmagick:hydromelon"
+  }
+}

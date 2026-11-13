@@ -1,0 +1,48 @@
+{
+  "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:ambrosia_supreme",
+  "ingredients": [
+    "primalmagick:manafruit",
+    "primalmagick:mana_prism",
+    "primalmagick:essence_cluster_infernal",
+    "primalmagick:rune_absorb",
+    "primalmagick:rune_self",
+    "primalmagick:rune_power"
+  ],
+  "instability": 8,
+  "mana": {
+    "sources": {
+      "primalmagick:infernal": 20000
+    }
+  },
+  "props": [
+    "#primalmagick:ritual_candles",
+    "#primalmagick:ritual_candles",
+    "#primalmagick:ritual_candles",
+    "primalmagick:ritual_lectern",
+    "primalmagick:bloodletter",
+    "primalmagick:celestial_harp"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:supreme_ambrosia"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:ambrosia_supreme_infernal"
+  }
+}

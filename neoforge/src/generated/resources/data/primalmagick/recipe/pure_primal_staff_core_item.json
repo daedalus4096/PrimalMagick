@@ -1,0 +1,59 @@
+{
+  "type": "primalmagick:ritual",
+  "disciplineOverride": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "expertiseGroup": "primalmagick:pure_primal_core",
+  "ingredients": [
+    "primalmagick:dark_primal_staff_core_item",
+    "primalmagick:hallowood_log",
+    "primalmagick:hallowood_log",
+    "#c:nether_stars",
+    "primalmagick:mana_salts",
+    "primalmagick:mana_salts"
+  ],
+  "instability": 8,
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 10000,
+      "primalmagick:earth": 10000,
+      "primalmagick:hallowed": 10000,
+      "primalmagick:infernal": 10000,
+      "primalmagick:moon": 10000,
+      "primalmagick:sea": 10000,
+      "primalmagick:sky": 10000,
+      "primalmagick:sun": 10000,
+      "primalmagick:void": 10000
+    }
+  },
+  "props": [
+    "primalmagick:ritual_bell",
+    "primalmagick:ritual_lectern",
+    "#primalmagick:ritual_candles",
+    "primalmagick:bloodletter",
+    "primalmagick:soul_anvil",
+    "primalmagick:celestial_harp"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:wand_core_pure_primal"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:pure_primal_staff_core_item"
+  }
+}

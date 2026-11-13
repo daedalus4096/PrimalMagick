@@ -1,0 +1,36 @@
+{
+  "type": "primalmagick:ritual",
+  "ingredients": [
+    "primalmagick:primalite_shovel",
+    "primalmagick:essence_shard_earth",
+    "primalmagick:essence_shard_earth",
+    "primalmagick:rune_earth",
+    "primalmagick:mana_prism",
+    "primalmagick:mana_salts"
+  ],
+  "instability": 3,
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 4000
+    }
+  },
+  "props": [
+    "#primalmagick:ritual_candles",
+    "primalmagick:ritual_bell"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:primal_shovel"
+    }
+  },
+  "result": {
+    "components": {
+      "minecraft:enchantments": {
+        "primalmagick:reverberation": 2
+      }
+    },
+    "id": "primalmagick:primal_shovel"
+  }
+}

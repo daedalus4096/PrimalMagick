@@ -1,0 +1,23 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:hexweave_robes",
+  "key": {
+    "#": "primalmagick:hexweave"
+  },
+  "pattern": [
+    "###",
+    "# #",
+    "# #"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hexweave"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hexweave_legs"
+  }
+}

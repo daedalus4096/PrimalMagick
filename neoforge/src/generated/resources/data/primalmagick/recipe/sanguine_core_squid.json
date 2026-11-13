@@ -1,0 +1,21 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:sanguine_core",
+  "group": "attuned_sanguine_cores",
+  "ingredients": [
+    "primalmagick:sanguine_core_blank",
+    "minecraft:ink_sac",
+    "primalmagick:essence_dust_sea"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sanguine_core_sea_creatures"
+    }
+  },
+  "result": {
+    "id": "primalmagick:sanguine_core_squid"
+  }
+}

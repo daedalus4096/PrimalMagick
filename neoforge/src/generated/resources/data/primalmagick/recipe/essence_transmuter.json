@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "#c:ingots/copper",
+    "M": "primalmagick:marble_enchanted_slab",
+    "P": "primalmagick:magitech_parts_enchanted",
+    "R": "primalmagick:mana_prism"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:moon": 4000
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CRC",
+    "MPM"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:essence_transmuter"
+    }
+  },
+  "result": {
+    "id": "primalmagick:essence_transmuter"
+  }
+}

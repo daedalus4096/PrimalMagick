@@ -1,0 +1,22 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "#": "primalmagick:skyglass"
+  },
+  "pattern": [
+    "# #",
+    " # "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_tinctures"
+    }
+  },
+  "result": {
+    "count": 3,
+    "id": "primalmagick:skyglass_flask"
+  }
+}

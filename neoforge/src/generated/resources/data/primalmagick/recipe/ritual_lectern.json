@@ -1,0 +1,28 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "B": "#c:bookshelves",
+    "S": "primalmagick:moonwood_slab"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:moon": 1000
+    }
+  },
+  "pattern": [
+    "SSS",
+    " B ",
+    " S "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ritual_lectern"
+    }
+  },
+  "result": {
+    "id": "primalmagick:ritual_lectern"
+  }
+}

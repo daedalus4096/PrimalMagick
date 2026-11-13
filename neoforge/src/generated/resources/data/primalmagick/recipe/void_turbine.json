@@ -1,0 +1,31 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "C": "minecraft:crimson_planks",
+    "I": "#primalmagick:ingots/hexium",
+    "P": "primalmagick:magitech_parts_forbidden",
+    "R": "#c:dusts/redstone",
+    "S": "primalmagick:essence_shard_void"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:void": 4000
+    }
+  },
+  "pattern": [
+    "IPI",
+    "CSC",
+    "CRC"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:void_turbine"
+    }
+  },
+  "result": {
+    "id": "primalmagick:void_turbine"
+  }
+}

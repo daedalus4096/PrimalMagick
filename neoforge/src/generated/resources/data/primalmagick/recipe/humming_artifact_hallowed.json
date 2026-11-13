@@ -1,0 +1,38 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "category": "arcane",
+  "group": "humming_artifact",
+  "ingredients": [
+    "primalmagick:humming_artifact_unattuned",
+    "primalmagick:essence_dust_hallowed"
+  ],
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 4000
+    }
+  },
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:humming_artifact"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:humming_artifact_hallowed"
+  }
+}

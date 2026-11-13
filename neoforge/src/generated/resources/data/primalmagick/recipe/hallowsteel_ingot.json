@@ -1,0 +1,19 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "category": "arcane",
+  "group": "hallowsteel_ingot",
+  "ingredients": [
+    "#primalmagick:ingots/hexium",
+    "primalmagick:essence_crystal_hallowed"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hallowsteel"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hallowsteel_ingot"
+  }
+}

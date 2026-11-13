@@ -1,0 +1,25 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:essence_shard",
+  "group": "essence_shard",
+  "key": {
+    "#": "primalmagick:essence_dust_sea",
+    "Q": "primalmagick:quartz_nugget"
+  },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:shard_synthesis"
+    }
+  },
+  "result": {
+    "id": "primalmagick:essence_shard_sea"
+  }
+}

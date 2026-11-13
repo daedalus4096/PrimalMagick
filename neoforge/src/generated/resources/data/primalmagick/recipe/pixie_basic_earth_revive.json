@@ -1,0 +1,20 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "category": "arcane",
+  "ingredients": [
+    "primalmagick:drained_pixie_basic_earth",
+    "primalmagick:essence_dust_earth"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:pixies"
+    }
+  },
+  "result": {
+    "id": "primalmagick:pixie_basic_earth"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "type": "primalmagick:ritual",
+  "expertiseGroup": "primalmagick:pixie_grand",
+  "ingredients": [
+    "primalmagick:mana_salts",
+    "primalmagick:essence_crystal_blood",
+    "#c:ingots/iron",
+    "primalmagick:rune_summon",
+    "primalmagick:rune_creature",
+    "primalmagick:rune_insight"
+  ],
+  "instability": 5,
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 10000
+    }
+  },
+  "props": [
+    "primalmagick:incense_brazier",
+    "primalmagick:ritual_bell",
+    "primalmagick:soul_anvil"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:grand_pixies"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      }
+    ]
+  },
+  "result": {
+    "id": "primalmagick:pixie_grand_blood"
+  }
+}

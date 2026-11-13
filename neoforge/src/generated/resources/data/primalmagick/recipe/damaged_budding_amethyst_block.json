@@ -1,0 +1,20 @@
+{
+  "type": "primalmagick:shapeless_arcane",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "category": "arcane",
+  "ingredients": [
+    "minecraft:amethyst_block",
+    "primalmagick:energized_amethyst"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:synthetic_gem_buds"
+    }
+  },
+  "result": {
+    "id": "primalmagick:damaged_budding_amethyst_block"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#primalmagick:ingots/hexium"
+  ],
+  "result": {
+    "count": 9,
+    "id": "primalmagick:hexium_nugget"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:mana_arrow",
+  "group": "mana_arrows",
+  "key": {
+    "A": "minecraft:arrow",
+    "D": "primalmagick:essence_dust_sky"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:sky": 500
+    }
+  },
+  "pattern": [
+    " A ",
+    "ADA",
+    " A "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_arrows"
+    }
+  },
+  "result": {
+    "count": 4,
+    "id": "primalmagick:mana_arrow_sky"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "D": "primalmagick:rune_dispel",
+    "L": "minecraft:stone_slab",
+    "P": "primalmagick:sunwood_planks",
+    "S": "#c:rods/wooden"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 2500
+    }
+  },
+  "pattern": [
+    " D ",
+    "SLS",
+    "PDP"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:runic_grindstone"
+    }
+  },
+  "result": {
+    "id": "primalmagick:runic_grindstone"
+  }
+}

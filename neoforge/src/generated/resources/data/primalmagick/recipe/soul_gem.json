@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "primalmagick:soul_gem_sliver",
+    "primalmagick:soul_gem_sliver",
+    "primalmagick:soul_gem_sliver",
+    "primalmagick:soul_gem_sliver",
+    "primalmagick:soul_gem_sliver",
+    "primalmagick:soul_gem_sliver",
+    "primalmagick:soul_gem_sliver",
+    "primalmagick:soul_gem_sliver",
+    "primalmagick:soul_gem_sliver"
+  ],
+  "result": {
+    "id": "primalmagick:soul_gem"
+  }
+}

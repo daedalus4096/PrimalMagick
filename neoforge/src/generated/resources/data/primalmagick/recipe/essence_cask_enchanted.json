@@ -1,0 +1,34 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "B": "minecraft:barrel",
+    "E": "#primalmagick:essences/terrestrial_shards",
+    "M": "#primalmagick:ingots/primalite",
+    "W": "primalmagick:heartwood"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 4000,
+      "primalmagick:moon": 4000,
+      "primalmagick:sea": 4000,
+      "primalmagick:sky": 4000,
+      "primalmagick:sun": 4000
+    }
+  },
+  "pattern": [
+    "WEW",
+    "MBM",
+    "WWW"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:essence_cask_enchanted"
+    }
+  },
+  "result": {
+    "id": "primalmagick:essence_cask_enchanted"
+  }
+}

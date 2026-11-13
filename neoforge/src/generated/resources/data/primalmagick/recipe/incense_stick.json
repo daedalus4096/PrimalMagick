@@ -1,0 +1,27 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "F": "#minecraft:small_flowers",
+    "S": "#c:rods/wooden"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:sky": 100
+    }
+  },
+  "pattern": [
+    " F",
+    "S "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:incense_brazier"
+    }
+  },
+  "result": {
+    "id": "primalmagick:incense_stick"
+  }
+}

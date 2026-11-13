@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "K": "#c:rods/wooden",
+    "P": "#c:ender_pearls",
+    "R": "primalmagick:rune_dispel",
+    "S": "#c:strings"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:void": 5000
+    }
+  },
+  "pattern": [
+    "SKS",
+    "KRK",
+    "PKP"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:enderward"
+    }
+  },
+  "result": {
+    "id": "primalmagick:enderward"
+  }
+}

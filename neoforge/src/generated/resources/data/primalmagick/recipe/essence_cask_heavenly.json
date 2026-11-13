@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "B": "primalmagick:essence_cask_forbidden",
+    "E": "primalmagick:essence_cluster_hallowed",
+    "M": "#primalmagick:ingots/hallowsteel",
+    "W": "primalmagick:hallowood_planks"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 40000
+    }
+  },
+  "pattern": [
+    "WEW",
+    "MBM",
+    "WWW"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:essence_cask_heavenly"
+    }
+  },
+  "result": {
+    "id": "primalmagick:essence_cask_heavenly"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "N": "#primalmagick:nuggets/primalite"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1500,
+      "primalmagick:moon": 1500,
+      "primalmagick:sea": 1500,
+      "primalmagick:sky": 1500,
+      "primalmagick:sun": 1500
+    }
+  },
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_cap_primalite"
+    }
+  },
+  "result": {
+    "id": "primalmagick:primalite_wand_cap_item"
+  }
+}

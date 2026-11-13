@@ -1,0 +1,23 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "expertiseGroup": "primalmagick:hallowsteel_armor",
+  "key": {
+    "I": "#primalmagick:ingots/hallowsteel"
+  },
+  "pattern": [
+    "I I",
+    "III",
+    "III"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hallowsteel"
+    }
+  },
+  "result": {
+    "id": "primalmagick:hallowsteel_chest"
+  }
+}

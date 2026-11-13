@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "G": "#c:ingots/gold",
+    "M": "primalmagick:marble",
+    "R": "primalmagick:marble_runed"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:earth": 1000,
+      "primalmagick:moon": 1000,
+      "primalmagick:sea": 1000,
+      "primalmagick:sky": 1000,
+      "primalmagick:sun": 1000
+    }
+  },
+  "pattern": [
+    "GRG",
+    "GMG"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_ritual"
+    }
+  },
+  "result": {
+    "id": "primalmagick:ritual_altar"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "key": {
+    "B": "primalmagick:essence_shard_blood",
+    "H": "#primalmagick:ingots/hexium",
+    "I": "primalmagick:essence_shard_infernal"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:blood": 5000,
+      "primalmagick:infernal": 5000
+    }
+  },
+  "pattern": [
+    " H ",
+    "BIB",
+    "H H"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sanguine_crucible"
+    }
+  },
+  "result": {
+    "id": "primalmagick:sanguine_core_blank"
+  }
+}

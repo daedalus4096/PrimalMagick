@@ -1,0 +1,30 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "category": "arcane",
+  "group": "calcinators",
+  "key": {
+    "C": "primalmagick:calcinator_forbidden",
+    "E": "primalmagick:essence_cluster_hallowed",
+    "M": "primalmagick:marble_hallowed"
+  },
+  "mana": {
+    "sources": {
+      "primalmagick:hallowed": 10000
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MCM",
+    "EEE"
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:calcinator_heavenly"
+    }
+  },
+  "result": {
+    "id": "primalmagick:calcinator_heavenly"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "primalmagick:shaped_arcane",
+  "baseExpertiseOverride": 0,
+  "bonusExpertiseOverride": 0,
+  "category": "arcane",
+  "key": {
+    "C": "primalmagick:marble_smoked_chiseled",
+    "M": "primalmagick:marble_smoked"
+  },
+  "pattern": [
+    " M ",
+    "MCM",
+    " M "
+  ],
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:master_manaweaving"
+    }
+  },
+  "result": {
+    "count": 5,
+    "id": "primalmagick:marble_smoked_runed"
+  }
+}
