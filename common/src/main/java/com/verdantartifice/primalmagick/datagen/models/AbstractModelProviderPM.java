@@ -302,7 +302,6 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     protected void executeItemModelGenerators(ItemModelGenerators itemModels) {
         // Generate crop items
-        itemModels.generateFlatItem(ItemsPM.HYDROMELON_SEEDS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ItemsPM.HYDROMELON_SLICE.get(), ModelTemplates.FLAT_ITEM);
 
         // Generate salted food items
