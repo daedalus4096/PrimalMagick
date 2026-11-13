@@ -91,6 +91,7 @@ processResources {
     }
 
     inputs.properties(expandProps)
+    setDuplicatesStrategy(DuplicatesStrategy.INCLUDE)
 }
 
 publishing {
