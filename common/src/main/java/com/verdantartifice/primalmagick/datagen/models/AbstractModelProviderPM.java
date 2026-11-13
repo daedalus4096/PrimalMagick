@@ -106,7 +106,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     protected void executeBlockModelGenerators(BlockModelGenerators blockModels) {
         // Generate models for defined block families
         BlockFamiliesPM.getStandardFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> blockModels.family(family.getBaseBlock()).generateFor(family));
-        BlockFamiliesPM.getPhasingFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> this.phasingFamily(family.getBaseBlock(), PhasingTextureMapping::cube, blockModels));
+        BlockFamiliesPM.getPhasingFamilies().filter(BlockFamily::shouldGenerateModel).forEach(family -> this.phasingFamily(family.getBaseBlock(), PhasingTextureMapping::cube, blockModels).generateFor(family));
 
         // Generate non-family marble blocks
         this.generatePillarBlock(BlocksPM.MARBLE_PILLAR.get(), blockModels);
