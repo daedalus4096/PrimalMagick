@@ -50,22 +50,16 @@ public class DataGeneratorsNeoforge {
     public static void onGatherClientData(GatherDataEvent.Client event) {
         // Add all the mod's client data providers to the generator for processing
         DataGenerator generator = event.getGenerator();
-        CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGeneratorNeoforge.addProviders(false, generator, generator.getPackOutput(), event.getLookupProvider());
-        CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGeneratorNeoforge.addProviders(false, generator, generator.getPackOutput(), intermediate);
+        CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGeneratorNeoforge.addProviders(true, generator, generator.getPackOutput(), event.getLookupProvider());
+        CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGeneratorNeoforge.addProviders(true, generator, generator.getPackOutput(), intermediate);
         event.addProvider(new SpriteSourceProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
         event.addProvider(new SoundDefinitionsProviderPMNeoforge(generator.getPackOutput()));
         event.addProvider(new StyleGuideProvider(generator.getPackOutput()));
         event.addProvider(new ModelProviderPMNeoforge(generator.getPackOutput(), Constants.MOD_ID));
         event.addProvider(new EquipmentAssetProviderPM(generator.getPackOutput()));
         event.addProvider(new LanguageProviderEnUs(generator.getPackOutput(), registryLookupFuture));
-    }
-    
-    @SubscribeEvent
-    public static void onGatherServerData(GatherDataEvent.Server event) {
+
         // Add all the mod's server data providers to the generator for processing
-        DataGenerator generator = event.getGenerator();
-        CompletableFuture<HolderLookup.Provider> intermediate = DualRegistryDataGeneratorNeoforge.addProviders(true, generator, generator.getPackOutput(), event.getLookupProvider());
-        CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGeneratorNeoforge.addProviders(true, generator, generator.getPackOutput(), intermediate);
         event.addProvider(new RecipesNeoforge.Runner(generator.getPackOutput(), registryLookupFuture));
         event.addProvider(new BlockTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
         event.addProvider(new ItemTagsProviderPMNeoforge(generator.getPackOutput(), registryLookupFuture));
