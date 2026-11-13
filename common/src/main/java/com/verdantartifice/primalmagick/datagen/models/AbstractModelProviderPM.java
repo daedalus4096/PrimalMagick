@@ -608,7 +608,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         }
         itemModels.itemModelOutput.accept(item, new SelectItemModel.Unbaked(
                 Optional.empty(),
-                new SelectItemModel.UnbakedSwitch<>(new StackDyeColor(), cases.values().stream().toList()),
+                new SelectItemModel.UnbakedSwitch<>(new StackDyeColor(), cases.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).toList()),
                 Optional.ofNullable(defaultModel)));
     }
 
