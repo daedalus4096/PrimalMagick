@@ -47,7 +47,6 @@ import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.HoneycombItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -1520,16 +1519,16 @@ public abstract class Recipes extends RecipeProvider {
         for (Source source : Sources.getAllSorted()) {
             for (EssenceType baseType : EssenceType.values()) {
                 baseType.getUpgrade().ifPresent(upgradeType -> {
-                    ItemStack baseStack = EssenceItem.getEssence(baseType, source);
-                    ItemStack upgradeStack = EssenceItem.getEssence(upgradeType, source);
+                    ItemStackTemplate baseStack = EssenceItem.getTemplate(baseType, source);
+                    ItemStackTemplate upgradeStack = EssenceItem.getTemplate(upgradeType, source);
                     Optional<Item> quartzItemOpt = upgradeType.getUpgradeMedium();
-                    if (!baseStack.isEmpty() && !upgradeStack.isEmpty() && quartzItemOpt.isPresent()) {
+                    if (baseStack != null && upgradeStack != null && quartzItemOpt.isPresent()) {
                         String name = "essence_" + upgradeType.getSerializedName() + "_" + source.getId().getPath() + "_from_" + baseType.getSerializedName();
-                        ArcaneShapedRecipeBuilder builder = this.arcaneShaped(upgradeStack.getItem())
+                        ArcaneShapedRecipeBuilder builder = this.arcaneShaped(upgradeStack.item().value())
                                 .patternLine("###")
                                 .patternLine("#Q#")
                                 .patternLine("###")
-                                .key('#', baseStack.getItem())
+                                .key('#', baseStack.item().value())
                                 .key('Q', quartzItemOpt.get())
                                 .expertiseGroup("essence_" + upgradeType.getSerializedName())
                                 .setGroup("essence_" + upgradeType.getSerializedName());
@@ -1546,12 +1545,12 @@ public abstract class Recipes extends RecipeProvider {
         for (Source source : Sources.getAllSorted()) {
             for (EssenceType baseType : EssenceType.values()) {
                 baseType.getDowngrade().ifPresent(downgradeType -> {
-                    ItemStack baseStack = EssenceItem.getEssence(baseType, source);
-                    ItemStack downgradeStack = EssenceItem.getEssence(downgradeType, source);
-                    if (!baseStack.isEmpty() && !downgradeStack.isEmpty()) {
+                    ItemStackTemplate baseStack = EssenceItem.getTemplate(baseType, source);
+                    ItemStackTemplate downgradeStack = EssenceItem.getTemplate(downgradeType, source);
+                    if (baseStack != null && downgradeStack != null) {
                         String name = "essence_" + downgradeType.getSerializedName() + "_" + source.getId().getPath() + "_from_" + baseType.getSerializedName();
-                        ArcaneShapelessRecipeBuilder builder = this.arcaneShapeless(downgradeStack.getItem(), 4)
-                            .addIngredient(baseStack.getItem())
+                        ArcaneShapelessRecipeBuilder builder = this.arcaneShapeless(downgradeStack.item().value(), 4)
+                            .addIngredient(baseStack.item().value())
                             .expertiseGroup("essence_" + downgradeType.getSerializedName())
                             .setGroup("essence_" + downgradeType.getSerializedName());
                         baseType.getDowngradeResearchEntry().ifPresent(builder::requiredResearch);

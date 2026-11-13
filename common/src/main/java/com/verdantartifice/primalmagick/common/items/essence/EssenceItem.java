@@ -5,6 +5,7 @@ import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,7 +52,18 @@ public class EssenceItem extends Item {
         Item item = ESSENCES.get(type, source);
         return (item == null) ? ItemStack.EMPTY : new ItemStack(item, count);
     }
-    
+
+    @Nullable
+    public static ItemStackTemplate getTemplate(@Nullable EssenceType type, @Nullable Source source) {
+        return getTemplate(type, source, 1);
+    }
+
+    @Nullable
+    public static ItemStackTemplate getTemplate(@Nullable EssenceType type, @Nullable Source source, int count) {
+        Item item = ESSENCES.get(type, source);
+        return (item == null) ? null : new ItemStackTemplate(item, count);
+    }
+
     public static Collection<Item> getAllEssences() {
         return Collections.unmodifiableCollection(ESSENCES.values());
     }
