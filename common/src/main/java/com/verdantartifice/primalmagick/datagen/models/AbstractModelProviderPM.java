@@ -23,8 +23,10 @@ import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.StainedSkyglassPaneBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
+import com.verdantartifice.primalmagick.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.SoulAnvilBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.IPhasingBlock;
+import com.verdantartifice.primalmagick.common.blockstates.properties.SaltSide;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.items.EquipmentAssetsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -286,7 +288,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createEmptyBlock(BlocksPM.CONSECRATION_FIELD.get(), blockModels);
         this.createEmptyBlock(BlocksPM.GLOW_FIELD.get(), blockModels);
         this.createEmptyBlock(BlocksPM.SOUL_GLOW_FIELD.get(), blockModels);
-        // TODO Generate salt trail block
+        this.createSaltWireBlock(BlocksPM.SALT_TRAIL.get(), blockModels, ItemsPM.REFINED_SALT.get());
         blockModels.createTrivialCube(BlocksPM.ROCK_SALT_ORE.get());
         blockModels.createTrivialCube(BlocksPM.QUARTZ_ORE.get());
         blockModels.createTrivialCube(BlocksPM.PRIMALITE_BLOCK.get());
@@ -1098,5 +1100,67 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         TextureMapping textures = plantType.getTextureMapping(cropBlock);
         MultiVariant model = BlockModelGenerators.plainVariant(plantType.getCross().create(cropBlock, textures, blockModels.modelOutput));
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(cropBlock, model));
+    }
+
+    private void createSaltWireBlock(Block wireBlock, BlockModelGenerators blockModels, Item wireItem) {
+        blockModels.registerSimpleFlatItemModel(wireItem);
+        blockModels.blockStateOutput
+                .accept(
+                        MultiPartGenerator.multiPart(wireBlock)
+                                .with(
+                                        BlockModelGenerators.or(
+                                                BlockModelGenerators.condition()
+                                                        .term(SaltTrailBlock.NORTH, SaltSide.NONE)
+                                                        .term(SaltTrailBlock.EAST, SaltSide.NONE)
+                                                        .term(SaltTrailBlock.SOUTH, SaltSide.NONE)
+                                                        .term(SaltTrailBlock.WEST, SaltSide.NONE),
+                                                BlockModelGenerators.condition()
+                                                        .term(SaltTrailBlock.NORTH, SaltSide.SIDE, SaltSide.UP)
+                                                        .term(SaltTrailBlock.EAST, SaltSide.SIDE, SaltSide.UP),
+                                                BlockModelGenerators.condition()
+                                                        .term(SaltTrailBlock.EAST, SaltSide.SIDE, SaltSide.UP)
+                                                        .term(SaltTrailBlock.SOUTH, SaltSide.SIDE, SaltSide.UP),
+                                                BlockModelGenerators.condition()
+                                                        .term(SaltTrailBlock.SOUTH, SaltSide.SIDE, SaltSide.UP)
+                                                        .term(SaltTrailBlock.WEST, SaltSide.SIDE, SaltSide.UP),
+                                                BlockModelGenerators.condition()
+                                                        .term(SaltTrailBlock.WEST, SaltSide.SIDE, SaltSide.UP)
+                                                        .term(SaltTrailBlock.NORTH, SaltSide.SIDE, SaltSide.UP)
+                                        ),
+                                        BlockModelGenerators.plainVariant(ResourceUtils.loc("salt_trail_dot").withPrefix("block/"))
+                                )
+                                .with(
+                                        BlockModelGenerators.condition().term(SaltTrailBlock.NORTH, SaltSide.SIDE, SaltSide.UP),
+                                        BlockModelGenerators.plainVariant(ResourceUtils.loc("salt_trail_side0").withPrefix("block/"))
+                                )
+                                .with(
+                                        BlockModelGenerators.condition().term(SaltTrailBlock.SOUTH, SaltSide.SIDE, SaltSide.UP),
+                                        BlockModelGenerators.plainVariant(ResourceUtils.loc("salt_trail_side_alt0").withPrefix("block/"))
+                                )
+                                .with(
+                                        BlockModelGenerators.condition().term(SaltTrailBlock.EAST, SaltSide.SIDE, SaltSide.UP),
+                                        BlockModelGenerators.plainVariant(ResourceUtils.loc("salt_trail_side_alt1").withPrefix("block/")).with(BlockModelGenerators.Y_ROT_270)
+                                )
+                                .with(
+                                        BlockModelGenerators.condition().term(SaltTrailBlock.WEST, SaltSide.SIDE, SaltSide.UP),
+                                        BlockModelGenerators.plainVariant(ResourceUtils.loc("salt_trail_side1").withPrefix("block/")).with(BlockModelGenerators.Y_ROT_270)
+                                )
+                                .with(
+                                        BlockModelGenerators.condition().term(SaltTrailBlock.NORTH, SaltSide.UP),
+                                        BlockModelGenerators.plainVariant(ResourceUtils.loc("salt_trail_up").withPrefix("block/"))
+                                )
+                                .with(
+                                        BlockModelGenerators.condition().term(SaltTrailBlock.EAST, SaltSide.UP),
+                                        BlockModelGenerators.plainVariant(ResourceUtils.loc("salt_trail_up").withPrefix("block/")).with(BlockModelGenerators.Y_ROT_90)
+                                )
+                                .with(
+                                        BlockModelGenerators.condition().term(SaltTrailBlock.SOUTH, SaltSide.UP),
+                                        BlockModelGenerators.plainVariant(ResourceUtils.loc("salt_trail_up").withPrefix("block/")).with(BlockModelGenerators.Y_ROT_180)
+                                )
+                                .with(
+                                        BlockModelGenerators.condition().term(SaltTrailBlock.WEST, SaltSide.UP),
+                                        BlockModelGenerators.plainVariant(ResourceUtils.loc("salt_trail_up").withPrefix("block/")).with(BlockModelGenerators.Y_ROT_270)
+                                )
+                );
     }
 }
