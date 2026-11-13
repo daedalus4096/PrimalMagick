@@ -1,0 +1,11 @@
+{
+  "type": "primalmagick:relic_fragments",
+  "conditions": [
+    {
+      "condition": "minecraft:killed_by_player"
+    }
+  ],
+  "maxCount": 5,
+  "minCount": 3,
+  "targetTag": "primalmagick:drops_relic_fragments_high"
+}

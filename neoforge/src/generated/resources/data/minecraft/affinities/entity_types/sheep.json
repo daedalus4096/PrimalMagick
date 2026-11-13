@@ -1,0 +1,7 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:sheep",
+  "values": {
+    "primalmagick:blood": 10
+  }
+}

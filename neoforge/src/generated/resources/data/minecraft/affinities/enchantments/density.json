@@ -1,0 +1,7 @@
+{
+  "type": "primalmagick:enchantment_bonus",
+  "multiplier": {
+    "primalmagick:earth": 1
+  },
+  "target": "minecraft:density"
+}

@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:jungle_wood",
+  "target": "minecraft:stripped_jungle_wood"
+}

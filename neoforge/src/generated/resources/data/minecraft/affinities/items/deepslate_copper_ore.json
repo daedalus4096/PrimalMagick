@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "primalmagick:earth": 10
+  },
+  "base": "minecraft:deepslate",
+  "target": "minecraft:deepslate_copper_ore"
+}

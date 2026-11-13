@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:dead_fire_coral",
+  "target": "minecraft:dead_fire_coral_fan"
+}

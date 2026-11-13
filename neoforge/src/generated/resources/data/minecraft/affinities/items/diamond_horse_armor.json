@@ -1,0 +1,7 @@
+{
+  "type": "primalmagick:item",
+  "set": {
+    "primalmagick:earth": 105
+  },
+  "target": "minecraft:diamond_horse_armor"
+}

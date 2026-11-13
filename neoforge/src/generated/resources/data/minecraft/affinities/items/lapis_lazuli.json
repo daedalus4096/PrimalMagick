@@ -1,0 +1,7 @@
+{
+  "type": "primalmagick:item",
+  "set": {
+    "primalmagick:earth": 10
+  },
+  "target": "minecraft:lapis_lazuli"
+}

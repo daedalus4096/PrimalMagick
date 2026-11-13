@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:stray",
+  "values": {
+    "primalmagick:blood": 10,
+    "primalmagick:sea": 5
+  }
+}

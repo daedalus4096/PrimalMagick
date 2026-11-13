@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "primalmagick:hallowed": 5
+  },
+  "base": "minecraft:sand",
+  "target": "minecraft:suspicious_sand"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "primalmagick:blood_notes",
+  "conditions": [
+    {
+      "condition": "minecraft:killed_by_player"
+    }
+  ],
+  "targetTag": "primalmagick:drops_blood_notes_high"
+}

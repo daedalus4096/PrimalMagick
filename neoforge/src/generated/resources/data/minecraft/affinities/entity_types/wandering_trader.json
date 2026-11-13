@@ -1,0 +1,7 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:wandering_trader",
+  "values": {
+    "primalmagick:blood": 10
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:crimson_stem",
+  "target": "minecraft:warped_stem"
+}

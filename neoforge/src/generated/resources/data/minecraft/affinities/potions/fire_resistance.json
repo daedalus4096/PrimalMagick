@@ -1,0 +1,7 @@
+{
+  "type": "primalmagick:potion_bonus",
+  "bonus": {
+    "primalmagick:infernal": 2
+  },
+  "target": "minecraft:fire_resistance"
+}

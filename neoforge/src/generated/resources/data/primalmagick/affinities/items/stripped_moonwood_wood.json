@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "primalmagick:moonwood_log",
+  "target": "primalmagick:stripped_moonwood_wood"
+}

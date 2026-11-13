@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:infernal": 10
+  },
+  "target": "minecraft:netherite_scrap"
+}

@@ -1,0 +1,11 @@
+{
+  "type": "primalmagick:guillotine",
+  "chance": 0.1,
+  "conditions": [
+    {
+      "condition": "minecraft:killed_by_player"
+    }
+  ],
+  "item": "minecraft:piglin_head",
+  "targetTag": "primalmagick:guillotine/piglin_head"
+}

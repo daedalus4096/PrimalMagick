@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:sandstone",
+  "target": "minecraft:red_sandstone"
+}

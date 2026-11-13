@@ -1,0 +1,7 @@
+{
+  "type": "primalmagick:potion_bonus",
+  "bonus": {
+    "primalmagick:sky": 2
+  },
+  "target": "minecraft:leaping"
+}

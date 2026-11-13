@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:stone_bricks",
+  "target": "minecraft:cracked_stone_bricks"
+}

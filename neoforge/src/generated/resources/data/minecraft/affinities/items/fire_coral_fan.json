@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:fire_coral",
+  "target": "minecraft:fire_coral_fan"
+}

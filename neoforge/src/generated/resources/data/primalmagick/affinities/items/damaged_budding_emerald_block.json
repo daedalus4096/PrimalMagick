@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:emerald_block",
+  "target": "primalmagick:damaged_budding_emerald_block"
+}

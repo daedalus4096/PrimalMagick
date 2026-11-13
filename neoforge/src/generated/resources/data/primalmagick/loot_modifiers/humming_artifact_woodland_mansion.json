@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:add_item",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/woodland_mansion"
+    },
+    {
+      "chance": 1.0,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "primalmagick:humming_artifact_unattuned"
+}

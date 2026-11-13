@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:potion",
+  "target": "minecraft:splash_potion"
+}

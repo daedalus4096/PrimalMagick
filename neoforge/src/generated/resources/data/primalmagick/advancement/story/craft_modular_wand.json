@@ -1,0 +1,57 @@
+{
+  "parent": "primalmagick:story/craft_arcane_workbench",
+  "criteria": {
+    "has_wand": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primalmagick:modular_wand"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.primalmagick.craft_modular_wand.description"
+    },
+    "icon": {
+      "components": {
+        "minecraft:rarity": "common",
+        "primalmagick:capability_mana_storage": {
+          "allowedSources": [
+            "primalmagick:hallowed",
+            "primalmagick:sun",
+            "primalmagick:blood",
+            "primalmagick:sea",
+            "primalmagick:sky",
+            "primalmagick:infernal",
+            "primalmagick:moon",
+            "primalmagick:void",
+            "primalmagick:earth"
+          ],
+          "capacity": 7500,
+          "mana": {
+            "sources": {}
+          },
+          "maxExtract": 2147483647,
+          "maxReceive": 2147483647
+        },
+        "primalmagick:wand_cap": "iron",
+        "primalmagick:wand_core": "heartwood",
+        "primalmagick:wand_gem": "apprentice"
+      },
+      "id": "primalmagick:modular_wand"
+    },
+    "title": {
+      "translate": "advancements.primalmagick.craft_modular_wand.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_wand"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

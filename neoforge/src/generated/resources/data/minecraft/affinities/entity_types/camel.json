@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:camel",
+  "values": {
+    "primalmagick:blood": 10,
+    "primalmagick:sun": 5
+  }
+}

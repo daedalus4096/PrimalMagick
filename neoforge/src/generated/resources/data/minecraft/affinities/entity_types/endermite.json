@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:endermite",
+  "values": {
+    "primalmagick:blood": 5,
+    "primalmagick:void": 5
+  }
+}

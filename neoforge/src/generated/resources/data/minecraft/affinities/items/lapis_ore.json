@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "primalmagick:earth": 10
+  },
+  "base": "minecraft:stone",
+  "target": "minecraft:lapis_ore"
+}

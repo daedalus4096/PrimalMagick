@@ -1,0 +1,9 @@
+{
+  "type": "primalmagick:item",
+  "set": {
+    "primalmagick:earth": 5,
+    "primalmagick:sea": 5,
+    "primalmagick:sun": 5
+  },
+  "target": "minecraft:kelp"
+}

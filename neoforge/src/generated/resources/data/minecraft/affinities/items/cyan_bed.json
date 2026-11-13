@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:white_bed",
+  "target": "minecraft:cyan_bed"
+}

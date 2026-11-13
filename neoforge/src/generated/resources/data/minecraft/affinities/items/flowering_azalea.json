@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:azalea",
+  "target": "minecraft:flowering_azalea"
+}

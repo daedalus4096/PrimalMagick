@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:item",
+  "set": {
+    "primalmagick:earth": 68,
+    "primalmagick:infernal": 22
+  },
+  "target": "minecraft:netherite_pickaxe"
+}
