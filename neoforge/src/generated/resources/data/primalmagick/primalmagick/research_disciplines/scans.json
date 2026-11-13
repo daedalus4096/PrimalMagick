@@ -1,0 +1,13 @@
+{
+  "iconLocation": "primalmagick:textures/item/magnifying_glass.png",
+  "key": {
+    "rootKey": "primalmagick:scans"
+  },
+  "unlockRequirementOpt": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 11893193,
+    "separation": 15,
+    "spacing": 30
+  },
+  "structures": [
+    {
+      "structure": "primalmagick:earth_library",
+      "weight": 1
+    },
+    {
+      "structure": "primalmagick:sea_library",
+      "weight": 1
+    },
+    {
+      "structure": "primalmagick:sky_library",
+      "weight": 1
+    },
+    {
+      "structure": "primalmagick:sun_library",
+      "weight": 1
+    },
+    {
+      "structure": "primalmagick:moon_library",
+      "weight": 1
+    },
+    {
+      "structure": "primalmagick:forbidden_library",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "asset_name": "gold",
+  "description": {
+    "color": "#F9C81C",
+    "translate": "trim_material.primalmagick.rune_sun"
+  },
+  "override_armor_assets": {
+    "minecraft:gold": "gold_darker"
+  }
+}

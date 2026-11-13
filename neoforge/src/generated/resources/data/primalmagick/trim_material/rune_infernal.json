@@ -1,0 +1,10 @@
+{
+  "asset_name": "copper",
+  "description": {
+    "color": "#ED2F1B",
+    "translate": "trim_material.primalmagick.rune_infernal"
+  },
+  "override_armor_assets": {
+    "minecraft:copper": "copper_darker"
+  }
+}

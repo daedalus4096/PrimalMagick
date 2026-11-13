@@ -1,0 +1,40 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowood_sapling"
+  },
+  "key": {
+    "rootKey": "primalmagick:hallowood_trees"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:hallowood_trees"
+      },
+      "recipes": [
+        "primalmagick:hallowood_wood",
+        "primalmagick:stripped_hallowood_wood",
+        "primalmagick:hallowood_planks",
+        "primalmagick:hallowood_slab",
+        "primalmagick:hallowood_stairs",
+        "primalmagick:hallowood_pillar"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hallowood_trees.text.stage.1"
+    }
+  ]
+}

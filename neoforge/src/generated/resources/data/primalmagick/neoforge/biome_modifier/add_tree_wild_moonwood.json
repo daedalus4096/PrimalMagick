@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#primalmagick:has_feature/tree_wild_moonwood",
+  "features": "primalmagick:tree_wild_moonwood",
+  "step": "vegetal_decoration"
+}

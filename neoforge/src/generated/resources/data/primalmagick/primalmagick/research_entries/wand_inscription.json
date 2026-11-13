@@ -1,0 +1,60 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:wand_inscription_table"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_inscription"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:basic_sorcery"
+    },
+    {
+      "rootKey": "primalmagick:advanced_wandmaking"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requiredValue": 1,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:spells_crafted"
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "observation",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_inscription"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_inscription.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:wand_inscription"
+      },
+      "recipes": [
+        "primalmagick:wand_inscription_table"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_inscription.text.stage.2"
+    }
+  ]
+}

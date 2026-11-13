@@ -1,0 +1,37 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:quartz"
+  },
+  "key": {
+    "rootKey": "primalmagick:quartz"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:quartz"
+      },
+      "recipes": [
+        "primalmagick:quartz_nugget",
+        "primalmagick:quartz_from_nuggets",
+        "primalmagick:quartz_from_smelting"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.quartz.text.stage.1"
+    }
+  ]
+}

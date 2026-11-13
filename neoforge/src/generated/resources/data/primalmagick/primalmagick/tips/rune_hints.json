@@ -1,0 +1,10 @@
+{
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_runeworking"
+    }
+  },
+  "translationKey": "tip.primalmagick.rune_hints"
+}

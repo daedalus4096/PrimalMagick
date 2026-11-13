@@ -1,0 +1,31 @@
+{
+  "aidBlocks": [
+    "minecraft:beehive"
+  ],
+  "baseSuccessChanceOverride": 0.5,
+  "materialOptions": [
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "material_type": "primalmagick:item_tag",
+      "quantity": 1,
+      "tag": "minecraft:small_flowers",
+      "weight": 1.0
+    }
+  ],
+  "otherRewards": [
+    {
+      "reward_type": "primalmagick:item",
+      "stack": {
+        "count": 3,
+        "id": "minecraft:honeycomb"
+      }
+    }
+  ],
+  "requiredMaterialCountOverride": 1,
+  "rewardMultiplier": 0.5,
+  "weightFunction": {
+    "reward_type": "primalmagick:constant",
+    "weight": 5.0
+  }
+}

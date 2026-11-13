@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#primalmagick:has_feature/tree_wild_sunwood",
+  "features": "primalmagick:tree_wild_sunwood",
+  "step": "vegetal_decoration"
+}

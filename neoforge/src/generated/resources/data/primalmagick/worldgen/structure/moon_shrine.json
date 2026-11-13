@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:shrine",
+  "biomes": "#primalmagick:has_structure/moon_shrine",
+  "shrine_type": "moon",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin"
+}

@@ -1,0 +1,12 @@
+{
+  "values": [
+    "primalmagick:earth",
+    "primalmagick:sea",
+    "primalmagick:sky",
+    "primalmagick:sun",
+    "primalmagick:moon",
+    "primalmagick:trade",
+    "primalmagick:forbidden",
+    "primalmagick:hallowed"
+  ]
+}

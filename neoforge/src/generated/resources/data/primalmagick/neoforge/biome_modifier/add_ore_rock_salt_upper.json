@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#primalmagick:has_feature/ore_rock_salt",
+  "features": "primalmagick:ore_rock_salt_upper",
+  "step": "underground_ores"
+}

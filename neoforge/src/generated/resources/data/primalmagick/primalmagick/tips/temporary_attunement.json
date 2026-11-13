@@ -1,0 +1,10 @@
+{
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:attunements"
+    }
+  },
+  "translationKey": "tip.primalmagick.temporary_attunement"
+}

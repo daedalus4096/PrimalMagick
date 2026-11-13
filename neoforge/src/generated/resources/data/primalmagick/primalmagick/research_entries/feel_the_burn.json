@@ -1,0 +1,16 @@
+{
+  "addenda": [],
+  "finales": [],
+  "flags": {
+    "hasHint": true,
+    "internal": true
+  },
+  "icon": {
+    "location": "primalmagick:textures/research/research_map.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:feel_the_burn"
+  },
+  "parents": [],
+  "stages": []
+}

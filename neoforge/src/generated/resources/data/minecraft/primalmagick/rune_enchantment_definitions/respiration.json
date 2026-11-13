@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:item",
+  "result": "minecraft:respiration",
+  "source": "primalmagick:sky",
+  "verb": "primalmagick:project"
+}

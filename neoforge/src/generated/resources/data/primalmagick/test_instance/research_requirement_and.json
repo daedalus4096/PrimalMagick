@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:function",
+  "environment": "minecraft:default",
+  "function": "primalmagick:research_requirement_and",
+  "max_attempts": 3,
+  "max_ticks": 400,
+  "padding": 1,
+  "setup_ticks": 50,
+  "structure": "primalmagick:test/empty3x3x3"
+}

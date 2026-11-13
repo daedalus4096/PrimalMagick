@@ -1,0 +1,34 @@
+{
+  "addenda": [],
+  "finales": [],
+  "flags": {
+    "internal": true
+  },
+  "icon": {
+    "location": "primalmagick:textures/research/research_tube.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:discover_void"
+  },
+  "parents": [],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:discover_void"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_forbidden"
+        },
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:sotu_discover_void"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.discover_void.text.stage.1"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:basics"
+  },
+  "finales": [],
+  "flags": {},
+  "key": {
+    "rootKey": "primalmagick:terrestrial_magick"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:attunements"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:terrestrial_magick"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.terrestrial_magick.text.stage.1"
+    }
+  ]
+}

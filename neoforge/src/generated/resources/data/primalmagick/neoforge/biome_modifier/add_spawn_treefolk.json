@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#primalmagick:has_spawn/treefolk",
+  "spawners": {
+    "type": "primalmagick:treefolk",
+    "maxCount": 3,
+    "minCount": 1,
+    "weight": 100
+  }
+}

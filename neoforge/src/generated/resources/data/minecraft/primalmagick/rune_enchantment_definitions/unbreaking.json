@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:item",
+  "result": "minecraft:unbreaking",
+  "source": "primalmagick:earth",
+  "verb": "primalmagick:protect"
+}

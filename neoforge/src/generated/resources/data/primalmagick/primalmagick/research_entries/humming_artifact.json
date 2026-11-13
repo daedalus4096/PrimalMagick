@@ -1,0 +1,108 @@
+{
+  "addenda": [
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_blood"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:humming_artifact"
+      },
+      "recipes": [
+        "primalmagick:humming_artifact_blood"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.1"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:humming_artifact"
+      },
+      "recipes": [
+        "primalmagick:humming_artifact_infernal"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.2"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:humming_artifact"
+      },
+      "recipes": [
+        "primalmagick:humming_artifact_void"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.3"
+    },
+    {
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:humming_artifact"
+      },
+      "recipes": [
+        "primalmagick:humming_artifact_hallowed"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.4"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "flags": {
+    "hidden": true
+  },
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:humming_artifact_unattuned"
+  },
+  "key": {
+    "rootKey": "primalmagick:humming_artifact"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:humming_artifact"
+      },
+      "recipes": [
+        "primalmagick:humming_artifact_earth",
+        "primalmagick:humming_artifact_sea",
+        "primalmagick:humming_artifact_sky",
+        "primalmagick:humming_artifact_sun",
+        "primalmagick:humming_artifact_moon"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.stage.1"
+    }
+  ]
+}

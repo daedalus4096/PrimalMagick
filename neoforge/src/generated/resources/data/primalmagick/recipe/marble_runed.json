@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": "primalmagick:marble_chiseled",
+    "M": "primalmagick:marble"
+  },
+  "pattern": [
+    " M ",
+    "MCM",
+    " M "
+  ],
+  "result": {
+    "count": 5,
+    "id": "primalmagick:marble_runed"
+  }
+}

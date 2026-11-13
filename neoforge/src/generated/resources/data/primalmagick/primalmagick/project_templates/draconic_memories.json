@@ -1,0 +1,23 @@
+{
+  "aidBlocks": [
+    "minecraft:dragon_head",
+    "minecraft:dragon_wall_head"
+  ],
+  "baseSuccessChanceOverride": 0.5,
+  "materialOptions": [
+    {
+      "bonusReward": 0.0,
+      "consumed": true,
+      "levels": 3,
+      "material_type": "primalmagick:experience",
+      "weight": 1.0
+    }
+  ],
+  "otherRewards": [],
+  "requiredMaterialCountOverride": 1,
+  "rewardMultiplier": 0.5,
+  "weightFunction": {
+    "reward_type": "primalmagick:constant",
+    "weight": 5.0
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "asset_name": "iron",
+  "description": {
+    "color": "#D1DDE3",
+    "translate": "trim_material.primalmagick.rune_moon"
+  },
+  "override_armor_assets": {
+    "minecraft:iron": "iron_darker"
+  }
+}

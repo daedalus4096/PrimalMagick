@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:creature",
+  "result": "minecraft:density",
+  "source": "primalmagick:earth",
+  "verb": "primalmagick:project"
+}

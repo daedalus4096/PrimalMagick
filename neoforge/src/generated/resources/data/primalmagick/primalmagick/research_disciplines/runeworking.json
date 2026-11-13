@@ -1,0 +1,16 @@
+{
+  "craftingStat": "primalmagick:crafted_runeworking",
+  "expertiseStat": "primalmagick:expertise_runeworking",
+  "iconLocation": "primalmagick:textures/research/discipline_runeworking.png",
+  "indexSortOrder": 500,
+  "key": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "unlockRequirementOpt": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:unlock_runeworking"
+    }
+  }
+}

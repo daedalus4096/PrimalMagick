@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:self",
+  "result": "minecraft:wind_burst",
+  "source": "primalmagick:sky",
+  "verb": "primalmagick:project"
+}

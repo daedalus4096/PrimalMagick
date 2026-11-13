@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:self",
+  "result": "minecraft:fire_protection",
+  "source": "primalmagick:infernal",
+  "verb": "primalmagick:protect"
+}

@@ -1,0 +1,41 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "flags": {},
+  "key": {
+    "rootKey": "primalmagick:spell_vehicle_projectile"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_sorcery"
+    }
+  ],
+  "stages": [
+    {
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:spell_vehicle_projectile"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_vehicle_projectile.text.stage.1"
+    },
+    {
+      "parentKey": {
+        "rootKey": "primalmagick:spell_vehicle_projectile"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.spell_vehicle_projectile.text.stage.2"
+    }
+  ]
+}

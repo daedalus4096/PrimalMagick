@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:creature",
+  "result": "minecraft:smite",
+  "source": "primalmagick:sun",
+  "verb": "primalmagick:project"
+}

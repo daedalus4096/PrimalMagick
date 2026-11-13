@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:item",
+  "result": "minecraft:loyalty",
+  "source": "primalmagick:sea",
+  "verb": "primalmagick:summon"
+}

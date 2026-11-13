@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "M": "primalmagick:marble"
+  },
+  "pattern": [
+    "M",
+    "M"
+  ],
+  "result": {
+    "count": 2,
+    "id": "primalmagick:marble_pillar"
+  }
+}

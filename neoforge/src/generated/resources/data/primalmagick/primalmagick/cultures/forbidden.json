@@ -1,0 +1,17 @@
+{
+  "accentBlockState": {
+    "Name": "primalmagick:stained_skyglass_red",
+    "Properties": {
+      "down": "false",
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "up": "false",
+      "west": "false"
+    }
+  },
+  "hiddenLootTable": "primalmagick:gameplay/empty",
+  "languageId": "primalmagick:forbidden",
+  "shelfLootTable": "primalmagick:gameplay/library/forbidden",
+  "welcomeLootTable": "primalmagick:gameplay/library/warning"
+}
