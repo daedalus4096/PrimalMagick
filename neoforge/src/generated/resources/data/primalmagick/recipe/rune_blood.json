@@ -13,6 +13,7 @@
       "rootKey": "primalmagick:rune_blood"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:rune_blood"
   }

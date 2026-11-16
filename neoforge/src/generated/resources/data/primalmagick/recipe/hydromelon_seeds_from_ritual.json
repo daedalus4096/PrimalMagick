@@ -23,6 +23,7 @@
       "rootKey": "primalmagick:hydromelon"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:hydromelon_seeds"
   }

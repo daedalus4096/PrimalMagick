@@ -18,6 +18,7 @@
       "rootKey": "primalmagick:hallowsteel"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:hallowsteel_shovel"
   }

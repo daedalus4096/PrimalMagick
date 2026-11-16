@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:void_turbine"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:void_turbine"
   }

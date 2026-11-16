@@ -19,6 +19,7 @@
       "rootKey": "primalmagick:supreme_manaweaving"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "count": 5,
     "id": "primalmagick:marble_hallowed_runed"

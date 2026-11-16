@@ -23,6 +23,7 @@
       "rootKey": "primalmagick:hallowsteel_golem"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:hallowsteel_golem_controller"
   }

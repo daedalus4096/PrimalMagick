@@ -23,6 +23,7 @@
       "rootKey": "primalmagick:earthshatter_hammer"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:earthshatter_hammer"
   }

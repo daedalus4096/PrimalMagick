@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:wand_cap_hexium"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:hexium_wand_cap_item"
   }

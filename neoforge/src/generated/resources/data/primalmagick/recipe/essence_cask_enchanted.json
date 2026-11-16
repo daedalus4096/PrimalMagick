@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:essence_cask_enchanted"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:essence_cask_enchanted"
   }

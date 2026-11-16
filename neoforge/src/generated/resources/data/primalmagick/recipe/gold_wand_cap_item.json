@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:wand_cap_gold"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:gold_wand_cap_item"
   }

@@ -21,6 +21,7 @@
       "rootKey": "primalmagick:wand_gem_adept"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:adept_wand_gem_item"
   }

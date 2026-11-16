@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:sacred_shield"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "components": {
       "minecraft:enchantments": {

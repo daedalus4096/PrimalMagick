@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:supreme_runeworking"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:runescribing_altar_heavenly"
   }

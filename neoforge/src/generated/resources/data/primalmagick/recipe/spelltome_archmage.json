@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:spelltome_archmage"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:spelltome_archmage"
   }

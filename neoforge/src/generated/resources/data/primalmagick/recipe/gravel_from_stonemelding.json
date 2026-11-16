@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:stonemelding"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "count": 8,
     "id": "minecraft:gravel"

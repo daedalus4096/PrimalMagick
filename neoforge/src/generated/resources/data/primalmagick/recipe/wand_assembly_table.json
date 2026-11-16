@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:advanced_wandmaking"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:wand_assembly_table"
   }

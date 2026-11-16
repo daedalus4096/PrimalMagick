@@ -13,6 +13,7 @@
       "rootKey": "primalmagick:linguistics"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:scribe_table"
   }

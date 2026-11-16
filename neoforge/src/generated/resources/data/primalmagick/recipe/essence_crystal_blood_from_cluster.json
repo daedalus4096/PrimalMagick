@@ -25,6 +25,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "count": 4,
     "id": "primalmagick:essence_crystal_blood"

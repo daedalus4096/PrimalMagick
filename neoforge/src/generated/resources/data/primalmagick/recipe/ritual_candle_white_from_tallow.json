@@ -19,6 +19,7 @@
       "rootKey": "primalmagick:ritual_candles"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:ritual_candle_white"
   }

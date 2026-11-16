@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:imbued_wool"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:imbued_wool_feet"
   }

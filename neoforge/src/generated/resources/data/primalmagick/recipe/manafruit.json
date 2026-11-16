@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:manafruit"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:manafruit"
   }

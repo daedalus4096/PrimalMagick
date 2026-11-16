@@ -12,6 +12,7 @@
       "rootKey": "primalmagick:ritual_candles"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:tallow"
   }

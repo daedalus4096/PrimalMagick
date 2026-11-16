@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:mana_orb_wizard"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:mana_orb_wizard"
   }

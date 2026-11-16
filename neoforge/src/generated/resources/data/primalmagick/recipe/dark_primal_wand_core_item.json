@@ -36,6 +36,7 @@
       "rootKey": "primalmagick:wand_core_dark_primal"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:dark_primal_wand_core_item"
   }

@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:emberflower"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "count": 2,
     "id": "primalmagick:emberflower"

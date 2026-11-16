@@ -38,6 +38,7 @@
       "rootKey": "primalmagick:wand_core_pure_primal"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:pure_primal_wand_core_item"
   }

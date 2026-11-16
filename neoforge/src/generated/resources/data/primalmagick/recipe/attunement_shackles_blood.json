@@ -35,6 +35,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:attunement_shackles_blood"
   }

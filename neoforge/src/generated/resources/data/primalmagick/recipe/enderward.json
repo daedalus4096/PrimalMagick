@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:enderward"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:enderward"
   }

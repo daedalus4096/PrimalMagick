@@ -23,6 +23,7 @@
       "rootKey": "primalmagick:ritual_bell"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:ritual_bell"
   }

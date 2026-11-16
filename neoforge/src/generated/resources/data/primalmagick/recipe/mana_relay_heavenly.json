@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:heavenly_mana_networking"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:mana_relay_heavenly"
   }

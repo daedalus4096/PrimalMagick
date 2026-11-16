@@ -18,6 +18,7 @@
       "rootKey": "primalmagick:wand_glamour_table"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:wand_glamour_table"
   }

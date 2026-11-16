@@ -27,6 +27,7 @@
       "rootKey": "primalmagick:runic_trim"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:runic_armor_trim_smithing_template"
   }

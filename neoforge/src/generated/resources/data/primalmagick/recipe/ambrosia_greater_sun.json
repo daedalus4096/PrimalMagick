@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:greater_ambrosia"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:ambrosia_greater_sun"
   }

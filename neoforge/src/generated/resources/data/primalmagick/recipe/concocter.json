@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:concocting_tinctures"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:concocter"
   }

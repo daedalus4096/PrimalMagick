@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:wand_core_obsidian"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:obsidian_wand_core_item"
   }

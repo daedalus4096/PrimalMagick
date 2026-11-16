@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:warding_module"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:warding_module_basic"
   }

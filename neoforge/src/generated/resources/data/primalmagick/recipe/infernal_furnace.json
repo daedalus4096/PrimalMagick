@@ -23,6 +23,7 @@
       "rootKey": "primalmagick:infernal_furnace"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:infernal_furnace"
   }

@@ -9,6 +9,7 @@
       "rootKey": "primalmagick:rune_project"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:rune_project"
   }

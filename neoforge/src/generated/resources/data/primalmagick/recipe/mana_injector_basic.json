@@ -12,6 +12,7 @@
       "rootKey": "primalmagick:mana_networking"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:mana_injector_basic"
   }

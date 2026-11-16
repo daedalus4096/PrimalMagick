@@ -9,6 +9,7 @@
       "rootKey": "primalmagick:rune_protect"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:rune_protect"
   }

@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:supreme_warding_module"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:warding_module_supreme"
   }

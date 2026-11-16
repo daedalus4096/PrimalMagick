@@ -19,6 +19,7 @@
       "rootKey": "primalmagick:shard_synthesis"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:essence_shard_sky"
   }

@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:mana_nexus"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:mana_nexus"
   }

@@ -23,6 +23,7 @@
       "rootKey": "primalmagick:bloodletter"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:bloodletter"
   }

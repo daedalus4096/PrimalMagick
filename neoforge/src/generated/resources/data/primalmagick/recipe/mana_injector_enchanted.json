@@ -12,6 +12,7 @@
       "rootKey": "primalmagick:advanced_mana_networking"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:mana_injector_enchanted"
   }

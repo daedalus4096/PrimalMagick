@@ -9,6 +9,7 @@
       "rootKey": "primalmagick:rune_creature"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:rune_creature"
   }

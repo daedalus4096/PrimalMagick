@@ -33,6 +33,7 @@
       "rootKey": "primalmagick:cleansing_rite"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:sanguine_core_inner_demon"
   }

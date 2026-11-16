@@ -31,6 +31,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:essence_cluster_hallowed"
   }

@@ -25,6 +25,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "count": 4,
     "id": "primalmagick:essence_dust_blood"

@@ -13,6 +13,7 @@
       "rootKey": "primalmagick:shard_desynthesis"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "count": 4,
     "id": "primalmagick:essence_dust_sun"

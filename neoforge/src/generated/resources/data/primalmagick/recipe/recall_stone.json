@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:recall_stone"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:recall_stone"
   }

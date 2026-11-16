@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:honey_extractor"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:honey_extractor"
   }

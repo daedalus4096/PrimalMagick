@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:mana_orb_apprentice"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:mana_orb_apprentice"
   }

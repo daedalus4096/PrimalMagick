@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:wand_core_heartwood"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:heartwood_wand_core_item"
   }

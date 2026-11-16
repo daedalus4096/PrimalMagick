@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:hexium_golem"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:hexium_golem_controller"
   }

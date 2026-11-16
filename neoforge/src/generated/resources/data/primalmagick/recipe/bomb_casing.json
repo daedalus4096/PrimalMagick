@@ -18,6 +18,7 @@
       "rootKey": "primalmagick:concocting_bombs"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:bomb_casing"
   }

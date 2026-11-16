@@ -23,6 +23,7 @@
       "rootKey": "primalmagick:attunement_shackles"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:attunement_shackles_moon"
   }

@@ -19,6 +19,7 @@
       "stage": 2
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:magnifying_glass"
   }

@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:mana_orb_adept"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:mana_orb_adept"
   }

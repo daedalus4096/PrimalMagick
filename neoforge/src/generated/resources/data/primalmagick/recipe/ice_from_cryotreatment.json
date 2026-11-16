@@ -12,6 +12,7 @@
       "rootKey": "primalmagick:cryotreatment"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "minecraft:ice"
   }

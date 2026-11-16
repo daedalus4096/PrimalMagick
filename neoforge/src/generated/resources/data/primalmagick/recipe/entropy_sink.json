@@ -29,6 +29,7 @@
       "rootKey": "primalmagick:entropy_sink"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:entropy_sink"
   }

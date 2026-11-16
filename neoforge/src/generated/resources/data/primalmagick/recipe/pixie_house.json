@@ -27,6 +27,7 @@
       "rootKey": "primalmagick:pixie_houses"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:pixie_house"
   }

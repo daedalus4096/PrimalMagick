@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:basic_ritual"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:offering_pedestal"
   }

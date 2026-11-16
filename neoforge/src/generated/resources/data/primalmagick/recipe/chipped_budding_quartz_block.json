@@ -26,6 +26,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:chipped_budding_quartz_block"
   }

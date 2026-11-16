@@ -15,6 +15,7 @@
       "rootKey": "primalmagick:sanguine_core_aliens"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:sanguine_core_enderman"
   }

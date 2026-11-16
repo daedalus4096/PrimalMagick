@@ -18,6 +18,7 @@
       "rootKey": "primalmagick:basic_manaweaving"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:mana_prism"
   }

@@ -27,6 +27,7 @@
       "rootKey": "primalmagick:wand_core_purpur"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:purpur_wand_core_item"
   }

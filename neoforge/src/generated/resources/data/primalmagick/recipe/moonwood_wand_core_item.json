@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:wand_core_moonwood"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:moonwood_wand_core_item"
   }

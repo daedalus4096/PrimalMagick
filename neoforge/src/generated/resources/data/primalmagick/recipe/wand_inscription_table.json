@@ -21,6 +21,7 @@
       "rootKey": "primalmagick:wand_inscription"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:wand_inscription_table"
   }

@@ -31,6 +31,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:essence_crystal_infernal"
   }

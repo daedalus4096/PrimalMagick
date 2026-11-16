@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:ambrosia"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:ambrosia_basic_sun"
   }

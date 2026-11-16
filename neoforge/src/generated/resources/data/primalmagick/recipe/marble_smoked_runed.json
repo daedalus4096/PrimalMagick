@@ -19,6 +19,7 @@
       "rootKey": "primalmagick:master_manaweaving"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "count": 5,
     "id": "primalmagick:marble_smoked_runed"

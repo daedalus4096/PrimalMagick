@@ -22,6 +22,7 @@
       "rootKey": "primalmagick:soul_anvil"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:soul_anvil"
   }

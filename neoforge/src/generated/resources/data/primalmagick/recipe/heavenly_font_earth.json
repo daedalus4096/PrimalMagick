@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:heavenly_mana_fonts"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:heavenly_font_earth"
   }

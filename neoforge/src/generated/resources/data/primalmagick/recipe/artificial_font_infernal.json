@@ -37,6 +37,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:artificial_font_infernal"
   }

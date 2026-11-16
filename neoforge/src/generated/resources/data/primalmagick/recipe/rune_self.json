@@ -9,6 +9,7 @@
       "rootKey": "primalmagick:rune_self"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:rune_self"
   }

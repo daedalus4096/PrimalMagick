@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:runic_grindstone"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:runic_grindstone"
   }

@@ -16,6 +16,7 @@
       "rootKey": "primalmagick:rune_insight"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:rune_insight"
   }

@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:spelltome_wizard"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:spelltome_wizard"
   }

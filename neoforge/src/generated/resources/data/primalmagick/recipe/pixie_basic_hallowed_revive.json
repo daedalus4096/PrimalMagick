@@ -26,6 +26,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:pixie_basic_hallowed"
   }

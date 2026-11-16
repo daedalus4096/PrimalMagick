@@ -38,6 +38,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:forbidden_font_infernal"
   }

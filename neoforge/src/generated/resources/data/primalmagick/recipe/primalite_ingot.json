@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:primalite"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:primalite_ingot"
   }

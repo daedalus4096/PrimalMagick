@@ -13,6 +13,7 @@
       "stage": 2
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:enchanted_ink_and_quill"
   }

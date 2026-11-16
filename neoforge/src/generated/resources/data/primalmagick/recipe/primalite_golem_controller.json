@@ -27,6 +27,7 @@
       "rootKey": "primalmagick:primalite_golem"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:primalite_golem_controller"
   }

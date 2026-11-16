@@ -38,6 +38,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:ambrosia_basic_hallowed"
   }

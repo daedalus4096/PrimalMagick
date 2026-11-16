@@ -13,6 +13,7 @@
       "rootKey": "primalmagick:cluster_desynthesis"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "count": 4,
     "id": "primalmagick:essence_crystal_moon"

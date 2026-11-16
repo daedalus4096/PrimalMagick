@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:pixies"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:pixie_basic_sun"
   }

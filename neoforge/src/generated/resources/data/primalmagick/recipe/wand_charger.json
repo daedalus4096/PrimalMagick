@@ -18,6 +18,7 @@
       "rootKey": "primalmagick:wand_charger"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:wand_charger"
   }

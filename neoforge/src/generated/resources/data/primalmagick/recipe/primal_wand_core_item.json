@@ -32,6 +32,7 @@
       "rootKey": "primalmagick:wand_core_primal"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:primal_wand_core_item"
   }

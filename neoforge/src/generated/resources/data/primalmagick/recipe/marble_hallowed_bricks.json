@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:supreme_manaweaving"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "count": 4,
     "id": "primalmagick:marble_hallowed_bricks"

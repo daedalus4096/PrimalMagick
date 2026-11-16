@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:spellcloth"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:spellcloth_legs"
   }

@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:wand_cap_iron"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:iron_wand_cap_item"
   }

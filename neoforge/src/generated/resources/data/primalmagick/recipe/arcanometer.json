@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:arcanometer"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:arcanometer"
   }

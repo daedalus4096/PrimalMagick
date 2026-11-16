@@ -27,6 +27,7 @@
       "rootKey": "primalmagick:wand_core_bone"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:bone_wand_core_item"
   }

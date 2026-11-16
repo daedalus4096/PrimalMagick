@@ -21,6 +21,7 @@
       "rootKey": "primalmagick:wand_gem_wizard"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:wizard_wand_gem_item"
   }

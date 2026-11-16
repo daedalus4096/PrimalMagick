@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:forbidden_sword"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "components": {
       "minecraft:enchantments": {

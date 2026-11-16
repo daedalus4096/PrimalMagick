@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:mana_orb_archmage"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:mana_orb_archmage"
   }

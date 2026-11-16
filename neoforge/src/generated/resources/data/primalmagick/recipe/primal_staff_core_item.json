@@ -47,6 +47,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:primal_staff_core_item"
   }

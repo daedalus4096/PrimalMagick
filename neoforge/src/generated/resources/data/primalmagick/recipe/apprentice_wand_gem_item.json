@@ -21,6 +21,7 @@
       "rootKey": "primalmagick:wand_gem_apprentice"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:apprentice_wand_gem_item"
   }

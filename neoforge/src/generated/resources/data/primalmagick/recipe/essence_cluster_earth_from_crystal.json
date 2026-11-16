@@ -19,6 +19,7 @@
       "rootKey": "primalmagick:cluster_synthesis"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:essence_cluster_earth"
   }

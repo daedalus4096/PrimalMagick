@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:desalinator"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:desalinator"
   }

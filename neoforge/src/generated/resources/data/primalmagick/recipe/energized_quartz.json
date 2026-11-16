@@ -25,6 +25,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:energized_quartz"
   }

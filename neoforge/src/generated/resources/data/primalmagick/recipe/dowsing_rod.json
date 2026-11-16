@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:dowsing_rod"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:dowsing_rod"
   }

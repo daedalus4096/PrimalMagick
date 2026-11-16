@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:supreme_magitech"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:magitech_parts_heavenly"
   }

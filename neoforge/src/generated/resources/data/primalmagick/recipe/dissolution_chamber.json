@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:dissolution_chamber"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:dissolution_chamber"
   }

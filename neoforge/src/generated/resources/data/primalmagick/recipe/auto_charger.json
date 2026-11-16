@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:auto_charger"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:auto_charger"
   }

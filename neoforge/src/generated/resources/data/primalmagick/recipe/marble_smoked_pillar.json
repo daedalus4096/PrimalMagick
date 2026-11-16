@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:master_manaweaving"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "count": 2,
     "id": "primalmagick:marble_smoked_pillar"

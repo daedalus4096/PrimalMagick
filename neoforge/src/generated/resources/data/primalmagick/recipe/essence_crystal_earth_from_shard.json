@@ -19,6 +19,7 @@
       "rootKey": "primalmagick:crystal_synthesis"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:essence_crystal_earth"
   }

@@ -23,6 +23,7 @@
       "rootKey": "primalmagick:sunlamp"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:sunlamp"
   }

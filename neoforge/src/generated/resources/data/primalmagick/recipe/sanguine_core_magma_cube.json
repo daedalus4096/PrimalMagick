@@ -15,6 +15,7 @@
       "rootKey": "primalmagick:sanguine_core_demons"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:sanguine_core_magma_cube"
   }

@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:dream_vision_talisman"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:dream_vision_talisman"
   }

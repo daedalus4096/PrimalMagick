@@ -19,6 +19,7 @@
       "rootKey": "primalmagick:expert_manaweaving"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "count": 5,
     "id": "primalmagick:marble_enchanted_runed"

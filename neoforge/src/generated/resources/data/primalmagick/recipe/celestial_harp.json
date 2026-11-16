@@ -22,6 +22,7 @@
       "rootKey": "primalmagick:celestial_harp"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:celestial_harp"
   }

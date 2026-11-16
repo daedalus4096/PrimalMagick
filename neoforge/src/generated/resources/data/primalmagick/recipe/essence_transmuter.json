@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:essence_transmuter"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:essence_transmuter"
   }

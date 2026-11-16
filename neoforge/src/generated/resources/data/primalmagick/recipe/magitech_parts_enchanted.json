@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:expert_magitech"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:magitech_parts_enchanted"
   }

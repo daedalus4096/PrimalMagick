@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:primal_pickaxe"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "components": {
       "minecraft:enchantments": {

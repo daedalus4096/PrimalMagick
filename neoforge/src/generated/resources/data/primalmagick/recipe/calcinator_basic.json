@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:calcinator_basic"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:calcinator_basic"
   }

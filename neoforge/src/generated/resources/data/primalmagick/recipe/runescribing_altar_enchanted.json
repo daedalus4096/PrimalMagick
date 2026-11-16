@@ -29,6 +29,7 @@
       "rootKey": "primalmagick:expert_runeworking"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:runescribing_altar_enchanted"
   }

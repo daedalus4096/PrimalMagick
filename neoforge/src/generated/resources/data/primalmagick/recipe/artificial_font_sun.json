@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:artificial_mana_fonts"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:artificial_font_sun"
   }

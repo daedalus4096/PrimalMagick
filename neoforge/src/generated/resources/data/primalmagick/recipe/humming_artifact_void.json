@@ -32,6 +32,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:humming_artifact_void"
   }

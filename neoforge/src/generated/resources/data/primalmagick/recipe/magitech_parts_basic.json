@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:basic_magitech"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:magitech_parts_basic"
   }

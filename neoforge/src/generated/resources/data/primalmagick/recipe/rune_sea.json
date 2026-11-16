@@ -13,6 +13,7 @@
       "rootKey": "primalmagick:rune_sea"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:rune_sea"
   }

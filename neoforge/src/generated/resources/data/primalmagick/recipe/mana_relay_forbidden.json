@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:forbidden_mana_networking"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:mana_relay_forbidden"
   }

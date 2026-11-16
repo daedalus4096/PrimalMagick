@@ -9,6 +9,7 @@
       "rootKey": "primalmagick:basic_runeworking"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:rune_unattuned"
   }

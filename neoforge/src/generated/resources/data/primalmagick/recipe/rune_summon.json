@@ -9,6 +9,7 @@
       "rootKey": "primalmagick:rune_summon"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:rune_summon"
   }

@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:basic_sorcery"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:spell_scroll_blank"
   }

@@ -16,6 +16,7 @@
       "rootKey": "primalmagick:expert_manaweaving"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "count": 6,
     "id": "primalmagick:marble_enchanted_slab"

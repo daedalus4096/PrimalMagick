@@ -9,6 +9,7 @@
       "rootKey": "primalmagick:rune_absorb"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:rune_absorb"
   }

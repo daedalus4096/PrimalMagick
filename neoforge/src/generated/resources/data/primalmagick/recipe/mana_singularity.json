@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:mana_singularity"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:mana_singularity"
   }

@@ -13,6 +13,7 @@
       "rootKey": "primalmagick:rune_earth"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:rune_earth"
   }

@@ -9,6 +9,7 @@
       "rootKey": "primalmagick:rune_area"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:rune_area"
   }

@@ -30,6 +30,7 @@
       "rootKey": "primalmagick:flying_carpet"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:flying_carpet"
   }

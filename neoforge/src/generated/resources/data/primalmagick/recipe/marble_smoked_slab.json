@@ -16,6 +16,7 @@
       "rootKey": "primalmagick:master_manaweaving"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "count": 6,
     "id": "primalmagick:marble_smoked_slab"

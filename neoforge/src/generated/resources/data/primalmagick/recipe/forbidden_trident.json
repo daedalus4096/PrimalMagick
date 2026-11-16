@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:forbidden_trident"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "components": {
       "minecraft:enchantments": {

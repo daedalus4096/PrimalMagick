@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:seascribe_pen"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:seascribe_pen"
   }

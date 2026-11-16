@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:primal_shovel"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "components": {
       "minecraft:enchantments": {

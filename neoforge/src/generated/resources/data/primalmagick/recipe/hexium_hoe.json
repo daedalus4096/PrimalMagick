@@ -18,6 +18,7 @@
       "rootKey": "primalmagick:hexium"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:hexium_hoe"
   }

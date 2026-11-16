@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:skyglass"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "count": 16,
     "id": "primalmagick:stained_skyglass_pane_brown"

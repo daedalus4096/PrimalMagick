@@ -27,6 +27,7 @@
       "rootKey": "primalmagick:wand_core_blaze_rod"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:blaze_rod_wand_core_item"
   }

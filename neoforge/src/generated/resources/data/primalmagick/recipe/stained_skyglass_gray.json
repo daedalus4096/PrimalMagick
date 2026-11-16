@@ -19,6 +19,7 @@
       "rootKey": "primalmagick:skyglass"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "count": 8,
     "id": "primalmagick:stained_skyglass_gray"

@@ -12,6 +12,7 @@
       "rootKey": "primalmagick:rune_grace"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:rune_grace"
   }

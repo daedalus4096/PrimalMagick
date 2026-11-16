@@ -28,6 +28,7 @@
       "rootKey": "primalmagick:calcinator_enchanted"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:calcinator_enchanted"
   }

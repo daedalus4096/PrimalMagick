@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:wand_cap_hallowsteel"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:hallowsteel_wand_cap_item"
   }

@@ -13,6 +13,7 @@
       "rootKey": "primalmagick:rune_hallowed"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:rune_hallowed"
   }

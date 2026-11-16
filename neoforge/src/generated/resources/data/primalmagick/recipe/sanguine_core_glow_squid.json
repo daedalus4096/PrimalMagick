@@ -15,6 +15,7 @@
       "rootKey": "primalmagick:sanguine_core_sea_creatures"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:sanguine_core_glow_squid"
   }

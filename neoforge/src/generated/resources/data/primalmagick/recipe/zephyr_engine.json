@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:zephyr_engine"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:zephyr_engine"
   }

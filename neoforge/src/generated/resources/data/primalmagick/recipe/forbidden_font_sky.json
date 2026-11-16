@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:forbidden_mana_fonts"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:forbidden_font_sky"
   }

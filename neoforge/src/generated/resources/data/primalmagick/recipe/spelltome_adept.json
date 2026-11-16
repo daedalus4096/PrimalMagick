@@ -23,6 +23,7 @@
       "rootKey": "primalmagick:spelltome_adept"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:spelltome_adept"
   }

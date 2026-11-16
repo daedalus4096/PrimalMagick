@@ -40,6 +40,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:blaze_rod_staff_core_item"
   }

@@ -53,6 +53,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:pure_primal_staff_core_item"
   }

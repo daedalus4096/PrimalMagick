@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:wand_core_bamboo"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:bamboo_wand_core_item"
   }

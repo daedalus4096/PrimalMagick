@@ -26,6 +26,7 @@
       "rootKey": "primalmagick:master_magitech"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:magitech_parts_forbidden"
   }

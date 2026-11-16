@@ -26,6 +26,7 @@
       }
     ]
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:damaged_budding_quartz_block"
   }

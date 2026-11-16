@@ -21,6 +21,7 @@
       "rootKey": "primalmagick:wand_gem_archmage"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "id": "primalmagick:archmage_wand_gem_item"
   }

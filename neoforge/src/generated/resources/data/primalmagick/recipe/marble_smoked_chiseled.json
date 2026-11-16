@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:master_manaweaving"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:marble_smoked_chiseled"
   }

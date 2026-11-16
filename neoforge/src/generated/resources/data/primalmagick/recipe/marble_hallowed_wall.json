@@ -17,6 +17,7 @@
       "rootKey": "primalmagick:supreme_manaweaving"
     }
   },
+  "researchTier": "primalmagick:supreme",
   "result": {
     "count": 6,
     "id": "primalmagick:marble_hallowed_wall"

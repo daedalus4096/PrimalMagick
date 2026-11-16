@@ -18,6 +18,7 @@
       "rootKey": "primalmagick:incense_brazier"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:incense_brazier"
   }

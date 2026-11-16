@@ -15,6 +15,7 @@
       "rootKey": "primalmagick:sanguine_core_undead"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:sanguine_core_skeleton"
   }

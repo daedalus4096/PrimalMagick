@@ -24,6 +24,7 @@
       "rootKey": "primalmagick:sanguine_crucible"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:sanguine_crucible"
   }

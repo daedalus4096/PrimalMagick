@@ -20,6 +20,7 @@
       "rootKey": "primalmagick:humming_artifact"
     }
   },
+  "researchTier": "primalmagick:basic",
   "result": {
     "id": "primalmagick:humming_artifact_moon"
   }

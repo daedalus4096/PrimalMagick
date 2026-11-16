@@ -27,6 +27,7 @@
       "rootKey": "primalmagick:master_runeworking"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:runescribing_altar_forbidden"
   }

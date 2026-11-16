@@ -25,6 +25,7 @@
       "rootKey": "primalmagick:hexweave"
     }
   },
+  "researchTier": "primalmagick:master",
   "result": {
     "id": "primalmagick:hexweave"
   }

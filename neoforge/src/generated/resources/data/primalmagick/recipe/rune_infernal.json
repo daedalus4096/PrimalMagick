@@ -13,6 +13,7 @@
       "rootKey": "primalmagick:rune_infernal"
     }
   },
+  "researchTier": "primalmagick:expert",
   "result": {
     "id": "primalmagick:rune_infernal"
   }
