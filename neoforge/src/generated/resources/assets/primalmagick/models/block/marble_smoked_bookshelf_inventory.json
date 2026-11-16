@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "primalmagick:block/marble_smoked_bookshelf_empty",
+    "side": "primalmagick:block/marble_smoked_bookshelf_side",
+    "top": "primalmagick:block/marble_smoked_bookshelf_top"
+  }
+}

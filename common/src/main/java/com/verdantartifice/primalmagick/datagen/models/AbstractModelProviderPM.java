@@ -746,7 +746,8 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
             this.addSlotStateAndRotationVariants(block, blockModels, multipartgenerator, condition, variantmutator);
         });
         blockModels.blockStateOutput.accept(multipartgenerator);
-        blockModels.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block, "_inventory"));
+        TexturedModelsPM.CARVED_BOOKSHELF.create(block, blockModels.modelOutput);
+        blockModels.registerSimpleItemModel(block, TexturedModelsPM.CARVED_BOOKSHELF_INVENTORY.createWithSuffix(block, "_inventory", blockModels.modelOutput));
         BlockModelGenerators.CHISELED_BOOKSHELF_SLOT_MODEL_CACHE.clear();
     }
 

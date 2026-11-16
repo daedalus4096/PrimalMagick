@@ -45,6 +45,19 @@ public class TextureMappingsPM {
                 .put(TextureSlotsPM.ALTAR_SIDE, TextureMapping.getBlockTexture(block, "_side"));
     }
 
+    public static TextureMapping carvedBookshelf(Block block) {
+        return new TextureMapping()
+                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(block, "_side"))
+                .put(TextureSlot.TOP, TextureMapping.getBlockTexture(block, "_top"));
+    }
+
+    public static TextureMapping carvedBookshelfInventory(Block block) {
+        return new TextureMapping()
+                .put(TextureSlot.FRONT, TextureMapping.getBlockTexture(block, "_empty"))
+                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(block, "_side"))
+                .put(TextureSlot.TOP, TextureMapping.getBlockTexture(block, "_top"));
+    }
+
     public static TextureMapping connected(Block block, ModelConnection modelConnection) {
         Identifier id = Services.BLOCKS_REGISTRY.getKey(block);
         return connected(Objects.requireNonNull(id), modelConnection);

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "side": "primalmagick:block/marble_bookshelf_side",
+    "top": "primalmagick:block/marble_bookshelf_top"
+  }
+}
