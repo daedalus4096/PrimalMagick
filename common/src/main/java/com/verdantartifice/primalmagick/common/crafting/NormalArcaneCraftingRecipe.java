@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -19,6 +18,7 @@ public abstract class NormalArcaneCraftingRecipe implements IArcaneRecipe {
     protected final Recipe.CommonInfo commonInfo;
     protected final IArcaneRecipe.ArcaneCraftingBookInfo bookInfo;
     protected final Optional<AbstractRequirement<?>> requirement;
+    protected final ResearchTier researchTier;
     protected final SourceList manaCosts;
     protected final Optional<Integer> baseExpertiseOverride;
     protected final Optional<Integer> bonusExpertiseOverride;
@@ -27,12 +27,13 @@ public abstract class NormalArcaneCraftingRecipe implements IArcaneRecipe {
     @Nullable private PlacementInfo placementInfo;
 
     protected NormalArcaneCraftingRecipe(Recipe.CommonInfo commonInfo, IArcaneRecipe.ArcaneCraftingBookInfo bookInfo,
-                                         Optional<AbstractRequirement<?>> requirement, SourceList manaCosts,
+                                         Optional<AbstractRequirement<?>> requirement, ResearchTier tier, SourceList manaCosts,
                                          Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride,
                                          Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
         this.commonInfo = commonInfo;
         this.bookInfo = bookInfo;
         this.requirement = requirement;
+        this.researchTier = tier;
         this.manaCosts = manaCosts;
         this.baseExpertiseOverride = baseExpertiseOverride;
         this.bonusExpertiseOverride = bonusExpertiseOverride;
@@ -81,13 +82,13 @@ public abstract class NormalArcaneCraftingRecipe implements IArcaneRecipe {
     }
 
     @Override
-    public int getExpertiseReward(RegistryAccess registryAccess) {
-        return this.baseExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultExpertise).orElse(0));
+    public int getExpertiseReward() {
+        return this.baseExpertiseOverride.orElseGet(() -> this.researchTier == null ? 0 : this.researchTier.getDefaultExpertise());
     }
 
     @Override
-    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
-        return this.bonusExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultBonusExpertise).orElse(0));
+    public int getBonusExpertiseReward() {
+        return this.bonusExpertiseOverride.orElseGet(() -> this.researchTier == null ? 0 : this.researchTier.getDefaultBonusExpertise());
     }
 
     @Override

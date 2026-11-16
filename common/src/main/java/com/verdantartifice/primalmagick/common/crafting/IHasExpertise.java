@@ -27,29 +27,26 @@ import java.util.Set;
 public interface IHasExpertise extends IHasRequirement {
     /**
      * Get the amount of expertise to be granted to the player any time this recipe is crafted.
-     * 
-     * @param registryAccess a registry access object
+     *
      * @return the recipe's expertise reward
      */
-    int getExpertiseReward(RegistryAccess registryAccess);
+    int getExpertiseReward();
     
     /**
      * Get the amount of bonus expertise to be granted to the player the first time this recipe,
      * or a recipe in its group, is crafted.
-     * 
-     * @param registryAccess a registry access object
+     *
      * @return the recipe's bonus expertise reward
      */
-    int getBonusExpertiseReward(RegistryAccess registryAccess);
+    int getBonusExpertiseReward();
     
     /**
      * Determine whether this recipe has an expertise reward.
-     * 
-     * @param registryAccess a registry access object
+     *
      * @return true if the recipe has a total expertise reward greater than zero, false otherwise
      */
-    default boolean hasExpertiseReward(RegistryAccess registryAccess) {
-        return (this.getExpertiseReward(registryAccess) > 0) || (this.getBonusExpertiseReward(registryAccess) > 0);
+    default boolean hasExpertiseReward() {
+        return (this.getExpertiseReward() > 0) || (this.getBonusExpertiseReward() > 0);
     }
     
     /**

@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.crafting.IHasExpertise;
 import com.verdantartifice.primalmagick.common.stats.ExpertiseManager;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -28,8 +27,8 @@ public record ExpertiseRecipeDisplay(int baseValue, int bonusValue, Optional<Ide
             ByteBufCodecs.optional(Identifier.STREAM_CODEC), ExpertiseRecipeDisplay::groupOpt,
             ExpertiseRecipeDisplay::new);
 
-    public ExpertiseRecipeDisplay(IHasExpertise recipe, RegistryAccess registryAccess) {
-        this(recipe.getExpertiseReward(registryAccess), recipe.getBonusExpertiseReward(registryAccess), recipe.getExpertiseGroup());
+    public ExpertiseRecipeDisplay(IHasExpertise recipe) {
+        this(recipe.getExpertiseReward(), recipe.getBonusExpertiseReward(), recipe.getExpertiseGroup());
     }
 
     public boolean isBonusEligible(Player player, ResourceKey<Recipe<?>> recipeKey) {

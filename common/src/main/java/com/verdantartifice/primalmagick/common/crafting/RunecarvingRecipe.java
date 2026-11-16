@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -43,6 +42,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
             Ingredient.CODEC.fieldOf("base").forGetter(o -> o.base),
             Ingredient.CODEC.fieldOf("etching").forGetter(o -> o.etching),
             AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
+            ResearchTier.CODEC.fieldOf("researchTier").forGetter(r -> r.researchTier),
             Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
             Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
             Identifier.CODEC.optionalFieldOf("expertiseGroup").forGetter(r -> r.expertiseGroup),
@@ -55,6 +55,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
             Ingredient.CONTENTS_STREAM_CODEC, o -> o.base,
             Ingredient.CONTENTS_STREAM_CODEC, o -> o.etching,
             ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), sar -> sar.requirement,
+            ResearchTier.STREAM_CODEC, sar -> sar.researchTier,
             ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), sar -> sar.baseExpertiseOverride,
             ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), sar -> sar.bonusExpertiseOverride,
             ByteBufCodecs.optional(Identifier.STREAM_CODEC), sar -> sar.expertiseGroup,
@@ -68,6 +69,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
     protected final Ingredient base;
     protected final Ingredient etching;
     protected final Optional<AbstractRequirement<?>> requirement;
+    protected final ResearchTier researchTier;
     protected final Optional<Integer> baseExpertiseOverride;
     protected final Optional<Integer> bonusExpertiseOverride;
     protected final Optional<Identifier> expertiseGroup;
@@ -75,7 +77,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
     @Nullable private PlacementInfo placementInfo;
 
     public RunecarvingRecipe(Recipe.CommonInfo commonInfo, ItemStackTemplate result, Ingredient base, Ingredient etching,
-                             Optional<AbstractRequirement<?>> requirement, Optional<Integer> baseExpertiseOverride,
+                             Optional<AbstractRequirement<?>> requirement, ResearchTier tier, Optional<Integer> baseExpertiseOverride,
                              Optional<Integer> bonusExpertiseOverride, Optional<Identifier> expertiseGroup,
                              Optional<ResearchDisciplineKey> disciplineOverride) {
         this.commonInfo = commonInfo;
@@ -83,6 +85,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
         this.base = base;
         this.etching = etching;
         this.requirement = requirement;
+        this.researchTier = tier;
         this.baseExpertiseOverride = baseExpertiseOverride;
         this.bonusExpertiseOverride = bonusExpertiseOverride;
         this.expertiseGroup = expertiseGroup;
@@ -151,13 +154,13 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
     }
 
     @Override
-    public int getExpertiseReward(RegistryAccess registryAccess) {
-        return this.baseExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultExpertise).orElse(0));
+    public int getExpertiseReward() {
+        return this.baseExpertiseOverride.orElseGet(() -> this.researchTier == null ? 0 : this.researchTier.getDefaultExpertise());
     }
 
     @Override
-    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
-        return this.bonusExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultBonusExpertise).orElse(0));
+    public int getBonusExpertiseReward() {
+        return this.bonusExpertiseOverride.orElseGet(() -> this.researchTier == null ? 0 : this.researchTier.getDefaultBonusExpertise());
     }
 
     @Override

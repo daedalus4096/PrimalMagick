@@ -12,8 +12,6 @@ import com.verdantartifice.primalmagick.common.research.requirements.AbstractReq
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
 import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -48,6 +46,7 @@ public class RitualRecipe implements IRitualRecipe {
             Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(o -> o.ingredients),
             BlockIngredient.CODEC.listOf().fieldOf("props").forGetter(o -> o.props),
             AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(o -> o.requirement),
+            ResearchTier.CODEC.fieldOf("researchTier").forGetter(o -> o.researchTier),
             Codec.INT.fieldOf("instability").forGetter(o -> o.instability),
             SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(o -> o.manaCosts),
             Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(o -> o.baseExpertiseOverride),
@@ -61,6 +60,7 @@ public class RitualRecipe implements IRitualRecipe {
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), o -> o.ingredients,
             BlockIngredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), o -> o.props,
             ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), o -> o.requirement,
+            ResearchTier.STREAM_CODEC, o -> o.researchTier,
             ByteBufCodecs.VAR_INT, o -> o.instability,
             SourceList.STREAM_CODEC, o -> o.manaCosts,
             ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), o -> o.baseExpertiseOverride,
@@ -75,6 +75,7 @@ public class RitualRecipe implements IRitualRecipe {
     protected final List<Ingredient> ingredients;
     protected final List<BlockIngredient> props;
     protected final Optional<AbstractRequirement<?>> requirement;
+    protected final ResearchTier researchTier;
     protected final int instability;
     protected final SourceList manaCosts;
     protected final Optional<Integer> baseExpertiseOverride;
@@ -84,7 +85,7 @@ public class RitualRecipe implements IRitualRecipe {
     @Nullable private PlacementInfo placementInfo;
 
     public RitualRecipe(Recipe.CommonInfo commonInfo, ItemStackTemplate result, List<Ingredient> ingredients,
-                        List<BlockIngredient> props, Optional<AbstractRequirement<?>> requirement, int instability,
+                        List<BlockIngredient> props, Optional<AbstractRequirement<?>> requirement, ResearchTier tier, int instability,
                         SourceList manaCosts, Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride,
                         Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
         this.commonInfo = commonInfo;
@@ -92,6 +93,7 @@ public class RitualRecipe implements IRitualRecipe {
         this.ingredients = ingredients;
         this.props = props;
         this.requirement = requirement;
+        this.researchTier = tier;
         this.instability = instability;
         this.manaCosts = manaCosts;
         this.baseExpertiseOverride = baseExpertiseOverride;
@@ -160,7 +162,7 @@ public class RitualRecipe implements IRitualRecipe {
                         this.manaCosts,
                         this.instability,
                         this.requirement,
-                        new ExpertiseRecipeDisplay(this, Minecraft.getInstance().player.registryAccess()),
+                        new ExpertiseRecipeDisplay(this),
                         new SlotDisplay.ItemSlotDisplay(ItemsPM.RITUAL_ALTAR.get())
                 )
         );
@@ -193,13 +195,13 @@ public class RitualRecipe implements IRitualRecipe {
     }
     
     @Override
-    public int getExpertiseReward(RegistryAccess registryAccess) {
-        return this.baseExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultExpertise).orElse(0));
+    public int getExpertiseReward() {
+        return this.baseExpertiseOverride.orElseGet(() -> this.researchTier == null ? 0 : this.researchTier.getDefaultExpertise());
     }
 
     @Override
-    public int getBonusExpertiseReward(RegistryAccess registryAccess) {
-        return this.bonusExpertiseOverride.orElseGet(() -> this.getResearchTier(registryAccess).map(ResearchTier::getDefaultBonusExpertise).orElse(0));
+    public int getBonusExpertiseReward() {
+        return this.bonusExpertiseOverride.orElseGet(() -> this.researchTier == null ? 0 : this.researchTier.getDefaultBonusExpertise());
     }
 
     @Override

@@ -7,12 +7,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.crafting.display.ExpertiseRecipeDisplay;
 import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneCraftingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 import com.verdantartifice.primalmagick.common.util.StreamCodecUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -51,6 +51,7 @@ public class ShapelessArcaneTagRecipe extends NormalArcaneCraftingRecipe {
             Codec.INT.optionalFieldOf("resultAmount", 1).forGetter(o -> o.resultAmount),
             Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter(o -> o.ingredients),
             AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
+            ResearchTier.CODEC.fieldOf("researchTier").forGetter(r -> r.researchTier),
             SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
             Codec.INT.optionalFieldOf("baseExpertiseOverride").forGetter(r -> r.baseExpertiseOverride),
             Codec.INT.optionalFieldOf("bonusExpertiseOverride").forGetter(r -> r.bonusExpertiseOverride),
@@ -65,6 +66,7 @@ public class ShapelessArcaneTagRecipe extends NormalArcaneCraftingRecipe {
             ByteBufCodecs.VAR_INT, o -> o.resultAmount,
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), o -> o.ingredients,
             ByteBufCodecs.optional(AbstractRequirement.dispatchStreamCodec()), sar -> sar.requirement,
+            ResearchTier.STREAM_CODEC, sar -> sar.researchTier,
             SourceList.STREAM_CODEC, sar -> sar.manaCosts,
             ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), sar -> sar.baseExpertiseOverride,
             ByteBufCodecs.optional(ByteBufCodecs.VAR_INT), sar -> sar.bonusExpertiseOverride,
@@ -81,10 +83,10 @@ public class ShapelessArcaneTagRecipe extends NormalArcaneCraftingRecipe {
     @Nullable protected HolderLookup.Provider registries;
 
     public ShapelessArcaneTagRecipe(Recipe.CommonInfo commonInfo, IArcaneRecipe.ArcaneCraftingBookInfo bookInfo,
-                                 TagKey<Item> resultTag, int resultAmount, List<Ingredient> ingredients, Optional<AbstractRequirement<?>> requirement,
-                                 SourceList manaCosts, Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride,
-                                 Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
-        super(commonInfo, bookInfo, requirement, manaCosts, baseExpertiseOverride, bonusExpertiseOverride, expertiseGroup, disciplineOverride);
+                                    TagKey<Item> resultTag, int resultAmount, List<Ingredient> ingredients, Optional<AbstractRequirement<?>> requirement,
+                                    ResearchTier tier, SourceList manaCosts, Optional<Integer> baseExpertiseOverride, Optional<Integer> bonusExpertiseOverride,
+                                    Optional<Identifier> expertiseGroup, Optional<ResearchDisciplineKey> disciplineOverride) {
+        super(commonInfo, bookInfo, requirement, tier, manaCosts, baseExpertiseOverride, bonusExpertiseOverride, expertiseGroup, disciplineOverride);
         this.resultTag = resultTag;
         this.resultAmount = resultAmount;
         this.ingredients = ingredients;
@@ -130,7 +132,7 @@ public class ShapelessArcaneTagRecipe extends NormalArcaneCraftingRecipe {
                         new SlotDisplay.TagSlotDisplay(this.resultTag), // FIXME Does this need a custom display to show count?
                         this.manaCosts,
                         this.requirement,
-                        new ExpertiseRecipeDisplay(this, Minecraft.getInstance().player.registryAccess()),
+                        new ExpertiseRecipeDisplay(this),
                         new SlotDisplay.ItemSlotDisplay(ItemsPM.ARCANE_WORKBENCH.get())
                 )
         );

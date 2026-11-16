@@ -88,13 +88,13 @@ public class ExpertiseManager {
                         expRecipe.getExpertiseGroup().ifPresentOrElse(groupId -> {
                             // If the recipe is part of an expertise group, only take its values into account if that group has not already been processed
                             if (!foundGroups.contains(groupId)) {
-                                int reward = expRecipe.getExpertiseReward(registryAccess) + expRecipe.getBonusExpertiseReward(registryAccess);
+                                int reward = expRecipe.getExpertiseReward() + expRecipe.getBonusExpertiseReward();
                                 retVal.add(reward);
                                 foundGroups.add(groupId);
                             }
                         }, () -> {
                             // If the recipe is not part of an expertise group, then always contribute its values to the threshold
-                            int reward = expRecipe.getExpertiseReward(registryAccess) + expRecipe.getBonusExpertiseReward(registryAccess);
+                            int reward = expRecipe.getExpertiseReward() + expRecipe.getBonusExpertiseReward();
                             retVal.add(reward);
                         });
                     });
@@ -149,11 +149,11 @@ public class ExpertiseManager {
             Level level = player.level();
             expRecipe.getResearchDiscipline(level.registryAccess(), recipeHolder.id()).ifPresent(discKey -> {
                 // Award base expertise for this recipe to the player's discipline score
-                incrementValue(player, discKey, expRecipe.getExpertiseReward(level.registryAccess()));
+                incrementValue(player, discKey, expRecipe.getExpertiseReward());
                 
                 // Award bonus expertise for this recipe to the player's discipline score if eligible, then mark it as having been crafted
                 if (isBonusEligible(player, recipeHolder)) {
-                    incrementValue(player, discKey, expRecipe.getBonusExpertiseReward(level.registryAccess()));
+                    incrementValue(player, discKey, expRecipe.getBonusExpertiseReward());
                     markCrafted(player, recipeHolder);
                 }
             });
