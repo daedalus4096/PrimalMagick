@@ -136,7 +136,8 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (this.hasCustomName() && DREADED_NAME.equals(this.getCustomName().getString())) {
+        Component customName = this.getCustomName();
+        if (this.hasCustomName() && customName != null && DREADED_NAME.equals(customName.getString())) {
             this.igniteForSeconds(8);
         }
     }
@@ -145,7 +146,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     public void setCustomName(Component name) {
         super.setCustomName(name);
         Level level = this.level();
-        if (!level.isClientSide() && DREADED_NAME.equals(name.getString())) {
+        if (!level.isClientSide() && name != null && DREADED_NAME.equals(name.getString())) {
             List<Player> nearby = EntityUtils.getEntitiesInRange(level, this.position(), null, Player.class, 6.0D);
             for (Player player : nearby) {
                 StatsManager.incrementValue(player, StatsPM.TREANTS_NAMED);
