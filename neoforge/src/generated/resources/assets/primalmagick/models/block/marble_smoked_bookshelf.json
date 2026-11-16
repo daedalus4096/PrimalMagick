@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_top",
+  "parent": "minecraft:block/chiseled_bookshelf",
   "textures": {
     "side": "primalmagick:block/marble_smoked_bookshelf_side",
     "top": "primalmagick:block/marble_smoked_bookshelf_top"

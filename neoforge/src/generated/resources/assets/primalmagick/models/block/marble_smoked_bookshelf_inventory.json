@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/orientable",
+  "parent": "minecraft:block/chiseled_bookshelf_inventory",
   "textures": {
     "front": "primalmagick:block/marble_smoked_bookshelf_empty",
     "side": "primalmagick:block/marble_smoked_bookshelf_side",
