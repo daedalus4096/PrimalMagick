@@ -17,8 +17,10 @@ import com.verdantartifice.primalmagick.common.crafting.recipe_book.DissolutionB
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTiers;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -67,28 +69,30 @@ import java.util.Optional;
  */
 public abstract class Recipes extends RecipeProvider {
     protected final HolderGetter<Block> blocks;
+    protected final HolderGetter<ResearchEntry> researchEntries;
     protected final HolderGetter<TrimPattern> trimPatterns;
 
     public Recipes(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);
         this.blocks = registries.lookupOrThrow(Registries.BLOCK);
+        this.researchEntries = registries.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES);
         this.trimPatterns = registries.lookupOrThrow(Registries.TRIM_PATTERN);
     }
 
     protected ArcaneShapedRecipeBuilder arcaneShaped(ItemLike result) {
-        return ArcaneShapedRecipeBuilder.arcaneShapedRecipe(this.items, result);
+        return ArcaneShapedRecipeBuilder.arcaneShapedRecipe(this.items, this.researchEntries, result);
     }
 
     protected ArcaneShapedRecipeBuilder arcaneShaped(ItemLike result, int count) {
-        return ArcaneShapedRecipeBuilder.arcaneShapedRecipe(this.items, result, count);
+        return ArcaneShapedRecipeBuilder.arcaneShapedRecipe(this.items, this.researchEntries, result, count);
     }
 
     protected ArcaneShapelessRecipeBuilder arcaneShapeless(ItemLike result) {
-        return ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(this.items, result);
+        return ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(this.items, this.researchEntries, result);
     }
 
     protected ArcaneShapelessRecipeBuilder arcaneShapeless(ItemLike result, int count) {
-        return ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(this.items, result, count);
+        return ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(this.items, this.researchEntries, result, count);
     }
 
     protected ConcoctingRecipeBuilder concocting(Holder<Potion> potion, ConcoctionType concoctionType) {
@@ -108,19 +112,19 @@ public abstract class Recipes extends RecipeProvider {
     }
     
     protected RitualRecipeBuilder ritual(ItemLike result) {
-        return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, result);
+        return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, this.researchEntries, result);
     }
     
     protected RitualRecipeBuilder ritual(ItemLike result, int count) {
-        return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, result, count);
+        return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, this.researchEntries, result, count);
     }
     
     protected RitualRecipeBuilder ritual(ItemStackTemplate result) {
-        return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, result);
+        return RitualRecipeBuilder.ritualRecipe(this.items, this.blocks, this.researchEntries, result);
     }
 
     protected RunecarvingRecipeBuilder runecarving(ItemLike result) {
-        return RunecarvingRecipeBuilder.runecarvingRecipe(this.items, result);
+        return RunecarvingRecipeBuilder.runecarvingRecipe(this.items, this.researchEntries, result);
     }
 
     protected ShapelessTagRecipeBuilder shapeless(RecipeCategory category, TagKey<Item> result) {

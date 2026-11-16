@@ -4,7 +4,9 @@ import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneTagRecipe;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneCraftingBookCategory;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.ResearchTiers;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
@@ -33,6 +35,7 @@ import java.util.Optional;
  */
 public class ArcaneShapelessTagRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
+    protected final HolderGetter<ResearchEntry> researchEntryGetter;
     protected final TagKey<Item> resultTag;
     protected final int resultAmount;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
@@ -46,8 +49,9 @@ public class ArcaneShapelessTagRecipeBuilder {
     protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
-    protected ArcaneShapelessTagRecipeBuilder(HolderGetter<Item> itemGetter, TagKey<Item> result, int count) {
+    protected ArcaneShapelessTagRecipeBuilder(HolderGetter<Item> itemGetter, HolderGetter<ResearchEntry> researchEntryGetter, TagKey<Item> result, int count) {
         this.itemGetter = itemGetter;
+        this.researchEntryGetter = researchEntryGetter;
         this.resultTag = result;
         this.resultAmount = count;
     }
@@ -59,8 +63,8 @@ public class ArcaneShapelessTagRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a shapeless arcane recipe
      */
-    public static ArcaneShapelessTagRecipeBuilder arcaneShapelessTagRecipe(HolderGetter<Item> itemGetter, TagKey<Item> result, int count) {
-        return new ArcaneShapelessTagRecipeBuilder(itemGetter, result, count);
+    public static ArcaneShapelessTagRecipeBuilder arcaneShapelessTagRecipe(HolderGetter<Item> itemGetter, HolderGetter<ResearchEntry> researchEntryGetter, TagKey<Item> result, int count) {
+        return new ArcaneShapelessTagRecipeBuilder(itemGetter, researchEntryGetter, result, count);
     }
     
     /**
@@ -69,8 +73,8 @@ public class ArcaneShapelessTagRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a shapeless arcane recipe
      */
-    public static ArcaneShapelessTagRecipeBuilder arcaneShapelessTagRecipe(HolderGetter<Item> itemGetter, TagKey<Item> result) {
-        return arcaneShapelessTagRecipe(itemGetter, result, 1);
+    public static ArcaneShapelessTagRecipeBuilder arcaneShapelessTagRecipe(HolderGetter<Item> itemGetter, HolderGetter<ResearchEntry> researchEntryGetter, TagKey<Item> result) {
+        return arcaneShapelessTagRecipe(itemGetter, researchEntryGetter, result, 1);
     }
     
     /**
@@ -215,6 +219,7 @@ public class ArcaneShapelessTagRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
+        var finalReq = this.getFinalRequirement();
         ShapelessArcaneTagRecipe recipe = new ShapelessArcaneTagRecipe(
                 new Recipe.CommonInfo(this.showNotification),
                 new IArcaneRecipe.ArcaneCraftingBookInfo(
@@ -223,7 +228,8 @@ public class ArcaneShapelessTagRecipeBuilder {
                 this.resultTag,
                 this.resultAmount,
                 this.ingredients,
-                this.getFinalRequirement(),
+                finalReq,
+                finalReq.flatMap(req -> req.getResearchTier(this.researchEntryGetter)).orElse(ResearchTiers.BASIC),
                 Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY),
                 this.baseExpertiseOverride,
                 this.bonusExpertiseOverride,

@@ -1955,13 +1955,23 @@ public class ResearchEntries {
     }
     
     @Nullable
-    public static ResearchEntry getEntry(RegistryAccess registryAccess, ResearchEntryKey key) {
+    public static ResearchEntry getEntry(HolderGetter.Provider registryAccess, ResearchEntryKey key) {
         return getEntry(registryAccess, key.getRootKey());
     }
-    
+
     @Nullable
-    public static ResearchEntry getEntry(RegistryAccess registryAccess, ResourceKey<ResearchEntry> rawKey) {
-        return registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getValue(rawKey);
+    public static ResearchEntry getEntry(HolderGetter.Provider registryAccess, ResourceKey<ResearchEntry> rawKey) {
+        return getEntry(registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES), rawKey);
+    }
+
+    @Nullable
+    public static ResearchEntry getEntry(HolderGetter<ResearchEntry> entryGetter, ResearchEntryKey key) {
+        return getEntry(entryGetter, key.getRootKey());
+    }
+
+    @Nullable
+    public static ResearchEntry getEntry(HolderGetter<ResearchEntry> entryGetter, ResourceKey<ResearchEntry> rawKey) {
+        return entryGetter.get(rawKey).map(Holder.Reference::value).orElse(null);
     }
     
     public static Stream<ResearchEntry> stream(RegistryAccess registryAccess) {

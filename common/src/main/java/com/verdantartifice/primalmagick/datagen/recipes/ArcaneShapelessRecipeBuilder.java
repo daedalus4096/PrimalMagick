@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneCrafti
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.ResearchTiers;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
@@ -40,6 +41,7 @@ import java.util.Optional;
  */
 public class ArcaneShapelessRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
+    protected final HolderGetter<ResearchEntry> researchEntryGetter;
     protected final ItemStackTemplate result;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected boolean showNotification = true;
@@ -52,8 +54,9 @@ public class ArcaneShapelessRecipeBuilder {
     protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
-    protected ArcaneShapelessRecipeBuilder(HolderGetter<Item> itemGetter, ItemLike result, int count) {
+    protected ArcaneShapelessRecipeBuilder(HolderGetter<Item> itemGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemLike result, int count) {
         this.itemGetter = itemGetter;
+        this.researchEntryGetter = researchEntryGetter;
         this.result = new ItemStackTemplate(result.asItem(), count);
     }
     
@@ -64,8 +67,8 @@ public class ArcaneShapelessRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a shapeless arcane recipe
      */
-    public static ArcaneShapelessRecipeBuilder arcaneShapelessRecipe(HolderGetter<Item> itemGetter, ItemLike result, int count) {
-        return new ArcaneShapelessRecipeBuilder(itemGetter, result, count);
+    public static ArcaneShapelessRecipeBuilder arcaneShapelessRecipe(HolderGetter<Item> itemGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemLike result, int count) {
+        return new ArcaneShapelessRecipeBuilder(itemGetter, researchEntryGetter, result, count);
     }
     
     /**
@@ -74,8 +77,8 @@ public class ArcaneShapelessRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a shapeless arcane recipe
      */
-    public static ArcaneShapelessRecipeBuilder arcaneShapelessRecipe(HolderGetter<Item> itemGetter, ItemLike result) {
-        return arcaneShapelessRecipe(itemGetter, result, 1);
+    public static ArcaneShapelessRecipeBuilder arcaneShapelessRecipe(HolderGetter<Item> itemGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemLike result) {
+        return arcaneShapelessRecipe(itemGetter, researchEntryGetter, result, 1);
     }
     
     /**
@@ -228,6 +231,7 @@ public class ArcaneShapelessRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
+        var finalReq = this.getFinalRequirement();
         ShapelessArcaneRecipe recipe = new ShapelessArcaneRecipe(
                 new Recipe.CommonInfo(this.showNotification),
                 new IArcaneRecipe.ArcaneCraftingBookInfo(
@@ -235,7 +239,8 @@ public class ArcaneShapelessRecipeBuilder {
                         Objects.requireNonNullElse(this.group, "")),
                 this.result,
                 this.ingredients,
-                this.getFinalRequirement(),
+                finalReq,
+                finalReq.flatMap(req -> req.getResearchTier(this.researchEntryGetter)).orElse(ResearchTiers.BASIC),
                 Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY),
                 this.baseExpertiseOverride,
                 this.bonusExpertiseOverride,

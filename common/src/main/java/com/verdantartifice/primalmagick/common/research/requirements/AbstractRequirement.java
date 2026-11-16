@@ -1,12 +1,14 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.platform.Services;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -64,18 +66,28 @@ public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     public Stream<AbstractResearchKey<?>> streamKeys() {
         return Stream.empty();
     }
-    
+
     /**
      * Returns the highest research tier represented by the keys comprising this requirement, if any.
-     * 
+     *
      * @param registryAccess a registry access object
      * @return the highest research tier represented by the keys comprising this requirement, if any
      */
     public Optional<ResearchTier> getResearchTier(RegistryAccess registryAccess) {
+        return this.getResearchTier(registryAccess.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES));
+    }
+    
+    /**
+     * Returns the highest research tier represented by the keys comprising this requirement, if any.
+     * 
+     * @param researchEntryGetter a holder getter object for research entries
+     * @return the highest research tier represented by the keys comprising this requirement, if any
+     */
+    public Optional<ResearchTier> getResearchTier(HolderGetter<ResearchEntry> researchEntryGetter) {
         Optional<ResearchTier> retVal = Optional.empty();
         for (AbstractResearchKey<?> rawKey : this.streamKeys().toList()) {
             if (rawKey instanceof ResearchEntryKey entryKey) {
-                ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
+                ResearchEntry entry = ResearchEntries.getEntry(researchEntryGetter, entryKey);
                 if (entry != null) {
                     Optional<ResearchTier> tierOpt = entry.tierOpt();
                     if (retVal.isEmpty() || (tierOpt.isPresent() && tierOpt.get().compareTo(retVal.get()) > 0)) {

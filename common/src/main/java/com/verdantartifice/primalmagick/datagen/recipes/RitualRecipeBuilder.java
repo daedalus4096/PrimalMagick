@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.crafting.RitualRecipe;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.ResearchTiers;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
@@ -41,6 +42,7 @@ import java.util.Optional;
 public class RitualRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
     protected final HolderGetter<Block> blockGetter;
+    protected final HolderGetter<ResearchEntry> researchEntryGetter;
     protected final ItemStackTemplate result;
     protected boolean showNotification = true;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
@@ -53,9 +55,10 @@ public class RitualRecipeBuilder {
     protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
-    protected RitualRecipeBuilder(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, ItemStackTemplate result) {
+    protected RitualRecipeBuilder(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemStackTemplate result) {
         this.itemGetter = itemGetter;
         this.blockGetter = blockGetter;
+        this.researchEntryGetter = researchEntryGetter;
         this.result = result;
     }
     
@@ -66,8 +69,8 @@ public class RitualRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, ItemLike result, int count) {
-        return new RitualRecipeBuilder(itemGetter, blockGetter, new ItemStackTemplate(result.asItem(), count));
+    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemLike result, int count) {
+        return new RitualRecipeBuilder(itemGetter, blockGetter, researchEntryGetter, new ItemStackTemplate(result.asItem(), count));
     }
     
     /**
@@ -76,8 +79,8 @@ public class RitualRecipeBuilder {
      * @param result the output item type
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, ItemLike result) {
-        return ritualRecipe(itemGetter, blockGetter, result, 1);
+    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemLike result) {
+        return ritualRecipe(itemGetter, blockGetter, researchEntryGetter, result, 1);
     }
     
     /**
@@ -86,8 +89,8 @@ public class RitualRecipeBuilder {
      * @param result the output item stack
      * @return a new builder for a ritual recipe
      */
-    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, ItemStackTemplate result) {
-        return new RitualRecipeBuilder(itemGetter, blockGetter, result);
+    public static RitualRecipeBuilder ritualRecipe(HolderGetter<Item> itemGetter, HolderGetter<Block> blockGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemStackTemplate result) {
+        return new RitualRecipeBuilder(itemGetter, blockGetter, researchEntryGetter, result);
     }
     
     /**
@@ -312,12 +315,14 @@ public class RitualRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
+        var finalReq = this.getFinalRequirement();
         RitualRecipe recipe = new RitualRecipe(
                 new Recipe.CommonInfo(this.showNotification),
                 this.result,
                 this.ingredients,
                 this.props,
-                this.getFinalRequirement(),
+                finalReq,
+                finalReq.flatMap(req -> req.getResearchTier(this.researchEntryGetter)).orElse(ResearchTiers.BASIC),
                 this.instability,
                 this.manaCosts,
                 this.baseExpertiseOverride,

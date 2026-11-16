@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchTier;
+import com.verdantartifice.primalmagick.common.research.ResearchTiers;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
@@ -35,6 +36,7 @@ import java.util.Optional;
  */
 public class RunecarvingRecipeBuilder {
     protected final HolderGetter<Item> itemGetter;
+    protected final HolderGetter<ResearchEntry> researchEntryGetter;
     protected final ItemStackTemplate result;
     protected boolean showNotification = true;
     protected Ingredient baseIngredient;
@@ -45,8 +47,9 @@ public class RunecarvingRecipeBuilder {
     protected Optional<Identifier> expertiseGroup = Optional.empty();
     protected Optional<ResearchDisciplineKey> disciplineOverride = Optional.empty();
 
-    protected RunecarvingRecipeBuilder(HolderGetter<Item> itemGetter, ItemLike item, int count) {
+    protected RunecarvingRecipeBuilder(HolderGetter<Item> itemGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemLike item, int count) {
         this.itemGetter = itemGetter;
+        this.researchEntryGetter = researchEntryGetter;
         this.result = new ItemStackTemplate(item.asItem(), count);
     }
     
@@ -57,8 +60,8 @@ public class RunecarvingRecipeBuilder {
      * @param count the output item quantity
      * @return a new builder for a runecarving recipe
      */
-    public static RunecarvingRecipeBuilder runecarvingRecipe(HolderGetter<Item> itemGetter, ItemLike item, int count) {
-        return new RunecarvingRecipeBuilder(itemGetter, item, count);
+    public static RunecarvingRecipeBuilder runecarvingRecipe(HolderGetter<Item> itemGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemLike item, int count) {
+        return new RunecarvingRecipeBuilder(itemGetter, researchEntryGetter, item, count);
     }
     
     /**
@@ -67,8 +70,8 @@ public class RunecarvingRecipeBuilder {
      * @param item the output item type
      * @return a new builder for a runecarving recipe
      */
-    public static RunecarvingRecipeBuilder runecarvingRecipe(HolderGetter<Item> itemGetter, ItemLike item) {
-        return new RunecarvingRecipeBuilder(itemGetter, item, 1);
+    public static RunecarvingRecipeBuilder runecarvingRecipe(HolderGetter<Item> itemGetter, HolderGetter<ResearchEntry> researchEntryGetter, ItemLike item) {
+        return new RunecarvingRecipeBuilder(itemGetter, researchEntryGetter, item, 1);
     }
     
     /**
@@ -197,12 +200,14 @@ public class RunecarvingRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.validate(id);
+        var finalReq = this.getFinalRequirement();
         RunecarvingRecipe recipe = new RunecarvingRecipe(
                 new Recipe.CommonInfo(this.showNotification),
                 this.result,
                 this.baseIngredient,
                 this.etchingIngredient,
-                this.getFinalRequirement(),
+                finalReq,
+                finalReq.flatMap(req -> req.getResearchTier(this.researchEntryGetter)).orElse(ResearchTiers.BASIC),
                 this.baseExpertiseOverride,
                 this.bonusExpertiseOverride,
                 this.expertiseGroup,
