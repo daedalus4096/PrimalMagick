@@ -191,9 +191,9 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.createAmethystCluster(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD.get());
         blockModels.createAmethystCluster(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD.get());
         blockModels.createAmethystCluster(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD.get());
-        blockModels.createTrivialCube(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get());
-        blockModels.createTrivialCube(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get());
-        blockModels.createTrivialCube(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
+        blockModels.createTrivialBlock(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get(), TexturedModel.COLUMN);
+        blockModels.createTrivialBlock(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get(), TexturedModel.COLUMN);
+        blockModels.createTrivialBlock(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get(), TexturedModel.COLUMN);
 
         // Generate skyglass full and pane blocks
         this.createSkyglassBlocks(BlocksPM.SKYGLASS.get(), BlocksPM.SKYGLASS_PANE.get(), blockModels);

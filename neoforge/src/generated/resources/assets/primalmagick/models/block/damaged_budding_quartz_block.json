@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "primalmagick:block/damaged_budding_quartz_block"
+    "end": "primalmagick:block/damaged_budding_quartz_block_top",
+    "side": "primalmagick:block/damaged_budding_quartz_block_side"
   }
 }
