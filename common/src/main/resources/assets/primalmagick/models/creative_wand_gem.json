@@ -2,7 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"4": "primalmagick:item/wand_gem_creative"
+		"4": "primalmagick:item/wand_gem_creative",
+		"particle": "primalmagick:item/wand_gem_creative"
 	},
 	"elements": [
 		{

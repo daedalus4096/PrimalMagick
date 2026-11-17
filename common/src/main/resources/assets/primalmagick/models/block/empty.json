@@ -1,7 +1,8 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "0": "primalmagick:block/marble"
+        "0": "primalmagick:block/marble",
+        "particle": "primalmagick:block/marble"
     },
     "elements": [
         {
