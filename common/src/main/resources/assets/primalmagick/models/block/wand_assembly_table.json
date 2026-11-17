@@ -5,10 +5,10 @@
 		"0": "primalmagick:block/wand_workbench_top",
 		"4": "primalmagick:block/wand_workbench_side",
 		"5": "primalmagick:block/wand_workbench_bottom",
-		"1_0": "primalmagick:item/mundane_wand_core",
-		"2_0": "primalmagick:item/iron_wand_cap",
-		"particle": "primalmagick:item/wand_gem",
-		"3_0": "primalmagick:item/wand_gem"
+		"1_0": "primalmagick:block/wand_workbench_core",
+		"2_0": "primalmagick:block/wand_workbench_cap",
+		"particle": "primalmagick:block/wand_workbench_gem",
+		"3_0": "primalmagick:block/wand_workbench_gem"
 	},
 	"elements": [
 		{

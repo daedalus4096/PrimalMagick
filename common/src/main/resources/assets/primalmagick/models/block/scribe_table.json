@@ -8,7 +8,7 @@
 		"2": "primalmagick:block/wood_table_bottom",
 		"3": "primalmagick:block/research_misc",
 		"5": "primalmagick:block/ink_still",
-		"6": "item/feather",
+		"6": "primalmagick:block/quill",
 		"particle": "primalmagick:block/wood_table_top"
 	},
 	"elements": [

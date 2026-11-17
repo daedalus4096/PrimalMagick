@@ -6,7 +6,7 @@
 		"1": "primalmagick:block/base_iron",
 		"2": "primalmagick:block/base_gold",
 		"4": "block/black_concrete",
-		"5": "primalmagick:item/arcanometer_antenna",
+		"5": "primalmagick:block/arcanometer_antenna",
 		"6": "block/white_concrete",
 		"particle": "primalmagick:block/base_iron"
 	},
