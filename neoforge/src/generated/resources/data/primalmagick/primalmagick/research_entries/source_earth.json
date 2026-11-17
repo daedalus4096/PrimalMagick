@@ -6,7 +6,7 @@
   "finales": [],
   "flags": {},
   "icon": {
-    "location": "primalmagick:sources/earth"
+    "location": "primalmagick:gui/sprites/sources/earth"
   },
   "key": {
     "rootKey": "primalmagick:source_earth"

@@ -6,7 +6,7 @@
   "finales": [],
   "flags": {},
   "icon": {
-    "location": "primalmagick:sources/blood"
+    "location": "primalmagick:gui/sprites/sources/blood"
   },
   "key": {
     "rootKey": "primalmagick:spell_payload_blood"

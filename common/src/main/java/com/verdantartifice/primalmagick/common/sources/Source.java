@@ -28,7 +28,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class Source implements StringRepresentable {
-    protected static final Identifier UNKNOWN_IMAGE = ResourceUtils.loc("research/research_unknown");
+    protected static final Identifier UNKNOWN_IMAGE = ResourceUtils.loc("gui/sprites/research/research_unknown");
 
     public static final Codec<Source> CODEC = Identifier.CODEC.xmap(Sources::get, Source::getId);
     public static final StreamCodec<ByteBuf, Source> STREAM_CODEC = Identifier.STREAM_CODEC.map(Sources::get, Source::getId);
@@ -58,11 +58,11 @@ public class Source implements StringRepresentable {
     }
     
     public Source(Identifier id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, ResourceKey<ResearchEntry> discoverKey, int sortOrder) {
-        this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.of(new ResearchEntryKey(discoverKey)), sortOrder, id.withPrefix("sources/"));
+        this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.of(new ResearchEntryKey(discoverKey)), sortOrder, id.withPrefix("gui/sprites/sources/"));
     }
     
     public Source(Identifier id, int color, ChatFormatting chatColor, double observationMultiplier, Stat manaSpentStat, int sortOrder) {
-        this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.empty(), sortOrder, id.withPrefix("sources/"));
+        this(id, color, chatColor, observationMultiplier, manaSpentStat, Optional.empty(), sortOrder, id.withPrefix("gui/sprites/sources/"));
     }
     
     @NotNull

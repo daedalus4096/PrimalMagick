@@ -6,7 +6,7 @@
   "finales": [],
   "flags": {},
   "icon": {
-    "location": "primalmagick:sources/void"
+    "location": "primalmagick:gui/sprites/sources/void"
   },
   "key": {
     "rootKey": "primalmagick:spell_payload_void"

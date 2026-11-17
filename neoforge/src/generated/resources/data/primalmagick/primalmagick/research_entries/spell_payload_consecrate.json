@@ -6,7 +6,7 @@
   "finales": [],
   "flags": {},
   "icon": {
-    "location": "primalmagick:sources/hallowed"
+    "location": "primalmagick:gui/sprites/sources/hallowed"
   },
   "key": {
     "rootKey": "primalmagick:spell_payload_consecrate"
