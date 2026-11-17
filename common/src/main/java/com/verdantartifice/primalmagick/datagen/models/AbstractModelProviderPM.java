@@ -844,7 +844,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         Map<ModelConnection, Identifier> glassModelIds = ModelConnectionSets.CUBE.modelConnections().stream().collect(Collectors.toMap(
                 modelConnection -> modelConnection,
                 modelConnection -> modelConnection.extendModel(ResourceUtils.loc("block/stained_skyglass"))
-                        .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(ResourceUtils.loc("block/stained_skyglass"), modelConnection).forceAllTranslucent(), blockModels.modelOutput)));
+                        .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(ResourceUtils.loc("stained_skyglass"), modelConnection).forceAllTranslucent(), blockModels.modelOutput)));
         Identifier variantZeroLoc = glassModelIds.get(ModelConnections.ZERO);
         Map<ModelConnection, MultiVariant> glassVariants = glassModelIds.entrySet().stream().collect(Collectors.toMap(
                 Map.Entry::getKey,

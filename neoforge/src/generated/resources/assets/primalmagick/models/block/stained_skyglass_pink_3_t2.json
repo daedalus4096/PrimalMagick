@@ -3,31 +3,31 @@
   "textures": {
     "down": {
       "force_translucent": true,
-      "sprite": "primalmagick:block/block/stained_skyglass_lr"
+      "sprite": "primalmagick:block/stained_skyglass_lr"
     },
     "east": {
       "force_translucent": true,
-      "sprite": "primalmagick:block/block/stained_skyglass_udlr"
+      "sprite": "primalmagick:block/stained_skyglass_udlr"
     },
     "north": {
       "force_translucent": true,
-      "sprite": "primalmagick:block/block/stained_skyglass_ulr"
+      "sprite": "primalmagick:block/stained_skyglass_ulr"
     },
     "particle": {
       "force_translucent": true,
-      "sprite": "primalmagick:block/block/stained_skyglass_unconnected"
+      "sprite": "primalmagick:block/stained_skyglass_unconnected"
     },
     "south": {
       "force_translucent": true,
-      "sprite": "primalmagick:block/block/stained_skyglass_ulr"
+      "sprite": "primalmagick:block/stained_skyglass_ulr"
     },
     "up": {
       "force_translucent": true,
-      "sprite": "primalmagick:block/block/stained_skyglass_udlr"
+      "sprite": "primalmagick:block/stained_skyglass_udlr"
     },
     "west": {
       "force_translucent": true,
-      "sprite": "primalmagick:block/block/stained_skyglass_udlr"
+      "sprite": "primalmagick:block/stained_skyglass_udlr"
     }
   }
 }
