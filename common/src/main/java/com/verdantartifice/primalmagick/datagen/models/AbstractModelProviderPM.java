@@ -995,7 +995,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     private void createRunescribingAltarBlock(Block block, BlockModelGenerators blockModels, Block textureSource) {
         Identifier modelLoc = Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.RUNESCRIBING_ALTAR)
                 .parent(ResourceUtils.loc("block/runescribing_altar"))
-                .create(block, TextureMappingsPM.runescribingAltar(textureSource), blockModels.modelOutput);
+                .create(block, TextureMappingsPM.runescribingAltar(block, textureSource), blockModels.modelOutput);
         MultiVariant variant = BlockModelGenerators.plainVariant(modelLoc);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
     }
