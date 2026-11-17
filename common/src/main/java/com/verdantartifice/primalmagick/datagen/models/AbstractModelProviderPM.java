@@ -228,7 +228,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         this.createHorizontalExistingBlock(BlocksPM.WAND_ASSEMBLY_TABLE.get(), blockModels);
         this.createSimpleExistingBlock(BlocksPM.WOOD_TABLE.get(), blockModels);
         this.createHorizontalExistingBlockWithRightHandAdjustments(BlocksPM.ANALYSIS_TABLE.get(), blockModels);
-        this.createCalcinatorBlock(BlocksPM.ESSENCE_FURNACE.get(), blockModels, TexturedModel.ORIENTABLE);
+        this.createEssenceFurnaceBlock(BlocksPM.ESSENCE_FURNACE.get(), blockModels);
         this.createCalcinatorBlock(BlocksPM.CALCINATOR_BASIC.get(), blockModels, TexturedModel.ORIENTABLE);
         this.createCalcinatorBlock(BlocksPM.CALCINATOR_ENCHANTED.get(), blockModels, TexturedModel.ORIENTABLE);
         this.createCalcinatorBlock(BlocksPM.CALCINATOR_FORBIDDEN.get(), blockModels, TexturedModel.ORIENTABLE);
@@ -877,10 +877,19 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(modelId)));
     }
 
+    private void createEssenceFurnaceBlock(Block block, BlockModelGenerators blockModels) {
+        MultiVariant normalVariant = BlockModelGenerators.plainVariant(ResourceUtils.loc("block/essence_furnace"));
+        MultiVariant litVariant = BlockModelGenerators.plainVariant(ResourceUtils.loc("block/essence_furnace_on"));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
+                .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, litVariant, normalVariant))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+    }
+
     private void createCalcinatorBlock(Block block, BlockModelGenerators blockModels, TexturedModel.Provider modelProvider) {
-        MultiVariant normalVariant = BlockModelGenerators.plainVariant(modelProvider.create(block, blockModels.modelOutput));
+        Material bottomTexture = TextureMapping.getBlockTexture(Blocks.FURNACE, "_top");
+        MultiVariant normalVariant = BlockModelGenerators.plainVariant(modelProvider.get(block).updateTextures(t -> t.put(TextureSlot.BOTTOM, bottomTexture)).create(block, blockModels.modelOutput));
         Material litFrontTexture = TextureMapping.getBlockTexture(block, "_front_on");
-        MultiVariant litVariant = BlockModelGenerators.plainVariant(modelProvider.get(block).updateTextures(t -> t.put(TextureSlot.FRONT, litFrontTexture)).createWithSuffix(block, "_on", blockModels.modelOutput));
+        MultiVariant litVariant = BlockModelGenerators.plainVariant(modelProvider.get(block).updateTextures(t -> t.put(TextureSlot.FRONT, litFrontTexture).put(TextureSlot.BOTTOM, bottomTexture)).createWithSuffix(block, "_on", blockModels.modelOutput));
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
                 .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, litVariant, normalVariant))
                 .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
