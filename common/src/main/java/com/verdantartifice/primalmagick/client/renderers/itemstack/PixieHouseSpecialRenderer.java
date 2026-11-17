@@ -6,8 +6,10 @@ import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.PixieHouseModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
@@ -27,6 +29,7 @@ public class PixieHouseSpecialRenderer implements NoDataSpecialModelRenderer {
             new Vector3f(0.7F, -0.7F, -0.7F),
             null);
     public static final Identifier TEXTURE = ResourceUtils.loc("textures/entity/pixie_house.png");
+    public static final SpriteId SPRITE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("pixie_house"));
 
     protected final PixieHouseModel model;
 

@@ -6,7 +6,7 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "primalmagick:textures/entity/pixie_house.png"
+      "resource": "primalmagick:entity/pixie_house"
     },
     {
       "type": "minecraft:paletted_permutations",

@@ -102,7 +102,7 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
 
         // Add custom item stack renderer textures to the item atlas
         this.addSingle(itemAtlas, SacredShieldItem.TEXTURE);
-        this.addSingle(itemAtlas, PixieHouseSpecialRenderer.TEXTURE);
+        this.addSingle(itemAtlas, PixieHouseSpecialRenderer.SPRITE.texture());
 
         // Add source textures to the block atlas
         this.addSingle(guiAtlas, Source.getUnknownImage());
