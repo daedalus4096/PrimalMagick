@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:sun": 2
+    "sources": {
+      "primalmagick:sun": 2
+    }
   },
   "base": "minecraft:dirt",
   "target": "minecraft:grass_block"

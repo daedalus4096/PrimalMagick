@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:enchantment_bonus",
   "multiplier": {
-    "primalmagick:moon": 1
+    "sources": {
+      "primalmagick:moon": 1
+    }
   },
   "target": "minecraft:silk_touch"
 }

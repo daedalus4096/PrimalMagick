@@ -1,12 +1,16 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:infernal": 10,
-    "primalmagick:moon": 10
+    "sources": {
+      "primalmagick:infernal": 10,
+      "primalmagick:moon": 10
+    }
   },
   "base": "minecraft:oak_log",
   "remove": {
-    "primalmagick:sun": 10
+    "sources": {
+      "primalmagick:sun": 10
+    }
   },
   "target": "minecraft:crimson_stem"
 }

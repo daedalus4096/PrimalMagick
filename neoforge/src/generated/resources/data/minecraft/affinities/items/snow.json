@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:sea": 2,
-    "primalmagick:sky": 2
+    "sources": {
+      "primalmagick:sea": 2,
+      "primalmagick:sky": 2
+    }
   },
   "target": "minecraft:snow"
 }

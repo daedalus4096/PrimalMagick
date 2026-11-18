@@ -2,9 +2,11 @@
   "type": "primalmagick:entity_type",
   "target": "primalmagick:hexium_golem",
   "values": {
-    "primalmagick:blood": 10,
-    "primalmagick:earth": 20,
-    "primalmagick:infernal": 10,
-    "primalmagick:void": 10
+    "sources": {
+      "primalmagick:blood": 10,
+      "primalmagick:earth": 20,
+      "primalmagick:infernal": 10,
+      "primalmagick:void": 10
+    }
   }
 }

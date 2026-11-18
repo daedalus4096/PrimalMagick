@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:infernal": 20
+    "sources": {
+      "primalmagick:infernal": 20
+    }
   },
   "base": "minecraft:bucket",
   "target": "minecraft:lava_bucket"

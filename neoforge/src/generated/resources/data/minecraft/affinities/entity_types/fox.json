@@ -2,6 +2,8 @@
   "type": "primalmagick:entity_type",
   "target": "minecraft:fox",
   "values": {
-    "primalmagick:blood": 5
+    "sources": {
+      "primalmagick:blood": 5
+    }
   }
 }

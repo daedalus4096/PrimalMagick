@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:hallowed": 5
+    "sources": {
+      "primalmagick:hallowed": 5
+    }
   },
   "base": "minecraft:golden_apple",
   "target": "minecraft:enchanted_golden_apple"

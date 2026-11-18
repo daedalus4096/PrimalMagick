@@ -1,11 +1,15 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:hallowed": 1
+    "sources": {
+      "primalmagick:hallowed": 1
+    }
   },
   "base": "minecraft:oak_slab",
   "remove": {
-    "primalmagick:sun": 1
+    "sources": {
+      "primalmagick:sun": 1
+    }
   },
   "target": "primalmagick:hallowood_slab"
 }

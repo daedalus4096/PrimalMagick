@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:sun": 5
+    "sources": {
+      "primalmagick:sun": 5
+    }
   },
   "target": "primalmagick:essence_dust_sun"
 }

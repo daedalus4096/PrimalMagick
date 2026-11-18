@@ -1,9 +1,11 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 12,
-    "primalmagick:moon": 7,
-    "primalmagick:sun": 4
+    "sources": {
+      "primalmagick:earth": 12,
+      "primalmagick:moon": 7,
+      "primalmagick:sun": 4
+    }
   },
   "target": "minecraft:suspicious_stew"
 }

@@ -1,5 +1,7 @@
 {
   "type": "primalmagick:item",
-  "set": {},
+  "set": {
+    "sources": {}
+  },
   "target": "minecraft:panda_spawn_egg"
 }

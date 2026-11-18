@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:moon": 3,
-    "primalmagick:sea": 3
+    "sources": {
+      "primalmagick:moon": 3,
+      "primalmagick:sea": 3
+    }
   },
   "target": "primalmagick:enchanted_ink"
 }

@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:earth": 10
+    "sources": {
+      "primalmagick:earth": 10
+    }
   },
   "base": "minecraft:stone",
   "target": "minecraft:iron_ore"

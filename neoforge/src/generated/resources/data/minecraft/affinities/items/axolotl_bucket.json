@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:blood": 5,
-    "primalmagick:sea": 5
+    "sources": {
+      "primalmagick:blood": 5,
+      "primalmagick:sea": 5
+    }
   },
   "base": "minecraft:bucket",
   "target": "minecraft:axolotl_bucket"

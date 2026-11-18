@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 5,
-    "primalmagick:sun": 10
+    "sources": {
+      "primalmagick:earth": 5,
+      "primalmagick:sun": 10
+    }
   },
   "target": "minecraft:glow_berries"
 }

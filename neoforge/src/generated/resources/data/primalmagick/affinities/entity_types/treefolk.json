@@ -2,7 +2,9 @@
   "type": "primalmagick:entity_type",
   "target": "primalmagick:treefolk",
   "values": {
-    "primalmagick:earth": 10,
-    "primalmagick:sun": 10
+    "sources": {
+      "primalmagick:earth": 10,
+      "primalmagick:sun": 10
+    }
   }
 }

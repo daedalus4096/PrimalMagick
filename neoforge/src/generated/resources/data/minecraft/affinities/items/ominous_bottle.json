@@ -1,9 +1,11 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:blood": 20,
-    "primalmagick:infernal": 20,
-    "primalmagick:void": 20
+    "sources": {
+      "primalmagick:blood": 20,
+      "primalmagick:infernal": 20,
+      "primalmagick:void": 20
+    }
   },
   "target": "minecraft:ominous_bottle"
 }

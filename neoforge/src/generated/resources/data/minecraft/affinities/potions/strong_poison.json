@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:potion_bonus",
   "bonus": {
-    "primalmagick:blood": 2,
-    "primalmagick:earth": 2
+    "sources": {
+      "primalmagick:blood": 2,
+      "primalmagick:earth": 2
+    }
   },
   "target": "minecraft:strong_poison"
 }

@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:earth": 20
+    "sources": {
+      "primalmagick:earth": 20
+    }
   },
   "base": "minecraft:deepslate",
   "target": "minecraft:deepslate_diamond_ore"

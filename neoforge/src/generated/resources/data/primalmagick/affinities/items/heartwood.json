@@ -1,11 +1,13 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 15,
-    "primalmagick:moon": 5,
-    "primalmagick:sea": 5,
-    "primalmagick:sky": 5,
-    "primalmagick:sun": 15
+    "sources": {
+      "primalmagick:earth": 15,
+      "primalmagick:moon": 5,
+      "primalmagick:sea": 5,
+      "primalmagick:sky": 5,
+      "primalmagick:sun": 15
+    }
   },
   "target": "primalmagick:heartwood"
 }

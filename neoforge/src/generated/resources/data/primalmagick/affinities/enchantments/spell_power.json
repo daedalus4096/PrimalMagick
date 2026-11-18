@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:enchantment_bonus",
   "multiplier": {
-    "primalmagick:infernal": 1
+    "sources": {
+      "primalmagick:infernal": 1
+    }
   },
   "target": "primalmagick:spell_power"
 }

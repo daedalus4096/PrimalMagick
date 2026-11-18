@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:enchantment_bonus",
   "multiplier": {
-    "primalmagick:sea": 1
+    "sources": {
+      "primalmagick:sea": 1
+    }
   },
   "target": "minecraft:lure"
 }

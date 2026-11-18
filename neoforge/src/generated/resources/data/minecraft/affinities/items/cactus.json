@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 5,
-    "primalmagick:sun": 5
+    "sources": {
+      "primalmagick:earth": 5,
+      "primalmagick:sun": 5
+    }
   },
   "target": "minecraft:cactus"
 }

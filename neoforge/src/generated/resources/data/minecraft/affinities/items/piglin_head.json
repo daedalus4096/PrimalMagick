@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:blood": 20,
-    "primalmagick:infernal": 5
+    "sources": {
+      "primalmagick:blood": 20,
+      "primalmagick:infernal": 5
+    }
   },
   "target": "minecraft:piglin_head"
 }

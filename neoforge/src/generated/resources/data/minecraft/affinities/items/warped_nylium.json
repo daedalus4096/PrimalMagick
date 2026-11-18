@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:moon": 2
+    "sources": {
+      "primalmagick:moon": 2
+    }
   },
   "base": "minecraft:netherrack",
   "target": "minecraft:warped_nylium"

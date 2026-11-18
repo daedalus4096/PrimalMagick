@@ -1,5 +1,7 @@
 {
   "type": "primalmagick:item",
-  "set": {},
+  "set": {
+    "sources": {}
+  },
   "target": "minecraft:repeating_command_block"
 }

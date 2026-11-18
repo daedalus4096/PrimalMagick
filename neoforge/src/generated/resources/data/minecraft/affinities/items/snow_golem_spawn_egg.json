@@ -1,5 +1,7 @@
 {
   "type": "primalmagick:item",
-  "set": {},
+  "set": {
+    "sources": {}
+  },
   "target": "minecraft:snow_golem_spawn_egg"
 }

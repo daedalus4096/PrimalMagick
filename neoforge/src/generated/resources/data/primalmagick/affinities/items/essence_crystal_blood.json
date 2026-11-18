@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:blood": 50
+    "sources": {
+      "primalmagick:blood": 50
+    }
   },
   "target": "primalmagick:essence_crystal_blood"
 }

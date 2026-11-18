@@ -2,7 +2,9 @@
   "type": "primalmagick:entity_type",
   "target": "minecraft:hoglin",
   "values": {
-    "primalmagick:blood": 10,
-    "primalmagick:infernal": 5
+    "sources": {
+      "primalmagick:blood": 10,
+      "primalmagick:infernal": 5
+    }
   }
 }

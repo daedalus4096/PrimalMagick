@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:potion_bonus",
   "bonus": {
-    "primalmagick:sea": 5
+    "sources": {
+      "primalmagick:sea": 5
+    }
   },
   "target": "minecraft:oozing"
 }

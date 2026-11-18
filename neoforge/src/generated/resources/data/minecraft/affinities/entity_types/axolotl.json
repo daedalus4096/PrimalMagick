@@ -2,7 +2,9 @@
   "type": "primalmagick:entity_type",
   "target": "minecraft:axolotl",
   "values": {
-    "primalmagick:blood": 10,
-    "primalmagick:sea": 10
+    "sources": {
+      "primalmagick:blood": 10,
+      "primalmagick:sea": 10
+    }
   }
 }

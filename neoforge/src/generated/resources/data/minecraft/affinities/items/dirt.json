@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 5
+    "sources": {
+      "primalmagick:earth": 5
+    }
   },
   "target": "minecraft:dirt"
 }

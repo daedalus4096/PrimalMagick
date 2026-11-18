@@ -1,5 +1,7 @@
 {
   "type": "primalmagick:item",
-  "set": {},
+  "set": {
+    "sources": {}
+  },
   "target": "minecraft:chain_command_block"
 }

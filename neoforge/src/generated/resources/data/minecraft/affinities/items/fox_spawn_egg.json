@@ -1,5 +1,7 @@
 {
   "type": "primalmagick:item",
-  "set": {},
+  "set": {
+    "sources": {}
+  },
   "target": "minecraft:fox_spawn_egg"
 }

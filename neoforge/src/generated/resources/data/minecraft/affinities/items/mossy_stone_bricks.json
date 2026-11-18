@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:moon": 3
+    "sources": {
+      "primalmagick:moon": 3
+    }
   },
   "base": "minecraft:stone_bricks",
   "target": "minecraft:mossy_stone_bricks"

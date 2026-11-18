@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 30,
-    "primalmagick:infernal": 5
+    "sources": {
+      "primalmagick:earth": 30,
+      "primalmagick:infernal": 5
+    }
   },
   "target": "minecraft:furnace"
 }

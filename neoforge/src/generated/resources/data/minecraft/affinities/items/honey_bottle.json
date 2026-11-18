@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:blood": 1,
-    "primalmagick:sea": 5
+    "sources": {
+      "primalmagick:blood": 1,
+      "primalmagick:sea": 5
+    }
   },
   "base": "minecraft:glass_bottle",
   "target": "minecraft:honey_bottle"

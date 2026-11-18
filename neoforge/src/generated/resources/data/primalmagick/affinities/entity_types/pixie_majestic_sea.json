@@ -2,8 +2,10 @@
   "type": "primalmagick:entity_type",
   "target": "primalmagick:pixie_majestic_sea",
   "values": {
-    "primalmagick:blood": 5,
-    "primalmagick:sea": 20,
-    "primalmagick:sky": 10
+    "sources": {
+      "primalmagick:blood": 5,
+      "primalmagick:sea": 20,
+      "primalmagick:sky": 10
+    }
   }
 }

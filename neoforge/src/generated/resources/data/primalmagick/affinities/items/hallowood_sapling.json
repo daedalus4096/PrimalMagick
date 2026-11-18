@@ -1,11 +1,15 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:hallowed": 10
+    "sources": {
+      "primalmagick:hallowed": 10
+    }
   },
   "base": "minecraft:oak_sapling",
   "remove": {
-    "primalmagick:sun": 10
+    "sources": {
+      "primalmagick:sun": 10
+    }
   },
   "target": "primalmagick:hallowood_sapling"
 }

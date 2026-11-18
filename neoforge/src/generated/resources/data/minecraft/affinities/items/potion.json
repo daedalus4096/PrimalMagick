@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:sea": 5
+    "sources": {
+      "primalmagick:sea": 5
+    }
   },
   "target": "minecraft:potion"
 }

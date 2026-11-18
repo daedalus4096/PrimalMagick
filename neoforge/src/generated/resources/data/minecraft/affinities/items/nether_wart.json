@@ -1,9 +1,11 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 5,
-    "primalmagick:infernal": 5,
-    "primalmagick:moon": 5
+    "sources": {
+      "primalmagick:earth": 5,
+      "primalmagick:infernal": 5,
+      "primalmagick:moon": 5
+    }
   },
   "target": "minecraft:nether_wart"
 }

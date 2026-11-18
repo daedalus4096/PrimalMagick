@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:sun": 15
+    "sources": {
+      "primalmagick:sun": 15
+    }
   },
   "base": "minecraft:dead_brain_coral_block",
   "target": "minecraft:brain_coral_block"

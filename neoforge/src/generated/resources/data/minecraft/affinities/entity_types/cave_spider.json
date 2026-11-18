@@ -2,8 +2,10 @@
   "type": "primalmagick:entity_type",
   "target": "minecraft:cave_spider",
   "values": {
-    "primalmagick:blood": 5,
-    "primalmagick:earth": 10,
-    "primalmagick:moon": 5
+    "sources": {
+      "primalmagick:blood": 5,
+      "primalmagick:earth": 10,
+      "primalmagick:moon": 5
+    }
   }
 }

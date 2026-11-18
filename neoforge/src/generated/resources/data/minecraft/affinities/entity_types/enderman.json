@@ -2,7 +2,9 @@
   "type": "primalmagick:entity_type",
   "target": "minecraft:enderman",
   "values": {
-    "primalmagick:blood": 10,
-    "primalmagick:void": 20
+    "sources": {
+      "primalmagick:blood": 10,
+      "primalmagick:void": 20
+    }
   }
 }

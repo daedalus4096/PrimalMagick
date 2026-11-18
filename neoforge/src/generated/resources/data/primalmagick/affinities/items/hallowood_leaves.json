@@ -1,11 +1,15 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:hallowed": 5
+    "sources": {
+      "primalmagick:hallowed": 5
+    }
   },
   "base": "minecraft:oak_leaves",
   "remove": {
-    "primalmagick:sun": 5
+    "sources": {
+      "primalmagick:sun": 5
+    }
   },
   "target": "primalmagick:hallowood_leaves"
 }

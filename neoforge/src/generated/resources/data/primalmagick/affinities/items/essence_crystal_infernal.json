@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:infernal": 50
+    "sources": {
+      "primalmagick:infernal": 50
+    }
   },
   "target": "primalmagick:essence_crystal_infernal"
 }

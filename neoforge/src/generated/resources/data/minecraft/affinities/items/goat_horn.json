@@ -1,9 +1,11 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:blood": 5,
-    "primalmagick:earth": 5,
-    "primalmagick:sky": 20
+    "sources": {
+      "primalmagick:blood": 5,
+      "primalmagick:earth": 5,
+      "primalmagick:sky": 20
+    }
   },
   "target": "minecraft:goat_horn"
 }

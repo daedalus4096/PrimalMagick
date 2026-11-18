@@ -2,7 +2,9 @@
   "type": "primalmagick:entity_type",
   "target": "primalmagick:pixie_basic_sky",
   "values": {
-    "primalmagick:blood": 5,
-    "primalmagick:sky": 15
+    "sources": {
+      "primalmagick:blood": 5,
+      "primalmagick:sky": 15
+    }
   }
 }

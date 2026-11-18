@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:hallowed": 100
+    "sources": {
+      "primalmagick:hallowed": 100
+    }
   },
   "target": "primalmagick:essence_cluster_hallowed"
 }

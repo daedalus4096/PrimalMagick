@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 3
+    "sources": {
+      "primalmagick:earth": 3
+    }
   },
   "target": "minecraft:stone_bricks"
 }

@@ -2,7 +2,9 @@
   "type": "primalmagick:entity_type",
   "target": "minecraft:tadpole",
   "values": {
-    "primalmagick:blood": 5,
-    "primalmagick:sea": 5
+    "sources": {
+      "primalmagick:blood": 5,
+      "primalmagick:sea": 5
+    }
   }
 }

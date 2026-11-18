@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:enchantment_bonus",
   "multiplier": {
-    "primalmagick:sky": 1
+    "sources": {
+      "primalmagick:sky": 1
+    }
   },
   "target": "minecraft:feather_falling"
 }

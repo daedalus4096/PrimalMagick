@@ -1,9 +1,11 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 38,
-    "primalmagick:infernal": 3,
-    "primalmagick:sun": 15
+    "sources": {
+      "primalmagick:earth": 38,
+      "primalmagick:infernal": 3,
+      "primalmagick:sun": 15
+    }
   },
   "target": "minecraft:copper_bulb"
 }

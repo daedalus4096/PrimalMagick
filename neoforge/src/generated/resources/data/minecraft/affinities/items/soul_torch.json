@@ -1,11 +1,15 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:infernal": 5
+    "sources": {
+      "primalmagick:infernal": 5
+    }
   },
   "base": "minecraft:torch",
   "remove": {
-    "primalmagick:sun": 5
+    "sources": {
+      "primalmagick:sun": 5
+    }
   },
   "target": "minecraft:soul_torch"
 }

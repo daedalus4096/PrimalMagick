@@ -2,7 +2,9 @@
   "type": "primalmagick:item",
   "base": "minecraft:kelp",
   "remove": {
-    "primalmagick:sea": 5
+    "sources": {
+      "primalmagick:sea": 5
+    }
   },
   "target": "minecraft:dried_kelp"
 }

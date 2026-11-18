@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:blood": 5
+    "sources": {
+      "primalmagick:blood": 5
+    }
   },
   "target": "minecraft:porkchop"
 }

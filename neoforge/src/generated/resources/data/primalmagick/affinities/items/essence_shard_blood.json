@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:blood": 20
+    "sources": {
+      "primalmagick:blood": 20
+    }
   },
   "target": "primalmagick:essence_shard_blood"
 }

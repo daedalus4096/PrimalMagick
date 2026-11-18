@@ -2,7 +2,9 @@
   "type": "primalmagick:entity_type",
   "target": "minecraft:blaze",
   "values": {
-    "primalmagick:infernal": 20,
-    "primalmagick:sky": 10
+    "sources": {
+      "primalmagick:infernal": 20,
+      "primalmagick:sky": 10
+    }
   }
 }

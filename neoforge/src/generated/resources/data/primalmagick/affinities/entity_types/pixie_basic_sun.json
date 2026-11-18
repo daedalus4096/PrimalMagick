@@ -2,8 +2,10 @@
   "type": "primalmagick:entity_type",
   "target": "primalmagick:pixie_basic_sun",
   "values": {
-    "primalmagick:blood": 5,
-    "primalmagick:sky": 10,
-    "primalmagick:sun": 5
+    "sources": {
+      "primalmagick:blood": 5,
+      "primalmagick:sky": 10,
+      "primalmagick:sun": 5
+    }
   }
 }

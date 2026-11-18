@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 20,
-    "primalmagick:void": 20
+    "sources": {
+      "primalmagick:earth": 20,
+      "primalmagick:void": 20
+    }
   },
   "target": "minecraft:bedrock"
 }

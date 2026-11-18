@@ -1,11 +1,15 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:moon": 2
+    "sources": {
+      "primalmagick:moon": 2
+    }
   },
   "base": "minecraft:oak_slab",
   "remove": {
-    "primalmagick:sun": 1
+    "sources": {
+      "primalmagick:sun": 1
+    }
   },
   "target": "primalmagick:moonwood_slab"
 }

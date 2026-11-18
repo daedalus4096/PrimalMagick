@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:moon": 20
+    "sources": {
+      "primalmagick:moon": 20
+    }
   },
   "target": "primalmagick:essence_shard_moon"
 }

@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:sun": 5
+    "sources": {
+      "primalmagick:sun": 5
+    }
   },
   "base": "minecraft:dead_bubble_coral",
   "target": "minecraft:bubble_coral"

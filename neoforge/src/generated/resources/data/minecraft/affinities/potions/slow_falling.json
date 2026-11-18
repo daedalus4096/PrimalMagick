@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:potion_bonus",
   "bonus": {
-    "primalmagick:sky": 2
+    "sources": {
+      "primalmagick:sky": 2
+    }
   },
   "target": "minecraft:slow_falling"
 }

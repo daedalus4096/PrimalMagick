@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:sun": 20
+    "sources": {
+      "primalmagick:sun": 20
+    }
   },
   "target": "primalmagick:essence_shard_sun"
 }

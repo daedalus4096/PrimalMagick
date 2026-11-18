@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 100,
-    "primalmagick:hallowed": 20
+    "sources": {
+      "primalmagick:earth": 100,
+      "primalmagick:hallowed": 20
+    }
   },
   "target": "minecraft:heavy_core"
 }

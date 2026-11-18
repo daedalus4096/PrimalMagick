@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:sun": 50
+    "sources": {
+      "primalmagick:sun": 50
+    }
   },
   "target": "primalmagick:essence_crystal_sun"
 }

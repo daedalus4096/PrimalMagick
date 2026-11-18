@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:void": 100
+    "sources": {
+      "primalmagick:void": 100
+    }
   },
   "target": "primalmagick:essence_cluster_void"
 }

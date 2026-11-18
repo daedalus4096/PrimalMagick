@@ -2,7 +2,9 @@
   "type": "primalmagick:entity_type",
   "target": "minecraft:spider",
   "values": {
-    "primalmagick:blood": 10,
-    "primalmagick:moon": 5
+    "sources": {
+      "primalmagick:blood": 10,
+      "primalmagick:moon": 5
+    }
   }
 }

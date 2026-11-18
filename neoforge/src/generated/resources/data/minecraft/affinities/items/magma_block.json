@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:infernal": 10
+    "sources": {
+      "primalmagick:infernal": 10
+    }
   },
   "target": "minecraft:magma_block"
 }

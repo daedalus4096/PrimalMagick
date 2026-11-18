@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 1,
-    "primalmagick:sun": 1
+    "sources": {
+      "primalmagick:earth": 1,
+      "primalmagick:sun": 1
+    }
   },
   "target": "minecraft:stick"
 }

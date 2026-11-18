@@ -1,9 +1,11 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:blood": 20,
-    "primalmagick:earth": 5,
-    "primalmagick:moon": 5
+    "sources": {
+      "primalmagick:blood": 20,
+      "primalmagick:earth": 5,
+      "primalmagick:moon": 5
+    }
   },
   "target": "primalmagick:blood_rose"
 }

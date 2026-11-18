@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "add": {
-    "primalmagick:sea": 5
+    "sources": {
+      "primalmagick:sea": 5
+    }
   },
   "base": "minecraft:melon_seeds",
   "target": "primalmagick:hydromelon_seeds"

@@ -2,6 +2,8 @@
   "type": "primalmagick:entity_type",
   "target": "minecraft:breeze",
   "values": {
-    "primalmagick:sky": 25
+    "sources": {
+      "primalmagick:sky": 25
+    }
   }
 }

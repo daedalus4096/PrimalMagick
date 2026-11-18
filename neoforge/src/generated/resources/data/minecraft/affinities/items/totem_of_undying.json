@@ -1,7 +1,9 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:hallowed": 10
+    "sources": {
+      "primalmagick:hallowed": 10
+    }
   },
   "target": "minecraft:totem_of_undying"
 }

@@ -1,9 +1,11 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:blood": 12,
-    "primalmagick:sea": 78,
-    "primalmagick:sun": 15
+    "sources": {
+      "primalmagick:blood": 12,
+      "primalmagick:sea": 78,
+      "primalmagick:sun": 15
+    }
   },
   "target": "minecraft:conduit"
 }

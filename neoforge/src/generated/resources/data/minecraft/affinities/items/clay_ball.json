@@ -1,8 +1,10 @@
 {
   "type": "primalmagick:item",
   "set": {
-    "primalmagick:earth": 2,
-    "primalmagick:sea": 2
+    "sources": {
+      "primalmagick:earth": 2,
+      "primalmagick:sea": 2
+    }
   },
   "target": "minecraft:clay_ball"
 }
