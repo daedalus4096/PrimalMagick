@@ -4779,7 +4779,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         this.arcaneShapeless(ItemsPM.SANGUINE_CORE_SLIME.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
-            .addIngredient(CommonTags.Items.SLIMEBALLS)
+            .addIngredient(CommonTags.Items.SLIME_BALLS)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
             .requiredResearch(ResearchEntries.SANGUINE_CORE_LAND_ANIMALS)

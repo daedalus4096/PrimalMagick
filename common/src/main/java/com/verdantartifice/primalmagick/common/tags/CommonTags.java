@@ -326,7 +326,6 @@ public class CommonTags {
         public static final TagKey<Item> SEEDS_WHEAT = splitTag("seeds/wheat");
         public static final TagKey<Item> SHULKER_BOXES = commonTag("shulker_boxes");
         public static final TagKey<Item> SLIME_BALLS = commonTag("slime_balls");
-        public static final TagKey<Item> SLIMEBALLS = commonTag("slimeballs");
         public static final TagKey<Item> STONES = commonTag("stones");
         public static final TagKey<Item> STORAGE_BLOCKS = commonTag("storage_blocks");
         public static final TagKey<Item> STORAGE_BLOCKS_BONE_MEAL = commonTag("storage_blocks/bone_meal");
