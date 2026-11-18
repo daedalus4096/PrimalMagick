@@ -56,5 +56,10 @@ public abstract class AbstractModelTemplateExtender implements IModelTemplateExt
         return this.createInner(ModelLocationUtils.getModelLocation(pItem, this.modelTemplate.suffix.orElse("")), pTextureMapping, pOutput);
     }
 
+    @Override
+    public Identifier createWithSuffix(@NotNull Item pItem, @NotNull String pSuffix, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput) {
+        return this.createInner(ModelLocationUtils.getModelLocation(pItem, pSuffix + this.modelTemplate.suffix.orElse("")), pTextureMapping, pOutput);
+    }
+
     protected abstract Identifier createInner(@NotNull Identifier modelLocation, @NotNull TextureMapping textureMapping, @NotNull BiConsumer<Identifier, ModelInstance> output);
 }

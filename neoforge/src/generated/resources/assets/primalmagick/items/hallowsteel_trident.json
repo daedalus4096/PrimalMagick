@@ -21,14 +21,14 @@
         "type": "minecraft:special",
         "base": "primalmagick:item/hallowsteel_trident_in_hand",
         "model": {
-          "type": "minecraft:trident"
+          "type": "primalmagick:hallowsteel_trident"
         }
       },
       "on_true": {
         "type": "minecraft:special",
         "base": "primalmagick:item/hallowsteel_trident_throwing",
         "model": {
-          "type": "minecraft:trident"
+          "type": "primalmagick:hallowsteel_trident"
         }
       },
       "property": "minecraft:using_item",

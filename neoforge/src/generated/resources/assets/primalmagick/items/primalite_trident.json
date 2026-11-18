@@ -21,14 +21,14 @@
         "type": "minecraft:special",
         "base": "primalmagick:item/primalite_trident_in_hand",
         "model": {
-          "type": "minecraft:trident"
+          "type": "primalmagick:primalite_trident"
         }
       },
       "on_true": {
         "type": "minecraft:special",
         "base": "primalmagick:item/primalite_trident_throwing",
         "model": {
-          "type": "minecraft:trident"
+          "type": "primalmagick:primalite_trident"
         }
       },
       "property": "minecraft:using_item",

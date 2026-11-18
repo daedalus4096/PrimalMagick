@@ -27,4 +27,5 @@ public interface IModelTemplateExtender {
     Identifier createWithOverride(@NotNull Block pBlock, @NotNull String pSuffix, @NotNull Function<Block, TextureMapping> pTextureMappingGetter, @NotNull BiConsumer<Identifier, ModelInstance> pOutput);
 
     Identifier create(@NotNull Item pItem, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput);
+    Identifier createWithSuffix(@NotNull Item pItem, @NotNull String pSuffix, @NotNull TextureMapping pTextureMapping, @NotNull BiConsumer<Identifier, ModelInstance> pOutput);
 }

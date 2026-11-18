@@ -4,6 +4,9 @@ import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.client.color.item.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ArcanometerSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.ForbiddenTridentSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelTridentSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaFontSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaInjectorSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaOrbSpecialRenderer;
@@ -11,6 +14,7 @@ import com.verdantartifice.primalmagick.client.renderers.itemstack.ManaRelaySpec
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ModularWandSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.MundaneWandSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseSpecialRenderer;
+import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteTridentSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ScanStateItemProperty;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.SpellcraftingAltarSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.SpelltomeSpecialRenderer;
@@ -74,6 +78,7 @@ import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.client.renderer.item.properties.conditional.IsUsingItem;
 import net.minecraft.client.renderer.item.properties.select.DisplayContext;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.client.renderer.special.TridentSpecialRenderer;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
@@ -338,7 +343,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
         // Generate tool items
         itemModels.generateFlatItem(ItemsPM.PRIMALITE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateTrident(ItemsPM.PRIMALITE_TRIDENT.get());
+        this.generateTrident(ItemsPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentSpecialRenderer.Unbaked.INSTANCE, itemModels);
         this.generateBow(ItemsPM.PRIMALITE_BOW.get(), itemModels);
         itemModels.generateFlatItem(ItemsPM.PRIMALITE_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.PRIMALITE_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -347,7 +352,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFishingRod(ItemsPM.PRIMALITE_FISHING_ROD.get());
         itemModels.generateShield(ItemsPM.PRIMALITE_SHIELD.get());
         itemModels.generateFlatItem(ItemsPM.HEXIUM_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateTrident(ItemsPM.HEXIUM_TRIDENT.get());
+        this.generateTrident(ItemsPM.HEXIUM_TRIDENT.get(), HexiumTridentSpecialRenderer.Unbaked.INSTANCE, itemModels);
         this.generateBow(ItemsPM.HEXIUM_BOW.get(), itemModels);
         itemModels.generateFlatItem(ItemsPM.HEXIUM_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.HEXIUM_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -356,7 +361,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFishingRod(ItemsPM.HEXIUM_FISHING_ROD.get());
         itemModels.generateShield(ItemsPM.HEXIUM_SHIELD.get());
         itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateTrident(ItemsPM.HALLOWSTEEL_TRIDENT.get());
+        this.generateTrident(ItemsPM.HALLOWSTEEL_TRIDENT.get(), HallowsteelTridentSpecialRenderer.Unbaked.INSTANCE, itemModels);
         this.generateBow(ItemsPM.HALLOWSTEEL_BOW.get(), itemModels);
         itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -365,7 +370,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateFishingRod(ItemsPM.HALLOWSTEEL_FISHING_ROD.get());
         itemModels.generateShield(ItemsPM.HALLOWSTEEL_SHIELD.get());
         itemModels.generateFlatItem(ItemsPM.FORBIDDEN_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateTrident(ItemsPM.FORBIDDEN_TRIDENT.get());
+        this.generateTrident(ItemsPM.FORBIDDEN_TRIDENT.get(), ForbiddenTridentSpecialRenderer.Unbaked.INSTANCE, itemModels);
         this.generateBow(ItemsPM.FORBIDDEN_BOW.get(), itemModels);
         itemModels.generateFlatItem(ItemsPM.PRIMAL_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.PRIMAL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -616,6 +621,36 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // The vanilla method doesn't create a base flat model for some reason, just the pulling overrides
         itemModels.createFlatItemModel(item, ModelTemplates.BOW);
         itemModels.generateBow(item);
+    }
+
+    private void generateTrident(Item item, SpecialModelRenderer.Unbaked<?> specialModel, ItemModelGenerators itemModels) {
+        ItemModel.Unbaked flatModel = ItemModelUtils.plainModel(itemModels.createFlatItemModel(item, ModelTemplates.FLAT_ITEM));
+        Identifier inHandNormalModelLoc = Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.EMPTY)
+                .guiLight(UnbakedModel.GuiLight.FRONT)
+                .transform(ItemDisplayContext.GUI, transform -> transform.translation(2, 3, 0).leftRotation(15, -25, -5).scale(0.65F))
+                .transform(ItemDisplayContext.GROUND, transform -> transform.translation(4, 4, 2).leftRotation(0, 0, 0).scale(0.25F))
+                .transform(ItemDisplayContext.FIXED, transform -> transform.translation(-2, 4, -5).leftRotation(0, 180, 0).scale(0.5F))
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, transform -> transform.translation(13, 17, 1).leftRotation(0, 90, -25).scale(1F))
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND, transform -> transform.translation(3, 17, 12).leftRotation(0, 60, 0).scale(1F))
+                // FIXME Should these transforms use rightRotation instead of leftRotation?
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, transform -> transform.translation(-3, 17, 1).leftRotation(0, -90, 25).scale(1F))
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, transform -> transform.translation(11, 17, -2).leftRotation(0, 60, 0).scale(1F))
+                .createWithSuffix(item, "_in_hand", TextureMapping.particle(TextureMapping.getItemTexture(item)), itemModels.modelOutput);
+        ItemModel.Unbaked inHandNormalModel = ItemModelUtils.specialModel(inHandNormalModelLoc, specialModel);
+        Identifier inHandThrowingModelLoc = Services.MODEL_TEMPLATES.extend(ModelTemplatesPM.EMPTY)
+                .guiLight(UnbakedModel.GuiLight.FRONT)
+                .transform(ItemDisplayContext.GUI, transform -> transform.translation(2, 3, 0).leftRotation(15, -25, -5).scale(0.65F))
+                .transform(ItemDisplayContext.GROUND, transform -> transform.translation(4, 4, 2).leftRotation(0, 0, 0).scale(0.25F))
+                .transform(ItemDisplayContext.FIXED, transform -> transform.translation(-2, 4, -5).leftRotation(0, 180, 0).scale(0.5F))
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND, transform -> transform.translation(13, 17, 1).leftRotation(0, 90, -25).scale(1F))
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND, transform -> transform.translation(8, -17, -7).leftRotation(0, 90, 180).scale(1F))
+                // FIXME Should these transforms use rightRotation instead of leftRotation?
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND, transform -> transform.translation(-3, 17, 1).leftRotation(0, -90, 25).scale(1F))
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND, transform -> transform.translation(8, -17, 9).leftRotation(0, 90, 180).scale(1F))
+                .createWithSuffix(item, "_throwing", TextureMapping.particle(TextureMapping.getItemTexture(item)), itemModels.modelOutput);
+        ItemModel.Unbaked inHandThrowingModel = ItemModelUtils.specialModel(inHandThrowingModelLoc, specialModel);
+        ItemModel.Unbaked inHandModel = ItemModelUtils.conditional(TridentSpecialRenderer.DEFAULT_TRANSFORMATION, ItemModelUtils.isUsingItem(), inHandThrowingModel, inHandNormalModel);
+        itemModels.itemModelOutput.accept(item, ItemModelGenerators.createFlatModelDispatch(flatModel, inHandModel));
     }
 
     /** Book openness (in degrees) that the old spelltome renderer used while the tome was held in first person */
