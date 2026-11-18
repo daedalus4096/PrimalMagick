@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "primalmagick:block/spirit_lantern"
+    "model": "primalmagick:item/spirit_lantern"
   }
 }

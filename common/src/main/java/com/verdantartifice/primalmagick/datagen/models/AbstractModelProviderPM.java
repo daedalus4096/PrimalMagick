@@ -913,6 +913,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     private void createLanternBlock(Block block, BlockModelGenerators blockModels) {
         Identifier modelLoc = ModelLocationUtils.getModelLocation(block);
         EnumProperty<Direction> prop = SunlampBlock.ATTACHMENT;
+        blockModels.registerSimpleFlatItemModel(block.asItem());
         blockModels.blockStateOutput.accept(MultiPartGenerator.multiPart(block)
                 .with(BlockModelGenerators.condition(prop, Direction.DOWN), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_ground_base")))
                 .with(BlockModelGenerators.condition(prop, Direction.DOWN), BlockModelGenerators.plainVariant(modelLoc.withSuffix("_ground_chain_stub")))
