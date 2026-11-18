@@ -864,8 +864,8 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     private void createRitualCandleBlock(RitualCandleBlock block, BlockModelGenerators blockModels) {
-        Identifier blockModel = ModelLocationUtils.getModelLocation(block);
-        MultiVariant variant = BlockModelGenerators.plainVariant(ResourceUtils.loc("block/ritual_candle"));
+        Identifier blockModel = ResourceUtils.loc("block/ritual_candle");
+        MultiVariant variant = BlockModelGenerators.plainVariant(blockModel);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, variant));
         blockModels.registerSimpleTintedItemModel(block, blockModel, ItemModelUtils.constantTint(block.getColor().getFireworkColor()));
     }
