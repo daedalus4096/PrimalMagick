@@ -44,13 +44,11 @@ public class GridDefinitionProvider implements DataProvider {
                     LOGGER.debug("Duplicate linguistics grid definition in data generation: {}", gridDef.getKey().toString());
                 }
             });
-            map.entrySet().forEach(entry -> {
-                GridDefinition.codec().encodeStart(JsonOps.INSTANCE, entry.getValue()).resultOrPartial(err -> {
-                    LOGGER.error("Failed to encode grid {}: {}", entry.getKey(), err);
-                }).ifPresent(encodedVal -> {
-                    futuresBuilder.add(DataProvider.saveStable(pOutput, encodedVal, this.getPath(this.packOutput, entry.getKey())));
-                });
-            });
+            map.forEach((key, value) -> GridDefinition.codec().encodeStart(JsonOps.INSTANCE, value).resultOrPartial(err -> {
+                LOGGER.error("Failed to encode grid {}: {}", key, err);
+            }).ifPresent(encodedVal -> {
+                futuresBuilder.add(DataProvider.saveStable(pOutput, encodedVal, this.getPath(this.packOutput, key)));
+            }));
             return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
         });
     }
