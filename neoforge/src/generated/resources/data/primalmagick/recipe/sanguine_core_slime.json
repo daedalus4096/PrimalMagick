@@ -5,7 +5,7 @@
   "group": "attuned_sanguine_cores",
   "ingredients": [
     "primalmagick:sanguine_core_blank",
-    "#c:slimeballs",
+    "#c:slime_balls",
     "primalmagick:essence_dust_sea"
   ],
   "requirement": {
