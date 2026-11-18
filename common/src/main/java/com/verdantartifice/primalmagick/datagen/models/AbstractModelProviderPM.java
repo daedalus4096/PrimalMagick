@@ -597,10 +597,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     }
 
     private void generateColorSelectItem(ItemModelGenerators itemModels, Item item, DyeColor defaultColor) {
-        CuboidItemModelWrapper.Unbaked defaultModel = null;
+        ItemModel.Unbaked defaultModel = null;
         Map<DyeColor, SelectItemModel.SwitchCase<DyeColor>> cases = new HashMap<>();
         for (DyeColor color : DyeColor.values()) {
-            var wrapper = new CuboidItemModelWrapper.Unbaked(ModelLocationUtils.getModelLocation(item, "_" + color.getName()), Optional.empty(), List.of());
+            var wrapper = ItemModelUtils.plainModel(itemModels.createFlatItemModel(item, "_" + color.getName(), ModelTemplates.FLAT_ITEM));
             cases.put(color, new SelectItemModel.SwitchCase<>(List.of(color), wrapper));
             if (color.equals(defaultColor)) {
                 defaultModel = wrapper;
