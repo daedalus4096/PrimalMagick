@@ -339,7 +339,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         // Generate tool items
         itemModels.generateFlatItem(ItemsPM.PRIMALITE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateTrident(ItemsPM.PRIMALITE_TRIDENT.get());
-        itemModels.generateBow(ItemsPM.PRIMALITE_BOW.get());
+        this.generateBow(ItemsPM.PRIMALITE_BOW.get(), itemModels);
         itemModels.generateFlatItem(ItemsPM.PRIMALITE_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.PRIMALITE_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.PRIMALITE_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -348,7 +348,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateShield(ItemsPM.PRIMALITE_SHIELD.get());
         itemModels.generateFlatItem(ItemsPM.HEXIUM_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateTrident(ItemsPM.HEXIUM_TRIDENT.get());
-        itemModels.generateBow(ItemsPM.HEXIUM_BOW.get());
+        this.generateBow(ItemsPM.HEXIUM_BOW.get(), itemModels);
         itemModels.generateFlatItem(ItemsPM.HEXIUM_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.HEXIUM_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.HEXIUM_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -357,7 +357,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateShield(ItemsPM.HEXIUM_SHIELD.get());
         itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateTrident(ItemsPM.HALLOWSTEEL_TRIDENT.get());
-        itemModels.generateBow(ItemsPM.HALLOWSTEEL_BOW.get());
+        this.generateBow(ItemsPM.HALLOWSTEEL_BOW.get(), itemModels);
         itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.HALLOWSTEEL_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -366,7 +366,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
         itemModels.generateShield(ItemsPM.HALLOWSTEEL_SHIELD.get());
         itemModels.generateFlatItem(ItemsPM.FORBIDDEN_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateTrident(ItemsPM.FORBIDDEN_TRIDENT.get());
-        itemModels.generateBow(ItemsPM.FORBIDDEN_BOW.get());
+        this.generateBow(ItemsPM.FORBIDDEN_BOW.get(), itemModels);
         itemModels.generateFlatItem(ItemsPM.PRIMAL_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.PRIMAL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ItemsPM.PRIMAL_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -610,6 +610,12 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 Optional.empty(),
                 new SelectItemModel.UnbakedSwitch<>(new StackDyeColor(), cases.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).toList()),
                 Optional.ofNullable(defaultModel)));
+    }
+
+    private void generateBow(Item item, ItemModelGenerators itemModels) {
+        // The vanilla method doesn't create a base flat model for some reason, just the pulling overrides
+        itemModels.createFlatItemModel(item, ModelTemplates.BOW);
+        itemModels.generateBow(item);
     }
 
     /** Book openness (in degrees) that the old spelltome renderer used while the tome was held in first person */
