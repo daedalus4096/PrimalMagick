@@ -145,6 +145,16 @@ public class ItemsPM {
         return obj;
     }
 
+    protected static <T extends BlockItem> IRegistryItem<Item, T> registerBlockItemSupplier(String name, Function<Item.Properties, ? extends T> itemFactory) {
+        return registerBlockItemSupplier(name, itemFactory, Item.Properties::new);
+    }
+
+    protected static <T extends BlockItem> IRegistryItem<Item, T> registerBlockItemSupplier(String name, Function<Item.Properties, ? extends T> itemFactory, Supplier<Item.Properties> propertiesSupplier) {
+        IRegistryItem<Item, T> obj = registerBlockItemSupplierWithoutTab(name, itemFactory, propertiesSupplier);
+        CreativeModeTabsPM.registerSupplier(obj);
+        return obj;
+    }
+
     protected static IRegistryItem<Item, Item> registerSimpleItemSupplier(String name, Supplier<Item.Properties> propertiesSupplier) {
         IRegistryItem<Item, Item> obj = registerSimpleItemWithoutTab(name, propertiesSupplier);
         CreativeModeTabsPM.registerSupplier(obj);
@@ -175,6 +185,10 @@ public class ItemsPM {
 
     protected static IRegistryItem<Item, BlockItem> registerSimpleBlockItemWithoutTab(String name, Supplier<? extends Block> blockSupplier, Supplier<Item.Properties> propertiesSupplier) {
         return Services.ITEMS_REGISTRY.registerSimpleBlockItem(name, blockSupplier, propertiesSupplier);
+    }
+
+    protected static <T extends BlockItem> IRegistryItem<Item, T> registerBlockItemSupplierWithoutTab(String name, Function<Item.Properties, ? extends T> itemFactory, Supplier<Item.Properties> propertiesSupplier) {
+        return Services.ITEMS_REGISTRY.registerItem(name, itemFactory, () -> propertiesSupplier.get().useBlockDescriptionPrefix());
     }
 
     protected static <I extends Item> IRegistryItem<Item, I> registerWithoutTab(String name, Function<Item.Properties, ? extends I> itemFactory, Supplier<Item.Properties> propertiesSupplier) {
@@ -264,7 +278,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> SUNWOOD_PLANKS = registerSimpleBlockItemSupplier("sunwood_planks", BlocksPM.SUNWOOD_PLANKS);
     public static final IRegistryItem<Item, BlockItem> SUNWOOD_SLAB = registerSimpleBlockItemSupplier("sunwood_slab", BlocksPM.SUNWOOD_SLAB);
     public static final IRegistryItem<Item, BlockItem> SUNWOOD_STAIRS = registerSimpleBlockItemSupplier("sunwood_stairs", BlocksPM.SUNWOOD_STAIRS);
-    public static final IRegistryItem<Item, BurnableBlockItem> SUNWOOD_PILLAR = registerSupplier("sunwood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.SUNWOOD_PILLAR, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> SUNWOOD_PILLAR = registerBlockItemSupplier("sunwood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.SUNWOOD_PILLAR, 300));
 
     // Register moonwood block items
     public static final IRegistryItem<Item, BlockItem> MOONWOOD_LOG = registerSimpleBlockItemSupplier("moonwood_log", BlocksPM.MOONWOOD_LOG);
@@ -276,7 +290,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> MOONWOOD_PLANKS = registerSimpleBlockItemSupplier("moonwood_planks", BlocksPM.MOONWOOD_PLANKS);
     public static final IRegistryItem<Item, BlockItem> MOONWOOD_SLAB = registerSimpleBlockItemSupplier("moonwood_slab", BlocksPM.MOONWOOD_SLAB);
     public static final IRegistryItem<Item, BlockItem> MOONWOOD_STAIRS = registerSimpleBlockItemSupplier("moonwood_stairs", BlocksPM.MOONWOOD_STAIRS);
-    public static final IRegistryItem<Item, BurnableBlockItem> MOONWOOD_PILLAR = registerSupplier("moonwood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.MOONWOOD_PILLAR, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> MOONWOOD_PILLAR = registerBlockItemSupplier("moonwood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.MOONWOOD_PILLAR, 300));
 
     // Register hallowood block items
     public static final IRegistryItem<Item, BlockItem> HALLOWOOD_LOG = registerSimpleBlockItemSupplier("hallowood_log", BlocksPM.HALLOWOOD_LOG);
@@ -288,7 +302,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> HALLOWOOD_PLANKS = registerSimpleBlockItemSupplier("hallowood_planks", BlocksPM.HALLOWOOD_PLANKS);
     public static final IRegistryItem<Item, BlockItem> HALLOWOOD_SLAB = registerSimpleBlockItemSupplier("hallowood_slab", BlocksPM.HALLOWOOD_SLAB);
     public static final IRegistryItem<Item, BlockItem> HALLOWOOD_STAIRS = registerSimpleBlockItemSupplier("hallowood_stairs", BlocksPM.HALLOWOOD_STAIRS);
-    public static final IRegistryItem<Item, BurnableBlockItem> HALLOWOOD_PILLAR = registerSupplier("hallowood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.HALLOWOOD_PILLAR, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> HALLOWOOD_PILLAR = registerBlockItemSupplier("hallowood_pillar", Services.ITEM_PROTOTYPES.burnable(BlocksPM.HALLOWOOD_PILLAR, 300));
 
     // Register crop items
     public static final IRegistryItem<Item, BlockItem> HYDROMELON_SEEDS = registerSimpleBlockItemSupplier("hydromelon_seeds", BlocksPM.HYDROMELON_STEM, () -> new Item.Properties().useItemDescriptionPrefix());
@@ -391,59 +405,59 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> RITUAL_CANDLE_YELLOW = registerSimpleBlockItemSupplier("ritual_candle_yellow", BlocksPM.RITUAL_CANDLE_YELLOW);
 
     // Register mana font block items
-    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_EARTH = registerSupplier("ancient_font_earth", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_EARTH), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_SEA = registerSupplier("ancient_font_sea", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_SEA), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_SKY = registerSupplier("ancient_font_sky", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_SKY), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_SUN = registerSupplier("ancient_font_sun", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_SUN), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_MOON = registerSupplier("ancient_font_moon", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_MOON), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_EARTH = registerSupplier("artificial_font_earth", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_EARTH), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_SEA = registerSupplier("artificial_font_sea", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_SEA), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_SKY = registerSupplier("artificial_font_sky", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_SKY), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_SUN = registerSupplier("artificial_font_sun", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_SUN), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_MOON = registerSupplier("artificial_font_moon", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_MOON), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_BLOOD = registerSupplier("artificial_font_blood", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_BLOOD), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_INFERNAL = registerSupplier("artificial_font_infernal", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_INFERNAL), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_VOID = registerSupplier("artificial_font_void", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_VOID), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_HALLOWED = registerSupplier("artificial_font_hallowed", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_HALLOWED), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_EARTH = registerSupplier("forbidden_font_earth", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_EARTH), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_SEA = registerSupplier("forbidden_font_sea", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_SEA), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_SKY = registerSupplier("forbidden_font_sky", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_SKY), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_SUN = registerSupplier("forbidden_font_sun", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_SUN), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_MOON = registerSupplier("forbidden_font_moon", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_MOON), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_BLOOD = registerSupplier("forbidden_font_blood", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_BLOOD), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_INFERNAL = registerSupplier("forbidden_font_infernal", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_INFERNAL), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_VOID = registerSupplier("forbidden_font_void", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_VOID), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_HALLOWED = registerSupplier("forbidden_font_hallowed", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_HALLOWED), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_EARTH = registerSupplier("heavenly_font_earth", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_EARTH), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_SEA = registerSupplier("heavenly_font_sea", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_SEA), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_SKY = registerSupplier("heavenly_font_sky", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_SKY), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_SUN = registerSupplier("heavenly_font_sun", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_SUN), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_MOON = registerSupplier("heavenly_font_moon", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_MOON), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_BLOOD = registerSupplier("heavenly_font_blood", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_BLOOD), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_INFERNAL = registerSupplier("heavenly_font_infernal", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_INFERNAL), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_VOID = registerSupplier("heavenly_font_void", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_VOID), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_HALLOWED = registerSupplier("heavenly_font_hallowed", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_HALLOWED), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_EARTH = registerBlockItemSupplier("ancient_font_earth", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_EARTH), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_SEA = registerBlockItemSupplier("ancient_font_sea", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_SEA), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_SKY = registerBlockItemSupplier("ancient_font_sky", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_SKY), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_SUN = registerBlockItemSupplier("ancient_font_sun", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_SUN), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ANCIENT_FONT_MOON = registerBlockItemSupplier("ancient_font_moon", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ANCIENT_FONT_MOON), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_EARTH = registerBlockItemSupplier("artificial_font_earth", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_EARTH), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_SEA = registerBlockItemSupplier("artificial_font_sea", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_SEA), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_SKY = registerBlockItemSupplier("artificial_font_sky", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_SKY), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_SUN = registerBlockItemSupplier("artificial_font_sun", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_SUN), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_MOON = registerBlockItemSupplier("artificial_font_moon", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_MOON), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_BLOOD = registerBlockItemSupplier("artificial_font_blood", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_BLOOD), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_INFERNAL = registerBlockItemSupplier("artificial_font_infernal", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_INFERNAL), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_VOID = registerBlockItemSupplier("artificial_font_void", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_VOID), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaFontBlockItem> ARTIFICIAL_FONT_HALLOWED = registerBlockItemSupplier("artificial_font_hallowed", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.ARTIFICIAL_FONT_HALLOWED), () -> new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_EARTH = registerBlockItemSupplier("forbidden_font_earth", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_EARTH), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_SEA = registerBlockItemSupplier("forbidden_font_sea", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_SEA), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_SKY = registerBlockItemSupplier("forbidden_font_sky", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_SKY), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_SUN = registerBlockItemSupplier("forbidden_font_sun", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_SUN), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_MOON = registerBlockItemSupplier("forbidden_font_moon", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_MOON), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_BLOOD = registerBlockItemSupplier("forbidden_font_blood", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_BLOOD), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_INFERNAL = registerBlockItemSupplier("forbidden_font_infernal", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_INFERNAL), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_VOID = registerBlockItemSupplier("forbidden_font_void", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_VOID), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> FORBIDDEN_FONT_HALLOWED = registerBlockItemSupplier("forbidden_font_hallowed", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.FORBIDDEN_FONT_HALLOWED), () -> new Item.Properties().stacksTo(16).rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_EARTH = registerBlockItemSupplier("heavenly_font_earth", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_EARTH), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_SEA = registerBlockItemSupplier("heavenly_font_sea", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_SEA), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_SKY = registerBlockItemSupplier("heavenly_font_sky", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_SKY), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_SUN = registerBlockItemSupplier("heavenly_font_sun", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_SUN), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_MOON = registerBlockItemSupplier("heavenly_font_moon", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_MOON), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_BLOOD = registerBlockItemSupplier("heavenly_font_blood", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_BLOOD), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_INFERNAL = registerBlockItemSupplier("heavenly_font_infernal", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_INFERNAL), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_VOID = registerBlockItemSupplier("heavenly_font_void", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_VOID), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaFontBlockItem> HEAVENLY_FONT_HALLOWED = registerBlockItemSupplier("heavenly_font_hallowed", Services.ITEM_PROTOTYPES.manaFont(BlocksPM.HEAVENLY_FONT_HALLOWED), () -> new Item.Properties().stacksTo(16).rarity(Rarity.EPIC));
 
     // Register device block items
-    public static final IRegistryItem<Item, BurnableBlockItem> ARCANE_WORKBENCH = registerSupplier("arcane_workbench", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ARCANE_WORKBENCH, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> ARCANE_WORKBENCH = registerBlockItemSupplier("arcane_workbench", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ARCANE_WORKBENCH, 300));
     public static final IRegistryItem<Item, BlockItem> WAND_ASSEMBLY_TABLE = registerSimpleBlockItemSupplier("wand_assembly_table", BlocksPM.WAND_ASSEMBLY_TABLE);
-    public static final IRegistryItem<Item, BurnableBlockItem> WOOD_TABLE = registerSupplier("wood_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WOOD_TABLE, 300));
-    public static final IRegistryItem<Item, BurnableBlockItem> ANALYSIS_TABLE = registerSupplier("analysis_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ANALYSIS_TABLE, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> WOOD_TABLE = registerBlockItemSupplier("wood_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WOOD_TABLE, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> ANALYSIS_TABLE = registerBlockItemSupplier("analysis_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ANALYSIS_TABLE, 300));
     public static final IRegistryItem<Item, BlockItem> ESSENCE_FURNACE = registerSimpleBlockItemSupplier("essence_furnace", BlocksPM.ESSENCE_FURNACE);
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_BASIC = registerSimpleBlockItemSupplier("calcinator_basic", BlocksPM.CALCINATOR_BASIC, () -> new Item.Properties().rarity(Rarity.COMMON));
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_ENCHANTED = registerSimpleBlockItemSupplier("calcinator_enchanted", BlocksPM.CALCINATOR_ENCHANTED, () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_FORBIDDEN = registerSimpleBlockItemSupplier("calcinator_forbidden", BlocksPM.CALCINATOR_FORBIDDEN, () -> new Item.Properties().rarity(Rarity.RARE));
     public static final IRegistryItem<Item, BlockItem> CALCINATOR_HEAVENLY = registerSimpleBlockItemSupplier("calcinator_heavenly", BlocksPM.CALCINATOR_HEAVENLY, () -> new Item.Properties().rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, BurnableBlockItem> WAND_INSCRIPTION_TABLE = registerSupplier("wand_inscription_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WAND_INSCRIPTION_TABLE, 300));
-    public static final IRegistryItem<Item, SpellcraftingAltarBlockItem> SPELLCRAFTING_ALTAR = registerSupplier("spellcrafting_altar", Services.ITEM_PROTOTYPES.spellcraftingAltar(BlocksPM.SPELLCRAFTING_ALTAR));
+    public static final IRegistryItem<Item, BurnableBlockItem> WAND_INSCRIPTION_TABLE = registerBlockItemSupplier("wand_inscription_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WAND_INSCRIPTION_TABLE, 300));
+    public static final IRegistryItem<Item, SpellcraftingAltarBlockItem> SPELLCRAFTING_ALTAR = registerBlockItemSupplier("spellcrafting_altar", Services.ITEM_PROTOTYPES.spellcraftingAltar(BlocksPM.SPELLCRAFTING_ALTAR));
     public static final IRegistryItem<Item, BlockItem> WAND_CHARGER = registerSimpleBlockItemSupplier("wand_charger", BlocksPM.WAND_CHARGER);
-    public static final IRegistryItem<Item, BurnableBlockItem> RESEARCH_TABLE = registerSupplier("research_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RESEARCH_TABLE, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> RESEARCH_TABLE = registerBlockItemSupplier("research_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RESEARCH_TABLE, 300));
     public static final IRegistryItem<Item, BlockItem> SUNLAMP = registerSimpleBlockItemSupplier("sunlamp", BlocksPM.SUNLAMP);
     public static final IRegistryItem<Item, BlockItem> SPIRIT_LANTERN = registerSimpleBlockItemSupplier("spirit_lantern", BlocksPM.SPIRIT_LANTERN);
     public static final IRegistryItem<Item, BlockItem> RITUAL_ALTAR = registerSimpleBlockItemSupplier("ritual_altar", BlocksPM.RITUAL_ALTAR, () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, BlockItem> OFFERING_PEDESTAL = registerSimpleBlockItemSupplier("offering_pedestal", BlocksPM.OFFERING_PEDESTAL);
     public static final IRegistryItem<Item, BlockItem> INCENSE_BRAZIER = registerSimpleBlockItemSupplier("incense_brazier", BlocksPM.INCENSE_BRAZIER);
-    public static final IRegistryItem<Item, BurnableBlockItem> RITUAL_LECTERN = registerSupplier("ritual_lectern", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RITUAL_LECTERN, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> RITUAL_LECTERN = registerBlockItemSupplier("ritual_lectern", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RITUAL_LECTERN, 300));
     public static final IRegistryItem<Item, BlockItem> RITUAL_BELL = registerSimpleBlockItemSupplier("ritual_bell", BlocksPM.RITUAL_BELL);
     public static final IRegistryItem<Item, BlockItem> BLOODLETTER = registerSimpleBlockItemSupplier("bloodletter", BlocksPM.BLOODLETTER);
     public static final IRegistryItem<Item, BlockItem> SOUL_ANVIL = registerSimpleBlockItemSupplier("soul_anvil", BlocksPM.SOUL_ANVIL);
@@ -451,7 +465,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_ENCHANTED = registerSimpleBlockItemSupplier("runescribing_altar_enchanted", BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED, () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_FORBIDDEN = registerSimpleBlockItemSupplier("runescribing_altar_forbidden", BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN, () -> new Item.Properties().rarity(Rarity.RARE));
     public static final IRegistryItem<Item, BlockItem> RUNESCRIBING_ALTAR_HEAVENLY = registerSimpleBlockItemSupplier("runescribing_altar_heavenly", BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY, () -> new Item.Properties().rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, BurnableBlockItem> RUNECARVING_TABLE = registerSupplier("runecarving_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RUNECARVING_TABLE, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> RUNECARVING_TABLE = registerBlockItemSupplier("runecarving_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.RUNECARVING_TABLE, 300));
     public static final IRegistryItem<Item, BlockItem> RUNIC_GRINDSTONE = registerSimpleBlockItemSupplier("runic_grindstone", BlocksPM.RUNIC_GRINDSTONE);
     public static final IRegistryItem<Item, BlockItem> HONEY_EXTRACTOR = registerSimpleBlockItemSupplier("honey_extractor", BlocksPM.HONEY_EXTRACTOR);
     public static final IRegistryItem<Item, BlockItem> PRIMALITE_GOLEM_CONTROLLER = registerSimpleBlockItemSupplier("primalite_golem_controller", BlocksPM.PRIMALITE_GOLEM_CONTROLLER, () -> new Item.Properties().rarity(Rarity.UNCOMMON));
@@ -459,30 +473,30 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> HALLOWSTEEL_GOLEM_CONTROLLER = registerSimpleBlockItemSupplier("hallowsteel_golem_controller", BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER, () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, BlockItem> SANGUINE_CRUCIBLE = registerSimpleBlockItemSupplier("sanguine_crucible", BlocksPM.SANGUINE_CRUCIBLE);
     public static final IRegistryItem<Item, BlockItem> CONCOCTER = registerSimpleBlockItemSupplier("concocter", BlocksPM.CONCOCTER);
-    public static final IRegistryItem<Item, BurnableBlockItem> CELESTIAL_HARP = registerSupplier("celestial_harp", Services.ITEM_PROTOTYPES.burnable(BlocksPM.CELESTIAL_HARP, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> CELESTIAL_HARP = registerBlockItemSupplier("celestial_harp", Services.ITEM_PROTOTYPES.burnable(BlocksPM.CELESTIAL_HARP, 300));
     public static final IRegistryItem<Item, BlockItem> ENTROPY_SINK = registerSimpleBlockItemSupplier("entropy_sink", BlocksPM.ENTROPY_SINK);
     public static final IRegistryItem<Item, BlockItem> AUTO_CHARGER = registerSimpleBlockItemSupplier("auto_charger", BlocksPM.AUTO_CHARGER);
     public static final IRegistryItem<Item, BlockItem> ESSENCE_TRANSMUTER = registerSimpleBlockItemSupplier("essence_transmuter", BlocksPM.ESSENCE_TRANSMUTER);
     public static final IRegistryItem<Item, BlockItem> DISSOLUTION_CHAMBER = registerSimpleBlockItemSupplier("dissolution_chamber", BlocksPM.DISSOLUTION_CHAMBER);
     public static final IRegistryItem<Item, BlockItem> ZEPHYR_ENGINE = registerSimpleBlockItemSupplier("zephyr_engine", BlocksPM.ZEPHYR_ENGINE);
     public static final IRegistryItem<Item, BlockItem> VOID_TURBINE = registerSimpleBlockItemSupplier("void_turbine", BlocksPM.VOID_TURBINE);
-    public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_ENCHANTED = registerSupplier("essence_cask_enchanted", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_ENCHANTED, 300), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_FORBIDDEN = registerSupplier("essence_cask_forbidden", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_FORBIDDEN, 300), () -> new Item.Properties().rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_HEAVENLY = registerSupplier("essence_cask_heavenly", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_HEAVENLY, 300), () -> new Item.Properties().rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, BurnableBlockItem> WAND_GLAMOUR_TABLE = registerSupplier("wand_glamour_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WAND_GLAMOUR_TABLE, 300));
+    public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_ENCHANTED = registerBlockItemSupplier("essence_cask_enchanted", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_ENCHANTED, 300), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_FORBIDDEN = registerBlockItemSupplier("essence_cask_forbidden", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_FORBIDDEN, 300), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, BurnableBlockItem> ESSENCE_CASK_HEAVENLY = registerBlockItemSupplier("essence_cask_heavenly", Services.ITEM_PROTOTYPES.burnable(BlocksPM.ESSENCE_CASK_HEAVENLY, 300), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, BurnableBlockItem> WAND_GLAMOUR_TABLE = registerBlockItemSupplier("wand_glamour_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.WAND_GLAMOUR_TABLE, 300));
     public static final IRegistryItem<Item, BlockItem> INFERNAL_FURNACE = registerSimpleBlockItemSupplier("infernal_furnace", BlocksPM.INFERNAL_FURNACE);
     public static final IRegistryItem<Item, BlockItem> MANA_NEXUS = registerSimpleBlockItemSupplier("mana_nexus", BlocksPM.MANA_NEXUS, () -> new Item.Properties().rarity(Rarity.RARE));
     public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY = registerSimpleBlockItemSupplier("mana_singularity", BlocksPM.MANA_SINGULARITY, () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, BlockItem> MANA_SINGULARITY_CREATIVE = registerSimpleBlockItemSupplier("mana_singularity_creative", BlocksPM.MANA_SINGULARITY_CREATIVE, () -> new Item.Properties().rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, BurnableBlockItem> SCRIBE_TABLE = registerSupplier("scribe_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.SCRIBE_TABLE, 300));
-    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_BASIC = registerSupplier("mana_relay_basic", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_BASIC));
-    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_ENCHANTED = registerSupplier("mana_relay_enchanted", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_ENCHANTED), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_FORBIDDEN = registerSupplier("mana_relay_forbidden", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_FORBIDDEN), () -> new Item.Properties().rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_HEAVENLY = registerSupplier("mana_relay_heavenly", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_HEAVENLY), () -> new Item.Properties().rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_BASIC = registerSupplier("mana_injector_basic", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_BASIC));
-    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_ENCHANTED = registerSupplier("mana_injector_enchanted", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_ENCHANTED), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_FORBIDDEN = registerSupplier("mana_injector_forbidden", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_FORBIDDEN), () -> new Item.Properties().rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_HEAVENLY = registerSupplier("mana_injector_heavenly", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_HEAVENLY), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, BurnableBlockItem> SCRIBE_TABLE = registerBlockItemSupplier("scribe_table", Services.ITEM_PROTOTYPES.burnable(BlocksPM.SCRIBE_TABLE, 300));
+    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_BASIC = registerBlockItemSupplier("mana_relay_basic", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_BASIC));
+    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_ENCHANTED = registerBlockItemSupplier("mana_relay_enchanted", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_ENCHANTED), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_FORBIDDEN = registerBlockItemSupplier("mana_relay_forbidden", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_FORBIDDEN), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaRelayBlockItem> MANA_RELAY_HEAVENLY = registerBlockItemSupplier("mana_relay_heavenly", Services.ITEM_PROTOTYPES.manaRelay(BlocksPM.MANA_RELAY_HEAVENLY), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_BASIC = registerBlockItemSupplier("mana_injector_basic", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_BASIC));
+    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_ENCHANTED = registerBlockItemSupplier("mana_injector_enchanted", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_ENCHANTED), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_FORBIDDEN = registerBlockItemSupplier("mana_injector_forbidden", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_FORBIDDEN), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, ManaInjectorBlockItem> MANA_INJECTOR_HEAVENLY = registerBlockItemSupplier("mana_injector_heavenly", Services.ITEM_PROTOTYPES.manaInjector(BlocksPM.MANA_INJECTOR_HEAVENLY), () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, BlockItem> DESALINATOR = registerSimpleBlockItemSupplier("desalinator", BlocksPM.DESALINATOR);
 
     // Register pixie structure items
@@ -495,7 +509,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, BlockItem> PRIMALITE_BLOCK = registerSimpleBlockItemSupplier("primalite_block", BlocksPM.PRIMALITE_BLOCK);
     public static final IRegistryItem<Item, BlockItem> HEXIUM_BLOCK = registerSimpleBlockItemSupplier("hexium_block", BlocksPM.HEXIUM_BLOCK);
     public static final IRegistryItem<Item, BlockItem> HALLOWSTEEL_BLOCK = registerSimpleBlockItemSupplier("hallowsteel_block", BlocksPM.HALLOWSTEEL_BLOCK);
-    public static final IRegistryItem<Item, BurnableBlockItem> IGNYX_BLOCK = registerSupplier("ignyx_block", Services.ITEM_PROTOTYPES.burnable(BlocksPM.IGNYX_BLOCK, 128000));
+    public static final IRegistryItem<Item, BurnableBlockItem> IGNYX_BLOCK = registerBlockItemSupplier("ignyx_block", Services.ITEM_PROTOTYPES.burnable(BlocksPM.IGNYX_BLOCK, 128000));
     public static final IRegistryItem<Item, BlockItem> SALT_BLOCK = registerSimpleBlockItemSupplier("salt_block", BlocksPM.SALT_BLOCK);
     public static final IRegistryItem<Item, BlockItem> TREEFOLK_SEED = registerSimpleBlockItemSupplier("treefolk_seed", BlocksPM.TREEFOLK_SPROUT, () -> new Item.Properties().useItemDescriptionPrefix());
     public static final IRegistryItem<Item, BlockItem> ENDERWARD = registerSimpleBlockItemSupplier("enderward", BlocksPM.ENDERWARD, () -> new Item.Properties().stacksTo(16));
