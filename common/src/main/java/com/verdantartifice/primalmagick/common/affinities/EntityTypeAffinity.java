@@ -33,7 +33,7 @@ public class EntityTypeAffinity extends AbstractAffinity<EntityType<?>, EntityTy
     
     protected final SourceList values;
     
-    protected EntityTypeAffinity(@NotNull ResourceKey<EntityType<?>> target, @NotNull SourceList values) {
+    public EntityTypeAffinity(@NotNull ResourceKey<EntityType<?>> target, @NotNull SourceList values) {
         super(target);
         this.values = values;
     }

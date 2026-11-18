@@ -33,7 +33,7 @@ public class PotionBonusAffinity extends AbstractAffinity<Potion, PotionBonusAff
 
     protected final SourceList bonusValues;
     
-    protected PotionBonusAffinity(@NotNull ResourceKey<Potion> target, @NotNull SourceList bonusValues) {
+    public PotionBonusAffinity(@NotNull ResourceKey<Potion> target, @NotNull SourceList bonusValues) {
         super(target);
         this.bonusValues = bonusValues;
     }

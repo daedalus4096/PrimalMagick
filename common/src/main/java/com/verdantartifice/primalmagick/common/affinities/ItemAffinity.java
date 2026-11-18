@@ -51,6 +51,10 @@ public class ItemAffinity extends AbstractAffinity<Item, ItemAffinity> {
         return new ItemAffinity(target, Either.left(new FixedValues(setValues)), recipe);
     }
 
+    public static ItemAffinity derived(@NotNull ResourceKey<Item> target, @NotNull ResourceKey<Item> base, @NotNull SourceList add, @NotNull SourceList remove) {
+        return new ItemAffinity(target, Either.right(new DerivedValues(base, add, remove)), Optional.empty());
+    }
+
     @Override
     public @NotNull AffinityType<ItemAffinity> getType() {
         return AffinityTypesPM.ITEM.get();

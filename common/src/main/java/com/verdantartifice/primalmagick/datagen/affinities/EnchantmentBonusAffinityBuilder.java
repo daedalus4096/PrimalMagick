@@ -1,8 +1,11 @@
 package com.verdantartifice.primalmagick.datagen.affinities;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
+import com.verdantartifice.primalmagick.common.affinities.AbstractAffinity;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTypesPM;
+import com.verdantartifice.primalmagick.common.affinities.EnchantmentBonusAffinity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.core.HolderLookup;
@@ -10,12 +13,16 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.enchantment.Enchantment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class EnchantmentBonusAffinityBuilder {
+    protected static final Logger LOGGER = LogManager.getLogger();
+
     protected final HolderLookup.Provider registries;
     protected final ResourceKey<Enchantment> targetId;
     protected SourceList.Builder multiplierValues = SourceList.builder();
@@ -62,18 +69,18 @@ public class EnchantmentBonusAffinityBuilder {
     
     public void build(Consumer<IFinishedAffinity> consumer, Identifier id) {
         this.validate(id);
-        consumer.accept(new EnchantmentBonusAffinityBuilder.Result(id, this.targetId.identifier(), this.multiplierValues.build()));
+        consumer.accept(new EnchantmentBonusAffinityBuilder.Result(id, this.targetId, this.multiplierValues.build()));
     }
     
     public static class Result implements IFinishedAffinity {
         protected final Identifier id;
-        protected final Identifier targetId;
+        protected final ResourceKey<Enchantment> targetId;
         protected final SourceList multiplierValues;
         
-        public Result(@Nonnull Identifier id, @Nonnull Identifier targetId, @Nullable SourceList multiplierValues) {
+        public Result(@Nonnull Identifier id, @Nonnull ResourceKey<Enchantment> targetId, @Nullable SourceList multiplierValues) {
             this.id = id;
             this.targetId = targetId;
-            this.multiplierValues = multiplierValues;
+            this.multiplierValues = multiplierValues == null ? SourceList.EMPTY : multiplierValues;
         }
 
         @Override
@@ -87,11 +94,8 @@ public class EnchantmentBonusAffinityBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
-            json.addProperty("target", this.targetId.toString());
-            if (this.multiplierValues != null && !this.multiplierValues.isEmpty()) {
-                json.add("multiplier", this.multiplierValues.serializeJson());
-            }
+        public JsonElement serialize() {
+            return AbstractAffinity.dispatchCodec().encodeStart(JsonOps.INSTANCE, new EnchantmentBonusAffinity(this.targetId, this.multiplierValues)).resultOrPartial(LOGGER::error).orElseThrow();
         }
     }
 }

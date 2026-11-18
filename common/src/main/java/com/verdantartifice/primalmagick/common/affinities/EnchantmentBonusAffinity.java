@@ -29,7 +29,7 @@ public class EnchantmentBonusAffinity extends AbstractAffinity<Enchantment, Ench
     
     protected final SourceList multiplierValues;
     
-    protected EnchantmentBonusAffinity(@NotNull ResourceKey<Enchantment> target, @NotNull SourceList multiplierValues) {
+    public EnchantmentBonusAffinity(@NotNull ResourceKey<Enchantment> target, @NotNull SourceList multiplierValues) {
         super(target);
         this.multiplierValues = multiplierValues;
     }

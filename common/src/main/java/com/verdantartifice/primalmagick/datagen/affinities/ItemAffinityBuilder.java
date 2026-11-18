@@ -1,29 +1,39 @@
 package com.verdantartifice.primalmagick.datagen.affinities;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
+import com.verdantartifice.primalmagick.common.affinities.AbstractAffinity;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTypesPM;
+import com.verdantartifice.primalmagick.common.affinities.ItemAffinity;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class ItemAffinityBuilder {
-    protected final Identifier targetId;
-    protected Identifier baseId;
+    protected static final Logger LOGGER = LogManager.getLogger();
+
+    protected final ResourceKey<Item> targetId;
+    protected ResourceKey<Item> baseId;
     protected boolean hasSetValues = false;
     protected SourceList.Builder setValues = SourceList.builder();
     protected SourceList.Builder addValues = SourceList.builder();
     protected SourceList.Builder removeValues = SourceList.builder();
 
     protected ItemAffinityBuilder(@Nonnull ItemLike item) {
-        this.targetId = Services.ITEMS_REGISTRY.getKey(item.asItem());
+        this.targetId = Services.ITEMS_REGISTRY.getResourceKey(item.asItem()).orElseThrow();
     }
     
     public static ItemAffinityBuilder itemAffinity(@Nonnull ItemLike item) {
@@ -39,7 +49,7 @@ public class ItemAffinityBuilder {
     }
     
     public ItemAffinityBuilder base(@Nonnull ItemLike baseItem) {
-        this.baseId = Services.ITEMS_REGISTRY.getKey(baseItem.asItem());
+        this.baseId = Services.ITEMS_REGISTRY.getResourceKey(baseItem.asItem()).orElseThrow();
         return this;
     }
     
@@ -95,7 +105,7 @@ public class ItemAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer) {
-        this.build(consumer, this.targetId);
+        this.build(consumer, this.targetId.identifier());
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {
@@ -109,13 +119,13 @@ public class ItemAffinityBuilder {
     
     public static class Result implements IFinishedAffinity {
         protected final Identifier id;
-        protected final Identifier targetId;
-        protected final Identifier baseId;
+        protected final ResourceKey<Item> targetId;
+        protected final ResourceKey<Item> baseId;
         protected final SourceList setValues;
         protected final SourceList addValues;
         protected final SourceList removeValues;
         
-        public Result(@Nonnull Identifier id, @Nonnull Identifier targetId, @Nullable Identifier baseId, @Nullable SourceList setValues, @Nullable SourceList addValues, @Nullable SourceList removeValues) {
+        public Result(@Nonnull Identifier id, @Nonnull ResourceKey<Item> targetId, @Nullable ResourceKey<Item> baseId, @Nullable SourceList setValues, @Nullable SourceList addValues, @Nullable SourceList removeValues) {
             this.id = id;
             this.targetId = targetId;
             this.baseId = baseId;
@@ -135,18 +145,19 @@ public class ItemAffinityBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
-            json.addProperty("target", this.targetId.toString());
+        public JsonElement serialize() {
+            return AbstractAffinity.dispatchCodec().encodeStart(JsonOps.INSTANCE, this.getFinalAffinity()).resultOrPartial(LOGGER::error).orElseThrow();
+        }
+
+        protected ItemAffinity getFinalAffinity() {
             if (this.baseId != null) {
-                json.addProperty("base", this.baseId.toString());
+                SourceList add = this.addValues == null ? SourceList.EMPTY : this.addValues;
+                SourceList remove = this.removeValues == null ? SourceList.EMPTY : this.removeValues;
+                return ItemAffinity.derived(this.targetId, this.baseId, add, remove);
             } else if (this.setValues != null) {
-                json.add("set", this.setValues.serializeJson());
-            }
-            if (this.addValues != null && !this.addValues.isEmpty()) {
-                json.add("add", this.addValues.serializeJson());
-            }
-            if (this.removeValues != null && !this.removeValues.isEmpty()) {
-                json.add("remove", this.removeValues.serializeJson());
+                return ItemAffinity.fixed(this.targetId, this.setValues, Optional.empty());
+            } else {
+                throw new IllegalStateException("Built affinity is neither fixed nor derived");
             }
         }
     }

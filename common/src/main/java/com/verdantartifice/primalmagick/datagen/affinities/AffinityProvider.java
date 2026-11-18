@@ -46,12 +46,12 @@ public class AffinityProvider implements DataProvider {
             ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
             Map<AffinityType<?>, Map<Identifier, IFinishedAffinity>> map = new HashMap<>();
             this.registerAffinities(p, affinity -> {
-                if (map.computeIfAbsent(affinity.getType(), type -> new HashMap<>()).put(affinity.getId(), affinity) != null) {
+                if (map.computeIfAbsent(affinity.getType(), _ -> new HashMap<>()).put(affinity.getId(), affinity) != null) {
                     LOGGER.debug("Duplicate affinity in data generation: {}", affinity.getId().toString());
                 }
             });
-            map.forEach((affinityType, affinityMap) -> affinityMap.forEach((affinityId, affinity) ->
-                    futuresBuilder.add(DataProvider.saveStable(cache, affinity.getAffinityJson(), this.getPath(this.packOutput, affinity.getType(), affinityId)))));
+            map.forEach((_, affinityMap) -> affinityMap.forEach((affinityId, affinity) ->
+                    futuresBuilder.add(DataProvider.saveStable(cache, affinity.serialize(), this.getPath(this.packOutput, affinity.getType(), affinityId)))));
             return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
         });
     }

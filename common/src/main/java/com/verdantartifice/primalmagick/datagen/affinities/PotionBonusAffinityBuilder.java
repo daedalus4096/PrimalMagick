@@ -1,25 +1,34 @@
 package com.verdantartifice.primalmagick.datagen.affinities;
 
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
+import com.verdantartifice.primalmagick.common.affinities.AbstractAffinity;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTypesPM;
+import com.verdantartifice.primalmagick.common.affinities.EnchantmentBonusAffinity;
+import com.verdantartifice.primalmagick.common.affinities.PotionBonusAffinity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.alchemy.Potion;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class PotionBonusAffinityBuilder {
-    protected final Identifier targetId;
+    protected static final Logger LOGGER = LogManager.getLogger();
+
+    protected final ResourceKey<Potion> targetId;
     protected SourceList.Builder bonusValues = SourceList.builder();
     
     protected PotionBonusAffinityBuilder(@Nonnull Holder<Potion> target) {
-        this.targetId = BuiltInRegistries.POTION.getKey(target.value());
+        this.targetId = BuiltInRegistries.POTION.getResourceKey(target.value()).orElseThrow();
     }
     
     public static PotionBonusAffinityBuilder potionBonusAffinity(@Nonnull Holder<Potion> target) {
@@ -46,7 +55,7 @@ public class PotionBonusAffinityBuilder {
     }
     
     public void build(Consumer<IFinishedAffinity> consumer) {
-        this.build(consumer, this.targetId);
+        this.build(consumer, this.targetId.identifier());
     }
     
     public void build(Consumer<IFinishedAffinity> consumer, String name) {
@@ -60,13 +69,13 @@ public class PotionBonusAffinityBuilder {
     
     public static class Result implements IFinishedAffinity {
         protected final Identifier id;
-        protected final Identifier targetId;
+        protected final ResourceKey<Potion> targetId;
         protected final SourceList bonusValues;
         
-        public Result(@Nonnull Identifier id, @Nonnull Identifier targetId, @Nullable SourceList bonusValues) {
+        public Result(@Nonnull Identifier id, @Nonnull ResourceKey<Potion> targetId, @Nullable SourceList bonusValues) {
             this.id = id;
             this.targetId = targetId;
-            this.bonusValues = bonusValues;
+            this.bonusValues = bonusValues == null ? SourceList.EMPTY : bonusValues;
         }
 
         @Override
@@ -80,11 +89,8 @@ public class PotionBonusAffinityBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
-            json.addProperty("target", this.targetId.toString());
-            if (this.bonusValues != null && !this.bonusValues.isEmpty()) {
-                json.add("bonus", this.bonusValues.serializeJson());
-            }
+        public JsonElement serialize() {
+            return AbstractAffinity.dispatchCodec().encodeStart(JsonOps.INSTANCE, new PotionBonusAffinity(this.targetId, this.bonusValues)).resultOrPartial(LOGGER::error).orElseThrow();
         }
     }
 }
