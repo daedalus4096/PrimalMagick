@@ -78,6 +78,14 @@ public interface IRegistryService<R> {
     boolean containsKey(Identifier id);
 
     /**
+     * Determine whether an object is present in this registry for the given resource location.
+     *
+     * @param id the ID of the value to be queried
+     * @return true if the identified value is present in this registry, false otherwise
+     */
+    boolean containsKey(ResourceKey<R> id);
+
+    /**
      * Get the resource key for the given value, if it exists in the registry.
      *
      * @param value the value to be queried

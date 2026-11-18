@@ -18,7 +18,7 @@ public class AffinityTypesPM {
     public static final IRegistryItem<AffinityType<?>, AffinityType<EnchantmentBonusAffinity>> ENCHANTMENT_BONUS = register("enchantment_bonus", EnchantmentBonusAffinity.CODEC, EnchantmentBonusAffinity.STREAM_CODEC, "enchantments");
     public static final IRegistryItem<AffinityType<?>, AffinityType<EntityTypeAffinity>> ENTITY_TYPE = register("entity_type", EntityTypeAffinity.CODEC, EntityTypeAffinity.STREAM_CODEC, "entity_types");
 
-    protected static <T extends AbstractAffinity<T>> IRegistryItem<AffinityType<?>, AffinityType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super FriendlyByteBuf, T> streamCodec, String folder) {
+    protected static <A, T extends AbstractAffinity<A, T>> IRegistryItem<AffinityType<?>, AffinityType<T>> register(String id, MapCodec<T> codec, StreamCodec<? super FriendlyByteBuf, T> streamCodec, String folder) {
         return Services.AFFINITY_TYPES_REGISTRY.register(id, () -> new AffinityType<>(ResourceUtils.loc(id), codec, streamCodec, folder));
     }
 }

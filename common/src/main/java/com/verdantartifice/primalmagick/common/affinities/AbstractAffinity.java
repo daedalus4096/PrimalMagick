@@ -6,30 +6,31 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public abstract class AbstractAffinity<T extends AbstractAffinity<T>> implements IAffinity {
-    public static Codec<AbstractAffinity<?>> dispatchCodec() {
+public abstract class AbstractAffinity<A, T extends AbstractAffinity<A, T>> implements IAffinity<A> {
+    public static Codec<AbstractAffinity<?, ?>> dispatchCodec() {
         return Services.AFFINITY_TYPES_REGISTRY.codec().dispatch("type", AbstractAffinity::getType, AffinityType::codec);
     }
 
-    public static StreamCodec<FriendlyByteBuf, AbstractAffinity<?>> dispatchStreamCodec() {
+    public static StreamCodec<FriendlyByteBuf, AbstractAffinity<?, ?>> dispatchStreamCodec() {
         return Services.AFFINITY_TYPES_REGISTRY.friendlyStreamCodec().dispatch(AbstractAffinity::getType, AffinityType::streamCodec);
     }
 
-    protected Identifier targetId;
+    protected ResourceKey<A> targetId;
     protected CompletableFuture<SourceList> totalCache;
 
-    protected AbstractAffinity(@NotNull Identifier target) {
+    protected AbstractAffinity(@NotNull ResourceKey<A> target) {
         this.targetId = target;
     }
     
     @Override
-    public @NotNull Identifier getTarget() {
+    public @NotNull ResourceKey<A> getTarget() {
         return this.targetId;
     }
 

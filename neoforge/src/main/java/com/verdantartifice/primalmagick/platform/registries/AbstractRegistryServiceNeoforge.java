@@ -72,6 +72,11 @@ abstract class AbstractRegistryServiceNeoforge<R> implements IRegistryService<R>
     }
 
     @Override
+    public boolean containsKey(ResourceKey<R> id) {
+        return this.getRegistry().containsKey(id);
+    }
+
+    @Override
     public Optional<ResourceKey<R>> getResourceKey(R value) {
         return this.getRegistry().getResourceKey(value);
     }

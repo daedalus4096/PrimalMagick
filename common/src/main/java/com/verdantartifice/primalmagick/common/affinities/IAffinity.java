@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.affinities;
 
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,8 +14,8 @@ import java.util.concurrent.CompletableFuture;
  * 
  * @author Daedalus4096
  */
-public interface IAffinity {
+public interface IAffinity<T> {
     @NotNull AffinityType<?> getType();
-    @NotNull Identifier getTarget();
+    @NotNull ResourceKey<T> getTarget();
     @NotNull CompletableFuture<SourceList> getTotalAsync(@NotNull Level level, @NotNull List<Identifier> history);
 }

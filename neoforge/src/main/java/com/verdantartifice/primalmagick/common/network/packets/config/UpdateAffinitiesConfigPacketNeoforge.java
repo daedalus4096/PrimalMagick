@@ -21,9 +21,9 @@ public class UpdateAffinitiesConfigPacketNeoforge implements CustomPacketPayload
     public static final StreamCodec<FriendlyByteBuf, UpdateAffinitiesConfigPacketNeoforge> STREAM_CODEC = StreamCodec.ofMember(UpdateAffinitiesConfigPacketNeoforge::encode, UpdateAffinitiesConfigPacketNeoforge::decode);
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected final List<AbstractAffinity<?>> affinities;
+    protected final List<AbstractAffinity<?, ?>> affinities;
 
-    public UpdateAffinitiesConfigPacketNeoforge(Collection<AbstractAffinity<?>> affinities) {
+    public UpdateAffinitiesConfigPacketNeoforge(Collection<AbstractAffinity<?, ?>> affinities) {
         this.affinities = new ArrayList<>(affinities);
     }
 
@@ -35,11 +35,11 @@ public class UpdateAffinitiesConfigPacketNeoforge implements CustomPacketPayload
         return new UpdateAffinitiesConfigPacketNeoforge(buf.readList(UpdateAffinitiesConfigPacketNeoforge::fromNetwork));
     }
 
-    public static AbstractAffinity<?> fromNetwork(FriendlyByteBuf buf) {
+    public static AbstractAffinity<?, ?> fromNetwork(FriendlyByteBuf buf) {
         return AbstractAffinity.dispatchStreamCodec().decode(buf);
     }
 
-    public static void toNetwork(FriendlyByteBuf buf, AbstractAffinity<?> affinity) {
+    public static void toNetwork(FriendlyByteBuf buf, AbstractAffinity<?, ?> affinity) {
         AbstractAffinity.dispatchStreamCodec().encode(buf, affinity);
     }
 

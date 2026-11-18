@@ -754,7 +754,7 @@ public class PrimalMagickCommand {
                     return;
                 }
 
-                IAffinity affinityData = am.getOrGenerateItemAffinityAsync(itemId, level, new ArrayList<>()).join();
+                IAffinity<?> affinityData = am.getOrGenerateItemAffinityAsync(itemId, level, new ArrayList<>()).join();
                 if (getRecipeCountForItem(level, item) ==0) {
                         SourceList sources = affinityData.getTotalAsync(level, new ArrayList<>()).join();
                         if (sources.isEmpty()){

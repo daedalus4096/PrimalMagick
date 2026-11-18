@@ -10,5 +10,5 @@ import net.minecraft.resources.Identifier;
  * 
  * @author Daedalus4096
  */
-public record AffinityType<T extends AbstractAffinity<T>>(Identifier id, MapCodec<T> codec, StreamCodec<? super FriendlyByteBuf, T> streamCodec, String folder) {
+public record AffinityType<T extends AbstractAffinity<?, T>>(Identifier id, MapCodec<T> codec, StreamCodec<? super FriendlyByteBuf, T> streamCodec, String folder) {
 }

@@ -13,6 +13,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -21,9 +22,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
+public class ItemAffinity extends AbstractAffinity<Item, ItemAffinity> {
     public static final MapCodec<ItemAffinity> CODEC = RecordCodecBuilder.<ItemAffinity>mapCodec(instance -> instance.group(
-            Identifier.CODEC.fieldOf("target").forGetter(ItemAffinity::getTarget),
+            ResourceKey.codec(Registries.ITEM).fieldOf("target").forGetter(ItemAffinity::getTarget),
             Codec.mapEither(FixedValues.CODEC, DerivedValues.CODEC).forGetter(ia -> ia.valuesEither),
             ResourceKey.codec(Registries.RECIPE).optionalFieldOf("recipe").forGetter(ItemAffinity::getSourceRecipe)
         ).apply(instance, ItemAffinity::new)).validate(ia -> ia.valuesEither.map(
@@ -32,7 +33,7 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
         ));
 
     public static final StreamCodec<FriendlyByteBuf, ItemAffinity> STREAM_CODEC = StreamCodec.composite(
-            Identifier.STREAM_CODEC, ItemAffinity::getTarget,
+            ResourceKey.streamCodec(Registries.ITEM), ItemAffinity::getTarget,
             ByteBufCodecs.either(FixedValues.STREAM_CODEC, DerivedValues.STREAM_CODEC), ia -> ia.valuesEither,
             ByteBufCodecs.optional(ResourceKey.streamCodec(Registries.RECIPE)), ItemAffinity::getSourceRecipe,
             ItemAffinity::new);
@@ -40,13 +41,13 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
     protected final Either<FixedValues, DerivedValues> valuesEither;
     protected final Optional<ResourceKey<Recipe<?>>> sourceRecipe;
     
-    protected ItemAffinity(@NotNull Identifier target, @NotNull Either<FixedValues, DerivedValues> valuesEither, @NotNull Optional<ResourceKey<Recipe<?>>> recipe) {
+    protected ItemAffinity(@NotNull ResourceKey<Item> target, @NotNull Either<FixedValues, DerivedValues> valuesEither, @NotNull Optional<ResourceKey<Recipe<?>>> recipe) {
         super(target);
         this.valuesEither = valuesEither;
         this.sourceRecipe = recipe;
     }
     
-    public static ItemAffinity fixed(@NotNull Identifier target, @NotNull SourceList setValues, @NotNull Optional<ResourceKey<Recipe<?>>> recipe) {
+    public static ItemAffinity fixed(@NotNull ResourceKey<Item> target, @NotNull SourceList setValues, @NotNull Optional<ResourceKey<Recipe<?>>> recipe) {
         return new ItemAffinity(target, Either.left(new FixedValues(setValues)), recipe);
     }
 
@@ -63,7 +64,7 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
     protected CompletableFuture<SourceList> calculateTotalAsync(@NotNull Level level, @NotNull List<Identifier> history) {
         return this.valuesEither.map(
             fv -> CompletableFuture.completedFuture(fv.set),
-            dv -> AffinityManager.getInstance().getOrGenerateItemAffinityAsync(dv.base, level, history)
+            dv -> AffinityManager.getInstance().getOrGenerateItemAffinityAsync(dv.base.identifier(), level, history)
                             .thenCompose(baseEntry -> baseEntry == null ?
                                     CompletableFuture.completedFuture(SourceList.EMPTY) :
                                     baseEntry.getTotalAsync(level, history))
@@ -81,9 +82,9 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
                 FixedValues::new);
     }
 
-    public record DerivedValues(Identifier base, SourceList add, SourceList remove) {
+    public record DerivedValues(ResourceKey<Item> base, SourceList add, SourceList remove) {
         public static final MapCodec<DerivedValues> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Identifier.CODEC.fieldOf("base").validate(
+                ResourceKey.codec(Registries.ITEM).fieldOf("base").validate(
                         rl -> Services.ITEMS_REGISTRY.containsKey(rl) ?
                                 DataResult.success(rl) :
                                 DataResult.error(() -> "Item " + rl + " not defined")
@@ -93,7 +94,7 @@ public class ItemAffinity extends AbstractAffinity<ItemAffinity> {
             ).apply(instance, DerivedValues::new));
 
         public static final StreamCodec<FriendlyByteBuf, DerivedValues> STREAM_CODEC = StreamCodec.composite(
-                Identifier.STREAM_CODEC, DerivedValues::base,
+                ResourceKey.streamCodec(Registries.ITEM), DerivedValues::base,
                 SourceList.STREAM_CODEC, DerivedValues::add,
                 SourceList.STREAM_CODEC, DerivedValues::remove,
                 DerivedValues::new);
