@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "primalmagick:block/sunwood_pillar"
+    "model": "primalmagick:block/sunwood_pillar_full"
   }
 }

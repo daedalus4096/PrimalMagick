@@ -869,6 +869,9 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 Identifier modelId = Services.MODEL_TEMPLATES.extend(this.getPillarModelTemplate(type))
                         .createWithSuffix(block, "_" + (type == PillarBlock.Type.BASE ? "" : (type + "_")) + phase, pillarMapping.resolve(phase), blockModels.modelOutput);
                 dispatch.select(phase, type, BlockModelGenerators.plainVariant(modelId));
+                if (phase == TimePhase.FULL && type == PillarBlock.Type.BASE) {
+                    blockModels.registerSimpleItemModel(block, modelId);
+                }
             });
         });
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(dispatch));
