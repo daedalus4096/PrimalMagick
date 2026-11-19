@@ -37,12 +37,6 @@ public class SacredShieldItem extends AbstractTieredShieldItem implements IEncha
     }
 
     @Override
-    public boolean canDecorate() {
-        // Does not support banner patterns
-        return false;
-    }
-
-    @Override
     public Map<ResourceKey<Enchantment>, Integer> getDefaultEnchantments() {
         return ImmutableMap.of(EnchantmentsPM.BULWARK, 2);
     }

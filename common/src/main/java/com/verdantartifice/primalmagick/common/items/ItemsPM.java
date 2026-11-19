@@ -106,6 +106,7 @@ import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BannerPatternLayers;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -553,7 +554,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, AxeItem> PRIMALITE_AXE = registerSupplier("primalite_axe", props -> new AxeItem(ToolMaterialsPM.PRIMALITE, 5.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, HoeItem> PRIMALITE_HOE = registerSupplier("primalite_hoe", props -> new HoeItem(ToolMaterialsPM.PRIMALITE, -2.0F, 0.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, TieredFishingRodItem> PRIMALITE_FISHING_ROD = registerSupplier("primalite_fishing_rod", props -> new TieredFishingRodItem(ToolMaterialsPM.PRIMALITE, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
-    public static final IRegistryItem<Item, PrimaliteShieldItem> PRIMALITE_SHIELD = registerSupplier("primalite_shield", Services.ITEM_PROTOTYPES.primaliteShield(), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, PrimaliteShieldItem> PRIMALITE_SHIELD = registerSupplier("primalite_shield", Services.ITEM_PROTOTYPES.primaliteShield(), () -> new Item.Properties().rarity(Rarity.UNCOMMON).component(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY));
     public static final IRegistryItem<Item, Item> HEXIUM_SWORD = registerSimpleItemSupplier("hexium_sword", () -> new Item.Properties().rarity(Rarity.RARE).sword(ToolMaterialsPM.HEXIUM, 3, -2.4F));
     public static final IRegistryItem<Item, HexiumTridentItem> HEXIUM_TRIDENT = registerSupplier("hexium_trident", Services.ITEM_PROTOTYPES.hexiumTrident(), () -> new Item.Properties().rarity(Rarity.RARE));
     public static final IRegistryItem<Item, AbstractTieredBowItem> HEXIUM_BOW = registerSupplier("hexium_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.HEXIUM), () -> new Item.Properties().rarity(Rarity.RARE));
@@ -562,7 +563,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, AxeItem> HEXIUM_AXE = registerSupplier("hexium_axe", props -> new AxeItem(ToolMaterialsPM.HEXIUM, 4.0F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.RARE));
     public static final IRegistryItem<Item, HoeItem> HEXIUM_HOE = registerSupplier("hexium_hoe", props -> new HoeItem(ToolMaterialsPM.HEXIUM, -4.0F, 0.0F, props), () -> new Item.Properties().rarity(Rarity.RARE));
     public static final IRegistryItem<Item, TieredFishingRodItem> HEXIUM_FISHING_ROD = registerSupplier("hexium_fishing_rod", props -> new TieredFishingRodItem(ToolMaterialsPM.HEXIUM, props), () -> new Item.Properties().rarity(Rarity.RARE));
-    public static final IRegistryItem<Item, HexiumShieldItem> HEXIUM_SHIELD = registerSupplier("hexium_shield", Services.ITEM_PROTOTYPES.hexiumShield(), () -> new Item.Properties().rarity(Rarity.RARE));
+    public static final IRegistryItem<Item, HexiumShieldItem> HEXIUM_SHIELD = registerSupplier("hexium_shield", Services.ITEM_PROTOTYPES.hexiumShield(), () -> new Item.Properties().rarity(Rarity.RARE).component(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY));
     public static final IRegistryItem<Item, Item> HALLOWSTEEL_SWORD = registerSimpleItemSupplier("hallowsteel_sword", () -> new Item.Properties().rarity(Rarity.EPIC).sword(ToolMaterialsPM.HALLOWSTEEL, 3, -2.4F));
     public static final IRegistryItem<Item, HallowsteelTridentItem> HALLOWSTEEL_TRIDENT = registerSupplier("hallowsteel_trident", Services.ITEM_PROTOTYPES.hallowsteelTrident(), () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, AbstractTieredBowItem> HALLOWSTEEL_BOW = registerSupplier("hallowsteel_bow", Services.ITEM_PROTOTYPES.tieredBow(ToolMaterialsPM.HALLOWSTEEL), () -> new Item.Properties().rarity(Rarity.EPIC));
@@ -571,7 +572,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, AxeItem> HALLOWSTEEL_AXE = registerSupplier("hallowsteel_axe", props -> new AxeItem(ToolMaterialsPM.HALLOWSTEEL, 3.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, HoeItem> HALLOWSTEEL_HOE = registerSupplier("hallowsteel_hoe", props -> new HoeItem(ToolMaterialsPM.HALLOWSTEEL, -5.0F, 0.0F, props), () -> new Item.Properties().rarity(Rarity.EPIC));
     public static final IRegistryItem<Item, TieredFishingRodItem> HALLOWSTEEL_FISHING_ROD = registerSupplier("hallowsteel_fishing_rod", props -> new TieredFishingRodItem(ToolMaterialsPM.HALLOWSTEEL, props), () -> new Item.Properties().rarity(Rarity.EPIC));
-    public static final IRegistryItem<Item, HallowsteelShieldItem> HALLOWSTEEL_SHIELD = registerSupplier("hallowsteel_shield", Services.ITEM_PROTOTYPES.hallowsteelShield(), () -> new Item.Properties().rarity(Rarity.EPIC));
+    public static final IRegistryItem<Item, HallowsteelShieldItem> HALLOWSTEEL_SHIELD = registerSupplier("hallowsteel_shield", Services.ITEM_PROTOTYPES.hallowsteelShield(), () -> new Item.Properties().rarity(Rarity.EPIC).component(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY));
     public static final IRegistryItem<Item, PrimalShovelItem> PRIMAL_SHOVEL = registerDefaultInstance("primal_shovel", props -> new PrimalShovelItem(ToolMaterialsPM.PRIMALITE, 1.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, PrimalFishingRodItem> PRIMAL_FISHING_ROD = registerDefaultInstance("primal_fishing_rod", props -> new PrimalFishingRodItem(ToolMaterialsPM.PRIMALITE, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, PrimalAxeItem> PRIMAL_AXE = registerDefaultInstance("primal_axe", props -> new PrimalAxeItem(ToolMaterialsPM.PRIMALITE, 5.5F, -3.0F, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
