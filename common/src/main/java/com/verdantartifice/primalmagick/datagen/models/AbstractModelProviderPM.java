@@ -893,12 +893,17 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     private void createSkyglassBlocks(Block glassBlock, Block paneBlock, BlockModelGenerators blockModels) {
         // Define block models and states for full glass block
-        Map<ModelConnection, MultiVariant> glassVariants = ModelConnectionSets.CUBE.modelConnections().stream().collect(Collectors.toMap(
+        Map<ModelConnection, Identifier> glassModelIds = ModelConnectionSets.CUBE.modelConnections().stream().collect(Collectors.toMap(
                 modelConnection -> modelConnection,
-                modelConnection -> BlockModelGenerators.plainVariant(
-                        modelConnection.extendModel(ResourceUtils.loc("block/skyglass"))
-                            .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput))));
+                modelConnection -> modelConnection.extendModel(ResourceUtils.loc("block/skyglass"))
+                        .createWithSuffix(glassBlock, modelConnection.suffix(), TextureMappingsPM.connected(glassBlock, modelConnection).forceAllTranslucent(), blockModels.modelOutput)));
+        Identifier variantZeroLoc = glassModelIds.get(ModelConnections.ZERO);
+        Map<ModelConnection, MultiVariant> glassVariants = glassModelIds.entrySet().stream().collect(Collectors.toMap(
+                Map.Entry::getKey,
+                entry -> BlockModelGenerators.plainVariant(entry.getValue())
+        ));
         blockModels.blockStateOutput.accept(ModelConnectionSets.CUBE.generatorFactory().apply(glassBlock, glassVariants));
+        blockModels.registerSimpleItemModel(glassBlock, variantZeroLoc);
 
         // Define block states and models for pane
         Map<ModelConnection, MultiVariant> paneVariants = ModelConnectionSets.PANE.modelConnections().stream().collect(Collectors.toMap(
