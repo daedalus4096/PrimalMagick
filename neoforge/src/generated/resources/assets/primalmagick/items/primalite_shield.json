@@ -5,14 +5,14 @@
       "type": "minecraft:special",
       "base": "primalmagick:item/primalite_shield",
       "model": {
-        "type": "minecraft:shield"
+        "type": "primalmagick:primalite_shield"
       }
     },
     "on_true": {
       "type": "minecraft:special",
       "base": "primalmagick:item/primalite_shield_blocking",
       "model": {
-        "type": "minecraft:shield"
+        "type": "primalmagick:primalite_shield"
       }
     },
     "property": "minecraft:using_item",

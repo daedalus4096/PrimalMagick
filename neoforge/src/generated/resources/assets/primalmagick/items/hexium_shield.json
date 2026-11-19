@@ -5,14 +5,14 @@
       "type": "minecraft:special",
       "base": "primalmagick:item/hexium_shield",
       "model": {
-        "type": "minecraft:shield"
+        "type": "primalmagick:hexium_shield"
       }
     },
     "on_true": {
       "type": "minecraft:special",
       "base": "primalmagick:item/hexium_shield_blocking",
       "model": {
-        "type": "minecraft:shield"
+        "type": "primalmagick:hexium_shield"
       }
     },
     "property": "minecraft:using_item",

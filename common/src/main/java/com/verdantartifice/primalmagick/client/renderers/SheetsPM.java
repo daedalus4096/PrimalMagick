@@ -6,7 +6,7 @@ import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 
 public class SheetsPM {
-    public static final Identifier SHIELD_SHEET = ResourceUtils.loc("textures/atlas/shield_patterns.png");
+    public static final Identifier SHIELD_SHEET = Identifier.withDefaultNamespace("textures/atlas/shield_patterns.png");
 
     public static final SpriteMapper SHIELD_MAPPER = new SpriteMapper(SHIELD_SHEET, "entity/shield");
 
