@@ -36,6 +36,7 @@ sourcesJar {
     from(rootProject.file('LICENSE')) {
         rename { "${it}_${mod_name}" }
     }
+    setDuplicatesStrategy(DuplicatesStrategy.INCLUDE)
 }
 
 jar {
