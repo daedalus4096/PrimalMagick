@@ -9,11 +9,10 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.object.book.BookModel;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
-import net.minecraft.client.resources.model.sprite.SpriteId;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,10 +21,10 @@ import org.joml.Vector3fc;
 import java.util.function.Consumer;
 
 public class SpelltomeSpecialRenderer implements SpecialModelRenderer<DeviceTier> {
-    protected static final SpriteId TEXTURE_APPRENTICE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("spelltome/apprentice"));
-    protected static final SpriteId TEXTURE_ADEPT = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("spelltome/adept"));
-    protected static final SpriteId TEXTURE_WIZARD = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("spelltome/wizard"));
-    protected static final SpriteId TEXTURE_ARCHMAGE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("spelltome/archmage"));
+    protected static final Identifier TEXTURE_APPRENTICE = ResourceUtils.loc("textures/entity/spelltome/apprentice.png");
+    protected static final Identifier TEXTURE_ADEPT = ResourceUtils.loc("textures/entity/spelltome/adept.png");
+    protected static final Identifier TEXTURE_WIZARD = ResourceUtils.loc("textures/entity/spelltome/wizard.png");
+    protected static final Identifier TEXTURE_ARCHMAGE = ResourceUtils.loc("textures/entity/spelltome/archmage.png");
 
     private final SpriteGetter sprites;
     private final BookModel model;
@@ -37,7 +36,7 @@ public class SpelltomeSpecialRenderer implements SpecialModelRenderer<DeviceTier
         this.state = state;
     }
 
-    private static SpriteId getTextureLocation(@Nullable DeviceTier tier) {
+    private static Identifier getTextureLocation(@Nullable DeviceTier tier) {
         return tier == null ? TEXTURE_APPRENTICE : switch (tier) {
             case BASIC -> TEXTURE_APPRENTICE;
             case ENCHANTED -> TEXTURE_ADEPT;
@@ -56,7 +55,7 @@ public class SpelltomeSpecialRenderer implements SpecialModelRenderer<DeviceTier
             boolean hasFoil,
             int outlineColor) {
         submitNodeCollector.submitModel(
-                this.model, this.state, poseStack, lightCoords, overlayCoords, -1, getTextureLocation(tier), this.sprites, outlineColor, null
+                this.model, this.state, poseStack, this.model.renderType(getTextureLocation(tier)), lightCoords, overlayCoords, outlineColor, null
         );
     }
 
