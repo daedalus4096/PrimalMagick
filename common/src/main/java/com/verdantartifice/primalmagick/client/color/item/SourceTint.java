@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +30,7 @@ public record SourceTint(int defaultColor) implements ItemTintSource {
     @Override
     public int calculate(@NotNull ItemStack itemStack, @Nullable ClientLevel clientLevel, @Nullable LivingEntity livingEntity) {
         return itemStack.has(DataComponentsPM.SOURCE_TINT.get()) ?
-            itemStack.get(DataComponentsPM.SOURCE_TINT.get()).getColor() :
+            ARGB.opaque(itemStack.get(DataComponentsPM.SOURCE_TINT.get()).getColor()) :
             this.defaultColor;
     }
 
