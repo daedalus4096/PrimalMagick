@@ -5,7 +5,9 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.IndexModifier;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 /**
  * Custom GUI slot for infernal furnace outputs.
@@ -13,8 +15,8 @@ import net.neoforged.neoforge.items.IItemHandler;
  * @author Daedalus4096
  */
 public class InfernalFurnaceResultSlotNeoforge extends GenericResultSlotNeoforge {
-    public InfernalFurnaceResultSlotNeoforge(Player pPlayer, IItemHandler itemHandler, int pSlot, int pXPosition, int pYPosition) {
-        super(pPlayer, itemHandler, pSlot, pXPosition, pYPosition);
+    public InfernalFurnaceResultSlotNeoforge(Player pPlayer, ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int pSlot, int pXPosition, int pYPosition) {
+        super(pPlayer, handler, slotModifier, pSlot, pXPosition, pYPosition);
     }
 
     @Override

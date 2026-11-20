@@ -4,7 +4,9 @@ import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.IndexModifier;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 /**
  * Custom GUI slot for calcinator fuel.
@@ -16,8 +18,8 @@ public class CalcinatorFuelSlotNeoforge extends FilteredSlotNeoforge {
 
     protected final CalcinatorMenu container;
 
-    public CalcinatorFuelSlotNeoforge(CalcinatorMenu container, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
-        super(inventoryIn, index, xPosition, yPosition,
+    public CalcinatorFuelSlotNeoforge(CalcinatorMenu container, ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int index, int xPosition, int yPosition) {
+        super(handler, slotModifier, index, xPosition, yPosition,
                 new FilteredSlotProperties().filter(stack -> container.isFuel(stack) || isBucket(stack)).tooltip(FUEL_SLOT_TOOLTIP));
         this.container = container;
     }

@@ -10,14 +10,15 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.IndexModifier;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class RunecarvingResultSlotNeoforge extends GenericResultSlotNeoforge {
     private final RunecarvingTableMenu menu;
 
-    public RunecarvingResultSlotNeoforge(RunecarvingTableMenu menu, Player player, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
-        super(player, inventoryIn, index, xPosition, yPosition);
+    public RunecarvingResultSlotNeoforge(RunecarvingTableMenu menu, Player player, ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int index, int xPosition, int yPosition) {
+        super(player, handler, slotModifier, index, xPosition, yPosition);
         this.menu = menu;
     }
 

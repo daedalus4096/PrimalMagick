@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.inventory.IItemHandlerPMNeoforge;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
@@ -10,11 +10,12 @@ import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SidedInvWrapperPMNeoforge extends WorldlyContainerWrapper implements IItemHandlerPM {
+public class SidedInvWrapperPMNeoforge extends WorldlyContainerWrapper implements IItemHandlerPMNeoforge {
     private final WorldlyContainer inv;
 
     public SidedInvWrapperPMNeoforge(WorldlyContainer inv, @Nullable Direction side) {
@@ -133,5 +134,18 @@ public class SidedInvWrapperPMNeoforge extends WorldlyContainerWrapper implement
     @Override
     public Container asContainer() {
         return this.inv;
+    }
+
+    @Override
+    public void set(int index, @NotNull ItemResource resource, int amount) {
+        try (Transaction tx = Transaction.openRoot()) {
+            ItemResource existing = this.getResource(index);
+            if (!existing.isEmpty()) {
+                this.extract(index, existing, this.getAmountAsInt(index), tx);
+            }
+            if (!resource.isEmpty()) {
+                this.insert(index, resource, amount, tx);
+            }
+        }
     }
 }

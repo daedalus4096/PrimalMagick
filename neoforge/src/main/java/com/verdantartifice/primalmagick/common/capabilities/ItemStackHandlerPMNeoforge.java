@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import com.verdantartifice.primalmagick.common.inventory.IItemHandlerPMNeoforge;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.util.RecipeContainerWrapper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.util.Util;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.IndexModifier;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
@@ -27,7 +29,7 @@ import java.util.function.Function;
  * 
  * @author Daedalus4096
  */
-public class ItemStackHandlerPMNeoforge extends ItemStacksResourceHandler implements IItemHandlerPM {
+public class ItemStackHandlerPMNeoforge extends ItemStacksResourceHandler implements IItemHandlerPMNeoforge {
     protected final AbstractTilePM tile;
     protected final Optional<Function<Integer, Integer>> limitFuncOverride;
     protected final Optional<BiPredicate<Integer, ItemStack>> validityFuncOverride;

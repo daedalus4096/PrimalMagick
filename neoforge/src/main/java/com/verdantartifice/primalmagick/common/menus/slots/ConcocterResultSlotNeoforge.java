@@ -4,11 +4,13 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.IndexModifier;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class ConcocterResultSlotNeoforge extends GenericResultSlotNeoforge {
-    public ConcocterResultSlotNeoforge(Player player, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
-        super(player, inventoryIn, index, xPosition, yPosition);
+    public ConcocterResultSlotNeoforge(Player player, ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int index, int xPosition, int yPosition) {
+        super(player, handler, slotModifier, index, xPosition, yPosition);
     }
 
     @Override

@@ -2,8 +2,10 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.IndexModifier;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -11,12 +13,12 @@ import org.jetbrains.annotations.NotNull;
  * 
  * @author Daedalus4096
  */
-public class GenericResultSlotNeoforge extends SlotItemHandler {
+public class GenericResultSlotNeoforge extends ResourceHandlerSlot {
     protected final Player player;
     protected int removeCount = 0;
 
-    public GenericResultSlotNeoforge(Player player, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
-        super(inventoryIn, index, xPosition, yPosition);
+    public GenericResultSlotNeoforge(Player player, ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int index, int xPosition, int yPosition) {
+        super(handler, slotModifier, index, xPosition, yPosition);
         this.player = player;
     }
     

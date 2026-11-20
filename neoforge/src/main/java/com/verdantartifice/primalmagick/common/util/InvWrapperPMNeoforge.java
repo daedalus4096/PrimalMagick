@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import com.verdantartifice.primalmagick.common.capabilities.IItemHandlerPM;
+import com.verdantartifice.primalmagick.common.inventory.IItemHandlerPMNeoforge;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.transfer.ResourceHandler;
@@ -9,10 +9,11 @@ import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class InvWrapperPMNeoforge implements IItemHandlerPM {
+public class InvWrapperPMNeoforge implements IItemHandlerPMNeoforge {
     private final ResourceHandler<ItemResource> inner;
     private final Container inv;
 
@@ -132,5 +133,54 @@ public class InvWrapperPMNeoforge implements IItemHandlerPM {
     @Override
     public Container asContainer() {
         return this.inv;
+    }
+
+    @Override
+    public int size() {
+        return this.inner.size();
+    }
+
+    @Override
+    @NotNull
+    public ItemResource getResource(int index) {
+        return this.inner.getResource(index);
+    }
+
+    @Override
+    public long getAmountAsLong(int index) {
+        return this.inner.getAmountAsLong(index);
+    }
+
+    @Override
+    public long getCapacityAsLong(int index, @NotNull ItemResource resource) {
+        return this.inner.getCapacityAsLong(index, resource);
+    }
+
+    @Override
+    public boolean isValid(int index, @NotNull ItemResource resource) {
+        return this.inner.isValid(index, resource);
+    }
+
+    @Override
+    public int insert(int index, @NotNull ItemResource resource, int amount, @NotNull TransactionContext transaction) {
+        return this.inner.insert(index, resource, amount, transaction);
+    }
+
+    @Override
+    public int extract(int index, @NotNull ItemResource resource, int amount, @NotNull TransactionContext transaction) {
+        return this.inner.extract(index, resource, amount, transaction);
+    }
+
+    @Override
+    public void set(int index, @NotNull ItemResource resource, int amount) {
+        try (Transaction tx = Transaction.openRoot()) {
+            ItemResource existing = this.inner.getResource(index);
+            if (!existing.isEmpty()) {
+                this.extract(index, existing, this.inner.getAmountAsInt(index), tx);
+            }
+            if (!resource.isEmpty()) {
+                this.insert(index, resource, amount, tx);
+            }
+        }
     }
 }
