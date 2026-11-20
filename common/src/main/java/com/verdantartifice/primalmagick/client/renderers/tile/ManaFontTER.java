@@ -28,7 +28,6 @@ import org.jetbrains.annotations.Nullable;
  * @see com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock
  */
 public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEntity, ManaFontTER.RenderState> {
-    public static final SpriteId CORE_SPRITE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("mana_font_core"));
     public static final SpriteId CORE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("mana_cube"));
 
     protected final ManaCubeModel manaCubeModel;

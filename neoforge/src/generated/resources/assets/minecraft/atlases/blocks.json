@@ -2,10 +2,6 @@
   "sources": [
     {
       "type": "minecraft:single",
-      "resource": "primalmagick:entity/mana_font_core"
-    },
-    {
-      "type": "minecraft:single",
       "resource": "primalmagick:entity/ritual_bell_body"
     },
     {

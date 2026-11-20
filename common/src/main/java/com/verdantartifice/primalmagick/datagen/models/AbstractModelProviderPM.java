@@ -709,7 +709,7 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 .createWithSuffix(block, "_item", TextureMappingsPM::empty, itemModels.modelOutput);
         itemModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.composite(
                 ItemModelUtils.plainModel(itemModelLoc),
-                ItemModelUtils.specialModel(itemModelLoc, new ManaFontSpecialRenderer.Unbaked())));
+                ItemModelUtils.specialModel(itemModelLoc, ManaFontSpecialRenderer.Unbaked.INSTANCE)));
     }
 
     private IModelTemplateExtender deviceTransforms(IModelTemplateExtender extender) {

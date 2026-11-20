@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.client.renderers.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.SubModelRenderHelper;
+import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -13,10 +15,10 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.ARGB;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -30,10 +32,14 @@ import org.jetbrains.annotations.Nullable;
  * @see com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity
  */
 public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity, RitualAltarTER.RenderState> {
+    public static final SpriteId CORE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("mana_cube"));
+
+    protected final ManaCubeModel manaCubeModel;
     private final BlockEntityRendererProvider.Context context;
 
     public RitualAltarTER(BlockEntityRendererProvider.Context context) {
         this.context = context;
+        this.manaCubeModel = new ManaCubeModel(context.bakeLayer(ModelLayersPM.MANA_CUBE));
     }
 
     @Override
@@ -80,27 +86,23 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
 
         // Render the ritual orb above the altar, if active
         if (renderState.orbActive) {
-            final float r = ARGB.redFloat(renderState.orbColor);
-            final float g = ARGB.greenFloat(renderState.orbColor);
-            final float b = ARGB.blueFloat(renderState.orbColor);
-            final float ds = 0.1875F;
-            final TextureAtlasSprite sprite = this.context.sprites().get(ManaFontTER.CORE_SPRITE);
+            final float baseScale = 0.375F;
 
             poseStack.pushPose();
             poseStack.translate(0.5D, 2.5D, 0.5D);
             poseStack.mulPose(Axis.YP.rotationDegrees(renderState.orbRotationY)); // Spin the orb like a shulker bullet
             poseStack.mulPose(Axis.XP.rotationDegrees(renderState.orbRotationX));
             poseStack.mulPose(Axis.ZP.rotationDegrees(renderState.orbRotationZ));
-            // FIXME Change to translucentBlockSheet once Fabulous graphics bug is fixed
-            submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockSheet(), (pose, consumer) -> {
-                this.renderCube(consumer, pose, ds, r, g, b, 1.0F, sprite);
-            });
+            poseStack.scale(baseScale, baseScale, baseScale);
+            submitNodeCollector.submitModelPart(this.manaCubeModel.root(), poseStack, CORE.renderType(RenderTypes::entitySolid),
+                    renderState.lightCoords, OverlayTexture.NO_OVERLAY, this.context.sprites().get(CORE), renderState.orbColor,
+                    renderState.breakProgress);
 
             // FIXME Uncomment once Fabulous graphics bug is fixed
 //            poseStack.scale(1.5F, 1.5F, 1.5F);
-//            submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockSheet(), (pose, consumer) -> {
-//                this.renderCube(consumer, pose, ds, r, g, b, 0.5F, sprite);
-//            });
+//            submitNodeCollector.submitModelPart(this.manaCubeModel.root(), poseStack, CORE.renderType(RenderTypes::entityTranslucent),
+//                    renderState.lightCoords, OverlayTexture.NO_OVERLAY, this.context.sprites().get(CORE), ARGB.color(0.5F, renderState.orbColor),
+//                    renderState.breakProgress);
 
             poseStack.popPose();
 
@@ -108,53 +110,6 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
         }
     }
 
-    protected void addVertex(VertexConsumer renderer, PoseStack.Pose pose, float x, float y, float z, float r, float g, float b, float a, float u, float v) {
-        renderer.addVertex(pose, x, y, z)
-                .setColor(r, g, b, a)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setUv(u, v)
-                .setUv2(240, 240)
-                .setNormal(1, 0, 0);
-    }
-    
-    protected void renderCube(VertexConsumer builder, PoseStack.Pose pose, float ds, float r, float g, float b, float a, TextureAtlasSprite sprite) {
-        // Draw the south face of the cube
-        this.addVertex(builder, pose, -ds, ds, ds, r, g, b, a, sprite.getU0(), sprite.getV1());
-        this.addVertex(builder, pose, -ds, -ds, ds, r, g, b, a, sprite.getU0(), sprite.getV0());
-        this.addVertex(builder, pose, ds, -ds, ds, r, g, b, a, sprite.getU1(), sprite.getV0());
-        this.addVertex(builder, pose, ds, ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
-        
-        // Draw the north face of the cube
-        this.addVertex(builder, pose, -ds, ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV1());
-        this.addVertex(builder, pose, ds, ds, -ds, r, g, b, a, sprite.getU1(), sprite.getV1());
-        this.addVertex(builder, pose, ds, -ds, -ds, r, g, b, a, sprite.getU1(), sprite.getV0());
-        this.addVertex(builder, pose, -ds, -ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
-        
-        // Draw the east face of the cube
-        this.addVertex(builder, pose, ds, ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV1());
-        this.addVertex(builder, pose, ds, ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
-        this.addVertex(builder, pose, ds, -ds, ds, r, g, b, a, sprite.getU1(), sprite.getV0());
-        this.addVertex(builder, pose, ds, -ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
-        
-        // Draw the west face of the cube
-        this.addVertex(builder, pose, -ds, -ds, ds, r, g, b, a, sprite.getU1(), sprite.getV0());
-        this.addVertex(builder, pose, -ds, ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
-        this.addVertex(builder, pose, -ds, ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV1());
-        this.addVertex(builder, pose, -ds, -ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
-        
-        // Draw the top face of the cube
-        this.addVertex(builder, pose, ds, ds, -ds, r, g, b, a, sprite.getU1(), sprite.getV0());
-        this.addVertex(builder, pose, -ds, ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
-        this.addVertex(builder, pose, -ds, ds, ds, r, g, b, a, sprite.getU0(), sprite.getV1());
-        this.addVertex(builder, pose, ds, ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
-        
-        // Draw the bottom face of the cube
-        this.addVertex(builder, pose, ds, -ds, -ds, r, g, b, a, sprite.getU1(), sprite.getV0());
-        this.addVertex(builder, pose, ds, -ds, ds, r, g, b, a, sprite.getU1(), sprite.getV1());
-        this.addVertex(builder, pose, -ds, -ds, ds, r, g, b, a, sprite.getU0(), sprite.getV1());
-        this.addVertex(builder, pose, -ds, -ds, -ds, r, g, b, a, sprite.getU0(), sprite.getV0());
-    }
-    
     public static class RenderState extends BlockEntityRenderState {
         @NotNull
         public ItemStack stack = ItemStack.EMPTY;

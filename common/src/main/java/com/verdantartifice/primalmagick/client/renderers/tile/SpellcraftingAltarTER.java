@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.client.renderers.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.phys.Vec3;
@@ -32,22 +31,16 @@ import org.jetbrains.annotations.Nullable;
  */
 public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingAltarTileEntity, SpellcraftingAltarTER.RenderState> {
     public static final SpriteId RING_TEXTURE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("spellcrafting_altar/spellcrafting_altar_ring"));
+    public static final SpriteId CORE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("mana_cube"));
 
     protected final SpellcraftingAltarRingModel ringModel;
+    protected final ManaCubeModel manaCubeModel;
     private final BlockEntityRendererProvider.Context context;
 
     public SpellcraftingAltarTER(BlockEntityRendererProvider.Context context) {
         this.context = context;
         this.ringModel = new SpellcraftingAltarRingModel(context.bakeLayer(ModelLayersPM.SPELLCRAFTING_ALTAR_RING));
-    }
-
-    protected void addVertex(VertexConsumer renderer, PoseStack.Pose stack, float x, float y, float z, float r, float g, float b, float u, float v) {
-        renderer.addVertex(stack, x, y, z)
-                .setColor(r, g, b, 1.0F)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setUv(u, v)
-                .setUv2(240, 240)
-                .setNormal(1, 0, 0);
+        this.manaCubeModel = new ManaCubeModel(context.bakeLayer(ModelLayersPM.MANA_CUBE));
     }
 
     @Override
@@ -88,55 +81,19 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         final float r = ARGB.redFloat(renderState.coreColor);
         final float g = ARGB.greenFloat(renderState.coreColor);
         final float b = ARGB.blueFloat(renderState.coreColor);
-        final float ds = 0.1875F;
-        final float scale = 0.5F;
-        final TextureAtlasSprite sprite = this.context.sprites().get(ManaFontTER.CORE_SPRITE);
+        final float baseScale = 0.375F;
+        final float coreScale = 0.5F;
 
         poseStack.pushPose();
         poseStack.translate(0.5D, 1.125D, 0.5D);
         poseStack.mulPose(Axis.YP.rotationDegrees(renderState.coreRotation)); // Spin the core around its Y-axis
         poseStack.mulPose(Axis.ZP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
         poseStack.mulPose(Axis.XP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
-        poseStack.scale(scale, scale, scale);
-
-        // TODO Abstract into a model instead of plotting individual vertices
-        submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockSheet(), (pose, consumer) -> {
-            // Draw the south face of the core
-            addVertex(consumer, pose, -ds, ds, ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, -ds, -ds, ds, r, g, b, sprite.getU0(), sprite.getV0());
-            addVertex(consumer, pose, ds, -ds, ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, ds, ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-
-            // Draw the north face of the core
-            addVertex(consumer, pose, -ds, ds, -ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, ds, ds, -ds, r, g, b, sprite.getU1(), sprite.getV1());
-            addVertex(consumer, pose, ds, -ds, -ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, -ds, -ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-
-            // Draw the east face of the core
-            addVertex(consumer, pose, ds, ds, -ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, ds, ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-            addVertex(consumer, pose, ds, -ds, ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, ds, -ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-
-            // Draw the west face of the core
-            addVertex(consumer, pose, -ds, -ds, ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, -ds, ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-            addVertex(consumer, pose, -ds, ds, -ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, -ds, -ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-
-            // Draw the top face of the core
-            addVertex(consumer, pose, ds, ds, -ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, -ds, ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-            addVertex(consumer, pose, -ds, ds, ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, ds, ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-
-            // Draw the bottom face of the core
-            addVertex(consumer, pose, ds, -ds, -ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, ds, -ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-            addVertex(consumer, pose, -ds, -ds, ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, -ds, -ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-        });
+        poseStack.scale(baseScale, baseScale, baseScale);
+        poseStack.scale(coreScale, coreScale, coreScale);
+        submitNodeCollector.submitModelPart(this.manaCubeModel.root(), poseStack, CORE.renderType(RenderTypes::entitySolid),
+                renderState.lightCoords, OverlayTexture.NO_OVERLAY, this.context.sprites().get(CORE), renderState.coreColor,
+                renderState.breakProgress);
         poseStack.popPose();
 
         // Draw a particle stream rising from the core

@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.Constants;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PixieHouseSpecialRenderer;
-import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaInjectorTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaRelayTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
@@ -86,7 +85,6 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         this.addSingle(guiAtlas, DesalinatorMenu.FLASK_SLOT_TEXTURE);
 
         // Add block entity renderer textures to the block atlas
-        this.addSingle(blockAtlas, ManaFontTER.CORE_SPRITE.texture());
         this.addSingle(blockAtlas, RitualBellTER.BELL_TEXTURE.texture());
         this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE.texture());
         this.addSingle(blockAtlas, ManaRelayTER.CORE.texture());
