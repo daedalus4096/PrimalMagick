@@ -55,7 +55,7 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Services.ITEMS_REGISTRY.getKey(this.stack.item().value()), this.stack.components());
+        return this.stack.hashCode();
     }
 
     @Override

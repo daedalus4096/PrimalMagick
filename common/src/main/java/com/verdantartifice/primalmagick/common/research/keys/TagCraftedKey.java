@@ -50,7 +50,7 @@ public class TagCraftedKey extends AbstractResearchKey<TagCraftedKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.tagKey);
+        return this.tagKey.hashCode();
     }
 
     @Override
