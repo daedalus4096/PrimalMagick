@@ -18,6 +18,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -100,7 +101,7 @@ public class ExpertiseProgressWidget extends AbstractWidget {
             if (statOpt.isPresent()) {
                 Stat stat = statOpt.get();
                 Component baseDescription = Component.translatable(stat.getTranslationKey());
-                String currentValue = stat.formatter().format(Math.min(this.currentValue, this.maxValue));
+                String currentValue = stat.formatter().format(Mth.clamp(this.currentValue, 0, this.maxValue));
                 String maxValue = stat.formatter().format(this.maxValue);
                 return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
             }
@@ -120,7 +121,7 @@ public class ExpertiseProgressWidget extends AbstractWidget {
 
     protected int getProgressionScaled() {
         // Determine how much of the progress meter to show
-        int i = this.currentValue;
+        int i = Mth.clamp(this.currentValue, 0, this.maxValue);
         int j = this.maxValue;
         return j != 0 && i != 0 ? (int)(16.0D * ((double)i / (double)j)) : 0;
     }

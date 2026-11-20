@@ -15,6 +15,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -53,7 +54,7 @@ public class StatProgressWidget extends AbstractWidget {
         // Render the icon
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX(), this.getY());
-        pGuiGraphics.pose().scale(0.0625F, 0.0625F);
+        pGuiGraphics.pose().scale(0.5F, 0.5F);
         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.iconLoc, 0, 0, 32, 32);
         pGuiGraphics.pose().popMatrix();
         
@@ -98,7 +99,7 @@ public class StatProgressWidget extends AbstractWidget {
     protected Component getStatDescription() {
         Minecraft mc = Minecraft.getInstance();
         Component baseDescription = Component.translatable(this.stat.getTranslationKey());
-        String currentValue = this.stat.formatter().format(Math.min(StatsManager.getValue(mc.player, this.stat), this.maxValue));
+        String currentValue = this.stat.formatter().format(Mth.clamp(StatsManager.getValue(mc.player, this.stat), 0, this.maxValue));
         String maxValue = this.stat.formatter().format(this.maxValue);
         return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
     }
@@ -115,7 +116,7 @@ public class StatProgressWidget extends AbstractWidget {
 
     protected int getProgressionScaled() {
         // Determine how much of the progress meter to show
-        int i = this.currentValue;
+        int i = Mth.clamp(this.currentValue, 0, this.maxValue);
         int j = this.maxValue;
         return j != 0 && i != 0 ? (int)(16.0D * ((double)i / (double)j)) : 0;
     }
