@@ -1,8 +1,9 @@
 package com.verdantartifice.primalmagick.client.renderers.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaCubeModel;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.tiles.mana.AbstractManaFontTileEntity;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
@@ -12,11 +13,10 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.SpriteId;
-import net.minecraft.util.ARGB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,22 +29,16 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEntity, ManaFontTER.RenderState> {
     public static final SpriteId CORE_SPRITE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("mana_font_core"));
+    public static final SpriteId CORE = Sheets.BLOCK_ENTITIES_MAPPER.apply(ResourceUtils.loc("mana_cube"));
 
+    protected final ManaCubeModel manaCubeModel;
     private final BlockEntityRendererProvider.Context context;
     
     public ManaFontTER(BlockEntityRendererProvider.Context context) {
         this.context = context;
+        this.manaCubeModel = new ManaCubeModel(context.bakeLayer(ModelLayersPM.MANA_CUBE));
     }
     
-    protected void addVertex(VertexConsumer renderer, PoseStack.Pose pose, float x, float y, float z, float r, float g, float b, float u, float v) {
-        renderer.addVertex(pose, x, y, z)
-                .setColor(r, g, b, 1.0F)
-                .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setUv(u, v)
-                .setUv2(240, 240)
-                .setNormal(1, 0, 0);
-    }
-
     @Override
     @NotNull
     public ManaFontTER.RenderState createRenderState() {
@@ -63,57 +57,19 @@ public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEnti
     @Override
     public void submit(@NotNull ManaFontTER.RenderState renderState, @NotNull PoseStack poseStack,
                        @NotNull SubmitNodeCollector submitNodeCollector, @NotNull CameraRenderState cameraRenderState) {
-        final float r = ARGB.redFloat(renderState.coreColor);
-        final float g = ARGB.greenFloat(renderState.coreColor);
-        final float b = ARGB.blueFloat(renderState.coreColor);
-        final float ds = 0.1875F;
-        final float scale = renderState.coreScale;
-        final TextureAtlasSprite sprite = this.context.sprites().get(CORE_SPRITE);
+        final float baseScale = 0.375F;
+        final float coreScale = renderState.coreScale;
 
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.5D, 0.5D);
         poseStack.mulPose(Axis.YP.rotationDegrees(renderState.coreRotation));    // Spin the core around its Y-axis
         poseStack.mulPose(Axis.ZP.rotationDegrees(45.0F));  // Tilt the core onto its diagonal
         poseStack.mulPose(Axis.XP.rotationDegrees(45.0F));  // Tilt the core onto its diagonal
-        poseStack.scale(scale, scale, scale);
-
-        submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockSheet(), (pose, consumer) -> {
-            // Draw the south face of the core
-            addVertex(consumer, pose, -ds, ds, ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, -ds, -ds, ds, r, g, b, sprite.getU0(), sprite.getV0());
-            addVertex(consumer, pose, ds, -ds, ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, ds, ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-
-            // Draw the north face of the core
-            addVertex(consumer, pose, -ds, ds, -ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, ds, ds, -ds, r, g, b, sprite.getU1(), sprite.getV1());
-            addVertex(consumer, pose, ds, -ds, -ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, -ds, -ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-
-            // Draw the east face of the core
-            addVertex(consumer, pose, ds, ds, -ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, ds, ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-            addVertex(consumer, pose, ds, -ds, ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, ds, -ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-
-            // Draw the west face of the core
-            addVertex(consumer, pose, -ds, -ds, ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, -ds, ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-            addVertex(consumer, pose, -ds, ds, -ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, -ds, -ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-
-            // Draw the top face of the core
-            addVertex(consumer, pose, ds, ds, -ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, -ds, ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-            addVertex(consumer, pose, -ds, ds, ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, ds, ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-
-            // Draw the bottom face of the core
-            addVertex(consumer, pose, ds, -ds, -ds, r, g, b, sprite.getU1(), sprite.getV0());
-            addVertex(consumer, pose, ds, -ds, ds, r, g, b, sprite.getU1(), sprite.getV1());
-            addVertex(consumer, pose, -ds, -ds, ds, r, g, b, sprite.getU0(), sprite.getV1());
-            addVertex(consumer, pose, -ds, -ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
-        });
+        poseStack.scale(baseScale, baseScale, baseScale);
+        poseStack.scale(coreScale, coreScale, coreScale);
+        submitNodeCollector.submitModelPart(this.manaCubeModel.root(), poseStack, CORE.renderType(RenderTypes::entitySolid),
+                renderState.lightCoords, OverlayTexture.NO_OVERLAY, this.context.sprites().get(CORE), renderState.coreColor,
+                renderState.breakProgress);
         poseStack.popPose();
     }
 
