@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.client.resources.model.sprite.SpriteId;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +60,7 @@ public class ManaFontSpecialRenderer implements SpecialModelRenderer<Source> {
         poseStack.mulPose(Axis.XP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
         poseStack.scale(baseScale, baseScale, baseScale);
         submitNodeCollector.submitModelPart(this.manaCubeModel.root(), poseStack, CORE.renderType(RenderTypes::entitySolid),
-                lightCoords, OverlayTexture.NO_OVERLAY, this.sprites.get(CORE), coreColor,
+                lightCoords, OverlayTexture.NO_OVERLAY, this.sprites.get(CORE), ARGB.opaque(coreColor),
                 null);
         poseStack.popPose();
     }
