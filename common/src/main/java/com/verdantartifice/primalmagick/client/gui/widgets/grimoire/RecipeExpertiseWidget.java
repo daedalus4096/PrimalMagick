@@ -63,7 +63,7 @@ public class RecipeExpertiseWidget extends AbstractWidget {
         // Render the icon
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX(), this.getY());
-        pGuiGraphics.pose().scale(0.0625F, 0.0625F);
+        pGuiGraphics.pose().scale(0.5F, 0.5F);
         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ICON_LOC, 0, 0, 32, 32);
         pGuiGraphics.pose().popMatrix();
 
