@@ -1145,7 +1145,9 @@ public class GrimoireScreen extends Screen {
     protected static boolean isValidRecipeIndexEntry(RecipeHolder<?> recipe) {
         Minecraft mc = Minecraft.getInstance();
         ContextMap contextMap = SlotDisplayContext.fromLevel(Objects.requireNonNull(mc.level));
-        if (!recipe.id().identifier().getNamespace().equals(Constants.MOD_ID) || recipe.value().display().getFirst().result().resolveForStacks(contextMap).isEmpty()) {
+        if ( !recipe.id().identifier().getNamespace().equals(Constants.MOD_ID) ||
+                recipe.value().display().isEmpty() ||
+                recipe.value().display().getFirst().result().resolveForStacks(contextMap).isEmpty()) {
             return false;
         }
         if (recipe.value() instanceof IHasRequirement hrr) {
