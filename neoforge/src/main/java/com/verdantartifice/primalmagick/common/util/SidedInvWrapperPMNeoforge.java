@@ -146,6 +146,7 @@ public class SidedInvWrapperPMNeoforge extends WorldlyContainerWrapper implement
             if (!resource.isEmpty()) {
                 this.insert(index, resource, amount, tx);
             }
+            tx.commit();
         }
     }
 }

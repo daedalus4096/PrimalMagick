@@ -181,6 +181,7 @@ public class InvWrapperPMNeoforge implements IItemHandlerPMNeoforge {
             if (!resource.isEmpty()) {
                 this.insert(index, resource, amount, tx);
             }
+            tx.commit();
         }
     }
 }
