@@ -13,10 +13,12 @@ import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjector
 import com.verdantartifice.primalmagick.client.renderers.tile.model.ManaInjectorFrameRingTopModel;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaInjectorBlock;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -77,6 +79,9 @@ public class ManaInjectorSpecialRenderer implements SpecialModelRenderer<DeviceT
             int outlineColor) {
         // Render the injector's frame rings
         poseStack.pushPose();
+        poseStack.translate(0.5D, 0, 0.5D);
+
+        poseStack.pushPose();
         poseStack.translate(0D, 1.875D, 0D);
         submitNodeCollector.submitModelPart(this.ringTopModel.root(), poseStack, this.ringTopModel.renderType(this.getTopFrameTexture(tier)), lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
         poseStack.popPose();
@@ -96,6 +101,8 @@ public class ManaInjectorSpecialRenderer implements SpecialModelRenderer<DeviceT
         submitNodeCollector.submitModelPart(this.ringBottomModel.root(), poseStack, this.ringBottomModel.renderType(BOTTOM_FRAME_TEXTURE), lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
         poseStack.popPose();
 
+        poseStack.popPose();
+
         // Draw the injector core
         final float tilt = 45.0F;
         final float coreScale = 0.1875F;
@@ -104,7 +111,7 @@ public class ManaInjectorSpecialRenderer implements SpecialModelRenderer<DeviceT
         poseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
         poseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
         poseStack.scale(coreScale, coreScale, coreScale);
-        submitNodeCollector.submitModelPart(this.cubeModel.root(), poseStack, this.cubeModel.renderType(CORE_TEXTURE), lightCoords, overlayCoords, null, false, hasFoil, -1, null, outlineColor);
+        submitNodeCollector.submitModelPart(this.cubeModel.root(), poseStack, this.cubeModel.renderType(CORE_TEXTURE), lightCoords, overlayCoords, null, false, hasFoil, ARGB.opaque(Sources.SKY.getColor()), null, outlineColor);
         poseStack.popPose();
     }
 
