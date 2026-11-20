@@ -82,7 +82,7 @@
     }
   },
   "display": {
-    "background": "primalmagick:textures/block/marble.png",
+    "background": "primalmagick:block/marble",
     "description": {
       "translate": "advancements.primalmagick.root.description"
     },

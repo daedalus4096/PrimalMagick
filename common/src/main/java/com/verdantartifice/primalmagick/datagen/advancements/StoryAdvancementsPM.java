@@ -80,7 +80,7 @@ public abstract class StoryAdvancementsPM {
         HolderGetter<EntityType<?>> entityTypeGetter = registries.lookupOrThrow(Registries.ENTITY_TYPE);
 
         // Define advancements
-        AdvancementHolder root = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("root").icon(ItemsPM.GRIMOIRE.get()).background(ResourceUtils.loc("textures/block/marble.png")).build())
+        AdvancementHolder root = Advancement.Builder.advancement().display(DisplayInfoBuilder.id("root").icon(ItemsPM.GRIMOIRE.get()).background(ResourceUtils.loc("block/marble")).build())
                 .requirements(AdvancementRequirements.Strategy.OR)
                 .addCriterion("earth_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(registries.lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructuresPM.EARTH_SHRINE))))
                 .addCriterion("sea_shrine", PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inStructure(registries.lookupOrThrow(Registries.STRUCTURE).getOrThrow(StructuresPM.SEA_SHRINE))))
