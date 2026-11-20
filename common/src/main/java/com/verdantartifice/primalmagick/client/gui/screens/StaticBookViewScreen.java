@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import org.apache.logging.log4j.LogManager;
@@ -186,7 +187,7 @@ public class StaticBookViewScreen extends Screen {
             int finalX = xPos + PAGE_TEXT_X_OFFSET;
             int finalY = yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT);
             this.renderedLines.put(new Vector2i(finalX, finalY), page.get(index));
-            guiGraphics.text(this.font, page.get(index), finalX, finalY, 0, false);
+            guiGraphics.text(this.font, page.get(index), finalX, finalY, ARGB.opaque(0), false);
         }
         
         // Draw any hover effects dictated by text style
