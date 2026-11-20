@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.client.resources.model.sprite.SpriteId;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -87,7 +88,7 @@ public class ManaRelaySpecialRenderer implements SpecialModelRenderer<DeviceTier
         poseStack.scale(baseScale, baseScale, baseScale);
         poseStack.scale(coreScale, coreScale, coreScale);
         submitNodeCollector.submitModelPart(this.cubeModel.root(), poseStack, CORE_TEXTURE.renderType(RenderTypes::entitySolid), lightCoords, overlayCoords,
-                this.sprites.get(CORE_TEXTURE), false, hasFoil, Sources.SKY.getColor(), null, outlineColor);
+                this.sprites.get(CORE_TEXTURE), false, hasFoil, ARGB.opaque(Sources.SKY.getColor()), null, outlineColor);
         poseStack.popPose();
     }
 

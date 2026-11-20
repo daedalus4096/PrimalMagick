@@ -72,14 +72,15 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity, Ma
         // Render the relay's frame
         final float baseScale = 0.5F;
         final float tilt = 45.0F;
+        SpriteId frameSprite = this.getFrameSprite(renderState.tier);
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.5D, 0.5D);
         poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.coreRotation));   // Spin the frame around its Y-axis
         poseStack.mulPose(Axis.ZP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
         poseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the frame onto its diagonal
         poseStack.scale(baseScale, baseScale, baseScale);
-        submitNodeCollector.submitModelPart(this.frameModel.root(), poseStack, this.getFrameSprite(renderState.tier).renderType(RenderTypes::entitySolid),
-                renderState.lightCoords, OverlayTexture.NO_OVERLAY, this.context.sprites().get(CORE));
+        submitNodeCollector.submitModelPart(this.frameModel.root(), poseStack, frameSprite.renderType(RenderTypes::entitySolid),
+                renderState.lightCoords, OverlayTexture.NO_OVERLAY, this.context.sprites().get(frameSprite));
         poseStack.popPose();
 
         // Render the relay's core
@@ -91,7 +92,7 @@ public class ManaRelayTER implements BlockEntityRenderer<ManaRelayTileEntity, Ma
         poseStack.mulPose(Axis.XP.rotationDegrees(tilt));   // Tilt the core onto its diagonal
         poseStack.scale(baseScale, baseScale, baseScale);
         poseStack.scale(coreScale, coreScale, coreScale);
-        submitNodeCollector.submitModelPart(this.manaCubeModel.root(), poseStack, CORE.renderType(RenderTypes::entityTranslucent),
+        submitNodeCollector.submitModelPart(this.manaCubeModel.root(), poseStack, CORE.renderType(RenderTypes::entitySolid),
                 renderState.lightCoords, OverlayTexture.NO_OVERLAY, this.context.sprites().get(CORE), renderState.coreColor,
                 renderState.breakProgress);
         poseStack.popPose();
