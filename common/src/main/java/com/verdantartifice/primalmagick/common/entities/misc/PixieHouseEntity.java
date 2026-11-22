@@ -172,6 +172,11 @@ public class PixieHouseEntity extends Mob implements NeutralMob {
     }
 
     @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
+    @Override
     public void readAdditionalSaveData(@NotNull ValueInput input) {
         Level level = this.level();
         this.readPersistentAngerSaveData(level, input);
