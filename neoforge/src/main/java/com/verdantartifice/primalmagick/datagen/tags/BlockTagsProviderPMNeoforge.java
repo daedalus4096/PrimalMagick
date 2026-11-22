@@ -104,8 +104,8 @@ public class BlockTagsProviderPMNeoforge extends BlockTagsProvider {
         this.tag(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT).add(Blocks.GRASS_BLOCK, Blocks.ROOTED_DIRT, Blocks.SHORT_GRASS, Blocks.FERN);
         TagAppender.<Block>forBuilder(this.getOrCreateRawBuilder(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT)).addOptional(ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("regions_unexplored", "alpha_grass_block"))).<Block>map(block -> block.builtInRegistryHolder().key());
 
-        this.tag(BlockTagsPM.MAY_PLACE_SUNWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);
-        this.tag(BlockTagsPM.MAY_PLACE_MOONWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);
-        this.tag(BlockTagsPM.MAY_PLACE_HALLOWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);
+        this.tag(BlockTagsPM.MAY_PLACE_SUNWOOD_SAPLINGS).addTag(BlockTags.SUPPORTS_VEGETATION);
+        this.tag(BlockTagsPM.MAY_PLACE_MOONWOOD_SAPLINGS).addTag(BlockTags.SUPPORTS_VEGETATION);
+        this.tag(BlockTagsPM.MAY_PLACE_HALLOWOOD_SAPLINGS).addTag(BlockTags.SUPPORTS_VEGETATION);
     }
 }
