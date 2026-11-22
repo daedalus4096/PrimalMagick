@@ -157,7 +157,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
                 return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.PASS;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
