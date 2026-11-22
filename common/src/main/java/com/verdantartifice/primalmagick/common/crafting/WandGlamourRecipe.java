@@ -94,14 +94,12 @@ public class WandGlamourRecipe extends CustomRecipe {
 
         ItemStack retVal = TransmuteRecipe.createWithOriginalComponents(this.result, wandStack);
         if (retVal.getItem() instanceof IHasWandComponents wandItem) {
-            if (this.core.test(coreStack)) {
-                if (coreStack.getItem() instanceof WandCoreItem wandCoreItem) {
-                    wandItem.setWandCoreAppearance(retVal, wandCoreItem.getWandCore());
-                } else if (coreStack.getItem() instanceof StaffCoreItem staffCoreItem) {
-                    wandItem.setWandCoreAppearance(retVal, staffCoreItem.getWandCore());
-                } else {
-                    wandItem.setWandCoreAppearance(retVal, null);
-                }
+            if (this.core.test(coreStack) && coreStack.getItem() instanceof WandCoreItem wandCoreItem) {
+                wandItem.setWandCoreAppearance(retVal, wandCoreItem.getWandCore());
+            } else if (this.core.test(coreStack) && coreStack.getItem() instanceof StaffCoreItem staffCoreItem) {
+                wandItem.setWandCoreAppearance(retVal, staffCoreItem.getWandCore());
+            } else {
+                wandItem.setWandCoreAppearance(retVal, null);
             }
 
             if (this.cap.test(capStack) && capStack.getItem() instanceof WandCapItem capItem) {
