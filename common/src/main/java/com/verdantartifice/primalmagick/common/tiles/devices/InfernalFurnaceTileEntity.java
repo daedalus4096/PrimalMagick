@@ -450,7 +450,7 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
 
     @Override
     protected int getInventoryCount() {
-        return 3;
+        return 4;
     }
 
     @Override
