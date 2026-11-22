@@ -30,16 +30,17 @@ import java.util.Objects;
 public class ContainerSynchronizerLarge implements ContainerSynchronizer {
     private final ServerPlayer player;
 
-    private final LoadingCache<TypedDataComponent<?>, Integer> cache = CacheBuilder.newBuilder().maximumSize(256L).build(new CacheLoader<>() {
-        private final DynamicOps<HashCode> registryHashOps = ContainerSynchronizerLarge.this.player.registryAccess().createSerializationContext(HashOps.CRC32C_INSTANCE);
-
-        public Integer load(TypedDataComponent<?> component) {
-            return component.encodeValue(this.registryHashOps).getOrThrow((message) -> new IllegalArgumentException("Failed to hash " + component + ": " + message)).asInt();
-        }
-    });
+    private final LoadingCache<TypedDataComponent<?>, Integer> cache;
 
     public ContainerSynchronizerLarge(ServerPlayer player) {
         this.player = player;
+        this.cache = CacheBuilder.newBuilder().maximumSize(256L).build(new CacheLoader<>() {
+            private final DynamicOps<HashCode> registryHashOps = ContainerSynchronizerLarge.this.player.registryAccess().createSerializationContext(HashOps.CRC32C_INSTANCE);
+
+            public Integer load(TypedDataComponent<?> component) {
+                return component.encodeValue(this.registryHashOps).getOrThrow((message) -> new IllegalArgumentException("Failed to hash " + component + ": " + message)).asInt();
+            }
+        });
     }
 
     @Override
