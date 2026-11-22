@@ -41,7 +41,6 @@ import java.util.Optional;
  */
 public class ArcaneWorkbenchMenu extends AbstractCraftingMenu implements IRecipeDisplayListener {
     protected final WandInventory wandInv = new WandInventory(this);
-    protected final ResultContainer resultInv = new ResultContainer();
     protected final ContainerLevelAccess access;
     protected final Player player;
     protected final Slot wandSlot;
@@ -75,7 +74,7 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu implements IRecipe
     @Override
     @NotNull
     protected Slot addResultSlot(@NotNull Player player, int x, int y) {
-        return this.addSlot(new ArcaneCraftingResultSlot(player, this.craftSlots, this.wandInv, this.resultInv, 0, x, y));
+        return this.addSlot(new ArcaneCraftingResultSlot(player, this.craftSlots, this.wandInv, this.resultSlots, 0, x, y));
     }
 
     @Nullable
@@ -155,7 +154,7 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu implements IRecipe
     
     @Override
     public boolean canTakeItemForPickAll(@NotNull ItemStack stack, Slot slotIn) {
-        return slotIn.container != this.resultInv && super.canTakeItemForPickAll(stack, slotIn);
+        return slotIn.container != this.resultSlots && super.canTakeItemForPickAll(stack, slotIn);
     }
     
     @Override
