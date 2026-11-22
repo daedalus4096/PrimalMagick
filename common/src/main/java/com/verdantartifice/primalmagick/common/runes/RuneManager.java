@@ -101,8 +101,9 @@ public class RuneManager {
             }
         }
         
-        // Sort enchantments first by their minimum XP cost (descending) and then by hash code (ascending) to ensure consistent results
-        intermediate.sort(Comparator.<EnchantmentInstance>comparingInt(i -> i.enchantment().value().getMinCost(i.level())).reversed().thenComparingInt(Record::hashCode));
+        // Sort enchantments first by their minimum XP cost (descending) and then by enchantment ID (ascending) to ensure consistent results
+        intermediate.sort(Comparator.<EnchantmentInstance>comparingInt(i -> i.enchantment().value().getMinCost(i.level())).reversed()
+                .thenComparing(i -> i.enchantment().unwrapKey().map(k -> k.identifier().toString()).orElse("")));
         
         // Add intermediate enchantments to the result map, filtering out incompatible enchantments if appropriate
         Map<Holder<Enchantment>, Integer> retVal = new HashMap<>();
