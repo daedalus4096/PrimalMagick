@@ -643,7 +643,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, Item> ENCHANTED_INK_AND_QUILL = registerSupplier("enchanted_ink_and_quill", EnchantedInkAndQuillItem::new, () -> new Item.Properties().durability(63));
     public static final IRegistryItem<Item, SeascribePenItem> SEASCRIBE_PEN = registerSupplier("seascribe_pen", SeascribePenItem::new);
     public static final IRegistryItem<Item, Item> ROCK_SALT = registerSimpleItemSupplier("rock_salt");
-    public static final IRegistryItem<Item, Item> EARTHSHATTER_HAMMER = registerSimpleItemSupplier("earthshatter_hammer", () -> new Item.Properties().rarity(Rarity.UNCOMMON));
+    public static final IRegistryItem<Item, Item> EARTHSHATTER_HAMMER = registerSupplier("earthshatter_hammer", Services.ITEM_PROTOTYPES.earthshatterHammer(), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, Item> MANA_PRISM = registerSimpleItemSupplier("mana_prism");
     public static final IRegistryItem<Item, Item> TALLOW = registerSimpleItemSupplier("tallow");
     public static final IRegistryItem<Item, Item> BEESWAX = registerSupplier("beeswax", HoneycombItem::new);
