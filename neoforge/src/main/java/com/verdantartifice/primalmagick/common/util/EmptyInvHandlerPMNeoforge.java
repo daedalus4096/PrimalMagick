@@ -25,6 +25,11 @@ public class EmptyInvHandlerPMNeoforge implements IItemHandlerPMNeoforge {
     }
 
     @Override
+    public void setStackInSlot(int slot, ItemStack stack) {
+        throw new IndexOutOfBoundsException(slot);
+    }
+
+    @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
         throw new IndexOutOfBoundsException(slot);
     }

@@ -17,6 +17,8 @@ public interface IItemHandlerPM {
 
     ItemStack getStackInSlot(int slot);
 
+    void setStackInSlot(int slot, ItemStack stack);
+
     ItemStack insertItem(int slot, ItemStack stack, boolean simulate);
 
     ItemStack insertItem(ItemStack stack, boolean simulate);

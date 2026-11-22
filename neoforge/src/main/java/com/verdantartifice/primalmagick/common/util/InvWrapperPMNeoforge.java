@@ -33,6 +33,11 @@ public class InvWrapperPMNeoforge implements IItemHandlerPMNeoforge {
     }
 
     @Override
+    public void setStackInSlot(int slot, ItemStack stack) {
+        this.set(slot, ItemResource.of(stack), stack.count());
+    }
+
+    @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
         return ItemUtil.insertItemReturnRemaining(this.inner, slot, stack, simulate, null);
     }

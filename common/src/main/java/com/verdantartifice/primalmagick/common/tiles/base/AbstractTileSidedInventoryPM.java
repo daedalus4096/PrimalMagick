@@ -302,11 +302,8 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
 
     public ItemStack replaceItem(int invIndex, int slotIndex, ItemStack newStack) {
         ItemStack oldStack = this.getItem(invIndex, slotIndex);
-        boolean success = this.itemHandlers.get(invIndex).transactSlots(false, List.of(
-                new IItemHandlerPM.SlotOperation(IItemHandlerPM.OperationType.EXTRACT, slotIndex, oldStack),
-                new IItemHandlerPM.SlotOperation(IItemHandlerPM.OperationType.INSERT, slotIndex, newStack)
-        ));
-        return success ? oldStack : ItemStack.EMPTY;
+        this.itemHandlers.get(invIndex).setStackInSlot(slotIndex, newStack);
+        return oldStack;
     }
 
     @Override
