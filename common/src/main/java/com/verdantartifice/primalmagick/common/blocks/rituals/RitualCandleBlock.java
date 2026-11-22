@@ -144,7 +144,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
             }
             return InteractionResult.SUCCESS;
         } else {
-            return InteractionResult.PASS;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         }
     }
 

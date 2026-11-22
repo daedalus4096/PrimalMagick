@@ -124,7 +124,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
             }
             return InteractionResult.SUCCESS;
         } else {
-            return InteractionResult.PASS;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
         }
     }
 
