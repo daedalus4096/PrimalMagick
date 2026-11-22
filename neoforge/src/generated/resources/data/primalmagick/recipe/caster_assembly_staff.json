@@ -1,6 +1,6 @@
 {
   "type": "primalmagick:wand_assembly_special",
-  "cap": "#primalmagick:caster_cores",
+  "cap": "#primalmagick:caster_caps",
   "core": "#primalmagick:caster_cores/staff",
   "gem": "#primalmagick:caster_gems",
   "result": {

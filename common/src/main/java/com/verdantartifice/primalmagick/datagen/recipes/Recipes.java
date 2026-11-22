@@ -752,14 +752,14 @@ public abstract class Recipes extends RecipeProvider {
         SpecialRecipeBuilder.special(
                 () -> new WandAssemblyRecipe(
                         this.tag(ItemTagsPM.CASTER_CORES_WAND),
-                        this.tag(ItemTagsPM.CASTER_CORES),
+                        this.tag(ItemTagsPM.CASTER_CAPS),
                         this.tag(ItemTagsPM.CASTER_GEMS),
                         new ItemStackTemplate(ItemsPM.MODULAR_WAND.get()))
         ).save(this.output, WandAssemblyRecipe.WAND_KEY);
         SpecialRecipeBuilder.special(
                 () -> new WandAssemblyRecipe(
                         this.tag(ItemTagsPM.CASTER_CORES_STAFF),
-                        this.tag(ItemTagsPM.CASTER_CORES),
+                        this.tag(ItemTagsPM.CASTER_CAPS),
                         this.tag(ItemTagsPM.CASTER_GEMS),
                         new ItemStackTemplate(ItemsPM.MODULAR_STAFF.get()))
         ).save(this.output, WandAssemblyRecipe.STAFF_KEY);
