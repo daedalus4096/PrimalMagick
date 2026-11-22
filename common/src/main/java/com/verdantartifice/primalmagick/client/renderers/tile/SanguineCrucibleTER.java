@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.renderers.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -38,10 +37,10 @@ public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucible
     protected static final float G = COLOR.getGreen() / 255.0F;
     protected static final float B = COLOR.getBlue() / 255.0F;
 
-    private final BlockEntityRendererProvider.Context context;
+    private final TextureAtlasSprite sprite;
 
     public SanguineCrucibleTER(BlockEntityRendererProvider.Context context) {
-        this.context = context;
+        this.sprite = context.sprites().get(WATER_TEXTURE);
     }
 
     @Override
@@ -74,10 +73,6 @@ public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucible
         }
     }
 
-    private void addVertex(VertexConsumer consumer, PoseStack.Pose pose, float x, float y, TextureAtlasSprite sprite) {
-        consumer.addVertex(pose, x, y, 0.0F).setColor(R, G, B, 1.0F).setUv(sprite.getU0(), sprite.getV1()).setUv2(0, 240).setNormal(1, 0, 0);
-    }
-
     @Override
     public void submit(@NotNull SanguineCrucibleTER.RenderState renderState, @NotNull PoseStack poseStack,
                        @NotNull SubmitNodeCollector submitNodeCollector, @NotNull CameraRenderState cameraRenderState) {
@@ -86,11 +81,10 @@ public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucible
         poseStack.translate(0.0D, renderState.fluidHeight, 0.0D);
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockSheet(), (pose, vertexConsumer) -> {
-            final TextureAtlasSprite sprite = this.context.sprites().get(WATER_TEXTURE);
-            this.addVertex(vertexConsumer, pose, 0F, 1F, sprite);
-            this.addVertex(vertexConsumer, pose, 1F, 1F, sprite);
-            this.addVertex(vertexConsumer, pose, 0F, 0F, sprite);
-            this.addVertex(vertexConsumer, pose, 0F, 0F, sprite);
+            vertexConsumer.addVertex(pose, 0, 1, 0.0F).setColor(R, G, B, 1.0F).setUv(sprite.getU0(), sprite.getV1()).setUv1(0, 0).setUv2(0, 240).setNormal(1, 0, 0).setLight(renderState.lightCoords);
+            vertexConsumer.addVertex(pose, 1, 1, 0.0F).setColor(R, G, B, 1.0F).setUv(sprite.getU1(), sprite.getV1()).setUv1(0, 0).setUv2(0, 240).setNormal(1, 0, 0).setLight(renderState.lightCoords);
+            vertexConsumer.addVertex(pose, 1, 0, 0.0F).setColor(R, G, B, 1.0F).setUv(sprite.getU1(), sprite.getV0()).setUv1(0, 0).setUv2(0, 240).setNormal(1, 0, 0).setLight(renderState.lightCoords);
+            vertexConsumer.addVertex(pose, 0, 0, 0.0F).setColor(R, G, B, 1.0F).setUv(sprite.getU0(), sprite.getV0()).setUv1(0, 0).setUv2(0, 240).setNormal(1, 0, 0).setLight(renderState.lightCoords);
         });
         poseStack.popPose();
 
