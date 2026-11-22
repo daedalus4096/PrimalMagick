@@ -1,6 +1,5 @@
 {
   "values": [
-    "#minecraft:dirt",
-    "minecraft:farmland"
+    "#minecraft:supports_vegetation"
   ]
 }
