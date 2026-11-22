@@ -216,7 +216,7 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu implements IRecipe
         resultSlots.setItem(0, result);
         menu.setRemoteSlot(0, result);
         player.connection.send(new ClientboundContainerSetSlotPacket(menu.containerId, menu.incrementStateId(), 0, result));
-        PacketHandler.sendToPlayer(new SetActiveRecipeDisplayPacket(menu.containerId, display), player);
+        PacketHandler.sendToPlayer(new SetActiveRecipeDisplayPacket(menu.containerId, Optional.ofNullable(display)), player);
     }
 
     protected boolean canUseArcaneRecipe(ResultContainer resultSlots, ServerPlayer player, RecipeHolder<IArcaneRecipe> recipeHolder) {

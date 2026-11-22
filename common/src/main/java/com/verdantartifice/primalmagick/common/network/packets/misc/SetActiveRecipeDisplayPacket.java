@@ -14,19 +14,21 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 
+import java.util.Optional;
+
 public class SetActiveRecipeDisplayPacket implements IMessageToClient {
     public static final Identifier CHANNEL = ResourceUtils.loc("set_active_recipe_display");
     public static final StreamCodec<RegistryFriendlyByteBuf, SetActiveRecipeDisplayPacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, p -> p.containerId,
-            RecipeDisplay.STREAM_CODEC, p -> p.display,
+            ByteBufCodecs.optional(RecipeDisplay.STREAM_CODEC), p -> p.displayOpt,
             SetActiveRecipeDisplayPacket::new);
 
     private final int containerId;
-    private final RecipeDisplay display;
+    private final Optional<RecipeDisplay> displayOpt;
 
-    public SetActiveRecipeDisplayPacket(int containerId, RecipeDisplay display) {
+    public SetActiveRecipeDisplayPacket(int containerId, Optional<RecipeDisplay> displayOpt) {
         this.containerId = containerId;
-        this.display = display;
+        this.displayOpt = displayOpt;
     }
 
     public static CustomPacketPayload.Type<CustomPacketPayload> type() {
@@ -37,7 +39,7 @@ public class SetActiveRecipeDisplayPacket implements IMessageToClient {
         SetActiveRecipeDisplayPacket message = ctx.message();
         Player player = Side.CLIENT.equals(ctx.side()) ? ClientUtils.getCurrentPlayer() : null;
         if (player != null && player.containerMenu instanceof IRecipeDisplayListener listener && player.containerMenu.containerId == message.containerId) {
-            listener.setRecipeDisplay(message.display);
+            listener.setRecipeDisplay(message.displayOpt.orElse(null));
         }
     }
 }
