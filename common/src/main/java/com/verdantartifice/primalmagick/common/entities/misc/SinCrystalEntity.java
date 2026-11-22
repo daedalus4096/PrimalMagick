@@ -36,7 +36,7 @@ import java.util.UUID;
  */
 public class SinCrystalEntity extends Entity {
     private static final EntityDataAccessor<Optional<BlockPos>> BEAM_TARGET = SynchedEntityData.defineId(SinCrystalEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
-    private static final EntityDataAccessor<Optional<UUID>> DAMAGE_CLOUD = SynchedEntityData.defineId(SinCrystalEntity.class, EntityDataSerializersPM.OPTIONAL_UUID);
+    private static final EntityDataAccessor<Optional<UUID>> DAMAGE_CLOUD = SynchedEntityData.defineId(SinCrystalEntity.class, EntityDataSerializersPM.OPTIONAL_UUID.get());
     
     public int innerRotation;
 

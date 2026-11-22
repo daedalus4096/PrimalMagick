@@ -40,6 +40,7 @@ import com.verdantartifice.primalmagick.platform.services.registries.ICriterionT
 import com.verdantartifice.primalmagick.platform.services.registries.IDataComponentTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IEnchantmentEntityEffectTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IEnchantmentLocationBasedEffectTypeRegistryService;
+import com.verdantartifice.primalmagick.platform.services.registries.IEntityDataSerializerRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IEntityTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IGridRewardTypeRegistryService;
 import com.verdantartifice.primalmagick.platform.services.registries.IItemRegistryService;
@@ -152,6 +153,7 @@ public class Services {
     public static final IAffinityTypeRegistryService AFFINITY_TYPES_REGISTRY = load(IAffinityTypeRegistryService.class);
     public static final IRecipeDisplayTypeRegistryService RECIPE_DISPLAY_TYPES_REGISTRY = load(IRecipeDisplayTypeRegistryService.class);
     public static final IRecipeBookCategoryRegistryService RECIPE_BOOK_CATEGORIES_REGISTRY = load(IRecipeBookCategoryRegistryService.class);
+    public static final IEntityDataSerializerRegistryService ENTITY_DATA_SERIALIZERS_REGISTRY = load(IEntityDataSerializerRegistryService.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
