@@ -426,7 +426,7 @@ public abstract class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM
     @Override
     protected void collectImplicitComponents(DataComponentMap.@NotNull Builder pComponents) {
         super.collectImplicitComponents(pComponents);
-        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage.copy());
     }
 
     @SuppressWarnings("deprecation")

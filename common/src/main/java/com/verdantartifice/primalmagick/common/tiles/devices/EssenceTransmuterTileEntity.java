@@ -394,7 +394,7 @@ public abstract class EssenceTransmuterTileEntity extends AbstractTileSidedInven
     @Override
     protected void collectImplicitComponents(@NotNull DataComponentMap.Builder pComponents) {
         super.collectImplicitComponents(pComponents);
-        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage);
+        pComponents.set(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), this.manaStorage.copy());
     }
 
     @SuppressWarnings("deprecation")
