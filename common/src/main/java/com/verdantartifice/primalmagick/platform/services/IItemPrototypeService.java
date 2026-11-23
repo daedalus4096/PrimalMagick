@@ -34,6 +34,7 @@ public interface IItemPrototypeService {
     <T extends Block> Function<Item.Properties, BurnableBlockItem> burnable(Supplier<T> block, int burnTicks);
 
     Function<Item.Properties, ArcanometerItem> arcanometer();
+    Function<Item.Properties, Item> earthshatterHammer();
     Function<Item.Properties, IgnyxItem> ignyx();
 
     <T extends Block> Function<Item.Properties, ManaFontBlockItem> manaFont(Supplier<T> blockSupplier);
