@@ -29,6 +29,8 @@ public class SpellBoltParticle extends Particle {
     protected final Vec3 start;
     protected final Vec3 delta;
     protected final int color;
+    protected final List<LineSegment> segmentList;
+    protected final List<Vec3> perturbList;
     
     protected SpellBoltParticle(ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, Vec3 target, int color) {
         super(world, x, y, z, xSpeed, ySpeed, zSpeed);
@@ -39,6 +41,10 @@ public class SpellBoltParticle extends Particle {
         this.zd = 0.0D;
         this.lifetime = 10;
         this.color = color;
+
+        // Generate the bolt's shape once; each frame only perturbs these segments slightly, so it reads as a single crackling bolt
+        this.segmentList = calcSegments(this.delta, this.random);
+        this.perturbList = calcPerturbs(this.segmentList, this.delta, this.random);
     }
     
     @NotNull
@@ -80,9 +86,7 @@ public class SpellBoltParticle extends Particle {
     }
 
     public RenderState getRenderState() {
-        List<LineSegment> segmentList = calcSegments(this.delta, this.random);
-        List<Vec3> perturbList = calcPerturbs(segmentList, this.delta, this.random);
-        return new RenderState(this.start, segmentList, perturbList, this.color);
+        return new RenderState(this.start, this.segmentList, this.perturbList, this.color);
     }
 
     /**
