@@ -126,7 +126,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         } else if (this.currentRotation.isPause()) {
             return (float)this.nextSegment.getDegreeOffset();
         } else {
-            return Mth.lerp((this.phaseTicks + partialTicks) / (float)this.nextUpdate, this.lastSegment.getDegreeOffset(), this.nextSegment.getDegreeTarget(this.lastSegment, this.currentRotation));
+            return Mth.lerp(Mth.clamp((this.phaseTicks + partialTicks) / (float)this.nextUpdate, 0F, 1F), this.lastSegment.getDegreeOffset(), this.nextSegment.getDegreeTarget(this.lastSegment, this.currentRotation));
         }
     }
     
@@ -136,8 +136,7 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         } else if (this.currentRotation.isPause()) {
             return this.nextSource.getColor();
         } else {
-            float blend = (this.phaseTicks + partialTicks) / (float)this.nextUpdate;
-            return ARGB.linearLerp(blend, this.lastSource.getColor(), this.nextSource.getColor());
+            return ARGB.linearLerp(Mth.clamp((this.phaseTicks + partialTicks) / (float)this.nextUpdate, 0F, 1F), this.lastSource.getColor(), this.nextSource.getColor());
         }
     }
     
