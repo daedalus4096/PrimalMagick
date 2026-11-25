@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:wand_inscription_special",
+  "caster": "primalmagick:spelltome_wizard",
+  "result": {
+    "id": "primalmagick:spelltome_wizard"
+  },
+  "scroll": "primalmagick:spell_scroll_filled"
+}

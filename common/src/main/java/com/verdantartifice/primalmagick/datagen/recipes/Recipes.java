@@ -781,6 +781,30 @@ public abstract class Recipes extends RecipeProvider {
                         new ItemStackTemplate(ItemsPM.MODULAR_STAFF.get()))
         ).save(this.output, WandInscriptionRecipe.STAFF_KEY);
         SpecialRecipeBuilder.special(
+                () -> new WandInscriptionRecipe(
+                        Ingredient.of(ItemsPM.SPELLTOME_APPRENTICE.get()),
+                        Ingredient.of(ItemsPM.SPELL_SCROLL_FILLED.get()),
+                        new ItemStackTemplate(ItemsPM.SPELLTOME_APPRENTICE.get()))
+        ).save(this.output, key("caster_inscription_spelltome_apprentice"));
+        SpecialRecipeBuilder.special(
+                () -> new WandInscriptionRecipe(
+                        Ingredient.of(ItemsPM.SPELLTOME_ADEPT.get()),
+                        Ingredient.of(ItemsPM.SPELL_SCROLL_FILLED.get()),
+                        new ItemStackTemplate(ItemsPM.SPELLTOME_ADEPT.get()))
+        ).save(this.output, key("caster_inscription_spelltome_adept"));
+        SpecialRecipeBuilder.special(
+                () -> new WandInscriptionRecipe(
+                        Ingredient.of(ItemsPM.SPELLTOME_WIZARD.get()),
+                        Ingredient.of(ItemsPM.SPELL_SCROLL_FILLED.get()),
+                        new ItemStackTemplate(ItemsPM.SPELLTOME_WIZARD.get()))
+        ).save(this.output, key("caster_inscription_spelltome_wizard"));
+        SpecialRecipeBuilder.special(
+                () -> new WandInscriptionRecipe(
+                        Ingredient.of(ItemsPM.SPELLTOME_ARCHMAGE.get()),
+                        Ingredient.of(ItemsPM.SPELL_SCROLL_FILLED.get()),
+                        new ItemStackTemplate(ItemsPM.SPELLTOME_ARCHMAGE.get()))
+        ).save(this.output, key("caster_inscription_spelltome_archmage"));
+        SpecialRecipeBuilder.special(
                 () -> new SpellcraftingRecipe(
                         Ingredient.of(ItemsPM.SPELL_SCROLL_BLANK.get()),
                         new ItemStackTemplate(ItemsPM.SPELL_SCROLL_FILLED.get()))
