@@ -33,6 +33,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tiles.BlockEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -51,7 +52,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Util;
-import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -64,7 +64,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -463,8 +462,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     protected void finishCraft() {
         if (this.level != null) {
             this.getActiveRecipe().ifPresent(recipeHolder -> {
-                ContextMap context = SlotDisplayContext.fromLevel(this.level);
-                ItemStack outputStack = recipeHolder.value().display().getFirst().result().resolveForFirstStack(context);
+                ItemStack outputStack = RecipeUtils.getOutputStack(recipeHolder, this.level);
                 ItemStack oldOutput = this.replaceItem(OUTPUT_INV_INDEX, 0, outputStack);
                 if (!oldOutput.isEmpty()) {
                     Containers.dropContents(this.level, this.getBlockPos(), NonNullList.of(ItemStack.EMPTY, oldOutput));

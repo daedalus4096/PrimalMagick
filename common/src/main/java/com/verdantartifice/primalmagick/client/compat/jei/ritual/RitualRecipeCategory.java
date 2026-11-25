@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.crafting.display.RitualRecipeDisp
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -23,7 +24,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 import org.jetbrains.annotations.NotNull;
 
@@ -70,18 +70,19 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
 
     @Override
     public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<IRitualRecipe> recipeHolder, @NotNull IFocusGroup focuses) {
-        RecipeDisplay display = recipeHolder.value().display().getFirst();
-        if (display instanceof RitualRecipeDisplay ritualDisplay) {
-            List<SlotDisplay> ingredients = ritualDisplay.ingredients();
-            List<SlotDisplay> props = ritualDisplay.props();
-            for (int index = 0; index < ingredients.size(); index++) {
-                builder.addInputSlot(1 + (index % 6) * 18, 14 + ((index / 6) * 18)).add(ingredients.get(index));
+        RecipeUtils.getFirstDisplay(recipeHolder).ifPresent(display -> {
+            if (display instanceof RitualRecipeDisplay ritualDisplay) {
+                List<SlotDisplay> ingredients = ritualDisplay.ingredients();
+                List<SlotDisplay> props = ritualDisplay.props();
+                for (int index = 0; index < ingredients.size(); index++) {
+                    builder.addInputSlot(1 + (index % 6) * 18, 14 + ((index / 6) * 18)).add(ingredients.get(index));
+                }
+                for (int index = 0; index < props.size(); index++) {
+                    builder.addInputSlot(1 + (index % 6) * 18, 63 + ((index / 6) * 18)).add(props.get(index));
+                }
+                builder.addOutputSlot(149, 32).add(ritualDisplay.result());
             }
-            for (int index = 0; index < props.size(); index++) {
-                builder.addInputSlot(1 + (index % 6) * 18, 63 + ((index / 6) * 18)).add(props.get(index));
-            }
-            builder.addOutputSlot(149, 32).add(ritualDisplay.result());
-        }
+        });
     }
 
     @Override

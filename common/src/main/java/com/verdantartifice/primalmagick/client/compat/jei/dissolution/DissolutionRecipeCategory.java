@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.display.DissolutionRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -19,7 +20,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -57,11 +57,12 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDi
 
     @Override
     public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<IDissolutionRecipe> recipe, @NotNull IFocusGroup focuses) {
-        RecipeDisplay display = recipe.value().display().getFirst();
-        if (display instanceof DissolutionRecipeDisplay drd) {
-            builder.addInputSlot(1, 19).add(drd.ingredient());
-            builder.addOutputSlot(61, 19).add(drd.result());
-        }
+        RecipeUtils.getFirstDisplay(recipe).ifPresent(display -> {
+            if (display instanceof DissolutionRecipeDisplay drd) {
+                builder.addInputSlot(1, 19).add(drd.ingredient());
+                builder.addOutputSlot(61, 19).add(drd.result());
+            }
+        });
     }
 
     @Override

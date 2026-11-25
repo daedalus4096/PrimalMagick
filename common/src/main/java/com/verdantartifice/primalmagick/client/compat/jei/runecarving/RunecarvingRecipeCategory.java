@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.display.RunecarvingRecipeDisplay;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -20,7 +21,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -61,12 +61,13 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
 
     @Override
     public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<IRunecarvingRecipe> recipeHolder, @NotNull IFocusGroup focuses) {
-        RecipeDisplay display = recipeHolder.value().display().getFirst();
-        if (display instanceof RunecarvingRecipeDisplay runecarvingDisplay) {
-            builder.addInputSlot(1, 1).add(runecarvingDisplay.baseIngredient());
-            builder.addInputSlot(50, 1).add(runecarvingDisplay.etchingIngredient());
-            builder.addOutputSlot(108, 1).add(runecarvingDisplay.result());
-        }
+        RecipeUtils.getFirstDisplay(recipeHolder).ifPresent(display -> {
+            if (display instanceof RunecarvingRecipeDisplay runecarvingDisplay) {
+                builder.addInputSlot(1, 1).add(runecarvingDisplay.baseIngredient());
+                builder.addInputSlot(50, 1).add(runecarvingDisplay.etchingIngredient());
+                builder.addOutputSlot(108, 1).add(runecarvingDisplay.result());
+            }
+        });
     }
 
     @Override

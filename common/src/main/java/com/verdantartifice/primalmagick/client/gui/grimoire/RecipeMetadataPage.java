@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -15,7 +16,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import net.minecraft.world.level.Level;
 
 /**
@@ -81,7 +81,7 @@ public class RecipeMetadataPage extends AbstractPage {
     @Override
     protected Component getTitleText() {
         Level level = Minecraft.getInstance().level;
-        ItemStack stack = level == null ? ItemStack.EMPTY : this.recipeHolder.value().display().getFirst().result().resolveForFirstStack(SlotDisplayContext.fromLevel(level));
+        ItemStack stack = RecipeUtils.getOutputStack(this.recipeHolder, level);
         return stack.getItem().getName(stack);
     }
 

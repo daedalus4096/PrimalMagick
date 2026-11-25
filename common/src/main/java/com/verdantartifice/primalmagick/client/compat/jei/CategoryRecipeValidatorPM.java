@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.client.compat.jei;
 
-import com.verdantartifice.primalmagick.client.util.RecipeUtils;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -43,8 +44,8 @@ public class CategoryRecipeValidatorPM<T extends Recipe<?>> {
             return true;
         }
         
-        ItemStack recipeOutput = RecipeUtils.getResultItem(recipe.value());
-        if (recipeOutput == null || recipeOutput.isEmpty()) {
+        ItemStack recipeOutput = RecipeUtils.getOutputStack(recipe, Minecraft.getInstance().level);
+        if (recipeOutput.isEmpty()) {
             LOGGER.error("Recipe has no output. {}", recipe.id().toString());
             return false;
         }

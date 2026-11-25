@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.crafting.ClientRecipes;
 import com.verdantartifice.primalmagick.common.crafting.IHasManaCost;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
@@ -334,8 +335,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
         Collection<RecipeHolder<?>> allRecipes = level instanceof ServerLevel serverLevel ? serverLevel.recipeAccess().getRecipes() : ClientRecipes.getAll();
         ContextMap contextMap = SlotDisplayContext.fromLevel(level);
         List<CompletableFuture<RecipeValues>> recipeValueFutures = allRecipes.stream()
-                .filter(r -> r.value().display().getFirst().result().resolveForFirstStack(contextMap) instanceof ItemStack stack &&
-                        Services.ITEMS_REGISTRY.getKey(stack.getItem()) instanceof Identifier resultId && resultId.equals(id))
+                .filter(r -> Services.ITEMS_REGISTRY.getKey(RecipeUtils.getOutputStack(r, contextMap).getItem()) instanceof Identifier resultId && resultId.equals(id))
                 .map(recipeHolder -> {
                     // Compute the affinities from the recipe's ingredients
                     return this.generateItemAffinityValuesFromIngredientsAsync(recipeHolder, level, history).thenApply(ingSources -> {
@@ -343,11 +343,14 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
                         SourceList retVal = ingSources.copy();
                         if (recipeHolder.value() instanceof IHasManaCost manaRecipe) {
                             SourceList manaCosts = manaRecipe.getManaCosts();
-                            for (Source source : manaCosts.getSources()) {
-                                if (manaCosts.getAmount(source) > 0) {
-                                    int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 200D) / recipeHolder.value().display().getFirst().result().resolveForFirstStack(contextMap).getCount());
-                                    if (manaAmount > 0) {
-                                        retVal = retVal.add(source, manaAmount);
+                            ItemStack resultStack = RecipeUtils.getOutputStack(recipeHolder, contextMap);
+                            if (!resultStack.isEmpty()) {
+                                for (Source source : manaCosts.getSources()) {
+                                    if (manaCosts.getAmount(source) > 0) {
+                                        int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 200D) / resultStack.getCount());
+                                        if (manaAmount > 0) {
+                                            retVal = retVal.add(source, manaAmount);
+                                        }
                                     }
                                 }
                             }
@@ -373,7 +376,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener<AbstractAf
     @NotNull
     protected CompletableFuture<SourceList> generateItemAffinityValuesFromIngredientsAsync(@NotNull RecipeHolder<?> recipeHolder, @NotNull Level level, @NotNull List<Identifier> history) {
         List<Ingredient> ingredients = recipeHolder.value().placementInfo().ingredients();
-        ItemStack output = recipeHolder.value().display().getFirst().result().resolveForFirstStack(SlotDisplayContext.fromLevel(level));
+        ItemStack output = RecipeUtils.getOutputStack(recipeHolder, level);
         
         // Populate a fake crafting inventory with ingredients to see what container items would be left behind
         CompletableFuture<NonNullList<ItemStack>> containerFuture;

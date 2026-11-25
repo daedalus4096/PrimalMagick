@@ -40,6 +40,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.DataPackUtils;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -770,7 +771,7 @@ public class PrimalMagickCommand {
     private static long getRecipeCountForItem(ServerLevel level, Item item) {
         ContextMap context = SlotDisplayContext.fromLevel(level);
         return level.recipeAccess().getRecipes().stream()
-            .filter(rh -> rh.value().display().getFirst().result().resolveForFirstStack(context) instanceof ItemStack stack && stack.is(item))
+            .filter(rh -> RecipeUtils.getOutputStack(rh, context).is(item))
             .count();
     }
 

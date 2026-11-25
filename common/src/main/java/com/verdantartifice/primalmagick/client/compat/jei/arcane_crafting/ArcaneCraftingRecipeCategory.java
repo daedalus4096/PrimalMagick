@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.crafting.display.ShapelessArcaneC
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -23,7 +24,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -70,18 +70,19 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<RecipeHolder<
 
     @Override
     public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<IArcaneRecipe> recipe, @NotNull IFocusGroup focuses) {
-        RecipeDisplay display = recipe.value().display().getFirst();
+        RecipeUtils.getFirstDisplay(recipe).ifPresent(display -> {
+            // Initialize recipe output
+            this.craftingGridHelper.createAndSetOutputs(builder, display.result());
 
-        // Initialize recipe output
-        this.craftingGridHelper.createAndSetOutputs(builder, display.result());
+            // Initialize recipe inputs
+            if (display instanceof ShapedArcaneCraftingRecipeDisplay shapedDisplay) {
+                this.craftingGridHelper.createAndSetIngredientsFromDisplays(builder, shapedDisplay.ingredients(), shapedDisplay.width(), shapedDisplay.height());
+            } else if (display instanceof ShapelessArcaneCraftingRecipeDisplay shapelessDisplay) {
+                this.craftingGridHelper.createAndSetIngredientsFromDisplays(builder, shapelessDisplay.ingredients(), 0, 0);
+                builder.setShapeless();
+            }
 
-        // Initialize recipe inputs
-        if (display instanceof ShapedArcaneCraftingRecipeDisplay shapedDisplay) {
-            this.craftingGridHelper.createAndSetIngredientsFromDisplays(builder, shapedDisplay.ingredients(), shapedDisplay.width(), shapedDisplay.height());
-        } else if (display instanceof ShapelessArcaneCraftingRecipeDisplay shapelessDisplay) {
-            this.craftingGridHelper.createAndSetIngredientsFromDisplays(builder, shapelessDisplay.ingredients(), 0, 0);
-            builder.setShapeless();
-        }
+        });
     }
 
     @Override

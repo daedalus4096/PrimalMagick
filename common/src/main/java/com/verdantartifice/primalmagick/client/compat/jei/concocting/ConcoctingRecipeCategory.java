@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.crafting.display.ConcoctingRecipe
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -22,7 +23,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -64,15 +64,16 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<ICon
 
     @Override
     public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull RecipeHolder<IConcoctingRecipe> recipe, @NotNull IFocusGroup focuses) {
-        RecipeDisplay display = recipe.value().display().getFirst();
-        if (display instanceof ConcoctingRecipeDisplay concoctingDisplay) {
-            // Initialize recipe output
-            this.craftingGridHelper.createAndSetOutputs(builder, concoctingDisplay.result());
+        RecipeUtils.getFirstDisplay(recipe).ifPresent(display -> {
+            if (display instanceof ConcoctingRecipeDisplay concoctingDisplay) {
+                // Initialize recipe output
+                this.craftingGridHelper.createAndSetOutputs(builder, concoctingDisplay.result());
 
-            // Initialize recipe inputs
-            this.craftingGridHelper.createAndSetIngredientsFromDisplays(builder, concoctingDisplay.ingredients(), 0, 0);
-            builder.setShapeless();
-        }
+                // Initialize recipe inputs
+                this.craftingGridHelper.createAndSetIngredientsFromDisplays(builder, concoctingDisplay.ingredients(), 0, 0);
+                builder.setShapeless();
+            }
+        });
     }
 
     @Override

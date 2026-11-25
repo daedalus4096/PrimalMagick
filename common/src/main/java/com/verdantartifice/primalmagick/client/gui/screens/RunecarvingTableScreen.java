@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.screens;
 
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -15,7 +16,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -93,8 +93,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
             int k = left + j % 4 * 16;
             int l = j / 4;
             int i1 = top + l * 18 + 2;
-            SlotDisplay buttonIcon = visibleRecipes.get(i).value().display().getFirst().result();
-            guiGraphics.setTooltipForNextFrame(this.font, buttonIcon.resolveForFirstStack(context), k, i1);
+            guiGraphics.item(RecipeUtils.getOutputStack(visibleRecipes.get(i), context), k, i1);
         }
     }
     
@@ -109,8 +108,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreenPM<Runecarvin
             int l = j / 4;
             int i1 = this.topPos + 14 + l * 18 + 2;
             if (pX >= k && pX < k + 16 && pY >= i1 && pY < i1 + 18) {
-                SlotDisplay buttonIcon = visibleRecipes.get(i).value().display().getFirst().result();
-                pGuiGraphics.setTooltipForNextFrame(this.font, buttonIcon.resolveForFirstStack(context), pX, pY);
+                pGuiGraphics.setTooltipForNextFrame(this.font, RecipeUtils.getOutputStack(visibleRecipes.get(i), context), pX, pY);
             }
         }
     }

@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.crafting.WandInventory;
 import com.verdantartifice.primalmagick.common.menus.slots.ArcaneCraftingResultSlot;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveRecipeDisplayPacket;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -184,13 +185,13 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu implements IRecipe
     protected static void slotChangedCraftingGrid(ArcaneWorkbenchMenu menu, ServerLevel level, ServerPlayer player, CraftingContainer container, ResultContainer resultSlots) {
         CraftingInput input = container.asCraftInput();
         ItemStack result = ItemStack.EMPTY;
-        RecipeDisplay display = null;
+        Optional<RecipeDisplay> displayOpt = Optional.empty();
 
         Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.recipeAccess().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), input, level);
         if (arcaneOptional.isPresent()) {
             // If the inputs match a defined arcane recipe, show the output if the player can use it
             RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
-            display = recipe.value().display().getFirst();
+            displayOpt = RecipeUtils.getFirstDisplay(recipe);
             if (menu.canUseArcaneRecipe(resultSlots, player, recipe)) {
                 ItemStack recipeResult = recipe.value().assemble(input);
                 if (recipeResult.isItemEnabled(level.enabledFeatures())) {
@@ -202,7 +203,7 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu implements IRecipe
             if (vanillaOptional.isPresent()) {
                 // If the inputs match a defined vanilla recipe, show the output if the player can use it
                 RecipeHolder<CraftingRecipe> recipe = vanillaOptional.get();
-                display = recipe.value().display().getFirst();
+                displayOpt = RecipeUtils.getFirstDisplay(recipe);
                 if (resultSlots.setRecipeUsed(player, recipe)) {
                     ItemStack recipeResult = recipe.value().assemble(input);
                     if (recipeResult.isItemEnabled(level.enabledFeatures())) {
@@ -215,7 +216,7 @@ public class ArcaneWorkbenchMenu extends AbstractCraftingMenu implements IRecipe
         resultSlots.setItem(0, result);
         menu.setRemoteSlot(0, result);
         player.connection.send(new ClientboundContainerSetSlotPacket(menu.containerId, menu.incrementStateId(), 0, result));
-        PacketHandler.sendToPlayer(new SetActiveRecipeDisplayPacket(menu.containerId, Optional.ofNullable(display)), player);
+        PacketHandler.sendToPlayer(new SetActiveRecipeDisplayPacket(menu.containerId, displayOpt), player);
     }
 
     protected boolean canUseArcaneRecipe(ResultContainer resultSlots, ServerPlayer player, RecipeHolder<IArcaneRecipe> recipeHolder) {

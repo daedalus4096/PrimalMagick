@@ -72,6 +72,7 @@ import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.tips.TipDefinition;
 import com.verdantartifice.primalmagick.common.tips.TipDefinitionsPM;
+import com.verdantartifice.primalmagick.common.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.ChatFormatting;
@@ -99,6 +100,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
@@ -146,7 +148,7 @@ public class GrimoireScreen extends Screen {
     protected boolean refreshing = false;
     protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
-    protected NavigableMap<String, List<RecipeHolder<?>>> indexMap;
+    protected final NavigableMap<String, List<RecipeHolder<?>>> indexMap = new TreeMap<>();
     protected Component cachedTip = null;
     protected Optional<String> lastRecipeSearch = Optional.empty();
     
@@ -1084,23 +1086,15 @@ public class GrimoireScreen extends Screen {
     
     protected void generateIndexMap() {
         ContextMap contextMap = SlotDisplayContext.fromLevel(Objects.requireNonNull(this.minecraft.level));
-        Comparator<RecipeHolder<?>> displayNameComparator = Comparator.comparing(r -> {
-            ItemStack resultStack = r.value().display().getFirst().result().resolveForFirstStack(contextMap);
-            return resultStack.getHoverName().getString();
-        });
+        Comparator<RecipeHolder<?>> displayNameComparator = Comparator.comparing(r -> RecipeUtils.getOutputStack(r, contextMap).getHoverName().getString());
         Comparator<RecipeHolder<?>> recipeIdComparator = Comparator.comparing(r -> r.id().identifier());
-        List<RecipeHolder<?>> processedRecipes = ClientRecipes.getAll().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
-                .sorted(displayNameComparator.thenComparing(recipeIdComparator)).toList();
 
-        this.indexMap = new TreeMap<>();
-        for (RecipeHolder<?> recipe : processedRecipes) {
-            ItemStack resultStack = recipe.value().display().getFirst().result().resolveForFirstStack(contextMap);
-            String recipeName = resultStack.getHoverName().getString();
-            if (!this.indexMap.containsKey(recipeName)) {
-                this.indexMap.put(recipeName, new ArrayList<>());
-            }
-            this.indexMap.get(recipeName).add(recipe);
-        }
+        this.indexMap.clear();
+        ClientRecipes.getAll().stream()
+                .filter(GrimoireScreen::isValidRecipeIndexEntry)
+                .sorted(displayNameComparator.thenComparing(recipeIdComparator))
+                .forEach(recipe ->
+                        this.indexMap.computeIfAbsent(RecipeUtils.getOutputStack(recipe, contextMap).getHoverName().getString(), _ -> new ArrayList<>()).add(recipe));
     }
     
     public boolean isIndexKey(String name) {
@@ -1125,7 +1119,7 @@ public class GrimoireScreen extends Screen {
         
         for (String recipeName : this.indexMap.navigableKeySet()) {
             if (recipeName.toLowerCase(Locale.ROOT).contains(this.lastRecipeSearch.orElse("").toLowerCase(Locale.ROOT))) {
-                tempPage.addContent(recipeName, this.indexMap.get(recipeName).getFirst().value().display().getFirst().result().resolveForFirstStack(contextMap));
+                tempPage.addContent(recipeName, RecipeUtils.getOutputStack(this.indexMap.get(recipeName).getFirst(), contextMap));
                 heightRemaining -= 12;
                 if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
                     heightRemaining = 156;
@@ -1144,10 +1138,12 @@ public class GrimoireScreen extends Screen {
     
     protected static boolean isValidRecipeIndexEntry(RecipeHolder<?> recipe) {
         Minecraft mc = Minecraft.getInstance();
-        ContextMap contextMap = SlotDisplayContext.fromLevel(Objects.requireNonNull(mc.level));
+        Optional<RecipeDisplay> displayOpt = RecipeUtils.getFirstDisplay(recipe);
+        ItemStack outputStack =  RecipeUtils.getOutputStack(recipe, mc.level);
+
         if ( !recipe.id().identifier().getNamespace().equals(Constants.MOD_ID) ||
-                recipe.value().display().isEmpty() ||
-                recipe.value().display().getFirst().result().resolveForStacks(contextMap).isEmpty()) {
+                displayOpt.isEmpty() ||
+                outputStack.isEmpty() ) {
             return false;
         }
         if (recipe.value() instanceof IHasRequirement hrr) {
