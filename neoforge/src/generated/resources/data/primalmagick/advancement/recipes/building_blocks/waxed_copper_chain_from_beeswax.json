@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_copper_chain": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:copper_chain"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primalmagick:waxed_copper_chain_from_beeswax"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_copper_chain"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primalmagick:waxed_copper_chain_from_beeswax"
+    ]
+  }
+}

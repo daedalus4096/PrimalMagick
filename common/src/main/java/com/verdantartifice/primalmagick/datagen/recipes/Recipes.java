@@ -55,6 +55,7 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShieldDecorationRecipe;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 import net.minecraft.world.level.ItemLike;
@@ -77,6 +78,10 @@ public abstract class Recipes extends RecipeProvider {
         this.blocks = registries.lookupOrThrow(Registries.BLOCK);
         this.researchEntries = registries.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES);
         this.trimPatterns = registries.lookupOrThrow(Registries.TRIM_PATTERN);
+    }
+
+    private static ResourceKey<Recipe<?>> key(String id) {
+        return ResourceKey.create(Registries.RECIPE, ResourceUtils.loc(id));
     }
 
     protected ArcaneShapedRecipeBuilder arcaneShaped(ItemLike result) {
@@ -732,12 +737,12 @@ public abstract class Recipes extends RecipeProvider {
         
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, CookingBookCategory.MISC, Items.CHARCOAL, 0.15F, 200)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))
-            .save(this.output, "charcoal_from_smelting_heartwood");
+            .save(this.output, key("charcoal_from_smelting_heartwood"));
         
         SmithingTrimRecipeBuilder.smithingTrim(Ingredient.of(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()), this.tag(ItemTagsPM.RUNIC_TRIMMABLE_ARMOR),
                         this.tag(ItemTagsPM.RUNIC_TRIM_MATERIALS), this.trimPatterns.getOrThrow(TrimPatternsPM.RUNIC), RecipeCategory.MISC)
                 .unlocks("has_smithing_trim_template", has(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()))
-            .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("runic_armor_trim_smithing_template_smithing_trim")));
+            .save(this.output, key("runic_armor_trim_smithing_template_smithing_trim"));
         this.arcaneShaped(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get())
             .patternLine("#R#")
             .patternLine("#M#")
@@ -785,13 +790,13 @@ public abstract class Recipes extends RecipeProvider {
         ).save(this.output, FlyingCarpetDyeRecipe.RECIPE_KEY);
         SpecialRecipeBuilder.special(
                 () -> new ShieldDecorationRecipe(this.tag(ItemTags.BANNERS), Ingredient.of(ItemsPM.PRIMALITE_SHIELD.get()), new ItemStackTemplate(ItemsPM.PRIMALITE_SHIELD.get()))
-        ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("primalite_shield_decoration")));
+        ).save(this.output, key("primalite_shield_decoration"));
         SpecialRecipeBuilder.special(
                 () -> new ShieldDecorationRecipe(this.tag(ItemTags.BANNERS), Ingredient.of(ItemsPM.HEXIUM_SHIELD.get()), new ItemStackTemplate(ItemsPM.HEXIUM_SHIELD.get()))
-        ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("hexium_shield_decoration")));
+        ).save(this.output, key("hexium_shield_decoration"));
         SpecialRecipeBuilder.special(
                 () -> new ShieldDecorationRecipe(this.tag(ItemTags.BANNERS), Ingredient.of(ItemsPM.HALLOWSTEEL_SHIELD.get()), new ItemStackTemplate(ItemsPM.HALLOWSTEEL_SHIELD.get()))
-        ).save(this.output, ResourceKey.create(Registries.RECIPE, ResourceUtils.loc("hallowsteel_shield_decoration")));
+        ).save(this.output, key("hallowsteel_shield_decoration"));
         SpecialRecipeBuilder.special(
                 () -> new WandGlamourRecipe(
                         Ingredient.of(ItemsPM.MODULAR_WAND.get()),
@@ -877,10 +882,10 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_brick_slab_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_brick_slab_from_marble_raw_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_brick_slab_from_marble_bricks_stonecutting");
+            .save(this.output, key("marble_brick_slab_from_marble_bricks_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_STAIRS.get(), 4)
             .pattern("M  ")
             .pattern("MM ")
@@ -890,10 +895,10 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_STAIRS.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_brick_stairs_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_brick_stairs_from_marble_raw_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_STAIRS.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_brick_stairs_from_marble_bricks_stonecutting");
+            .save(this.output, key("marble_brick_stairs_from_marble_bricks_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_WALL.get(), 6)
             .pattern("MMM")
             .pattern("MMM")
@@ -902,10 +907,10 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_WALL.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_brick_wall_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_brick_wall_from_marble_raw_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_WALL.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_brick_wall_from_marble_bricks_stonecutting");
+            .save(this.output, key("marble_brick_wall_from_marble_bricks_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICKS.get(), 4)
             .pattern("MM")
             .pattern("MM")
@@ -914,7 +919,7 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICKS.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_bricks_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_bricks_from_marble_raw_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_CHISELED.get())
             .pattern("M")
             .pattern("M")
@@ -923,7 +928,7 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_CHISELED.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_chiseled_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_chiseled_from_marble_raw_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_PILLAR.get(), 2)
             .pattern("M")
             .pattern("M")
@@ -932,7 +937,7 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_PILLAR.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_pillar_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_pillar_from_marble_raw_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_RUNED.get(), 5)
             .pattern(" M ")
             .pattern("MCM")
@@ -943,7 +948,7 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_RUNED.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_runed_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_runed_from_marble_raw_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SLAB.get(), 6)
             .pattern("MMM")
             .define('M', BlocksPM.MARBLE.get())
@@ -951,7 +956,7 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SLAB.get(), 2)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_slab_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_slab_from_marble_raw_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_STAIRS.get(), 4)
             .pattern("M  ")
             .pattern("MM ")
@@ -961,7 +966,7 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_STAIRS.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_stairs_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_stairs_from_marble_raw_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_WALL.get(), 6)
             .pattern("MMM")
             .pattern("MMM")
@@ -970,7 +975,7 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_WALL.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_wall_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_wall_from_marble_raw_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_TILES.get(), 4)
             .pattern("MM")
             .pattern("MM")
@@ -979,10 +984,10 @@ public abstract class Recipes extends RecipeProvider {
             .save(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_TILES.get(), 1)
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE.get()))
-            .save(this.output, "marble_tiles_from_marble_raw_stonecutting");
+            .save(this.output, key("marble_tiles_from_marble_raw_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_TILES.get(), 1)
             .unlockedBy("has_marble_bricks", has(BlocksPM.MARBLE_BRICKS.get()))
-            .save(this.output, "marble_tiles_from_marble_bricks_stonecutting");
+            .save(this.output, key("marble_tiles_from_marble_bricks_stonecutting"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BOOKSHELF.get())
             .pattern("MMM")
             .pattern("SSS")
@@ -1007,10 +1012,10 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_brick_slab_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_brick_slab_from_marble_enchanted_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_brick_slab_from_marble_enchanted_bricks_stonecutting");
+            .save(this.output, key("marble_enchanted_brick_slab_from_marble_enchanted_bricks_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -1021,10 +1026,10 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_brick_stairs_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_brick_stairs_from_marble_enchanted_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_brick_stairs_from_marble_enchanted_bricks_stonecutting");
+            .save(this.output, key("marble_enchanted_brick_stairs_from_marble_enchanted_bricks_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -1034,10 +1039,10 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_brick_wall_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_brick_wall_from_marble_enchanted_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_brick_wall_from_marble_enchanted_bricks_stonecutting");
+            .save(this.output, key("marble_enchanted_brick_wall_from_marble_enchanted_bricks_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_BRICKS.get(), 4)
             .patternLine("MM")
             .patternLine("MM")
@@ -1047,7 +1052,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICKS.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_bricks_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_bricks_from_marble_enchanted_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_CHISELED.get())
             .patternLine("M")
             .patternLine("M")
@@ -1057,7 +1062,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_CHISELED.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_chiseled_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_chiseled_from_marble_enchanted_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_PILLAR.get(), 2)
             .patternLine("M")
             .patternLine("M")
@@ -1067,7 +1072,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_PILLAR.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_pillar_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_pillar_from_marble_enchanted_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), 5)
             .patternLine(" M ")
             .patternLine("MCM")
@@ -1079,7 +1084,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_RUNED.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_runed_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_runed_from_marble_enchanted_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_ENCHANTED.get())
@@ -1088,7 +1093,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_SLAB.get(), 2)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_slab_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_slab_from_marble_enchanted_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -1099,7 +1104,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_STAIRS.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_stairs_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_stairs_from_marble_enchanted_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -1109,7 +1114,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_WALL.get(), 1)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
-            .save(this.output, "marble_enchanted_wall_from_marble_enchanted_stonecutting");
+            .save(this.output, key("marble_enchanted_wall_from_marble_enchanted_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get())
             .patternLine("MMM")
             .patternLine("SSS")
@@ -1139,10 +1144,10 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_brick_slab_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_brick_slab_from_marble_smoked_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_brick_slab_from_marble_smoked_bricks_stonecutting");
+            .save(this.output, key("marble_smoked_brick_slab_from_marble_smoked_bricks_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -1153,10 +1158,10 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_brick_stairs_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_brick_stairs_from_marble_smoked_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_brick_stairs_from_marble_smoked_bricks_stonecutting");
+            .save(this.output, key("marble_smoked_brick_stairs_from_marble_smoked_bricks_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -1166,10 +1171,10 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_brick_wall_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_brick_wall_from_marble_smoked_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_brick_wall_from_marble_smoked_bricks_stonecutting");
+            .save(this.output, key("marble_smoked_brick_wall_from_marble_smoked_bricks_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_BRICKS.get(), 4)
             .patternLine("MM")
             .patternLine("MM")
@@ -1179,7 +1184,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICKS.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_bricks_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_bricks_from_marble_smoked_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_CHISELED.get())
             .patternLine("M")
             .patternLine("M")
@@ -1189,7 +1194,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_CHISELED.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_chiseled_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_chiseled_from_marble_smoked_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_PILLAR.get(), 2)
             .patternLine("M")
             .patternLine("M")
@@ -1199,7 +1204,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_PILLAR.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_pillar_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_pillar_from_marble_smoked_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_RUNED.get(), 5)
             .patternLine(" M ")
             .patternLine("MCM")
@@ -1211,7 +1216,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_RUNED.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_runed_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_runed_from_marble_smoked_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_SMOKED.get())
@@ -1220,7 +1225,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_SLAB.get(), 2)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_slab_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_slab_from_marble_smoked_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -1231,7 +1236,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_STAIRS.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_stairs_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_stairs_from_marble_smoked_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -1241,7 +1246,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_WALL.get(), 1)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
-            .save(this.output, "marble_smoked_wall_from_marble_smoked_stonecutting");
+            .save(this.output, key("marble_smoked_wall_from_marble_smoked_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_SMOKED_BOOKSHELF.get())
             .patternLine("MMM")
             .patternLine("SSS")
@@ -1271,10 +1276,10 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_brick_slab_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_brick_slab_from_marble_hallowed_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_brick_slab_from_marble_hallowed_bricks_stonecutting");
+            .save(this.output, key("marble_hallowed_brick_slab_from_marble_hallowed_bricks_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -1285,10 +1290,10 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_brick_stairs_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_brick_stairs_from_marble_hallowed_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_brick_stairs_from_marble_hallowed_bricks_stonecutting");
+            .save(this.output, key("marble_hallowed_brick_stairs_from_marble_hallowed_bricks_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -1298,10 +1303,10 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_brick_wall_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_brick_wall_from_marble_hallowed_stonecutting"));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_brick_wall_from_marble_hallowed_bricks_stonecutting");
+            .save(this.output, key("marble_hallowed_brick_wall_from_marble_hallowed_bricks_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_BRICKS.get(), 4)
             .patternLine("MM")
             .patternLine("MM")
@@ -1311,7 +1316,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICKS.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_bricks_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_bricks_from_marble_hallowed_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_CHISELED.get())
             .patternLine("M")
             .patternLine("M")
@@ -1321,7 +1326,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_CHISELED.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_chiseled_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_chiseled_from_marble_hallowed_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_PILLAR.get(), 2)
             .patternLine("M")
             .patternLine("M")
@@ -1331,7 +1336,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_PILLAR.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_pillar_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_pillar_from_marble_hallowed_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_RUNED.get(), 5)
             .patternLine(" M ")
             .patternLine("MCM")
@@ -1343,7 +1348,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_RUNED.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_runed_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_runed_from_marble_hallowed_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_HALLOWED.get())
@@ -1352,7 +1357,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_SLAB.get(), 2)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_slab_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_slab_from_marble_hallowed_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_STAIRS.get(), 4)
             .patternLine("M  ")
             .patternLine("MM ")
@@ -1363,7 +1368,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_STAIRS.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_stairs_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_stairs_from_marble_hallowed_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_WALL.get(), 6)
             .patternLine("MMM")
             .patternLine("MMM")
@@ -1373,7 +1378,7 @@ public abstract class Recipes extends RecipeProvider {
             .build(this.output);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_WALL.get(), 1)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
-            .save(this.output, "marble_hallowed_wall_from_marble_hallowed_stonecutting");
+            .save(this.output, key("marble_hallowed_wall_from_marble_hallowed_stonecutting"));
         this.arcaneShaped(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get())
             .patternLine("MMM")
             .patternLine("SSS")
@@ -1569,14 +1574,14 @@ public abstract class Recipes extends RecipeProvider {
     protected void registerSaltRecipes() {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(BlocksPM.ROCK_SALT_ORE.get()), RecipeCategory.MISC, CookingBookCategory.MISC, ItemsPM.ROCK_SALT.get(), 0, 200)
             .unlockedBy("has_rock_salt_ore", has(BlocksPM.ROCK_SALT_ORE.get()))
-            .save(this.output, "rock_salt_from_smelting");
+            .save(this.output, key("rock_salt_from_smelting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.ROCK_SALT.get()), RecipeCategory.MISC, CookingBookCategory.MISC, ItemsPM.REFINED_SALT.get(), 0.2F, 200)
             .unlockedBy("has_rock_salt", has(ItemsPM.ROCK_SALT.get()))
-            .save(this.output, "refined_salt_from_smelting");
+            .save(this.output, key("refined_salt_from_smelting"));
         this.shapeless(RecipeCategory.FOOD, ItemsPM.REFINED_SALT.get())
             .requires(ItemsPM.SALT_PINCH.get(), 9)
             .unlockedBy("has_salt_pinch", has(ItemsPM.SALT_PINCH.get()))
-            .save(this.output, "refined_salt_from_pinches");
+            .save(this.output, key("refined_salt_from_pinches"));
         this.shapeless(RecipeCategory.BUILDING_BLOCKS, ItemsPM.SALT_BLOCK.get())
             .requires(ItemsPM.REFINED_SALT.get(), 9)
             .unlockedBy("has_salt", has(ItemsPM.REFINED_SALT.get()))
@@ -1584,7 +1589,7 @@ public abstract class Recipes extends RecipeProvider {
         this.shapeless(RecipeCategory.MISC, ItemsPM.REFINED_SALT.get(), 9)
             .requires(ItemsPM.SALT_BLOCK.get())
             .unlockedBy("has_salt_block", has(ItemsPM.SALT_BLOCK.get()))
-            .save(this.output, "refined_salt_from_salt_block");
+            .save(this.output, key("refined_salt_from_salt_block"));
         this.shapeless(RecipeCategory.FOOD, ItemsPM.SALTED_BAKED_POTATO.get())
             .requires(ItemsPM.REFINED_SALT.get())
             .requires(Items.BAKED_POTATO)
@@ -2154,70 +2159,70 @@ public abstract class Recipes extends RecipeProvider {
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemTagsPM.SURFACE_STONE)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(this.output, "cobblestone_from_earthshatter_hammer");
+            .save(this.output, key("cobblestone_from_earthshatter_hammer"));
         this.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.COBBLED_DEEPSLATE)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemTagsPM.DEEP_STONE)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(this.output, "cobbled_deepslate_from_earthshatter_hammer");
+            .save(this.output, key("cobbled_deepslate_from_earthshatter_hammer"));
         this.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.GRAVEL)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(CommonTags.Items.COBBLESTONES)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(this.output, "gravel_from_earthshatter_hammer");
+            .save(this.output, key("gravel_from_earthshatter_hammer"));
         this.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.SAND)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(CommonTags.Items.GRAVELS)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(this.output, "sand_from_earthshatter_hammer");
+            .save(this.output, key("sand_from_earthshatter_hammer"));
         this.shapeless(RecipeCategory.MISC, Items.NETHERITE_SCRAP, 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(Items.ANCIENT_DEBRIS)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(this.output, "netherite_scrap_from_earthshatter_hammer");
+            .save(this.output, key("netherite_scrap_from_earthshatter_hammer"));
         this.shapeless(RecipeCategory.MISC, ItemsPM.ROCK_SALT.get(), 8)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemsPM.ROCK_SALT_ORE.get())
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(this.output, "rock_salt_from_earthshatter_hammer");
+            .save(this.output, key("rock_salt_from_earthshatter_hammer"));
         this.shapeless(RecipeCategory.MISC, ItemsPM.REFINED_SALT.get(), 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemsPM.ROCK_SALT.get())
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-            .save(this.output, "refined_salt_from_earthshatter_hammer");
+            .save(this.output, key("refined_salt_from_earthshatter_hammer"));
     }
 
     protected void registerMineralRecipes() {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.IRON_GRIT.get()), RecipeCategory.MISC, CookingBookCategory.MISC, Items.IRON_INGOT, 0.7F, 200)
             .unlockedBy("has_grit", has(ItemsPM.IRON_GRIT.get()))
             .group("iron_ingot")
-            .save(this.output, "iron_ingot_from_grit_smelting");
+            .save(this.output, key("iron_ingot_from_grit_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemsPM.IRON_GRIT.get()), RecipeCategory.MISC, CookingBookCategory.MISC, Items.IRON_INGOT, 0.7F, 100)
             .unlockedBy("has_grit", has(ItemsPM.IRON_GRIT.get()))
             .group("iron_ingot")
-            .save(this.output, "iron_ingot_from_grit_blasting");
+            .save(this.output, key("iron_ingot_from_grit_blasting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.GOLD_GRIT.get()), RecipeCategory.MISC, CookingBookCategory.MISC, Items.GOLD_INGOT, 0.7F, 200)
             .unlockedBy("has_grit", has(ItemsPM.GOLD_GRIT.get()))
             .group("gold_ingot")
-            .save(this.output, "gold_ingot_from_grit_smelting");
+            .save(this.output, key("gold_ingot_from_grit_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemsPM.GOLD_GRIT.get()), RecipeCategory.MISC, CookingBookCategory.MISC, Items.GOLD_INGOT, 0.7F, 100)
             .unlockedBy("has_grit", has(ItemsPM.GOLD_GRIT.get()))
             .group("gold_ingot")
-            .save(this.output, "gold_ingot_from_grit_blasting");
+            .save(this.output, key("gold_ingot_from_grit_blasting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.COPPER_GRIT.get()), RecipeCategory.MISC, CookingBookCategory.MISC, Items.COPPER_INGOT, 0.7F, 200)
             .unlockedBy("has_grit", has(ItemsPM.COPPER_GRIT.get()))
             .group("copper_ingot")
-            .save(this.output, "copper_ingot_from_grit_smelting");
+            .save(this.output, key("copper_ingot_from_grit_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ItemsPM.COPPER_GRIT.get()), RecipeCategory.MISC, CookingBookCategory.MISC, Items.COPPER_INGOT, 0.7F, 100)
             .unlockedBy("has_grit", has(ItemsPM.COPPER_GRIT.get()))
             .group("copper_ingot")
-            .save(this.output, "copper_ingot_from_grit_blasting");
+            .save(this.output, key("copper_ingot_from_grit_blasting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(BlocksPM.QUARTZ_ORE.get()), RecipeCategory.MISC, CookingBookCategory.MISC, Items.QUARTZ, 0.2F, 200)
             .unlockedBy("has_quartz_ore", has(BlocksPM.QUARTZ_ORE.get()))
-            .save(this.output, "quartz_from_smelting");
+            .save(this.output, key("quartz_from_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(BlocksPM.QUARTZ_ORE.get()), RecipeCategory.MISC, CookingBookCategory.MISC, Items.QUARTZ, 0.2F, 200)
             .unlockedBy("has_quartz_ore", has(BlocksPM.QUARTZ_ORE.get()))
-            .save(this.output, "quartz_from_blasting");
+            .save(this.output, key("quartz_from_blasting"));
         this.shapeless(RecipeCategory.MISC, ItemsPM.QUARTZ_NUGGET.get(), 9)
             .requires(Items.QUARTZ)
             .unlockedBy("has_quartz", has(Items.QUARTZ))
@@ -2228,7 +2233,7 @@ public abstract class Recipes extends RecipeProvider {
             .pattern("NNN")
             .define('N', ItemExtensionTags.NUGGETS_QUARTZ)
             .unlockedBy("has_nugget", has(ItemExtensionTags.NUGGETS_QUARTZ))
-            .save(this.output, "quartz_from_nuggets");
+            .save(this.output, key("quartz_from_nuggets"));
     }
     
     protected void registerPrimaliteRecipes() {
@@ -2253,12 +2258,12 @@ public abstract class Recipes extends RecipeProvider {
             .define('N', ItemTagsPM.NUGGETS_PRIMALITE)
             .group("primalite_ingot")
             .unlockedBy("has_nugget", has(ItemTagsPM.NUGGETS_PRIMALITE))
-            .save(this.output, "primalite_ingot_from_nuggets");
+            .save(this.output, key("primalite_ingot_from_nuggets"));
         this.shapeless(RecipeCategory.MISC, ItemsPM.PRIMALITE_INGOT.get(), 9)
             .requires(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE)
             .group("primalite_ingot")
             .unlockedBy("has_block", has(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE))
-            .save(this.output, "primalite_ingots_from_block");
+            .save(this.output, key("primalite_ingots_from_block"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, ItemsPM.PRIMALITE_BLOCK.get())
             .pattern("III")
             .pattern("III")
@@ -2399,12 +2404,12 @@ public abstract class Recipes extends RecipeProvider {
             .define('N', ItemTagsPM.NUGGETS_HEXIUM)
             .group("hexium_ingot")
             .unlockedBy("has_nugget", has(ItemTagsPM.NUGGETS_HEXIUM))
-            .save(this.output, "hexium_ingot_from_nuggets");
+            .save(this.output, key("hexium_ingot_from_nuggets"));
         this.shapeless(RecipeCategory.MISC, ItemsPM.HEXIUM_INGOT.get(), 9)
             .requires(ItemTagsPM.STORAGE_BLOCKS_HEXIUM)
             .group("hexium_ingot")
             .unlockedBy("has_block", has(ItemTagsPM.STORAGE_BLOCKS_HEXIUM))
-            .save(this.output, "hexium_ingots_from_block");
+            .save(this.output, key("hexium_ingots_from_block"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, ItemsPM.HEXIUM_BLOCK.get())
             .pattern("III")
             .pattern("III")
@@ -2543,12 +2548,12 @@ public abstract class Recipes extends RecipeProvider {
             .define('N', ItemTagsPM.NUGGETS_HALLOWSTEEL)
             .group("hallowsteel_ingot")
             .unlockedBy("has_nugget", has(ItemTagsPM.NUGGETS_HALLOWSTEEL))
-            .save(this.output, "hallowsteel_ingot_from_nuggets");
+            .save(this.output, key("hallowsteel_ingot_from_nuggets"));
         this.shapeless(RecipeCategory.MISC, ItemsPM.HALLOWSTEEL_INGOT.get(), 9)
             .requires(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL)
             .group("hallowsteel_ingot")
             .unlockedBy("has_block", has(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL))
-            .save(this.output, "hallowsteel_ingots_from_block");
+            .save(this.output, key("hallowsteel_ingots_from_block"));
         this.shaped(RecipeCategory.BUILDING_BLOCKS, ItemsPM.HALLOWSTEEL_BLOCK.get())
             .pattern("III")
             .pattern("III")
@@ -7548,7 +7553,7 @@ public abstract class Recipes extends RecipeProvider {
         this.shapeless(RecipeCategory.BREWING, Items.BLAZE_POWDER)
             .requires(ItemsPM.EMBERFLOWER.get())
             .unlockedBy("has_emberflower", has(ItemsPM.EMBERFLOWER.get()))
-            .save(this.output, "blaze_powder_from_emberflower");
+            .save(this.output, key("blaze_powder_from_emberflower"));
     }
     
     protected void registerIgnyxRecipes() {
@@ -7565,12 +7570,12 @@ public abstract class Recipes extends RecipeProvider {
         this.shapeless(RecipeCategory.MISC, ItemsPM.IGNYX.get(), 9)
             .requires(ItemsPM.IGNYX_BLOCK.get())
             .unlockedBy("has_ignyx_block", has(ItemsPM.IGNYX_BLOCK.get()))
-            .save(this.output, "ignyx_from_storage_block");
+            .save(this.output, key("ignyx_from_storage_block"));
         this.shapeless(RecipeCategory.DECORATIONS, Items.TORCH, 32)
             .requires(ItemsPM.IGNYX.get())
             .requires(this.tag(CommonTags.Items.RODS_WOODEN), 8)
             .unlockedBy("has_ignyx", has(ItemsPM.IGNYX.get()))
-            .save(this.output, "torch_from_ignyx");
+            .save(this.output, key("torch_from_ignyx"));
     }
     
     protected void registerGemBudRecipes() {
@@ -7692,7 +7697,7 @@ public abstract class Recipes extends RecipeProvider {
                         .requires(ItemsPM.BEESWAX.get())
                         .group(getItemName(waxOn))
                         .unlockedBy(getHasName(waxOff), has(waxOff))
-                        .save(this.output, getConversionRecipeName(waxOn, ItemsPM.BEESWAX.get()));
+                        .save(this.output, key(getConversionRecipeName(waxOn, ItemsPM.BEESWAX.get())));
             }
         });
     }
