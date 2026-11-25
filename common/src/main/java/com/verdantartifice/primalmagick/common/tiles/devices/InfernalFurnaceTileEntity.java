@@ -245,7 +245,8 @@ public abstract class InfernalFurnaceTileEntity extends AbstractTileSidedInvento
                         // If the fuel has a container item (e.g. a lava bucket), place the empty container in the fuel slot
                         ItemStack oldFuelStack = entity.replaceItem(FUEL_INV_INDEX, 0, remainderStack.create());
                         if (!oldFuelStack.isEmpty()) {
-                            Containers.dropContents(level, pos, NonNullList.of(ItemStack.EMPTY, oldFuelStack));
+                            oldFuelStack.shrink(1);
+                            Containers.dropContents(level, pos, NonNullList.of(oldFuelStack));
                         }
                     } else {
                         // Otherwise, shrink the fuel stack
