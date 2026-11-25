@@ -24,7 +24,7 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
         if (stack == null) {
             throw new IllegalArgumentException("Item stack may not be null or empty");
         }
-        this.stack = stack;
+        this.stack = stack.withCount(1);    // Preserve the stack components but not its count
     }
 
     public ItemScanKey(ItemLike itemLike) {
