@@ -63,6 +63,7 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
 
     protected void addSources() {
         // TODO Can this be extracted into a common super layer?
+        SourceList guiAtlas = this.atlas(AtlasIds.GUI);
         SourceList blockAtlas = this.atlas(AtlasIds.BLOCKS);
         SourceList itemAtlas = this.atlas(AtlasIds.ITEMS);
         SourceList armorTrimsAtlas = this.atlas(AtlasIds.ARMOR_TRIMS);
@@ -84,6 +85,10 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         // Add custom item stack renderer textures to the item atlas
         this.addSingle(itemAtlas, SacredShieldItem.TEXTURE);
         this.addSingle(itemAtlas, PixieHouseSpecialRenderer.SPRITE.texture());
+
+        // Add source textures to the GUI atlas
+        this.addSingle(guiAtlas, Source.getUnknownImage());
+        Sources.getAllSorted().forEach(source -> this.addSingle(guiAtlas, source.getImage()));
 
         // Add robe armor trim item overlays to the item atlas
         itemAtlas.addSource(new PalettedPermutations(
