@@ -465,7 +465,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
                 ItemStack outputStack = RecipeUtils.getOutputStack(recipeHolder, this.level);
                 ItemStack oldOutput = this.replaceItem(OUTPUT_INV_INDEX, 0, outputStack);
                 if (!oldOutput.isEmpty()) {
-                    Containers.dropContents(this.level, this.getBlockPos(), NonNullList.of(ItemStack.EMPTY, oldOutput));
+                    Containers.dropContents(this.level, this.getBlockPos(), NonNullList.of(oldOutput));
                 }
                 Player activePlayer = this.getActivePlayer();
                 if (activePlayer != null) {
