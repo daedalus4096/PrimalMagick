@@ -93,6 +93,8 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Definition of a ritual altar tile entity.  Provides the core functionality for the corresponding
@@ -108,6 +110,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
     protected static final int RITUAL_SOUND_LENGTH = 58;
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Random RNG = new Random();
+    private static final Pattern LEGACY_RESOURCE_KEY_PATTERN = Pattern.compile("ResourceKey\\[\\S+ / (\\S+)]");
     
     protected final WeightedRandomBag<Mishap> mishaps;
     
@@ -206,8 +209,7 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         this.stability = Mth.clamp(input.getFloatOr("Stability", 0F), MIN_STABILITY, MAX_STABILITY);
         this.activePlayer = EntityReference.read(input, "ActivePlayer");
 
-        this.activeRecipeId = null;
-        input.read("ActiveRecipeId", ResourceKey.codec(Registries.RECIPE)).ifPresent(id -> this.activeRecipeId = id);
+        this.activeRecipeId = input.getString("ActiveRecipeId").map(RitualAltarTileEntity::parseActiveRecipeId).orElse(null);
 
         this.currentStep = input.read("CurrentStep", AbstractRitualStep.dispatchCodec()).orElse(null);
 
@@ -228,15 +230,32 @@ public abstract class RitualAltarTileEntity extends AbstractTileSidedInventoryPM
         output.putInt("NextCheckCount", this.nextCheckCount);
         output.putFloat("Stability", this.stability);
         EntityReference.store(this.activePlayer, output, "ActivePlayer");
-        if (this.activeRecipeId != null) {
-            output.putString("ActiveRecipeId", this.activeRecipeId.toString());
-        }
+        output.storeNullable("ActiveRecipeId", ResourceKey.codec(Registries.RECIPE), this.activeRecipeId);
         output.storeNullable("CurrentStep", AbstractRitualStep.dispatchCodec(), this.currentStep);
         output.storeNullable("RemainingSteps", AbstractRitualStep.dispatchCodec().listOf(), this.remainingSteps);
         output.storeNullable("AwaitedPropPos", BlockPos.CODEC, this.awaitedPropPos);
         output.storeNullable("ChanneledOfferingPos", BlockPos.CODEC, this.channeledOfferingPos);
     }
     
+    /**
+     * Parses a saved active recipe ID. It's written with the recipe resource key codec, which stores the plain
+     * recipe identifier ("namespace:path"). Earlier 26.1 builds wrote the key's toString() instead
+     * ("ResourceKey[minecraft:recipe / namespace:path]"), so the identifier is recovered from that form too, letting
+     * a ritual in progress in a world saved by one of those builds keep its recipe. Anything else unparseable is
+     * treated as no active recipe.
+     */
+    @Nullable
+    protected static ResourceKey<Recipe<?>> parseActiveRecipeId(String value) {
+        Identifier id = Identifier.tryParse(value);
+        if (id == null) {
+            Matcher matcher = LEGACY_RESOURCE_KEY_PATTERN.matcher(value);
+            if (matcher.matches()) {
+                id = Identifier.tryParse(matcher.group(1));
+            }
+        }
+        return id == null ? null : ResourceKey.create(Registries.RECIPE, id);
+    }
+
     protected void reset() {
         // If there's a prop being waited on, close it out
         if (this.level != null && this.awaitedPropPos != null) {
