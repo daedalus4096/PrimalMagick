@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Either;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.misc.IconDefinition;
@@ -11,14 +10,13 @@ import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.SpriteId;
-import net.minecraft.data.AtlasIds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -120,20 +118,9 @@ public class GuiUtils {
         
         guiGraphics.pose().pushMatrix();
 
-        guiGraphics.pose().pushMatrix();
-        
         // Render the source's icon
-        MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
-        Identifier guiAtlas = AtlasIds.GUI;
-        SpriteId texSprite = new SpriteId(guiAtlas, imageLoc);
-        VertexConsumer builder = texSprite.buffer(mc.getAtlasManager(), buffer, RenderTypes::itemCutout);
-        TextureAtlasSprite sprite = mc.getAtlasManager().get(texSprite);
-        builder.addVertex(x + 0.0F, y + 16.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
-        builder.addVertex(x + 16.0F, y + 16.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU1(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
-        builder.addVertex(x + 16.0F, y + 0.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU1(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
-        builder.addVertex(x + 0.0F, y + 0.0F, (float)z).setColor(1.0F, 1.0F, 1.0F, 1.0F).setUv(sprite.getU0(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
-        buffer.endBatch();
-
+        guiGraphics.pose().pushMatrix();
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, imageLoc, x, y, 16, 16);
         guiGraphics.pose().popMatrix();
         
         // Render an amount string for the source, if an amount has been given
@@ -176,10 +163,9 @@ public class GuiUtils {
                 poseStack.scale(scale, scale, scale);
 
                 Identifier texLoc = source.isDiscovered(mc.player) ? source.getImage() : Source.getUnknownImage();
-                Identifier guiAtlas = AtlasIds.GUI;
-                SpriteId texSprite = new SpriteId(guiAtlas, texLoc);
+                SpriteId texSprite = new SpriteId(Sheets.GUI_SHEET, texLoc);
                 TextureAtlasSprite sprite = mc.getAtlasManager().get(texSprite);
-                submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.entityCutout(guiAtlas), (pose, vertexConsumer) -> {
+                submitNodeCollector.submitCustomGeometry(poseStack, texSprite.renderType(RenderTypes::entityCutout), (pose, vertexConsumer) -> {
                     vertexConsumer.addVertex(pose, 0.0F, 16.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setUv(sprite.getU0(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
                     vertexConsumer.addVertex(pose, 16.0F, 16.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setUv(sprite.getU1(), sprite.getV1()).setUv2(240, 240).setNormal(1, 0, 0);
                     vertexConsumer.addVertex(pose, 16.0F, 0.0F, 0.0F).setColor(1.0F, 1.0F, 1.0F, 1.0F).setOverlay(OverlayTexture.NO_OVERLAY).setUv(sprite.getU1(), sprite.getV0()).setUv2(240, 240).setNormal(1, 0, 0);
