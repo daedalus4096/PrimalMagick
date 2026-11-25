@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AndRequirem
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
+import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.NonNullList;
@@ -179,6 +180,6 @@ public class ConcoctingRecipeBuilder {
     }
 
     private Identifier getResultPotionKey() {
-        return BuiltInRegistries.POTION.getKey(this.potionHolder.value());
+        return ResourceUtils.loc(BuiltInRegistries.POTION.getKey(this.potionHolder.value()).getPath());
     }
 }
