@@ -27,7 +27,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * Server data container for the wand inscription table GUI.
@@ -171,17 +171,20 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
     protected void slotChangedCraftingGrid(Level world) {
         if (!world.isClientSide() && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = spe.level().recipeAccess().byKey(WandInscriptionRecipe.WAND_KEY);
-            if (opt.isEmpty()) {
-                opt = spe.level().recipeAccess().byKey(WandInscriptionRecipe.STAFF_KEY);
-            }
-            if (opt.isPresent() && opt.get().value() instanceof WandInscriptionRecipe recipe) {
+
+            @SuppressWarnings("unchecked")
+            List<RecipeHolder<WandInscriptionRecipe>> relevantRecipes = spe.level().recipeAccess().getRecipes().stream()
+                    .filter(holder -> holder.value() instanceof WandInscriptionRecipe)
+                    .map(holder -> (RecipeHolder<WandInscriptionRecipe>)holder)
+                    .toList();
+            for (RecipeHolder<WandInscriptionRecipe> holder : relevantRecipes) {
                 // If the inputs are valid for inscribing a spell onto a wand or staff, show the output
-                if (recipe.matches(this.componentInv.asCraftInput(), world)) {
-                    stack = recipe.assemble(this.componentInv.asCraftInput());
+                if (holder.value().matches(this.componentInv.asCraftInput(), world)) {
+                    stack = holder.value().assemble(this.componentInv.asCraftInput());
+                    break;
                 }
             }
-            
+
             // Send a packet to the client to update its GUI with the shown output
             this.resultInv.setItem(0, stack);
             spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 0, stack));
