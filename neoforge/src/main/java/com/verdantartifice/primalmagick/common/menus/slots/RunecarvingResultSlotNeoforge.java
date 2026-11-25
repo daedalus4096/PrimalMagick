@@ -38,7 +38,7 @@ public class RunecarvingResultSlotNeoforge extends GenericResultSlotNeoforge {
     public void onTake(Player thePlayer, ItemStack stack) {
         this.menu.getTileInventory(Direction.UP).extractItem(0, 1, false);
         this.menu.getTileInventory(Direction.UP).extractItem(1, 1, false);
-        this.menu.updateRecipeResultSlot(thePlayer.registryAccess());
+        this.menu.updateRecipeResultSlot();
 
         stack.getItem().onCraftedBy(stack, thePlayer);
         this.menu.getContainerLevelAccess().execute((world, pos) -> {
