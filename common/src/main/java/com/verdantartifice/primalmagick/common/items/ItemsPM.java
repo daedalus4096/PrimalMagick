@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.items;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.components.DataComponentsPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
@@ -883,7 +884,7 @@ public class ItemsPM {
     // Register caster/wand items
     public static final IRegistryItem<Item, Item> SPELL_SCROLL_BLANK = registerSimpleItemSupplier("spell_scroll_blank");
     public static final IRegistryItem<Item, SpellScrollItem> SPELL_SCROLL_FILLED = registerWithoutTab("spell_scroll_filled", SpellScrollItem::new);
-    public static final IRegistryItem<Item, MundaneWandItem> MUNDANE_WAND = registerSupplier("mundane_wand", Services.ITEM_PROTOTYPES.mundaneWand(), () -> new Item.Properties().stacksTo(1).enchantable(1));
+    public static final IRegistryItem<Item, MundaneWandItem> MUNDANE_WAND = registerSupplier("mundane_wand", Services.ITEM_PROTOTYPES.mundaneWand(), () -> new Item.Properties().stacksTo(1).enchantable(1).component(DataComponentsPM.CAPABILITY_MANA_STORAGE.get(), ManaStorage.emptyWand(MundaneWandItem.MAX_MANA)));
     public static final IRegistryItem<Item, ModularWandItem> MODULAR_WAND = registerCustom("modular_wand", ModularWandItem::registerCreativeTabItems, Services.ITEM_PROTOTYPES.modularWand(), () -> new Item.Properties().stacksTo(1));
     public static final IRegistryItem<Item, ModularStaffItem> MODULAR_STAFF = registerCustom("modular_staff", ModularWandItem::registerCreativeTabItems, Services.ITEM_PROTOTYPES.modularStaff(), () -> new Item.Properties().stacksTo(1).attributes(ModularStaffItem.createAttributes(5, -2.4)).component(DataComponents.TOOL, ModularStaffItem.createToolProperties()));
     public static final IRegistryItem<Item, WandCoreItem> HEARTWOOD_WAND_CORE_ITEM = registerSupplier("heartwood_wand_core_item", props -> new WandCoreItem(WandCore.HEARTWOOD, props));
