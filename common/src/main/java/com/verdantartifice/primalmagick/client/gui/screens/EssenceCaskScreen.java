@@ -13,6 +13,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 
@@ -117,7 +118,7 @@ public class EssenceCaskScreen extends AbstractContainerScreenPM<EssenceCaskMenu
     protected void extractLabels(@NotNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         super.extractLabels(guiGraphics, mouseX, mouseY);
         Component contentsLabel = Component.translatable("label.primalmagick.essence_cask.contents", this.menu.getTotalEssenceCount(), this.menu.getTotalEssenceCapacity());
-        guiGraphics.text(this.font, contentsLabel, 8, 92, 4210752, false);
+        guiGraphics.text(this.font, contentsLabel, 8, 92, ARGB.opaque(0x404040), false);
     }
 
     protected void onWidgetClicked(EssenceCaskWidget widget, int clickButton) {

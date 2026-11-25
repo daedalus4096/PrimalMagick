@@ -143,7 +143,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Render missing writing materials text
             Component text = Component.translatable("label.primalmagick.scribe_table.missing_book");
             int width = this.minecraft.font.width(text.getString());
-            pGuiGraphics.text(this.minecraft.font, text, this.leftPos + 7 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
+            pGuiGraphics.text(this.minecraft.font, text, this.leftPos + 7 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), ARGB.black(1F), false);
 
             // If no grid is currently active, hide all node buttons
             this.nodeButtons.values().forEach(b -> b.visible = false);

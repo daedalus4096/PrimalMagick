@@ -27,14 +27,14 @@ public class SectionHeaderWidget extends AbstractWidget {
         int strWidth = mc.font.width(this.getMessage().getString());
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= this.width) {
-            pGuiGraphics.text(mc.font, this.getMessage(), this.getX() + this.width / 2 - strWidth / 2, this.getY() + (this.height - 8) / 2, Color.BLACK.getRGB(), false);
+            pGuiGraphics.text(mc.font, this.getMessage(), this.getX() + this.width / 2 - strWidth / 2, this.getY() + (this.height - 8) / 2, ARGB.black(1F), false);
         } else {
             // Scale the string down to fit on one line, if need be
             float scale = (float)this.width / (float)strWidth;
             pGuiGraphics.pose().pushMatrix();
             pGuiGraphics.pose().translate(this.getX(), this.getY() + dy + scale);
             pGuiGraphics.pose().scale(scale, scale);
-            pGuiGraphics.text(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
+            pGuiGraphics.text(mc.font, this.getMessage(), 0, 0, ARGB.black(1F), false);
             pGuiGraphics.pose().popMatrix();
         }
         pGuiGraphics.pose().popMatrix();

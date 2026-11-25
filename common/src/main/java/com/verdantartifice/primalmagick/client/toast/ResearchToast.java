@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 
 import java.util.Optional;
 
@@ -56,7 +57,7 @@ public class ResearchToast extends AbstractToastPM {
 
     @Override
     protected int getBodyColor() {
-        return 0;
+        return ARGB.black(1F);
     }
 
     @Override

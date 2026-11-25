@@ -82,7 +82,7 @@ public class AnalysisTableScreen extends AbstractContainerScreenPM<AnalysisTable
             int width = this.font.width(text.get().getString());
             int x = 1 + (this.imageWidth - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
-            guiGraphics.text(this.font, text.get(), x, y, Color.BLACK.getRGB(), false);
+            guiGraphics.text(this.font, text.get(), x, y, ARGB.black(1F), false);
         }
     }
 

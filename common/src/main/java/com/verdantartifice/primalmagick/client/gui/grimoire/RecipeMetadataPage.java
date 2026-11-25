@@ -12,12 +12,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.display.SlotDisplayContext;
 import net.minecraft.world.level.Level;
-
-import java.awt.Color;
 
 /**
  * GUI page to show recipe metadata in the grimoire.
@@ -60,22 +59,22 @@ public class RecipeMetadataPage extends AbstractPage {
         Component noneComponent = Component.translatable("tooltip.primalmagick.none");
 
         // Render the metadata's discipline header
-        guiGraphics.text(mc.font, Component.translatable("grimoire.primalmagick.recipe_metadata.discipline").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, Component.translatable("grimoire.primalmagick.recipe_metadata.discipline").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, ARGB.black(1F), false);
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research discipline
         if (isEntryMissing) {
-            guiGraphics.text(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, noneComponent, x - 3 + (side * 138), y - 4, ARGB.black(1F), false);
         }
         y += 2 * mc.font.lineHeight;
         
         // Render the metadata's entry header
-        guiGraphics.text(mc.font, Component.translatable("grimoire.primalmagick.recipe_metadata.entry").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, Component.translatable("grimoire.primalmagick.recipe_metadata.entry").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, ARGB.black(1F), false);
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research entry
         if (isEntryMissing) {
-            guiGraphics.text(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, noneComponent, x - 3 + (side * 138), y - 4, ARGB.black(1F), false);
         }
     }
 

@@ -82,7 +82,7 @@ public class DripParticlePM extends SingleQuadParticle {
             DripParticlePM.Hang particle = new DripParticlePM.Hang(level, x, y, z, this.sprite, ParticleTypesPM.FALLING_BLOOD_DROP.get());
             particle.gravity *= 0.01F;
             particle.lifetime = 100;
-            particle.setColor(Sources.BLOOD.getColor());
+            particle.setColor(ARGB.opaque(Sources.BLOOD.getColor()));
             return particle;
         }
     }
@@ -98,7 +98,7 @@ public class DripParticlePM extends SingleQuadParticle {
         public Particle createParticle(@NotNull SimpleParticleType options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
             DripParticlePM.Fall particle = new DripParticlePM.Fall(level, x, y, z, this.sprite, ParticleTypesPM.LANDING_BLOOD_DROP.get());
             particle.gravity = 0.01F;
-            particle.setColor(Sources.BLOOD.getColor());
+            particle.setColor(ARGB.opaque(Sources.BLOOD.getColor()));
             return particle;
         }
     }
@@ -114,7 +114,7 @@ public class DripParticlePM extends SingleQuadParticle {
         public Particle createParticle(@NotNull SimpleParticleType options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, @NotNull RandomSource randomSource) {
             DripParticlePM.Land particle = new DripParticlePM.Land(level, x, y, z, this.sprite);
             particle.lifetime = (int)(28.0D / (level.getRandom().nextDouble() * 0.8D + 0.2D));
-            particle.setColor(Sources.BLOOD.getColor());
+            particle.setColor(ARGB.opaque(Sources.BLOOD.getColor()));
             return particle;
         }
     }

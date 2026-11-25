@@ -22,6 +22,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -129,7 +130,7 @@ public class GuiUtils {
             guiGraphics.pose().scale(0.5F, 0.5F);
             String amountStr = Integer.toString(amount);
             int amountWidth = mc.font.width(amountStr);
-            guiGraphics.text(mc.font, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.font.lineHeight + (y * 2)), Color.WHITE.getRGB());
+            guiGraphics.text(mc.font, amountStr, (32 - amountWidth + (x * 2)), (32 - mc.font.lineHeight + (y * 2)), ARGB.white(1F));
             guiGraphics.pose().popMatrix();
         }
         

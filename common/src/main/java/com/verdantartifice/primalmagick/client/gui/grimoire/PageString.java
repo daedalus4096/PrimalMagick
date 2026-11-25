@@ -2,8 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-
-import java.awt.Color;
+import net.minecraft.util.ARGB;
 
 /**
  * A string element to be rendered on a grimoire page.
@@ -15,7 +14,7 @@ public record PageString(String str) implements IPageElement {
     public void render(GuiGraphicsExtractor guiGraphics, int side, int x, int y) {
         // Render this element's string to the screen
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.text(mc.font, this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, this.str.replace("~B", ""), x - 1 + (side * 138), y - 6, ARGB.black(1F), false);
     }
 
     @Override

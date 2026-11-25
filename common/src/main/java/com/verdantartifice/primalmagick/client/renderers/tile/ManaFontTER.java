@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.sprite.SpriteId;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -67,7 +68,7 @@ public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEnti
         poseStack.scale(baseScale, baseScale, baseScale);
         poseStack.scale(coreScale, coreScale, coreScale);
         submitNodeCollector.submitModelPart(this.manaCubeModel.root(), poseStack, CORE.renderType(RenderTypes::entitySolid),
-                renderState.lightCoords, OverlayTexture.NO_OVERLAY, this.context.sprites().get(CORE), renderState.coreColor,
+                renderState.lightCoords, OverlayTexture.NO_OVERLAY, this.context.sprites().get(CORE), ARGB.opaque(renderState.coreColor),
                 renderState.breakProgress);
         poseStack.popPose();
     }

@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ARGB;
 
 import java.awt.Color;
 import java.util.List;
@@ -100,7 +101,7 @@ public class RequirementsPage extends AbstractPage {
         List<AbstractRequirement<?>> reqs = this.stage.getRequirementsByCategory(category);
         if (!reqs.isEmpty()) {
             Component leadComponent = Component.translatable(textTranslationKey).withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.text(mc.font, leadComponent, x, y - 6, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, leadComponent, x, y - 6, ARGB.black(1F), false);
             y += mc.font.lineHeight;
             y += ((widgetHeight + 2) * (1 + (reqs.size() / ITEMS_PER_ROW)));  // Make room for widgets
         }

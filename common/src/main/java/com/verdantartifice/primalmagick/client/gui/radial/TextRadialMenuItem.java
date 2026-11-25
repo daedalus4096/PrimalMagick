@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ARGB;
 
 public class TextRadialMenuItem extends RadialMenuItem {
     private final Component text;
@@ -36,7 +37,7 @@ public class TextRadialMenuItem extends RadialMenuItem {
         String textString = text.getString();
         int x = (int)(context.x - context.fontRenderer.width(textString) / 2.0f);
         int y = (int)(context.y - context.fontRenderer.lineHeight / 2.0f);
-        context.guiGraphics.text(context.fontRenderer, textString, x, y, color);
+        context.guiGraphics.text(context.fontRenderer, textString, x, y, ARGB.opaque(color));
     }
 
     @Override

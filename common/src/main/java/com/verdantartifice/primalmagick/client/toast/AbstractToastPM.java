@@ -7,6 +7,7 @@ import net.minecraft.client.gui.components.toasts.ToastManager;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
@@ -61,7 +62,7 @@ public abstract class AbstractToastPM implements Toast {
         List<FormattedCharSequence> bodyLines = font.split(this.getBodyText(), lineMax);
         if (this.getSubtitleText().isEmpty() && bodyLines.size() == 1) {
             // If only one body line is needed and there's no subtitle, render the title and body together without a fade
-            pGuiGraphics.text(font, this.getTitleText(), x, 7, this.getTitleColor() | 0xFF000000, false);
+            pGuiGraphics.text(font, this.getTitleText(), x, 7, ARGB.opaque(this.getTitleColor()), false);
             pGuiGraphics.text(font, bodyLines.getFirst(), x, 18, this.getBodyColor(), false);
         } else {
             // Otherwise, render toast body with a fade

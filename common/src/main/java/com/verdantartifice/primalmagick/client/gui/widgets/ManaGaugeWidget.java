@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
@@ -65,7 +66,7 @@ public class ManaGaugeWidget extends AbstractWidget {
         
         // Render colored gauge
         int mana = this.getScaledMana();
-        pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, 1, 51 - mana, 1, 1, 10, mana, 256, 256, this.source.getColor());
+        pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, 1, 51 - mana, 1, 1, 10, mana, 256, 256, ARGB.opaque(this.source.getColor()));
 
         // Render gauge foreground texture
         pGuiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, 0, 0, 24, 0, this.width, this.height, 256, 256, -1);

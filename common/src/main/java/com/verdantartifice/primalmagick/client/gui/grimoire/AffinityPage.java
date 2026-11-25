@@ -8,9 +8,9 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ARGB;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -80,20 +80,20 @@ public class AffinityPage extends AbstractPage {
             Component text = Component.translatable("grimoire.primalmagick.affinity_data.calculating");
             int width = mc.font.width(text.getString());
             int indent = 124;
-            guiGraphics.text(mc.font, text, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, text, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, ARGB.black(1F), false);
 
             // Display calculation progress if applicable
             this.progressFutures.ifPresent($ -> {
                 Component progressText = Component.literal(this.getCurrentProgress() + " / " + this.getTotalProgress());
                 int progressWidth = mc.font.width(progressText.getString());
-                guiGraphics.text(mc.font, progressText, x - 3 + (side * 140) + (indent / 2) - (progressWidth / 2), startY + 78 + mc.font.lineHeight, Color.BLACK.getRGB(), false);
+                guiGraphics.text(mc.font, progressText, x - 3 + (side * 140) + (indent / 2) - (progressWidth / 2), startY + 78 + mc.font.lineHeight, ARGB.black(1F), false);
             });
         } else if (this.isFirstPage() && this.getElements().isEmpty()) {
             // If the page has no contents, render a label saying so
             Component text = Component.translatable("grimoire.primalmagick.affinity_data.no_entries");
             int width = mc.font.width(text.getString());
             int indent = 124;
-            guiGraphics.text(mc.font, text, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, text, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, ARGB.black(1F), false);
         }
     }
 

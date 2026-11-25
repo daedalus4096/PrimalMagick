@@ -11,6 +11,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 
 import java.awt.Color;
@@ -60,14 +61,14 @@ public abstract class AbstractTopicButton extends Button {
         int dx = this.icon == null ? 0 : (this.icon.isLarge() ? 16 : 11);
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= (this.width - dx)) {
-            guiGraphics.text(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, ARGB.black(1F), false);
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)(this.width - dx) / (float)strWidth;
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + scale);
             guiGraphics.pose().scale(scale, scale);
-            guiGraphics.text(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
+            guiGraphics.text(mc.font, this.getMessage(), 0, 0, ARGB.black(1F), false);
             guiGraphics.pose().popMatrix();
         }
         if (this.icon != null) {

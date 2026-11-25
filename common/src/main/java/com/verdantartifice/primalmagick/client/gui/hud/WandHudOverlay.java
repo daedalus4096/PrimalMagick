@@ -15,6 +15,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -92,13 +93,13 @@ public class WandHudOverlay {
         }
         
         // Render the gauge mana bar
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, HUD_TEXTURE, x + 14, y + 2, 14, 12, (int)(40 * ratio), 8, 256, 256, color);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, HUD_TEXTURE, x + 14, y + 2, 14, 12, (int)(40 * ratio), 8, 256, 256, ARGB.opaque(color));
         
         // Render the mana text by the gauge if holding shift
         if (Minecraft.getInstance().hasShiftDown()) {
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(61, 2);
-            guiGraphics.text(font, text, x, y, -1);
+            guiGraphics.text(font, text, x, y, ARGB.white(1F));
             guiGraphics.pose().popMatrix();
         }
         

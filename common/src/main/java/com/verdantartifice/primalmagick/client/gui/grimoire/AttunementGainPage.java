@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.rewards.AttunementReward;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ARGB;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -36,7 +37,7 @@ public class AttunementGainPage extends AbstractPage {
         Minecraft mc = Minecraft.getInstance();
         for (AttunementReward reward : this.rewards) {
             Component fullText = reward.getDescription(mc.player);
-            guiGraphics.text(mc.font, fullText, x - 3 + (side * 140), y - 6, 0, false);
+            guiGraphics.text(mc.font, fullText, x - 3 + (side * 140), y - 6, ARGB.black(1F), false);
             y += mc.font.lineHeight;
         }
     }

@@ -8,6 +8,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
@@ -48,7 +49,7 @@ public class TrimMaterialsPM {
     }
     
     private static Style getStyle(Source source) {
-        return Style.EMPTY.withColor(source.getColor());
+        return Style.EMPTY.withColor(ARGB.opaque(source.getColor()));
     }
     
     public static Source getSource(ResourceKey<TrimMaterial> key) {

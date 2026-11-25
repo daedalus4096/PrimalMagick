@@ -15,6 +15,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,13 +63,13 @@ public class AttunementMeterWidget extends AbstractWidget {
         int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
 
         // Render permanent meter bar
-        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p, 0, 100)), 10, Mth.clamp(p, 0, 100), this.permanentColor.getRGB());
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p, 0, 100)), 10, Mth.clamp(p, 0, 100), ARGB.opaque(this.permanentColor.getRGB()));
         
         // Render induced meter bar
-        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i, 0, 100)), 10, Mth.clamp(i, 0, 100 - p), this.inducedColor.getRGB());
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i, 0, 100)), 10, Mth.clamp(i, 0, 100 - p), ARGB.opaque(this.inducedColor.getRGB()));
         
         // Render temporary meter bar
-        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 10, Mth.clamp(t, 0, 100 - p - i), this.temporaryColor.getRGB());
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BAR, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 10, Mth.clamp(t, 0, 100 - p - i), ARGB.opaque(this.temporaryColor.getRGB()));
 
         // Render meter foreground
         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FOREGROUND, this.getX(), this.getY(), 12, 102);

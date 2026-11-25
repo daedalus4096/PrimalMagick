@@ -20,13 +20,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,8 +89,8 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
         this.background.draw(guiGraphics);
 
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.text(mc.font, Component.translatable("jei.primalmagick.ritual.offerings.header"), 0, 2, Color.BLACK.getRGB(), false);
-        guiGraphics.text(mc.font, Component.translatable("jei.primalmagick.ritual.props.header"), 0, 51, Color.BLACK.getRGB(), false);
+        guiGraphics.text(mc.font, Component.translatable("jei.primalmagick.ritual.offerings.header"), 0, 2, ARGB.black(1F), false);
+        guiGraphics.text(mc.font, Component.translatable("jei.primalmagick.ritual.props.header"), 0, 51, ARGB.black(1F), false);
         
         IRitualRecipe recipe = recipeHolder.value();
         if (!recipe.getManaCosts().isEmpty()) {

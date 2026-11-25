@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.state.gui.GuiElementRenderState;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.joml.Matrix3x2f;
@@ -246,7 +247,7 @@ public class GenericRadialMenu {
                 String text = currentCentralText.getString();
                 int textX = (int)((owner.width - fontRenderer.width(text)) / 2.0f);
                 int textY = (int)((owner.height - fontRenderer.lineHeight) / 2.0f);
-                guiGraphics.text(fontRenderer, text, textX, textY, 0xFFFFFFFF);
+                guiGraphics.text(fontRenderer, text, textX, textY, ARGB.white(1F));
             }
 
             guiGraphics.pose().pushMatrix();
