@@ -40,7 +40,7 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
-    public static final Identifier BOOK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_book_slot");
+    public static final Identifier BOOK_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_book_slot");
     protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
     protected static final int[] COSTS_PER_SLOT = new int[] { 25, 100, 300 };
 

@@ -36,8 +36,8 @@ import java.util.stream.Collectors;
  * @author Daedalus4096
  */
 public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTableTileEntity> implements IItemHandlerChangeListener {
-    public static final Identifier PAPER_SLOT_TEXTURE = ResourceUtils.loc("item/empty_paper_slot");
-    public static final Identifier PENCIL_SLOT_TEXTURE = ResourceUtils.loc("item/empty_pencil_slot");
+    public static final Identifier PAPER_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_paper_slot");
+    public static final Identifier PENCIL_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_pencil_slot");
     protected static final Component PAPER_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.research_table.slot.paper");
     protected static final Component PENCIL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.research_table.slot.pencil");
     

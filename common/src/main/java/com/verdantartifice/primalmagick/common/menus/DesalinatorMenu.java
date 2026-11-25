@@ -32,9 +32,9 @@ import org.slf4j.Logger;
  * @author Daedalus4096
  */
 public class DesalinatorMenu extends AbstractTileSidedInventoryMenu<DesalinatorTileEntity> implements IItemHandlerChangeListener {
-    public static final Identifier BUCKET_SLOT_TEXTURE = ResourceUtils.loc("item/empty_bucket_slot");
-    public static final Identifier BOTTLE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_bottle_slot");
-    public static final Identifier FLASK_SLOT_TEXTURE = ResourceUtils.loc("item/empty_flask_slot");
+    public static final Identifier BUCKET_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_bucket_slot");
+    public static final Identifier BOTTLE_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_bottle_slot");
+    public static final Identifier FLASK_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_flask_slot");
     protected static final Component WATER_BUCKET_TOOLTIP = Component.translatable("tooltip.primalmagick.desalinator.slot.water_bucket");
     protected static final AbstractRequirement<?> FLASK_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CONCOCTING_TINCTURES));
     protected static final Logger LOGGER = LogUtils.getLogger();

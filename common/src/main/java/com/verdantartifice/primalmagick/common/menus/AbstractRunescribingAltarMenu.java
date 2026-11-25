@@ -40,7 +40,7 @@ import java.util.Map;
  * @author Daedalus4096
  */
 public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<RunescribingAltarTileEntity> {
-    public static final Identifier RUNE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_rune_slot");
+    public static final Identifier RUNE_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_rune_slot");
     public static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runescribing_altar.slot.input");
     public static final Component RUNE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runescribing_altar.slot.rune");
 

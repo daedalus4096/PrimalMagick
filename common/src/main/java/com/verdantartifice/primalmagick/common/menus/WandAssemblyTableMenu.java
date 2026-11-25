@@ -36,9 +36,9 @@ import java.util.Optional;
  * @author Daedalus4096
  */
 public class WandAssemblyTableMenu extends AbstractContainerMenu {
-    public static final Identifier CAP_SLOT_TEXTURE = ResourceUtils.loc("item/empty_wand_cap_slot");
-    public static final Identifier CORE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_wand_core_slot");
-    public static final Identifier GEM_SLOT_TEXTURE = ResourceUtils.loc("item/empty_wand_gem_slot");
+    public static final Identifier CAP_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_wand_cap_slot");
+    public static final Identifier CORE_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_wand_core_slot");
+    public static final Identifier GEM_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_wand_gem_slot");
     protected static final Component CORE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_assembly_table.slot.core");
     protected static final Component CAP_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_assembly_table.slot.cap");
     protected static final Component GEM_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_assembly_table.slot.gem");

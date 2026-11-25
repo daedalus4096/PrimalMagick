@@ -63,27 +63,10 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
 
     protected void addSources() {
         // TODO Can this be extracted into a common super layer?
-        SourceList guiAtlas = this.atlas(AtlasIds.GUI);
         SourceList blockAtlas = this.atlas(AtlasIds.BLOCKS);
         SourceList itemAtlas = this.atlas(AtlasIds.ITEMS);
         SourceList armorTrimsAtlas = this.atlas(AtlasIds.ARMOR_TRIMS);
         
-        // Add empty-slot background images to the GUI atlas
-        this.addSingle(guiAtlas, WandAssemblyTableMenu.CORE_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, WandAssemblyTableMenu.CAP_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, WandAssemblyTableMenu.GEM_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, IWandSlot.TEXTURE);
-        this.addSingle(guiAtlas, ResearchTableMenu.PAPER_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, ResearchTableMenu.PENCIL_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, AbstractRunescribingAltarMenu.RUNE_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, RunecarvingTableMenu.BASE_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, RunecarvingTableMenu.ETCHING_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, HoneyExtractorMenu.HONEYCOMB_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, HoneyExtractorMenu.BOTTLE_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, InfernalFurnaceMenu.IGNYX_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, DesalinatorMenu.BUCKET_SLOT_TEXTURE);
-        this.addSingle(guiAtlas, DesalinatorMenu.FLASK_SLOT_TEXTURE);
-
         // Add block entity renderer textures to the block atlas
         this.addSingle(blockAtlas, RitualBellTER.BELL_TEXTURE.texture());
         this.addSingle(blockAtlas, SpellcraftingAltarTER.RING_TEXTURE.texture());
@@ -101,10 +84,6 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         // Add custom item stack renderer textures to the item atlas
         this.addSingle(itemAtlas, SacredShieldItem.TEXTURE);
         this.addSingle(itemAtlas, PixieHouseSpecialRenderer.SPRITE.texture());
-
-        // Add source textures to the block atlas
-        this.addSingle(guiAtlas, Source.getUnknownImage());
-        Sources.getAllSorted().forEach(source -> this.addSingle(guiAtlas, source.getImage()));
 
         // Add robe armor trim item overlays to the item atlas
         itemAtlas.addSource(new PalettedPermutations(

@@ -29,7 +29,7 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class InfernalFurnaceMenu extends AbstractTileRecipeBookMenu<InfernalFurnaceTileEntity, SingleRecipeInput, AbstractCookingRecipe> {
-    public static final Identifier IGNYX_SLOT_TEXTURE = ResourceUtils.loc("item/empty_ignyx_slot");
+    public static final Identifier IGNYX_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_ignyx_slot");
     protected static final Component IGNYX_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.infernal_furnace.slot.ignyx");
 
     protected final ContainerData furnaceData;

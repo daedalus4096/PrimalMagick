@@ -27,8 +27,8 @@ public class TrimPatternsPM {
     protected static final Component RUNIC_ARMOR_TRIM_INGREDIENTS = Component.translatable(Util.makeDescriptionId("tooltip", ResourceUtils.loc("smithing_template.runic_armor_trim.ingredients"))).withStyle(DESCRIPTION_FORMAT);
     protected static final Component RUNIC_ARMOR_TRIM_BASE_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("tooltip", ResourceUtils.loc("smithing_template.runic_armor_trim.base_slot_description")));
     protected static final Component RUNIC_ARMOR_TRIM_ADDITIONS_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("tooltip", ResourceUtils.loc("smithing_template.runic_armor_trim.additions_slot_description")));
-    protected static final List<Identifier> RUNIC_TRIMMABLE_ARMOR_ICONS = List.of(Identifier.withDefaultNamespace("item/empty_armor_slot_helmet"), Identifier.withDefaultNamespace("item/empty_armor_slot_chestplate"), Identifier.withDefaultNamespace("item/empty_armor_slot_leggings"), Identifier.withDefaultNamespace("item/empty_armor_slot_boots"));
-    protected static final List<Identifier> RUNIC_TRIMMABLE_MATERIAL_ICONS = List.of(ResourceUtils.loc("item/empty_rune_slot"));
+    protected static final List<Identifier> RUNIC_TRIMMABLE_ARMOR_ICONS = List.of(Identifier.withDefaultNamespace("container/slot/helmet"), Identifier.withDefaultNamespace("container/slot/chestplate"), Identifier.withDefaultNamespace("container/slot/leggings"), Identifier.withDefaultNamespace("container/slot/boots"));
+    protected static final List<Identifier> RUNIC_TRIMMABLE_MATERIAL_ICONS = List.of(ResourceUtils.loc("container/slot/empty_rune_slot"));
 
     public static SmithingTemplateItem createRunicArmorTrimTemplate(Item.Properties properties) {
         return new SmithingTemplateItem(

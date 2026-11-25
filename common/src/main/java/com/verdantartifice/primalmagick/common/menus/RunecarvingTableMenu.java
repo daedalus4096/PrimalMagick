@@ -37,8 +37,8 @@ import java.util.List;
  * @author Daedalus4096
  */
 public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<RunecarvingTableTileEntity> implements IItemHandlerChangeListener {
-    public static final Identifier BASE_SLOT_TEXTURE = ResourceUtils.loc("item/empty_slab_slot");
-    public static final Identifier ETCHING_SLOT_TEXTURE = ResourceUtils.loc("item/empty_lapis_slot");
+    public static final Identifier BASE_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_slab_slot");
+    public static final Identifier ETCHING_SLOT_TEXTURE = ResourceUtils.loc("container/slot/empty_lapis_slot");
     protected static final Component BASE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runecarving_table.slot.base");
     protected static final Component ETCHING_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runecarving_table.slot.etching");
 

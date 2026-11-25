@@ -4,5 +4,5 @@ import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.resources.Identifier;
 
 public interface IWandSlot {
-    Identifier TEXTURE = ResourceUtils.loc("item/empty_wand_slot");
+    Identifier TEXTURE = ResourceUtils.loc("container/slot/empty_wand_slot");
 }

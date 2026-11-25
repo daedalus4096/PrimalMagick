@@ -37,7 +37,7 @@ import java.util.Optional;
 public class WandInscriptionTableMenu extends AbstractContainerMenu {
     protected static final Component CASTER_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.caster");
     protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.scroll");
-    protected static final Identifier TOME_BACKGROUND = ResourceUtils.loc("item/empty_book_slot");
+    protected static final Identifier TOME_BACKGROUND = ResourceUtils.loc("container/slot/empty_book_slot");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final InscriptionComponentInventory componentInv = new InscriptionComponentInventory();
