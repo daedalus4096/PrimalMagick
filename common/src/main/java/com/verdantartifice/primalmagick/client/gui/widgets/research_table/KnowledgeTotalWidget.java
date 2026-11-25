@@ -63,7 +63,6 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         // Draw knowledge type icon
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX(), this.getY());
-        pGuiGraphics.pose().scale(0.0625F, 0.0625F);
         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.type.getIconLocation(), 0, 0, 16, 16);
         pGuiGraphics.pose().popMatrix();
         
