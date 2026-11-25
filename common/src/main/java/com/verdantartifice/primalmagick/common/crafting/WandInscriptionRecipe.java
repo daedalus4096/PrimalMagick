@@ -58,7 +58,7 @@ public class WandInscriptionRecipe extends CustomRecipe {
 
     @Override
     public boolean matches(@NotNull CraftingInput inv, @NotNull Level worldIn) {
-        if (inv.ingredientCount() != 2) {
+        if (inv.ingredientCount() > 2) {
             return false;
         }
 
