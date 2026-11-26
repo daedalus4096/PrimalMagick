@@ -91,7 +91,7 @@ public class RecipeIndexPage extends AbstractPage {
             this.searchBox.setMaxLength(50);
             this.searchBox.setBordered(true);
             this.searchBox.setVisible(true);
-            this.searchBox.setTextColor(0xFFFFFF);
+            this.searchBox.setTextColor(0xFFFFFFFF);
             this.searchBox.setHint(SEARCH_HINT);
             this.searchBox.setEditable(true);
             this.startingSearchText.ifPresentOrElse(text -> {

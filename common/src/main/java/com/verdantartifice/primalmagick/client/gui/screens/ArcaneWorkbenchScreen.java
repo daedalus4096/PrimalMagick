@@ -16,6 +16,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import org.jetbrains.annotations.NotNull;
@@ -98,7 +99,7 @@ public class ArcaneWorkbenchScreen extends AbstractRecipeBookScreen<ArcaneWorkbe
             int width = this.font.width(text.getString());
             int x = 1 + (this.imageWidth - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
-            graphics.text(this.font, text, x, y, 0, false);
+            graphics.text(this.font, text, x, y, ARGB.black(1F), false);
         }
     }
 

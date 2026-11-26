@@ -24,6 +24,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringDecomposer;
@@ -145,7 +146,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                 if (cost < 0) {
                     // The drawCenteredString method doesn't have an option to omit the drop shadow, alas, so we do it manually
                     Component text = Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.already_studied");
-                    pGuiGraphics.text(this.font, text, slotLeft + 54 - this.font.width(text) / 2, slotTop + 5, (textColor & 16711422) >> 1, false);
+                    pGuiGraphics.text(this.font, text, slotLeft + 54 - this.font.width(text) / 2, slotTop + 5, ARGB.opaque((textColor & 16711422) >> 1), false);
                 }
             } else if (this.minecraft.player != null) {
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
@@ -156,7 +157,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     if (levelCount > 0 && levelCount <= DISABLED_LEVEL_SPRITES.length) {
                         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, DISABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
                     }
-                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, (textColor & 16711422) >> 1);
+                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, ARGB.opaque((textColor & 16711422) >> 1));
                 } else {
                     // Highlight all non-disabled slots up to and including the hovered slot
                     if (slotIndex <= hoveredSlotIndex) {
@@ -171,14 +172,14 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
                     }
 
-                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, textColor);
+                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, ARGB.opaque(textColor));
                     textColor = 8453920;
                 }
 
                 // Draw the total number of levels required to choose the option
                 if (minLevels > 0) {
                     String costStr = "" + minLevels;
-                    pGuiGraphics.text(this.font, costStr, slotTextStart + 86 - this.font.width(costStr), slotTop + 9, textColor);
+                    pGuiGraphics.text(this.font, costStr, slotTextStart + 86 - this.font.width(costStr), slotTop + 9, ARGB.opaque(textColor));
                 }
             }
         }
