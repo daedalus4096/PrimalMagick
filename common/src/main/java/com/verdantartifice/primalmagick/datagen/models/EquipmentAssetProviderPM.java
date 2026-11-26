@@ -7,6 +7,7 @@ import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import org.jetbrains.annotations.NotNull;
@@ -24,17 +25,22 @@ public class EquipmentAssetProviderPM implements DataProvider {
     }
 
     private static void bootstrap(BiConsumer<ResourceKey<EquipmentAsset>, EquipmentClientInfo> pOutput) {
-        pOutput.accept(EquipmentAssetsPM.IMBUED_WOOL, onlyHumanoid("imbued_wool"));
-        pOutput.accept(EquipmentAssetsPM.SPELLCLOTH, onlyHumanoid("spellcloth"));
-        pOutput.accept(EquipmentAssetsPM.HEXWEAVE, onlyHumanoid("hexweave"));
-        pOutput.accept(EquipmentAssetsPM.SAINTSWOOL, onlyHumanoid("saintswool"));
-        pOutput.accept(EquipmentAssetsPM.PRIMALITE, onlyHumanoid("primalite"));
-        pOutput.accept(EquipmentAssetsPM.HEXIUM, onlyHumanoid("hexium"));
-        pOutput.accept(EquipmentAssetsPM.HALLOWSTEEL, onlyHumanoid("hallowsteel"));
+        pOutput.accept(EquipmentAssetsPM.IMBUED_WOOL, onlyAdultHumanoid("imbued_wool"));
+        pOutput.accept(EquipmentAssetsPM.SPELLCLOTH, onlyAdultHumanoid("spellcloth"));
+        pOutput.accept(EquipmentAssetsPM.HEXWEAVE, onlyAdultHumanoid("hexweave"));
+        pOutput.accept(EquipmentAssetsPM.SAINTSWOOL, onlyAdultHumanoid("saintswool"));
+        pOutput.accept(EquipmentAssetsPM.PRIMALITE, onlyAdultHumanoid("primalite"));
+        pOutput.accept(EquipmentAssetsPM.HEXIUM, onlyAdultHumanoid("hexium"));
+        pOutput.accept(EquipmentAssetsPM.HALLOWSTEEL, onlyAdultHumanoid("hallowsteel"));
     }
 
-    private static EquipmentClientInfo onlyHumanoid(String pName) {
-        return EquipmentClientInfo.builder().addHumanoidLayers(ResourceUtils.loc(pName)).build();
+    private static EquipmentClientInfo onlyAdultHumanoid(String pName) {
+        // TODO Add baby textures and switch back to calling addHumanoidLayers
+        Identifier textureId = ResourceUtils.loc(pName);
+        return EquipmentClientInfo.builder()
+                .addLayers(EquipmentClientInfo.LayerType.HUMANOID, EquipmentClientInfo.Layer.leatherDyeable(textureId, false))
+                .addLayers(EquipmentClientInfo.LayerType.HUMANOID_LEGGINGS, EquipmentClientInfo.Layer.leatherDyeable(textureId, false))
+                .build();
     }
 
     @Override
