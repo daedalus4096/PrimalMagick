@@ -49,7 +49,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         // Draw the colored source icon
         pGuiGraphics.pose().pushMatrix();
         pGuiGraphics.pose().translate(this.getX(), this.getY());
-        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, discovered ? this.source.getImage() : Source.getUnknownImage(), 0, 0, 32, 32);
+        pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, discovered ? this.source.getImage() : Source.getUnknownImage(), 0, 0, 16, 16);
         pGuiGraphics.pose().popMatrix();
         
         // Draw the amount string
