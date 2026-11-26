@@ -1,0 +1,7 @@
+{
+  "type": "primalmagick:item",
+  "set": {
+    "sources": {}
+  },
+  "target": "minecraft:test_block"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "sources": {
+      "primalmagick:sea": 5
+    }
+  },
+  "base": "minecraft:diamond_horse_armor",
+  "target": "minecraft:diamond_nautilus_armor"
+}

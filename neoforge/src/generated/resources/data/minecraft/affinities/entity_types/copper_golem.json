@@ -1,0 +1,9 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:copper_golem",
+  "values": {
+    "sources": {
+      "primalmagick:earth": 10
+    }
+  }
+}

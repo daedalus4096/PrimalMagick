@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:copper_lantern",
+  "target": "minecraft:exposed_copper_lantern"
+}

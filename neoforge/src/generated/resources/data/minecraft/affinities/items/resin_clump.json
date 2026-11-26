@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:item",
+  "set": {
+    "sources": {
+      "primalmagick:earth": 2,
+      "primalmagick:moon": 5
+    }
+  },
+  "target": "minecraft:resin_clump"
+}

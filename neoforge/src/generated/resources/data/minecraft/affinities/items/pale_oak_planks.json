@@ -1,0 +1,15 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "sources": {
+      "primalmagick:moon": 2
+    }
+  },
+  "base": "minecraft:oak_planks",
+  "remove": {
+    "sources": {
+      "primalmagick:sun": 2
+    }
+  },
+  "target": "minecraft:pale_oak_planks"
+}

@@ -1,0 +1,11 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:zombie_nautilus",
+  "values": {
+    "sources": {
+      "primalmagick:blood": 10,
+      "primalmagick:moon": 10,
+      "primalmagick:sea": 5
+    }
+  }
+}

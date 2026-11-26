@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:oak_slab",
+  "target": "minecraft:mangrove_slab"
+}

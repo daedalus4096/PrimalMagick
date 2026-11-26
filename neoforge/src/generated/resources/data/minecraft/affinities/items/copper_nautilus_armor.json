@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "sources": {
+      "primalmagick:sea": 5
+    }
+  },
+  "base": "minecraft:copper_horse_armor",
+  "target": "minecraft:copper_nautilus_armor"
+}

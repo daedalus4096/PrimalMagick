@@ -1,0 +1,11 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:happy_ghast",
+  "values": {
+    "sources": {
+      "primalmagick:blood": 10,
+      "primalmagick:infernal": 10,
+      "primalmagick:sky": 10
+    }
+  }
+}

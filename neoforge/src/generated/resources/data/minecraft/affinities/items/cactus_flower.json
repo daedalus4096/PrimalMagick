@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:dandelion",
+  "target": "minecraft:cactus_flower"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "sources": {
+      "primalmagick:sea": 5
+    }
+  },
+  "base": "minecraft:iron_horse_armor",
+  "target": "minecraft:iron_nautilus_armor"
+}

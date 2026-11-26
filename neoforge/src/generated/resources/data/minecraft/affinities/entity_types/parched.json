@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:parched",
+  "values": {
+    "sources": {
+      "primalmagick:blood": 10,
+      "primalmagick:sun": 5
+    }
+  }
+}
