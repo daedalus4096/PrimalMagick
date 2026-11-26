@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.items;
 
+import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
@@ -725,15 +726,15 @@ public class ItemsPM {
 
     // Register rune items
     public static final IRegistryItem<Item, Item> RUNE_UNATTUNED = registerSimpleItemSupplier("rune_unattuned");
-    public static final IRegistryItem<Item, RuneItem> RUNE_EARTH = registerSupplier("rune_earth", props -> new RuneItem(Rune.EARTH, props));
-    public static final IRegistryItem<Item, RuneItem> RUNE_SEA = registerSupplier("rune_sea", props -> new RuneItem(Rune.SEA, props));
-    public static final IRegistryItem<Item, RuneItem> RUNE_SKY = registerSupplier("rune_sky", props -> new RuneItem(Rune.SKY, props));
-    public static final IRegistryItem<Item, RuneItem> RUNE_SUN = registerSupplier("rune_sun", props -> new RuneItem(Rune.SUN, props));
-    public static final IRegistryItem<Item, RuneItem> RUNE_MOON = registerSupplier("rune_moon", props -> new RuneItem(Rune.MOON, props));
-    public static final IRegistryItem<Item, RuneItem> RUNE_BLOOD = registerSupplier("rune_blood", props -> new RuneItem(Rune.BLOOD, props));
-    public static final IRegistryItem<Item, RuneItem> RUNE_INFERNAL = registerSupplier("rune_infernal", props -> new RuneItem(Rune.INFERNAL, props));
-    public static final IRegistryItem<Item, RuneItem> RUNE_VOID = registerSupplier("rune_void", props -> new RuneItem(Rune.VOID, props));
-    public static final IRegistryItem<Item, RuneItem> RUNE_HALLOWED = registerSupplier("rune_hallowed", props -> new RuneItem(Rune.HALLOWED, props));
+    public static final IRegistryItem<Item, RuneItem> RUNE_EARTH = registerSupplier("rune_earth", props -> new RuneItem(Rune.EARTH, props), () -> new Item.Properties().trimMaterial(TrimMaterialsPM.RUNE_EARTH));
+    public static final IRegistryItem<Item, RuneItem> RUNE_SEA = registerSupplier("rune_sea", props -> new RuneItem(Rune.SEA, props), () -> new Item.Properties().trimMaterial(TrimMaterialsPM.RUNE_SEA));
+    public static final IRegistryItem<Item, RuneItem> RUNE_SKY = registerSupplier("rune_sky", props -> new RuneItem(Rune.SKY, props), () -> new Item.Properties().trimMaterial(TrimMaterialsPM.RUNE_SKY));
+    public static final IRegistryItem<Item, RuneItem> RUNE_SUN = registerSupplier("rune_sun", props -> new RuneItem(Rune.SUN, props), () -> new Item.Properties().trimMaterial(TrimMaterialsPM.RUNE_SUN));
+    public static final IRegistryItem<Item, RuneItem> RUNE_MOON = registerSupplier("rune_moon", props -> new RuneItem(Rune.MOON, props), () -> new Item.Properties().trimMaterial(TrimMaterialsPM.RUNE_MOON));
+    public static final IRegistryItem<Item, RuneItem> RUNE_BLOOD = registerSupplier("rune_blood", props -> new RuneItem(Rune.BLOOD, props), () -> new Item.Properties().trimMaterial(TrimMaterialsPM.RUNE_BLOOD));
+    public static final IRegistryItem<Item, RuneItem> RUNE_INFERNAL = registerSupplier("rune_infernal", props -> new RuneItem(Rune.INFERNAL, props), () -> new Item.Properties().trimMaterial(TrimMaterialsPM.RUNE_INFERNAL));
+    public static final IRegistryItem<Item, RuneItem> RUNE_VOID = registerSupplier("rune_void", props -> new RuneItem(Rune.VOID, props), () -> new Item.Properties().trimMaterial(TrimMaterialsPM.RUNE_VOID));
+    public static final IRegistryItem<Item, RuneItem> RUNE_HALLOWED = registerSupplier("rune_hallowed", props -> new RuneItem(Rune.HALLOWED, props), () -> new Item.Properties().trimMaterial(TrimMaterialsPM.RUNE_HALLOWED));
     public static final IRegistryItem<Item, RuneItem> RUNE_ABSORB = registerSupplier("rune_absorb", props -> new RuneItem(Rune.ABSORB, props));
     public static final IRegistryItem<Item, RuneItem> RUNE_DISPEL = registerSupplier("rune_dispel", props -> new RuneItem(Rune.DISPEL, props));
     public static final IRegistryItem<Item, RuneItem> RUNE_PROJECT = registerSupplier("rune_project", props -> new RuneItem(Rune.PROJECT, props));
