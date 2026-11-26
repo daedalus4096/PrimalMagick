@@ -30,9 +30,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -98,9 +100,13 @@ public class DowsingRodItem extends Item {
     @Override
     @NotNull
     public InteractionResult use(@NotNull Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
-        // If using the dowsing rod on empty air, then clear any recorded dowsing positions
+        // If using the dowsing rod on empty air, then clear any recorded dowsing positions. The client also
+        // calls this after any block click that useOn passes on, so skip it when a block is targeted;
+        // otherwise a sneaking click on a block would record its position and immediately clear it again.
         InteractionResult retVal = super.use(pLevel, pPlayer, pUsedHand);
-        this.recordDowsingPosition(pPlayer.getItemInHand(pUsedHand), pPlayer, null);
+        if (getPlayerPOVHitResult(pLevel, pPlayer, ClipContext.Fluid.NONE).getType() == HitResult.Type.MISS) {
+            this.recordDowsingPosition(pPlayer.getItemInHand(pUsedHand), pPlayer, null);
+        }
         return retVal;
     }
 
