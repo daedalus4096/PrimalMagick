@@ -29,8 +29,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
-
 public class WandGlamourTableMenu extends AbstractContainerMenu {
     public static final Identifier CAP_SLOT_TEXTURE = WandAssemblyTableMenu.CAP_SLOT_TEXTURE;
     public static final Identifier CORE_SLOT_TEXTURE = WandAssemblyTableMenu.CORE_SLOT_TEXTURE;
@@ -196,15 +194,12 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
         if (!world.isClientSide() && this.player instanceof ServerPlayer spe) {
             ServerLevel level = spe.level();
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = level.recipeAccess().byKey(WandGlamourRecipe.WAND_KEY);
-            if (opt.isEmpty()) {
-                opt = level.recipeAccess().byKey(WandGlamourRecipe.STAFF_KEY);
-            }
-            if (opt.isPresent() && opt.get().value() instanceof WandGlamourRecipe recipe) {
-                // If the inputs are valid, show the output
-                CraftingInput craftInput = this.componentInv.asCraftInput();
-                if (recipe.matches(craftInput, world)) {
+            CraftingInput craftInput = this.componentInv.asCraftInput();
+            for (RecipeHolder<?> holder : level.recipeAccess().getRecipes()) {
+                // If the inputs are valid for a wand or staff, show the output
+                if (holder.value() instanceof WandGlamourRecipe recipe && recipe.matches(craftInput, world)) {
                     stack = recipe.assemble(craftInput);
+                    break;
                 }
             }
             
