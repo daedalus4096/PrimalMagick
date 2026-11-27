@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:tall_grass",
+  "target": "minecraft:tall_dry_grass"
+}

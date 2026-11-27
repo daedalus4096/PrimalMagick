@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:open_eyeblossom",
+  "target": "minecraft:closed_eyeblossom"
+}

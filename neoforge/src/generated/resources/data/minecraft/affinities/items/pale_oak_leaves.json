@@ -1,0 +1,15 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "sources": {
+      "primalmagick:moon": 5
+    }
+  },
+  "base": "minecraft:oak_leaves",
+  "remove": {
+    "sources": {
+      "primalmagick:sun": 5
+    }
+  },
+  "target": "minecraft:pale_oak_leaves"
+}

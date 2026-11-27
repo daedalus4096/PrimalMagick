@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:entity_type",
+  "target": "minecraft:creaking",
+  "values": {
+    "sources": {
+      "primalmagick:earth": 10,
+      "primalmagick:moon": 10
+    }
+  }
+}

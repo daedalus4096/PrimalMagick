@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:lightning_rod",
+  "target": "minecraft:exposed_lightning_rod"
+}

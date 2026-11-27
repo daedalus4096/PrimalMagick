@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:bundle",
+  "target": "minecraft:red_bundle"
+}

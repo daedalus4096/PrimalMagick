@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:pale_oak_log",
+  "target": "minecraft:pale_oak_wood"
+}

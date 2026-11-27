@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "sources": {
+      "primalmagick:moon": 2
+    }
+  },
+  "base": "minecraft:short_grass",
+  "target": "minecraft:firefly_bush"
+}

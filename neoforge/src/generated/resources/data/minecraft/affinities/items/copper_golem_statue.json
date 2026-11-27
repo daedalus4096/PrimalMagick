@@ -1,0 +1,11 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "sources": {
+      "primalmagick:earth": 5,
+      "primalmagick:sun": 5
+    }
+  },
+  "base": "minecraft:copper_block",
+  "target": "minecraft:copper_golem_statue"
+}

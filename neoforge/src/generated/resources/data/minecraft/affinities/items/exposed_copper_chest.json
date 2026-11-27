@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:copper_chest",
+  "target": "minecraft:exposed_copper_chest"
+}

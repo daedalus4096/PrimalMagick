@@ -1,0 +1,5 @@
+{
+  "type": "primalmagick:item",
+  "base": "minecraft:egg",
+  "target": "minecraft:brown_egg"
+}

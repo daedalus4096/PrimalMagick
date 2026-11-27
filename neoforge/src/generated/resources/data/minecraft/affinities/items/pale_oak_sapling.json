@@ -1,0 +1,15 @@
+{
+  "type": "primalmagick:item",
+  "add": {
+    "sources": {
+      "primalmagick:moon": 10
+    }
+  },
+  "base": "minecraft:oak_sapling",
+  "remove": {
+    "sources": {
+      "primalmagick:sun": 10
+    }
+  },
+  "target": "minecraft:pale_oak_sapling"
+}
