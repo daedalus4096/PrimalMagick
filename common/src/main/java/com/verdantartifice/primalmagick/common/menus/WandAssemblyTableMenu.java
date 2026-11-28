@@ -24,11 +24,10 @@ import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
 
 /**
  * Server data container for the wand assembly table GUI.
@@ -193,14 +192,12 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
     protected void slotChangedCraftingGrid(Level world) {
         if (!world.isClientSide() && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<?>> opt = spe.level().recipeAccess().byKey(WandAssemblyRecipe.WAND_KEY);
-            if (opt.isEmpty()) {
-                opt = spe.level().recipeAccess().byKey(WandAssemblyRecipe.STAFF_KEY);
-            }
-            if (opt.isPresent() && opt.get().value() instanceof WandAssemblyRecipe recipe) {
+            CraftingInput craftInput = this.componentInv.asCraftInput();
+            for (RecipeHolder<?> holder : spe.level().recipeAccess().getRecipes()) {
                 // If the inputs make a valid wand or staff, show the output
-                if (recipe.matches(this.componentInv.asCraftInput(), world)) {
-                    stack = recipe.assemble(this.componentInv.asCraftInput());
+                if (holder.value() instanceof WandAssemblyRecipe recipe && recipe.matches(craftInput, world)) {
+                    stack = recipe.assemble(craftInput);
+                    break;
                 }
             }
             
