@@ -157,7 +157,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     if (levelCount > 0 && levelCount <= DISABLED_LEVEL_SPRITES.length) {
                         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, DISABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
                     }
-                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, ARGB.opaque((textColor & 16711422) >> 1));
+                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, ARGB.opaque((textColor & 16711422) >> 1), false);
                 } else {
                     // Highlight all non-disabled slots up to and including the hovered slot
                     if (slotIndex <= hoveredSlotIndex) {
@@ -172,12 +172,12 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                         pGuiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENABLED_LEVEL_SPRITES[levelCount - 1], slotLeft + 1, slotTop + 1, 16, 16);
                     }
 
-                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, ARGB.opaque(textColor));
+                    pGuiGraphics.textWithWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, ARGB.opaque(textColor), false);
                     textColor = 8453920;
                 }
 
                 // Draw the total number of levels required to choose the option
-                if (minLevels > 0) {
+                if (minLevels > 0 && !this.minecraft.player.getAbilities().instabuild) {
                     String costStr = "" + minLevels;
                     pGuiGraphics.text(this.font, costStr, slotTextStart + 86 - this.font.width(costStr), slotTop + 9, ARGB.opaque(textColor));
                 }
