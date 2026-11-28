@@ -32,11 +32,14 @@ import java.util.Optional;
  */
 public class ArcaneWorkbenchScreen extends AbstractRecipeBookScreen<ArcaneWorkbenchMenu> {
     private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/arcane_workbench.png");
+    // Taller than a standard container screen, whose height the recipe book screen base class fixes at construction
+    private static final int IMAGE_HEIGHT = 183;
 
     protected List<ManaCostWidget> costWidgets = new ArrayList<>();
 
     public ArcaneWorkbenchScreen(ArcaneWorkbenchMenu menu, Inventory inventory, Component title) {
         super(menu, new ArcaneCraftingRecipeBookComponent(menu), inventory, title);
+        this.inventoryLabelY = IMAGE_HEIGHT - 94;
     }
 
     @Override
@@ -79,7 +82,14 @@ public class ArcaneWorkbenchScreen extends AbstractRecipeBookScreen<ArcaneWorkbe
         super.extractBackground(graphics, mouseX, mouseY, partialTicks);
         int xo = this.leftPos;
         int yo = (this.height - this.imageHeight) / 2;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, xo, yo, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, xo, yo, 0.0F, 0.0F, this.imageWidth, IMAGE_HEIGHT, 256, 256);
+    }
+
+    @Override
+    protected boolean hasClickedOutside(double mx, double my, int xo, int yo) {
+        // Clicks on the part of the screen below the standard container height are still inside it
+        boolean inExtendedArea = mx >= xo && mx < xo + this.imageWidth && my >= yo + this.imageHeight && my < yo + IMAGE_HEIGHT;
+        return super.hasClickedOutside(mx, my, xo, yo) && !inExtendedArea;
     }
 
     @Override
