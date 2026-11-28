@@ -30,11 +30,11 @@ public class CalcinatorScreen extends AbstractContainerScreenPM<CalcinatorMenu> 
         // Animate burn indicator
         if (this.menu.isBurning()) {
             int burn = this.menu.getBurnLeftScaled();
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BURN_SPRITE, 14, 14, 0, 14 - burn, this.leftPos + 34, this.topPos + 48 - burn, 14, burn);
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BURN_SPRITE, 14, 14, 0, 14 - burn, this.leftPos + 34, this.topPos + 50 - burn, 14, burn);
         }
         
         // Animate cook progress indicator
         int cook = this.menu.getCookProgressionScaled();
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_SPRITE, 24, 16, 0, 0, this.leftPos + 75, this.topPos + 44, cook, 16);
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_SPRITE, 24, 16, 0, 0, this.leftPos + 57, this.topPos + 34, cook, 16);
     }
 }
