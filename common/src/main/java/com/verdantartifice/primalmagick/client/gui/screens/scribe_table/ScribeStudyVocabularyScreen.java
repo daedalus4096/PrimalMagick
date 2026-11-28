@@ -49,7 +49,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     private static final Identifier SLOT_SPRITE = ResourceUtils.loc("scribe_table/slot");
     private static final Identifier TEXTURE = ResourceUtils.loc("textures/gui/scribe_study_vocabulary.png");
     /** The Identifier containing the texture for the Book rendered above the enchantment table */
-    private static final Identifier ENCHANTING_BOOK_LOCATION = Identifier.withDefaultNamespace("textures/entity/enchanting_table_book.png");
+    private static final Identifier ENCHANTING_BOOK_LOCATION = Identifier.withDefaultNamespace("textures/entity/enchantment/enchanting_table_book.png");
 
     private final RandomSource random = RandomSource.create();
     private BookModel bookModel;
