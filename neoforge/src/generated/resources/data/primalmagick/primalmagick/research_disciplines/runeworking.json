@@ -1,7 +1,7 @@
 {
   "craftingStat": "primalmagick:crafted_runeworking",
   "expertiseStat": "primalmagick:expertise_runeworking",
-  "iconLocation": "primalmagick:textures/research/discipline_runeworking.png",
+  "iconLocation": "primalmagick:textures/gui/sprites/research/discipline_runeworking.png",
   "indexSortOrder": 500,
   "key": {
     "rootKey": "primalmagick:runeworking"

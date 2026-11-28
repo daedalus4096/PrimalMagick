@@ -6,7 +6,7 @@
   "finales": [],
   "flags": {},
   "icon": {
-    "location": "primalmagick:textures/research/discipline_alchemy.png"
+    "location": "primalmagick:textures/gui/sprites/research/discipline_alchemy.png"
   },
   "key": {
     "rootKey": "primalmagick:basic_alchemy"

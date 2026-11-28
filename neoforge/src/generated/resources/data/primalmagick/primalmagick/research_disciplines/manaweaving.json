@@ -1,7 +1,7 @@
 {
   "craftingStat": "primalmagick:crafted_manaweaving",
   "expertiseStat": "primalmagick:expertise_manaweaving",
-  "iconLocation": "primalmagick:textures/research/discipline_manaweaving.png",
+  "iconLocation": "primalmagick:textures/gui/sprites/research/discipline_manaweaving.png",
   "indexSortOrder": 200,
   "key": {
     "rootKey": "primalmagick:manaweaving"

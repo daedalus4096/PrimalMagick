@@ -5,7 +5,7 @@
     "internal": true
   },
   "icon": {
-    "location": "primalmagick:textures/research/research_map.png"
+    "location": "primalmagick:textures/gui/sprites/research/research_map.png"
   },
   "key": {
     "rootKey": "primalmagick:env_moon"

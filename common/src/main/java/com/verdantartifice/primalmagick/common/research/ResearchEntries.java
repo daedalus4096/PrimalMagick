@@ -353,16 +353,16 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNKNOWN_RESEARCH = create("unknown_research");
     
     // Commonly used research icons
-    private static final Identifier ICON_MANAWEAVING = ResourceUtils.loc("textures/research/discipline_manaweaving.png");
-    private static final Identifier ICON_ALCHEMY = ResourceUtils.loc("textures/research/discipline_alchemy.png");
-    private static final Identifier ICON_SORCERY = ResourceUtils.loc("textures/research/discipline_sorcery.png");
-    private static final Identifier ICON_RUNEWORKING = ResourceUtils.loc("textures/research/discipline_runeworking.png");
-    private static final Identifier ICON_RITUAL = ResourceUtils.loc("textures/research/discipline_ritual.png");
-    private static final Identifier ICON_MAGITECH = ResourceUtils.loc("textures/research/discipline_magitech.png");
-    private static final Identifier ICON_BAG = ResourceUtils.loc("textures/research/research_bag.png");
-    private static final Identifier ICON_MAP = ResourceUtils.loc("textures/research/research_map.png");
-    private static final Identifier ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
-    private static final Identifier ICON_UNKNOWN = ResourceUtils.loc("textures/research/research_unknown.png");
+    private static final Identifier ICON_MANAWEAVING = ResourceUtils.loc("textures/gui/sprites/research/discipline_manaweaving.png");
+    private static final Identifier ICON_ALCHEMY = ResourceUtils.loc("textures/gui/sprites/research/discipline_alchemy.png");
+    private static final Identifier ICON_SORCERY = ResourceUtils.loc("textures/gui/sprites/research/discipline_sorcery.png");
+    private static final Identifier ICON_RUNEWORKING = ResourceUtils.loc("textures/gui/sprites/research/discipline_runeworking.png");
+    private static final Identifier ICON_RITUAL = ResourceUtils.loc("textures/gui/sprites/research/discipline_ritual.png");
+    private static final Identifier ICON_MAGITECH = ResourceUtils.loc("textures/gui/sprites/research/discipline_magitech.png");
+    private static final Identifier ICON_BAG = ResourceUtils.loc("textures/gui/sprites/research/research_bag.png");
+    private static final Identifier ICON_MAP = ResourceUtils.loc("textures/gui/sprites/research/research_map.png");
+    private static final Identifier ICON_TUBE = ResourceUtils.loc("textures/gui/sprites/research/research_tube.png");
+    private static final Identifier ICON_UNKNOWN = ResourceUtils.loc("textures/gui/sprites/research/research_unknown.png");
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, ResourceUtils.loc(name));
@@ -389,7 +389,7 @@ public class ResearchEntries {
                         .recipe(ItemsPM.ANALYSIS_TABLE.get()).end()
                 .stage().recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).end()
                 .build());
-        register(context, THEORYCRAFTING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/knowledge_theory.png").parent(FIRST_STEPS)
+        register(context, THEORYCRAFTING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/gui/sprites/research/knowledge_theory.png").parent(FIRST_STEPS)
                 .stage().requiredObservations(1).end()
                 .stage().requiredCraft(ItemsPM.RESEARCH_TABLE.get()).requiredCraft(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get())
                         .recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).end()

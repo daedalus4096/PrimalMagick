@@ -6,7 +6,7 @@
     "internal": true
   },
   "icon": {
-    "location": "primalmagick:textures/research/research_bag.png"
+    "location": "primalmagick:textures/gui/sprites/research/research_bag.png"
   },
   "key": {
     "rootKey": "primalmagick:scan_hallowsteel"

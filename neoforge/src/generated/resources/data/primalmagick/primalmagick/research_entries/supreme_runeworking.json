@@ -6,7 +6,7 @@
   "finales": [],
   "flags": {},
   "icon": {
-    "location": "primalmagick:textures/research/discipline_runeworking.png"
+    "location": "primalmagick:textures/gui/sprites/research/discipline_runeworking.png"
   },
   "key": {
     "rootKey": "primalmagick:supreme_runeworking"

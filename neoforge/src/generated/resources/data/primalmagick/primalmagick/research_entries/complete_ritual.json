@@ -12,7 +12,7 @@
     "hidden": true
   },
   "icon": {
-    "location": "primalmagick:textures/research/discipline_ritual.png"
+    "location": "primalmagick:textures/gui/sprites/research/discipline_ritual.png"
   },
   "key": {
     "rootKey": "primalmagick:complete_ritual"

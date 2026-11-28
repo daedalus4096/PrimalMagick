@@ -29,7 +29,7 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
             RuneEnchantmentPartialKey::new);
     
     private static final String PREFIX = "&";
-    private static final Identifier ICON_TUBE = ResourceUtils.loc("textures/research/research_tube.png");
+    private static final Identifier ICON_TUBE = ResourceUtils.loc("textures/gui/sprites/research/research_tube.png");
 
     protected final Holder<Enchantment> enchant;
     protected final RuneType runeType;

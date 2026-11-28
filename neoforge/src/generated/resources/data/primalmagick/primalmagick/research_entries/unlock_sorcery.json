@@ -6,7 +6,7 @@
   "finales": [],
   "flags": {},
   "icon": {
-    "location": "primalmagick:textures/research/discipline_sorcery.png"
+    "location": "primalmagick:textures/gui/sprites/research/discipline_sorcery.png"
   },
   "key": {
     "rootKey": "primalmagick:unlock_sorcery"

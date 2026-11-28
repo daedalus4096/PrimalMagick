@@ -12,7 +12,7 @@
     "hidden": true
   },
   "icon": {
-    "location": "primalmagick:textures/research/discipline_sorcery.png"
+    "location": "primalmagick:textures/gui/sprites/research/discipline_sorcery.png"
   },
   "key": {
     "rootKey": "primalmagick:complete_sorcery"

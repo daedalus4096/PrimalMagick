@@ -6,7 +6,7 @@
     "internal": true
   },
   "icon": {
-    "location": "primalmagick:textures/research/research_tube.png"
+    "location": "primalmagick:textures/gui/sprites/research/research_tube.png"
   },
   "key": {
     "rootKey": "primalmagick:sotu_research_arcanometer"

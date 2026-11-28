@@ -12,7 +12,7 @@
     "hidden": true
   },
   "icon": {
-    "location": "primalmagick:textures/research/discipline_manaweaving.png"
+    "location": "primalmagick:textures/gui/sprites/research/discipline_manaweaving.png"
   },
   "key": {
     "rootKey": "primalmagick:complete_manaweaving"

@@ -6,7 +6,7 @@
   "finales": [],
   "flags": {},
   "icon": {
-    "location": "primalmagick:textures/research/knowledge_theory.png"
+    "location": "primalmagick:textures/gui/sprites/research/knowledge_theory.png"
   },
   "key": {
     "rootKey": "primalmagick:theorycrafting"

@@ -27,7 +27,7 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
     });
     
     private static final String PREFIX = "*";
-    private static final Identifier ICON_MAP = ResourceUtils.loc("textures/research/research_map.png");
+    private static final Identifier ICON_MAP = ResourceUtils.loc("textures/gui/sprites/research/research_map.png");
 
     protected final EntityType<?> entityType;
     
