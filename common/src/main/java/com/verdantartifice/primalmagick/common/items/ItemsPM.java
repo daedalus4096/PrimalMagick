@@ -667,7 +667,7 @@ public class ItemsPM {
     public static final IRegistryItem<Item, DowsingRodItem> DOWSING_ROD = registerSupplier("dowsing_rod", DowsingRodItem::new, () -> new Item.Properties().stacksTo(1).durability(63));
     public static final IRegistryItem<Item, Item> FOUR_LEAF_CLOVER = registerSimpleItemSupplier("four_leaf_clover");
     public static final IRegistryItem<Item, RecallStoneItem> RECALL_STONE = registerSupplier("recall_stone", RecallStoneItem::new);
-    public static final IRegistryItem<Item, SmithingTemplateItem> RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE = registerSupplier("runic_armor_trim_smithing_template", TrimPatternsPM::createRunicArmorTrimTemplate);
+    public static final IRegistryItem<Item, SmithingTemplateItem> RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE = registerSupplier("runic_armor_trim_smithing_template", TrimPatternsPM::createRunicArmorTrimTemplate, () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, WardingModuleItem> BASIC_WARDING_MODULE = registerSupplier("warding_module_basic", props -> new WardingModuleItem(DeviceTier.ENCHANTED, props), () -> new Item.Properties().rarity(Rarity.UNCOMMON));
     public static final IRegistryItem<Item, WardingModuleItem> GREATER_WARDING_MODULE = registerSupplier("warding_module_greater", props -> new WardingModuleItem(DeviceTier.FORBIDDEN, props), () -> new Item.Properties().rarity(Rarity.RARE));
     public static final IRegistryItem<Item, WardingModuleItem> SUPREME_WARDING_MODULE = registerSupplier("warding_module_supreme", props -> new WardingModuleItem(DeviceTier.HEAVENLY, props), () -> new Item.Properties().rarity(Rarity.EPIC));
