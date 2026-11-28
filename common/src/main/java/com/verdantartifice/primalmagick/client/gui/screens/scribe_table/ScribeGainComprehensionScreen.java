@@ -252,8 +252,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 pGuiGraphics.pose().pushMatrix();
                 int dx = this.width / 2;
                 int dy = this.height / 2;
-                pGuiGraphics.pose().translate(this.getX() + 2 + (dx * 0.75F), this.getY() + 2 + (dy * 0.75F));
-                pGuiGraphics.pose().scale(0.5F, 0.5F);  // Scale down to 50% size for rendering
+                pGuiGraphics.pose().translate(this.getX() + 1 + (dx * 0.5F), this.getY() + 1 + (dy * 0.5F));
+                pGuiGraphics.pose().scale(0.25F, 0.25F);  // Scale down to 50% size for rendering
                 if (this.unlockable) {
                     // If the node can currently be unlocked, pulse its scale up and down for extra visibility
                     float scale = 1F + (0.1F * Mth.sin((this.player.tickCount + pPartialTick) / 3F));
