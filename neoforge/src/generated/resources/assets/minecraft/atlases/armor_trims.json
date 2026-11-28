@@ -4,15 +4,15 @@
       "type": "minecraft:paletted_permutations",
       "palette_key": "minecraft:trims/color_palettes/trim_palette",
       "permutations": {
-        "rune_blood": "minecraft:trims/color_palettes/redstone",
-        "rune_earth": "minecraft:trims/color_palettes/emerald",
-        "rune_hallowed": "minecraft:trims/color_palettes/quartz",
-        "rune_infernal": "minecraft:trims/color_palettes/copper",
-        "rune_moon": "minecraft:trims/color_palettes/iron",
-        "rune_sea": "minecraft:trims/color_palettes/lapis",
-        "rune_sky": "minecraft:trims/color_palettes/diamond",
-        "rune_sun": "minecraft:trims/color_palettes/gold",
-        "rune_void": "minecraft:trims/color_palettes/amethyst"
+        "rune_blood": "primalmagick:trims/color_palettes/rune_blood",
+        "rune_earth": "primalmagick:trims/color_palettes/rune_earth",
+        "rune_hallowed": "primalmagick:trims/color_palettes/rune_hallowed",
+        "rune_infernal": "primalmagick:trims/color_palettes/rune_infernal",
+        "rune_moon": "primalmagick:trims/color_palettes/rune_moon",
+        "rune_sea": "primalmagick:trims/color_palettes/rune_sea",
+        "rune_sky": "primalmagick:trims/color_palettes/rune_sky",
+        "rune_sun": "primalmagick:trims/color_palettes/rune_sun",
+        "rune_void": "primalmagick:trims/color_palettes/rune_void"
       },
       "textures": [
         "primalmagick:trims/entity/humanoid/runic",

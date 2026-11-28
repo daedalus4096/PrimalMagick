@@ -121,15 +121,15 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
                 trimPatternTextures(),
                 Identifier.withDefaultNamespace("trims/color_palettes/trim_palette"),
                 ImmutableMap.<String, Identifier>builder()
-                        .put("rune_earth", Identifier.withDefaultNamespace("trims/color_palettes/emerald"))
-                        .put("rune_sea", Identifier.withDefaultNamespace("trims/color_palettes/lapis"))
-                        .put("rune_sky", Identifier.withDefaultNamespace("trims/color_palettes/diamond"))
-                        .put("rune_sun", Identifier.withDefaultNamespace("trims/color_palettes/gold"))
-                        .put("rune_moon", Identifier.withDefaultNamespace("trims/color_palettes/iron"))
-                        .put("rune_blood", Identifier.withDefaultNamespace("trims/color_palettes/redstone"))
-                        .put("rune_infernal", Identifier.withDefaultNamespace("trims/color_palettes/copper"))
-                        .put("rune_void", Identifier.withDefaultNamespace("trims/color_palettes/amethyst"))
-                        .put("rune_hallowed", Identifier.withDefaultNamespace("trims/color_palettes/quartz"))
+                        .put("rune_earth", ResourceUtils.loc("trims/color_palettes/rune_earth"))
+                        .put("rune_sea", ResourceUtils.loc("trims/color_palettes/rune_sea"))
+                        .put("rune_sky", ResourceUtils.loc("trims/color_palettes/rune_sky"))
+                        .put("rune_sun", ResourceUtils.loc("trims/color_palettes/rune_sun"))
+                        .put("rune_moon", ResourceUtils.loc("trims/color_palettes/rune_moon"))
+                        .put("rune_blood", ResourceUtils.loc("trims/color_palettes/rune_blood"))
+                        .put("rune_infernal", ResourceUtils.loc("trims/color_palettes/rune_infernal"))
+                        .put("rune_void", ResourceUtils.loc("trims/color_palettes/rune_void"))
+                        .put("rune_hallowed", ResourceUtils.loc("trims/color_palettes/rune_hallowed"))
                         .build()));
     }
 

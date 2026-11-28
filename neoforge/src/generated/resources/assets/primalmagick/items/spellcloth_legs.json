@@ -78,6 +78,69 @@
           "model": "primalmagick:item/spellcloth_legs_resin_trim"
         },
         "when": "minecraft:resin"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/spellcloth_legs_rune_earth_trim"
+        },
+        "when": "primalmagick:rune_earth"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/spellcloth_legs_rune_sea_trim"
+        },
+        "when": "primalmagick:rune_sea"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/spellcloth_legs_rune_sky_trim"
+        },
+        "when": "primalmagick:rune_sky"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/spellcloth_legs_rune_sun_trim"
+        },
+        "when": "primalmagick:rune_sun"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/spellcloth_legs_rune_moon_trim"
+        },
+        "when": "primalmagick:rune_moon"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/spellcloth_legs_rune_blood_trim"
+        },
+        "when": "primalmagick:rune_blood"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/spellcloth_legs_rune_infernal_trim"
+        },
+        "when": "primalmagick:rune_infernal"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/spellcloth_legs_rune_void_trim"
+        },
+        "when": "primalmagick:rune_void"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primalmagick:item/spellcloth_legs_rune_hallowed_trim"
+        },
+        "when": "primalmagick:rune_hallowed"
       }
     ],
     "fallback": {

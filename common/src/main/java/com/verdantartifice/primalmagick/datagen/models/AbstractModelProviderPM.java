@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.models;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.client.color.item.SourceTint;
 import com.verdantartifice.primalmagick.client.item.properties.StackDyeColor;
@@ -21,6 +22,8 @@ import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteTrid
 import com.verdantartifice.primalmagick.client.renderers.itemstack.ScanStateItemProperty;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.SpellcraftingAltarSpecialRenderer;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.SpelltomeSpecialRenderer;
+import com.verdantartifice.primalmagick.common.armortrim.MaterialAssetGroupsPM;
+import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
@@ -57,6 +60,8 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 import com.verdantartifice.primalmagick.platform.Services;
 import net.minecraft.client.color.item.Constant;
+import net.minecraft.client.color.item.Dye;
+import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -78,6 +83,7 @@ import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.RangeSelectItemModel;
 import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.client.renderer.item.properties.select.DisplayContext;
+import net.minecraft.client.renderer.item.properties.select.TrimMaterialProperty;
 import net.minecraft.client.renderer.special.ShieldSpecialRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.special.TridentSpecialRenderer;
@@ -87,10 +93,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
+import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.AttachFace;
@@ -99,6 +109,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -112,6 +123,19 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
     private static final Identifier TRIM_PREFIX_ROBE_CHESTPLATE = prefixForModSlotTrim("robe_chest");
     private static final Identifier TRIM_PREFIX_ROBE_LEGGINGS = prefixForModSlotTrim("robe_legs");
     private static final Identifier TRIM_PREFIX_ROBE_BOOTS = prefixForModSlotTrim("robe_feet");
+
+    private static final List<ItemModelGenerators.TrimMaterialData> ROBE_TRIM_MATERIAL_MODELS = ImmutableList.<ItemModelGenerators.TrimMaterialData>builder()
+            .addAll(ItemModelGenerators.TRIM_MATERIAL_MODELS)
+            .add(new ItemModelGenerators.TrimMaterialData(MaterialAssetGroupsPM.RUNE_EARTH, TrimMaterialsPM.RUNE_EARTH))
+            .add(new ItemModelGenerators.TrimMaterialData(MaterialAssetGroupsPM.RUNE_SEA, TrimMaterialsPM.RUNE_SEA))
+            .add(new ItemModelGenerators.TrimMaterialData(MaterialAssetGroupsPM.RUNE_SKY, TrimMaterialsPM.RUNE_SKY))
+            .add(new ItemModelGenerators.TrimMaterialData(MaterialAssetGroupsPM.RUNE_SUN, TrimMaterialsPM.RUNE_SUN))
+            .add(new ItemModelGenerators.TrimMaterialData(MaterialAssetGroupsPM.RUNE_MOON, TrimMaterialsPM.RUNE_MOON))
+            .add(new ItemModelGenerators.TrimMaterialData(MaterialAssetGroupsPM.RUNE_BLOOD, TrimMaterialsPM.RUNE_BLOOD))
+            .add(new ItemModelGenerators.TrimMaterialData(MaterialAssetGroupsPM.RUNE_INFERNAL, TrimMaterialsPM.RUNE_INFERNAL))
+            .add(new ItemModelGenerators.TrimMaterialData(MaterialAssetGroupsPM.RUNE_VOID, TrimMaterialsPM.RUNE_VOID))
+            .add(new ItemModelGenerators.TrimMaterialData(MaterialAssetGroupsPM.RUNE_HALLOWED, TrimMaterialsPM.RUNE_HALLOWED))
+            .build();
 
     public AbstractModelProviderPM(PackOutput output) {
         super(output);
@@ -417,22 +441,22 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 this.generateSourceTintedLayeredItem(itemModels, item, ResourceUtils.loc("mana_arrow_head").withPrefix("item/"), ResourceUtils.loc("mana_arrow_base").withPrefix("item/")));
 
         // Generate armor items
-        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_HEAD.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_HELMET, false);
-        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_CHEST.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_LEGS.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_LEGGINGS, false);
-        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_FEET.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_BOOTS, false);
-        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_HEAD.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_HELMET, false);
-        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_CHEST.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_LEGS.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_LEGGINGS, false);
-        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_FEET.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_BOOTS, false);
-        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_HEAD.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_HELMET, false);
-        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_CHEST.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_LEGS.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_LEGGINGS, false);
-        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_FEET.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_BOOTS, false);
-        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_HEAD.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_HELMET, false);
-        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_CHEST.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_LEGS.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_LEGGINGS, false);
-        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_FEET.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_BOOTS, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.IMBUED_WOOL_HEAD.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_HELMET, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.IMBUED_WOOL_CHEST.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_CHESTPLATE, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.IMBUED_WOOL_LEGS.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_LEGGINGS, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.IMBUED_WOOL_FEET.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_BOOTS, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.SPELLCLOTH_HEAD.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_HELMET, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.SPELLCLOTH_CHEST.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_CHESTPLATE, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.SPELLCLOTH_LEGS.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_LEGGINGS, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.SPELLCLOTH_FEET.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_BOOTS, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.HEXWEAVE_HEAD.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_HELMET, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.HEXWEAVE_CHEST.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_CHESTPLATE, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.HEXWEAVE_LEGS.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_LEGGINGS, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.HEXWEAVE_FEET.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_BOOTS, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.SAINTSWOOL_HEAD.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_HELMET, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.SAINTSWOOL_CHEST.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_CHESTPLATE, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.SAINTSWOOL_LEGS.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_LEGGINGS, false);
+        this.generateTrimmableRobeItem(itemModels, ItemsPM.SAINTSWOOL_FEET.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_BOOTS, false);
         itemModels.generateTrimmableItem(ItemsPM.PRIMALITE_HEAD.get(), EquipmentAssetsPM.PRIMALITE, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
         itemModels.generateTrimmableItem(ItemsPM.PRIMALITE_CHEST.get(), EquipmentAssetsPM.PRIMALITE, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
         itemModels.generateTrimmableItem(ItemsPM.PRIMALITE_LEGS.get(), EquipmentAssetsPM.PRIMALITE, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
@@ -589,6 +613,39 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
     public static Identifier prefixForModSlotTrim(String slotName) {
         return ResourceUtils.loc("trims/items/" + slotName + "_trim");
+    }
+
+    public void generateTrimmableRobeItem(ItemModelGenerators itemModels, Item armor, ResourceKey<EquipmentAsset> equipmentAssetId, Identifier slotTrimPrefix, boolean hasDyedLayer) {
+        Identifier modelLocation = ModelLocationUtils.getModelLocation(armor);
+        Material itemTexture = TextureMapping.getItemTexture(armor);
+        Material overlayTexture = TextureMapping.getItemTexture(armor, "_overlay");
+        List<SelectItemModel.SwitchCase<ResourceKey<TrimMaterial>>> cases = new ArrayList<>(ROBE_TRIM_MATERIAL_MODELS.size());
+
+        for (ItemModelGenerators.TrimMaterialData material : ROBE_TRIM_MATERIAL_MODELS) {
+            Identifier trimModelLocation = modelLocation.withSuffix("_" + material.assets().base().suffix() + "_trim");
+            Material trimOverlayTexture = new Material(slotTrimPrefix.withSuffix("_" + material.assets().assetId(equipmentAssetId).suffix()));
+            ItemModel.Unbaked trimModel;
+            if (hasDyedLayer) {
+                itemModels.generateLayeredItem(trimModelLocation, itemTexture, overlayTexture, trimOverlayTexture);
+                trimModel = ItemModelUtils.tintedModel(trimModelLocation, new Dye(-6265536));
+            } else {
+                itemModels.generateLayeredItem(trimModelLocation, itemTexture, trimOverlayTexture);
+                trimModel = ItemModelUtils.plainModel(trimModelLocation);
+            }
+
+            cases.add(ItemModelUtils.when(material.materialKey(), trimModel));
+        }
+
+        ItemModel.Unbaked untrimmedModel;
+        if (hasDyedLayer) {
+            ModelTemplates.TWO_LAYERED_ITEM.create(modelLocation, TextureMapping.layered(itemTexture, overlayTexture), itemModels.modelOutput);
+            untrimmedModel = ItemModelUtils.tintedModel(modelLocation, new Dye(-6265536));
+        } else {
+            ModelTemplates.FLAT_ITEM.create(modelLocation, TextureMapping.layer0(itemTexture), itemModels.modelOutput);
+            untrimmedModel = ItemModelUtils.plainModel(modelLocation);
+        }
+
+        itemModels.itemModelOutput.accept(armor, ItemModelUtils.select(new TrimMaterialProperty(), untrimmedModel, cases));
     }
 
     private void generateSourceTintedLayeredItem(ItemModelGenerators itemModels, Item item, Identifier overlayModel, Identifier baseModel) {
