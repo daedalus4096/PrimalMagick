@@ -71,8 +71,9 @@ public class WandInscriptionRecipe extends CustomRecipe {
                 // If a filled spell scroll is also present, check that the scroll's spell will fit into the wand
                 return spellContainer.canAddSpell(wandStack, scrollItem.getSpell(scrollStack));
             } else {
-                // If no item is present in the scroll slot, clear the wand; if it's something other than a filled spell scroll, don't allow combination
-                return scrollStack.isEmpty();
+                // If no item is present in the scroll slot, clear the wand, as long as it has spells to clear; if it's
+                // something other than a filled spell scroll, don't allow combination
+                return scrollStack.isEmpty() && spellContainer.getSpellCount(wandStack) > 0;
             }
         } else {
             return false;
