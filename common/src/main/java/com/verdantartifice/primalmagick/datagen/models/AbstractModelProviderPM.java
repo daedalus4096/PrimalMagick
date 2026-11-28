@@ -108,10 +108,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
-    private static final Identifier TRIM_PREFIX_ROBE_HELMET = ItemModelGenerators.prefixForSlotTrim("robe_head");
-    private static final Identifier TRIM_PREFIX_ROBE_CHESTPLATE = ItemModelGenerators.prefixForSlotTrim("robe_chest");
-    private static final Identifier TRIM_PREFIX_ROBE_LEGGINGS = ItemModelGenerators.prefixForSlotTrim("robe_legs");
-    private static final Identifier TRIM_PREFIX_ROBE_BOOTS = ItemModelGenerators.prefixForSlotTrim("robe_feet");
+    private static final Identifier TRIM_PREFIX_ROBE_HELMET = prefixForModSlotTrim("robe_head");
+    private static final Identifier TRIM_PREFIX_ROBE_CHESTPLATE = prefixForModSlotTrim("robe_chest");
+    private static final Identifier TRIM_PREFIX_ROBE_LEGGINGS = prefixForModSlotTrim("robe_legs");
+    private static final Identifier TRIM_PREFIX_ROBE_BOOTS = prefixForModSlotTrim("robe_feet");
 
     public AbstractModelProviderPM(PackOutput output) {
         super(output);
@@ -585,6 +585,10 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
 
         // Generate debug items
         itemModels.generateFlatItem(ItemsPM.TICK_STICK.get(), Items.STICK, ModelTemplates.FLAT_ITEM);
+    }
+
+    public static Identifier prefixForModSlotTrim(String slotName) {
+        return ResourceUtils.loc("trims/items/" + slotName + "_trim");
     }
 
     private void generateSourceTintedLayeredItem(ItemModelGenerators itemModels, Item item, Identifier overlayModel, Identifier baseModel) {
