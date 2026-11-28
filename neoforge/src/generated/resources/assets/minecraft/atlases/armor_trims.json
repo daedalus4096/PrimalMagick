@@ -15,8 +15,8 @@
         "rune_void": "minecraft:trims/color_palettes/amethyst"
       },
       "textures": [
-        "primalmagick:trims/models/armor/runic",
-        "primalmagick:trims/models/armor/runic_leggings"
+        "primalmagick:trims/entity/humanoid/runic",
+        "primalmagick:trims/entity/humanoid_leggings/runic"
       ]
     }
   ]

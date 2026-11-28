@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.ManaInjectorTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaRelayTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
+import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
 import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarMenu;
 import com.verdantartifice.primalmagick.common.menus.DesalinatorMenu;
@@ -22,13 +23,18 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.ResourceUtils;
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.AtlasIds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.equipment.trim.TrimPattern;
+import net.minecraft.world.item.equipment.trim.TrimPatterns;
 import net.neoforged.neoforge.client.data.SpriteSourceProvider;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -112,8 +118,7 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
         
         // Add mod armor trim pattern model overlays to the armor trims atlas
         armorTrimsAtlas.addSource(new PalettedPermutations(
-                List.of(ResourceUtils.loc("trims/models/armor/runic"),
-                        ResourceUtils.loc("trims/models/armor/runic_leggings")),
+                trimPatternTextures(),
                 Identifier.withDefaultNamespace("trims/color_palettes/trim_palette"),
                 ImmutableMap.<String, Identifier>builder()
                         .put("rune_earth", Identifier.withDefaultNamespace("trims/color_palettes/emerald"))
@@ -126,5 +131,23 @@ public class SpriteSourceProviderPMNeoforge extends SpriteSourceProvider {
                         .put("rune_void", Identifier.withDefaultNamespace("trims/color_palettes/amethyst"))
                         .put("rune_hallowed", Identifier.withDefaultNamespace("trims/color_palettes/quartz"))
                         .build()));
+    }
+
+    private static final List<ResourceKey<TrimPattern>> MOD_PATTERNS = List.of(
+            TrimPatternsPM.RUNIC
+    );
+    private static final List<EquipmentClientInfo.LayerType> HUMANOID_LAYERS = List.of(
+            EquipmentClientInfo.LayerType.HUMANOID, EquipmentClientInfo.LayerType.HUMANOID_LEGGINGS
+    );
+
+    private static List<Identifier> trimPatternTextures() {
+        List<Identifier> result = new ArrayList<>(MOD_PATTERNS.size() * HUMANOID_LAYERS.size());
+        for (ResourceKey<TrimPattern> modPattern : MOD_PATTERNS) {
+            Identifier assetId = TrimPatterns.defaultAssetId(modPattern);
+            for (EquipmentClientInfo.LayerType humanoidLayer : HUMANOID_LAYERS) {
+                result.add(assetId.withPath(patternPath -> humanoidLayer.trimAssetPrefix() + "/" + patternPath));
+            }
+        }
+        return result;
     }
 }

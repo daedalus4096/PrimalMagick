@@ -108,6 +108,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class AbstractModelProviderPM extends ModelProvider {
+    private static final Identifier TRIM_PREFIX_ROBE_HELMET = ItemModelGenerators.prefixForSlotTrim("robe_head");
+    private static final Identifier TRIM_PREFIX_ROBE_CHESTPLATE = ItemModelGenerators.prefixForSlotTrim("robe_chest");
+    private static final Identifier TRIM_PREFIX_ROBE_LEGGINGS = ItemModelGenerators.prefixForSlotTrim("robe_legs");
+    private static final Identifier TRIM_PREFIX_ROBE_BOOTS = ItemModelGenerators.prefixForSlotTrim("robe_feet");
+
     public AbstractModelProviderPM(PackOutput output) {
         super(output);
     }
@@ -412,22 +417,22 @@ public abstract class AbstractModelProviderPM extends ModelProvider {
                 this.generateSourceTintedLayeredItem(itemModels, item, ResourceUtils.loc("mana_arrow_head").withPrefix("item/"), ResourceUtils.loc("mana_arrow_base").withPrefix("item/")));
 
         // Generate armor items
-        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_HEAD.get(), EquipmentAssetsPM.IMBUED_WOOL, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_CHEST.get(), EquipmentAssetsPM.IMBUED_WOOL, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_LEGS.get(), EquipmentAssetsPM.IMBUED_WOOL, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_FEET.get(), EquipmentAssetsPM.IMBUED_WOOL, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_HEAD.get(), EquipmentAssetsPM.SPELLCLOTH, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_CHEST.get(), EquipmentAssetsPM.SPELLCLOTH, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_LEGS.get(), EquipmentAssetsPM.SPELLCLOTH, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_FEET.get(), EquipmentAssetsPM.SPELLCLOTH, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_HEAD.get(), EquipmentAssetsPM.HEXWEAVE, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_CHEST.get(), EquipmentAssetsPM.HEXWEAVE, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_LEGS.get(), EquipmentAssetsPM.HEXWEAVE, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_FEET.get(), EquipmentAssetsPM.HEXWEAVE, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_HEAD.get(), EquipmentAssetsPM.SAINTSWOOL, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_CHEST.get(), EquipmentAssetsPM.SAINTSWOOL, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_LEGS.get(), EquipmentAssetsPM.SAINTSWOOL, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_FEET.get(), EquipmentAssetsPM.SAINTSWOOL, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
+        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_HEAD.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_HELMET, false);
+        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_CHEST.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_CHESTPLATE, false);
+        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_LEGS.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_LEGGINGS, false);
+        itemModels.generateTrimmableItem(ItemsPM.IMBUED_WOOL_FEET.get(), EquipmentAssetsPM.IMBUED_WOOL, TRIM_PREFIX_ROBE_BOOTS, false);
+        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_HEAD.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_HELMET, false);
+        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_CHEST.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_CHESTPLATE, false);
+        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_LEGS.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_LEGGINGS, false);
+        itemModels.generateTrimmableItem(ItemsPM.SPELLCLOTH_FEET.get(), EquipmentAssetsPM.SPELLCLOTH, TRIM_PREFIX_ROBE_BOOTS, false);
+        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_HEAD.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_HELMET, false);
+        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_CHEST.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_CHESTPLATE, false);
+        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_LEGS.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_LEGGINGS, false);
+        itemModels.generateTrimmableItem(ItemsPM.HEXWEAVE_FEET.get(), EquipmentAssetsPM.HEXWEAVE, TRIM_PREFIX_ROBE_BOOTS, false);
+        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_HEAD.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_HELMET, false);
+        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_CHEST.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_CHESTPLATE, false);
+        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_LEGS.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_LEGGINGS, false);
+        itemModels.generateTrimmableItem(ItemsPM.SAINTSWOOL_FEET.get(), EquipmentAssetsPM.SAINTSWOOL, TRIM_PREFIX_ROBE_BOOTS, false);
         itemModels.generateTrimmableItem(ItemsPM.PRIMALITE_HEAD.get(), EquipmentAssetsPM.PRIMALITE, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
         itemModels.generateTrimmableItem(ItemsPM.PRIMALITE_CHEST.get(), EquipmentAssetsPM.PRIMALITE, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
         itemModels.generateTrimmableItem(ItemsPM.PRIMALITE_LEGS.get(), EquipmentAssetsPM.PRIMALITE, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
